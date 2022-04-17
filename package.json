@@ -1,0 +1,21 @@
+{
+  "name": "fern",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Fullstack Express React Native framework for building iOS, Android, and Web apps with an Express API",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "./packages/*"
+    ],
+    "nohoist": ["**/react-native", "**/react-native/**", "**/expo", "**/expo/**", "**/@storybook", "**/@storybook/**"]
+
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "resolutions": {
+    "@types/react": "17.0.44"
+  }
+}

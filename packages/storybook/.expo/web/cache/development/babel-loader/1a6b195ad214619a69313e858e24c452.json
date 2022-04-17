@@ -1,0 +1,1 @@
+{"ast":null,"code":"import '@storybook/addon-ondevice-actions/register';","map":{"version":3,"sources":["/Users/josh/src/ferns/packages/storybook/rn-addons.ts"],"names":[],"mappings":"AAAA,OAAO,4CAAP","sourcesContent":["import '@storybook/addon-ondevice-actions/register';\n// import '@storybook/addon-ondevice-knobs/register';\n\n"]},"metadata":{},"sourceType":"module"}
