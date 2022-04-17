@@ -1,4 +1,4 @@
-import {Box} from "./Box";
+import {Box} from "@ferns/ui";
 import React from "react";
 
 export class StorybookContainer extends React.Component<any, any> {

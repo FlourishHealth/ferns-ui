@@ -136,6 +136,7 @@
     "typescript": "^4.6.3"
   },
   "peerDependencies": {
+    "expo-font": "^10.0.5",
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/async-storage": "^1.12.0",
     "@react-native-community/blur": "^3.6.0",

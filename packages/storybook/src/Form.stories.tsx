@@ -1,8 +1,8 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {FormLine} from "../../ui/src/Form";
+import {Box} from "@ferns/ui"
+import {FormLine} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer"
 
 export default {
   title: "FormLine",

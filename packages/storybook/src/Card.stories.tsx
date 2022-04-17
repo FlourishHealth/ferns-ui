@@ -1,6 +1,6 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {Card} from "../../ui/src/Card";
+import {Box} from "@ferns/ui"
+import {Card} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
 
 export default {

@@ -1,9 +1,9 @@
-import {Switch} from "../../ui/src/Switch";
+import {Switch} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {WithLabel} from "../../ui/src/WithLabel";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {Box} from "@ferns/ui"
+import {WithLabel} from "@ferns/ui"
+import {StorybookContainer} from "./StorybookContainer"
 
 interface State {
   boolean: boolean;

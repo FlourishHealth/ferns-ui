@@ -1,9 +1,9 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {Text} from "../../ui/src/Text";
-import {TextProps} from "../../ui/src/Common";
+import {Box} from "@ferns/ui"
+import {Text} from "@ferns/ui"
+import {TextProps} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer"
 function renderText(text: string, props: Partial<TextProps>) {
   return (
     <Box width="100%" paddingY={1}>

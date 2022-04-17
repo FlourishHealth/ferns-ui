@@ -2,7 +2,7 @@ import React from "react";
 // import {Box} from "@ferns/ui";
 import {Field} from "@ferns/ui";
 import {storiesOf} from "@storybook/react-native";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer"
 
 export default {
   title: "Field",

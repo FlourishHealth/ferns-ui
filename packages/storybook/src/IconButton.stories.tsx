@@ -1,8 +1,8 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {IconButton} from "../../ui/src/IconButton";
+import {Box} from "@ferns/ui"
+import {IconButton} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer"
 
 storiesOf("IconButton", module).add("Icon Buttons", () => (
   <StorybookContainer>

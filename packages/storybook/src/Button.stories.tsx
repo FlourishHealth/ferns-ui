@@ -1,10 +1,10 @@
 import {action} from "@storybook/addon-actions";
 import React from "react";
-import {Button} from "../../ui/src/Button";
+import {Button} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {Box} from "../../ui/src/Box";
-import {ButtonProps} from "../../ui/src/Common";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {Box} from "@ferns/ui"
+import {ButtonProps} from "@ferns/ui"
+import {StorybookContainer} from "./StorybookContainer"
 
 function allColorButtons(props: Partial<ButtonProps>) {
   return (

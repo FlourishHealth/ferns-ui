@@ -1,8 +1,8 @@
 import React from "react";
-import {SplitPage} from "../../ui/src/SplitPage";
-import {Text} from "../../ui/src/Text";
+import {SplitPage} from "@ferns/ui"
+import {Text} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {Box} from "../../ui/src/Box";
+import {Box} from "@ferns/ui"
 
 storiesOf("Split Page", module).add("Split", () => (
   <SplitPage

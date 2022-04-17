@@ -1,9 +1,9 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {AllColors} from "../../ui/src/Common";
+import {Box} from "@ferns/ui"
+import {AllColors} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {Text} from "../../ui/src/Text";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {Text} from "@ferns/ui"
+import {StorybookContainer} from "./StorybookContainer"
 
 const colors: AllColors[] = [
   "primary",

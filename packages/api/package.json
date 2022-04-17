@@ -1,5 +1,5 @@
 {
-  "name": "@fern/api",
+  "name": "@ferns/api",
   "version": "0.3.1",
   "description": "Styled after the Django & Django REST Framework, a batteries-include framework for building REST APIs with Node/Express/Mongoose.",
   "main": "dist/index.js",

@@ -1,7 +1,7 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {TextArea} from "../../ui/src/TextArea";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {Box} from "@ferns/ui"
+import {TextArea} from "@ferns/ui"
+import {StorybookContainer} from "./StorybookContainer"
 
 export default {
   title: "TextArea",

@@ -1,8 +1,8 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {SelectList, SelectListOptions} from "../../ui/src/SelectList";
+import {Box} from "@ferns/ui"
+import {SelectList, SelectListOptions} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer"
 
 const options: SelectListOptions = [
   {label: "First", value: "first"},

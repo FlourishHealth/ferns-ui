@@ -1,8 +1,8 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {Icon, IconExpo} from "../../ui/src/Icon";
+import {Box} from "@ferns/ui"
+import {Icon, IconExpo} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer"
 
 storiesOf("Icon", module)
   .add("Solid Icons", () => (

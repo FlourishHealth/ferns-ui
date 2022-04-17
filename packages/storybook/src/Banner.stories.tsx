@@ -1,5 +1,5 @@
-import {Box} from "../../ui/src/Box";
-import {Banner} from "../../ui/src/Banner";
+import {Box} from "@ferns/ui"
+import {Banner} from "@ferns/ui"
 
 import React from "react";
 import {storiesOf} from "@storybook/react-native";

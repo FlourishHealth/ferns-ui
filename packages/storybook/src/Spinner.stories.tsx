@@ -1,6 +1,6 @@
 import React from "react";
-import {Spinner} from "../../ui/src/Spinner";
-import {Box} from "../../ui/src/Box";
+import {Spinner} from "@ferns/ui"
+import {Box} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
 
 storiesOf("Spinner", module)

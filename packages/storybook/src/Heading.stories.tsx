@@ -1,9 +1,9 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {Heading} from "../../ui/src/Heading";
-import {HeadingProps} from "../../ui/src/Common";
+import {Box} from "@ferns/ui"
+import {Heading} from "@ferns/ui"
+import {HeadingProps} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer"
 
 function renderText(text: string, props: Partial<HeadingProps>) {
   return (

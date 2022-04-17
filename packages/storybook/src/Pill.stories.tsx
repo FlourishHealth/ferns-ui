@@ -1,9 +1,9 @@
 import React from "react";
-import {Box} from "../../ui/src/Box";
-import {AllColors} from "../../ui/src/Common";
-import {Pill} from "../../ui/src/Pill";
+import {Box} from "@ferns/ui"
+import {AllColors} from "@ferns/ui"
+import {Pill} from "@ferns/ui"
 import {storiesOf} from "@storybook/react-native";
-import {StorybookContainer} from "../../ui/src/StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer"
 
 const renderPill = (color: AllColors) => (
   <Box display="flex" direction="row" alignItems="center" paddingY={1}>
