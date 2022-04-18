@@ -10,7 +10,6 @@
       "./packages/*"
     ],
     "nohoist": ["**/react-native", "**/react-native/**", "**/expo", "**/expo/**","**/expo-*", "**/expo-*/**", "**/@storybook", "**/@storybook/**"]
-
   },
   "devDependencies": {
   },
