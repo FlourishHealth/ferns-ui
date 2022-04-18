@@ -2,7 +2,7 @@
   "name": "@ferns/ui",
   "version": "0.1.2",
   "main": "dist/index.js",
-  "license": "MIT",
+  "license": "Apache 2.0",
   "scripts": {
     "local": "tsc-watch --onSuccess \"cp -a dist/* ../totum/node_modules/react-unifier/dist\"",
     "build": "tsc",
