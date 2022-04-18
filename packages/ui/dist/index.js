@@ -35,6 +35,7 @@ export * from "./Spinner";
 export * from "./Switch";
 export * from "./TapToEdit";
 export * from "./Text";
+export * from "./TextArea";
 export * from "./TextField";
 export * from "./UnifiedScreens";
 export * from "./Unifier";

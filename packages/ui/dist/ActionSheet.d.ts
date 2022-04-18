@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Animated, ViewStyle } from "react-native";
+import { Animated, KeyboardEvent, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent, ViewStyle } from "react-native";
 export declare type ActionSheetProps = {
     children?: React.ReactNode;
     ref?: React.MutableRefObject<{
@@ -316,7 +316,37 @@ export declare type ActionSheetProps = {
      */
     onPositionChanged?: (hasReachedTop: boolean) => void;
 };
-export declare const styles: any;
+export declare const styles: {
+    scrollView: {
+        height: string;
+        width: string;
+        backgroundColor: string;
+    };
+    container: {
+        width: string;
+        backgroundColor: string;
+        alignSelf: "center";
+    };
+    safearea: {
+        position: "absolute";
+        top: number;
+        left: number;
+    };
+    indicator: {
+        height: number;
+        width: number;
+        borderRadius: number;
+        backgroundColor: string;
+        marginVertical: number;
+        alignSelf: "center";
+    };
+    parentContainer: {
+        width: string;
+        height: string;
+        justifyContent: "center";
+        alignItems: "center";
+    };
+};
 export declare function getDeviceHeight(statusBarTranslucent: boolean | undefined): number;
 export declare const getElevation: (elevation?: number | undefined) => {
     elevation?: undefined;

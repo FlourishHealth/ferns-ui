@@ -15,8 +15,8 @@ declare class UnifierClass {
     utils: {
         dismissKeyboard: () => void;
         dimensions: () => {
-            width: any;
-            height: any;
+            width: number;
+            height: number;
         };
         copyToClipboard: (text: string) => void;
         orientationChange: (callback: (orentation: "portrait" | "landscape") => void) => void;

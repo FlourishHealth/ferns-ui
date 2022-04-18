@@ -21,7 +21,7 @@ export declare class TextField extends React.Component<TextFieldProps, TextField
         password: string;
         search: string;
         text: string;
-        url: any;
+        url: string | undefined;
         username: string;
     };
     textContentMap: {
@@ -34,7 +34,7 @@ export declare class TextField extends React.Component<TextFieldProps, TextField
         password: string;
         search: string;
         text: string;
-        url: any;
+        url: string | undefined;
         username: string;
     };
     renderIcon(): JSX.Element | null;

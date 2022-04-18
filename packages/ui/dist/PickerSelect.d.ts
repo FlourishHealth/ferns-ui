@@ -1,6 +1,86 @@
 import PropTypes from "prop-types";
 import { PureComponent } from "react";
-declare const defaultStyles: any;
+declare const defaultStyles: {
+    viewContainer: {
+        alignSelf: "stretch";
+    };
+    iconContainer: {
+        position: "absolute";
+        right: number;
+    };
+    modalViewTop: {
+        flex: number;
+    };
+    modalViewMiddle: {
+        height: number;
+        flexDirection: "row";
+        justifyContent: "space-between";
+        alignItems: "center";
+        paddingHorizontal: number;
+        backgroundColor: string;
+        borderTopWidth: number;
+        borderTopColor: string;
+        zIndex: number;
+    };
+    chevronContainer: {
+        flexDirection: "row";
+    };
+    chevron: {
+        width: number;
+        height: number;
+        backgroundColor: string;
+        borderColor: string;
+        borderTopWidth: number;
+        borderRightWidth: number;
+    };
+    chevronUp: {
+        marginLeft: number;
+        transform: ({
+            translateY: number;
+            rotate?: undefined;
+        } | {
+            rotate: string;
+            translateY?: undefined;
+        })[];
+    };
+    chevronDown: {
+        marginLeft: number;
+        transform: ({
+            translateY: number;
+            rotate?: undefined;
+        } | {
+            rotate: string;
+            translateY?: undefined;
+        })[];
+    };
+    chevronActive: {
+        borderColor: string;
+    };
+    done: {
+        color: string;
+        fontWeight: "600";
+        fontSize: number;
+        paddingTop: number;
+        paddingRight: number;
+    };
+    doneDepressed: {
+        fontSize: number;
+    };
+    modalViewBottom: {
+        justifyContent: "center";
+        backgroundColor: string;
+    };
+    placeholder: {
+        color: string;
+    };
+    headlessAndroidPicker: {
+        position: "absolute";
+        width: string;
+        height: string;
+        color: string;
+        opacity: number;
+    };
+};
 export default class RNPickerSelect extends PureComponent<any, any> {
     static propTypes: {
         onValueChange: PropTypes.Validator<(...args: any[]) => any>;

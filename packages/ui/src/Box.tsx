@@ -117,7 +117,7 @@ export class Box extends React.Component<BoxProps, {}> {
     overflow: (value) => {
       if (value === "scrollY" || value === "scroll") {
         return {overflow: "scroll"};
-      } else if (value === "scollX") {
+      } else if (value === "scrollX") {
         return {overflow: "scrollX"};
       }
       return {};
