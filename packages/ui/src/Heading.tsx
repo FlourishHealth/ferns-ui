@@ -1,5 +1,6 @@
 import React from "react";
 import {Text as NativeText} from "react-native";
+
 import {HeadingProps} from "./Common";
 import {Unifier} from "./Unifier";
 
@@ -37,7 +38,7 @@ export class Heading extends React.Component<HeadingProps, {}> {
   }
 
   render() {
-    let lines = 0;
+    const lines = 0;
     // if (this.props.numberOfLines) {
     //   lines = this.props.numberOfLines;
     // } else if (this.props.inline) {

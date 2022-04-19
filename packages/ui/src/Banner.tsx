@@ -1,8 +1,9 @@
 import React from "react";
+
 import {Box} from "./Box";
+import {BoxColor, ButtonColor, Rounding, TextColor} from "./Common";
 import {IconButton} from "./IconButton";
 import {Text} from "./Text";
-import {BoxColor, ButtonColor, Rounding, TextColor} from "./Common";
 import {Unifier} from "./Unifier";
 
 // import {faTimesCircle, faArrowRight} from "@fortawesome/free-solid-svg-icons";
@@ -54,7 +55,7 @@ export class Banner extends React.Component<BannerProps, BannerState> {
     if (!this.state.show) {
       return null;
     }
-    let type = this.props.type || "dismiss";
+    const type = this.props.type || "dismiss";
 
     if (type === "action" && !this.props.onClick) {
       console.warn("Banners with type action require an onClick property.");
@@ -63,25 +64,25 @@ export class Banner extends React.Component<BannerProps, BannerState> {
 
     return (
       <Box
-        onClick={this.dismiss}
-        paddingY={2}
-        marginTop={3}
-        marginBottom={3}
         color={this.props.color || "secondaryDark"}
-        direction="row"
-        rounding={this.props.shape}
         dangerouslySetInlineStyle={{
           __style: {
             marginLeft: negativeMargin,
             marginRight: negativeMargin,
           },
         }}
-        width={Unifier.utils.dimensions().width || "100%"}
-        paddingX={3}
+        direction="row"
         justifyContent="between"
-        shadow={true}
+        marginBottom={3}
+        marginTop={3}
+        paddingX={3}
+        paddingY={2}
+        rounding={this.props.shape}
+        shadow
+        width={Unifier.utils.dimensions().width || "100%"}
+        onClick={this.dismiss}
       >
-        <Box direction="column" justifyContent="center" alignItems="center" flex="shrink">
+        <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
           <Box paddingY={1}>
             <Text align="center" color={this.props.textColor || "white"} weight="bold">
               {this.props.text}
@@ -95,25 +96,25 @@ export class Banner extends React.Component<BannerProps, BannerState> {
             </Box>
           )}
         </Box>
-        <Box display="block" width={40} alignItems="center" justifyContent="center">
+        <Box alignItems="center" display="block" justifyContent="center" width={40}>
           {type === "dismiss" && (
             <IconButton
-              prefix="fas"
+              accessibilityLabel=""
               icon="times-circle"
               // size="lg"
-              onClick={() => this.dismiss()}
-              accessibilityLabel=""
               iconColor={(this.props.textColor || "white") as ButtonColor}
+              prefix="fas"
+              onClick={() => this.dismiss()}
             />
           )}
           {type === "action" && (
             <IconButton
-              prefix="fas"
+              accessibilityLabel=""
               icon="arrow-right"
               // size="lg"
-              onClick={() => this.props.onClick && this.props.onClick()}
-              accessibilityLabel=""
               iconColor={(this.props.textColor || "white") as ButtonColor}
+              prefix="fas"
+              onClick={() => this.props.onClick && this.props.onClick()}
             />
           )}
         </Box>

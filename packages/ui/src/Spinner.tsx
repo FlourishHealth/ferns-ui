@@ -1,10 +1,12 @@
 import React from "react";
 import {ActivityIndicator, View} from "react-native";
+
 import {SpinnerProps} from "./Common";
 import {Unifier} from "./Unifier";
 
 export class LoadingOverlay extends React.Component<SpinnerProps, {}> {
   componentId?: string = undefined;
+
   async showHide() {
     if (this.componentId) {
       try {
@@ -36,7 +38,7 @@ export class LoadingOverlay extends React.Component<SpinnerProps, {}> {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: Unifier.theme["white"],
+          backgroundColor: Unifier.theme.white,
           opacity: 0.5,
         }}
       >
@@ -61,7 +63,7 @@ export class Spinner extends React.Component<SpinnerProps, SpinnerState> {
     if (!this.state.show) {
       return null;
     }
-    let size: "small" | "large" = this.props.size === "sm" ? "small" : "large";
+    const size: "small" | "large" = this.props.size === "sm" ? "small" : "large";
     return <ActivityIndicator color={this.props.color || "darkGray"} size={size} />;
   }
 }

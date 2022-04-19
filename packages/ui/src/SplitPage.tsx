@@ -1,14 +1,15 @@
 import React from "react";
+import {ListRenderItemInfo, View} from "react-native";
+
 import {Box} from "./Box";
 import {Color} from "./Common";
 import {ErrorBoundary} from "./ErrorBoundary";
-import {Spinner} from "./Spinner";
-import {Unifier} from "./Unifier";
 import {FlatList} from "./FlatList";
-import {ListRenderItemInfo, View} from "react-native";
-import {mediaQueryLargerThan} from "./MediaQuery";
 import {Icon} from "./Icon";
 import {IconButton} from "./IconButton";
+import {mediaQueryLargerThan} from "./MediaQuery";
+import {Spinner} from "./Spinner";
+import {Unifier} from "./Unifier";
 
 interface SplitPageProps {
   // TODO: figure out navigation
@@ -67,9 +68,9 @@ export class SplitPage extends React.Component<SplitPageProps, SplitPageState> {
         {this.props.renderListViewHeader && this.props.renderListViewHeader()}
         <FlatList
           data={this.props.listViewData}
-          renderItem={this.renderItem}
-          keyExtractor={(item) => item.id}
           extraData={this.props.listViewExtraData}
+          keyExtractor={(item) => item.id}
+          renderItem={this.renderItem}
         />
       </View>
     );
@@ -81,8 +82,8 @@ export class SplitPage extends React.Component<SplitPageProps, SplitPageState> {
         {!mediaQueryLargerThan("sm") && (
           <Box width="100%">
             <IconButton
-              icon="times"
               accessibilityLabel="close"
+              icon="times"
               iconColor="darkGray"
               onClick={() => this.setState({selectedId: undefined})}
             />
@@ -96,16 +97,16 @@ export class SplitPage extends React.Component<SplitPageProps, SplitPageState> {
   render() {
     return (
       <Box
-        avoidKeyboard={true}
-        keyboardOffset={this.props.keyboardOffset}
-        display="flex"
-        width="100%"
-        height="100%"
-        flex="grow"
-        direction="row"
+        avoidKeyboard
         color={this.props.color || "lightGray"}
+        direction="row"
+        display="flex"
+        flex="grow"
+        height="100%"
+        keyboardOffset={this.props.keyboardOffset}
+        width="100%"
       >
-        {this.props.loading === true && <Spinner size="md" color={Unifier.theme.darkGray as any} />}
+        {this.props.loading === true && <Spinner color={Unifier.theme.darkGray as any} size="md" />}
         {this.renderList()}
         {this.renderListContent()}
       </Box>

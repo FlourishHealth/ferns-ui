@@ -1,7 +1,8 @@
 import React from "react";
 import {TouchableOpacity} from "react-native";
-import {Icon} from "./Icon";
+
 import {IconButtonProps, iconSizeToNumber} from "./Common";
+import {Icon} from "./Icon";
 import {Unifier} from "./Unifier";
 
 export class IconButton extends React.Component<IconButtonProps, {}> {
@@ -10,7 +11,7 @@ export class IconButton extends React.Component<IconButtonProps, {}> {
     let color;
     if (this.props.bgColor === "transparentDarkGray") {
       opacity = 0.8;
-      color = Unifier.theme["darkGray"];
+      color = Unifier.theme.darkGray;
     } else if (this.props.bgColor === "transparent" || !this.props.bgColor) {
       opacity = 0.0;
       color = Unifier.theme.white;
@@ -19,12 +20,9 @@ export class IconButton extends React.Component<IconButtonProps, {}> {
     }
     return (
       <TouchableOpacity
-        onPress={() => {
-          Unifier.utils.haptic();
-          this.props.onClick();
-        }}
+        hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
         style={{
-          opacity: opacity,
+          opacity,
           backgroundColor: color,
           borderRadius: 100,
           // paddingBottom: iconSizeToNumber(this.props.size) / 4,
@@ -37,13 +35,16 @@ export class IconButton extends React.Component<IconButtonProps, {}> {
           justifyContent: "center",
           alignItems: "center",
         }}
-        hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
+        onPress={() => {
+          Unifier.utils.haptic();
+          this.props.onClick();
+        }}
       >
         <Icon
+          color={this.props.iconColor}
+          name={this.props.icon}
           prefix={this.props.prefix || "fas"}
           size={iconSizeToNumber(this.props.size)}
-          name={this.props.icon}
-          color={this.props.iconColor}
         />
       </TouchableOpacity>
     );

@@ -1,6 +1,7 @@
 import React from "react";
-import {BlurBoxProps} from "./Common";
+
 import {Box} from "./Box";
+import {BlurBoxProps} from "./Common";
 import {mergeInlineStyles} from "./Utilities";
 
 export class BlurBox extends React.Component<BlurBoxProps, {}> {
@@ -17,9 +18,9 @@ export class BlurBox extends React.Component<BlurBoxProps, {}> {
           opacity: 0.8,
           borderRadius: 12,
         })}
+        margin={margin || 0}
         marginBottom={marginBottom || 4}
         marginTop={marginTop || 0}
-        margin={margin || 0}
       >
         <Box paddingX={4} {...props}>
           {this.props.children}

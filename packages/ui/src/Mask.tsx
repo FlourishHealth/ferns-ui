@@ -1,4 +1,5 @@
 import React from "react";
+
 import {MaskProps} from "./Common";
 
 export class Mask extends React.Component<MaskProps, {}> {

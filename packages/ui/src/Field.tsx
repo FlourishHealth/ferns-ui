@@ -2,6 +2,7 @@ import isDate from "lodash/isDate";
 import isNumber from "lodash/isNumber";
 import moment from "moment-timezone";
 import React from "react";
+
 import {Box} from "./Box";
 import {FieldProps, TextFieldType} from "./Common";
 import {FieldWithLabels} from "./FieldWithLabels";
@@ -90,47 +91,47 @@ export class Field extends React.Component<FieldProps, State> {
       }
       return (
         <SelectList
+          disabled={this.props.disabled}
           id={this.props.name}
           options={this.props.options}
-          onChange={this.handleChange}
           value={this.state.value}
-          disabled={this.props.disabled}
+          onChange={this.handleChange}
         />
       );
     } else if (this.props.type === "textarea") {
       return (
         <TextArea
+          disabled={this.props.disabled}
           id={this.props.name}
           placeholder={this.props.placeholder}
-          onChange={({value}) => this.handleChange(value)}
-          value={String(this.state.value)}
-          disabled={this.props.disabled}
           rows={this.props.rows}
+          value={String(this.state.value)}
+          onChange={({value}) => this.handleChange(value)}
         />
       );
     } else if (this.props.type === "boolean") {
       return (
         <Switch
-          id={this.props.name}
-          switched={Boolean(this.state.value)}
           disabled={this.props.disabled}
+          id={this.props.name}
           name={this.props.name}
+          switched={Boolean(this.state.value)}
           onChange={(result) => this.handleSwitchChange(result)}
         />
       );
     } else if (this.props.type === "date") {
-      let value = this.state.value.seconds
+      const value = this.state.value.seconds
         ? moment(this.state.value.seconds * 1000)
         : moment(this.state.value);
       return (
         <TextField
+          disabled
           id={this.props.name}
           placeholder={this.props.placeholder}
-          onChange={(result) => this.handleChange(result.value)}
-          value={value.format("MM/DD/YYYY HH:mmA")}
-          // TODO: allow editing with a date picker
-          disabled={true}
           type="text"
+          // TODO: allow editing with a date picker
+          value={value.format("MM/DD/YYYY HH:mmA")}
+          onChange={(result) => this.handleChange(result.value)}
         />
       );
     } else {
@@ -148,7 +149,7 @@ export class Field extends React.Component<FieldProps, State> {
       } else if (type === "email") {
         autoComplete = "username";
       }
-      let value = String(this.state.value);
+      const value = String(this.state.value);
       // if (this.props.type === "percent") {
       //   value = `${Number(this.state.value).toFixed(0)}%`;
       // } else if (this.props.type === "currency") {
@@ -157,28 +158,22 @@ export class Field extends React.Component<FieldProps, State> {
       // console.log("VAL", value);
       return (
         <TextField
+          autoComplete={autoComplete}
+          disabled={this.props.disabled}
           id={this.props.name}
           placeholder={this.props.placeholder}
-          autoComplete={autoComplete}
-          onChange={(result) => this.handleChange(result.value)}
-          value={value}
-          disabled={this.props.disabled}
           type={type as "date" | "email" | "number" | "password" | "text" | "url"}
+          value={value}
+          onChange={(result) => this.handleChange(result.value)}
         />
       );
     }
   }
 
   render() {
-    let children = this.renderField();
-    const {
-      errorMessage,
-      errorMessageColor,
-      helperText,
-      helperTextColor,
-      label,
-      labelColor,
-    } = this.props;
+    const children = this.renderField();
+    const {errorMessage, errorMessageColor, helperText, helperTextColor, label, labelColor} =
+      this.props;
     return (
       <Box marginBottom={5}>
         <FieldWithLabels

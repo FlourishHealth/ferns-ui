@@ -4,6 +4,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Clipboard, Dimensions, Keyboard, Linking, Vibration} from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
+
 import {PermissionKind, UnifiedTheme} from "./Common";
 import {requestPermissions} from "./Permissions";
 
@@ -93,7 +94,9 @@ export type PlatformOS = "ios" | "android" | "web";
 
 class UnifierClass {
   private _theme?: Partial<UnifiedTheme>;
+
   private _web = false;
+
   private _dev = false;
 
   get web(): boolean {
@@ -182,7 +185,6 @@ class UnifierClass {
       Dimensions.addEventListener("change", () => {
         const screen = Dimensions.get("screen");
         const isPortrait = screen.width < screen.height;
-        console.log("Orientation change, isPortrait:", isPortrait);
         callback(isPortrait ? "portrait" : "landscape");
       });
     },
@@ -223,7 +225,7 @@ class UnifierClass {
       try {
         const jsonValue = await AsyncStorage.getItem(key);
         if (jsonValue) {
-          let value = JSON.parse(jsonValue);
+          const value = JSON.parse(jsonValue);
           if (value === null || value === undefined) {
             return defaultValue;
           } else {
@@ -252,7 +254,7 @@ class UnifierClass {
 
   tracking = {
     log: (message: string) => {
-      console.log(message);
+      console.info(message);
     },
   };
 

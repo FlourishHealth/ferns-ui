@@ -1,8 +1,9 @@
 import React from "react";
+
 import {FieldWithLabelsProps} from "./Common";
 import {WithLabel} from "./WithLabel";
 
-export function FieldWithLabels({
+export const FieldWithLabels = ({
   children,
   errorMessage,
   errorMessageColor = "red",
@@ -10,26 +11,26 @@ export function FieldWithLabels({
   helperTextColor = "darkGray",
   label,
   labelColor = "darkGray",
-}: FieldWithLabelsProps) {
+}: FieldWithLabelsProps) => {
   return (
     <WithLabel
-      show={Boolean(helperText)}
       label={helperText}
+      labelColor={helperTextColor}
       labelPlacement="after"
       labelSize="sm"
-      labelColor={helperTextColor}
+      show={Boolean(helperText)}
     >
       <WithLabel
-        show={Boolean(errorMessage)}
         label={errorMessage}
+        labelColor={errorMessageColor}
         labelPlacement="after"
         labelSize="md"
-        labelColor={errorMessageColor}
+        show={Boolean(errorMessage)}
       >
-        <WithLabel show={Boolean(label)} label={label} labelColor={labelColor}>
+        <WithLabel label={label} labelColor={labelColor} show={Boolean(label)}>
           {children}
         </WithLabel>
       </WithLabel>
     </WithLabel>
   );
-}
+};

@@ -1,17 +1,18 @@
-import {BoxProps} from "./Common";
 import React from "react";
+
 import {Box} from "./Box";
+import {BoxProps} from "./Common";
 
 export class Card extends React.Component<BoxProps, {}> {
   render() {
     return (
       <Box
+        color={this.props.color || "white"}
         direction="column"
         display="flex"
-        color={this.props.color || "white"}
-        rounding={3}
-        shadow={true}
         padding={this.props.padding || 4}
+        rounding={3}
+        shadow
         width={this.props.width}
         {...this.props}
       >

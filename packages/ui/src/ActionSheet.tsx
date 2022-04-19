@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import React, {Component, createRef} from "react";
 import {
   Animated,
@@ -405,7 +407,7 @@ export const styles = StyleSheet.create({
 });
 
 export function getDeviceHeight(statusBarTranslucent: boolean | undefined): number {
-  let height = Dimensions.get("window").height;
+  const height = Dimensions.get("window").height;
 
   if (Platform.OS === "android" && !statusBarTranslucent) {
     return StatusBar.currentHeight ? height - StatusBar.currentHeight : height;
@@ -442,7 +444,7 @@ export const waitAsync = (ms: number): Promise<null> =>
     }, ms);
   });
 
-let safeAreaInnerHeight = 0;
+const safeAreaInnerHeight = 0;
 const dummyData = ["dummy"];
 let safeAreaPaddingTop = Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0;
 let calculatedDeviceHeight = Dimensions.get("window").height;
@@ -488,27 +490,43 @@ export class ActionSheet extends Component<Props, State, any> {
   static defaultProps = defaultProps;
 
   actionSheetHeight = 0;
+
   prevScroll = 0;
+
   timeout: any | null = null;
+
   offsetY = 0;
+
   currentOffsetFromBottom = 0;
+
   scrollAnimationEndValue = 0;
 
   hasBounced = false;
+
   layoutHasCalled = false;
+
   isClosing = false;
+
   isRecoiling = false;
+
   isReachedTop = false;
+
   deviceLayoutCalled = false;
 
   scrollViewRef: React.RefObject<any>;
+
   safeAreaViewRef: React.RefObject<any>;
 
   transformValue: Animated.Value;
+
   opacityValue: Animated.Value;
+
   borderRadius: Animated.Value;
+
   underlayTranslateY: Animated.Value;
+
   underlayScale: Animated.Value;
+
   indicatorTranslateY: Animated.Value;
 
   constructor(props: ActionSheetProps) {
@@ -552,15 +570,16 @@ export class ActionSheet extends Component<Props, State, any> {
    */
 
   snapToOffset = (offset: number) => {
-    let correction = this.state.deviceHeight * 0.15;
-    let extraScroll = this.props.extraScroll || 0;
-    let scrollOffset = this.props.gestureEnabled
+    const correction = this.state.deviceHeight * 0.15;
+    const extraScroll = this.props.extraScroll || 0;
+    const scrollOffset = this.props.gestureEnabled
       ? offset + correction + extraScroll
       : offset + correction + extraScroll;
     this.currentOffsetFromBottom = offset / this.actionSheetHeight;
     this._scrollTo(scrollOffset);
     this.updateActionSheetPosition(scrollOffset);
   };
+
   // Open the ActionSheet
   show = () => {
     this.setModalVisible(true);
@@ -594,7 +613,7 @@ export class ActionSheet extends Component<Props, State, any> {
   };
 
   _hideAnimation() {
-    let {
+    const {
       animated,
       closeAnimationDuration,
       bottomOffset,
@@ -673,10 +692,10 @@ export class ActionSheet extends Component<Props, State, any> {
   };
 
   _showModal = async (event: LayoutChangeEvent) => {
-    let {gestureEnabled, delayActionSheetDraw, delayActionSheetDrawTime} = this.props;
+    const {gestureEnabled, delayActionSheetDraw, delayActionSheetDrawTime} = this.props;
 
     if (!event?.nativeEvent) return;
-    let height = event.nativeEvent.layout.height;
+    const height = event.nativeEvent.layout.height;
     if (this.layoutHasCalled) {
       this.actionSheetHeight = height;
       this._returnToPrevScrollPosition(height);
@@ -684,7 +703,7 @@ export class ActionSheet extends Component<Props, State, any> {
     } else {
       this.layoutHasCalled = true;
       this.actionSheetHeight = height;
-      let scrollOffset = this.getInitialScrollPosition();
+      const scrollOffset = this.getInitialScrollPosition();
       this.isRecoiling = false;
       if (Platform.OS === "ios") {
         await waitAsync(delayActionSheetDrawTime as number);
@@ -713,7 +732,7 @@ export class ActionSheet extends Component<Props, State, any> {
   };
 
   _openAnimation = (scrollOffset: number) => {
-    let {bounciness, bounceOnOpen, animated, openAnimationSpeed} = this.props;
+    const {bounciness, bounceOnOpen, animated, openAnimationSpeed} = this.props;
 
     if (animated) {
       this.transformValue.setValue(scrollOffset);
@@ -736,23 +755,23 @@ export class ActionSheet extends Component<Props, State, any> {
   };
 
   _onScrollBegin = async () => {};
+
   _onScrollBeginDrag = async (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    let verticalOffset = event.nativeEvent.contentOffset.y;
-    this.prevScroll = verticalOffset;
+    this.prevScroll = event.nativeEvent.contentOffset.y;
   };
 
   _applyHeightLimiter() {
     if (this.actionSheetHeight > this.state.deviceHeight) {
       this.actionSheetHeight =
-        (this.actionSheetHeight - (this.actionSheetHeight - this.state.deviceHeight)) * 1;
+        this.actionSheetHeight - (this.actionSheetHeight - this.state.deviceHeight);
     }
   }
 
   _onScrollEnd = async (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    let {springOffset, extraScroll} = this.props;
-    let verticalOffset = event.nativeEvent.contentOffset.y;
+    const {springOffset, extraScroll} = this.props;
+    const verticalOffset = event.nativeEvent.contentOffset.y;
 
-    let correction = this.state.deviceHeight * 0.15;
+    const correction = this.state.deviceHeight * 0.15;
     if (this.isRecoiling) return;
 
     if (this.prevScroll < verticalOffset) {
@@ -764,7 +783,7 @@ export class ActionSheet extends Component<Props, State, any> {
           this.currentOffsetFromBottom < (this.props.initialOffsetFromBottom ?? 0)
             ? (this.props.initialOffsetFromBottom as number)
             : 1;
-        let scrollOffset =
+        const scrollOffset =
           this.actionSheetHeight * this.currentOffsetFromBottom + correction + (extraScroll ?? 0);
 
         this._scrollTo(scrollOffset);
@@ -792,8 +811,8 @@ export class ActionSheet extends Component<Props, State, any> {
 
   updateActionSheetPosition(scrollPosition: number) {
     if (this.actionSheetHeight >= this.state.deviceHeight - 1) {
-      let correction = this.state.deviceHeight * 0.15;
-      let distanceFromTop = this.actionSheetHeight + correction - scrollPosition;
+      const correction = this.state.deviceHeight * 0.15;
+      const distanceFromTop = this.actionSheetHeight + correction - scrollPosition;
       if (distanceFromTop < safeAreaPaddingTop) {
         if (!this.props.drawUnderStatusBar) return;
         this.indicatorTranslateY.setValue(0);
@@ -804,8 +823,8 @@ export class ActionSheet extends Component<Props, State, any> {
   }
 
   _returnToPrevScrollPosition(height: number) {
-    let correction = this.state.deviceHeight * 0.15;
-    let scrollOffset =
+    const correction = this.state.deviceHeight * 0.15;
+    const scrollOffset =
       height * this.currentOffsetFromBottom + correction + (this.props.extraScroll ?? 0);
 
     this.updateActionSheetPosition(scrollOffset);
@@ -818,7 +837,7 @@ export class ActionSheet extends Component<Props, State, any> {
     this.scrollViewRef.current?._listRef._scrollRef.scrollTo({
       x: 0,
       y: this.scrollAnimationEndValue,
-      animated: animated,
+      animated,
     });
   };
 
@@ -852,8 +871,8 @@ export class ActionSheet extends Component<Props, State, any> {
   _onScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     this.offsetY = event.nativeEvent.contentOffset.y;
 
-    let correction = this.state.deviceHeight * 0.15;
-    let distanceFromTop = this.actionSheetHeight + correction - this.offsetY;
+    const correction = this.state.deviceHeight * 0.15;
+    const distanceFromTop = this.actionSheetHeight + correction - this.offsetY;
 
     if (this.actionSheetHeight < this.offsetY) {
       if (!this.isReachedTop) {
@@ -913,7 +932,7 @@ export class ActionSheet extends Component<Props, State, any> {
     v = parseInt(v);
 
     if (v >= 63 || Platform.OS === "ios") {
-      let keyboardHeight = event.endCoordinates.height;
+      const keyboardHeight = event.endCoordinates.height;
       const {height: windowHeight} = Dimensions.get("window");
 
       const currentlyFocusedField = TextInput.State.currentlyFocusedField
@@ -931,10 +950,10 @@ export class ActionSheet extends Component<Props, State, any> {
         if (gap >= 0) {
           return;
         }
-        let toValue = this.props.keyboardMode === "position" ? -(keyboardHeight + 15) : gap - 10;
+        const toValue = this.props.keyboardMode === "position" ? -(keyboardHeight + 15) : gap - 10;
 
         Animated.timing(this.transformValue, {
-          toValue: toValue,
+          toValue,
           duration: 250,
           useNativeDriver: true,
         }).start();
@@ -957,7 +976,7 @@ export class ActionSheet extends Component<Props, State, any> {
   handleChildScrollEnd = async () => {
     if (this.offsetY > this.prevScroll) return;
     if (this.prevScroll - (this.props.springOffset ?? 0) > this.offsetY) {
-      let scrollOffset = this.getInitialScrollPosition();
+      const scrollOffset = this.getInitialScrollPosition();
       if (this.offsetY > scrollOffset - 100) {
         this.isRecoiling = true;
         this._scrollTo(scrollOffset);
@@ -1003,7 +1022,7 @@ export class ActionSheet extends Component<Props, State, any> {
   }
 
   _onDeviceLayout = async (_event: any) => {
-    let event = {..._event};
+    const event = {..._event};
 
     if (this.timeout) {
       clearTimeout(this.timeout);
@@ -1011,7 +1030,8 @@ export class ActionSheet extends Component<Props, State, any> {
 
     this.timeout = setTimeout(async () => {
       let safeMarginFromTop = 0;
-      let measuredPadding = Platform.OS === "ios" ? await this.measure() : StatusBar.currentHeight;
+      const measuredPadding =
+        Platform.OS === "ios" ? await this.measure() : StatusBar.currentHeight;
 
       if (!this.props.drawUnderStatusBar) {
         if (Platform.OS === "android" && !this.props.statusBarTranslucent) return;
@@ -1020,8 +1040,8 @@ export class ActionSheet extends Component<Props, State, any> {
       } else {
         this.updateActionSheetPosition(this.offsetY);
       }
-      let height = event.nativeEvent.layout.height - safeMarginFromTop;
-      let width = Dimensions.get("window").width;
+      const height = event.nativeEvent.layout.height - safeMarginFromTop;
+      const width = Dimensions.get("window").width;
       if (
         height?.toFixed(0) === calculatedDeviceHeight?.toFixed(0) &&
         width?.toFixed(0) === this.state.deviceWidth?.toFixed(0) &&
@@ -1041,8 +1061,8 @@ export class ActionSheet extends Component<Props, State, any> {
 
   getInitialScrollPosition() {
     this._applyHeightLimiter();
-    let correction = this.state.deviceHeight * 0.15;
-    let scrollPosition = this.props.gestureEnabled
+    const correction = this.state.deviceHeight * 0.15;
+    const scrollPosition = this.props.gestureEnabled
       ? this.actionSheetHeight * (this.props.initialOffsetFromBottom ?? 0) +
         correction +
         (this.props.extraScroll ?? 0)
@@ -1056,8 +1076,8 @@ export class ActionSheet extends Component<Props, State, any> {
   _keyExtractor = (item: any) => item;
 
   render() {
-    let {scrollable, modalVisible, keyboard} = this.state;
-    let {
+    const {scrollable, modalVisible, keyboard} = this.state;
+    const {
       onOpen,
       overlayColor,
       gestureEnabled,
@@ -1074,17 +1094,16 @@ export class ActionSheet extends Component<Props, State, any> {
 
     return (
       <Modal
-        visible={modalVisible}
         animationType="none"
+        statusBarTranslucent={statusBarTranslucent}
         // testID={testID}
         supportedOrientations={SUPPORTED_ORIENTATIONS}
-        onShow={onOpen}
+        transparent
+        visible={modalVisible}
         onRequestClose={this._onRequestClose}
-        transparent={true}
-        statusBarTranslucent={statusBarTranslucent}
+        onShow={onOpen}
       >
         <Animated.View
-          onLayout={this._onDeviceLayout}
           style={[
             styles.parentContainer,
             {
@@ -1092,34 +1111,20 @@ export class ActionSheet extends Component<Props, State, any> {
               width: this.state.deviceWidth,
             },
           ]}
+          onLayout={this._onDeviceLayout}
         >
           <SafeAreaView ref={this.safeAreaViewRef} style={styles.safearea}>
             <View />
           </SafeAreaView>
           <FlatList
-            bounces={false}
-            keyboardShouldPersistTaps={keyboardShouldPersistTaps}
             ref={this.scrollViewRef}
-            scrollEventThrottle={5}
-            showsVerticalScrollIndicator={false}
-            onMomentumScrollBegin={this._onScrollBegin}
-            onMomentumScrollEnd={this._onScrollEnd}
-            scrollEnabled={scrollable && !keyboard}
-            onScrollBeginDrag={this._onScrollBeginDrag}
-            onTouchEnd={this._onTouchEnd}
-            onScroll={this._onScroll}
-            scrollsToTop={false}
-            style={[
-              styles.scrollView,
-              {
-                width: this.state.deviceWidth,
-              },
-            ]}
+            bounces={false}
             contentContainerStyle={{
               width: this.state.deviceWidth,
             }}
             data={dummyData}
             keyExtractor={this._keyExtractor}
+            keyboardShouldPersistTaps={keyboardShouldPersistTaps}
             renderItem={() => (
               <View
                 style={{
@@ -1127,9 +1132,6 @@ export class ActionSheet extends Component<Props, State, any> {
                 }}
               >
                 <Animated.View
-                  onTouchStart={this._onTouchBackdrop}
-                  onTouchMove={this._onTouchBackdrop}
-                  onTouchEnd={this._onTouchBackdrop}
                   style={{
                     height: "100%",
                     width: "100%",
@@ -1138,29 +1140,31 @@ export class ActionSheet extends Component<Props, State, any> {
                     backgroundColor: overlayColor,
                     opacity: defaultOverlayOpacity,
                   }}
+                  onTouchEnd={this._onTouchBackdrop}
+                  onTouchMove={this._onTouchBackdrop}
+                  onTouchStart={this._onTouchBackdrop}
                 />
                 <View
-                  onTouchMove={this._onTouchMove}
-                  onTouchStart={this._onTouchStart}
-                  onTouchEnd={this._onTouchEnd}
                   style={{
                     height: this.state.deviceHeight * 1.15,
                     width: "100%",
                     zIndex: 10,
                   }}
+                  onTouchEnd={this._onTouchEnd}
+                  onTouchMove={this._onTouchMove}
+                  onTouchStart={this._onTouchStart}
                 >
                   <TouchableOpacity
-                    onPress={this._onTouchBackdrop}
-                    onLongPress={this._onTouchBackdrop}
                     style={{
                       height: this.state.deviceHeight * 1.15,
                       width: "100%",
                     }}
+                    onLongPress={this._onTouchBackdrop}
+                    onPress={this._onTouchBackdrop}
                   />
                 </View>
 
                 <Animated.View
-                  onLayout={this._showModal}
                   style={[
                     styles.container,
                     {
@@ -1179,6 +1183,7 @@ export class ActionSheet extends Component<Props, State, any> {
                       maxHeight: this.state.deviceHeight,
                     },
                   ]}
+                  onLayout={this._showModal}
                 >
                   <Animated.View
                     style={{
@@ -1206,6 +1211,21 @@ export class ActionSheet extends Component<Props, State, any> {
                 </Animated.View>
               </View>
             )}
+            scrollEnabled={scrollable && !keyboard}
+            scrollEventThrottle={5}
+            scrollsToTop={false}
+            showsVerticalScrollIndicator={false}
+            style={[
+              styles.scrollView,
+              {
+                width: this.state.deviceWidth,
+              },
+            ]}
+            onMomentumScrollBegin={this._onScrollBegin}
+            onMomentumScrollEnd={this._onScrollEnd}
+            onScroll={this._onScroll}
+            onScrollBeginDrag={this._onScrollBeginDrag}
+            onTouchEnd={this._onTouchEnd}
           />
         </Animated.View>
       </Modal>

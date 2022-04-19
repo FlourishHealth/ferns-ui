@@ -1,7 +1,8 @@
 import React from "react";
+
 import {Box} from "./Box";
-import {Text} from "./Text";
 import {WithLabelProps} from "./Common";
+import {Text} from "./Text";
 
 export class WithLabel extends React.Component<WithLabelProps, {}> {
   render() {
@@ -23,7 +24,7 @@ export class WithLabel extends React.Component<WithLabelProps, {}> {
         >
           {this.props.labelPlacement !== "after" && (
             <Box paddingY={1}>
-              <Text size={this.props.labelSize} color={labelColor || "darkGray"} weight="bold">
+              <Text color={labelColor || "darkGray"} size={this.props.labelSize} weight="bold">
                 {label}
               </Text>
             </Box>
@@ -31,7 +32,7 @@ export class WithLabel extends React.Component<WithLabelProps, {}> {
           {children}
           {this.props.labelPlacement === "after" && (
             <Box paddingY={1}>
-              <Text size={this.props.labelSize} color={labelColor || "darkGray"}>
+              <Text color={labelColor || "darkGray"} size={this.props.labelSize}>
                 {label}
               </Text>
             </Box>

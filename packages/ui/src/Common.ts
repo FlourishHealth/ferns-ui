@@ -1,4 +1,5 @@
 import {SyntheticEvent} from "react";
+
 import {SelectListOptions} from "./SelectList";
 
 export interface BaseProfile {

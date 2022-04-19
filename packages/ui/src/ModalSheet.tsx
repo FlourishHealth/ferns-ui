@@ -44,12 +44,12 @@ export const SimpleContent = forwardRef((props: Props, ref) => {
       <Modalize
         // HeaderComponent={renderHeader}
         ref={combinedRef}
+        adjustToContentHeight
+        panGestureAnimatedValue={animated}
         scrollViewProps={{
           showsVerticalScrollIndicator: false,
           stickyHeaderIndices: [0],
         }}
-        panGestureAnimatedValue={animated}
-        adjustToContentHeight={true}
       >
         {props.children}
       </Modalize>
