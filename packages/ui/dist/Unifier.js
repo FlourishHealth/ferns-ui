@@ -100,7 +100,6 @@ class UnifierClass {
                 Dimensions.addEventListener("change", () => {
                     const screen = Dimensions.get("screen");
                     const isPortrait = screen.width < screen.height;
-                    console.log("Orientation change, isPortrait:", isPortrait);
                     callback(isPortrait ? "portrait" : "landscape");
                 });
             },
@@ -140,7 +139,7 @@ class UnifierClass {
                 try {
                     const jsonValue = await AsyncStorage.getItem(key);
                     if (jsonValue) {
-                        let value = JSON.parse(jsonValue);
+                        const value = JSON.parse(jsonValue);
                         if (value === null || value === undefined) {
                             return defaultValue;
                         }
@@ -173,7 +172,7 @@ class UnifierClass {
         };
         this.tracking = {
             log: (message) => {
-                console.log(message);
+                console.info(message);
             },
         };
         this.initIcons = () => {

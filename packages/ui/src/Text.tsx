@@ -1,6 +1,7 @@
 import React from "react";
 import {Text as NativeText} from "react-native";
 import Hyperlink from "react-native-hyperlink";
+
 import {TextProps} from "./Common";
 import {Unifier} from "./Unifier";
 
@@ -84,7 +85,7 @@ export class Text extends React.Component<TextProps, {}> {
         // <Hyperlink linkDefault={true} linkStyle={{textDecorationLine: "underline"}}>
         //   {inner}
         // </Hyperlink>
-        <Hyperlink linkDefault={true}>{inner}</Hyperlink>
+        <Hyperlink linkDefault>{inner}</Hyperlink>
       );
     }
   }

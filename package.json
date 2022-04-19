@@ -4,13 +4,15 @@
   "version": "0.1.0",
   "description": "Fullstack Express React Native framework for building iOS, Android, and Web apps with an Express API",
   "main": "index.js",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "workspaces": {
     "packages": [
       "./packages/*"
     ],
     "nohoist": ["**/react-native", "**/react-native/**", "**/expo", "**/expo/**","**/expo-*", "**/expo-*/**", "**/@storybook", "**/@storybook/**"]
-
+  },
+  "scripts": {
+    "demo-ios": ""
   },
   "devDependencies": {
   },

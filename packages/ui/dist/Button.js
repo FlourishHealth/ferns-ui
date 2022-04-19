@@ -3,10 +3,10 @@ import React from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { Box } from "./Box";
 import { iconSizeToNumber } from "./Common";
+import { Icon } from "./Icon";
 // import {Icon} from "./Icon";
 import { Text } from "./Text";
 import { Unifier } from "./Unifier";
-import { Icon } from "./Icon";
 const buttonTextColor = {
     blue: "white",
     lightGray: "darkGray",
@@ -63,7 +63,7 @@ export class Button extends React.Component {
         if (color === "gray") {
             color = "lightGray";
         }
-        return (React.createElement(TouchableOpacity, { style: {
+        return (React.createElement(TouchableOpacity, { disabled: this.props.disabled || this.props.loading, style: {
                 alignSelf: this.props.inline === true ? undefined : "stretch",
                 height: this.HEIGHTS[this.props.size || "md"],
                 backgroundColor: this.getBackgroundColor(color),
@@ -78,7 +78,7 @@ export class Button extends React.Component {
                 opacity: this.props.disabled ? 0.4 : 1,
                 flexDirection: "row",
                 paddingHorizontal: 4 * 2,
-            }, disabled: this.props.disabled || this.props.loading, onPress: debounce(async () => {
+            }, onPress: debounce(async () => {
                 Unifier.utils.haptic();
                 this.setState({ loading: true });
                 try {
@@ -93,9 +93,9 @@ export class Button extends React.Component {
                 this.setState({ loading: false });
             }, 500, { leading: true }) },
             this.props.icon !== undefined && (React.createElement(Box, { paddingX: 2 },
-                React.createElement(Icon, { prefix: this.props.iconPrefix || "far", size: iconSizeToNumber(this.props.size), name: this.props.icon, color: this.getTextColor(this.props.color) }))),
+                React.createElement(Icon, { color: this.getTextColor(this.props.color), name: this.props.icon, prefix: this.props.iconPrefix || "far", size: iconSizeToNumber(this.props.size) }))),
             Boolean(this.props.children) && this.props.children,
-            Boolean(this.props.text) && (React.createElement(Text, { weight: "bold", color: this.getTextColor(color), size: this.props.size, skipLinking: true, inline: this.props.inline }, this.props.text)),
+            Boolean(this.props.text) && (React.createElement(Text, { color: this.getTextColor(color), inline: this.props.inline, size: this.props.size, skipLinking: true, weight: "bold" }, this.props.text)),
             (this.state.loading || this.props.loading) && (React.createElement(Box, { marginLeft: 2 },
                 React.createElement(ActivityIndicator, { color: this.getTextColor(color), size: "small" })))));
     }

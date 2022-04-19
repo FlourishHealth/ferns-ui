@@ -24,7 +24,7 @@ export class BlurBox extends React.Component {
     }
     render() {
         const _a = this.props, { marginBottom, marginTop, margin } = _a, props = __rest(_a, ["marginBottom", "marginTop", "margin"]);
-        return (React.createElement(Box, { marginBottom: marginBottom || 4, marginTop: marginTop || 0, margin: margin || 0, width: "100%" }, this.renderBlur(React.createElement(Box, Object.assign({ paddingX: 4 }, props), this.props.children))));
+        return (React.createElement(Box, { margin: margin || 0, marginBottom: marginBottom || 4, marginTop: marginTop || 0, width: "100%" }, this.renderBlur(React.createElement(Box, Object.assign({ paddingX: 4 }, props), this.props.children))));
     }
 }
 //# sourceMappingURL=BlurBox.native.js.map

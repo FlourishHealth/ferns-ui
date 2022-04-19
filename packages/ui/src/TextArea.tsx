@@ -1,4 +1,5 @@
 import React from "react";
+
 import {TextAreaProps} from "./Common";
 import {TextField} from "./TextField";
 
@@ -9,6 +10,6 @@ export class TextArea extends React.Component<TextAreaProps, {}> {
   }
 
   render() {
-    return <TextField {...this.props} multiline={true} height={100} rows={4} />;
+    return <TextField {...this.props} height={100} multiline rows={4} />;
   }
 }

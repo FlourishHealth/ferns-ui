@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
+
 import {Box} from "./Box";
+import {AllColors, IconPrefix, IconSize} from "./Common";
 import {Icon} from "./Icon";
-import {IconSize, IconPrefix, AllColors} from "./Common";
 
 /* 
 Originally based on https://github.com/pinterest/gestalt
@@ -201,8 +202,8 @@ export default function Pog(props: Props) {
           color={color}
           // dangerouslySetSvgPath={dangerouslySetSvgPath}
           name={icon}
-          size={iconSize}
           prefix={iconPrefix}
+          size={iconSize}
         />
       </Box>
     </div>

@@ -1,12 +1,13 @@
 import React from "react";
+
 import {Box} from "./Box";
-import {Text} from "./Text";
-import {Switch} from "./Switch";
-import {TextField} from "./TextField";
-import {TextArea} from "./TextArea";
 import {Button} from "./Button";
-import {SelectList} from "./SelectList";
 import {IconButton} from "./IconButton";
+import {SelectList} from "./SelectList";
+import {Switch} from "./Switch";
+import {Text} from "./Text";
+import {TextArea} from "./TextArea";
+import {TextField} from "./TextField";
 
 function objToJoinedString(obj: any) {
   return Object.keys(obj || {})
@@ -40,16 +41,16 @@ export class FormLine extends React.Component<FormLineProps, FormLineState> {
         <Box marginRight={2}>
           <Text weight="bold">{this.props.name}</Text>
         </Box>
-        <Box display="flex" direction="column">
+        <Box direction="column" display="flex">
           {Object.keys(this.props.value).map((k) => (
             <>
               <Text weight="bold">{k}</Text>
               <Switch
-                switched={this.state.value[k]}
-                onChange={() =>
-                  this.setState({value: {...this.state.value, [k]: !this.state.value[k]}})
-                }
                 id={k}
+                switched={this.state.value[k]}
+                onChange={() => {
+                  this.setState({value: {...this.state.value, [k]: !this.state.value[k]}});
+                }}
               />
             </>
           ))}
@@ -65,9 +66,9 @@ export class FormLine extends React.Component<FormLineProps, FormLineState> {
           <Text weight="bold">{this.props.name}</Text>
         </Box>
         <Switch
+          id={this.props.name}
           switched={this.state.value}
           onChange={() => this.setState({value: !this.state.value})}
-          id={this.props.name}
         />
       </>
     );
@@ -80,9 +81,9 @@ export class FormLine extends React.Component<FormLineProps, FormLineState> {
           <Text weight="bold">{this.props.name}</Text>
         </Box>
         <TextField
+          id={this.props.name}
           value={this.state.value}
           onChange={(result) => this.setState({value: result.value})}
-          id={this.props.name}
         />
       </>
     );
@@ -95,9 +96,9 @@ export class FormLine extends React.Component<FormLineProps, FormLineState> {
           <Text weight="bold">{this.props.name}</Text>
         </Box>
         <TextArea
+          id={this.props.name}
           value={this.state.value}
           onChange={(result) => this.setState({value: result.value})}
-          id={this.props.name}
         />
         <Button size="sm" text="Save" onClick={() => this.props.onSave(this.state.value)} />
       </>
@@ -132,13 +133,13 @@ export class FormLine extends React.Component<FormLineProps, FormLineState> {
         text = objToJoinedString(text);
       }
       return (
-        <Box display="flex" direction="row">
+        <Box direction="row" display="flex">
           <IconButton
+            accessibilityLabel="edit"
+            icon="edit"
             iconColor="darkGray"
             prefix="far"
             size="xs"
-            accessibilityLabel="edit"
-            icon="edit"
             onClick={() => this.setState({editing: true, value: this.props.value})}
           />
           <Box marginRight={2}>
@@ -149,13 +150,13 @@ export class FormLine extends React.Component<FormLineProps, FormLineState> {
       );
     }
     return (
-      <Box display="flex" direction="row">
+      <Box direction="row" display="flex">
         <IconButton
+          accessibilityLabel="edit"
+          icon="cancel"
           iconColor="darkGray"
           prefix="far"
           size="xs"
-          accessibilityLabel="edit"
-          icon="cancel"
           onClick={() => this.setState({editing: false})}
         />
         {this.props.kind === "boolean" && this.renderBooleanField()}

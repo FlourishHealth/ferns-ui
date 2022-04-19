@@ -2,9 +2,10 @@
   "name": "@ferns/ui",
   "version": "0.1.2",
   "main": "dist/index.js",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "scripts": {
     "local": "tsc-watch --onSuccess \"cp -a dist/* ../totum/node_modules/react-unifier/dist\"",
+    "lint": "eslint --fix \"src/**/*.ts*\"",
     "build": "tsc",
     "dev": "tsc -w"
   },
@@ -53,27 +54,10 @@
       "lodash"
     ],
     "extends": [
-      "plugin:react/recommended",
-      "plugin:@typescript-eslint/recommended",
-      "prettier/@typescript-eslint",
-      "plugin:prettier/recommended"
+      "ferns"
     ],
     "rules": {
-      "prefer-const": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/explicit-member-accessibility": "off",
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/interface-name-prefix": "off",
-      "@typescript-eslint/no-empty-function": "off",
-      "@typescript-eslint/no-empty-interface": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-var-require": "off",
-      "lodash/import-scope": [
-        2,
-        "method"
-      ],
-      "prettier/prettier": "error",
-      "react-native/no-inline-styles": "off"
+      "react/function-component-definition": "off"
     }
   },
   "jest": {
@@ -134,20 +118,31 @@
     "tsc-watch": "^5.0.2"
   },
   "devDependencies": {
-    "@types/react-native": "^0.67.4",
-    "typescript": "^4.6.3",
-    "expo-font": "^10.0.5",
+    "eslint-config-ferns": "*",
     "@expo/vector-icons": "^12.0.0",
-    "@react-native-community/async-storage": "^1.12.0",
+    "@react-native-async-storage/async-storage": "^1.17.3",
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/datetimepicker": "^4.0.0",
     "@react-native-picker/picker": "^2.2.1",
     "@sentry/browser": "^5.17.0",
     "@sentry/react": "^5.20.1",
     "@sentry/react-native": "^1.7.1",
+    "@types/react-native": "^0.67.4",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^7.25.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-lodash": "^7.1.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-native": "^3.7.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "expo-font": "^10.0.5",
     "lodash": "^4.17.21",
     "mixpanel-browser": "^2.38.0",
     "moment-timezone": "^0.5.34",
+    "prettier": "^2.5.1",
     "react": "17.0.2",
     "react-app-polyfill": "^1.0.6",
     "react-date-picker": "7.10.0",
@@ -164,10 +159,10 @@
     "react-native-portalize": "^1.0.7",
     "react-native-svg": "^12.1.0",
     "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "typescript": "^4.1.5"
   },
   "peerDependencies": {
-    "expo-font": "^10.0.5",
     "@expo/vector-icons": "^12.0.0",
     "@react-native-community/async-storage": "^1.12.0",
     "@react-native-community/blur": "^3.6.0",
@@ -176,6 +171,7 @@
     "@sentry/browser": "^5.17.0",
     "@sentry/react": "^5.20.1",
     "@sentry/react-native": "^1.7.1",
+    "expo-font": "^10.0.5",
     "lodash": "^4.17.21",
     "mixpanel-browser": "^2.38.0",
     "moment-timezone": "^0.5.34",

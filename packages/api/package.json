@@ -21,11 +21,11 @@
     "express"
   ],
   "author": "Josh Gachnang",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/joshgachnang/mongoose-rest-framework/issues"
+    "url": "https://github.com/FlourishHealth/ferns/issues"
   },
-  "homepage": "https://github.com/joshgachnang/mongoose-rest-framework#readme",
+  "homepage": "https://github.com/FlourishHealth/ferns#readme",
   "dependencies": {
     "@sentry/node": "^6.15.0",
     "axios": "^0.24.0",

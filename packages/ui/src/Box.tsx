@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+
 import {UnifiedTheme} from ".";
-import {AlignContent, AlignItems, AlignSelf, JustifyContent, SPACING} from "./Common";
-import {BoxProps} from "./Common";
+import {AlignContent, AlignItems, AlignSelf, BoxProps, JustifyContent, SPACING} from "./Common";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {Unifier} from "./Unifier";
 
@@ -244,17 +244,17 @@ export class Box extends React.Component<BoxProps, {}> {
 
       box = (
         <ScrollView
-          horizontal={this.props.overflow === "scrollX"}
-          style={scrollStyle}
-          contentContainerStyle={{justifyContent, alignContent, alignItems}}
-          keyboardShouldPersistTaps="handled"
           ref={this.props.scrollRef || this.scrollRef}
+          contentContainerStyle={{justifyContent, alignContent, alignItems}}
+          horizontal={this.props.overflow === "scrollX"}
+          keyboardShouldPersistTaps="handled"
+          scrollEventThrottle={50}
+          style={scrollStyle}
           onScroll={(event) => {
             if (this.props.onScroll && event) {
               this.props.onScroll(event.nativeEvent.contentOffset.y);
             }
           }}
-          scrollEventThrottle={50}
         >
           {box}
         </ScrollView>
@@ -265,8 +265,8 @@ export class Box extends React.Component<BoxProps, {}> {
       box = (
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
-          style={{flex: 1, display: "flex"}}
           keyboardVerticalOffset={this.props.keyboardOffset}
+          style={{flex: 1, display: "flex"}}
         >
           <SafeAreaView style={{flex: 1, display: "flex"}}>{box}</SafeAreaView>
         </KeyboardAvoidingView>

@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/react-native";
-import {ErrorBoundaryProps} from "./Common";
 import React from "react";
+
+import {ErrorBoundaryProps} from "./Common";
 import {ErrorPage} from "./ErrorPage";
 
 interface State {

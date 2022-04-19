@@ -16,6 +16,7 @@ interface PageProps {
     footer?: any;
     rightButton?: string;
     rightButtonOnClick?: () => void;
+    children?: any;
 }
 export declare class Page extends React.Component<PageProps, {}> {
     actionSheetRef: React.RefObject<any>;

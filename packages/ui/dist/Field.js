@@ -76,21 +76,21 @@ export class Field extends React.Component {
                 console.error("Field with type=select require options");
                 return null;
             }
-            return (React.createElement(SelectList, { id: this.props.name, options: this.props.options, onChange: this.handleChange, value: this.state.value, disabled: this.props.disabled }));
+            return (React.createElement(SelectList, { disabled: this.props.disabled, id: this.props.name, options: this.props.options, value: this.state.value, onChange: this.handleChange }));
         }
         else if (this.props.type === "textarea") {
-            return (React.createElement(TextArea, { id: this.props.name, placeholder: this.props.placeholder, onChange: ({ value }) => this.handleChange(value), value: String(this.state.value), disabled: this.props.disabled, rows: this.props.rows }));
+            return (React.createElement(TextArea, { disabled: this.props.disabled, id: this.props.name, placeholder: this.props.placeholder, rows: this.props.rows, value: String(this.state.value), onChange: ({ value }) => this.handleChange(value) }));
         }
         else if (this.props.type === "boolean") {
-            return (React.createElement(Switch, { id: this.props.name, switched: Boolean(this.state.value), disabled: this.props.disabled, name: this.props.name, onChange: (result) => this.handleSwitchChange(result) }));
+            return (React.createElement(Switch, { disabled: this.props.disabled, id: this.props.name, name: this.props.name, switched: Boolean(this.state.value), onChange: (result) => this.handleSwitchChange(result) }));
         }
         else if (this.props.type === "date") {
-            let value = this.state.value.seconds
+            const value = this.state.value.seconds
                 ? moment(this.state.value.seconds * 1000)
                 : moment(this.state.value);
-            return (React.createElement(TextField, { id: this.props.name, placeholder: this.props.placeholder, onChange: (result) => this.handleChange(result.value), value: value.format("MM/DD/YYYY HH:mmA"), 
+            return (React.createElement(TextField, { disabled: true, id: this.props.name, placeholder: this.props.placeholder, type: "text", 
                 // TODO: allow editing with a date picker
-                disabled: true, type: "text" }));
+                value: value.format("MM/DD/YYYY HH:mmA"), onChange: (result) => this.handleChange(result.value) }));
         }
         else {
             let type = "text";
@@ -109,19 +109,19 @@ export class Field extends React.Component {
             else if (type === "email") {
                 autoComplete = "username";
             }
-            let value = String(this.state.value);
+            const value = String(this.state.value);
             // if (this.props.type === "percent") {
             //   value = `${Number(this.state.value).toFixed(0)}%`;
             // } else if (this.props.type === "currency") {
             //   value = `$${Number(value).toFixed(2)}`;
             // }
             // console.log("VAL", value);
-            return (React.createElement(TextField, { id: this.props.name, placeholder: this.props.placeholder, autoComplete: autoComplete, onChange: (result) => this.handleChange(result.value), value: value, disabled: this.props.disabled, type: type }));
+            return (React.createElement(TextField, { autoComplete: autoComplete, disabled: this.props.disabled, id: this.props.name, placeholder: this.props.placeholder, type: type, value: value, onChange: (result) => this.handleChange(result.value) }));
         }
     }
     render() {
-        let children = this.renderField();
-        const { errorMessage, errorMessageColor, helperText, helperTextColor, label, labelColor, } = this.props;
+        const children = this.renderField();
+        const { errorMessage, errorMessageColor, helperText, helperTextColor, label, labelColor } = this.props;
         return (React.createElement(Box, { marginBottom: 5 },
             React.createElement(FieldWithLabels, Object.assign({}, {
                 errorMessage,

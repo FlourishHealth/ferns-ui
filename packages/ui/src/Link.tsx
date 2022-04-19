@@ -1,6 +1,7 @@
 import React from "react";
-import {Text} from "./Text";
+
 import {LinkProps} from "./Common";
+import {Text} from "./Text";
 
 interface LinkState {}
 

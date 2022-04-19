@@ -1,0 +1,21 @@
+name: Create Issues from TODOs
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    # Run on latest version of ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # "ref" specifies the branch to check out.
+          # "github.event.release.target_commitish" is a global variable and specifies the branch the release targeted
+          ref: ${{ github.event.release.target_commitish }}
+      - name: "TODO to Issue"
+        uses: "alstr/todo-to-issue-action@v4.5"
+        id: "todo"

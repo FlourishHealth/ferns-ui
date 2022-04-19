@@ -11,16 +11,16 @@ export class TapToEdit extends React.Component {
     }
     render() {
         if (!this.state.showEdit) {
-            return (React.createElement(Box, { display: "flex", direction: "row", onClick: () => this.setState({ showEdit: true }) },
+            return (React.createElement(Box, { direction: "row", display: "flex", onClick: () => this.setState({ showEdit: true }) },
                 React.createElement(Box, { marginRight: 2 },
-                    React.createElement(Icon, { name: "edit", size: 20, color: "primaryDark", prefix: "far" })),
+                    React.createElement(Icon, { color: "primaryDark", name: "edit", prefix: "far", size: 20 })),
                 React.createElement(Text, null, this.props.children)));
         }
         else {
             return (React.createElement(Box, null,
                 React.createElement(TextField, Object.assign({}, this.props)),
-                React.createElement(Box, { width: 100, paddingY: 1 },
-                    React.createElement(Button, { inline: true, color: "primary", text: "Save", onClick: () => {
+                React.createElement(Box, { paddingY: 1, width: 100 },
+                    React.createElement(Button, { color: "primary", inline: true, text: "Save", onClick: () => {
                             this.setState({ showEdit: false });
                             if (this.props.onSubmitEditing) {
                                 this.props.onSubmitEditing();

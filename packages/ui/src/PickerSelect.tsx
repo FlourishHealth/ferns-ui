@@ -189,6 +189,7 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     Icon: null,
     InputAccessoryView: null,
   };
+
   inputRef: any;
 
   static handlePlaceholder({placeholder}: any) {
@@ -245,7 +246,7 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     this.renderInputAccessoryView = this.renderInputAccessoryView.bind(this);
   }
 
-  componentDidUpdate = (prevProps: any, prevState: any) => {
+  componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>) {
     // update items if items or placeholder prop changes
     const items = RNPickerSelect.handlePlaceholder({
       placeholder: this.props.placeholder,
@@ -269,7 +270,7 @@ export default class RNPickerSelect extends PureComponent<any, any> {
         ...(selectedItemChanged ? {selectedItem} : {}),
       });
     }
-  };
+  }
 
   onUpArrow() {
     const {onUpArrow} = this.props;
@@ -369,10 +370,10 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     return items.map((item: any) => {
       return (
         <Picker.Item
-          label={item.label}
-          value={item.value}
           key={item.key || item.label}
           color={item.color}
+          label={item.label}
+          value={item.value}
         />
       );
     });
@@ -431,6 +432,7 @@ export default class RNPickerSelect extends PureComponent<any, any> {
           </TouchableOpacity>
         </View>
         <TouchableOpacity
+          hitSlop={{top: 4, right: 4, bottom: 4, left: 4}}
           testID="done_button"
           onPress={() => {
             this.togglePicker(true, onDonePress);
@@ -441,18 +443,17 @@ export default class RNPickerSelect extends PureComponent<any, any> {
           onPressOut={() => {
             this.setState({doneDepressed: false});
           }}
-          hitSlop={{top: 4, right: 4, bottom: 4, left: 4}}
           {...touchableDoneProps}
         >
           <View testID="needed_for_touchable">
             <Text
-              testID="done_text"
               allowFontScaling={false}
               style={[
                 defaultStyles.done,
                 style.done,
                 doneDepressed ? [defaultStyles.doneDepressed, style.doneDepressed] : {},
               ]}
+              testID="done_text"
             >
               {doneText}
             </Text>
@@ -470,7 +471,7 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     }
 
     return (
-      <View testID="icon_container" style={[defaultStyles.iconContainer, style.iconContainer]}>
+      <View style={[defaultStyles.iconContainer, style.iconContainer]} testID="icon_container">
         <Icon testID="icon" />
       </View>
     );
@@ -494,14 +495,14 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     return (
       <View pointerEvents="box-only" style={containerStyle}>
         <TextInput
-          testID="text_input"
+          ref={this.setInputRef}
+          editable={false}
           style={[
             Platform.OS === "ios" ? style.inputIOS : style.inputAndroid,
             this.getPlaceholderStyle(),
           ]}
+          testID="text_input"
           value={selectedItem.inputLabel ? selectedItem.inputLabel : selectedItem.label}
-          ref={this.setInputRef}
-          editable={false}
           {...textInputProps}
         />
         {this.renderIcon()}
@@ -516,21 +517,21 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     return (
       <View style={[defaultStyles.viewContainer, style.viewContainer]}>
         <TouchableOpacity
+          activeOpacity={1}
           testID="ios_touchable_wrapper"
           onPress={() => {
             this.togglePicker(true);
           }}
-          activeOpacity={1}
           {...touchableWrapperProps}
         >
           {this.renderTextInputOrChildren()}
         </TouchableOpacity>
         <Modal
-          testID="ios_modal"
-          visible={showPicker}
-          transparent
           animationType={animationType}
           supportedOrientations={["portrait", "landscape"]}
+          testID="ios_modal"
+          transparent
+          visible={showPicker}
           onOrientationChange={this.onOrientationChange}
           {...modalProps}
         >
@@ -550,9 +551,9 @@ export default class RNPickerSelect extends PureComponent<any, any> {
             ]}
           >
             <Picker
+              selectedValue={selectedItem.value}
               testID="ios_picker"
               onValueChange={this.onValueChange}
-              selectedValue={selectedItem.value}
               {...pickerProps}
             >
               {this.renderPickerItems()}
@@ -578,23 +579,23 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     const Component: any = fixAndroidTouchableBug ? View : TouchableOpacity;
     return (
       <Component
+        activeOpacity={1}
         testID="android_touchable_wrapper"
         onPress={onOpen}
-        activeOpacity={1}
         {...touchableWrapperProps}
       >
         <View style={style.headlessAndroidContainer}>
           {this.renderTextInputOrChildren()}
           <Picker
+            enabled={!disabled}
+            selectedValue={selectedItem.value}
             style={[
               Icon ? {backgroundColor: "transparent"} : {}, // to hide native icon
               defaultStyles.headlessAndroidPicker,
               style.headlessAndroidPicker,
             ]}
             testID="android_picker_headless"
-            enabled={!disabled}
             onValueChange={this.onValueChange}
-            selectedValue={selectedItem.value}
             {...pickerProps}
           >
             {this.renderPickerItems()}
@@ -611,15 +612,15 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     return (
       <View style={[defaultStyles.viewContainer, style.viewContainer]}>
         <Picker
+          enabled={!disabled}
+          selectedValue={selectedItem.value}
           style={[
             Icon ? {backgroundColor: "transparent"} : {}, // to hide native icon
             style.inputAndroid,
             this.getPlaceholderStyle(),
           ]}
           testID="android_picker"
-          enabled={!disabled}
           onValueChange={this.onValueChange}
-          selectedValue={selectedItem.value}
           {...pickerProps}
         >
           {this.renderPickerItems()}
@@ -636,11 +637,11 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     return (
       <View style={[defaultStyles.viewContainer, style.viewContainer]}>
         <Picker
-          style={[style.inputWeb]}
-          testID="web_picker"
           enabled={!disabled}
-          onValueChange={this.onValueChange}
           selectedValue={selectedItem.value}
+          style={style.inputWeb}
+          testID="web_picker"
+          onValueChange={this.onValueChange}
           {...pickerProps}
         >
           {this.renderPickerItems()}

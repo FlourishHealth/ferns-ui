@@ -1,13 +1,14 @@
 import debounce from "lodash/debounce";
 import React from "react";
 import {ActivityIndicator, TouchableOpacity} from "react-native";
+
+import {UnifiedTheme} from ".";
 import {Box} from "./Box";
 import {ButtonProps, Color, iconSizeToNumber} from "./Common";
+import {Icon} from "./Icon";
 // import {Icon} from "./Icon";
 import {Text} from "./Text";
 import {Unifier} from "./Unifier";
-import {Icon} from "./Icon";
-import {UnifiedTheme} from ".";
 
 interface ButtonState {
   loading: boolean;
@@ -30,6 +31,7 @@ const buttonTextColor: {[buttonColor: string]: "white" | "darkGray"} = {
 
 export class Button extends React.Component<ButtonProps, ButtonState> {
   state = {loading: false};
+
   HEIGHTS = {
     sm: 36,
     md: 40,
@@ -69,6 +71,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
     }
     return (
       <TouchableOpacity
+        disabled={this.props.disabled || this.props.loading}
         style={{
           alignSelf: this.props.inline === true ? undefined : "stretch",
           height: this.HEIGHTS[this.props.size || "md"],
@@ -85,7 +88,6 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
           flexDirection: "row",
           paddingHorizontal: 4 * 2,
         }}
-        disabled={this.props.disabled || this.props.loading}
         onPress={debounce(
           async () => {
             Unifier.utils.haptic();
@@ -107,21 +109,21 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
         {this.props.icon !== undefined && (
           <Box paddingX={2}>
             <Icon
+              color={this.getTextColor(this.props.color as Color)}
+              name={this.props.icon}
               prefix={this.props.iconPrefix || "far"}
               size={iconSizeToNumber(this.props.size)}
-              name={this.props.icon}
-              color={this.getTextColor(this.props.color as Color)}
             />
           </Box>
         )}
         {Boolean(this.props.children) && this.props.children}
         {Boolean(this.props.text) && (
           <Text
-            weight="bold"
             color={this.getTextColor(color as Color)}
-            size={this.props.size}
-            skipLinking={true}
             inline={this.props.inline}
+            size={this.props.size}
+            skipLinking
+            weight="bold"
           >
             {this.props.text}
           </Text>

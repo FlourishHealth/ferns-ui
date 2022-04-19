@@ -1,10 +1,11 @@
 import React from "react";
+
 import {Box} from "./Box";
 import {Button} from "./Button";
+import {TextFieldProps} from "./Common";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 import {TextField} from "./TextField";
-import {TextFieldProps} from "./Common";
 
 interface TapToEditState {
   showEdit: boolean;
@@ -16,9 +17,9 @@ export class TapToEdit extends React.Component<TextFieldProps, TapToEditState> {
   render() {
     if (!this.state.showEdit) {
       return (
-        <Box display="flex" direction="row" onClick={() => this.setState({showEdit: true})}>
+        <Box direction="row" display="flex" onClick={() => this.setState({showEdit: true})}>
           <Box marginRight={2}>
-            <Icon name="edit" size={20} color="primaryDark" prefix="far" />
+            <Icon color="primaryDark" name="edit" prefix="far" size={20} />
           </Box>
           <Text>{this.props.children}</Text>
         </Box>
@@ -27,10 +28,10 @@ export class TapToEdit extends React.Component<TextFieldProps, TapToEditState> {
       return (
         <Box>
           <TextField {...this.props} />
-          <Box width={100} paddingY={1}>
+          <Box paddingY={1} width={100}>
             <Button
-              inline={true}
               color="primary"
+              inline
               text="Save"
               onClick={() => {
                 this.setState({showEdit: false});

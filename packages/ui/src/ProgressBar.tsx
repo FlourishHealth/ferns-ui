@@ -1,5 +1,6 @@
 import React from "react";
 import {View} from "react-native";
+
 import {ProgressBarProps} from "./Common";
 import {Unifier} from "./Unifier";
 
@@ -33,7 +34,7 @@ export class ProgressBar extends React.Component<ProgressBarProps, ProgressBarSt
             backgroundColor: Unifier.theme[this.props.color],
             opacity: 0.3,
           }}
-        ></View>
+        />
         <View
           style={{
             width: `${Math.min(this.props.completed / 100, 1) * 100}%`,

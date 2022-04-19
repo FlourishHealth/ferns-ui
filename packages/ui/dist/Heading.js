@@ -34,7 +34,7 @@ export class Heading extends React.Component {
         return style;
     }
     render() {
-        let lines = 0;
+        const lines = 0;
         // if (this.props.numberOfLines) {
         //   lines = this.props.numberOfLines;
         // } else if (this.props.inline) {

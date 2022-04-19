@@ -3,7 +3,7 @@
 import get from "lodash/get";
 export function mergeInlineStyles(inlineStyle, newStyle) {
     const inline = get(inlineStyle, "__style");
-    let dangerouslySetInlineStyle = {
+    const dangerouslySetInlineStyle = {
         __style: Object.assign(Object.assign({}, inline), newStyle),
     };
     return dangerouslySetInlineStyle;
@@ -24,7 +24,7 @@ export const concat = (styles) => styles.reduce(({ className: classNameA, inline
     className: new Set([...classNameA, ...classNameB]),
     inlineStyle: Object.assign(Object.assign({}, inlineStyleA), inlineStyleB),
 }), identity());
-export const mapClassName = (fn) => ({ className, inlineStyle, }) => ({
+export const mapClassName = (fn) => ({ className, inlineStyle }) => ({
     className: new Set(Array.from(className).map(fn)),
     inlineStyle,
 });
@@ -34,9 +34,7 @@ export const toProps = ({ className, inlineStyle, }) => {
         // Sorting here ensures that classNames are always stable, reducing diff
         // churn. Box usually has a small number of properties so it's not a perf
         // concern.
-        props.className = Array.from(className)
-            .sort()
-            .join(" ");
+        props.className = Array.from(className).sort().join(" ");
     }
     if (Object.keys(inlineStyle).length > 0) {
         props.style = inlineStyle;

@@ -1,4 +1,5 @@
 import React from "react";
+
 import {Box} from "./Box";
 import {Button} from "./Button";
 import {Text} from "./Text";
@@ -16,15 +17,15 @@ export class ErrorPage extends React.Component<ErrorPageProps, {}> {
   render() {
     return (
       <Box
-        height="100%"
-        width="100%"
-        display="flex"
-        justifyContent="center"
         alignItems="center"
         direction="column"
+        display="flex"
+        height="100%"
+        justifyContent="center"
         padding={6}
+        width="100%"
       >
-        <Text color="red" size="lg" weight="bold" align="center">
+        <Text align="center" color="red" size="lg" weight="bold">
           Oops!
         </Text>
         <Box paddingY={3}>
@@ -36,7 +37,7 @@ export class ErrorPage extends React.Component<ErrorPageProps, {}> {
         <Box paddingY={3}>
           <Text>{this.props.error.toString()}</Text>
         </Box>
-        <Button text="Try again" color="blue" onClick={this.props.resetError} />
+        <Button color="blue" text="Try again" onClick={this.props.resetError} />
       </Box>
     );
   }

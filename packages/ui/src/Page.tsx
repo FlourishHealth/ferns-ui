@@ -1,4 +1,5 @@
 import React from "react";
+
 import {Box} from "./Box";
 import {Button} from "./Button";
 import {Color, UnsignedUpTo12} from "./Common";
@@ -26,6 +27,7 @@ interface PageProps {
   footer?: any;
   rightButton?: string;
   rightButtonOnClick?: () => void;
+  children?: any;
 }
 
 export class Page extends React.Component<PageProps, {}> {
@@ -36,42 +38,42 @@ export class Page extends React.Component<PageProps, {}> {
       return null;
     }
     return (
-      <Box width="100%" display="flex" direction="row">
+      <Box direction="row" display="flex" width="100%">
         {this.props.backButton && (
-          <Box paddingY={3} justifyContent="center" alignItems="center" display="block">
+          <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
-              prefix="fas"
+              accessibilityLabel=""
               icon="chevron-left"
+              iconColor="darkGray"
+              prefix="fas"
               size="md"
               onClick={() => this.props.navigation.goBack()}
-              accessibilityLabel=""
-              iconColor="darkGray"
             />
           </Box>
         )}
         {this.props.closeButton && (
-          <Box paddingY={3} justifyContent="center" alignItems="center" display="block">
+          <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
-              prefix="fas"
+              accessibilityLabel=""
               icon="times"
+              iconColor="darkGray"
+              prefix="fas"
               size="md"
               onClick={() => this.props.navigation.goBack()}
-              accessibilityLabel=""
-              iconColor="darkGray"
             />
           </Box>
         )}
         {Boolean(this.props.title) && (
-          <Box display="flex" flex="grow" justifyContent="center" direction="column">
+          <Box direction="column" display="flex" flex="grow" justifyContent="center">
             <Heading align="center">{this.props.title}</Heading>
           </Box>
         )}
         {this.props.rightButton && (
-          <Box paddingY={3} justifyContent="center" alignItems="center" display="block">
+          <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <Button
-              type="ghost"
-              text={this.props.rightButton}
               color="gray"
+              text={this.props.rightButton}
+              type="ghost"
               onClick={() => this.props.rightButtonOnClick && this.props.rightButtonOnClick()}
             />
           </Box>
@@ -84,22 +86,22 @@ export class Page extends React.Component<PageProps, {}> {
     return (
       <ErrorBoundary>
         <Box
-          scroll={this.props.scroll === undefined ? true : this.props.scroll}
-          padding={this.props.padding !== undefined ? this.props.padding : 2}
-          avoidKeyboard={true}
-          keyboardOffset={this.props.keyboardOffset}
-          display={this.props.display || "flex"}
-          width="100%"
-          flex="grow"
-          maxWidth={this.props.maxWidth || 800}
           alignSelf="center"
-          direction={this.props.direction || "column"}
+          avoidKeyboard
           color={this.props.color || "lightGray"}
+          direction={this.props.direction || "column"}
+          display={this.props.display || "flex"}
+          flex="grow"
+          keyboardOffset={this.props.keyboardOffset}
+          maxWidth={this.props.maxWidth || 800}
+          padding={this.props.padding !== undefined ? this.props.padding : 2}
+          scroll={this.props.scroll === undefined ? true : this.props.scroll}
+          width="100%"
           // color="ligh"
         >
           {this.renderHeader()}
           {this.props.loading === true && (
-            <Spinner size="md" color={Unifier.theme.darkGray as any} />
+            <Spinner color={Unifier.theme.darkGray as any} size="md" />
           )}
           {/* <KeyboardAccessoryNavigation
           avoidKeyboard
@@ -112,16 +114,16 @@ export class Page extends React.Component<PageProps, {}> {
         </Box>
         {Boolean(this.props.footer) && (
           <Box
-            width="100%"
-            maxWidth={this.props.maxWidth || 800}
-            marginBottom={8}
-            paddingY={this.props.padding !== undefined ? this.props.padding : 2}
-            paddingX={this.props.padding !== undefined ? this.props.padding : 6}
+            alignSelf="center"
+            color={this.props.color || "lightGray"}
+            direction={this.props.direction || "column"}
             display={this.props.display || "flex"}
             flex="shrink"
-            alignSelf="center"
-            direction={this.props.direction || "column"}
-            color={this.props.color || "lightGray"}
+            marginBottom={8}
+            maxWidth={this.props.maxWidth || 800}
+            paddingX={this.props.padding !== undefined ? this.props.padding : 6}
+            paddingY={this.props.padding !== undefined ? this.props.padding : 2}
+            width="100%"
           >
             {this.props.footer}
           </Box>

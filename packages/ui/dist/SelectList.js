@@ -7,7 +7,7 @@ export class SelectList extends React.Component {
         this.state = { showing: false };
     }
     render() {
-        return (React.createElement(RNPickerSelect, { placeholder: {}, style: {
+        return (React.createElement(RNPickerSelect, { items: this.props.options, placeholder: {}, style: {
                 viewContainer: {
                     flexDirection: "row",
                     justifyContent: "center",
@@ -22,7 +22,7 @@ export class SelectList extends React.Component {
                     borderRadius: 5,
                     backgroundColor: Unifier.theme.white,
                 },
-            }, items: this.props.options, onValueChange: this.props.onChange, value: this.props.value }));
+            }, value: this.props.value, onValueChange: this.props.onChange }));
     }
 }
 //# sourceMappingURL=SelectList.js.map

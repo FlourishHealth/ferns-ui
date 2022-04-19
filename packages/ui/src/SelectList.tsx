@@ -1,6 +1,7 @@
 import React from "react";
-import RNPickerSelect from "./PickerSelect";
+
 import {FieldWithLabelsProps} from "./Common";
+import RNPickerSelect from "./PickerSelect";
 import {Unifier} from "./Unifier";
 
 export type SelectListOptions = {label: string; value: string | undefined}[];
@@ -21,6 +22,7 @@ export class SelectList extends React.Component<SelectListProps, {}> {
   render() {
     return (
       <RNPickerSelect
+        items={this.props.options}
         placeholder={{}}
         style={{
           viewContainer: {
@@ -38,9 +40,8 @@ export class SelectList extends React.Component<SelectListProps, {}> {
             backgroundColor: Unifier.theme.white,
           },
         }}
-        items={this.props.options}
-        onValueChange={this.props.onChange}
         value={this.props.value}
+        onValueChange={this.props.onChange}
       />
     );
   }

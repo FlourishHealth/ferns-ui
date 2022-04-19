@@ -1,6 +1,7 @@
 import moment from "moment-timezone";
 import React from "react";
 import {ActivityIndicator, KeyboardTypeOptions, Platform, TextInput, View} from "react-native";
+
 import {Box} from "./Box";
 import {TextFieldProps} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
@@ -18,8 +19,11 @@ interface TextFieldState {
 
 export class TextField extends React.Component<TextFieldProps, TextFieldState> {
   dateActionSheetRef: React.RefObject<any> = React.createRef();
+
   numberRangeActionSheetRef: React.RefObject<any> = React.createRef();
+
   decimalRangeActionSheetRef: React.RefObject<any> = React.createRef();
+
   weightActionSheetRef: React.RefObject<any> = React.createRef();
 
   constructor(props: TextFieldProps) {
@@ -69,13 +73,13 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
     if (this.props.searching === true) {
       return (
         <Box marginRight={4}>
-          <ActivityIndicator color={Unifier.theme["primary"]} size="small" />
+          <ActivityIndicator color={Unifier.theme.primary} size="small" />
         </Box>
       );
     } else {
       return (
         <Box marginRight={2}>
-          <Icon prefix="far" size={14} name="search" />
+          <Icon name="search" prefix="far" size={14} />
         </Box>
       );
     }
@@ -127,30 +131,20 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
     if (this.props.type === "date") {
       value = moment(this.props.value).format("MM/DD/YYYY");
     } else if (this.props.type === "height") {
-      value = `${Math.floor(Number(this.props.value) / 12)} ft, ${Number(this.props.value) %
-        12} in`;
+      value = `${Math.floor(Number(this.props.value) / 12)} ft, ${
+        Number(this.props.value) % 12
+      } in`;
     }
     return (
       <>
         <WithLabel
           label={errorMessage}
-          labelPlacement="after"
           labelColor={this.props.errorMessageColor || "red"}
+          labelPlacement="after"
           labelSize="sm"
         >
           <WithLabel {...props}>
             <View
-              onTouchEnd={() => {
-                if (this.props.type === "date") {
-                  this.dateActionSheetRef?.current?.setModalVisible(true);
-                } else if (this.props.type === "numberRange") {
-                  this.numberRangeActionSheetRef?.current?.setModalVisible(true);
-                } else if (this.props.type === "decimalRange") {
-                  this.decimalRangeActionSheetRef?.current?.setModalVisible(true);
-                } else if (this.props.type === "height") {
-                  this.weightActionSheetRef?.current?.setModalVisible(true);
-                }
-              }}
               style={{
                 flexDirection: "row",
                 justifyContent: "center",
@@ -168,9 +162,41 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
                 backgroundColor: this.props.disabled ? Unifier.theme.gray : Unifier.theme.white,
                 overflow: "hidden",
               }}
+              onTouchEnd={() => {
+                if (this.props.type === "date") {
+                  this.dateActionSheetRef?.current?.setModalVisible(true);
+                } else if (this.props.type === "numberRange") {
+                  this.numberRangeActionSheetRef?.current?.setModalVisible(true);
+                } else if (this.props.type === "decimalRange") {
+                  this.decimalRangeActionSheetRef?.current?.setModalVisible(true);
+                } else if (this.props.type === "height") {
+                  this.weightActionSheetRef?.current?.setModalVisible(true);
+                }
+              }}
             >
               {this.renderIcon()}
               <TextInput
+                ref={(ref) => {
+                  if (this.props.inputRef) {
+                    this.props.inputRef(ref);
+                  }
+                }}
+                autoCapitalize={type === "text" ? "sentences" : "none"}
+                autoFocus={this.props.autoFocus}
+                blurOnSubmit
+                // TODO: uncomment with upgrade to React 0.56.
+                // textContentType={textContentType}
+                editable={this.isEditable()}
+                keyboardType={keyboardType as KeyboardTypeOptions}
+                multiline={this.props.multiline}
+                numberOfLines={this.props.rows || 4}
+                placeholder={this.props.placeholder}
+                placeholderTextColor={Unifier.theme.gray}
+                returnKeyType={
+                  type === "number" || type === "decimal" ? "done" : this.props.returnKeyType
+                }
+                secureTextEntry={type === "password"}
+                // For react-native-autofocus
                 style={{
                   flex: 1,
                   paddingTop: 10,
@@ -185,24 +211,8 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
                   outlineWidth: 0,
                   ...this.props.style,
                 }}
-                keyboardType={keyboardType as KeyboardTypeOptions}
-                onChangeText={(text) => {
-                  this.props.onChange({value: text});
-                }}
-                value={value}
-                // TODO: uncomment with upgrade to React 0.56.
-                // textContentType={textContentType}
-                placeholder={this.props.placeholder}
-                placeholderTextColor={Unifier.theme.gray}
-                secureTextEntry={type === "password"}
-                editable={this.isEditable()}
-                autoCapitalize={type === "text" ? "sentences" : "none"}
                 underlineColorAndroid="transparent"
-                onFocus={() => {
-                  if (!this.isHandledByModal()) {
-                    this.setState({focused: true});
-                  }
-                }}
+                value={value}
                 onBlur={() => {
                   if (!this.isHandledByModal()) {
                     this.setState({focused: false});
@@ -214,10 +224,18 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
                   //   this.actionSheetRef?.current?.setModalVisible(false);
                   // }
                 }}
-                // For react-native-autofocus
-                ref={(ref) => {
-                  if (this.props.inputRef) {
-                    this.props.inputRef(ref);
+                onChangeText={(text) => {
+                  this.props.onChange({value: text});
+                }}
+                onContentSizeChange={(event) => {
+                  if (!this.props.grow) {
+                    return;
+                  }
+                  this.setState({height: event.nativeEvent.contentSize.height});
+                }}
+                onFocus={() => {
+                  if (!this.isHandledByModal()) {
+                    this.setState({focused: true});
                   }
                 }}
                 onSubmitEditing={() => {
@@ -228,19 +246,6 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
                     this.props.onSubmitEditing();
                   }
                 }}
-                onContentSizeChange={(event) => {
-                  if (!this.props.grow) {
-                    return;
-                  }
-                  this.setState({height: event.nativeEvent.contentSize.height});
-                }}
-                blurOnSubmit={true}
-                returnKeyType={
-                  type === "number" || type === "decimal" ? "done" : this.props.returnKeyType
-                }
-                autoFocus={this.props.autoFocus}
-                multiline={this.props.multiline}
-                numberOfLines={this.props.rows || 4}
               />
             </View>
           </WithLabel>
@@ -256,8 +261,8 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
         {this.props.type === "numberRange" && this.props.value && (
           <NumberPickerActionSheet
             actionSheetRef={this.numberRangeActionSheetRef}
-            min={this.props.min || 0}
             max={this.props.max || (this.props.min || 0) + 100}
+            min={this.props.min || 0}
             value={this.props.value}
             onChange={(result) => this.props.onChange(result)}
           />
@@ -265,8 +270,8 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
         {this.props.type === "decimalRange" && this.props.value && (
           <DecimalRangeActionSheet
             actionSheetRef={this.decimalRangeActionSheetRef}
-            min={this.props.min || 0}
             max={this.props.max || (this.props.min || 0) + 100}
+            min={this.props.min || 0}
             value={this.props.value}
             onChange={(result) => this.props.onChange(result)}
           />

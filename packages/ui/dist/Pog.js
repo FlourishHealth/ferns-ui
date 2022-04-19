@@ -139,6 +139,6 @@ export default function Pog(props) {
                 // accessibilityLabel=""
                 color: color, 
                 // dangerouslySetSvgPath={dangerouslySetSvgPath}
-                name: icon, size: iconSize, prefix: iconPrefix }))));
+                name: icon, prefix: iconPrefix, size: iconSize }))));
 }
 //# sourceMappingURL=Pog.js.map

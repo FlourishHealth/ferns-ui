@@ -12,7 +12,7 @@ export declare const identity: () => Style;
 export declare const fromClassName: (...classNames: string[]) => Style;
 export declare const fromInlineStyle: (inlineStyle: InlineStyle) => Style;
 export declare const concat: (styles: Style[]) => Style;
-export declare const mapClassName: (fn: (x: string) => string) => ({ className, inlineStyle, }: Style) => Style;
+export declare const mapClassName: (fn: (x: string) => string) => ({ className, inlineStyle }: Style) => Style;
 export declare const toProps: ({ className, inlineStyle, }: Style) => {
     className: string;
     style: InlineStyle;

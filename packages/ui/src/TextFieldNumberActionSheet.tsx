@@ -1,8 +1,8 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment-timezone";
 import React, {SyntheticEvent} from "react";
-import {ActionSheet} from "./ActionSheet";
 
+import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
 import {OnChangeCallback} from "./Common";
@@ -26,15 +26,15 @@ export class NumberPickerActionSheet extends React.Component<
 
   render() {
     return (
-      <ActionSheet ref={this.props.actionSheetRef} gestureEnabled={true} bounceOnOpen={true}>
-        <Box width="100%" paddingX={4} marginBottom={8}>
-          <Box width="100%" display="flex" alignItems="end">
+      <ActionSheet ref={this.props.actionSheetRef} bounceOnOpen gestureEnabled>
+        <Box marginBottom={8} paddingX={4} width="100%">
+          <Box alignItems="end" display="flex" width="100%">
             <Box width="33%">
               <Button
-                type="ghost"
-                text="Save"
                 color="blue"
                 size="lg"
+                text="Save"
+                type="ghost"
                 onClick={() => {
                   this.props.actionSheetRef?.current?.setModalVisible(false);
                 }}
@@ -42,11 +42,11 @@ export class NumberPickerActionSheet extends React.Component<
             </Box>
           </Box>
           <DateTimePicker
+            display="spinner"
+            is24Hour
+            mode={this.props.mode}
             testID="dateTimePicker"
             value={moment(this.props.value).toDate()}
-            mode={this.props.mode}
-            is24Hour={true}
-            display="spinner"
             onChange={(event: any, date?: Date) => {
               if (!date) {
                 return;

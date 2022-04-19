@@ -1,11 +1,11 @@
+import {Picker} from "@react-native-picker/picker";
+import range from "lodash/range";
 import React from "react";
-import {ActionSheet} from "./ActionSheet";
 
+import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {Picker} from "@react-native-picker/picker";
 import {OnChangeCallback} from "./Common";
-import range from "lodash/range";
 
 const PICKER_HEIGHT = 104;
 
@@ -36,32 +36,32 @@ export class DecimalRangeActionSheet extends React.Component<
 
   render() {
     return (
-      <ActionSheet ref={this.props.actionSheetRef} gestureEnabled={true} bounceOnOpen={true}>
-        <Box width="100%" paddingX={4} marginBottom={8}>
-          <Box width="100%" display="flex" alignItems="end">
+      <ActionSheet ref={this.props.actionSheetRef} bounceOnOpen gestureEnabled>
+        <Box marginBottom={8} paddingX={4} width="100%">
+          <Box alignItems="end" display="flex" width="100%">
             <Box width="33%">
               <Button
-                type="ghost"
-                text="Close"
                 color="blue"
                 size="lg"
+                text="Close"
+                type="ghost"
                 onClick={() => {
                   this.props.actionSheetRef?.current?.setModalVisible(false);
                 }}
               />
             </Box>
           </Box>
-          <Box width="100%" direction="row">
+          <Box direction="row" width="100%">
             <Box width="50%">
               <Picker
-                style={{
-                  height: PICKER_HEIGHT,
-                  backgroundColor: "#FFFFFF",
-                }}
                 itemStyle={{
                   height: PICKER_HEIGHT,
                 }}
                 selectedValue={this.state.whole}
+                style={{
+                  height: PICKER_HEIGHT,
+                  backgroundColor: "#FFFFFF",
+                }}
                 onValueChange={(whole) => {
                   this.setState({whole: String(whole)});
                   this.props.onChange({
@@ -77,14 +77,14 @@ export class DecimalRangeActionSheet extends React.Component<
             </Box>
             <Box width="50%">
               <Picker
-                style={{
-                  height: PICKER_HEIGHT,
-                  backgroundColor: "#FFFFFF",
-                }}
                 itemStyle={{
                   height: PICKER_HEIGHT,
                 }}
                 selectedValue={this.state.decimal}
+                style={{
+                  height: PICKER_HEIGHT,
+                  backgroundColor: "#FFFFFF",
+                }}
                 onValueChange={(decimal) => {
                   // console.log(
                   //   "DECIMAL",
@@ -101,7 +101,7 @@ export class DecimalRangeActionSheet extends React.Component<
               >
                 {range(0, 10).map((n) => {
                   // console.log("N", n);
-                  return <Picker.Item key={String(n)} label={"." + String(n)} value={String(n)} />;
+                  return <Picker.Item key={String(n)} label={`.${String(n)}`} value={String(n)} />;
                 })}
               </Picker>
             </Box>

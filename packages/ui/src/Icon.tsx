@@ -1,5 +1,6 @@
 import {FontAwesome} from "@expo/vector-icons";
 import React from "react";
+
 import {iconNumberToSize, IconProps, iconSizeToNumber} from "./Common";
 // import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 // // import {library} from "@fortawesome/fontawesome-svg-core";
@@ -52,13 +53,13 @@ import {Unifier} from "./Unifier";
 // );
 
 export function initIcons() {
-  console.log("Initializing icons");
+  console.debug("Initializing icons");
 }
 
-let iconSet = new Set();
+const iconSet = new Set();
 
 function addIcon(icon: string, prefix = "far") {
-  let prev = new Set(iconSet);
+  const prev = new Set(iconSet);
   iconSet.add(`${prefix}-${icon}`);
   if (
     prev.size !== iconSet.size &&
@@ -78,7 +79,7 @@ export class Icon extends React.Component<IconProps, {}> {
     } else if (size === "md") {
       size = "1x";
     }
-    return <FontAwesome icon={this.props.name as any} color={color} size={size as any} />;
+    return <FontAwesome color={color} icon={this.props.name as any} size={size as any} />;
   }
 }
 
@@ -86,11 +87,11 @@ export class IconExpo extends React.Component<IconProps, {}> {
   render() {
     const color = Unifier.theme[this.props.color || "primary"];
     // Standardize the size (pretty hacky..)
-    let size = iconSizeToNumber(iconNumberToSize(this.props.size));
+    const size = iconSizeToNumber(iconNumberToSize(this.props.size));
     return (
       <FontAwesome
-        icon={[this.props.prefix || "far", this.props.name as any]}
         color={color}
+        icon={[this.props.prefix || "far", this.props.name as any]}
         size={size}
       />
     );

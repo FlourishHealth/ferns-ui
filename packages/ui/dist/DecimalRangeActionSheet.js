@@ -1,9 +1,9 @@
+import { Picker } from "@react-native-picker/picker";
+import range from "lodash/range";
 import React from "react";
 import { ActionSheet } from "./ActionSheet";
 import { Box } from "./Box";
 import { Button } from "./Button";
-import { Picker } from "@react-native-picker/picker";
-import range from "lodash/range";
 const PICKER_HEIGHT = 104;
 export class DecimalRangeActionSheet extends React.Component {
     constructor(props) {
@@ -14,22 +14,22 @@ export class DecimalRangeActionSheet extends React.Component {
         };
     }
     render() {
-        return (React.createElement(ActionSheet, { ref: this.props.actionSheetRef, gestureEnabled: true, bounceOnOpen: true },
-            React.createElement(Box, { width: "100%", paddingX: 4, marginBottom: 8 },
-                React.createElement(Box, { width: "100%", display: "flex", alignItems: "end" },
+        return (React.createElement(ActionSheet, { ref: this.props.actionSheetRef, bounceOnOpen: true, gestureEnabled: true },
+            React.createElement(Box, { marginBottom: 8, paddingX: 4, width: "100%" },
+                React.createElement(Box, { alignItems: "end", display: "flex", width: "100%" },
                     React.createElement(Box, { width: "33%" },
-                        React.createElement(Button, { type: "ghost", text: "Close", color: "blue", size: "lg", onClick: () => {
+                        React.createElement(Button, { color: "blue", size: "lg", text: "Close", type: "ghost", onClick: () => {
                                 var _a, _b;
                                 (_b = (_a = this.props.actionSheetRef) === null || _a === void 0 ? void 0 : _a.current) === null || _b === void 0 ? void 0 : _b.setModalVisible(false);
                             } }))),
-                React.createElement(Box, { width: "100%", direction: "row" },
+                React.createElement(Box, { direction: "row", width: "100%" },
                     React.createElement(Box, { width: "50%" },
-                        React.createElement(Picker, { style: {
+                        React.createElement(Picker, { itemStyle: {
+                                height: PICKER_HEIGHT,
+                            }, selectedValue: this.state.whole, style: {
                                 height: PICKER_HEIGHT,
                                 backgroundColor: "#FFFFFF",
-                            }, itemStyle: {
-                                height: PICKER_HEIGHT,
-                            }, selectedValue: this.state.whole, onValueChange: (whole) => {
+                            }, onValueChange: (whole) => {
                                 this.setState({ whole: String(whole) });
                                 this.props.onChange({
                                     value: String(Number(whole) + Number(this.state.decimal) * 0.1),
@@ -39,12 +39,12 @@ export class DecimalRangeActionSheet extends React.Component {
                             return React.createElement(Picker.Item, { key: String(n), label: String(n), value: String(n) });
                         }))),
                     React.createElement(Box, { width: "50%" },
-                        React.createElement(Picker, { style: {
+                        React.createElement(Picker, { itemStyle: {
+                                height: PICKER_HEIGHT,
+                            }, selectedValue: this.state.decimal, style: {
                                 height: PICKER_HEIGHT,
                                 backgroundColor: "#FFFFFF",
-                            }, itemStyle: {
-                                height: PICKER_HEIGHT,
-                            }, selectedValue: this.state.decimal, onValueChange: (decimal) => {
+                            }, onValueChange: (decimal) => {
                                 // console.log(
                                 //   "DECIMAL",
                                 //   decimal,
@@ -58,7 +58,7 @@ export class DecimalRangeActionSheet extends React.Component {
                                 });
                             } }, range(0, 10).map((n) => {
                             // console.log("N", n);
-                            return React.createElement(Picker.Item, { key: String(n), label: "." + String(n), value: String(n) });
+                            return React.createElement(Picker.Item, { key: String(n), label: `.${String(n)}`, value: String(n) });
                         })))))));
     }
 }

@@ -1,5 +1,5 @@
 /// <reference types="react" />
-import { IconSize, IconPrefix, AllColors } from "./Common";
+import { AllColors, IconPrefix, IconSize } from "./Common";
 interface Props {
     active?: boolean;
     bgColor?: "transparent" | "transparentDarkGray" | "gray" | "lightGray" | "white" | "blue";

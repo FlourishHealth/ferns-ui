@@ -1,11 +1,11 @@
+import {Picker} from "@react-native-picker/picker";
+import range from "lodash/range";
 import React from "react";
-import {ActionSheet} from "./ActionSheet";
 
+import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {Picker} from "@react-native-picker/picker";
 import {OnChangeCallback} from "./Common";
-import range from "lodash/range";
 
 const PICKER_HEIGHT = 104;
 
@@ -29,15 +29,15 @@ export class NumberPickerActionSheet extends React.Component<
 
   render() {
     return (
-      <ActionSheet ref={this.props.actionSheetRef} gestureEnabled={true} bounceOnOpen={true}>
-        <Box width="100%" paddingX={4} marginBottom={8}>
-          <Box width="100%" display="flex" alignItems="end">
+      <ActionSheet ref={this.props.actionSheetRef} bounceOnOpen gestureEnabled>
+        <Box marginBottom={8} paddingX={4} width="100%">
+          <Box alignItems="end" display="flex" width="100%">
             <Box width="33%">
               <Button
-                type="ghost"
-                text="Close"
                 color="blue"
                 size="lg"
+                text="Close"
+                type="ghost"
                 onClick={() => {
                   this.props.actionSheetRef?.current?.setModalVisible(false);
                 }}
@@ -45,14 +45,14 @@ export class NumberPickerActionSheet extends React.Component<
             </Box>
           </Box>
           <Picker
-            style={{
-              height: PICKER_HEIGHT,
-              backgroundColor: "#FFFFFF",
-            }}
             itemStyle={{
               height: PICKER_HEIGHT,
             }}
             selectedValue={String(this.props.value)}
+            style={{
+              height: PICKER_HEIGHT,
+              backgroundColor: "#FFFFFF",
+            }}
             onValueChange={(itemValue) => this.props.onChange({value: String(itemValue)})}
           >
             {range(this.props.min, this.props.max).map((n) => (

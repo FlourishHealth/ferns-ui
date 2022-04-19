@@ -6,7 +6,7 @@ export class TextArea extends React.Component {
         this.state = {};
     }
     render() {
-        return React.createElement(TextField, Object.assign({}, this.props, { multiline: true, height: 100, rows: 4 }));
+        return React.createElement(TextField, Object.assign({}, this.props, { height: 100, multiline: true, rows: 4 }));
     }
 }
 //# sourceMappingURL=TextArea.js.map
