@@ -11,6 +11,9 @@
     ],
     "nohoist": ["**/react-native", "**/react-native/**", "**/expo", "**/expo/**","**/expo-*", "**/expo-*/**", "**/@storybook", "**/@storybook/**"]
   },
+  "scripts": {
+    "demo-ios": ""
+  },
   "devDependencies": {
   },
   "resolutions": {
