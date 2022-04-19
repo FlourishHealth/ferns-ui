@@ -1,6 +1,9 @@
-name: Continuous Integration
+name: Lint Continuous Integration
 
-on: [push]
+on:
+  push:
+    paths:
+      - 'packages/eslint-config-ferns/**'
 
 defaults:
   run:

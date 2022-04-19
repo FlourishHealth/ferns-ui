@@ -1,4 +1,4 @@
-name: NPM publish Continuous Deployment workflow
+name: API NPM publish Continuous Deployment workflow
 
 on:
   release:

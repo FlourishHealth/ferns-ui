@@ -9,6 +9,7 @@
     "web": "expo start --web",
     "eject": "expo eject"
   },
+  "license": "Apache-2.0",
   "dependencies": {
     "expo-font": "^10.0.5",
     "@ferns/ui": "*",

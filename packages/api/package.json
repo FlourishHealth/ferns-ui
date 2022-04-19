@@ -21,7 +21,7 @@
     "express"
   ],
   "author": "Josh Gachnang",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/FlourishHealth/ferns/issues"
   },
