@@ -36,7 +36,7 @@ jobs:
       - name: Install whole project dependencies
         # if: steps.yarn-cache.outputs.cache-hit != 'true' # I think we want to install every time,
         # but use the cache?
-        run: yarn
+        run: yarn --frozen-lockfile
         working-directory: './'
       - name: yarn lint
         run: yarn lint

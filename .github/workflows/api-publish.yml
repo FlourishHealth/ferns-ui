@@ -31,8 +31,11 @@ jobs:
         uses: supercharge/mongodb-github-action@1.6.0
         with:
           mongodb-version: 4.4
-      - name: Install project dependencies
-        run: yarn install --frozen-lockfile
+      - name: Install whole project dependencies
+        # if: steps.yarn-cache.outputs.cache-hit != 'true' # I think we want to install every time,
+        # but use the cache?
+        run: yarn --frozen-lockfile
+        working-directory: './'
       # set up git since we will later push to the repo
       - run: git config --global user.name "GitHub CD bot"
       - run: git config --global user.email "github-cd-bot@nang.io"
