@@ -1,9 +1,9 @@
-name: UI Continuous Integration
+name: UI Demo Continuous Integration
 
 on:
   push:
     paths:
-      - 'packages/ui/**'
+      - 'packages/ui-demo/**'
 
 defaults:
   run:
@@ -40,8 +40,8 @@ jobs:
         working-directory: './'
       - name: yarn lint
         run: yarn lint
-      - name: yarn build
-        run: yarn build
+#      - name: yarn build
+#        run: yarn build
 #      - name: yarn test
 #        run: yarn test
 #        env:

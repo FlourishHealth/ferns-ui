@@ -23,7 +23,7 @@ export const SelectListStories = {
             options={options}
             placeholder="Here's some placeholder text."
             value={item}
-            onChange={(item) => setItem(item)}
+            onChange={(newItem) => setItem(newItem)}
           />
         </StorybookContainer>
       );
@@ -39,7 +39,7 @@ export const SelectListStories = {
             label="Enter a bunch of text"
             options={options}
             value={item}
-            onChange={(item) => setItem(item)}
+            onChange={(newItem) => setItem(newItem)}
           />
         </StorybookContainer>
       );
@@ -55,7 +55,7 @@ export const SelectListStories = {
             options={options}
             placeholder="This is disabled"
             value={item}
-            onChange={(item) => setItem(item)}
+            onChange={(newItem) => setItem(newItem)}
           />
         </StorybookContainer>
       );
