@@ -33,10 +33,10 @@ jobs:
 #          restore-keys: |
 #            ${{ runner.os }}-yarn-
 
-      - name: Install project dependencies
+      - name: Install whole project dependencies
         # if: steps.yarn-cache.outputs.cache-hit != 'true' # I think we want to install every time,
         # but use the cache?
-        run: yarn install for whole project
+        run: yarn
         working-directory: './'
       - name: yarn lint
         run: yarn lint
