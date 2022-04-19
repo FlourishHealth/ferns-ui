@@ -246,7 +246,7 @@ export default class RNPickerSelect extends PureComponent<any, any> {
     this.renderInputAccessoryView = this.renderInputAccessoryView.bind(this);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>) {
     // update items if items or placeholder prop changes
     const items = RNPickerSelect.handlePlaceholder({
       placeholder: this.props.placeholder,

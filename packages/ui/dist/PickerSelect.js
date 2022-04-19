@@ -94,24 +94,6 @@ const defaultStyles = StyleSheet.create({
 export default class RNPickerSelect extends PureComponent {
     constructor(props) {
         super(props);
-        this.componentDidUpdate = (prevProps, prevState) => {
-            // update items if items or placeholder prop changes
-            const items = RNPickerSelect.handlePlaceholder({
-                placeholder: this.props.placeholder,
-            }).concat(this.props.items);
-            const itemsChanged = !isEqual(prevState.items, items);
-            // update selectedItem if value prop is defined and differs from currently selected item
-            const { selectedItem, idx } = RNPickerSelect.getSelectedItem({
-                items,
-                key: this.props.itemKey,
-                value: this.props.value,
-            });
-            const selectedItemChanged = !isEqual(this.props.value, undefined) && !isEqual(prevState.selectedItem, selectedItem);
-            if (itemsChanged || selectedItemChanged) {
-                this.props.onValueChange(selectedItem.value, idx);
-                this.setState(Object.assign(Object.assign({}, (itemsChanged ? { items } : {})), (selectedItemChanged ? { selectedItem } : {})));
-            }
-        };
         const items = RNPickerSelect.handlePlaceholder({
             placeholder: props.placeholder,
         }).concat(props.items);
@@ -156,6 +138,24 @@ export default class RNPickerSelect extends PureComponent {
             selectedItem: items[idx] || {},
             idx,
         };
+    }
+    componentDidUpdate(prevProps, prevState) {
+        // update items if items or placeholder prop changes
+        const items = RNPickerSelect.handlePlaceholder({
+            placeholder: this.props.placeholder,
+        }).concat(this.props.items);
+        const itemsChanged = !isEqual(prevState.items, items);
+        // update selectedItem if value prop is defined and differs from currently selected item
+        const { selectedItem, idx } = RNPickerSelect.getSelectedItem({
+            items,
+            key: this.props.itemKey,
+            value: this.props.value,
+        });
+        const selectedItemChanged = !isEqual(this.props.value, undefined) && !isEqual(prevState.selectedItem, selectedItem);
+        if (itemsChanged || selectedItemChanged) {
+            this.props.onValueChange(selectedItem.value, idx);
+            this.setState(Object.assign(Object.assign({}, (itemsChanged ? { items } : {})), (selectedItemChanged ? { selectedItem } : {})));
+        }
     }
     onUpArrow() {
         const { onUpArrow } = this.props;
@@ -225,7 +225,7 @@ export default class RNPickerSelect extends PureComponent {
     renderPickerItems() {
         const { items } = this.state;
         return items.map((item) => {
-            return (React.createElement(Picker.Item, { label: item.label, value: item.value, key: item.key || item.label, color: item.color }));
+            return (React.createElement(Picker.Item, { key: item.key || item.label, color: item.color, label: item.label, value: item.value }));
         });
     }
     renderInputAccessoryView() {
@@ -252,26 +252,26 @@ export default class RNPickerSelect extends PureComponent {
                             style.chevronDown,
                             onDownArrow ? [defaultStyles.chevronActive, style.chevronActive] : {},
                         ] }))),
-            React.createElement(TouchableOpacity, Object.assign({ testID: "done_button", onPress: () => {
+            React.createElement(TouchableOpacity, Object.assign({ hitSlop: { top: 4, right: 4, bottom: 4, left: 4 }, testID: "done_button", onPress: () => {
                     this.togglePicker(true, onDonePress);
                 }, onPressIn: () => {
                     this.setState({ doneDepressed: true });
                 }, onPressOut: () => {
                     this.setState({ doneDepressed: false });
-                }, hitSlop: { top: 4, right: 4, bottom: 4, left: 4 } }, touchableDoneProps),
+                } }, touchableDoneProps),
                 React.createElement(View, { testID: "needed_for_touchable" },
-                    React.createElement(Text, { testID: "done_text", allowFontScaling: false, style: [
+                    React.createElement(Text, { allowFontScaling: false, style: [
                             defaultStyles.done,
                             style.done,
                             doneDepressed ? [defaultStyles.doneDepressed, style.doneDepressed] : {},
-                        ] }, doneText)))));
+                        ], testID: "done_text" }, doneText)))));
     }
     renderIcon() {
         const { style, Icon } = this.props;
         if (!Icon) {
             return null;
         }
-        return (React.createElement(View, { testID: "icon_container", style: [defaultStyles.iconContainer, style.iconContainer] },
+        return (React.createElement(View, { style: [defaultStyles.iconContainer, style.iconContainer], testID: "icon_container" },
             React.createElement(Icon, { testID: "icon" })));
     }
     renderTextInputOrChildren() {
@@ -282,20 +282,20 @@ export default class RNPickerSelect extends PureComponent {
             return (React.createElement(View, { pointerEvents: "box-only", style: containerStyle }, children));
         }
         return (React.createElement(View, { pointerEvents: "box-only", style: containerStyle },
-            React.createElement(TextInput, Object.assign({ testID: "text_input", style: [
+            React.createElement(TextInput, Object.assign({ ref: this.setInputRef, editable: false, style: [
                     Platform.OS === "ios" ? style.inputIOS : style.inputAndroid,
                     this.getPlaceholderStyle(),
-                ], value: selectedItem.inputLabel ? selectedItem.inputLabel : selectedItem.label, ref: this.setInputRef, editable: false }, textInputProps)),
+                ], testID: "text_input", value: selectedItem.inputLabel ? selectedItem.inputLabel : selectedItem.label }, textInputProps)),
             this.renderIcon()));
     }
     renderIOS() {
         const { style, modalProps, pickerProps, touchableWrapperProps } = this.props;
         const { animationType, orientation, selectedItem, showPicker } = this.state;
         return (React.createElement(View, { style: [defaultStyles.viewContainer, style.viewContainer] },
-            React.createElement(TouchableOpacity, Object.assign({ testID: "ios_touchable_wrapper", onPress: () => {
+            React.createElement(TouchableOpacity, Object.assign({ activeOpacity: 1, testID: "ios_touchable_wrapper", onPress: () => {
                     this.togglePicker(true);
-                }, activeOpacity: 1 }, touchableWrapperProps), this.renderTextInputOrChildren()),
-            React.createElement(Modal, Object.assign({ testID: "ios_modal", visible: showPicker, transparent: true, animationType: animationType, supportedOrientations: ["portrait", "landscape"], onOrientationChange: this.onOrientationChange }, modalProps),
+                } }, touchableWrapperProps), this.renderTextInputOrChildren()),
+            React.createElement(Modal, Object.assign({ animationType: animationType, supportedOrientations: ["portrait", "landscape"], testID: "ios_modal", transparent: true, visible: showPicker, onOrientationChange: this.onOrientationChange }, modalProps),
                 React.createElement(TouchableOpacity, { style: [defaultStyles.modalViewTop, style.modalViewTop], testID: "ios_modal_top", onPress: () => {
                         this.togglePicker(true);
                     } }),
@@ -305,37 +305,37 @@ export default class RNPickerSelect extends PureComponent {
                         { height: orientation === "portrait" ? 215 : 162 },
                         style.modalViewBottom,
                     ] },
-                    React.createElement(Picker, Object.assign({ testID: "ios_picker", onValueChange: this.onValueChange, selectedValue: selectedItem.value }, pickerProps), this.renderPickerItems())))));
+                    React.createElement(Picker, Object.assign({ selectedValue: selectedItem.value, testID: "ios_picker", onValueChange: this.onValueChange }, pickerProps), this.renderPickerItems())))));
     }
     renderAndroidHeadless() {
         const { disabled, Icon, style, pickerProps, onOpen, touchableWrapperProps, fixAndroidTouchableBug, } = this.props;
         const { selectedItem } = this.state;
         const Component = fixAndroidTouchableBug ? View : TouchableOpacity;
-        return (React.createElement(Component, Object.assign({ testID: "android_touchable_wrapper", onPress: onOpen, activeOpacity: 1 }, touchableWrapperProps),
+        return (React.createElement(Component, Object.assign({ activeOpacity: 1, testID: "android_touchable_wrapper", onPress: onOpen }, touchableWrapperProps),
             React.createElement(View, { style: style.headlessAndroidContainer },
                 this.renderTextInputOrChildren(),
-                React.createElement(Picker, Object.assign({ style: [
+                React.createElement(Picker, Object.assign({ enabled: !disabled, selectedValue: selectedItem.value, style: [
                         Icon ? { backgroundColor: "transparent" } : {},
                         defaultStyles.headlessAndroidPicker,
                         style.headlessAndroidPicker,
-                    ], testID: "android_picker_headless", enabled: !disabled, onValueChange: this.onValueChange, selectedValue: selectedItem.value }, pickerProps), this.renderPickerItems()))));
+                    ], testID: "android_picker_headless", onValueChange: this.onValueChange }, pickerProps), this.renderPickerItems()))));
     }
     renderAndroidNativePickerStyle() {
         const { disabled, Icon, style, pickerProps } = this.props;
         const { selectedItem } = this.state;
         return (React.createElement(View, { style: [defaultStyles.viewContainer, style.viewContainer] },
-            React.createElement(Picker, Object.assign({ style: [
+            React.createElement(Picker, Object.assign({ enabled: !disabled, selectedValue: selectedItem.value, style: [
                     Icon ? { backgroundColor: "transparent" } : {},
                     style.inputAndroid,
                     this.getPlaceholderStyle(),
-                ], testID: "android_picker", enabled: !disabled, onValueChange: this.onValueChange, selectedValue: selectedItem.value }, pickerProps), this.renderPickerItems()),
+                ], testID: "android_picker", onValueChange: this.onValueChange }, pickerProps), this.renderPickerItems()),
             this.renderIcon()));
     }
     renderWeb() {
         const { disabled, style, pickerProps } = this.props;
         const { selectedItem } = this.state;
         return (React.createElement(View, { style: [defaultStyles.viewContainer, style.viewContainer] },
-            React.createElement(Picker, Object.assign({ style: [style.inputWeb], testID: "web_picker", enabled: !disabled, onValueChange: this.onValueChange, selectedValue: selectedItem.value }, pickerProps), this.renderPickerItems()),
+            React.createElement(Picker, Object.assign({ enabled: !disabled, selectedValue: selectedItem.value, style: style.inputWeb, testID: "web_picker", onValueChange: this.onValueChange }, pickerProps), this.renderPickerItems()),
             this.renderIcon()));
     }
     render() {

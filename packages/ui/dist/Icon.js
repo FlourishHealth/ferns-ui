@@ -51,11 +51,11 @@ import { Unifier } from "./Unifier";
 //   faSpinner
 // );
 export function initIcons() {
-    console.log("Initializing icons");
+    console.debug("Initializing icons");
 }
-let iconSet = new Set();
+const iconSet = new Set();
 function addIcon(icon, prefix = "far") {
-    let prev = new Set(iconSet);
+    const prev = new Set(iconSet);
     iconSet.add(`${prefix}-${icon}`);
     if (prev.size !== iconSet.size &&
         (!process.env.NODE_ENV || process.env.NODE_ENV === "development")) {
@@ -73,15 +73,15 @@ export class Icon extends React.Component {
         else if (size === "md") {
             size = "1x";
         }
-        return React.createElement(FontAwesome, { icon: this.props.name, color: color, size: size });
+        return React.createElement(FontAwesome, { color: color, icon: this.props.name, size: size });
     }
 }
 export class IconExpo extends React.Component {
     render() {
         const color = Unifier.theme[this.props.color || "primary"];
         // Standardize the size (pretty hacky..)
-        let size = iconSizeToNumber(iconNumberToSize(this.props.size));
-        return (React.createElement(FontAwesome, { icon: [this.props.prefix || "far", this.props.name], color: color, size: size }));
+        const size = iconSizeToNumber(iconNumberToSize(this.props.size));
+        return (React.createElement(FontAwesome, { color: color, icon: [this.props.prefix || "far", this.props.name], size: size }));
         // const {name, prefix} = this.props;
         // const color = Unifier.theme[this.props.color || "primary"];
         // const size = this.props.size;

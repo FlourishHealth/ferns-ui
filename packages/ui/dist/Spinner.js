@@ -32,7 +32,7 @@ export class LoadingOverlay extends React.Component {
                 flex: 1,
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor: Unifier.theme["white"],
+                backgroundColor: Unifier.theme.white,
                 opacity: 0.5,
             } },
             React.createElement(Spinner, null)));
@@ -51,7 +51,7 @@ export class Spinner extends React.Component {
         if (!this.state.show) {
             return null;
         }
-        let size = this.props.size === "sm" ? "small" : "large";
+        const size = this.props.size === "sm" ? "small" : "large";
         return React.createElement(ActivityIndicator, { color: this.props.color || "darkGray", size: size });
     }
 }

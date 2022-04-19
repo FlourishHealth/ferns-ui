@@ -31,7 +31,7 @@ export class Image extends React.Component {
     }
     render() {
         return (React.createElement(Box, { color: this.props.color },
-            React.createElement(NativeImage, { resizeMode: this.resizeMode(this.props.fit), style: Object.assign({ height: this.height(), width: this.width(), maxHeight: this.props.maxHeight, maxWidth: this.props.maxWidth }, this.props.style), source: { uri: this.props.src, cache: "force-cache" } })));
+            React.createElement(NativeImage, { resizeMode: this.resizeMode(this.props.fit), source: { uri: this.props.src, cache: "force-cache" }, style: Object.assign({ height: this.height(), width: this.width(), maxHeight: this.props.maxHeight, maxWidth: this.props.maxWidth }, this.props.style) })));
     }
 }
 //# sourceMappingURL=Image.js.map

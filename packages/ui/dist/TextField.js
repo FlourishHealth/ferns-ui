@@ -96,11 +96,11 @@ export class TextField extends React.Component {
         }
         if (this.props.searching === true) {
             return (React.createElement(Box, { marginRight: 4 },
-                React.createElement(ActivityIndicator, { color: Unifier.theme["primary"], size: "small" })));
+                React.createElement(ActivityIndicator, { color: Unifier.theme.primary, size: "small" })));
         }
         else {
             return (React.createElement(Box, { marginRight: 2 },
-                React.createElement(Icon, { prefix: "far", size: 14, name: "search" })));
+                React.createElement(Icon, { name: "search", prefix: "far", size: 14 })));
         }
     }
     focus() {
@@ -119,27 +119,12 @@ export class TextField extends React.Component {
             value = moment(this.props.value).format("MM/DD/YYYY");
         }
         else if (this.props.type === "height") {
-            value = `${Math.floor(Number(this.props.value) / 12)} ft, ${Number(this.props.value) %
-                12} in`;
+            value = `${Math.floor(Number(this.props.value) / 12)} ft, ${Number(this.props.value) % 12} in`;
         }
         return (React.createElement(React.Fragment, null,
-            React.createElement(WithLabel, { label: errorMessage, labelPlacement: "after", labelColor: this.props.errorMessageColor || "red", labelSize: "sm" },
+            React.createElement(WithLabel, { label: errorMessage, labelColor: this.props.errorMessageColor || "red", labelPlacement: "after", labelSize: "sm" },
                 React.createElement(WithLabel, Object.assign({}, props),
-                    React.createElement(View, { onTouchEnd: () => {
-                            var _a, _b, _c, _d, _e, _f, _g, _h;
-                            if (this.props.type === "date") {
-                                (_b = (_a = this.dateActionSheetRef) === null || _a === void 0 ? void 0 : _a.current) === null || _b === void 0 ? void 0 : _b.setModalVisible(true);
-                            }
-                            else if (this.props.type === "numberRange") {
-                                (_d = (_c = this.numberRangeActionSheetRef) === null || _c === void 0 ? void 0 : _c.current) === null || _d === void 0 ? void 0 : _d.setModalVisible(true);
-                            }
-                            else if (this.props.type === "decimalRange") {
-                                (_f = (_e = this.decimalRangeActionSheetRef) === null || _e === void 0 ? void 0 : _e.current) === null || _f === void 0 ? void 0 : _f.setModalVisible(true);
-                            }
-                            else if (this.props.type === "height") {
-                                (_h = (_g = this.weightActionSheetRef) === null || _g === void 0 ? void 0 : _g.current) === null || _h === void 0 ? void 0 : _h.setModalVisible(true);
-                            }
-                        }, style: {
+                    React.createElement(View, { style: {
                             flexDirection: "row",
                             justifyContent: "center",
                             alignItems: "center",
@@ -155,20 +140,34 @@ export class TextField extends React.Component {
                             borderRadius: 16,
                             backgroundColor: this.props.disabled ? Unifier.theme.gray : Unifier.theme.white,
                             overflow: "hidden",
+                        }, onTouchEnd: () => {
+                            var _a, _b, _c, _d, _e, _f, _g, _h;
+                            if (this.props.type === "date") {
+                                (_b = (_a = this.dateActionSheetRef) === null || _a === void 0 ? void 0 : _a.current) === null || _b === void 0 ? void 0 : _b.setModalVisible(true);
+                            }
+                            else if (this.props.type === "numberRange") {
+                                (_d = (_c = this.numberRangeActionSheetRef) === null || _c === void 0 ? void 0 : _c.current) === null || _d === void 0 ? void 0 : _d.setModalVisible(true);
+                            }
+                            else if (this.props.type === "decimalRange") {
+                                (_f = (_e = this.decimalRangeActionSheetRef) === null || _e === void 0 ? void 0 : _e.current) === null || _f === void 0 ? void 0 : _f.setModalVisible(true);
+                            }
+                            else if (this.props.type === "height") {
+                                (_h = (_g = this.weightActionSheetRef) === null || _g === void 0 ? void 0 : _g.current) === null || _h === void 0 ? void 0 : _h.setModalVisible(true);
+                            }
                         } },
                         this.renderIcon(),
-                        React.createElement(TextInput, { style: Object.assign({ flex: 1, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 0, height: this.getHeight(), width: "100%", color: Unifier.theme.darkGray, fontFamily: Unifier.theme.primaryFont, 
-                                // Remove border in web.
-                                outlineWidth: 0 }, this.props.style), keyboardType: keyboardType, onChangeText: (text) => {
-                                this.props.onChange({ value: text });
-                            }, value: value, 
+                        React.createElement(TextInput, { ref: (ref) => {
+                                if (this.props.inputRef) {
+                                    this.props.inputRef(ref);
+                                }
+                            }, autoCapitalize: type === "text" ? "sentences" : "none", autoFocus: this.props.autoFocus, blurOnSubmit: true, 
                             // TODO: uncomment with upgrade to React 0.56.
                             // textContentType={textContentType}
-                            placeholder: this.props.placeholder, placeholderTextColor: Unifier.theme.gray, secureTextEntry: type === "password", editable: this.isEditable(), autoCapitalize: type === "text" ? "sentences" : "none", underlineColorAndroid: "transparent", onFocus: () => {
-                                if (!this.isHandledByModal()) {
-                                    this.setState({ focused: true });
-                                }
-                            }, onBlur: () => {
+                            editable: this.isEditable(), keyboardType: keyboardType, multiline: this.props.multiline, numberOfLines: this.props.rows || 4, placeholder: this.props.placeholder, placeholderTextColor: Unifier.theme.gray, returnKeyType: type === "number" || type === "decimal" ? "done" : this.props.returnKeyType, secureTextEntry: type === "password", 
+                            // For react-native-autofocus
+                            style: Object.assign({ flex: 1, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 0, height: this.getHeight(), width: "100%", color: Unifier.theme.darkGray, fontFamily: Unifier.theme.primaryFont, 
+                                // Remove border in web.
+                                outlineWidth: 0 }, this.props.style), underlineColorAndroid: "transparent", value: value, onBlur: () => {
                                 if (!this.isHandledByModal()) {
                                     this.setState({ focused: false });
                                 }
@@ -178,11 +177,16 @@ export class TextField extends React.Component {
                                 // if (this.props.type === "date") {
                                 //   this.actionSheetRef?.current?.setModalVisible(false);
                                 // }
-                            }, 
-                            // For react-native-autofocus
-                            ref: (ref) => {
-                                if (this.props.inputRef) {
-                                    this.props.inputRef(ref);
+                            }, onChangeText: (text) => {
+                                this.props.onChange({ value: text });
+                            }, onContentSizeChange: (event) => {
+                                if (!this.props.grow) {
+                                    return;
+                                }
+                                this.setState({ height: event.nativeEvent.contentSize.height });
+                            }, onFocus: () => {
+                                if (!this.isHandledByModal()) {
+                                    this.setState({ focused: true });
                                 }
                             }, onSubmitEditing: () => {
                                 if (this.props.onEnter) {
@@ -191,15 +195,10 @@ export class TextField extends React.Component {
                                 if (this.props.onSubmitEditing) {
                                     this.props.onSubmitEditing();
                                 }
-                            }, onContentSizeChange: (event) => {
-                                if (!this.props.grow) {
-                                    return;
-                                }
-                                this.setState({ height: event.nativeEvent.contentSize.height });
-                            }, blurOnSubmit: true, returnKeyType: type === "number" || type === "decimal" ? "done" : this.props.returnKeyType, autoFocus: this.props.autoFocus, multiline: this.props.multiline, numberOfLines: this.props.rows || 4 })))),
+                            } })))),
             this.props.type === "date" && (React.createElement(DateTimeActionSheet, { actionSheetRef: this.dateActionSheetRef, mode: "date", value: this.props.value, onChange: (result) => this.props.onChange(result) })),
-            this.props.type === "numberRange" && this.props.value && (React.createElement(NumberPickerActionSheet, { actionSheetRef: this.numberRangeActionSheetRef, min: this.props.min || 0, max: this.props.max || (this.props.min || 0) + 100, value: this.props.value, onChange: (result) => this.props.onChange(result) })),
-            this.props.type === "decimalRange" && this.props.value && (React.createElement(DecimalRangeActionSheet, { actionSheetRef: this.decimalRangeActionSheetRef, min: this.props.min || 0, max: this.props.max || (this.props.min || 0) + 100, value: this.props.value, onChange: (result) => this.props.onChange(result) })),
+            this.props.type === "numberRange" && this.props.value && (React.createElement(NumberPickerActionSheet, { actionSheetRef: this.numberRangeActionSheetRef, max: this.props.max || (this.props.min || 0) + 100, min: this.props.min || 0, value: this.props.value, onChange: (result) => this.props.onChange(result) })),
+            this.props.type === "decimalRange" && this.props.value && (React.createElement(DecimalRangeActionSheet, { actionSheetRef: this.decimalRangeActionSheetRef, max: this.props.max || (this.props.min || 0) + 100, min: this.props.min || 0, value: this.props.value, onChange: (result) => this.props.onChange(result) })),
             this.props.type === "height" && (React.createElement(HeightActionSheet, { actionSheetRef: this.weightActionSheetRef, value: this.props.value, onChange: (result) => {
                     this.props.onChange(result);
                 } }))));

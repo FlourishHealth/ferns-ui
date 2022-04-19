@@ -152,7 +152,7 @@ export default class RNPickerSelect extends PureComponent<any, any> {
         idx: any;
     };
     constructor(props: any);
-    componentDidUpdate: (prevProps: any, prevState: any) => void;
+    componentDidUpdate(prevProps: Readonly<any>, prevState: Readonly<any>): void;
     onUpArrow(): void;
     onDownArrow(): void;
     onValueChange(value: any, index: any): void;

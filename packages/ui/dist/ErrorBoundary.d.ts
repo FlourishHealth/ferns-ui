@@ -1,5 +1,5 @@
-import { ErrorBoundaryProps } from "./Common";
 import React from "react";
+import { ErrorBoundaryProps } from "./Common";
 interface State {
     error?: Error;
 }

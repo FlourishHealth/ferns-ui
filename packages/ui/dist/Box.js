@@ -212,14 +212,14 @@ export class Box extends React.Component {
         }
         if (this.props.scroll) {
             const _a = this.propsToStyle(), { justifyContent, alignContent, alignItems } = _a, scrollStyle = __rest(_a, ["justifyContent", "alignContent", "alignItems"]);
-            box = (React.createElement(ScrollView, { horizontal: this.props.overflow === "scrollX", style: scrollStyle, contentContainerStyle: { justifyContent, alignContent, alignItems }, keyboardShouldPersistTaps: "handled", ref: this.props.scrollRef || this.scrollRef, onScroll: (event) => {
+            box = (React.createElement(ScrollView, { ref: this.props.scrollRef || this.scrollRef, contentContainerStyle: { justifyContent, alignContent, alignItems }, horizontal: this.props.overflow === "scrollX", keyboardShouldPersistTaps: "handled", scrollEventThrottle: 50, style: scrollStyle, onScroll: (event) => {
                     if (this.props.onScroll && event) {
                         this.props.onScroll(event.nativeEvent.contentOffset.y);
                     }
-                }, scrollEventThrottle: 50 }, box));
+                } }, box));
         }
         if (this.props.avoidKeyboard) {
-            box = (React.createElement(KeyboardAvoidingView, { behavior: Platform.OS === "ios" ? "padding" : "height", style: { flex: 1, display: "flex" }, keyboardVerticalOffset: this.props.keyboardOffset },
+            box = (React.createElement(KeyboardAvoidingView, { behavior: Platform.OS === "ios" ? "padding" : "height", keyboardVerticalOffset: this.props.keyboardOffset, style: { flex: 1, display: "flex" } },
                 React.createElement(SafeAreaView, { style: { flex: 1, display: "flex" } }, box)));
         }
         return box;

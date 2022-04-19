@@ -1,7 +1,7 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
-import { Icon } from "./Icon";
 import { iconSizeToNumber } from "./Common";
+import { Icon } from "./Icon";
 import { Unifier } from "./Unifier";
 export class IconButton extends React.Component {
     render() {
@@ -9,7 +9,7 @@ export class IconButton extends React.Component {
         let color;
         if (this.props.bgColor === "transparentDarkGray") {
             opacity = 0.8;
-            color = Unifier.theme["darkGray"];
+            color = Unifier.theme.darkGray;
         }
         else if (this.props.bgColor === "transparent" || !this.props.bgColor) {
             opacity = 0.0;
@@ -18,11 +18,8 @@ export class IconButton extends React.Component {
         else {
             color = Unifier.theme[this.props.bgColor];
         }
-        return (React.createElement(TouchableOpacity, { onPress: () => {
-                Unifier.utils.haptic();
-                this.props.onClick();
-            }, style: {
-                opacity: opacity,
+        return (React.createElement(TouchableOpacity, { hitSlop: { top: 10, left: 10, bottom: 10, right: 10 }, style: {
+                opacity,
                 backgroundColor: color,
                 borderRadius: 100,
                 // paddingBottom: iconSizeToNumber(this.props.size) / 4,
@@ -34,8 +31,11 @@ export class IconButton extends React.Component {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-            }, hitSlop: { top: 10, left: 10, bottom: 10, right: 10 } },
-            React.createElement(Icon, { prefix: this.props.prefix || "fas", size: iconSizeToNumber(this.props.size), name: this.props.icon, color: this.props.iconColor })));
+            }, onPress: () => {
+                Unifier.utils.haptic();
+                this.props.onClick();
+            } },
+            React.createElement(Icon, { color: this.props.iconColor, name: this.props.icon, prefix: this.props.prefix || "fas", size: iconSizeToNumber(this.props.size) })));
     }
 }
 //# sourceMappingURL=IconButton.js.map

@@ -28,29 +28,29 @@ export class Banner extends React.Component {
         if (!this.state.show) {
             return null;
         }
-        let type = this.props.type || "dismiss";
+        const type = this.props.type || "dismiss";
         if (type === "action" && !this.props.onClick) {
             console.warn("Banners with type action require an onClick property.");
         }
         const negativeMargin = (this.props.negativeXMargin || 0) * -4;
-        return (React.createElement(Box, { onClick: this.dismiss, paddingY: 2, marginTop: 3, marginBottom: 3, color: this.props.color || "secondaryDark", direction: "row", rounding: this.props.shape, dangerouslySetInlineStyle: {
+        return (React.createElement(Box, { color: this.props.color || "secondaryDark", dangerouslySetInlineStyle: {
                 __style: {
                     marginLeft: negativeMargin,
                     marginRight: negativeMargin,
                 },
-            }, width: Unifier.utils.dimensions().width || "100%", paddingX: 3, justifyContent: "between", shadow: true },
-            React.createElement(Box, { direction: "column", justifyContent: "center", alignItems: "center", flex: "shrink" },
+            }, direction: "row", justifyContent: "between", marginBottom: 3, marginTop: 3, paddingX: 3, paddingY: 2, rounding: this.props.shape, shadow: true, width: Unifier.utils.dimensions().width || "100%", onClick: this.dismiss },
+            React.createElement(Box, { alignItems: "center", direction: "column", flex: "shrink", justifyContent: "center" },
                 React.createElement(Box, { paddingY: 1 },
                     React.createElement(Text, { align: "center", color: this.props.textColor || "white", weight: "bold" }, this.props.text)),
                 this.props.subtext && (React.createElement(Box, { paddingY: 1 },
                     React.createElement(Text, { align: "center", color: this.props.textColor || "white" }, this.props.subtext)))),
-            React.createElement(Box, { display: "block", width: 40, alignItems: "center", justifyContent: "center" },
-                type === "dismiss" && (React.createElement(IconButton, { prefix: "fas", icon: "times-circle", 
+            React.createElement(Box, { alignItems: "center", display: "block", justifyContent: "center", width: 40 },
+                type === "dismiss" && (React.createElement(IconButton, { accessibilityLabel: "", icon: "times-circle", 
                     // size="lg"
-                    onClick: () => this.dismiss(), accessibilityLabel: "", iconColor: (this.props.textColor || "white") })),
-                type === "action" && (React.createElement(IconButton, { prefix: "fas", icon: "arrow-right", 
+                    iconColor: (this.props.textColor || "white"), prefix: "fas", onClick: () => this.dismiss() })),
+                type === "action" && (React.createElement(IconButton, { accessibilityLabel: "", icon: "arrow-right", 
                     // size="lg"
-                    onClick: () => this.props.onClick && this.props.onClick(), accessibilityLabel: "", iconColor: (this.props.textColor || "white") })))));
+                    iconColor: (this.props.textColor || "white"), prefix: "fas", onClick: () => this.props.onClick && this.props.onClick() })))));
     }
 }
 //# sourceMappingURL=Banner.js.map

@@ -11,8 +11,8 @@ export class SegmentedControl extends React.Component {
         // }
     }
     render() {
-        return (React.createElement(Box, { rounding: 3, width: "100%", height: 40, display: "flex", direction: "row", color: "lightGray", padding: 1 }, this.props.items.map((item, index) => (React.createElement(Box, { key: index, rounding: 3, height: "100%", width: `${100 / this.props.items.length}%`, color: this.props.selectedItemIndex === index ? "white" : "lightGray" },
-            React.createElement(Box, { width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", onClick: () => this.props.onChange({ activeIndex: index }) }, this.renderItem(item)))))));
+        return (React.createElement(Box, { color: "lightGray", direction: "row", display: "flex", height: 40, padding: 1, rounding: 3, width: "100%" }, this.props.items.map((item, index) => (React.createElement(Box, { key: index, color: this.props.selectedItemIndex === index ? "white" : "lightGray", height: "100%", rounding: 3, width: `${100 / this.props.items.length}%` },
+            React.createElement(Box, { alignItems: "center", display: "flex", height: "100%", justifyContent: "center", width: "100%", onClick: () => this.props.onChange({ activeIndex: index }) }, this.renderItem(item)))))));
     }
 }
 //# sourceMappingURL=SegmentedControl.js.map

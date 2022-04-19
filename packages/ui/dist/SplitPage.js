@@ -1,11 +1,11 @@
 import React from "react";
+import { View } from "react-native";
 import { Box } from "./Box";
+import { FlatList } from "./FlatList";
+import { IconButton } from "./IconButton";
+import { mediaQueryLargerThan } from "./MediaQuery";
 import { Spinner } from "./Spinner";
 import { Unifier } from "./Unifier";
-import { FlatList } from "./FlatList";
-import { View } from "react-native";
-import { mediaQueryLargerThan } from "./MediaQuery";
-import { IconButton } from "./IconButton";
 // A component for rendering a list on one side and a details view on the right for large screens,
 // and a scrollable list where clicking an item takes you the details view.
 export class SplitPage extends React.Component {
@@ -32,18 +32,18 @@ export class SplitPage extends React.Component {
                     flexDirection: "column",
                 } },
                 this.props.renderListViewHeader && this.props.renderListViewHeader(),
-                React.createElement(FlatList, { data: this.props.listViewData, renderItem: this.renderItem, keyExtractor: (item) => item.id, extraData: this.props.listViewExtraData })));
+                React.createElement(FlatList, { data: this.props.listViewData, extraData: this.props.listViewExtraData, keyExtractor: (item) => item.id, renderItem: this.renderItem })));
         };
         this.renderListContent = () => {
             return (React.createElement(Box, { flex: "grow", padding: 2 },
                 !mediaQueryLargerThan("sm") && (React.createElement(Box, { width: "100%" },
-                    React.createElement(IconButton, { icon: "times", accessibilityLabel: "close", iconColor: "darkGray", onClick: () => this.setState({ selectedId: undefined }) }))),
+                    React.createElement(IconButton, { accessibilityLabel: "close", icon: "times", iconColor: "darkGray", onClick: () => this.setState({ selectedId: undefined }) }))),
                 this.props.renderContent(this.state.selectedId)));
         };
     }
     render() {
-        return (React.createElement(Box, { avoidKeyboard: true, keyboardOffset: this.props.keyboardOffset, display: "flex", width: "100%", height: "100%", flex: "grow", direction: "row", color: this.props.color || "lightGray" },
-            this.props.loading === true && React.createElement(Spinner, { size: "md", color: Unifier.theme.darkGray }),
+        return (React.createElement(Box, { avoidKeyboard: true, color: this.props.color || "lightGray", direction: "row", display: "flex", flex: "grow", height: "100%", keyboardOffset: this.props.keyboardOffset, width: "100%" },
+            this.props.loading === true && React.createElement(Spinner, { color: Unifier.theme.darkGray, size: "md" }),
             this.renderList(),
             this.renderListContent()));
     }

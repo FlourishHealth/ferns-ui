@@ -34,9 +34,9 @@ export const SimpleContent = forwardRef((props, ref) => {
         // HeaderComponent={renderHeader}
         , { 
             // HeaderComponent={renderHeader}
-            ref: combinedRef, scrollViewProps: {
+            ref: combinedRef, adjustToContentHeight: true, panGestureAnimatedValue: animated, scrollViewProps: {
                 showsVerticalScrollIndicator: false,
                 stickyHeaderIndices: [0],
-            }, panGestureAnimatedValue: animated, adjustToContentHeight: true }, props.children)));
+            } }, props.children)));
 });
 //# sourceMappingURL=ModalSheet.js.map

@@ -1,6 +1,6 @@
 import React from "react";
-import { Color } from "./Common";
 import { ListRenderItemInfo } from "react-native";
+import { Color } from "./Common";
 interface SplitPageProps {
     navigation: any;
     loading?: boolean;

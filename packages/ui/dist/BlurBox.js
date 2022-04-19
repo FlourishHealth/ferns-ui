@@ -21,7 +21,7 @@ export class BlurBox extends React.Component {
                 backgroundColor: "#111",
                 opacity: 0.8,
                 borderRadius: 12,
-            }), marginBottom: marginBottom || 4, marginTop: marginTop || 0, margin: margin || 0 }),
+            }), margin: margin || 0, marginBottom: marginBottom || 4, marginTop: marginTop || 0 }),
             React.createElement(Box, Object.assign({ paddingX: 4 }, props), this.props.children)));
     }
 }

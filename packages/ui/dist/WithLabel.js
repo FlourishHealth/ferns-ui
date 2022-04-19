@@ -14,10 +14,10 @@ export class WithLabel extends React.Component {
         if (label) {
             return (React.createElement(Box, { direction: labelInline ? "row" : "column", justifyContent: this.props.labelJustifyContent, width: "100%" },
                 this.props.labelPlacement !== "after" && (React.createElement(Box, { paddingY: 1 },
-                    React.createElement(Text, { size: this.props.labelSize, color: labelColor || "darkGray", weight: "bold" }, label))),
+                    React.createElement(Text, { color: labelColor || "darkGray", size: this.props.labelSize, weight: "bold" }, label))),
                 children,
                 this.props.labelPlacement === "after" && (React.createElement(Box, { paddingY: 1 },
-                    React.createElement(Text, { size: this.props.labelSize, color: labelColor || "darkGray" }, label)))));
+                    React.createElement(Text, { color: labelColor || "darkGray", size: this.props.labelSize }, label)))));
         }
         else {
             return children;
