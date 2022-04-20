@@ -40,8 +40,6 @@ jobs:
       - run: cd src && npm version ${{ github.event.release.tag_name }}
       # build the project
       - run: yarn build
-      # run tests just in case
-      - run: yarn test
       # publish to NPM -> there is one caveat, continue reading for the fix
       - run: cd src && npm publish
         env:
