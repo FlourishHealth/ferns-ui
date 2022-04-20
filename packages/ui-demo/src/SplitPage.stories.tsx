@@ -1,4 +1,4 @@
-import { Box, SplitPage, Text } from "@ferns/ui";
+import { Box, SplitPage, Text } from "ferns-ui";
 import React from "react";
 
 export const SplitPageStories = {

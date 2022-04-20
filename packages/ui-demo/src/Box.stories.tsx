@@ -1,4 +1,4 @@
-import { AllColors, Box, Text } from "@ferns/ui";
+import { AllColors, Box, Text } from "ferns-ui";
 import React from "react";
 
 import { StorybookContainer } from "./StorybookContainer";

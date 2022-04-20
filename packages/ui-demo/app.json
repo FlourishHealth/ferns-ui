@@ -26,7 +26,12 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "build": {
+        "babel": {
+          "include": ["victory-native", "@sentry/react-native"]
+        }
+      }
     }
   }
 }

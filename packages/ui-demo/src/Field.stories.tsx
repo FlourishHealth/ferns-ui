@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import { Field } from "@ferns/ui";
+import { Field } from "ferns-ui";
 import React from "react";
 
 import { StorybookContainer } from "./StorybookContainer";
