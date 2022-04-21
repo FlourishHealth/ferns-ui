@@ -2,7 +2,6 @@ import debounce from "lodash/debounce";
 import React from "react";
 import { ActivityIndicator, TouchableOpacity } from "react-native";
 import { Box } from "./Box";
-import { iconSizeToNumber } from "./Common";
 import { Icon } from "./Icon";
 // import {Icon} from "./Icon";
 import { Text } from "./Text";
@@ -93,7 +92,7 @@ export class Button extends React.Component {
                 this.setState({ loading: false });
             }, 500, { leading: true }) },
             this.props.icon !== undefined && (React.createElement(Box, { paddingX: 2 },
-                React.createElement(Icon, { color: this.getTextColor(this.props.color), name: this.props.icon, prefix: this.props.iconPrefix || "far", size: iconSizeToNumber(this.props.size) }))),
+                React.createElement(Icon, { color: this.getTextColor(this.props.color), name: this.props.icon, prefix: this.props.iconPrefix || "far", size: this.props.size }))),
             Boolean(this.props.children) && this.props.children,
             Boolean(this.props.text) && (React.createElement(Text, { color: this.getTextColor(color), inline: this.props.inline, size: this.props.size, skipLinking: true, weight: "bold" }, this.props.text)),
             (this.state.loading || this.props.loading) && (React.createElement(Box, { marginLeft: 2 },

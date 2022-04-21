@@ -79,7 +79,7 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
     } else {
       return (
         <Box marginRight={2}>
-          <Icon name="search" prefix="far" size={14} />
+          <Icon name="search" prefix="far" size="md" />
         </Box>
       );
     }

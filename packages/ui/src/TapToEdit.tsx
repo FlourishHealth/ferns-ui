@@ -19,7 +19,7 @@ export class TapToEdit extends React.Component<TextFieldProps, TapToEditState> {
       return (
         <Box direction="row" display="flex" onClick={() => this.setState({showEdit: true})}>
           <Box marginRight={2}>
-            <Icon color="primaryDark" name="edit" prefix="far" size={20} />
+            <Icon color="primaryDark" name="edit" prefix="far" size="lg" />
           </Box>
           <Text>{this.props.children}</Text>
         </Box>

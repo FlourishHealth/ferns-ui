@@ -45,11 +45,7 @@ const renderStory = (story: Story) => {
 
 export default function App() {
   const [currentStory, setStory] = useState<string | null>(null);
-  console.info(
-    "Current",
-    currentStory,
-    stories.map((s) => s.title)
-  );
+  console.log("Hi")
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -64,6 +60,7 @@ export default function App() {
             <Text style={{ fontWeight: "bold" }}>&lt; Back</Text>
           </TouchableOpacity>
         )}
+        <Text style={{marginLeft: 20, fontWeight: "bold"}}>{currentStory}</Text>
       </View>
       <View style={styles.body}>
         {currentStory && allStories[currentStory]()}
@@ -77,7 +74,7 @@ export default function App() {
                   {s.title}
                 </Text>
                 {Object.keys(s.stories).map((title) => (
-                  <TouchableOpacity key={title} onPress={() => setStory(title)}>
+                  <TouchableOpacity key={title} onPress={() => {console.log("PRES", title); setStory(title)}}>
                     <Text style={{ fontSize: 16, marginBottom: 8 }}>
                       {title}
                     </Text>

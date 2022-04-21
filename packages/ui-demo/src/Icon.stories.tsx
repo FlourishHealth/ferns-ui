@@ -1,5 +1,6 @@
-import { Box, Icon, IconExpo } from "ferns-ui";
+import { Box, Icon } from "ferns-ui";
 import React from "react";
+import {FontAwesome} from "@expo/vector-icons";
 
 import { StorybookContainer } from "./StorybookContainer";
 
@@ -17,31 +18,32 @@ export const IconStories = {
             justifyContent="between"
             width="100%"
           >
-            <IconExpo name="heart" prefix="fas" />
-            <Icon name="plus" prefix="fas" />
-            <Icon name="edit" prefix="fas" />
+            <Icon name="heart" />
+            <Icon name="plus" />
+            <Icon name="edit" />
+            <Icon name="heart"  />
           </Box>
         </StorybookContainer>
       );
     },
-    "Regular Icons": function () {
-      return (
-        <StorybookContainer>
-          <Box
-            direction="row"
-            display="flex"
-            height="100%"
-            justifyContent="between"
-            width="100%"
-          >
-            <Icon name="heart" prefix="far" />
-            <Icon name="plus" prefix="far" />
-            <Icon name="edit" prefix="far" />
-            <Icon name="heart" prefix="far" />
-          </Box>
-        </StorybookContainer>
-      );
-    },
+    // "Regular Icons": function () {
+    //   return (
+    //     <StorybookContainer>
+    //       <Box
+    //         direction="row"
+    //         display="flex"
+    //         height="100%"
+    //         justifyContent="between"
+    //         width="100%"
+    //       >
+    //         <Icon name="heart" prefix="far" />
+    //         <Icon name="plus" prefix="far" />
+    //         <Icon name="edit" prefix="far" />
+    //         <Icon name="heart" prefix="far" />
+    //       </Box>
+    //     </StorybookContainer>
+    //   );
+    // },
     "Icon Sizes": function () {
       return (
         <StorybookContainer>
@@ -52,20 +54,20 @@ export const IconStories = {
             justifyContent="between"
             width="100%"
           >
-            <Icon name="heart" prefix="fas" size={8} />
-            <Icon name="heart" prefix="far" size={8} />
+            <Icon name="heart" prefix="fas" size="xs" />
+            <Icon name="heart" prefix="far" size="xs" />
 
-            <Icon name="heart" prefix="fas" size={12} />
-            <Icon name="heart" prefix="far" size={12} />
+            <Icon name="heart" prefix="fas" size="sm" />
+            <Icon name="heart" prefix="far" size="sm" />
 
-            <Icon name="heart" prefix="fas" size={15} />
-            <Icon name="heart" prefix="far" size={15} />
+            <Icon name="heart" prefix="fas" size="md" />
+            <Icon name="heart" prefix="far" size="md" />
 
-            <Icon name="heart" prefix="fas" size={22} />
-            <Icon name="heart" prefix="far" size={22} />
+            <Icon name="heart" prefix="fas" size="lg" />
+            <Icon name="heart" prefix="far" size="lg" />
 
-            <Icon name="heart" prefix="fas" size={28} />
-            <Icon name="heart" prefix="far" size={28} />
+            <Icon name="heart" prefix="fas" size="xl" />
+            <Icon name="heart" prefix="far" size="xl" />
           </Box>
         </StorybookContainer>
       );

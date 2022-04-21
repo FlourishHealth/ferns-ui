@@ -100,7 +100,7 @@ export class TextField extends React.Component {
         }
         else {
             return (React.createElement(Box, { marginRight: 2 },
-                React.createElement(Icon, { name: "search", prefix: "far", size: 14 })));
+                React.createElement(Icon, { name: "search", prefix: "far", size: "md" })));
         }
     }
     focus() {

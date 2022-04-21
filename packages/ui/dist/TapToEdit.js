@@ -13,7 +13,7 @@ export class TapToEdit extends React.Component {
         if (!this.state.showEdit) {
             return (React.createElement(Box, { direction: "row", display: "flex", onClick: () => this.setState({ showEdit: true }) },
                 React.createElement(Box, { marginRight: 2 },
-                    React.createElement(Icon, { color: "primaryDark", name: "edit", prefix: "far", size: 20 })),
+                    React.createElement(Icon, { color: "primaryDark", name: "edit", prefix: "far", size: "lg" })),
                 React.createElement(Text, null, this.props.children)));
         }
         else {

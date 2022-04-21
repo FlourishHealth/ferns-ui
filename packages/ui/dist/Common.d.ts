@@ -323,10 +323,10 @@ export interface FaceBookButtonProps {
     signUp: boolean;
 }
 export interface IconProps {
-    prefix: IconPrefix;
+    prefix?: IconPrefix;
     name: string;
     color?: AllColors;
-    size?: number;
+    size?: IconSize;
     iconStyle?: any;
     containerStyle?: any;
 }

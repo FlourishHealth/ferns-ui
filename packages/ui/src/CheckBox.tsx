@@ -36,7 +36,7 @@ export class CheckBox extends React.Component<CheckBoxProps, {}> {
               color="white"
               name="check"
               prefix="fas"
-              size={this.props.size === "sm" ? 7 : 10}
+              size={this.props.size === "sm" ? "sm" : "md"}
             />
           )}
         </Box>

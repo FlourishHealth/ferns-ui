@@ -35,7 +35,7 @@ export class IconButton extends React.Component {
                 Unifier.utils.haptic();
                 this.props.onClick();
             } },
-            React.createElement(Icon, { color: this.props.iconColor, name: this.props.icon, prefix: this.props.prefix || "fas", size: iconSizeToNumber(this.props.size) })));
+            React.createElement(Icon, { color: this.props.iconColor, name: this.props.icon, prefix: this.props.prefix || "fas", size: this.props.size })));
     }
 }
 //# sourceMappingURL=IconButton.js.map

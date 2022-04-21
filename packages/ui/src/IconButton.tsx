@@ -44,7 +44,7 @@ export class IconButton extends React.Component<IconButtonProps, {}> {
           color={this.props.iconColor}
           name={this.props.icon}
           prefix={this.props.prefix || "fas"}
-          size={iconSizeToNumber(this.props.size)}
+          size={this.props.size}
         />
       </TouchableOpacity>
     );

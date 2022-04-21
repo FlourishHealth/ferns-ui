@@ -5,7 +5,7 @@ import {Box} from "./Box";
 import {AllColors, IconPrefix, IconSize} from "./Common";
 import {Icon} from "./Icon";
 
-/* 
+/*
 Originally based on https://github.com/pinterest/gestalt
 Forked, added type definitions, and added features.
 */
@@ -203,7 +203,7 @@ export default function Pog(props: Props) {
           // dangerouslySetSvgPath={dangerouslySetSvgPath}
           name={icon}
           prefix={iconPrefix}
-          size={iconSize}
+          size={size}
         />
       </Box>
     </div>
