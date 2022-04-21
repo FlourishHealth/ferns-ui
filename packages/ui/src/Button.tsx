@@ -112,7 +112,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
               color={this.getTextColor(this.props.color as Color)}
               name={this.props.icon}
               prefix={this.props.iconPrefix || "far"}
-              size={iconSizeToNumber(this.props.size)}
+              size={this.props.size}
             />
           </Box>
         )}

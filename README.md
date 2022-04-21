@@ -1,12 +1,21 @@
-# Ferns
+# ferns-ui
 
-This is a monorepo for the various @ferns packages, built by [Flourish Health](https://www.flourish.health) for our apps.
+This package gives you a consistent React Native and React Native Web UI, along with theming support. It's primarily
+designed to work with Expo.
 
-For building an API quickly with Express and Mongo, look at [@ferns/api](https://github.com/FlourishHealth/ferns/tree/master/packages/api)
+There is a demo app for easily checking out the UIs in iOS/Android/Web in packages/ui-demo
 
-For a React Native (+Web) UI built around consistent design and avoiding stylesheets, look at [@ferns/ui](https://github.com/FlourishHealth/ferns/tree/master/packages/ui)
+## Dev
 
-For a demo of the @ferns/ui, check out [@ferns/ui-demo](https://github.com/FlourishHealth/ferns/tree/master/packages/ui-demo)
+To make developing easy, link ui and ui-demo together with `yarn link` with this helper script:
 
-For fullstack Typescript linting for all your projects, we have [eslint-config-ferns](https://github.com/FlourishHealth/ferns/tree/master/packages/eslint-config-ferns)
+    yarn make-links
 
+Now you will be using the local ferns-ui package and the demo will update as you change the code. You'll need to be
+compiling the ui code and running the demo in separate terminals:
+
+    # In two different terminals:
+    yarn dev
+    yarn web
+
+`yarn dev` will start the Typescript compiler. `yarn web` will launch the ui-demo in Expo for web.

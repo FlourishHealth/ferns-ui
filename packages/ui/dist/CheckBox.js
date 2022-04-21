@@ -11,7 +11,7 @@ export class CheckBox extends React.Component {
                 this.props.onChange({ value: !this.props.checked });
                 this.props.onClick && this.props.onClick();
             } },
-            React.createElement(Box, { alignItems: "center", direction: "column", display: "flex", height: "100%", justifyContent: "center", width: "100%" }, this.props.checked && (React.createElement(Icon, { color: "white", name: "check", prefix: "fas", size: this.props.size === "sm" ? 7 : 10 })))));
+            React.createElement(Box, { alignItems: "center", direction: "column", display: "flex", height: "100%", justifyContent: "center", width: "100%" }, this.props.checked && (React.createElement(Icon, { color: "white", name: "check", prefix: "fas", size: this.props.size === "sm" ? "sm" : "md" })))));
     }
     render() {
         return (React.createElement(Box, { alignItems: "center", direction: "row", display: "flex", maxHeight: 60, paddingY: 1, width: "100%" },

@@ -12,7 +12,12 @@
     "nohoist": ["**/react-native", "**/react-native/**", "**/expo", "**/expo/**","**/expo-*", "**/expo-*/**", "**/@storybook", "**/@storybook/**"]
   },
   "scripts": {
-    "demo-ios": ""
+    "android": "yarn --cwd packages/ui-demo android",
+    "ios": "yarn --cwd packages/ui-demo ios",
+    "web": "yarn --cwd packages/ui-demo web",
+    "build": "yarn --cwd packages/ui build",
+    "dev": "yarn --cwd packages/ui dev",
+    "make-links": "cd packages/ui && yarn link && cd ../packages/ui-demo && yarn link ferns-ui"
   },
   "devDependencies": {
   },

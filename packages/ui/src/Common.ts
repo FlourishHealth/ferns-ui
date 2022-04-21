@@ -160,6 +160,7 @@ export type Font =
   | "button";
 
 // type Sizes = "small" | "xsmall" | "sm" | "small" | "medium" | "lg" | "large";
+
 export type Direction = "up" | "right" | "down" | "left";
 export type Color =
   | "blue"
@@ -628,10 +629,10 @@ export interface FaceBookButtonProps {
 }
 
 export interface IconProps {
-  prefix: IconPrefix;
+  prefix?: IconPrefix; // For support FA solid/regular/light/duotone, as well as other icon packs in the future.
   name: string;
   color?: AllColors;
-  size?: number;
+  size?: IconSize;
   iconStyle?: any;
   containerStyle?: any;
 }
