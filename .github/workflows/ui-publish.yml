@@ -56,6 +56,6 @@ jobs:
           SLACK_CHANNEL: bots
           SLACK_COLOR: "#4BB543"
           # SLACK_MESSAGE: "Post Content :rocket:"
-          SLACK_TITLE: Released react-unifier@${{ github.event.release.target_commitish }}
+          SLACK_TITLE: Released ui@${{ github.event.release.target_commitish }}
           SLACK_USERNAME: Flourish
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

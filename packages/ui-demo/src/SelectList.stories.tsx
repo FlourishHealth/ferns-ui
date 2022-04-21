@@ -1,4 +1,4 @@
-import { Box, SelectList, SelectListOptions } from "@ferns/ui";
+import { Box, SelectList, SelectListOptions } from "ferns-ui";
 import React from "react";
 
 import { StorybookContainer } from "./StorybookContainer";

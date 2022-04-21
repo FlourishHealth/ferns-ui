@@ -70,7 +70,7 @@ export default function App() {
         {!currentStory && (
           <ScrollView style={styles.storyList}>
             {stories.map((s) => (
-              <>
+              <React.Fragment key={s.title}>
                 <Text
                   style={{ fontWeight: "bold", fontSize: 20, marginBottom: 12 }}
                 >
@@ -83,7 +83,7 @@ export default function App() {
                     </Text>
                   </TouchableOpacity>
                 ))}
-              </>
+              </React.Fragment>
             ))}
           </ScrollView>
         )}

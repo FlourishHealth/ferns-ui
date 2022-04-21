@@ -1,4 +1,4 @@
-import { Box, SegmentedControl } from "@ferns/ui";
+import { Box, SegmentedControl } from "ferns-ui";
 import React from "react";
 
 export const SegmentedControlStories = {

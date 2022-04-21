@@ -1,4 +1,4 @@
-import { Box, Heading, HeadingProps } from "@ferns/ui";
+import { Box, Heading, HeadingProps } from "ferns-ui";
 import React from "react";
 
 import { StorybookContainer } from "./StorybookContainer";
