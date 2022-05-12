@@ -17,7 +17,7 @@
     "web": "yarn --cwd packages/ui-demo web",
     "build": "yarn --cwd packages/ui build",
     "dev": "yarn --cwd packages/ui dev",
-    "make-links": "cd packages/ui && yarn link && cd ../packages/ui-demo && yarn link ferns-ui"
+    "make-links": "cd packages/ui && yarn link && cd ../ui-demo && yarn link ferns-ui"
   },
   "devDependencies": {
   },
