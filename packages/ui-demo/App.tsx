@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import {
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -45,7 +46,7 @@ const renderStory = (story: Story) => {
 
 export default function App() {
   const [currentStory, setStory] = useState<string | null>(null);
-  console.log("Hi")
+  console.log("Hi");
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -56,11 +57,13 @@ export default function App() {
           </Text>
         )}
         {currentStory && (
-          <TouchableOpacity onPress={() => setStory(null)}>
+          <Pressable onPress={() => setStory(null)}>
             <Text style={{ fontWeight: "bold" }}>&lt; Back</Text>
-          </TouchableOpacity>
+          </Pressable>
         )}
-        <Text style={{marginLeft: 20, fontWeight: "bold"}}>{currentStory}</Text>
+        <Text style={{ marginLeft: 20, fontWeight: "bold" }}>
+          {currentStory}
+        </Text>
       </View>
       <View style={styles.body}>
         {currentStory && allStories[currentStory]()}
@@ -74,11 +77,17 @@ export default function App() {
                   {s.title}
                 </Text>
                 {Object.keys(s.stories).map((title) => (
-                  <TouchableOpacity key={title} onPress={() => {console.log("PRES", title); setStory(title)}}>
+                  <Pressable
+                    key={title}
+                    onPress={() => {
+                      console.log("PRES", title);
+                      setStory(title);
+                    }}
+                  >
                     <Text style={{ fontSize: 16, marginBottom: 8 }}>
                       {title}
                     </Text>
-                  </TouchableOpacity>
+                  </Pressable>
                 ))}
               </React.Fragment>
             ))}
