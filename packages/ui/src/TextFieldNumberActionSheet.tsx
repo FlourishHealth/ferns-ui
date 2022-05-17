@@ -1,6 +1,6 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment-timezone";
-import React, {SyntheticEvent} from "react";
+import React from "react";
 
 import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";

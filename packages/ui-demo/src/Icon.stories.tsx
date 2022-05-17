@@ -1,6 +1,6 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { Box, Icon } from "ferns-ui";
 import React from "react";
-import {FontAwesome} from "@expo/vector-icons";
 
 import { StorybookContainer } from "./StorybookContainer";
 
@@ -21,7 +21,7 @@ export const IconStories = {
             <Icon name="heart" />
             <Icon name="plus" />
             <Icon name="edit" />
-            <Icon name="heart"  />
+            <Icon name="heart" />
           </Box>
         </StorybookContainer>
       );

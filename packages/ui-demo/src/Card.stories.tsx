@@ -1,4 +1,4 @@
-import { Box, Card } from "ferns-ui";
+import { Box, Card, Text } from "ferns-ui";
 import React from "react";
 
 export const CardStories = {
@@ -27,13 +27,19 @@ export const CardStories = {
                 rounding="circle"
                 width={50}
               >
-                <h2>JG</h2>
+                <h2>
+                  <Text>JG</Text>
+                </h2>
               </Box>
               <Box direction="column" paddingX={2}>
                 <div>
-                  <b>Josh Gachnang</b>
+                  <b>
+                    <Text>Josh Gachnang</Text>
+                  </b>
                 </div>
-                <div>joined 2 years ago</div>
+                <div>
+                  <Text>joined 2 years ago</Text>
+                </div>
               </Box>
             </Box>
           </Card>

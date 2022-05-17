@@ -1,4 +1,4 @@
-import { Box, Link, Text } from "ferns-ui";
+import { Link, Text } from "ferns-ui";
 import React from "react";
 
 import { StorybookContainer } from "./StorybookContainer";
@@ -20,13 +20,11 @@ export const LinkStories = {
             <Text color="blue">Colored links</Text>
           </Link>
 
-          <Text>
-            Here is an inline link:
-            <Link href="http://google.com" inline>
-              <Text>Some Link</Text>
-            </Link>
-            And a bit more text.
-          </Text>
+          <Text>Here is an inline link:</Text>
+          <Link href="http://google.com" inline>
+            <Text>Some Link</Text>
+          </Link>
+          <Text> And a bit more text.</Text>
         </StorybookContainer>
       );
     },
