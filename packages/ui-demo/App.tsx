@@ -1,12 +1,6 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import {StatusBar} from "expo-status-bar";
+import React, {useState} from "react";
+import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import * as Stories from "./src/stories";
 
@@ -15,11 +9,11 @@ type StoryFunc = () => JSX.Element;
 export interface Story {
   title: string;
   component: any;
-  stories: { [name: string]: StoryFunc };
+  stories: {[name: string]: StoryFunc};
 }
 
 const stories: Story[] = Object.values(Stories);
-const allStories: { [name: string]: StoryFunc } = {};
+const allStories: {[name: string]: StoryFunc} = {};
 for (const story of stories) {
   for (const storyName of Object.keys(story.stories)) {
     allStories[storyName] = story.stories[storyName];
@@ -43,22 +37,19 @@ const renderStory = (story: Story) => {
   );
 };
 
-export default function App() {
+const App = () => {
   const [currentStory, setStory] = useState<string | null>(null);
-  console.log("Hi")
+  // eslint-disable-next-line no-console
+  console.log("Hi");
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.header}>
-        {!currentStory && (
-          <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-            Pick A Story:
-          </Text>
-        )}
+        {!currentStory && <Text style={{fontWeight: "bold", fontSize: 20}}>Pick A Story:</Text>}
         {currentStory && (
-          <TouchableOpacity onPress={() => setStory(null)}>
-            <Text style={{ fontWeight: "bold" }}>&lt; Back</Text>
-          </TouchableOpacity>
+          <Pressable onPress={() => setStory(null)}>
+            <Text style={{fontWeight: "bold"}}>&lt; Back</Text>
+          </Pressable>
         )}
         <Text style={{marginLeft: 20, fontWeight: "bold"}}>{currentStory}</Text>
       </View>
@@ -68,17 +59,18 @@ export default function App() {
           <ScrollView style={styles.storyList}>
             {stories.map((s) => (
               <React.Fragment key={s.title}>
-                <Text
-                  style={{ fontWeight: "bold", fontSize: 20, marginBottom: 12 }}
-                >
-                  {s.title}
-                </Text>
+                <Text style={{fontWeight: "bold", fontSize: 20, marginBottom: 12}}>{s.title}</Text>
                 {Object.keys(s.stories).map((title) => (
-                  <TouchableOpacity key={title} onPress={() => {console.log("PRES", title); setStory(title)}}>
-                    <Text style={{ fontSize: 16, marginBottom: 8 }}>
-                      {title}
-                    </Text>
-                  </TouchableOpacity>
+                  <Pressable
+                    key={title}
+                    onPress={() => {
+                      // eslint-disable-next-line no-console
+                      console.log("PRES", title);
+                      setStory(title);
+                    }}
+                  >
+                    <Text style={{fontSize: 16, marginBottom: 8}}>{title}</Text>
+                  </Pressable>
                 ))}
               </React.Fragment>
             ))}
@@ -87,7 +79,7 @@ export default function App() {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -125,3 +117,5 @@ const styles = StyleSheet.create({
     marginBottom: 80, // ScrollView isn't the proper height so you can't get to the bottom.
   },
 });
+
+export default App;

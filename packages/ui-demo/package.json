@@ -1,6 +1,7 @@
 {
   "name": "ferns-ui-demo",
   "version": "1.0.0",
+  "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -8,56 +9,10 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "lint": "eslint --fix \"src/**/*.ts*\""
+    "lint": "eslint \"src/**/*.ts*\"",
+    "lintfix": "eslint --fix \"src/**/*.ts*\""
   },
   "license": "Apache-2.0",
-  "dependencies": {
-    "expo-font": "^10.0.5",
-    "ferns-ui": "*",
-    "expo": "~44.0.0",
-    "expo-status-bar": "~1.2.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-native": "0.64.3",
-    "react-native-web": "0.17.1",
-    "@expo/vector-icons": "^12.0.0",
-    "@react-native-async-storage/async-storage": "^1.17.3",
-    "@react-native-community/blur": "^3.6.0",
-    "@react-native-community/datetimepicker": "^4.0.0",
-    "@react-native-picker/picker": "^2.2.1",
-    "@sentry/browser": "^5.17.0",
-    "@sentry/react": "^5.20.1",
-    "@sentry/react-native": "^1.7.1",
-    "lodash": "^4.17.21",
-    "mixpanel-browser": "^2.38.0",
-    "moment-timezone": "^0.5.34",
-    "react-app-polyfill": "^1.0.6",
-    "react-date-picker": "7.10.0",
-    "react-dev-utils": "^10.2.1",
-    "react-native-gesture-handler": "^1.6.1",
-    "react-native-haptic-feedback": "^1.10.0",
-    "react-native-hyperlink": "^0.0.19",
-    "react-native-modalize": "^2.0.12",
-    "react-native-navigation": "^6.12.0",
-    "react-native-permissions": "^3.1.0",
-    "react-native-picker-select": "^8.0.0",
-    "react-native-portalize": "^1.0.7",
-    "react-native-svg": "^12.1.0",
-    "react-router": "^5.2.0",
-    "react-router-dom": "^5.2.0"
-  },
-  "devDependencies": {
-    "eslint-config-ferns": "*",
-    "@babel/core": "^7.12.9",
-    "@types/react": "~17.0.21",
-    "@types/react-native": "~0.64.12",
-    "typescript": "~4.3.5"
-  },
-  "resolutions": {
-    "update-input-width": "1.1.1",
-    "@types/react": "17.0.44"
-  },
-  "private": true,
   "eslintConfig": {
     "extends": [
       "ferns"
@@ -66,9 +21,63 @@
       "react": {
         "version": "detect"
       }
-    },
-    "rules": {
-      "react/display-name": "off"
     }
+  },
+  "dependencies": {
+    "@expo/vector-icons": "^12.0.0",
+    "@react-native-async-storage/async-storage": "~1.15.0",
+    "@react-native-community/blur": "^3.6.0",
+    "@react-native-community/datetimepicker": "4.0.0",
+    "@react-native-picker/picker": "2.2.1",
+    "@sentry/browser": "^6.19.7",
+    "@sentry/react": "^6.19.7",
+    "@sentry/react-native": "^3.4.2",
+    "expo": "~44.0.0",
+    "expo-font": "^10.0.5",
+    "expo-status-bar": "~1.2.0",
+    "ferns-ui": "0.2.2",
+    "lodash": "^4.17.21",
+    "mixpanel-browser": "^2.38.0",
+    "moment-timezone": "^0.5.34",
+    "react": "17.0.1",
+    "react-app-polyfill": "^1.0.6",
+    "react-date-picker": "7.10.0",
+    "react-dev-utils": "^10.2.1",
+    "react-dom": "17.0.1",
+    "react-native": "0.64.3",
+    "react-native-gesture-handler": "~2.1.0",
+    "react-native-haptic-feedback": "^1.10.0",
+    "react-native-hyperlink": "^0.0.19",
+    "react-native-modalize": "^2.0.12",
+    "react-native-navigation": "^6.12.0",
+    "react-native-permissions": "^3.1.0",
+    "react-native-picker-select": "^8.0.0",
+    "react-native-portalize": "^1.0.7",
+    "react-native-svg": "12.1.1",
+    "react-native-web": "0.17.1",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "~0.64.12",
+    "@typescript-eslint/eslint-plugin": "^5.23.0",
+    "@typescript-eslint/parser": "^5.23.0",
+    "eslint": "^8.15.0",
+    "eslint-config-ferns": "^0.3.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-lodash": "^7.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-native": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "prettier": "^2.6.2",
+    "typescript": "~4.1.5"
+  },
+  "resolutions": {
+    "update-input-width": "1.1.1",
+    "@types/react": "17.0.44"
   }
 }
