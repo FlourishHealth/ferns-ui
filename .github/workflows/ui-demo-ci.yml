@@ -37,9 +37,10 @@ jobs:
         # if: steps.yarn-cache.outputs.cache-hit != 'true' # I think we want to install every time,
         # but use the cache?
         run: yarn --frozen-lockfile
-        working-directory: './'
+        working-directory: 'packages/ui-demo'
       - name: yarn lint
         run: yarn lint
+        working-directory: 'packages/ui-demo'
 #      - name: yarn build
 #        run: yarn build
 #      - name: yarn test
