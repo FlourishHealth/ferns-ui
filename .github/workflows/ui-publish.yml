@@ -45,17 +45,23 @@ jobs:
         env:
           # Use a token to publish to NPM. See below for how to set it up
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-      # push the version changes to GitHub
-      - run: git pull --ff-only && git push
-        env:
-          # The secret is passed automatically. Nothing to configure.
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      # create a PR with the version bump. We can't commit directly to the master branch because of branch protection.
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: "Bump package version to ${{ github.event.release.tag_name }}"
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          branch: package-json-${{ github.event.release.tag_name }}
+          title: "[Publish] Bump package version to ${{ github.event.release.tag_name }}"
+          assignees: joshgachnang
+          reviewers: joshgachnang
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: bots
           SLACK_COLOR: "#4BB543"
           # SLACK_MESSAGE: "Post Content :rocket:"
-          SLACK_TITLE: Released ui@${{ github.event.release.target_commitish }}
+          SLACK_TITLE: Released ferns-ui@${{ github.event.release.target_commitish }}
           SLACK_USERNAME: Flourish
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
