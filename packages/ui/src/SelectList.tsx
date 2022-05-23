@@ -4,7 +4,7 @@ import {FieldWithLabelsProps} from "./Common";
 import RNPickerSelect from "./PickerSelect";
 import {Unifier} from "./Unifier";
 
-export type SelectListOptions = {label: string; value: string | undefined}[];
+export type SelectListOptions = {label: string; value: string | number | undefined}[];
 export interface SelectListProps extends FieldWithLabelsProps {
   id?: string;
   name?: string;
