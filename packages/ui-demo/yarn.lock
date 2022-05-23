@@ -1518,10 +1518,10 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/datetimepicker@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-4.0.0.tgz#4629ac3d8d54b4024385f2b2a30bbe13640c6ed3"
-  integrity sha512-q3JfDHX5PI0AxFeMsB6jcHSXODloXAqBVsOfkIvm+YbAe1TUs/xZ3qGazsKVBk9EdFyHO4k+S1Q8tQkEnk2YrQ==
+"@react-native-community/datetimepicker@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-5.1.0.tgz#c2e73b6ca375a527e54f0a19b0e4ca42bc8b7382"
+  integrity sha512-DsKmdthZIb1AfuvpPE0iOiw4iQLXUWY3mJEYpGe9iUJt7pOkNnqHk6D95wqg4wjZ2bEBLAPfvndoeWZAjAZKfw==
   dependencies:
     invariant "^2.2.4"
 
@@ -3809,12 +3809,12 @@ fbjs@^3.0.0:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.30"
 
-ferns-ui@0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/ferns-ui/-/ferns-ui-0.2.2.tgz#c926a214e42eba0bf236541c54fc65586f20c8f6"
-  integrity sha512-Uc7t+3BqtH8vwkng8wjO4b+Xl2C2UsL5WAV4MScQ8uTsLv2+oIy+wCUWSvVGpBDtugO/RxGnDY4Ebbc8C4JSwg==
+ferns-ui@*:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/ferns-ui/-/ferns-ui-0.2.4.tgz#eda63b7ec55e0b5d288de6faf04a9d975c57d7a0"
+  integrity sha512-pWTo7bn0YIbT1bkwTz0TWkY/P2OoC2bvUV6DoHSNMoVORW+r4uUSFFn3+Wms9LGlzh9+BzseVk3gdF/TDT+Pow==
   dependencies:
-    tsc-watch "^5.0.2"
+    tsc-watch "^5.0.3"
 
 figures@^2.0.0:
   version "2.0.0"
@@ -7654,7 +7654,7 @@ ts-interface-checker@^0.1.9:
   resolved "https://registry.yarnpkg.com/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz#784fd3d679722bc103b1b4b8030bcddb5db2a699"
   integrity sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==
 
-tsc-watch@^5.0.2:
+tsc-watch@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/tsc-watch/-/tsc-watch-5.0.3.tgz#4d0b2bda8f2677c8f9ed36e001c1a86c31701145"
   integrity sha512-Hz2UawwELMSLOf0xHvAFc7anLeMw62cMVXr1flYmhRuOhOyOljwmb1l/O60ZwRyy1k7N1iC1mrn1QYM2zITfuw==
