@@ -1,8 +1,8 @@
 import React from "react";
 import {Text as NativeText} from "react-native";
-import Hyperlink from "react-native-hyperlink";
 
 import {TextProps} from "./Common";
+import {Hyperlink} from "./Hyperlink";
 import {Unifier} from "./Unifier";
 
 export class Text extends React.Component<TextProps, {}> {
@@ -82,10 +82,9 @@ export class Text extends React.Component<TextProps, {}> {
       return inner;
     } else {
       return (
-        // <Hyperlink linkDefault={true} linkStyle={{textDecorationLine: "underline"}}>
-        //   {inner}
-        // </Hyperlink>
-        <Hyperlink linkDefault>{inner}</Hyperlink>
+        <Hyperlink linkDefault linkStyle={{textDecorationLine: "underline"}}>
+          {inner}
+        </Hyperlink>
       );
     }
   }

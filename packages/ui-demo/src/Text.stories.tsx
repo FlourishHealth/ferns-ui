@@ -66,5 +66,16 @@ export const TextStories = {
         </StorybookContainer>
       );
     },
+    Links() {
+      return (
+        <StorybookContainer>
+          <Box direction="column" display="flex" height="100%" width="100%">
+            <Text>Go to google: https://google.com they have stuff.</Text>
+            <Text>Here is my email: josh@example.com.</Text>
+            <Text skipLinking>No link here: https://google.com.</Text>
+          </Box>
+        </StorybookContainer>
+      );
+    },
   },
 };
