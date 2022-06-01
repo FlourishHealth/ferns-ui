@@ -1,12 +1,12 @@
 import { Box, SegmentedControl } from "ferns-ui";
-import React from "react";
+import React, { useState } from "react";
 
 export const SegmentedControlStories = {
   title: "Segmented Control",
   component: SegmentedControl,
   stories: {
-    "Default Control": function () {
-      const [itemIndex, setItemIndex] = React.useState(0);
+    DefaultControl() {
+      const [itemIndex, setItemIndex] = useState(0);
       return (
         <Box display="flex" width="100%">
           <SegmentedControl
@@ -17,8 +17,8 @@ export const SegmentedControlStories = {
         </Box>
       );
     },
-    "Large Control": function () {
-      const [itemIndex, setItemIndex] = React.useState(0);
+    LargeControl() {
+      const [itemIndex, setItemIndex] = useState(0);
       return (
         <Box display="flex" width="100%">
           <SegmentedControl
