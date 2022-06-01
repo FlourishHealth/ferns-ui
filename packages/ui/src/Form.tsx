@@ -21,7 +21,7 @@ interface FormLineProps {
   value: any;
   onSave: (value: any) => void;
   kind: "boolean" | "string" | "textarea" | "select" | "multiboolean";
-  options?: (string | undefined)[];
+  options?: string[];
 }
 
 interface FormLineState {
