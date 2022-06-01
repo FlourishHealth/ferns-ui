@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {Clipboard, Dimensions, Keyboard, Linking, Vibration} from "react-native";
+import {Clipboard, Dimensions, Keyboard, Linking, Platform, Vibration} from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import {PermissionKind, UnifiedTheme} from "./Common";
@@ -206,7 +206,9 @@ class UnifierClass {
         enableVibrateFallback: true,
         ignoreAndroidSystemSettings: false,
       };
-      ReactNativeHapticFeedback.trigger("impactLight", options);
+      if (Platform.OS !== "web") {
+        ReactNativeHapticFeedback.trigger("impactLight", options);
+      }
     },
     openUrl: async (url: string) => {
       return Linking.openURL(url);
