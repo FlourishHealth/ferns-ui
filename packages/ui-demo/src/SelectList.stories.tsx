@@ -13,7 +13,7 @@ export const SelectListStories = {
   title: "Select List",
   component: SelectList,
   stories: {
-    "Select Lists": function () {
+    SelectLists() {
       const [item, setItem] = React.useState(options[0].value);
 
       return (
@@ -28,7 +28,7 @@ export const SelectListStories = {
         </StorybookContainer>
       );
     },
-    "With Label": function () {
+    WithLabel() {
       const [item, setItem] = React.useState(options[0].value);
 
       return (
