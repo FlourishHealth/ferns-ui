@@ -1,5 +1,5 @@
-import { Box, SegmentedControl } from "ferns-ui";
-import React, { useState } from "react";
+import {Box, SegmentedControl} from "ferns-ui";
+import React, {useState} from "react";
 
 export const SegmentedControlStories = {
   title: "Segmented Control",
@@ -12,7 +12,7 @@ export const SegmentedControlStories = {
           <SegmentedControl
             items={["One", "Two", "Three"]}
             selectedItemIndex={itemIndex}
-            onChange={({ activeIndex }) => setItemIndex(activeIndex)}
+            onChange={({activeIndex}) => setItemIndex(activeIndex)}
           />
         </Box>
       );
@@ -25,7 +25,7 @@ export const SegmentedControlStories = {
             items={["One", "Two", "Three"]}
             selectedItemIndex={itemIndex}
             size="lg"
-            onChange={({ activeIndex }) => setItemIndex(activeIndex)}
+            onChange={({activeIndex}) => setItemIndex(activeIndex)}
           />
         </Box>
       );

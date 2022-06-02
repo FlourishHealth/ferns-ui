@@ -1,7 +1,7 @@
-import { AllColors, Box, Pill } from "ferns-ui";
+import {AllColors, Box, Pill} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 
 const renderPill = (color: AllColors) => (
   <Box alignItems="center" direction="row" display="flex" paddingY={1}>
@@ -45,11 +45,7 @@ export const PillStories = {
   component: Pill,
   stories: {
     Pills() {
-      return (
-        <StorybookContainer>
-          {colors.map((c) => renderPill(c))}
-        </StorybookContainer>
-      );
+      return <StorybookContainer>{colors.map((c) => renderPill(c))}</StorybookContainer>;
     },
   },
 };

@@ -1,4 +1,5 @@
 export * from "./Common";
+export * from "./Avatar";
 export * from "./Banner";
 export * from "./BlurBox";
 export * from "./Body";

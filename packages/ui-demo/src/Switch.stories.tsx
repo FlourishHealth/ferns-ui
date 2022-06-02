@@ -1,7 +1,7 @@
-import { Box, Switch, WithLabel } from "ferns-ui";
+import {Box, Switch, WithLabel} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 
 interface State {
   boolean: boolean;
@@ -28,13 +28,13 @@ class SwitchForms extends React.Component<{}, State> {
           <Switch
             id="check"
             switched={this.state.boolean}
-            onChange={(result) => this.setState({ boolean: result })}
+            onChange={(result) => this.setState({boolean: result})}
           />
           <WithLabel label="With A Label">
             <Switch
               id="withLabel"
               switched={this.state.withLabel}
-              onChange={(result) => this.setState({ withLabel: result })}
+              onChange={(result) => this.setState({withLabel: result})}
             />
           </WithLabel>
 
@@ -45,7 +45,7 @@ class SwitchForms extends React.Component<{}, State> {
               labelColor="primary"
               // color="primary"
               switched={this.state.primary}
-              onChange={(result) => this.setState({ primary: result })}
+              onChange={(result) => this.setState({primary: result})}
             />
           </WithLabel>
           <WithLabel label="Small">
@@ -54,7 +54,7 @@ class SwitchForms extends React.Component<{}, State> {
               label="Small"
               switched={this.state.small}
               // size="sm"
-              onChange={(result) => this.setState({ small: result })}
+              onChange={(result) => this.setState({small: result})}
             />
           </WithLabel>
         </Box>

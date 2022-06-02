@@ -776,7 +776,7 @@ export interface SpinnerProps {
 }
 
 export interface MaskProps {
-  children?: React.ReactNode;
+  children?: React.ReactElement;
   shape?: "circle" | "rounded" | "square";
   height?: number | string;
   width?: number | string;

@@ -1,7 +1,7 @@
-import { Box, FormLine } from "ferns-ui";
+import {Box, FormLine} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 
 export const FormStories = {
   title: "Forms",
@@ -28,7 +28,7 @@ class Forms extends React.Component<{}, State> {
       name: "",
       boolean: true,
       textarea: "",
-      multiboolean: { one: true, two: true, three: true },
+      multiboolean: {one: true, two: true, three: true},
       select: undefined,
     };
   }
@@ -41,7 +41,7 @@ class Forms extends React.Component<{}, State> {
             kind="string"
             name="name"
             value={this.state.name}
-            onSave={(name) => this.setState({ name })}
+            onSave={(name) => this.setState({name})}
           />
         </Box>
         <Box paddingY={2}>
@@ -49,7 +49,7 @@ class Forms extends React.Component<{}, State> {
             kind="boolean"
             name="boolean"
             value={this.state.boolean}
-            onSave={(boolean) => this.setState({ boolean })}
+            onSave={(boolean) => this.setState({boolean})}
           />
         </Box>
         <Box paddingY={2}>
@@ -57,7 +57,7 @@ class Forms extends React.Component<{}, State> {
             kind="textarea"
             name="textarea"
             value={this.state.textarea}
-            onSave={(textarea) => this.setState({ textarea })}
+            onSave={(textarea) => this.setState({textarea})}
           />
         </Box>
         <Box paddingY={2}>
@@ -65,7 +65,7 @@ class Forms extends React.Component<{}, State> {
             kind="multiboolean"
             name="multiboolean"
             value={this.state.multiboolean}
-            onSave={(multiboolean) => this.setState({ multiboolean })}
+            onSave={(multiboolean) => this.setState({multiboolean})}
           />
         </Box>
         <Box paddingY={2}>
@@ -74,7 +74,7 @@ class Forms extends React.Component<{}, State> {
             name="select"
             options={[undefined, "ay", "bee", "see"]}
             value={this.state.select}
-            onSave={(select) => this.setState({ select })}
+            onSave={(select) => this.setState({select})}
           />
         </Box>
       </StorybookContainer>
