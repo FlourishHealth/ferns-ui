@@ -1,7 +1,7 @@
-import { Box, TextArea } from "ferns-ui";
+import {Box, TextArea} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 
 export const TextAreaStories = {
   title: "TextArea",
@@ -10,11 +10,7 @@ export const TextAreaStories = {
     TextAreas() {
       return (
         <StorybookContainer>
-          <TextArea
-            id="none"
-            placeholder="Here's some placeholder text."
-            onChange={() => {}}
-          />
+          <TextArea id="none" placeholder="Here's some placeholder text." onChange={() => {}} />
         </StorybookContainer>
       );
     },
@@ -34,12 +30,7 @@ export const TextAreaStories = {
   TextAreaDisabled() {
     return (
       <StorybookContainer>
-        <TextArea
-          disabled
-          id="none"
-          placeholder="This is disabled"
-          onChange={() => {}}
-        />
+        <TextArea disabled id="none" placeholder="This is disabled" onChange={() => {}} />
       </StorybookContainer>
     );
   },

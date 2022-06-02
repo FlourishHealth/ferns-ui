@@ -1,8 +1,8 @@
-import { FontAwesome } from "@expo/vector-icons";
-import { Box, Icon } from "ferns-ui";
+import {FontAwesome} from "@expo/vector-icons";
+import {Box, Icon} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 
 export const IconStories = {
   title: "Icon",
@@ -11,13 +11,7 @@ export const IconStories = {
     "Solid Icons": function () {
       return (
         <StorybookContainer>
-          <Box
-            direction="row"
-            display="flex"
-            height="100%"
-            justifyContent="between"
-            width="100%"
-          >
+          <Box direction="row" display="flex" height="100%" justifyContent="between" width="100%">
             <Icon name="heart" />
             <Icon name="plus" />
             <Icon name="edit" />
@@ -47,13 +41,7 @@ export const IconStories = {
     "Icon Sizes": function () {
       return (
         <StorybookContainer>
-          <Box
-            direction="row"
-            display="flex"
-            height="100%"
-            justifyContent="between"
-            width="100%"
-          >
+          <Box direction="row" display="flex" height="100%" justifyContent="between" width="100%">
             <Icon name="heart" prefix="fas" size="xs" />
             <Icon name="heart" prefix="far" size="xs" />
 

@@ -1,7 +1,7 @@
-import { Box, Text, TextProps } from "ferns-ui";
+import {Box, Text, TextProps} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 const renderText = (text: string, props: Partial<TextProps>) => {
   return (
     <Box paddingY={1} width="100%">
@@ -19,18 +19,18 @@ export const TextStories = {
         <StorybookContainer>
           <Box direction="column" display="flex" height="100%" width="100%">
             {renderText("default", {})}
-            {renderText("small", { size: "sm" })}
-            {renderText("large", { size: "lg" })}
-            {renderText("gray", { color: "gray" })}
-            {renderText("lightGray", { color: "lightGray" })}
-            {renderText("primary", { color: "primary" })}
-            {renderText("secondary", { color: "secondary" })}
-            {renderText("tertiary", { color: "tertiary" })}
-            {renderText("accent", { color: "accent" })}
-            {renderText("red", { color: "red" })}
-            {renderText("bold", { weight: "bold" })}
-            {renderText("italic", { italic: true })}
-            {renderText("center", { align: "center" })}
+            {renderText("small", {size: "sm"})}
+            {renderText("large", {size: "lg"})}
+            {renderText("gray", {color: "gray"})}
+            {renderText("lightGray", {color: "lightGray"})}
+            {renderText("primary", {color: "primary"})}
+            {renderText("secondary", {color: "secondary"})}
+            {renderText("tertiary", {color: "tertiary"})}
+            {renderText("accent", {color: "accent"})}
+            {renderText("red", {color: "red"})}
+            {renderText("bold", {weight: "bold"})}
+            {renderText("italic", {italic: true})}
+            {renderText("center", {align: "center"})}
           </Box>
         </StorybookContainer>
       );

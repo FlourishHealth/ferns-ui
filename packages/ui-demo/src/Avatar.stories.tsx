@@ -1,4 +1,4 @@
-import { Avatar, Box, Text } from "ferns-ui";
+import {Avatar, Box, Text} from "ferns-ui";
 import React from "react";
 
 export const AvatarStories = {
@@ -37,13 +37,7 @@ export const AvatarStories = {
     },
     Outlines() {
       return (
-        <Box
-          color="blue"
-          direction="column"
-          display="flex"
-          height="100%"
-          width="100%"
-        >
+        <Box color="blue" direction="column" display="flex" height="100%" width="100%">
           <Text>XS</Text>
           <Avatar name="Tony Stark" outline size="xs" />
           <Text>SM</Text>
@@ -55,82 +49,31 @@ export const AvatarStories = {
           <Text>XL</Text>
           <Avatar name="Tony Stark" outline size="xl" />
           <Text>XS</Text>
-          <Avatar
-            name="Tony Stark"
-            outline
-            size="xs"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" outline size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>SM</Text>
-          <Avatar
-            name="Tony Stark"
-            outline
-            size="sm"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" outline size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>MD</Text>
-          <Avatar
-            name="Tony Stark"
-            outline
-            size="md"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" outline size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>LG</Text>
-          <Avatar
-            name="Tony Stark"
-            outline
-            size="lg"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" outline size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>XL</Text>
-          <Avatar
-            name="Tony Stark"
-            outline
-            size="xl"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" outline size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
         </Box>
       );
     },
     Images() {
       return (
-        <Box
-          color="blue"
-          direction="column"
-          display="flex"
-          height="100%"
-          width="100%"
-        >
+        <Box color="blue" direction="column" display="flex" height="100%" width="100%">
           <Text>XS</Text>
-          <Avatar
-            name="Tony Stark"
-            size="xs"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>SM</Text>
-          <Avatar
-            name="Tony Stark"
-            size="sm"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>MD</Text>
-          <Avatar
-            name="Tony Stark"
-            size="md"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>LG</Text>
-          <Avatar
-            name="Tony Stark"
-            size="lg"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>XL</Text>
-          <Avatar
-            name="Tony Stark"
-            size="xl"
-            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-          />
+          <Avatar name="Tony Stark" size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
         </Box>
       );
     },

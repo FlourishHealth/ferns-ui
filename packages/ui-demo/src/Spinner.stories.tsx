@@ -1,4 +1,4 @@
-import { Box, Spinner } from "ferns-ui";
+import {Box, Spinner} from "ferns-ui";
 import React from "react";
 
 export const SpinnerStories = {

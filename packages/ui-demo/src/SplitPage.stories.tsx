@@ -1,4 +1,4 @@
-import { Box, SplitPage, Text } from "ferns-ui";
+import {Box, SplitPage, Text} from "ferns-ui";
 import React from "react";
 
 export const SplitPageStories = {
@@ -15,9 +15,7 @@ export const SplitPageStories = {
           navigation={{}}
           renderContent={(index) => (
             <Box color="lightGray" padding={2}>
-              {index === undefined && (
-                <Text weight="bold">Nothing selected</Text>
-              )}
+              {index === undefined && <Text weight="bold">Nothing selected</Text>}
               {index !== undefined && <Text weight="bold">User {index}</Text>}
             </Box>
           )}

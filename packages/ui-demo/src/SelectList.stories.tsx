@@ -1,12 +1,12 @@
-import { Box, SelectList, SelectListOptions } from "ferns-ui";
+import {Box, SelectList, SelectListOptions} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 
 const options: SelectListOptions = [
-  { label: "First", value: "first" },
-  { label: "Second", value: "second" },
-  { label: "Third, A Really Long Option", value: "third" },
+  {label: "First", value: "first"},
+  {label: "Second", value: "second"},
+  {label: "Third, A Really Long Option", value: "third"},
 ];
 
 export const SelectListStories = {

@@ -1,4 +1,4 @@
-import { Box, Card, Text } from "ferns-ui";
+import {Box, Card, Text} from "ferns-ui";
 import React from "react";
 
 export const CardStories = {

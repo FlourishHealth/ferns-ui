@@ -1,8 +1,8 @@
 /* eslint-disable react/display-name */
-import { Field } from "ferns-ui";
+import {Field} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 
 export const FieldStories = {
   title: "Field",
@@ -130,8 +130,8 @@ export const FieldStories = {
             label="Select Field"
             name="text"
             options={[
-              { label: "Option 1", value: "Option 1" },
-              { label: "Option 2", value: "Option 2" },
+              {label: "Option 1", value: "Option 1"},
+              {label: "Option 2", value: "Option 2"},
             ]}
             type="select"
           />

@@ -1,7 +1,7 @@
-import { Box, TextField } from "ferns-ui";
+import {Box, TextField} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 
 export const TextFieldStories = {
   title: "TextField",
@@ -10,11 +10,7 @@ export const TextFieldStories = {
     "Text Fields": function () {
       return (
         <StorybookContainer>
-          <TextField
-            id="none"
-            placeholder="Here's some placeholder text."
-            onChange={() => {}}
-          />
+          <TextField id="none" placeholder="Here's some placeholder text." onChange={() => {}} />
         </StorybookContainer>
       );
     },
@@ -33,12 +29,7 @@ export const TextFieldStories = {
     Disabled() {
       return (
         <StorybookContainer>
-          <TextField
-            disabled
-            id="none"
-            placeholder="This is disabled"
-            onChange={() => {}}
-          />
+          <TextField disabled id="none" placeholder="This is disabled" onChange={() => {}} />
         </StorybookContainer>
       );
     },

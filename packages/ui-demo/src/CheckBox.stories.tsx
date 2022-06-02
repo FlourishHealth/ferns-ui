@@ -1,7 +1,7 @@
-import { Box, CheckBox, WithLabel } from "ferns-ui";
+import {Box, CheckBox, WithLabel} from "ferns-ui";
 import React from "react";
 
-import { StorybookContainer } from "./StorybookContainer";
+import {StorybookContainer} from "./StorybookContainer";
 
 interface State {
   boolean: boolean;
@@ -27,13 +27,13 @@ class Forms extends React.Component<{}, State> {
         <CheckBox
           checked={this.state.boolean}
           id="check"
-          onChange={(result) => this.setState({ boolean: result.value })}
+          onChange={(result) => this.setState({boolean: result.value})}
         />
         <WithLabel label="With A Label">
           <CheckBox
             checked={this.state.withLabel}
             id="withLabel"
-            onChange={(result) => this.setState({ withLabel: result.value })}
+            onChange={(result) => this.setState({withLabel: result.value})}
           />
         </WithLabel>
 
@@ -44,7 +44,7 @@ class Forms extends React.Component<{}, State> {
             id="primary"
             label="Primary Color"
             labelColor="primary"
-            onChange={(result) => this.setState({ primary: result.value })}
+            onChange={(result) => this.setState({primary: result.value})}
           />
         </WithLabel>
         <WithLabel label="Small">
@@ -53,7 +53,7 @@ class Forms extends React.Component<{}, State> {
             id="small"
             label="Small"
             size="sm"
-            onChange={(result) => this.setState({ small: result.value })}
+            onChange={(result) => this.setState({small: result.value})}
           />
         </WithLabel>
       </StorybookContainer>

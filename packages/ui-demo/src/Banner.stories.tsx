@@ -1,4 +1,4 @@
-import { Banner, Box } from "ferns-ui";
+import {Banner, Box} from "ferns-ui";
 import React from "react";
 
 export const BannerStories = {
