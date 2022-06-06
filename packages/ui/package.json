@@ -4,11 +4,12 @@
   "main": "dist/index.js",
   "license": "Apache-2.0",
   "scripts": {
-    "local": "tsc-watch --onSuccess \"cp -a dist/* ../totum/node_modules/react-unifier/dist\"",
+    "local": "tsc-watch --onSuccess \"cp -a dist/* ../flourish/node_modules/ferns-ui/dist\"",
     "lint": "eslint \"src/**/*.ts*\"",
     "lintfix": "eslint --fix \"src/**/*.ts*\"",
     "build": "tsc",
-    "dev": "tsc -w"
+    "dev": "tsc -w",
+    "deps": "node checkDeps.js"
   },
   "babel": {
     "presets": [
@@ -119,8 +120,8 @@
     "tsc-watch": "^5.0.3"
   },
   "devDependencies": {
-    "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "^1.17.4",
+    "@expo/vector-icons": "^12.0.0",
+    "@react-native-async-storage/async-storage": "^1.15.0",
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/datetimepicker": "^5.1.0",
     "@react-native-picker/picker": "^2.2.1",
@@ -142,7 +143,7 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "eslint-plugin-react-native": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "expo-font": "^10.1.0",
+    "expo-font": "^10.0.5",
     "lodash": "^4.17.21",
     "mixpanel-browser": "^2.38.0",
     "moment-timezone": "^0.5.34",
@@ -153,7 +154,7 @@
     "react-dev-utils": "^11.0.4",
     "react-dom": "17.0.2",
     "react-native": "^0.64.3",
-    "react-native-gesture-handler": "^1.6.1",
+    "react-native-gesture-handler": "^2.1.0",
     "react-native-haptic-feedback": "^1.10.0",
     "react-native-modalize": "^2.0.12",
     "react-native-navigation": "^6.12.0",
@@ -167,13 +168,13 @@
   },
   "peerDependencies": {
     "@expo/vector-icons": "^12.0.0",
-    "@react-native-async-storage/async-storage": "^1.17.3",
+    "@react-native-async-storage/async-storage": "^1.15.0",
     "@react-native-community/blur": "^3.6.0",
-    "@react-native-community/datetimepicker": "^4.0.0",
+    "@react-native-community/datetimepicker": "^5.1.0",
     "@react-native-picker/picker": "^2.2.1",
-    "@sentry/browser": "^5.17.0",
-    "@sentry/react": "^5.20.1",
-    "@sentry/react-native": "^1.7.1",
+    "@sentry/browser": "^6.19.7",
+    "@sentry/react": "^6.19.7",
+    "@sentry/react-native": "^3.4.2",
     "expo-font": "^10.0.5",
     "lodash": "^4.17.21",
     "mixpanel-browser": "^2.38.0",
@@ -184,7 +185,7 @@
     "react-dev-utils": "^11.0.4",
     "react-dom": "17.0.2",
     "react-native": "^0.64.3",
-    "react-native-gesture-handler": "^1.6.1",
+    "react-native-gesture-handler": "^2.1.0",
     "react-native-haptic-feedback": "^1.10.0",
     "react-native-modalize": "^2.0.12",
     "react-native-navigation": "^6.12.0",
