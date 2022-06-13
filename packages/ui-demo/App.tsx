@@ -1,3 +1,4 @@
+import {useFonts} from "expo-font";
 import {StatusBar} from "expo-status-bar";
 import React, {useState} from "react";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
@@ -39,6 +40,17 @@ const renderStory = (story: Story) => {
 
 const App = () => {
   const [currentStory, setStory] = useState<string | null>(null);
+  const [loaded] = useFonts({
+    "Comfortaa-Light": require("./assets/Comfortaa-Light.ttf"),
+    "Comfortaa-Bold": require("./assets/Comfortaa-Bold.ttf"),
+    IMFellEnglishSC: require("./assets/IMFellEnglishSC-Regular.ttf"),
+    "DancingScript-Regular": require("./assets/DancingScript-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   // eslint-disable-next-line no-console
   console.log("Hi");
   return (
