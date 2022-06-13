@@ -18,5 +18,6 @@ export * from "./Spinner.stories";
 export * from "./SplitPage.stories";
 export * from "./Switch.stories";
 export * from "./Text.stories";
+export * from "./Theme.stories";
 // export * from "./TextArea.stories";
 export * from "./TextField.stories";
