@@ -16,6 +16,8 @@ export const AvatarStories = {
           <Avatar name="Tony Ironman Stark" />
           <Text>Tony</Text>
           <Avatar name="Tony" />
+          <Text>Colored Tony Start</Text>
+          <Avatar backgroundColor="primary" name="Tony Stark" textColor="white" />
         </Box>
       );
     },
