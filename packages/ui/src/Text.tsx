@@ -24,7 +24,7 @@ export class Text extends React.Component<TextProps, {}> {
       | "accentFont"
       | "accentBoldFont"
       | "titleFont" = "primaryFont";
-    if (this.props.font === "primary") {
+    if (this.props.font === "primary" || !this.props.font) {
       if (this.props.weight === "bold") {
         font = "primaryBoldFont";
       } else {

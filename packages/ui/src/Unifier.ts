@@ -2,11 +2,17 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Font from "expo-font";
+import {FontSource} from "expo-font";
 import {Clipboard, Dimensions, Keyboard, Linking, Platform, Vibration} from "react-native";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 import {PermissionKind, UnifiedTheme} from "./Common";
 import {requestPermissions} from "./Permissions";
+
+function capitalize(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 const DEFAULT_FONT = "Cochin";
 const DEFAULT_BOLD_FONT = "Cochin";
@@ -92,6 +98,61 @@ const DefaultTheme: UnifiedTheme = {
 
 export type PlatformOS = "ios" | "android" | "web";
 
+const fontKeys = [
+  "primaryFont",
+  "primaryBoldFont",
+  "secondaryFont",
+  "secondaryBoldFont",
+  "buttonFont",
+  "accentFont",
+  "accentBoldFont",
+  "titleFont",
+];
+
+type Luminance = "light" | "lighter" | "dark" | "darker";
+const luminances: Luminance[] = ["lighter", "light", "dark", "darker"];
+
+// Changes a color luminance
+export function changeColorLuminance(hex: string, luminanceChange: Luminance) {
+  // Validate hex string, strip "#" if present.
+  hex = String(hex).replace(/[^0-9a-f]/gi, "");
+  if (hex.length === 3) {
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+  } else if (hex.length !== 6) {
+    throw new Error(`Invalid color hex: ${hex}`);
+  }
+  let luminance;
+  switch (luminanceChange) {
+    case "light":
+      luminance = -0.2;
+      break;
+    case "lighter":
+      luminance = -0.33;
+      break;
+    case "dark":
+      luminance = 0.2;
+      break;
+    case "darker":
+      luminance = 0.33;
+      break;
+    default:
+      throw new Error(`Cannot change luminance to ${luminanceChange}`);
+  }
+
+  // Convert to decimal and change luminosity
+  let rgb = "#";
+  for (let i = 0; i < 3; i++) {
+    const decimal = parseInt(hex.substr(i * 2, 2), 16);
+    const appliedLuminance = Math.round(
+      Math.min(Math.max(0, decimal + decimal * luminance), 255)
+    ).toString(16);
+    // 0 pad, if necessary.
+    rgb += `00${appliedLuminance}`.substr(appliedLuminance.length);
+  }
+
+  return rgb;
+}
+
 class UnifierClass {
   private _theme?: Partial<UnifiedTheme>;
 
@@ -107,7 +168,39 @@ class UnifierClass {
     return this._dev;
   }
 
+  private get fontMap() {
+    const fontMap: {[id: string]: FontSource} = {};
+    for (const key of fontKeys) {
+      if (typeof this.theme[key] === "string") {
+        fontMap[key] = key;
+      } else {
+        fontMap[this.theme[key].name] = this.theme[key].source;
+      }
+    }
+    return fontMap;
+  }
+
+  // If the theme only has e.g. "primary" set, calculate the primaryLighter, primaryLight, etc based on that color.
+  private calculateLuminances(
+    theme: Partial<UnifiedTheme>,
+    color: "primary" | "secondary" | "accent" | "tertiary"
+  ) {
+    if (!theme[color]) {
+      return;
+    }
+    for (const luminance of luminances) {
+      const capitalized = capitalize(luminance);
+      if (!theme[`${color}${capitalized}`] && theme[color]) {
+        theme[`${color}${capitalized}`] = changeColorLuminance(theme[color] as string, luminance);
+      }
+    }
+  }
+
   setTheme(theme: Partial<UnifiedTheme>) {
+    Unifier.calculateLuminances(theme, "primary");
+    Unifier.calculateLuminances(theme, "secondary");
+    Unifier.calculateLuminances(theme, "accent");
+    Unifier.calculateLuminances(theme, "tertiary");
     this._theme = theme;
   }
 
@@ -169,6 +262,14 @@ class UnifierClass {
     },
   };
 
+  loadFonts = async () => {
+    try {
+      await Font.loadAsync(this.fontMap);
+    } catch (err) {
+      console.error(`[unifier] Fonts failed to load: ${err}`);
+    }
+  };
+
   // tracking: Tracking,
   utils = {
     dismissKeyboard: () => {
@@ -181,7 +282,7 @@ class UnifierClass {
     copyToClipboard: (text: string) => {
       Clipboard.setString(text);
     },
-    orientationChange: (callback: (orentation: "portrait" | "landscape") => void) => {
+    orientationChange: (callback: (orientation: "portrait" | "landscape") => void) => {
       Dimensions.addEventListener("change", () => {
         const screen = Dimensions.get("screen");
         const isPortrait = screen.width < screen.height;

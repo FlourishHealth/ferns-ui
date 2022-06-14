@@ -38,11 +38,11 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
     lg: 48,
   };
 
-  getBackgroundColor(color: string) {
+  getBackgroundColor(color: string): string {
     if (this.props.type === "ghost" || this.props.type === "outline") {
       return "transparent";
     } else {
-      return Unifier.theme[color as keyof UnifiedTheme];
+      return Unifier.theme[color as keyof UnifiedTheme] as string;
     }
   }
 
@@ -120,6 +120,7 @@ export class Button extends React.Component<ButtonProps, ButtonState> {
         {Boolean(this.props.text) && (
           <Text
             color={this.getTextColor(color as Color)}
+            font="button"
             inline={this.props.inline}
             size={this.props.size}
             skipLinking
