@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Image, Text, View} from "react-native";
 
 import {Box} from "./Box";
+import {AllColors} from "./Common";
 import {Unifier} from "./Unifier";
 
 const sizes = {
@@ -13,6 +14,10 @@ const sizes = {
 };
 
 interface AvatarProps {
+  // Color for the background of the circle when no src picture is present.
+  backgroundColor?: AllColors;
+  // Color for the initials when no src picture is present.
+  textColor?: AllColors;
   /**
    * The name of the user. This is used for the placeholder treatment if an image is not available.
    */
@@ -87,10 +92,14 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: Unifier.theme.gray,
+            backgroundColor: props.backgroundColor
+              ? Unifier.theme[props.backgroundColor]
+              : Unifier.theme.gray,
           }}
         >
-          <Text style={{fontSize, color: Unifier.theme.darkGray}}>{computedInitials}</Text>
+          <Text style={{fontSize, color: props.textColor ?? Unifier.theme.darkGray}}>
+            {computedInitials}
+          </Text>
         </View>
       )}
     </Box>
