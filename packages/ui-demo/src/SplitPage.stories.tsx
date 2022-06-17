@@ -25,7 +25,7 @@ export const SplitPageStories = {
             </Box>
           )}
           renderListViewItem={(item) => (
-            <Box color="blue" padding={2}>
+            <Box key={item.item.name} color="blue" padding={2}>
               <Text>name: {item.item.name}</Text>
             </Box>
           )}

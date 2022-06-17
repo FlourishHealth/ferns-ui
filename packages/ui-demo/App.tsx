@@ -1,6 +1,7 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useFonts} from "expo-font";
 import {StatusBar} from "expo-status-bar";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import * as Stories from "./src/stories";
@@ -20,26 +21,18 @@ for (const story of stories) {
     allStories[storyName] = story.stories[storyName];
   }
 }
-console.info(
-  "ALL",
-  Object.keys(allStories),
-  stories.map((s) => s.title)
-);
-
-const renderStory = (story: Story) => {
-  return (
-    <View>
-      <Text>{story.title}</Text>
-      {Object.keys(story.stories).map((key) => {
-        const Story = story.stories[key];
-        return <Story key={key} />;
-      })}
-    </View>
-  );
-};
 
 const App = () => {
   const [currentStory, setStory] = useState<string | null>(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem("story").then((story) => {
+      if (story) {
+        setStory(story);
+      }
+    });
+  }, []);
+
   const [loaded] = useFonts({
     "Comfortaa-Light": require("./assets/Comfortaa-Light.ttf"),
     "Comfortaa-Bold": require("./assets/Comfortaa-Bold.ttf"),
@@ -51,15 +44,18 @@ const App = () => {
     return null;
   }
 
-  // eslint-disable-next-line no-console
-  console.log("Hi");
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.header}>
         {!currentStory && <Text style={{fontWeight: "bold", fontSize: 20}}>Pick A Story:</Text>}
         {currentStory && (
-          <Pressable onPress={() => setStory(null)}>
+          <Pressable
+            onPress={async () => {
+              setStory(null);
+              await AsyncStorage.setItem("story", "");
+            }}
+          >
             <Text style={{fontWeight: "bold"}}>&lt; Back</Text>
           </Pressable>
         )}
@@ -75,10 +71,9 @@ const App = () => {
                 {Object.keys(s.stories).map((title) => (
                   <Pressable
                     key={title}
-                    onPress={() => {
-                      // eslint-disable-next-line no-console
-                      console.log("PRES", title);
+                    onPress={async () => {
                       setStory(title);
+                      await AsyncStorage.setItem("story", title);
                     }}
                   >
                     <Text style={{fontSize: 16, marginBottom: 8}}>{title}</Text>
@@ -98,10 +93,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     width: "100%",
     height: "100%",
+    maxHeight: "100%",
+    position: "absolute",
+    overflow: "hidden",
   },
   header: {
     backgroundColor: "#ccc",
-    marginTop: 30,
     display: "flex",
     flexDirection: "row",
     width: "100%",
@@ -126,7 +123,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     paddingTop: 16,
     overflow: "scroll",
-    marginBottom: 80, // ScrollView isn't the proper height so you can't get to the bottom.
+    paddingBottom: 120, // ScrollView isn't the proper height so you can't get to the bottom.
   },
 });
 
