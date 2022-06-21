@@ -1,4 +1,4 @@
-import {Box, TapToEdit, Text} from "ferns-ui";
+import {Box, TapToEdit} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 const TapStory = (): ReactElement => {
@@ -8,6 +8,7 @@ const TapStory = (): ReactElement => {
   // 1.957 causes a floating imprecision if not handled correctly.
   const [percent, setPercent] = useState(1.957);
   const [select, setSelect] = useState("Option1");
+  const [multiselect, setMultiselect] = useState(["Option2"]);
 
   return (
     <Box direction="column" display="flex" height="100%" width="100%">
@@ -63,6 +64,25 @@ const TapStory = (): ReactElement => {
         type="select"
         onSave={(value): void => {
           setSelect(value);
+        }}
+      />
+      <TapToEdit
+        key="multiselect"
+        initialValue={multiselect}
+        name="multiselect"
+        options={[
+          {label: "Option1", value: "Option1"},
+          {label: "Option2", value: "Option2"},
+          {label: "Option2", value: "Option3"},
+          {
+            label: "Really long option for testing some wrap around and such",
+            value: "Really long option for testing some wrap around and such",
+          },
+        ]}
+        title="Multi Select"
+        type="multiselect"
+        onSave={(value): void => {
+          setMultiselect(value);
         }}
       />
     </Box>

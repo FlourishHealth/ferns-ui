@@ -4,15 +4,40 @@ import moment from "moment-timezone";
 import React, {useState} from "react";
 
 import {Box} from "./Box";
-import {FieldProps, TextFieldType} from "./Common";
+import {FieldWithLabelsProps, TextFieldType} from "./Common";
 import {FieldWithLabels} from "./FieldWithLabels";
-import {SelectList} from "./SelectList";
+import {SelectList, SelectListOptions} from "./SelectList";
 import {Switch} from "./Switch";
+import {Text} from "./Text";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 
-interface State {
-  value: any;
+export interface FieldProps extends FieldWithLabelsProps {
+  name: string;
+  label?: string;
+  subLabel?: string;
+  initialValue?: any;
+  handleChange: any;
+  // Additional validation
+  validate?: (value: any) => boolean;
+  validateErrorMessage?: string;
+  type?:
+    | "boolean"
+    | "email"
+    | "text"
+    | "textarea"
+    | "number"
+    | "currency"
+    | "percent"
+    | "select"
+    | "password"
+    | "url"
+    | "date"
+    | "multiselect";
+  rows?: number;
+  options?: SelectListOptions;
+  placeholder?: string;
+  disabled?: boolean;
 }
 
 /**
@@ -27,6 +52,7 @@ interface State {
  */
 export function Field(props: FieldProps) {
   const [value, setValue] = useState(props.initialValue || "");
+  const [multiselectValue, setMultiselectValue] = useState(props.initialValue ?? []);
 
   const handleChange = (newValue: string) => {
     if (props.type === "currency") {
@@ -48,7 +74,6 @@ export function Field(props: FieldProps) {
   };
 
   const validate = () => {
-    // console.log("VALIDATE", props.validate && props.validate(value));
     if (props.validate && !props.validate(value)) {
       return false;
     }
@@ -95,6 +120,47 @@ export function Field(props: FieldProps) {
           value={value}
           onChange={handleChange}
         />
+      );
+    } else if (props.type === "multiselect") {
+      if (!props.options) {
+        console.error("Field with type=multiselect require options");
+        return null;
+      }
+      return (
+        <Box width="100%">
+          {props.options.map((o) => (
+            <Box key={o.label + o.value} direction="row" justifyContent="between" width="100%">
+              <Box flex="shrink" marginRight={2}>
+                <Text weight="bold">{o.label}</Text>
+              </Box>
+              <Box>
+                <Switch
+                  key={o.label + o.value}
+                  disabled={props.disabled}
+                  id={props.name}
+                  name={props.name}
+                  switched={(multiselectValue ?? []).includes(o.value)}
+                  onChange={(result) => {
+                    let newValue;
+                    if (result) {
+                      if (multiselectValue.includes(o.value)) {
+                        console.warn(`Tried to add value that already exists: ${o.value}`);
+                        return;
+                      }
+                      newValue = [...multiselectValue, o.value];
+                    } else {
+                      newValue = multiselectValue.filter((v: string) => v !== o.value);
+                    }
+                    setMultiselectValue(newValue);
+                    if (props.handleChange) {
+                      props.handleChange(props.name, newValue);
+                    }
+                  }}
+                />
+              </Box>
+            </Box>
+          ))}
+        </Box>
       );
     } else if (props.type === "textarea") {
       return (

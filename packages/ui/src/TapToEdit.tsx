@@ -2,8 +2,8 @@ import React, {ReactElement, useState} from "react";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {BoxProps, FieldProps} from "./Common";
-import {Field} from "./Field";
+import {BoxProps} from "./Common";
+import {Field, FieldProps} from "./Field";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 
@@ -26,7 +26,7 @@ export const TapToEdit = (props: TapToEditProps): ReactElement => {
   const {title, editable = true, rowBoxProps, transform, fieldComponent, ...fieldProps} = props;
   if (editing) {
     return (
-      <Box direction="column">
+      <Box direction="column" maxWidth="100%" paddingX={3} paddingY={2} width="100%">
         {fieldComponent ? (
           fieldComponent(setValue as any)
         ) : (
@@ -84,12 +84,16 @@ export const TapToEdit = (props: TapToEditProps): ReactElement => {
           minimumFractionDigits: 2, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
         });
         displayValue = formatter.format(value);
+      } else if (fieldProps?.type === "multiselect") {
+        // ???
+        displayValue = value.join(", ");
       }
     }
     return (
       <Box
         direction="row"
         justifyContent="between"
+        maxWidth="100%"
         paddingX={3}
         paddingY={2}
         width="100%"
@@ -98,9 +102,9 @@ export const TapToEdit = (props: TapToEditProps): ReactElement => {
         <Box>
           <Text weight="bold">{title}:</Text>
         </Box>
-        <Box direction="row">
-          <Box>
-            <Text>{displayValue}</Text>
+        <Box direction="row" flex="shrink" marginLeft={2}>
+          <Box flex="shrink">
+            <Text overflow="breakWord">{displayValue}</Text>
           </Box>
           {editable && (
             <Box marginLeft={2} onClick={(): void => setEditing(true)}>
