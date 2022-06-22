@@ -680,33 +680,6 @@ export interface FieldWithLabelsProps {
   children?: React.ReactNode;
 }
 
-export interface FieldProps extends FieldWithLabelsProps {
-  name: string;
-  label?: string;
-  subLabel?: string;
-  initialValue?: any;
-  handleChange: any;
-  // Additional validation
-  validate?: (value: any) => boolean;
-  validateErrorMessage?: string;
-  type?:
-    | "boolean"
-    | "email"
-    | "text"
-    | "textarea"
-    | "number"
-    | "currency"
-    | "percent"
-    | "select"
-    | "password"
-    | "url"
-    | "date";
-  rows?: number;
-  options?: SelectListOptions;
-  placeholder?: string;
-  disabled?: boolean;
-}
-
 export interface TextFieldProps extends FieldWithLabelsProps {
   id?: string;
   onChange: OnChangeCallback;

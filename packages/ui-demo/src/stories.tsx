@@ -17,6 +17,7 @@ export * from "./SelectList.stories";
 export * from "./Spinner.stories";
 export * from "./SplitPage.stories";
 export * from "./Switch.stories";
+export * from "./TapToEdit.stories";
 export * from "./Text.stories";
 export * from "./Theme.stories";
 // export * from "./TextArea.stories";

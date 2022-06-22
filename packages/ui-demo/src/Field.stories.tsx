@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import {Field} from "ferns-ui";
+import {Box, Field} from "ferns-ui";
 import React from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -26,9 +26,7 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {
-              console.info("Change");
-            }}
+            handleChange={() => {}}
             helperText="Here's some help text"
             label="Boolean Field"
             name="text"
@@ -174,6 +172,27 @@ export const FieldStories = {
             name="text"
             type="date"
           />
+        </StorybookContainer>
+      );
+    },
+    "Multiselect Field": function () {
+      return (
+        <StorybookContainer>
+          <Box width={300}>
+            <Field
+              handleChange={() => {}}
+              helperText="Here's some help text"
+              initialValue={[]}
+              label="Date Field"
+              name="text"
+              options={[
+                {label: "Option1", value: "Option1"},
+                {label: "Option2", value: "Option2"},
+                {label: "Option3", value: "Option3"},
+              ]}
+              type="multiselect"
+            />
+          </Box>
         </StorybookContainer>
       );
     },
