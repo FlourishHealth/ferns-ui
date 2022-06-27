@@ -1,4 +1,3 @@
-import {FontAwesome} from "@expo/vector-icons";
 import {Box, Icon} from "ferns-ui";
 import React from "react";
 

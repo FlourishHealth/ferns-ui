@@ -45,16 +45,3 @@ export const ButtonStories = {
     Outline: () => allColorButtons({type: "outline"}),
   },
 };
-
-const Template = (args: any) => <Button text="Button" onClick={action("clicked")} {...args} />;
-
-// const Primary: any = Template.bind({});
-//
-// Primary.args = {
-//   size: "md",
-//   color: "primary",
-//   text: "PRIMARY",
-//   type: "solid",
-//   inline: false,
-//   disabled: false,
-// };

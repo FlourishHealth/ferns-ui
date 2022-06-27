@@ -1,4 +1,4 @@
-import {Box, CheckBox, WithLabel} from "ferns-ui";
+import {CheckBox, WithLabel} from "ferns-ui";
 import React from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
