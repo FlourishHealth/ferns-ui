@@ -1,4 +1,3 @@
-import {useFonts} from "expo-font";
 import {Box, Button, Heading, Text, Unifier} from "ferns-ui";
 import React from "react";
 

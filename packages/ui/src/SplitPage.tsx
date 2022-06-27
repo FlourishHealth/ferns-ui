@@ -3,9 +3,7 @@ import {ListRenderItemInfo, View} from "react-native";
 
 import {Box} from "./Box";
 import {Color} from "./Common";
-import {ErrorBoundary} from "./ErrorBoundary";
 import {FlatList} from "./FlatList";
-import {Icon} from "./Icon";
 import {IconButton} from "./IconButton";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {Spinner} from "./Spinner";

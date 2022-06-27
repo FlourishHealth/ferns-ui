@@ -4,7 +4,7 @@ import {ActivityIndicator, TouchableOpacity} from "react-native";
 
 import {UnifiedTheme} from ".";
 import {Box} from "./Box";
-import {ButtonProps, Color, iconSizeToNumber} from "./Common";
+import {ButtonProps, Color} from "./Common";
 import {Icon} from "./Icon";
 // import {Icon} from "./Icon";
 import {Text} from "./Text";

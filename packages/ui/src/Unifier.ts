@@ -366,6 +366,4 @@ class UnifierClass {
   };
 }
 
-const NOTIFICATION_TAB_KEY = "@unifier/tabNotifications";
-
 export const Unifier = new UnifierClass();

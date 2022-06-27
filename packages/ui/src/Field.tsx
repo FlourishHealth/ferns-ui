@@ -1,5 +1,3 @@
-import isDate from "lodash/isDate";
-import isNumber from "lodash/isNumber";
 import moment from "moment-timezone";
 import React, {useState} from "react";
 
@@ -70,39 +68,6 @@ export function Field(props: FieldProps) {
     setValue(switchValue);
     if (props.handleChange) {
       props.handleChange(props.name, switchValue);
-    }
-  };
-
-  const validate = () => {
-    if (props.validate && !props.validate(value)) {
-      return false;
-    }
-    switch (props.type) {
-      case "boolean":
-        return true;
-      case "currency":
-        return true;
-      case "date":
-        return !value || isDate(value);
-      case "email":
-        return !value || (value.search("@") > -1 && value.search(".") > -1);
-      case "number":
-        return !value || isNumber(value);
-      case "password":
-        return true;
-      case "percent":
-        return !value || isNumber(value.replace("%", ""));
-      case "select":
-        return true;
-      case "text":
-      case undefined: // text is default
-        return true;
-      case "textarea":
-        return true;
-      case "url":
-        return true;
-      default:
-        return true;
     }
   };
 

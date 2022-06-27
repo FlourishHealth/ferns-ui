@@ -1,7 +1,4 @@
-import {FontSource} from "expo-font";
 import {SyntheticEvent} from "react";
-
-import {SelectListOptions} from "./SelectList";
 
 export interface BaseProfile {
   email: string;
