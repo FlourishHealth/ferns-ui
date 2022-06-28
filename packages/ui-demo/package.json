@@ -53,6 +53,7 @@
     "react-native-permissions": "^3.1.0",
     "react-native-picker-select": "^8.0.0",
     "react-native-portalize": "^1.0.7",
+    "react-native-reanimated": "^2.8.0",
     "react-native-svg": "12.3.0",
     "react-native-web": "0.17.7",
     "react-router": "^5.2.0",
