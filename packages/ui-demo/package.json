@@ -8,7 +8,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "build": "expo build:web",
+    "build-web": "expo build:web",
+    "build-ios": "expo build:ios",
+    "build-android": "expo build:android",
     "eject": "expo eject",
     "lint": "eslint \"**/*.ts*\"",
     "lintfix": "eslint --fix \"**/*.ts*\""
