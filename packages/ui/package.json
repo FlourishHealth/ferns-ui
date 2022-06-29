@@ -121,7 +121,7 @@
   },
   "devDependencies": {
     "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "^1.15.0",
+    "@react-native-async-storage/async-storage": "^1.17.7",
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/datetimepicker": "^6.2.0",
     "@react-native-picker/picker": "2.4.2",
@@ -130,7 +130,7 @@
     "@sentry/react-native": "^4.1.0",
     "@types/lodash": "^4.14.182",
     "@types/mdurl": "^1.0.2",
-    "@types/react-native": "^0.67.7",
+    "@types/react-native": "^0.69.1",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
     "@typescript-eslint/parser": "^5.23.0",
     "eslint": "^8.15.0",
