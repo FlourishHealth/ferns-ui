@@ -125,9 +125,9 @@
     "@react-native-community/blur": "^3.6.0",
     "@react-native-community/datetimepicker": "^5.1.0",
     "@react-native-picker/picker": "^2.2.1",
-    "@sentry/browser": "^6.19.7",
-    "@sentry/react": "^6.19.7",
-    "@sentry/react-native": "^3.4.2",
+    "@sentry/browser": "^7.3.1",
+    "@sentry/react": "^7.3.1",
+    "@sentry/react-native": "^4.0.2",
     "@types/lodash": "^4.14.182",
     "@types/mdurl": "^1.0.2",
     "@types/react-native": "^0.67.7",
@@ -165,7 +165,7 @@
     "react-native-svg": "^12.1.0",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "typescript": "~4.1.5"
+    "typescript": "~4.7.4"
   },
   "peerDependencies": {
     "@expo/vector-icons": "^12.0.0",
