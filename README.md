@@ -1,9 +1,13 @@
 # ferns-ui
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ffd05ee5-fbcf-417e-8455-45ea15447361/deploy-status)](https://app.netlify.com/sites/ferns-ui/deploys)
+
 This package gives you a consistent React Native and React Native Web UI, along with theming support. It's primarily
 designed to work with Expo.
 
-There is a demo app for easily checking out the UIs in iOS/Android/Web in packages/ui-demo
+Check out the demo app for easily seeing how the UIs work in iOS/Android/Web in packages/ui-demo
+
+You can see the [web demo here](https://ferns-ui.netlify.app)
 
 ## Dev
 
