@@ -19,7 +19,9 @@ const SelectLists = () => {
         options={options}
         placeholder="Here's some placeholder text."
         value={item}
-        onChange={(newItem) => setItem(newItem)}
+        onChange={(newItem) => {
+          setItem(newItem);
+        }}
       />
     </StorybookContainer>
   );

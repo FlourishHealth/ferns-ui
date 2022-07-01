@@ -289,10 +289,8 @@ export default class RNPickerSelect extends PureComponent<any, any> {
 
     onValueChange(value, index);
 
-    this.setState((prevState: any) => {
-      return {
-        selectedItem: prevState.items[index],
-      };
+    this.setState({
+      selectedItem: this.props.items[index],
     });
   }
 
@@ -639,7 +637,7 @@ export default class RNPickerSelect extends PureComponent<any, any> {
         <Picker
           enabled={!disabled}
           selectedValue={selectedItem.value}
-          style={style.inputWeb}
+          style={[{width: "100%", height: "100%", border: "none"}, style.inputWeb]}
           testID="web_picker"
           onValueChange={this.onValueChange}
           {...pickerProps}
