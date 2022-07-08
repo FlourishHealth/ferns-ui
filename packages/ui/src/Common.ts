@@ -584,24 +584,6 @@ export interface BoxProps {
 
 export type BoxColor = AllColors | "transparent";
 
-export interface ButtonProps {
-  text: string;
-  // TODO make this work for all colors
-  color?: ButtonColor | Color;
-  // default gray
-  disabled?: boolean; // default false
-  inline?: boolean; // default false
-  size?: "sm" | "md" | "lg"; // default md
-
-  // Pattern Addition
-  type?: "solid" | "ghost" | "outline";
-  loading?: boolean;
-  onClick: any;
-  icon?: GestaltIconName | string;
-  iconPrefix?: IconPrefix;
-  iconColor?: ButtonColor | Color;
-}
-
 export interface DrawerProps {
   animationOpenTime: number;
   animationCloseTime: number;

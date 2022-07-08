@@ -31,6 +31,17 @@ const allColorButtons = (props: Partial<ButtonProps>) => {
       <Box paddingY={1}>
         <Button color="gray" text="Gray" onClick={action("clicked")} {...props} />
       </Box>
+      <Box paddingY={1}>
+        <Button
+          color="primary"
+          text="Async Loading Button"
+          onClick={async () => {
+            return new Promise((resolve) => {
+              setTimeout(resolve, 2 * 1000);
+            });
+          }}
+        />
+      </Box>
     </StorybookContainer>
   );
 };
