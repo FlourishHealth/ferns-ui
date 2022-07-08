@@ -2,6 +2,7 @@ import React from "react";
 import {ImageBackground as ImageBackgroundNative} from "react-native";
 
 interface ImageBackgroundProps {
+  children?: any;
   style?: any;
   source: any;
 }
