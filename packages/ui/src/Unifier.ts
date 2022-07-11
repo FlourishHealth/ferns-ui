@@ -303,7 +303,7 @@ class UnifierClass {
       Vibration.vibrate(pattern || [100], false);
     },
     haptic: () => {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      return Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     },
     openUrl: async (url: string) => {
       return Linking.openURL(url);
