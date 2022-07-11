@@ -122,6 +122,12 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
     );
   };
 
+  shouldAutocorrect = (): boolean => {
+    return (
+      this.props.type === "text" && (!this.props.autoComplete || this.props.autoComplete === "on")
+    );
+  };
+
   render() {
     const type = this.props.type || "text";
     const keyboardType = this.keyboardMap[type];
@@ -182,6 +188,7 @@ export class TextField extends React.Component<TextFieldProps, TextFieldState> {
                   }
                 }}
                 autoCapitalize={type === "text" ? "sentences" : "none"}
+                autoCorrect={this.shouldAutocorrect()}
                 autoFocus={this.props.autoFocus}
                 blurOnSubmit
                 // TODO: uncomment with upgrade to React 0.56.
