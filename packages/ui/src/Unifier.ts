@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Font from "expo-font";
 import {FontSource} from "expo-font";
 import * as Haptics from "expo-haptics";
-import {Clipboard, Dimensions, Keyboard, Linking, Vibration} from "react-native";
+import {Clipboard, Dimensions, Keyboard, Linking, Platform, Vibration} from "react-native";
 
 import {PermissionKind, UnifiedTheme} from "./Common";
 import {requestPermissions} from "./Permissions";
@@ -303,7 +303,10 @@ class UnifierClass {
       Vibration.vibrate(pattern || [100], false);
     },
     haptic: () => {
-      return Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      if (Platform.OS !== "web") {
+        return Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+      }
+      return;
     },
     openUrl: async (url: string) => {
       return Linking.openURL(url);
