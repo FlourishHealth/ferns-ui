@@ -1,16 +1,69 @@
 import moment from "moment-timezone";
 import React, {ReactElement, useState} from "react";
 import {ActivityIndicator, KeyboardTypeOptions, Platform, TextInput, View} from "react-native";
+import {Calendar} from "react-native-calendars";
 
 import {Box} from "./Box";
 import {TextFieldProps} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
 import {DecimalRangeActionSheet} from "./DecimalRangeActionSheet";
+import {Heading} from "./Heading";
 import {HeightActionSheet} from "./HeightActionSheet";
 import {Icon} from "./Icon";
+import {IconButton} from "./IconButton";
 import {NumberPickerActionSheet} from "./NumberPickerActionSheet";
 import {Unifier} from "./Unifier";
 import {WithLabel} from "./WithLabel";
+
+function CalendarHeader(props: any) {
+  const {addMonth, month} = props;
+  const displayDate = moment(month[0]).format("MMM YYYY");
+  return (
+    <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
+      <IconButton
+        accessibilityLabel="arrow"
+        bgColor="white"
+        icon="angle-double-left"
+        iconColor="blue"
+        size="md"
+        onClick={() => {
+          addMonth(-12);
+        }}
+      />
+      <IconButton
+        accessibilityLabel="arrow"
+        bgColor="white"
+        icon="angle-left"
+        iconColor="blue"
+        size="md"
+        onClick={() => {
+          addMonth(-1);
+        }}
+      />
+      <Heading size="sm">{displayDate}</Heading>
+      <IconButton
+        accessibilityLabel="arrow"
+        bgColor="white"
+        icon="angle-right"
+        iconColor="blue"
+        size="md"
+        onClick={() => {
+          addMonth(1);
+        }}
+      />
+      <IconButton
+        accessibilityLabel="arrow"
+        bgColor="white"
+        icon="angle-double-right"
+        iconColor="blue"
+        size="md"
+        onClick={() => {
+          addMonth(12);
+        }}
+      />
+    </Box>
+  );
+}
 
 const keyboardMap = {
   date: "default",
@@ -82,6 +135,7 @@ export function TextField({
 
   const [focused, setFocused] = useState(false);
   const [height, setHeight] = useState(propsHeight || 40);
+  const [showDate, setShowDate] = useState(false);
 
   const renderIcon = () => {
     if (type !== "search") {
@@ -139,6 +193,7 @@ export function TextField({
   } else if (type === "height") {
     value = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
   }
+
   return (
     <>
       <WithLabel
@@ -239,6 +294,9 @@ export function TextField({
                 if (!isHandledByModal) {
                   setFocused(true);
                 }
+                if (Platform.OS === "web" && type === "date") {
+                  setShowDate(true);
+                }
               }}
               onSubmitEditing={() => {
                 if (onEnter) {
@@ -259,6 +317,19 @@ export function TextField({
           value={value}
           onChange={(result) => onChange(result)}
         />
+      )}
+      {type === "date" && Platform.OS === "web" && showDate && (
+        <Box maxWidth={300}>
+          {/* TODO: Calendar should disappear when you click away from it. */}
+          <Calendar
+            customHeader={CalendarHeader}
+            initialDate={value}
+            onDayPress={(day: any) => {
+              onChange({value: day.dateString});
+              setShowDate(false);
+            }}
+          />
+        </Box>
       )}
       {type === "numberRange" && value && (
         <NumberPickerActionSheet

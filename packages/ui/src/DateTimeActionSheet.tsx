@@ -14,48 +14,42 @@ interface DateTimeActionSheetProps {
   actionSheetRef: React.RefObject<any>;
 }
 
-interface DateTimeActionSheetState {}
-
-export class DateTimeActionSheet extends React.Component<
-  DateTimeActionSheetProps,
-  DateTimeActionSheetState
-> {
-  constructor(props: DateTimeActionSheetProps) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <ActionSheet ref={this.props.actionSheetRef} bounceOnOpen gestureEnabled>
-        <Box marginBottom={8} paddingX={4} width="100%">
-          <Box alignItems="end" display="flex" width="100%">
-            <Box width="33%">
-              <Button
-                color="blue"
-                size="lg"
-                text="Save"
-                type="ghost"
-                onClick={() => {
-                  this.props.actionSheetRef?.current?.setModalVisible(false);
-                }}
-              />
-            </Box>
+export function DateTimeActionSheet({
+  actionSheetRef,
+  mode,
+  value,
+  onChange,
+}: DateTimeActionSheetProps) {
+  return (
+    <ActionSheet ref={actionSheetRef} bounceOnOpen gestureEnabled>
+      <Box marginBottom={8} paddingX={4} width="100%">
+        <Box alignItems="end" display="flex" width="100%">
+          <Box width="33%">
+            <Button
+              color="blue"
+              size="lg"
+              text="Save"
+              type="ghost"
+              onClick={() => {
+                actionSheetRef?.current?.setModalVisible(false);
+              }}
+            />
           </Box>
-          <DateTimePicker
-            display="spinner"
-            is24Hour
-            mode={this.props.mode}
-            testID="dateTimePicker"
-            value={moment(this.props.value).toDate()}
-            onChange={(event: any, date: any) => {
-              if (!date) {
-                return;
-              }
-              this.props.onChange({event, value: date.toString()});
-            }}
-          />
         </Box>
-      </ActionSheet>
-    );
-  }
+        <DateTimePicker
+          display="spinner"
+          is24Hour
+          mode={mode}
+          testID="dateTimePicker"
+          value={moment(value).toDate()}
+          onChange={(event: any, date: any) => {
+            if (!date) {
+              return;
+            }
+            onChange({event, value: date.toString()});
+          }}
+        />
+      </Box>
+    </ActionSheet>
+  );
 }
