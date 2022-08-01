@@ -1,4 +1,3 @@
-import moment from "moment-timezone";
 import React, {useState} from "react";
 
 import {Box} from "./Box";
@@ -149,15 +148,14 @@ export function Field(props: FieldProps) {
         />
       );
     } else if (props.type === "date") {
-      const date = value.seconds ? moment(value.seconds * 1000) : moment(value);
       return (
         <TextField
           disabled
           id={props.name}
           placeholder={props.placeholder}
-          type="text"
+          type="date"
           // TODO: allow editing with a date picker
-          value={date.format("MM/DD/YYYY HH:mmA")}
+          value={value}
           onChange={(result) => handleChange(result.value)}
         />
       );
