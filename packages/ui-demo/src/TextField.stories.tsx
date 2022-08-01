@@ -1,7 +1,28 @@
 import {TextField} from "ferns-ui";
-import React from "react";
+import React, {ReactElement, useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
+
+const TextFieldStory = ({
+  initialValue,
+  type,
+}: {
+  initialValue: string;
+  type: string;
+}): ReactElement => {
+  const [value, setValue] = useState(initialValue);
+  return (
+    <TextField
+      id="none"
+      label="Pick a date"
+      type={type as any}
+      value={value}
+      onChange={(v) => {
+        setValue(v.value);
+      }}
+    />
+  );
+};
 
 export const TextFieldStories = {
   title: "TextField",
@@ -23,6 +44,13 @@ export const TextFieldStories = {
             label="Enter some text"
             onChange={() => {}}
           />
+        </StorybookContainer>
+      );
+    },
+    Date() {
+      return (
+        <StorybookContainer>
+          <TextFieldStory initialValue="2021-05-01" type="date" />
         </StorybookContainer>
       );
     },
