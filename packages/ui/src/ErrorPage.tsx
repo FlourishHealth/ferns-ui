@@ -30,8 +30,8 @@ export class ErrorPage extends React.Component<ErrorPageProps, {}> {
         </Text>
         <Box paddingY={3}>
           <Text align="center">
-            There&apos;s an error. Sorry! Josh just got a notification about the error so he can fix
-            it as soon as possible!
+            There&apos;s an error. Sorry! Our team just got a notification about the error so they
+            can fix it as soon as possible!
           </Text>
         </Box>
         <Box paddingY={3}>
