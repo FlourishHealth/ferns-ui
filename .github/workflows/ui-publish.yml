@@ -54,8 +54,8 @@ jobs:
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           branch: package-json-${{ github.event.release.tag_name }}
           title: "[Publish] Bump package version to ${{ github.event.release.tag_name }}"
-          assignees: joshgachnang
-          reviewers: joshgachnang
+          assignees: joshgachnang,kjkurtz,swanka
+          reviewers: joshgachnang,kjkurtz,swanka
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
