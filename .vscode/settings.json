@@ -1,0 +1,10 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[typescript]": {
+    "editor.codeActionsOnSave": {
+      "editor.organizeImports": true
+    }
+  }
+}
