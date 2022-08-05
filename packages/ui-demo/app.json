@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -26,12 +27,7 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png",
-      "build": {
-        "babel": {
-          "include": ["victory-native", "@sentry/react-native"]
-        }
-      }
+      "favicon": "./assets/favicon.png"
     }
   }
 }
