@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react-native";
 import React from "react";
 
 import {ErrorBoundaryProps} from "./Common";
@@ -18,7 +17,6 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, State> {
 
   componentDidCatch(error: Error, info: {componentStack: string}) {
     console.warn("[ErrorBoundary] Caught error", error);
-    Sentry.captureException(error);
 
     if (this.props.onError) {
       this.props.onError(error, info.componentStack);
