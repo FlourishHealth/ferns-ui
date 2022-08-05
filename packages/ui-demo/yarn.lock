@@ -3823,10 +3823,10 @@ fbjs@^3.0.0:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.30"
 
-ferns-ui@*:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/ferns-ui/-/ferns-ui-0.6.3.tgz#53c3d7619804978398da707f4ac66ef27043dd04"
-  integrity sha512-LvF0oKtvNOISl88fPvpywRWXsnapzITI9u5yX/cYjnrq09X0/SakBYeYu4N3pobS5YvgR9qb6DJ8BYCDdQ/1TA==
+ferns-ui@0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/ferns-ui/-/ferns-ui-0.6.4.tgz#31f3bbb4e7929b9c209483d8b7677c2e979095ba"
+  integrity sha512-ImeqLanoy3HGNtSEbIR3GMVt4yeVu5sHmK1ev6NiQ9YHsMXD30wornlOdL7rTzVNW+0IGSPvaBfBMNcAA3P9kg==
   dependencies:
     tsc-watch "^5.0.3"
 
