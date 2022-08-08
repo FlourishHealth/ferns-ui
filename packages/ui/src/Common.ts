@@ -660,6 +660,7 @@ export interface FieldWithLabelsProps {
 }
 
 export interface TextFieldProps extends FieldWithLabelsProps {
+  innerRef?: any;
   id?: string;
   onChange: OnChangeCallback;
   autoComplete?: "current-password" | "on" | "off" | "username";
