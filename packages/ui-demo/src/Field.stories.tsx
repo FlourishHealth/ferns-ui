@@ -196,5 +196,20 @@ export const FieldStories = {
         </StorybookContainer>
       );
     },
+    "Address Field": function () {
+      return (
+        <StorybookContainer>
+          <Box width={300}>
+            <Field
+              handleChange={() => {}}
+              helperText="Address Fields Helper Text"
+              label="Address Field"
+              name="address"
+              type="address"
+            />
+          </Box>
+        </StorybookContainer>
+      );
+    },
   },
 };

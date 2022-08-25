@@ -1026,7 +1026,7 @@ export interface ScrollViewProps {
 
 type ItemT = any;
 type ViewStyle = any;
-interface StyleProp {
+export interface StyleProp {
   [key: string]: any;
 }
 
@@ -1328,4 +1328,12 @@ export interface NavConfig {
 export interface ProgressBarProps {
   color: Color;
   completed: number;
+}
+
+export interface AddressInterface {
+  address1: string;
+  address2?: string;
+  city: string;
+  state: string;
+  zipcode: string;
 }

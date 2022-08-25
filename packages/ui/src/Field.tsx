@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 
 import {Box} from "./Box";
-import {FieldWithLabelsProps, TextFieldType} from "./Common";
+import {AddressInterface, FieldWithLabelsProps, TextFieldType} from "./Common";
+import {USSTATESLIST} from "./Constants";
 import {FieldWithLabels} from "./FieldWithLabels";
 import {SelectList, SelectListOptions} from "./SelectList";
 import {Switch} from "./Switch";
@@ -30,7 +31,8 @@ export interface FieldProps extends FieldWithLabelsProps {
     | "password"
     | "url"
     | "date"
-    | "multiselect";
+    | "multiselect"
+    | "address";
   rows?: number;
   options?: SelectListOptions;
   placeholder?: string;
@@ -60,6 +62,13 @@ export function Field(props: FieldProps) {
     setValue(newValue);
     if (props.handleChange) {
       props.handleChange(props.name, newValue);
+    }
+  };
+
+  const handleAddressChange = (field: string, newValue: string) => {
+    setValue({...value, [field]: newValue});
+    if (props.handleChange) {
+      props.handleChange(props.name, {...value, [field]: newValue});
     }
   };
 
@@ -158,6 +167,55 @@ export function Field(props: FieldProps) {
           value={value}
           onChange={(result) => handleChange(result.value)}
         />
+      );
+    } else if (props.type === "address") {
+      const {
+        address1 = "",
+        address2 = "",
+        city = "",
+        state = "",
+        zipcode = "",
+      }: AddressInterface = value;
+      return (
+        <>
+          <TextField
+            id="address1"
+            label="Street Address"
+            type="text"
+            value={address1}
+            onChange={(result) => handleAddressChange("address1", result.value)}
+          />
+          <TextField
+            id="address2"
+            label="Apt, suite, etc"
+            type="text"
+            value={address2}
+            onChange={(result) => handleAddressChange("address2", result.value)}
+          />
+          <TextField
+            id="city"
+            label="City"
+            type="text"
+            value={city}
+            onChange={(result) => handleAddressChange("city", result.value)}
+          />
+          <SelectList
+            id="state"
+            label="State"
+            options={USSTATESLIST}
+            placeholder="Select state"
+            style={{borderRadius: 16}}
+            value={state}
+            onChange={(result) => handleAddressChange("state", result)}
+          />
+          <TextField
+            id="zipcode"
+            label="Zipcode"
+            type="text"
+            value={zipcode}
+            onChange={(result) => handleAddressChange("zipcode", result.value)}
+          />
+        </>
       );
     } else {
       let type: TextFieldType = "text";
