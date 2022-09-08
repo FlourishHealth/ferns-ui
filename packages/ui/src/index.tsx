@@ -49,6 +49,7 @@ export * from "./NumberPickerActionSheet";
 // export * from "./Chart";
 export * from "./ModalSheet";
 export * from "./ProgressBar";
+export * from "./DateTimeField";
 
 // Lifted from react-native
 type ImageRequireSource = number;

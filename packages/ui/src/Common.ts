@@ -659,6 +659,12 @@ export interface FieldWithLabelsProps {
   children?: React.ReactNode;
 }
 
+export interface DateTimeFieldProps extends FieldWithLabelsProps {
+  mode: "date" | "time" | "datetime";
+  value: Date;
+  onChange: (date: Date) => void;
+}
+
 export interface TextFieldProps extends FieldWithLabelsProps {
   innerRef?: any;
   id?: string;

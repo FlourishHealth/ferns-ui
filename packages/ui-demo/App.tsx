@@ -14,18 +14,17 @@ export interface Story {
   stories: {[name: string]: StoryFunc};
 }
 
-const stories: Story[] = Object.values(Stories);
-const allStories: {[name: string]: StoryFunc} = {};
-for (const story of stories) {
-  for (const storyName of Object.keys(story.stories)) {
-    allStories[storyName] = story.stories[storyName];
-  }
-}
-
 const App = () => {
   const [currentStory, setStory] = useState<string | null>(null);
+  const stories: Story[] = Object.values(Stories);
+  const allStories: {[name: string]: StoryFunc} = {};
 
   useEffect(() => {
+    for (const story of stories) {
+      for (const storyName of Object.keys(story.stories)) {
+        allStories[storyName] = story.stories[storyName];
+      }
+    }
     AsyncStorage.getItem("story").then((story) => {
       if (story) {
         setStory(story);

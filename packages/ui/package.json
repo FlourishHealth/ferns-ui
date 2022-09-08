@@ -117,6 +117,7 @@
     "@types/react": "17.0.44"
   },
   "dependencies": {
+    "react-datetime-picker": "^3.5.0",
     "tsc-watch": "^5.0.3"
   },
   "devDependencies": {
@@ -127,6 +128,7 @@
     "@react-native-picker/picker": "2.4.4",
     "@types/lodash": "^4.14.184",
     "@types/mdurl": "^1.0.2",
+    "@types/react-datetime-picker": "^3.4.1",
     "@types/react-native": "^0.69.1",
     "@typescript-eslint/eslint-plugin": "^5.34.0",
     "@typescript-eslint/parser": "^5.34.0",
@@ -165,6 +167,7 @@
   },
   "peerDependencies": {
     "@expo/vector-icons": "^13.0.0",
+    "react-datetime-picker": "^3.5.0",
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-community/blur": "^4.2.0",
     "@react-native-community/datetimepicker": "^6.3.2",
