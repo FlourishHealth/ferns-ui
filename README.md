@@ -11,9 +11,12 @@ You can see the [web demo here](https://ferns-ui.netlify.app)
 
 ## Dev
 
-To make developing easy, link ui and ui-demo together with `yarn link` with this helper script:
+To make developing easier, you can use the following script to link ferns-ui with the ui-demo:
 
-    yarn make-links
+    # sync ui to ui-demo
+    syncuid() {
+        cd <PATH>/ferns-ui/packages/ui && yarn build && rsync -avp <PATH>/ferns-ui/packages/ui/dist/* <PATH>/ferns-ui/packages/ui-demo/node_modules/ferns-ui/dist/
+    }
 
 Now you will be using the local ferns-ui package and the demo will update as you change the code. You'll need to be
 compiling the ui code and running the demo in separate terminals:
@@ -28,13 +31,9 @@ compiling the ui code and running the demo in separate terminals:
 
 If you need to test your changes in another project, you can use this handy bash function:
 
-     ui() {
-        set -ex
-        cd ~/src/ferns-ui/packages/ui
-        yarn build
-        yarn pack --filename /tmp/ui.tgz
-        cd ~/src/app
-        yarn add file:/tmp/ui.tgz
+    # sync ui to different app
+    syncui() {
+        cd <PATH>/ferns-ui/packages/ui && yarn build && rsync -avp <PATH>/ferns-ui/packages/ui/dist/* <PATH>/app/node_modules/ferns-ui/dist/
     }
 
 Update the paths to match your project directories. This will build and pack up ferns-ui like it is being
