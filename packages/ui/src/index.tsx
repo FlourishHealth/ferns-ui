@@ -1,5 +1,6 @@
 export * from "./Constants";
 export * from "./Common";
+export * from "./ActionSheet";
 export * from "./Avatar";
 export * from "./Banner";
 export * from "./BlurBox";
@@ -17,7 +18,6 @@ export * from "./Form";
 export * from "./HeaderButtons";
 export * from "./Heading";
 export * from "./Icon";
-export * from "./ActionSheet";
 export * from "./IconButton";
 export * from "./Image";
 export * from "./ImageBackground";
@@ -26,7 +26,7 @@ export * from "./ImageBackground";
 export * from "./Link";
 export * from "./Mask";
 export * from "./Meta";
-// export * from "./Modal";
+export * from "./Modal";
 
 export * from "./Page";
 export * from "./Pill";

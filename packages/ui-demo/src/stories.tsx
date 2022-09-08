@@ -11,6 +11,7 @@ export * from "./Icon.stories";
 export * from "./IconButton.stories";
 export * from "./Link.stories";
 export * from "./Mask.stories";
+export * from "./Modal.stories";
 export * from "./Pill.stories";
 export * from "./SegmentedControl.stories";
 export * from "./SelectList.stories";
