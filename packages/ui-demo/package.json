@@ -51,7 +51,7 @@
     "react-app-polyfill": "^3.0.0",
     "react-datetime-picker": "^3.5.0",
     "react-dom": "18.0.0",
-    "react-native": "0.69.4",
+    "react-native": "0.69.5",
     "react-native-calendars": "^1.1286.0",
     "react-native-gesture-handler": "~2.5.0",
     "react-native-haptic-feedback": "^1.14.0",

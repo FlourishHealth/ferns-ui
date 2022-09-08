@@ -14,17 +14,19 @@ export interface Story {
   stories: {[name: string]: StoryFunc};
 }
 
+const stories: Story[] = Object.values(Stories);
+const allStories: {[name: string]: StoryFunc} = {};
+for (const story of stories) {
+  for (const storyName of Object.keys(story.stories)) {
+    console.log(storyName);
+    allStories[storyName] = story.stories[storyName];
+  }
+}
+console.log({allStories});
+
 const App = () => {
   const [currentStory, setStory] = useState<string | null>(null);
-  const stories: Story[] = Object.values(Stories);
-  const allStories: {[name: string]: StoryFunc} = {};
-
   useEffect(() => {
-    for (const story of stories) {
-      for (const storyName of Object.keys(story.stories)) {
-        allStories[storyName] = story.stories[storyName];
-      }
-    }
     AsyncStorage.getItem("story").then((story) => {
       if (story && allStories[story]) {
         setStory(story);
@@ -42,6 +44,7 @@ const App = () => {
   if (!loaded) {
     return null;
   }
+  console.log({allStories, currentStory});
 
   return (
     <View style={styles.container}>
