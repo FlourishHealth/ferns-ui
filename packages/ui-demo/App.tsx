@@ -26,7 +26,7 @@ const App = () => {
       }
     }
     AsyncStorage.getItem("story").then((story) => {
-      if (story) {
+      if (story && allStories[story]) {
         setStory(story);
       }
     });
