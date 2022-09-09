@@ -24,10 +24,9 @@ for (const story of stories) {
 
 const App = () => {
   const [currentStory, setStory] = useState<string | null>(null);
-
   useEffect(() => {
     AsyncStorage.getItem("story").then((story) => {
-      if (story) {
+      if (story && allStories[story]) {
         setStory(story);
       }
     });

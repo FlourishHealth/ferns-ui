@@ -40,6 +40,7 @@
     "@react-native-community/blur": "^4.2.0",
     "@react-native-community/datetimepicker": "6.2.0",
     "@react-native-picker/picker": "2.4.2",
+    "@types/react-datetime-picker": "^3.4.1",
     "expo": "^46.0.0",
     "expo-font": "~10.2.0",
     "expo-haptics": "~11.3.0",
@@ -48,8 +49,10 @@
     "moment-timezone": "^0.5.34",
     "react": "18.0.0",
     "react-app-polyfill": "^3.0.0",
+    "react-date-picker": "^8.4.0",
+    "react-datetime-picker": "^3.5.0",
     "react-dom": "18.0.0",
-    "react-native": "0.69.4",
+    "react-native": "0.69.5",
     "react-native-calendars": "^1.1286.0",
     "react-native-gesture-handler": "~2.5.0",
     "react-native-haptic-feedback": "^1.14.0",
@@ -62,7 +65,8 @@
     "react-native-svg": "12.3.0",
     "react-native-web": "~0.18.7",
     "react-router": "^6.3.0",
-    "react-router-dom": "^6.3.0"
+    "react-router-dom": "^6.3.0",
+    "react-time-picker": "^4.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
