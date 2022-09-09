@@ -21,7 +21,6 @@ export const DateTimeStories = {
   title: "Date Time",
   component: DateTimeField,
   stories: {
-    // eslint-disable-next-line react/display-name
     "Date and Time": function () {
       return <DateTime mode="datetime" />;
     },
