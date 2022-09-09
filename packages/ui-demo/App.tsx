@@ -61,7 +61,7 @@ const App = () => {
         <Text style={{marginLeft: 20, fontWeight: "bold"}}>{currentStory}</Text>
       </View>
       <View style={styles.body}>
-        {currentStory && allStories[currentStory]()}
+        {currentStory && allStories[currentStory] && allStories[currentStory]()}
         {!currentStory && (
           <ScrollView style={styles.storyList}>
             {stories.map((s) => (
