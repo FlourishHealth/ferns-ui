@@ -1,8 +1,10 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment-timezone";
 import React, {ReactElement} from "react";
+import DatePicker from "react-date-picker";
 import DateTimePickerWeb from "react-datetime-picker";
 import {Platform, View} from "react-native";
+import TimePicker from "react-time-picker";
 
 import {Box} from "./Box";
 import {DateTimeFieldProps} from "./Common";
@@ -71,7 +73,23 @@ export const DateTimeField = ({
               </>
             )}
             {Platform.OS === "web" && (
-              <DateTimePickerWeb disableClock value={value} onChange={onChange} />
+              <>
+                {mode === "datetime" && (
+                  <DateTimePickerWeb disableClock value={value} onChange={onChange} />
+                )}
+                {mode === "date" && <DatePicker value={value} onChange={onChange} />}
+                {mode === "time" && (
+                  <TimePicker
+                    disableClock
+                    value={value}
+                    onChange={(newVal) => {
+                      // TimePicker returns a string or Date, so we need to make sure it's a Date
+                      const newDate = new Date(newVal);
+                      onChange(newDate);
+                    }}
+                  />
+                )}
+              </>
             )}
           </Box>
         </View>
