@@ -6,7 +6,6 @@ import {Platform, View} from "react-native";
 
 import {Box} from "./Box";
 import {DateTimeFieldProps} from "./Common";
-import {Text} from "./Text";
 import {WithLabel} from "./WithLabel";
 
 export const DateTimeField = ({
@@ -29,7 +28,7 @@ export const DateTimeField = ({
             {Platform.OS === "ios" && (
               <DateTimePicker
                 display="spinner"
-                mode="datetime"
+                mode={mode}
                 testID="dateTimePicker"
                 value={moment(value).toDate()}
                 onChange={(event: any, date: any) => {
@@ -40,7 +39,37 @@ export const DateTimeField = ({
                 }}
               />
             )}
-            <Text>Test</Text>
+            {Platform.OS === "android" && (
+              <>
+                <DateTimePicker
+                  display="spinner"
+                  mode={mode === "datetime" ? "date" : mode}
+                  testID="dateTimePicker"
+                  value={moment(value).toDate()}
+                  onChange={(event: any, date: any) => {
+                    if (!date) {
+                      return;
+                    }
+                    onChange(value);
+                  }}
+                />
+                {mode === "datetime" && (
+                  <DateTimePicker
+                    display="spinner"
+                    mode="time"
+                    testID="dateTimePicker"
+                    value={moment(value).toDate()}
+                    onChange={(event: any, date: any) => {
+                      // fix to append to date object
+                      if (!date) {
+                        return;
+                      }
+                      onChange(value);
+                    }}
+                  />
+                )}
+              </>
+            )}
             {Platform.OS === "web" && (
               <DateTimePickerWeb disableClock value={value} onChange={onChange} />
             )}
