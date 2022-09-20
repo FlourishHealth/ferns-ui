@@ -24,7 +24,7 @@ export const DateTimeField = ({
     >
       <WithLabel>
         <View>
-          <Box maxWidth={300}>
+          <Box flex="grow" maxWidth={300}>
             {mode === "datetime" && (
               <DateTimePickerWeb disableClock value={value} onChange={onChange} />
             )}
