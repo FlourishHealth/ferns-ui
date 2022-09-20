@@ -16,6 +16,7 @@ export interface FieldProps extends FieldWithLabelsProps {
   subLabel?: string;
   initialValue?: any;
   handleChange: any;
+  height?: number;
   // Additional validation
   validate?: (value: any) => boolean;
   validateErrorMessage?: string;
@@ -139,8 +140,9 @@ export function Field(props: FieldProps) {
       return (
         <TextArea
           disabled={props.disabled}
+          height={props.height}
           id={props.name}
-          placeholder={props.placeholder}
+          placeholder={value ? props.placeholder : undefined}
           rows={props.rows}
           value={String(value)}
           onChange={(result) => handleChange(result.value)}
