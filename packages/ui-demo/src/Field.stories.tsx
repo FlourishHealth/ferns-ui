@@ -66,13 +66,16 @@ export const FieldStories = {
             helperText="Here's some help text"
             label="TextArea Field"
             name="text"
+            placeholder="this is my placeholder"
             type="textarea"
           />
           <Field
             handleChange={() => {}}
             helperText="Here's some help text"
+            initialValue="initial value"
             label="Large TextArea "
             name="text"
+            placeholder="this is my placeholder"
             rows={10}
             type="textarea"
           />

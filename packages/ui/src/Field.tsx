@@ -142,7 +142,7 @@ export function Field(props: FieldProps) {
           disabled={props.disabled}
           height={props.height}
           id={props.name}
-          placeholder={value ? props.placeholder : undefined}
+          placeholder={Boolean(value) ? "" : props.placeholder}
           rows={props.rows}
           value={String(value)}
           onChange={(result) => handleChange(result.value)}
