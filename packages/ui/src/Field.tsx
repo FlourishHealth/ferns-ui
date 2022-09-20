@@ -140,7 +140,7 @@ export function Field(props: FieldProps) {
       return (
         <TextArea
           disabled={props.disabled}
-          height={props.height}
+          height={props.height ?? 100}
           id={props.name}
           placeholder={Boolean(value) ? "" : props.placeholder}
           rows={props.rows}
