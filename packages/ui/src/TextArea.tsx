@@ -10,6 +10,7 @@ export class TextArea extends React.Component<TextAreaProps, {}> {
   }
 
   render() {
-    return <TextField {...this.props} height={100} multiline rows={4} />;
+    const {height, ...props} = this.props;
+    return <TextField {...props} height={height ?? 100} multiline />;
   }
 }
