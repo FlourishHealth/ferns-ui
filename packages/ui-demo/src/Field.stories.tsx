@@ -214,5 +214,25 @@ export const FieldStories = {
         </StorybookContainer>
       );
     },
+    "Custom Select Field": function () {
+      return (
+        <StorybookContainer>
+          <Box width={300}>
+            <Field
+              handleChange={() => {}}
+              helperText="Helper text goes here"
+              label="Custom Select Field"
+              name="customSelect"
+              options={[
+                {label: "she/her/hers", value: "she/her/hers"},
+                {label: "he/him/his", value: "he/him/his"},
+                {label: "they/them/theirs", value: "they/them/theirs"},
+              ]}
+              type="customSelect"
+            />
+          </Box>
+        </StorybookContainer>
+      );
+    },
   },
 };
