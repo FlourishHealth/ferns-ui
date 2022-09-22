@@ -516,6 +516,13 @@ export default class RNPickerSelect extends PureComponent<any, any> {
       <View style={[defaultStyles.viewContainer, style.viewContainer]}>
         <TouchableOpacity
           activeOpacity={1}
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: style?.minHeight || 50,
+            width: "100%",
+          }}
           testID="ios_touchable_wrapper"
           onPress={() => {
             this.togglePicker(true);
