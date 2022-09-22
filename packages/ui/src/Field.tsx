@@ -89,7 +89,7 @@ export function Field(props: FieldProps) {
         setCustomValue("");
       }
 
-      // Update the feild value and select value
+      // Update the field value and select value
       setValue(newValue);
       setSelectValue(newValue);
       if (props.handleChange) {
