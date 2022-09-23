@@ -1,8 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useFonts} from "expo-font";
 import {StatusBar} from "expo-status-bar";
-import React, {useEffect, useState} from "react";
+import React, {ReactElement, useEffect, useState} from "react";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
+import {SafeAreaProvider, useSafeAreaInsets} from "react-native-safe-area-context";
 
 import * as Stories from "./src/stories";
 
@@ -23,6 +24,7 @@ for (const story of stories) {
 }
 
 const App = () => {
+  const insets = useSafeAreaInsets();
   const [currentStory, setStory] = useState<string | null>(null);
   useEffect(() => {
     AsyncStorage.getItem("story").then((story) => {
@@ -44,7 +46,16 @@ const App = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+        paddingLeft: insets.left,
+        paddingRight: insets.right,
+        backgroundColor: "#fff",
+      }}
+    >
       <StatusBar style="auto" />
       <View style={styles.header}>
         {!currentStory && <Text style={{fontWeight: "bold", fontSize: 20}}>Pick A Story:</Text>}
@@ -63,27 +74,39 @@ const App = () => {
       <View style={styles.body}>
         {currentStory && allStories[currentStory] && allStories[currentStory]()}
         {!currentStory && (
-          <ScrollView style={styles.storyList}>
-            {stories.map((s) => (
-              <React.Fragment key={s.title}>
-                <Text style={{fontWeight: "bold", fontSize: 20, marginBottom: 12}}>{s.title}</Text>
-                {Object.keys(s.stories).map((title) => (
-                  <Pressable
-                    key={title}
-                    onPress={async () => {
-                      setStory(title);
-                      await AsyncStorage.setItem("story", title);
-                    }}
-                  >
-                    <Text style={{fontSize: 16, marginBottom: 8}}>{title}</Text>
-                  </Pressable>
-                ))}
-              </React.Fragment>
-            ))}
+          <ScrollView>
+            <View style={styles.storyList}>
+              {stories.map((s) => (
+                <React.Fragment key={s.title}>
+                  <Text style={{fontWeight: "bold", fontSize: 20, marginBottom: 12}}>
+                    {s.title}
+                  </Text>
+                  {Object.keys(s.stories).map((title) => (
+                    <Pressable
+                      key={title}
+                      onPress={async () => {
+                        setStory(title);
+                        await AsyncStorage.setItem("story", title);
+                      }}
+                    >
+                      <Text style={{fontSize: 16, marginBottom: 8}}>{title}</Text>
+                    </Pressable>
+                  ))}
+                </React.Fragment>
+              ))}
+            </View>
           </ScrollView>
         )}
       </View>
     </View>
+  );
+};
+
+const AppRoot = (): ReactElement => {
+  return (
+    <SafeAreaProvider>
+      <App />
+    </SafeAreaProvider>
   );
 };
 
@@ -126,4 +149,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default AppRoot;
