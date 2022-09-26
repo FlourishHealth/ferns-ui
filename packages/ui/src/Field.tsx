@@ -33,7 +33,8 @@ export interface FieldProps extends FieldWithLabelsProps {
     | "url"
     | "date"
     | "multiselect"
-    | "address";
+    | "address"
+    | "customSelect";
   rows?: number;
   options?: SelectListOptions;
   placeholder?: string;
@@ -54,6 +55,11 @@ export function Field(props: FieldProps) {
   const [value, setValue] = useState(props.initialValue || "");
   const [multiselectValue, setMultiselectValue] = useState(props.initialValue ?? []);
 
+  // showCustomInput, customValue, and selectValue are all for type="customSelect"
+  const [showCustomInput, setShowCustomInput] = useState(false);
+  const [customValue, setCustomValue] = useState("");
+  const [selectValue, setSelectValue] = useState(props.initialValue || "");
+
   const handleChange = (newValue: string) => {
     if (props.type === "currency") {
       newValue = newValue.replace("$", "");
@@ -61,6 +67,40 @@ export function Field(props: FieldProps) {
       newValue = newValue.replace("%", "");
     }
     setValue(newValue);
+    if (props.handleChange) {
+      props.handleChange(props.name, newValue);
+    }
+  };
+
+  // Custom select has 3 values - the overall field value, the value of the select menu, and the value of the custom input
+  const handleCustomSelectListChange = (newValue: string) => {
+    // If "custom" is selected from the dropdown, toggle the custom input open and clear the previous value
+    if (newValue === "custom") {
+      setShowCustomInput(true);
+      setValue("");
+      setSelectValue(newValue);
+    }
+
+    // If any non-custom value is selected
+    else {
+      // Close the custom input if open and clear the value
+      if (showCustomInput) {
+        setShowCustomInput(false);
+        setCustomValue("");
+      }
+
+      // Update the field value and select value
+      setValue(newValue);
+      setSelectValue(newValue);
+      if (props.handleChange) {
+        props.handleChange(props.name, newValue);
+      }
+    }
+  };
+
+  const handleCustomSelectTextInputChange = (newValue: string) => {
+    setValue(newValue);
+    setCustomValue(newValue);
     if (props.handleChange) {
       props.handleChange(props.name, newValue);
     }
@@ -217,6 +257,34 @@ export function Field(props: FieldProps) {
             value={zipcode}
             onChange={(result) => handleAddressChange("zipcode", result.value)}
           />
+        </>
+      );
+    } else if (props.type === "customSelect") {
+      if (!props.options) {
+        console.error("Field with type=customSelect require options");
+        return null;
+      }
+      return (
+        <>
+          <SelectList
+            id="providedOptions"
+            options={[...props.options, {label: "Custom", value: "custom"}]}
+            placeholder="Select an option"
+            value={selectValue}
+            onChange={handleCustomSelectListChange}
+          />
+          {Boolean(showCustomInput) && (
+            <Box paddingY={2}>
+              <TextField
+                disabled={props.disabled}
+                id="customOptions"
+                placeholder={props.placeholder}
+                type="text"
+                value={customValue}
+                onChange={(result) => handleCustomSelectTextInputChange(result.value)}
+              />
+            </Box>
+          )}
         </>
       );
     } else {
