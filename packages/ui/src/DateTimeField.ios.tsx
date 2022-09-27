@@ -1,7 +1,6 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment-timezone";
 import React, {ReactElement} from "react";
-import {View} from "react-native";
 
 import {Box} from "./Box";
 import {DateTimeFieldProps} from "./Common";
@@ -22,22 +21,20 @@ export const DateTimeField = ({
       labelSize="sm"
     >
       <WithLabel>
-        <View>
-          <Box maxWidth={300}>
-            <DateTimePicker
-              display="spinner"
-              mode={mode}
-              testID="dateTimePicker"
-              value={moment(value).toDate()}
-              onChange={(event: any, date: any) => {
-                if (!date) {
-                  return;
-                }
-                onChange(value);
-              }}
-            />
-          </Box>
-        </View>
+        <Box maxWidth={300}>
+          <DateTimePicker
+            display="spinner"
+            mode={mode}
+            testID="dateTimePicker"
+            value={moment(value).toDate()}
+            onChange={(event: any, date: any) => {
+              if (!date) {
+                return;
+              }
+              onChange(value);
+            }}
+          />
+        </Box>
       </WithLabel>
     </WithLabel>
   );

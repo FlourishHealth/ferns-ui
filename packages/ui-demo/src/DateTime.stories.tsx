@@ -10,11 +10,7 @@ interface DateTimeProps {
 const DateTime = ({mode}: DateTimeProps) => {
   const [value, setValue] = useState(new Date());
 
-  return (
-    <StorybookContainer>
-      <DateTimeField mode={mode} value={value} onChange={setValue} />
-    </StorybookContainer>
-  );
+  return <DateTimeField mode={mode} value={value} onChange={setValue} />;
 };
 
 export const DateTimeStories = {
@@ -22,13 +18,28 @@ export const DateTimeStories = {
   component: DateTimeField,
   stories: {
     "Date and Time": function () {
-      return <DateTime mode="datetime" />;
+      return (
+        // Placed two here to ensure that the calendar z-index does
+        // not conflict with the second one
+        <StorybookContainer>
+          <DateTime mode="datetime" />
+          <DateTime mode="datetime" />
+        </StorybookContainer>
+      );
     },
     "Date without Time": function () {
-      return <DateTime mode="date" />;
+      return (
+        <StorybookContainer>
+          <DateTime mode="date" />
+        </StorybookContainer>
+      );
     },
     "Time without Date": function () {
-      return <DateTime mode="time" />;
+      return (
+        <StorybookContainer>
+          <DateTime mode="time" />
+        </StorybookContainer>
+      );
     },
   },
 };
