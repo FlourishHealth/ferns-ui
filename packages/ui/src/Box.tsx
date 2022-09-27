@@ -90,6 +90,7 @@ export class Box extends React.Component<BoxProps, {}> {
     paddingX: (value) => ({paddingLeft: value * SPACING, paddingRight: value * SPACING}),
     paddingY: (value) => ({paddingTop: value * SPACING, paddingBottom: value * SPACING}),
     padding: (value) => ({padding: value * SPACING}),
+    zIndex: (value) => ({zIndex: value ? value : undefined}),
     position: (value) => ({position: value}),
     top: (top) => ({top: top ? 0 : undefined}),
     bottom: (bottom) => ({bottom: bottom ? 0 : undefined}),

@@ -564,6 +564,7 @@ export interface BoxProps {
   top?: boolean;
   width?: number | string;
   wrap?: boolean;
+  zIndex?: number | "auto";
 
   // Pattern additions
   onClick?: any;
