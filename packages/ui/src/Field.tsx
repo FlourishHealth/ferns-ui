@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import {Box} from "./Box";
 import {AddressInterface, FieldWithLabelsProps, TextFieldType} from "./Common";
@@ -71,6 +71,15 @@ export function Field(props: FieldProps) {
       props.handleChange(props.name, newValue);
     }
   };
+
+  useEffect(() => {
+    // upon initialization, set the value within the parent to the initial value
+    handleChange(
+      props.initialValue || (props.options && props.options[0] ? props.options[0].value : "")
+    );
+    // only want to run this once so setting empty dependency array
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Custom select has 3 values - the overall field value, the value of the select menu, and the value of the custom input
   const handleCustomSelectListChange = (newValue: string) => {
