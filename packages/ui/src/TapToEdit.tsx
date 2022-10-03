@@ -26,7 +26,7 @@ export const TapToEdit = (props: TapToEditProps): ReactElement => {
   const {title, editable = true, rowBoxProps, transform, fieldComponent, ...fieldProps} = props;
   if (editing) {
     return (
-      <Box direction="column" maxWidth="100%" paddingX={3} paddingY={2} width="100%">
+      <Box direction="column">
         {fieldComponent ? (
           fieldComponent(setValue as any)
         ) : (
@@ -64,10 +64,10 @@ export const TapToEdit = (props: TapToEditProps): ReactElement => {
       </Box>
     );
   } else {
-    let displayValue = value;
-    // If transform is present, that takes priority
+    let displayValue = props.initialValue;
+    // If a transform props is present, that takes priority
     if (transform) {
-      displayValue = transform(value);
+      displayValue = transform(props.initialValue);
     } else {
       // If no transform, try and display the value reasonably.
       if (fieldProps?.type === "boolean") {
@@ -93,7 +93,6 @@ export const TapToEdit = (props: TapToEditProps): ReactElement => {
       <Box
         direction="row"
         justifyContent="between"
-        maxWidth="100%"
         paddingX={3}
         paddingY={2}
         width="100%"
@@ -102,8 +101,8 @@ export const TapToEdit = (props: TapToEditProps): ReactElement => {
         <Box>
           <Text weight="bold">{title}:</Text>
         </Box>
-        <Box direction="row" flex="shrink" marginLeft={2}>
-          <Box flex="shrink">
+        <Box direction="row">
+          <Box>
             <Text overflow="breakWord">{displayValue}</Text>
           </Box>
           {editable && (
