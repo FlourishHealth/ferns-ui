@@ -80,6 +80,7 @@ export interface UnifiedTheme {
   eggplant: string;
   gray: string;
   green: string;
+  springGreen: string;
   lightGray: string;
   maroon: string;
   midnight: string;
@@ -166,6 +167,7 @@ export type Color =
   | "eggplant"
   | "gray"
   | "green"
+  | "springGreen"
   | "lightGray"
   | "maroon"
   | "midnight"

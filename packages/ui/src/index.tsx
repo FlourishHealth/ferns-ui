@@ -2,6 +2,7 @@ export * from "./Constants";
 export * from "./Common";
 export * from "./ActionSheet";
 export * from "./Avatar";
+export * from "./Badge";
 export * from "./Banner";
 export * from "./BlurBox";
 export * from "./Body";
