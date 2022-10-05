@@ -20,7 +20,7 @@ const BADGE_COLORS: {[key: string]: AllColors} = {
   error: "red",
   warning: "orange",
   success: "springGreen",
-  neutral: "darkGray",
+  neutral: "gray",
 };
 
 export function Badge({
