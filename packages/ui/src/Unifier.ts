@@ -26,6 +26,7 @@ const DefaultTheme: UnifiedTheme = {
   darkGray: "#111",
   // secondary colors
   green: "#0fa573",
+  springGreen: "#008753",
   pine: "#0a6955",
   olive: "#364a4c",
   blue: "#4a90e2",
