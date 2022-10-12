@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import {Box} from "./Box";
 import {AddressInterface, FieldWithLabelsProps, TextFieldType} from "./Common";
@@ -14,8 +14,6 @@ export interface FieldProps extends FieldWithLabelsProps {
   name: string;
   label?: string;
   subLabel?: string;
-  initialValue?: any;
-  handleChange: any;
   height?: number;
   // Additional validation
   validate?: (value: any) => boolean;
@@ -36,50 +34,36 @@ export interface FieldProps extends FieldWithLabelsProps {
     | "address"
     | "customSelect";
   rows?: number;
+  value?: any;
+  setValue?: any;
   options?: SelectListOptions;
   placeholder?: string;
   disabled?: boolean;
 }
 
 /**
- * Field is a fully uncontrolled component for creating various inputs. Fully uncontrolled means Field manages its own
- * state for the TextFields/Switches/etc, not the parent component. When values are updated, Field will pass the data to
- * the parent through the handleChange prop. You can set an initialValue, but you should not update initialValue
- * this prop with the result of handleChange.
- *
  * Note: You MUST set a key={} prop for this component, otherwise you may wind up with stale data. Just changing
  * initialValue will not work.
  *
  */
-export function Field(props: FieldProps) {
-  const [value, setValue] = useState(props.initialValue || "");
-  const [multiselectValue, setMultiselectValue] = useState(props.initialValue ?? []);
-
+export function Field({
+  name,
+  label,
+  subLabel,
+  height,
+  validate,
+  validateErrorMessage,
+  type,
+  rows,
+  value,
+  setValue,
+  options,
+  placeholder,
+  disabled,
+}: FieldProps) {
   // showCustomInput, customValue, and selectValue are all for type="customSelect"
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customValue, setCustomValue] = useState("");
-  const [selectValue, setSelectValue] = useState(props.initialValue || "");
-
-  const handleChange = (newValue: string) => {
-    if (props.type === "currency") {
-      newValue = newValue.replace("$", "");
-    } else if (props.type === "percent") {
-      newValue = newValue.replace("%", "");
-    }
-    setValue(newValue);
-    if (props.handleChange) {
-      props.handleChange(props.name, newValue);
-    }
-  };
-
-  useEffect(() => {
-    // upon initialization, set the value within the parent to the initial value
-    handleChange(
-      props.initialValue || (props.options && props.options[0] ? props.options[0].value : "")
-    );
-    // only want to run this once so setting empty dependency array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // Custom select has 3 values - the overall field value, the value of the select menu, and the value of the custom input
   const handleCustomSelectListChange = (newValue: string) => {
@@ -87,7 +71,7 @@ export function Field(props: FieldProps) {
     if (newValue === "custom") {
       setShowCustomInput(true);
       setValue("");
-      setSelectValue(newValue);
+      // setSelectValue(newValue);
     }
 
     // If any non-custom value is selected
@@ -100,58 +84,45 @@ export function Field(props: FieldProps) {
 
       // Update the field value and select value
       setValue(newValue);
-      setSelectValue(newValue);
-      if (props.handleChange) {
-        props.handleChange(props.name, newValue);
-      }
     }
   };
 
   const handleCustomSelectTextInputChange = (newValue: string) => {
     setValue(newValue);
     setCustomValue(newValue);
-    if (props.handleChange) {
-      props.handleChange(props.name, newValue);
-    }
   };
 
   const handleAddressChange = (field: string, newValue: string) => {
     setValue({...value, [field]: newValue});
-    if (props.handleChange) {
-      props.handleChange(props.name, {...value, [field]: newValue});
-    }
   };
 
   const handleSwitchChange = (switchValue: boolean) => {
     setValue(switchValue);
-    if (props.handleChange) {
-      props.handleChange(props.name, switchValue);
-    }
   };
 
   const renderField = () => {
-    if (props.type === "select") {
-      if (!props.options) {
+    if (type === "select") {
+      if (!options) {
         console.error("Field with type=select require options");
         return null;
       }
       return (
         <SelectList
-          disabled={props.disabled}
-          id={props.name}
-          options={props.options}
+          disabled={disabled}
+          id={name}
+          options={options}
           value={value}
           onChange={handleChange}
         />
       );
-    } else if (props.type === "multiselect") {
-      if (!props.options) {
+    } else if (type === "multiselect") {
+      if (!options) {
         console.error("Field with type=multiselect require options");
         return null;
       }
       return (
         <Box width="100%">
-          {props.options.map((o) => (
+          {options.map((o) => (
             <Box key={o.label + o.value} direction="row" justifyContent="between" width="100%">
               <Box flex="shrink" marginRight={2}>
                 <Text weight="bold">{o.label}</Text>
@@ -159,25 +130,22 @@ export function Field(props: FieldProps) {
               <Box>
                 <Switch
                   key={o.label + o.value}
-                  disabled={props.disabled}
-                  id={props.name}
-                  name={props.name}
-                  switched={(multiselectValue ?? []).includes(o.value)}
+                  disabled={disabled}
+                  id={name}
+                  name={name}
+                  switched={(value ?? []).includes(o.value)}
                   onChange={(result) => {
                     let newValue;
                     if (result) {
-                      if (multiselectValue.includes(o.value)) {
+                      if (value.includes(o.value)) {
                         console.warn(`Tried to add value that already exists: ${o.value}`);
                         return;
                       }
-                      newValue = [...multiselectValue, o.value];
+                      newValue = [...value, o.value];
                     } else {
-                      newValue = multiselectValue.filter((v: string) => v !== o.value);
+                      newValue = value.filter((v: string) => v !== o.value);
                     }
-                    setMultiselectValue(newValue);
-                    if (props.handleChange) {
-                      props.handleChange(props.name, newValue);
-                    }
+                    setValue(newValue);
                   }}
                 />
               </Box>
@@ -185,41 +153,41 @@ export function Field(props: FieldProps) {
           ))}
         </Box>
       );
-    } else if (props.type === "textarea") {
+    } else if (type === "textarea") {
       return (
         <TextArea
-          disabled={props.disabled}
-          height={props.height ?? 100}
-          id={props.name}
-          placeholder={Boolean(value) ? "" : props.placeholder}
-          rows={props.rows}
+          disabled={disabled}
+          height={height ?? 100}
+          id={name}
+          placeholder={Boolean(value) ? "" : placeholder}
+          rows={rows}
           value={String(value)}
-          onChange={(result) => handleChange(result.value)}
+          onChange={(result) => setValue(result.value)}
         />
       );
-    } else if (props.type === "boolean") {
+    } else if (type === "boolean") {
       return (
         <Switch
-          disabled={props.disabled}
-          id={props.name}
-          name={props.name}
+          disabled={disabled}
+          id={name}
+          name={name}
           switched={Boolean(value)}
           onChange={(result) => handleSwitchChange(result)}
         />
       );
-    } else if (props.type === "date") {
+    } else if (type === "date") {
       return (
         <TextField
           disabled
-          id={props.name}
-          placeholder={props.placeholder}
+          id={name}
+          placeholder={placeholder}
           type="date"
           // TODO: allow editing with a date picker
           value={value}
           onChange={(result) => handleChange(result.value)}
         />
       );
-    } else if (props.type === "address") {
+    } else if (type === "address") {
       const {
         address1 = "",
         address2 = "",
@@ -268,8 +236,8 @@ export function Field(props: FieldProps) {
           />
         </>
       );
-    } else if (props.type === "customSelect") {
-      if (!props.options) {
+    } else if (type === "customSelect") {
+      if (!options) {
         console.error("Field with type=customSelect require options");
         return null;
       }
@@ -277,17 +245,17 @@ export function Field(props: FieldProps) {
         <>
           <SelectList
             id="providedOptions"
-            options={[...props.options, {label: "Custom", value: "custom"}]}
+            options={[...options, {label: "Custom", value: "custom"}]}
             placeholder="Select an option"
-            value={selectValue}
+            value={value}
             onChange={handleCustomSelectListChange}
           />
           {Boolean(showCustomInput) && (
             <Box paddingY={2}>
               <TextField
-                disabled={props.disabled}
+                disabled={disabled}
                 id="customOptions"
-                placeholder={props.placeholder}
+                placeholder={placeholder}
                 type="text"
                 value={customValue}
                 onChange={(result) => handleCustomSelectTextInputChange(result.value)}
@@ -297,35 +265,34 @@ export function Field(props: FieldProps) {
         </>
       );
     } else {
-      let type: TextFieldType = "text";
+      let tfType: TextFieldType = "text";
+      let tfValue: string = value;
       // Number is supported differently because we need fractional numbers and they don't work
       // well on iOS.
-      if (props.type && ["date", "email", "password", "url"].indexOf(props.type) > -1) {
-        type = props.type as TextFieldType;
-      } else if (props.type === "percent" || props.type === "currency") {
-        type = "text";
+      if (type && ["date", "email", "password", "url"].indexOf(type) > -1) {
+        tfType = type as TextFieldType;
+      } else if (type === "percent" || type === "currency") {
+        tfType = "text";
       }
       let autoComplete: "on" | "current-password" | "username" = "on";
-      if (type === "password") {
+      if (tfType === "password") {
         autoComplete = "current-password";
-      } else if (type === "email") {
+      } else if (tfType === "email") {
         autoComplete = "username";
       }
-      const stringValue = String(value);
-      // if (props.type === "percent") {
-      //   value = `${Number(value).toFixed(0)}%`;
-      // } else if (props.type === "currency") {
-      //   value = `$${Number(value).toFixed(2)}`;
-      // }
-      // console.log("VAL", value);
+      if (type === "percent") {
+        tfValue = `${Number(value).toFixed(0)}%`;
+      } else if (type === "currency") {
+        tfValue = `$${Number(value).toFixed(2)}`;
+      }
       return (
         <TextField
           autoComplete={autoComplete}
-          disabled={props.disabled}
-          id={props.name}
-          placeholder={props.placeholder}
-          type={type as "date" | "email" | "number" | "password" | "text" | "url"}
-          value={stringValue}
+          disabled={disabled}
+          id={name}
+          placeholder={placeholder}
+          type={tfType as "date" | "email" | "number" | "password" | "text" | "url"}
+          value={tfValue}
           onChange={(result) => handleChange(result.value)}
         />
       );
