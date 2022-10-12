@@ -117,6 +117,7 @@
     "@types/react": "17.0.44"
   },
   "dependencies": {
+    "expo-image-picker": "^13.3.1",
     "tsc-watch": "^5.0.3"
   },
   "devDependencies": {

@@ -51,15 +51,40 @@ export const AvatarStories = {
           <Text>XL</Text>
           <Avatar name="Tony Stark" outline size="xl" />
           <Text>XS</Text>
-          <Avatar name="Tony Stark" outline size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            outline
+            size="xs"
+          />
           <Text>SM</Text>
-          <Avatar name="Tony Stark" outline size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            outline
+            size="sm"
+          />
           <Text>MD</Text>
-          <Avatar name="Tony Stark" outline size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            outline
+            size="md"
+          />
           <Text>LG</Text>
-          <Avatar name="Tony Stark" outline size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            outline
+            size="lg"
+          />
           <Text>XL</Text>
-          <Avatar name="Tony Stark" outline size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            outline
+            size="xl"
+          />
         </Box>
       );
     },
@@ -67,15 +92,61 @@ export const AvatarStories = {
       return (
         <Box color="blue" direction="column" display="flex" height="100%" width="100%">
           <Text>XS</Text>
-          <Avatar name="Tony Stark" size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="xs" />
           <Text>SM</Text>
-          <Avatar name="Tony Stark" size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="sm" />
           <Text>MD</Text>
-          <Avatar name="Tony Stark" size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="md" />
           <Text>LG</Text>
-          <Avatar name="Tony Stark" size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="lg" />
           <Text>XL</Text>
-          <Avatar name="Tony Stark" size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="xl" />
+        </Box>
+      );
+    },
+    ImagePicker() {
+      return (
+        <Box direction="column" display="flex" height="100%" width="100%">
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            size="xs"
+          />
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            size="sm"
+          />
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            size="md"
+          />
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            size="lg"
+          />
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+            name="Tony Stark"
+            size="xl"
+          />
         </Box>
       );
     },
