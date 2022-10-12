@@ -11,7 +11,7 @@ function badgeLine(text: string, badgeProps: any) {
 }
 
 import {StorybookContainer} from "./StorybookContainer";
-export const TextStories = {
+export const BadgeStories = {
   title: "Badge",
   component: Badge,
   stories: {
