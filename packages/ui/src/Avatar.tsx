@@ -1,8 +1,10 @@
+import {launchImageLibraryAsync, MediaTypeOptions} from "expo-image-picker";
 import React, {useState} from "react";
-import {Image, Text, View} from "react-native";
+import {Image, ImageResizeMode, Text, View} from "react-native";
 
 import {Box} from "./Box";
-import {AllColors} from "./Common";
+import {AllColors, iconSizeToNumber} from "./Common";
+import {Icon} from "./Icon";
 import {Unifier} from "./Unifier";
 
 const sizes = {
@@ -38,11 +40,33 @@ interface AvatarProps {
    * The URL of the user's image.
    */
   src?: string;
+  /**
+   * The fit for the image within the Avatar: "cover" | "contain" | "none".
+   * Default is undefined. See Image.tsx for more info
+   */
+  imageFit?: "cover" | "contain" | "none";
+  /**
+   * Allow user to edit the image of the avatar
+   */
+  editAvatarImage?: boolean;
+  /**
+   * Function to handle the avatar image edit
+   */
+  onChange?: (val: any) => void;
 }
 
 export const Avatar = (props: AvatarProps): React.ReactElement => {
   const [isImageLoaded, setIsImageLoaded] = useState(true);
-  const {name, initials, outline, size = "md", src} = props;
+  const [src, setSrc] = useState(props.src ?? undefined);
+  const {
+    name,
+    initials,
+    outline,
+    size = "md",
+    imageFit = "contain",
+    editAvatarImage,
+    onChange,
+  } = props;
   const width = sizes[size];
   const height = sizes[size];
   const radius = sizes[size] / 2;
@@ -57,6 +81,22 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       .toLocaleUpperCase();
 
   const handleImageError = () => setIsImageLoaded(false);
+
+  const pickImage = async () => {
+    // TODO: Add permission request to use camera to take a picture
+    const result = await launchImageLibraryAsync({
+      mediaTypes: MediaTypeOptions.Images,
+      allowsEditing: true,
+    });
+
+    if (!result.cancelled) {
+      setSrc(result.uri);
+      if (onChange) {
+        onChange(result);
+      }
+    }
+  };
+
   return (
     <Box
       border={outline ? "white" : undefined}
@@ -64,13 +104,18 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       overflow="hidden"
       position="relative"
       rounding="circle"
-      width={width}
+      width={editAvatarImage ? width + iconSizeToNumber(size) : width}
     >
+      {editAvatarImage && (
+        <Box bottom position="absolute" right zIndex={5} onClick={pickImage}>
+          <Icon color="black" name="edit" size={size} />
+        </Box>
+      )}
       {src && isImageLoaded ? (
         // TODO: Make our Image component rounding work so that we can use it for Avatar. Currently it creates an
-        //  unrounded box around the Image.
+        // unrounded box around the Image.
         <Image
-          resizeMode="contain"
+          resizeMode={imageFit as ImageResizeMode}
           source={{uri: src, cache: "force-cache"}}
           style={{
             borderRadius: radius,

@@ -79,5 +79,51 @@ export const AvatarStories = {
         </Box>
       );
     },
+    ImagePicker() {
+      return (
+        <Box direction="column" display="flex" height="100%" width="100%">
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            name="Tony Stark"
+            size="xs"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+          />
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            name="Tony Stark"
+            size="sm"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+          />
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            name="Tony Stark"
+            size="md"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+          />
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            name="Tony Stark"
+            size="lg"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+          />
+          <Text>Edit Image</Text>
+
+          <Avatar
+            editAvatarImage
+            name="Tony Stark"
+            size="xl"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+          />
+        </Box>
+      );
+    },
   },
 };
