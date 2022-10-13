@@ -39,7 +39,7 @@ interface AvatarProps {
   /**
    * The URL of the user's image.
    */
-  imageSrc?: string;
+  src?: string;
   /**
    * The fit for the image within the Avatar: "cover" | "contain" | "none".
    * Default is undefined. See Image.tsx for more info
@@ -57,7 +57,7 @@ interface AvatarProps {
 
 export const Avatar = (props: AvatarProps): React.ReactElement => {
   const [isImageLoaded, setIsImageLoaded] = useState(true);
-  const [imageSrc, setImageSrc] = useState(props.imageSrc ?? undefined);
+  const [src, setSrc] = useState(props.src ?? undefined);
   const {
     name,
     initials,
@@ -90,7 +90,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     });
 
     if (!result.cancelled) {
-      setImageSrc(result.uri);
+      setSrc(result.uri);
       if (onChange) {
         onChange(result);
       }
@@ -105,19 +105,18 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       position="relative"
       rounding="circle"
       width={editAvatarImage ? width + iconSizeToNumber(size) : width}
-      zIndex="auto"
     >
       {editAvatarImage && (
         <Box bottom position="absolute" right zIndex={5} onClick={pickImage}>
           <Icon color="black" name="edit" size={size} />
         </Box>
       )}
-      {imageSrc && isImageLoaded ? (
+      {src && isImageLoaded ? (
         // TODO: Make our Image component rounding work so that we can use it for Avatar. Currently it creates an
         // unrounded box around the Image.
         <Image
           resizeMode={imageFit as ImageResizeMode}
-          source={{uri: imageSrc, cache: "force-cache"}}
+          source={{uri: src, cache: "force-cache"}}
           style={{
             borderRadius: radius,
             height,

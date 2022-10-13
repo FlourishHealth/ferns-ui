@@ -51,40 +51,15 @@ export const AvatarStories = {
           <Text>XL</Text>
           <Avatar name="Tony Stark" outline size="xl" />
           <Text>XS</Text>
-          <Avatar
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-            name="Tony Stark"
-            outline
-            size="xs"
-          />
+          <Avatar name="Tony Stark" outline size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>SM</Text>
-          <Avatar
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-            name="Tony Stark"
-            outline
-            size="sm"
-          />
+          <Avatar name="Tony Stark" outline size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>MD</Text>
-          <Avatar
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-            name="Tony Stark"
-            outline
-            size="md"
-          />
+          <Avatar name="Tony Stark" outline size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>LG</Text>
-          <Avatar
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-            name="Tony Stark"
-            outline
-            size="lg"
-          />
+          <Avatar name="Tony Stark" outline size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>XL</Text>
-          <Avatar
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-            name="Tony Stark"
-            outline
-            size="xl"
-          />
+          <Avatar name="Tony Stark" outline size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
         </Box>
       );
     },
@@ -92,15 +67,15 @@ export const AvatarStories = {
       return (
         <Box color="blue" direction="column" display="flex" height="100%" width="100%">
           <Text>XS</Text>
-          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="xs" />
+          <Avatar name="Tony Stark" size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>SM</Text>
-          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="sm" />
+          <Avatar name="Tony Stark" size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>MD</Text>
-          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="md" />
+          <Avatar name="Tony Stark" size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>LG</Text>
-          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="lg" />
+          <Avatar name="Tony Stark" size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
           <Text>XL</Text>
-          <Avatar imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg" name="Tony Stark" size="xl" />
+          <Avatar name="Tony Stark" size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
         </Box>
       );
     },
@@ -111,41 +86,41 @@ export const AvatarStories = {
 
           <Avatar
             editAvatarImage
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
             name="Tony Stark"
             size="xs"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
           />
           <Text>Edit Image</Text>
 
           <Avatar
             editAvatarImage
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
             name="Tony Stark"
             size="sm"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
           />
           <Text>Edit Image</Text>
 
           <Avatar
             editAvatarImage
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
             name="Tony Stark"
             size="md"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
           />
           <Text>Edit Image</Text>
 
           <Avatar
             editAvatarImage
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
             name="Tony Stark"
             size="lg"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
           />
           <Text>Edit Image</Text>
 
           <Avatar
             editAvatarImage
-            imageSrc="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
             name="Tony Stark"
             size="xl"
+            src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
           />
         </Box>
       );
