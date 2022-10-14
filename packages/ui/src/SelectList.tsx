@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 
 import {FieldWithLabelsProps, StyleProp} from "./Common";
 import RNPickerSelect from "./PickerSelect";
@@ -21,6 +21,12 @@ export interface SelectListProps extends FieldWithLabelsProps {
 
 export function SelectList({options, value, onChange, label, labelColor, style}: SelectListProps) {
   const withLabelProps = {label, labelColor};
+
+  useEffect(() => {
+    if (!value && options && options.length > 0) {
+      onChange(options[0].value);
+    }
+  }, [onChange, options, value]);
   return (
     <WithLabel {...withLabelProps}>
       <RNPickerSelect

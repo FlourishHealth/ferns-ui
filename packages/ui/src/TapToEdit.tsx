@@ -39,7 +39,7 @@ export const TapToEdit = ({
         {fieldComponent ? (
           fieldComponent(setValue as any)
         ) : (
-          <Field label={title} setValue={setValue} {...fieldProps} />
+          <Field label={title} onChange={setValue} {...fieldProps} />
         )}
         <Box direction="row">
           <Button

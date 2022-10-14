@@ -12,12 +12,12 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
-            initialValue="Pre-filled text"
             label="Text Field"
             name="text"
             type="text"
+            value="Pre-filled text"
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -26,11 +26,12 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="Boolean Field"
             name="text"
             type="boolean"
+            value
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -39,21 +40,12 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="Email Field"
             name="text"
             type="email"
-          />
-
-          <Field
-            handleChange={() => {}}
-            helperText="Requires @example.com"
-            label="Email Field With Extra Validation"
-            name="text"
-            type="email"
-            validate={(value) => value.search("@example.com") > -1}
-            validateErrorMessage="Must be an example.com email"
+            value="abc@123.org"
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -62,22 +54,22 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="TextArea Field"
             name="text"
             placeholder="this is my placeholder"
             type="textarea"
+            onChange={() => {}}
           />
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
-            initialValue="initial value"
             label="Large TextArea "
             name="text"
             placeholder="this is my placeholder"
             rows={10}
             type="textarea"
+            value="initial value"
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -86,11 +78,12 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="Number Field"
             name="text"
             type="number"
+            value={123}
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -99,11 +92,12 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="Currency Field"
             name="text"
             type="currency"
+            value="1234.56"
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -112,11 +106,12 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="Percent Field"
             name="text"
             type="percent"
+            value={12}
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -126,7 +121,6 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="Select Field"
             name="text"
@@ -135,6 +129,7 @@ export const FieldStories = {
               {label: "Option 2", value: "Option 2"},
             ]}
             type="select"
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -143,11 +138,12 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="Password Field"
             name="text"
             type="password"
+            value="mypassword"
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -156,11 +152,12 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="Url Field"
             name="text"
             type="url"
+            value="https://www.flourish.health"
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -169,11 +166,12 @@ export const FieldStories = {
       return (
         <StorybookContainer>
           <Field
-            handleChange={() => {}}
             helperText="Here's some help text"
             label="Date Field"
             name="text"
             type="date"
+            value={new Date()}
+            onChange={() => {}}
           />
         </StorybookContainer>
       );
@@ -183,9 +181,7 @@ export const FieldStories = {
         <StorybookContainer>
           <Box width={300}>
             <Field
-              handleChange={() => {}}
               helperText="Here's some help text"
-              initialValue={[]}
               label="Date Field"
               name="text"
               options={[
@@ -194,6 +190,8 @@ export const FieldStories = {
                 {label: "Option3", value: "Option3"},
               ]}
               type="multiselect"
+              value={[]}
+              onChange={() => {}}
             />
           </Box>
         </StorybookContainer>
@@ -204,11 +202,18 @@ export const FieldStories = {
         <StorybookContainer>
           <Box width={300}>
             <Field
-              handleChange={() => {}}
               helperText="Address Fields Helper Text"
               label="Address Field"
               name="address"
               type="address"
+              value={{
+                address1: "123 Main St",
+                address2: "Apt 1",
+                city: "San Francisco",
+                state: "CA",
+                zipcode: "94105",
+              }}
+              onChange={() => {}}
             />
           </Box>
         </StorybookContainer>
@@ -219,7 +224,6 @@ export const FieldStories = {
         <StorybookContainer>
           <Box width={300}>
             <Field
-              handleChange={() => {}}
               helperText="Helper text goes here"
               label="Custom Select Field"
               name="customSelect"
@@ -229,6 +233,8 @@ export const FieldStories = {
                 {label: "they/them/theirs", value: "they/them/theirs"},
               ]}
               type="customSelect"
+              value="she/her/hers"
+              onChange={() => {}}
             />
           </Box>
         </StorybookContainer>

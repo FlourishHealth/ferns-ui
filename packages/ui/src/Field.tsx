@@ -31,7 +31,7 @@ export interface FieldProps extends FieldWithLabelsProps {
     | "customSelect";
   rows?: number;
   value?: any;
-  setValue?: any;
+  onChange?: any;
   options?: SelectListOptions;
   placeholder?: string;
   disabled?: boolean;
@@ -50,7 +50,7 @@ export const Field = ({
   type,
   rows,
   value,
-  setValue,
+  onChange,
   options,
   placeholder,
   disabled,
@@ -68,7 +68,7 @@ export const Field = ({
     // If "custom" is selected from the dropdown, toggle the custom input open and clear the previous value
     if (newValue === "custom") {
       setShowCustomInput(true);
-      setValue("");
+      onChange("");
       // setSelectValue(newValue);
     }
 
@@ -81,21 +81,21 @@ export const Field = ({
       }
 
       // Update the field value and select value
-      setValue(newValue);
+      onChange(newValue);
     }
   };
 
   const handleCustomSelectTextInputChange = (newValue: string) => {
-    setValue(newValue);
+    onChange(newValue);
     setCustomValue(newValue);
   };
 
   const handleAddressChange = (field: string, newValue: string) => {
-    setValue({...value, [field]: newValue});
+    onChange({...value, [field]: newValue});
   };
 
   const handleSwitchChange = (switchValue: boolean) => {
-    setValue(switchValue);
+    onChange(switchValue);
   };
 
   const renderField = () => {
@@ -110,7 +110,7 @@ export const Field = ({
           id={name}
           options={options}
           value={value}
-          onChange={setValue}
+          onChange={onChange}
         />
       );
     } else if (type === "multiselect") {
@@ -143,7 +143,7 @@ export const Field = ({
                     } else {
                       newValue = value.filter((v: string) => v !== o.value);
                     }
-                    setValue(newValue);
+                    onChange(newValue);
                   }}
                 />
               </Box>
@@ -160,7 +160,7 @@ export const Field = ({
           placeholder={Boolean(value) ? "" : placeholder}
           rows={rows}
           value={String(value)}
-          onChange={(result) => setValue(result.value)}
+          onChange={(result) => onChange(result.value)}
         />
       );
     } else if (type === "boolean") {
@@ -182,7 +182,7 @@ export const Field = ({
           type="date"
           // TODO: allow editing with a date picker
           value={value}
-          onChange={(result) => setValue(result.value)}
+          onChange={(result) => onChange(result.value)}
         />
       );
     } else if (type === "address") {
@@ -291,7 +291,7 @@ export const Field = ({
           placeholder={placeholder}
           type={tfType as "date" | "email" | "number" | "password" | "text" | "url"}
           value={tfValue}
-          onChange={(result) => setValue(result.value)}
+          onChange={(result) => onChange(result.value)}
         />
       );
     }
