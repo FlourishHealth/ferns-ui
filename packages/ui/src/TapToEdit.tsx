@@ -7,8 +7,9 @@ import {Field, FieldProps} from "./Field";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 
-export interface TapToEditProps extends Omit<FieldProps, "handleChange"> {
+export interface TapToEditProps extends Omit<FieldProps, "handleChange" | "value"> {
   title: string;
+  initialValue: any;
   // Not required if not editable.
   onSave?: (value: any) => void | Promise<void>;
   // Defaults to true
@@ -19,22 +20,26 @@ export interface TapToEditProps extends Omit<FieldProps, "handleChange"> {
   fieldComponent?: (setValue: () => void) => ReactElement;
 }
 
-export const TapToEdit = (props: TapToEditProps): ReactElement => {
+export const TapToEdit = ({
+  initialValue,
+  title,
+  onSave,
+  editable,
+  rowBoxProps,
+  transform,
+  fieldComponent,
+  ...fieldProps
+}: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
-  const [value, setValue] = useState(props.initialValue);
+  const [value, setValue] = useState(initialValue);
 
-  const {title, editable = true, rowBoxProps, transform, fieldComponent, ...fieldProps} = props;
   if (editing) {
     return (
       <Box direction="column">
         {fieldComponent ? (
           fieldComponent(setValue as any)
         ) : (
-          <Field
-            handleChange={(_: string, val: any): void => setValue(val)}
-            label={props.title}
-            {...fieldProps}
-          />
+          <Field label={title} setValue={setValue} {...fieldProps} />
         )}
         <Box direction="row">
           <Button
@@ -42,10 +47,10 @@ export const TapToEdit = (props: TapToEditProps): ReactElement => {
             inline
             text="Save"
             onClick={async (): Promise<void> => {
-              if (!props.onSave) {
+              if (!onSave) {
                 console.error("No onSave provided for editable TapToEdit");
               } else {
-                await props.onSave(value);
+                await onSave(value);
               }
               setEditing(false);
             }}
@@ -64,10 +69,10 @@ export const TapToEdit = (props: TapToEditProps): ReactElement => {
       </Box>
     );
   } else {
-    let displayValue = props.initialValue;
+    let displayValue = initialValue;
     // If a transform props is present, that takes priority
     if (transform) {
-      displayValue = transform(props.initialValue);
+      displayValue = transform(initialValue);
     } else {
       // If no transform, try and display the value reasonably.
       if (fieldProps?.type === "boolean") {

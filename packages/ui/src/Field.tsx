@@ -13,11 +13,7 @@ import {TextField} from "./TextField";
 export interface FieldProps extends FieldWithLabelsProps {
   name: string;
   label?: string;
-  subLabel?: string;
   height?: number;
-  // Additional validation
-  validate?: (value: any) => boolean;
-  validateErrorMessage?: string;
   type?:
     | "boolean"
     | "email"
@@ -46,13 +42,11 @@ export interface FieldProps extends FieldWithLabelsProps {
  * initialValue will not work.
  *
  */
-export function Field({
+export const Field = ({
   name,
   label,
-  subLabel,
+  labelColor,
   height,
-  validate,
-  validateErrorMessage,
   type,
   rows,
   value,
@@ -60,7 +54,11 @@ export function Field({
   options,
   placeholder,
   disabled,
-}: FieldProps) {
+  errorMessage,
+  errorMessageColor,
+  helperText,
+  helperTextColor,
+}: FieldProps) => {
   // showCustomInput, customValue, and selectValue are all for type="customSelect"
   const [showCustomInput, setShowCustomInput] = useState(false);
   const [customValue, setCustomValue] = useState("");
@@ -112,7 +110,7 @@ export function Field({
           id={name}
           options={options}
           value={value}
-          onChange={handleChange}
+          onChange={setValue}
         />
       );
     } else if (type === "multiselect") {
@@ -184,7 +182,7 @@ export function Field({
           type="date"
           // TODO: allow editing with a date picker
           value={value}
-          onChange={(result) => handleChange(result.value)}
+          onChange={(result) => setValue(result.value)}
         />
       );
     } else if (type === "address") {
@@ -293,14 +291,13 @@ export function Field({
           placeholder={placeholder}
           type={tfType as "date" | "email" | "number" | "password" | "text" | "url"}
           value={tfValue}
-          onChange={(result) => handleChange(result.value)}
+          onChange={(result) => setValue(result.value)}
         />
       );
     }
   };
 
   const children = renderField();
-  const {errorMessage, errorMessageColor, helperText, helperTextColor, label, labelColor} = props;
   return (
     <Box marginBottom={5}>
       <FieldWithLabels
@@ -317,4 +314,4 @@ export function Field({
       </FieldWithLabels>
     </Box>
   );
-}
+};
