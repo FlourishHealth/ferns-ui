@@ -125,7 +125,6 @@ export function Button({
 
   return (
     <>
-      {Boolean(withConfirmation) && renderConfirmation()}
       <TouchableOpacity
         disabled={disabled || loading}
         style={{
@@ -195,6 +194,7 @@ export function Button({
           </Box>
         )}
       </TouchableOpacity>
+      {Boolean(withConfirmation) && renderConfirmation()}
     </>
   );
 }

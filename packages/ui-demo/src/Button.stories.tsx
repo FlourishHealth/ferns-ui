@@ -48,8 +48,8 @@ const allColorButtons = (props: Partial<ButtonProps>) => {
 
 const confirmationButton = (props: Partial<ButtonProps>) => {
   return (
-    <StorybookContainer>
-      <Box paddingY={1} width={300}>
+    <Box>
+      <Box paddingX={3} paddingY={3}>
         <Button
           color="secondary"
           text="Default"
@@ -60,7 +60,7 @@ const confirmationButton = (props: Partial<ButtonProps>) => {
           {...props}
         />
       </Box>
-      <Box paddingY={1} width={300}>
+      <Box paddingX={3} paddingY={1}>
         <Button
           color="darkGray"
           confirmationHeading="A custom heading!"
@@ -73,7 +73,7 @@ const confirmationButton = (props: Partial<ButtonProps>) => {
           {...props}
         />
       </Box>
-    </StorybookContainer>
+    </Box>
   );
 };
 
