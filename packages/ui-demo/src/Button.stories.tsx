@@ -51,8 +51,21 @@ const confirmationButton = (props: Partial<ButtonProps>) => {
     <StorybookContainer>
       <Box paddingY={1} width={300}>
         <Button
+          color="secondary"
+          text="Default"
+          withConfirmation
+          onClick={() => {
+            action("Clicked!");
+          }}
+          {...props}
+        />
+      </Box>
+      <Box paddingY={1} width={300}>
+        <Button
           color="darkGray"
-          text="Confirmation Button"
+          confirmationHeading="A custom heading!"
+          confirmationText="A custom text body!"
+          text="Custom"
           withConfirmation
           onClick={() => {
             action("Clicked!");
