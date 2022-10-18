@@ -46,6 +46,24 @@ const allColorButtons = (props: Partial<ButtonProps>) => {
   );
 };
 
+const confirmationButton = (props: Partial<ButtonProps>) => {
+  return (
+    <StorybookContainer>
+      <Box paddingY={1} width={300}>
+        <Button
+          color="darkGray"
+          text="Confirmation Button"
+          withConfirmation
+          onClick={() => {
+            action("Clicked!");
+          }}
+          {...props}
+        />
+      </Box>
+    </StorybookContainer>
+  );
+};
+
 export const ButtonStories = {
   title: "Button",
   component: Button,
@@ -54,5 +72,6 @@ export const ButtonStories = {
     Loading: () => allColorButtons({loading: true}),
     Ghost: () => allColorButtons({type: "ghost"}),
     Outline: () => allColorButtons({type: "outline"}),
+    Confirmation: () => confirmationButton({}),
   },
 };
