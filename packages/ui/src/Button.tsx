@@ -148,10 +148,8 @@ export function Button({
             Unifier.utils.haptic();
             setLoading(true);
             try {
-              if (withConfirmation) {
-                if (!showConfirmation) {
-                  setShowConfirmation(true);
-                }
+              if (withConfirmation && !showConfirmation) {
+                setShowConfirmation(true);
               } else if (onClick) {
                 await onClick();
               }
@@ -188,7 +186,7 @@ export function Button({
             {text}
           </Text>
         )}
-        {(loading || loading) && (
+        {Boolean(loading) && (
           <Box marginLeft={2}>
             <ActivityIndicator color={getTextColor(color as Color)} size="small" />
           </Box>
