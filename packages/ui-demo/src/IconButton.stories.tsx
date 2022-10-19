@@ -2,12 +2,13 @@ import {Box, IconButton} from "ferns-ui";
 import React from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
+import {action} from "./tools";
 
 export const IconButtonStories = {
   title: "IconButton",
   component: IconButton,
   stories: {
-    "Icon Buttons": function () {
+    Colors() {
       return (
         <StorybookContainer>
           <IconButton
@@ -75,6 +76,23 @@ export const IconButtonStories = {
             />
           </Box>
         </StorybookContainer>
+      );
+    },
+    Confirmation() {
+      return (
+        <Box padding={4}>
+          <IconButton
+            accessibilityLabel="Button with plus icon"
+            bgColor="gray"
+            icon="plus"
+            iconColor="white"
+            prefix="fas"
+            withConfirmation
+            onClick={() => {
+              action("Clicked!");
+            }}
+          />
+        </Box>
       );
     },
   },
