@@ -8,28 +8,28 @@ const allColorButtons = (props: Partial<ButtonProps>) => {
   return (
     <StorybookContainer>
       <Box paddingY={1}>
-        <Button text="Default" onClick={action("clicked")} {...props} />
+        <Button text="Default" onClick={() => action("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
-        <Button color="primary" text="Primary" onClick={action("clicked")} {...props} />
+        <Button color="primary" text="Primary" onClick={() => action("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
-        <Button color="secondary" text="Secondary" onClick={action("clicked")} {...props} />
+        <Button color="secondary" text="Secondary" onClick={() => action("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
-        <Button color="tertiary" text="Tertiary" onClick={action("clicked")} {...props} />
+        <Button color="tertiary" text="Tertiary" onClick={() => action("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
-        <Button color="accent" text="Accent" onClick={action("clicked")} {...props} />
+        <Button color="accent" text="Accent" onClick={() => action("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
-        <Button color="red" text="Red" onClick={action("clicked")} {...props} />
+        <Button color="red" text="Red" onClick={() => action("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
-        <Button color="darkGray" text="Dark Gray" onClick={action("clicked")} {...props} />
+        <Button color="darkGray" text="Dark Gray" onClick={() => action("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
-        <Button color="gray" text="Gray" onClick={action("clicked")} {...props} />
+        <Button color="gray" text="Gray" onClick={() => action("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
         <Button
@@ -46,6 +46,37 @@ const allColorButtons = (props: Partial<ButtonProps>) => {
   );
 };
 
+const confirmationButton = (props: Partial<ButtonProps>) => {
+  return (
+    <Box>
+      <Box paddingX={3} paddingY={3}>
+        <Button
+          color="secondary"
+          text="Default"
+          withConfirmation
+          onClick={() => {
+            action("Clicked!");
+          }}
+          {...props}
+        />
+      </Box>
+      <Box paddingX={3} paddingY={1}>
+        <Button
+          color="darkGray"
+          confirmationHeading="A custom heading!"
+          confirmationText="A custom text body!"
+          text="Custom"
+          withConfirmation
+          onClick={() => {
+            action("Clicked!");
+          }}
+          {...props}
+        />
+      </Box>
+    </Box>
+  );
+};
+
 export const ButtonStories = {
   title: "Button",
   component: Button,
@@ -54,5 +85,6 @@ export const ButtonStories = {
     Loading: () => allColorButtons({loading: true}),
     Ghost: () => allColorButtons({type: "ghost"}),
     Outline: () => allColorButtons({type: "outline"}),
+    Confirmation: () => confirmationButton({}),
   },
 };
