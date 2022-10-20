@@ -630,6 +630,9 @@ export interface IconButtonProps {
   bgColor?: "transparent" | "transparentDarkGray" | "gray" | "lightGray" | "white"; // default transparent
   disabled?: boolean;
   selected?: boolean;
+  withConfirmation?: boolean;
+  confirmationText?: string;
+  confirmationHeading?: string;
 }
 
 export interface NavigatorProps {
