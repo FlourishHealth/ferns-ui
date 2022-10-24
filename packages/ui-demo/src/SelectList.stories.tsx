@@ -1,5 +1,5 @@
 import {SelectList, SelectListOptions} from "ferns-ui";
-import React from "react";
+import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
 
@@ -10,7 +10,7 @@ const options: SelectListOptions = [
 ];
 
 const SelectLists = () => {
-  const [item, setItem] = React.useState(options[0].value);
+  const [item, setItem] = useState(options[0].value);
 
   return (
     <StorybookContainer>
@@ -28,7 +28,7 @@ const SelectLists = () => {
 };
 
 const WithLabel = () => {
-  const [item, setItem] = React.useState(options[0].value);
+  const [item, setItem] = useState(options[0].value);
 
   return (
     <StorybookContainer>
@@ -45,7 +45,7 @@ const WithLabel = () => {
 };
 
 const Disabled = () => {
-  const [item, setItem] = React.useState(options[0].value);
+  const [item, setItem] = useState(options[0].value);
 
   return (
     <StorybookContainer>

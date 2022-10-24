@@ -1,244 +1,315 @@
 /* eslint-disable react/display-name */
 import {Box, Field} from "ferns-ui";
-import React from "react";
+import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
+
+const TextField = () => {
+  const [value, setValue] = useState("Pre-filled text");
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Text Field"
+        name="text"
+        type="text"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const BooleanField = () => {
+  const [value, setValue] = useState(true);
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Boolean Field"
+        name="boolean"
+        type="boolean"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const EmailTextField = () => {
+  const [value, setValue] = useState("test@email.com");
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Email Field"
+        name="text"
+        type="email"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const TextAreaField = () => {
+  const [value, setValue] = useState("this is my placeholder");
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="TextArea Field"
+        name="text"
+        placeholder="this is my placeholder"
+        type="textarea"
+        value={value}
+        onChange={setValue}
+      />
+      <Field
+        helperText="Here's some help text"
+        label="Large TextArea "
+        name="text"
+        placeholder="this is my placeholder"
+        rows={10}
+        type="textarea"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const NumberField = () => {
+  const [value, setValue] = useState(123);
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Number Field"
+        name="text"
+        type="number"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const CurrencyField = () => {
+  const [value, setValue] = useState(1234.56);
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Currency Field"
+        name="text"
+        type="currency"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const PercentField = () => {
+  const [value, setValue] = useState(0.12);
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Percent Field"
+        name="text"
+        type="percent"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const SelectField = () => {
+  const [value, setValue] = useState();
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Select Field"
+        name="text"
+        options={[
+          {label: "Option 1", value: "Option 1"},
+          {label: "Option 2", value: "Option 2"},
+        ]}
+        type="select"
+        onChange={() => {}}
+      />
+    </StorybookContainer>
+  );
+};
+
+const PasswordField = () => {
+  const [value, setValue] = useState("mypassword");
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Password Field"
+        name="text"
+        type="password"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const URLField = () => {
+  const [value, setValue] = useState("https://www.flourish.health");
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="URL Field"
+        name="text"
+        type="url"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const DateField = () => {
+  const [value, setValue] = useState(new Date());
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Date Field"
+        name="text"
+        type="date"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const MultiselectField = () => {
+  const [value, setValue] = useState("Option2");
+  return (
+    <StorybookContainer>
+      <Box width={300}>
+        <Field
+          helperText="Here's some help text"
+          label="Date Field"
+          name="text"
+          options={[
+            {label: "Option1", value: "Option1"},
+            {label: "Option2", value: "Option2"},
+            {label: "Option3", value: "Option3"},
+          ]}
+          type="multiselect"
+          value={value}
+          onChange={setValue}
+        />
+      </Box>
+    </StorybookContainer>
+  );
+};
+
+const AddressField = () => {
+  const [value, setValue] = useState({
+    address1: "123 Main St",
+    address2: "Apt 1",
+    city: "San Francisco",
+    state: "CA",
+    zip: "94105",
+  });
+  return (
+    <StorybookContainer>
+      <Box width={300}>
+        <Field
+          helperText="Address Fields Helper Text"
+          label="Address Field"
+          name="address"
+          type="address"
+          value={value}
+          onChange={setValue}
+        />
+      </Box>
+    </StorybookContainer>
+  );
+};
+
+const CustomSelectField = () => {
+  const [value, setValue] = useState("they/them/theirs");
+  return (
+    <StorybookContainer>
+      <Box width={300}>
+        <Field
+          helperText="Helper text goes here"
+          label="Custom Select Field"
+          name="customSelect"
+          options={[
+            {label: "she/her/hers", value: "she/her/hers"},
+            {label: "he/him/his", value: "he/him/his"},
+            {label: "they/them/theirs", value: "they/them/theirs"},
+          ]}
+          type="customSelect"
+          value={value}
+          onChange={setValue}
+        />
+      </Box>
+    </StorybookContainer>
+  );
+};
 
 export const FieldStories = {
   title: "Field",
   component: Field,
   stories: {
     "Text Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Text Field"
-            name="text"
-            type="text"
-            value="Pre-filled text"
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <TextField />;
     },
     "Boolean Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Boolean Field"
-            name="text"
-            type="boolean"
-            value
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <BooleanField />;
     },
     "Email Text Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Email Field"
-            name="text"
-            type="email"
-            value="abc@123.org"
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <EmailTextField />;
     },
     "Text Area Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="TextArea Field"
-            name="text"
-            placeholder="this is my placeholder"
-            type="textarea"
-            onChange={() => {}}
-          />
-          <Field
-            helperText="Here's some help text"
-            label="Large TextArea "
-            name="text"
-            placeholder="this is my placeholder"
-            rows={10}
-            type="textarea"
-            value="initial value"
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <TextAreaField />;
     },
     "Number Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Number Field"
-            name="text"
-            type="number"
-            value={123}
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <NumberField />;
     },
     "Currency Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Currency Field"
-            name="text"
-            type="currency"
-            value="1234.56"
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <CurrencyField />;
     },
     "Percent Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Percent Field"
-            name="text"
-            type="percent"
-            value={12}
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <PercentField />;
     },
 
     "Select Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Select Field"
-            name="text"
-            options={[
-              {label: "Option 1", value: "Option 1"},
-              {label: "Option 2", value: "Option 2"},
-            ]}
-            type="select"
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <SelectField />;
     },
     "Password Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Password Field"
-            name="text"
-            type="password"
-            value="mypassword"
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <PasswordField />;
     },
     "URL Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Url Field"
-            name="text"
-            type="url"
-            value="https://www.flourish.health"
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <URLField />;
     },
     "Date Field": function () {
-      return (
-        <StorybookContainer>
-          <Field
-            helperText="Here's some help text"
-            label="Date Field"
-            name="text"
-            type="date"
-            value={new Date()}
-            onChange={() => {}}
-          />
-        </StorybookContainer>
-      );
+      return <DateField />;
     },
     "Multiselect Field": function () {
-      return (
-        <StorybookContainer>
-          <Box width={300}>
-            <Field
-              helperText="Here's some help text"
-              label="Date Field"
-              name="text"
-              options={[
-                {label: "Option1", value: "Option1"},
-                {label: "Option2", value: "Option2"},
-                {label: "Option3", value: "Option3"},
-              ]}
-              type="multiselect"
-              value={[]}
-              onChange={() => {}}
-            />
-          </Box>
-        </StorybookContainer>
-      );
+      return <MultiselectField />;
     },
     "Address Field": function () {
-      return (
-        <StorybookContainer>
-          <Box width={300}>
-            <Field
-              helperText="Address Fields Helper Text"
-              label="Address Field"
-              name="address"
-              type="address"
-              value={{
-                address1: "123 Main St",
-                address2: "Apt 1",
-                city: "San Francisco",
-                state: "CA",
-                zipcode: "94105",
-              }}
-              onChange={() => {}}
-            />
-          </Box>
-        </StorybookContainer>
-      );
+      return <AddressField />;
     },
     "Custom Select Field": function () {
-      return (
-        <StorybookContainer>
-          <Box width={300}>
-            <Field
-              helperText="Helper text goes here"
-              label="Custom Select Field"
-              name="customSelect"
-              options={[
-                {label: "she/her/hers", value: "she/her/hers"},
-                {label: "he/him/his", value: "he/him/his"},
-                {label: "they/them/theirs", value: "they/them/theirs"},
-              ]}
-              type="customSelect"
-              value="she/her/hers"
-              onChange={() => {}}
-            />
-          </Box>
-        </StorybookContainer>
-      );
+      return <CustomSelectField />;
     },
   },
 };
