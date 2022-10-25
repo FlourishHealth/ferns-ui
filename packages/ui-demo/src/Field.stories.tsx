@@ -140,7 +140,8 @@ const SelectField = () => {
           {label: "Option 2", value: "Option 2"},
         ]}
         type="select"
-        onChange={() => {}}
+        value={value}
+        onChange={setValue}
       />
     </StorybookContainer>
   );
