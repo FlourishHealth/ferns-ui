@@ -69,7 +69,6 @@ export const Field = ({
     if (newValue === "custom") {
       setShowCustomInput(true);
       onChange("");
-      // setSelectValue(newValue);
     }
 
     // If any non-custom value is selected
