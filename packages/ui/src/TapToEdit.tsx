@@ -7,7 +7,7 @@ import {Field, FieldProps} from "./Field";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 
-export interface TapToEditProps extends Omit<FieldProps, "handleChange" | "value"> {
+export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   title: string;
   initialValue: any;
   // Not required if not editable.
@@ -24,7 +24,7 @@ export const TapToEdit = ({
   initialValue,
   title,
   onSave,
-  editable,
+  editable = true,
   rowBoxProps,
   transform,
   fieldComponent,
@@ -39,7 +39,7 @@ export const TapToEdit = ({
         {fieldComponent ? (
           fieldComponent(setValue as any)
         ) : (
-          <Field label={title} onChange={setValue} {...fieldProps} />
+          <Field label={title} value={value} onChange={setValue} {...fieldProps} />
         )}
         <Box direction="row">
           <Button
