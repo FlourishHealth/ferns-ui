@@ -21,9 +21,9 @@ interface ModalProps {
   // Renders a primary colored button all the way to the right in the footer, if no footer prop is provided.
   primaryButtonText?: string;
   primaryButtonOnClick?: (value?: any) => void;
+  primaryButtonDisabled?: boolean;
   // Renders a primary gray button to the left of the primary button in the footer, if no footer prop is provided.
   // Requires primaryButtonText to be defined, but is not required itself.
-  primaryButtonDisabled?: boolean;
   secondaryButtonText?: string;
   secondaryButtonOnClick?: (value?: any) => void;
 }
