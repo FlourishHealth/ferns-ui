@@ -21,7 +21,8 @@ interface ModalProps {
   // Renders a primary colored button all the way to the right in the footer, if no footer prop is provided.
   primaryButtonText?: string;
   primaryButtonOnClick?: (value?: any) => void;
-  // Renders a primary gray button to the left of the primary button in the footer, if no footer prop is provided.
+  primaryButtonDisabled?: boolean;
+  // Renders a gray button to the left of the primary button in the footer, if no footer prop is provided.
   // Requires primaryButtonText to be defined, but is not required itself.
   secondaryButtonText?: string;
   secondaryButtonOnClick?: (value?: any) => void;
@@ -38,6 +39,7 @@ export const Modal = ({
   subHeading,
   primaryButtonText,
   primaryButtonOnClick,
+  primaryButtonDisabled = false,
   secondaryButtonText,
   secondaryButtonOnClick,
 }: ModalProps): React.ReactElement => {
@@ -82,7 +84,12 @@ export const Modal = ({
           </Box>
         )}
         <Box minWidth={120}>
-          <Button color="primary" text={primaryButtonText ?? ""} onClick={primaryButtonOnClick} />
+          <Button
+            color="primary"
+            disabled={primaryButtonDisabled}
+            text={primaryButtonText ?? ""}
+            onClick={primaryButtonOnClick}
+          />
         </Box>
       </Box>
     );
