@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import {ImageResult, manipulateAsync, SaveFormat} from "expo-image-manipulator";
 import {launchImageLibraryAsync, MediaTypeOptions} from "expo-image-picker";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Image, ImageResizeMode, Text, View} from "react-native";
 
 import {Box} from "./Box";
@@ -97,11 +97,18 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       .join("")
       .toLocaleUpperCase();
 
+  useEffect(() => {
+    setSrc(props.src);
+  }, [props]);
+
   if (editAvatarImage && !onChange) {
     console.warn("Avatars with the editAvatarImage flag on should also have an onChange property.");
   }
 
-  const handleImageError = () => setIsImageLoaded(false);
+  const handleImageError = () => {
+    setIsImageLoaded(false);
+    console.warn("Image load error");
+  };
 
   const pickImage = async () => {
     // TODO: Add permission request to use camera to take a picture
