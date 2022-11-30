@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 
 import {Box} from "./Box";
 import {AddressInterface, FieldWithLabelsProps, TextFieldType} from "./Common";
 import {USSTATESLIST} from "./Constants";
+import {CustomSelect} from "./CustomSelect";
 import {FieldWithLabels} from "./FieldWithLabels";
 import {SelectList, SelectListOptions} from "./SelectList";
 import {Switch} from "./Switch";
@@ -59,36 +60,6 @@ export const Field = ({
   helperText,
   helperTextColor,
 }: FieldProps) => {
-  // showCustomInput, customValue, and selectValue are all for type="customSelect"
-  const [showCustomInput, setShowCustomInput] = useState(false);
-  const [customValue, setCustomValue] = useState("");
-
-  // Custom select has 3 values - the overall field value, the value of the select menu, and the value of the custom input
-  const handleCustomSelectListChange = (newValue: string) => {
-    // If "custom" is selected from the dropdown, toggle the custom input open and clear the previous value
-    if (newValue === "custom") {
-      setShowCustomInput(true);
-      onChange("");
-    }
-
-    // If any non-custom value is selected
-    else {
-      // Close the custom input if open and clear the value
-      if (showCustomInput) {
-        setShowCustomInput(false);
-        setCustomValue("");
-      }
-
-      // Update the field value and select value
-      onChange(newValue);
-    }
-  };
-
-  const handleCustomSelectTextInputChange = (newValue: string) => {
-    onChange(newValue);
-    setCustomValue(newValue);
-  };
-
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
   };
@@ -239,27 +210,7 @@ export const Field = ({
         return null;
       }
       return (
-        <>
-          <SelectList
-            id="providedOptions"
-            options={[...options, {label: "Custom", value: "custom"}]}
-            placeholder="Select an option"
-            value={value}
-            onChange={handleCustomSelectListChange}
-          />
-          {Boolean(showCustomInput) && (
-            <Box paddingY={2}>
-              <TextField
-                disabled={disabled}
-                id="customOptions"
-                placeholder={placeholder}
-                type="text"
-                value={customValue}
-                onChange={(result) => handleCustomSelectTextInputChange(result.value)}
-              />
-            </Box>
-          )}
-        </>
+        <CustomSelect disabled={disabled} options={options} value={value} onChange={onChange} />
       );
     } else {
       let tfType: TextFieldType = "text";
