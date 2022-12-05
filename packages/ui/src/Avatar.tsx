@@ -122,7 +122,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       const resizedImage = await resizeImage(result.uri);
       setSrc(resizedImage.uri);
       if (onChange) {
-        onChange(resizedImage);
+        onChange({avatarImageFormat, ...resizedImage});
       }
     }
   };
