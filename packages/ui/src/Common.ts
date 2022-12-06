@@ -698,6 +698,7 @@ export interface TextFieldProps extends FieldWithLabelsProps {
   inputRef?: any;
   onSubmitEditing?: any;
   onEnter?: any;
+  // blurOnSubmit defaults to true
   // if blurOnSubmit is false and multiline is true, return will create a new line
   blurOnSubmit?: boolean;
   multiline?: boolean;
