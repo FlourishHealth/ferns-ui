@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
+import {ImageResult, manipulateAsync, SaveFormat} from "expo-image-manipulator";
 import {launchImageLibraryAsync, MediaTypeOptions} from "expo-image-picker";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Image, ImageResizeMode, Text, View} from "react-native";
 
 import {Box} from "./Box";
@@ -53,6 +55,18 @@ interface AvatarProps {
    * Function to handle the avatar image edit
    */
   onChange?: (val: any) => void;
+  /**
+   * Resize image width. If only the width is provided, the image will preserve aspect ratio
+   */
+  avatarImageWidth?: number;
+  /**
+   * Resize image height. If avatarImageWidth is also provided, the image aspect ratio may be distorted.
+   */
+  avatarImageHeight?: number;
+  /**
+   * The image format that the image will be saved as after any edits by the expo-image-manipulator
+   */
+  avatarImageFormat?: SaveFormat;
 }
 
 export const Avatar = (props: AvatarProps): React.ReactElement => {
@@ -66,6 +80,9 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     imageFit = "contain",
     editAvatarImage,
     onChange,
+    avatarImageWidth = sizes[size],
+    avatarImageHeight,
+    avatarImageFormat = SaveFormat.PNG,
   } = props;
   const width = sizes[size];
   const height = sizes[size];
@@ -80,21 +97,42 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       .join("")
       .toLocaleUpperCase();
 
-  const handleImageError = () => setIsImageLoaded(false);
+  useEffect(() => {
+    setSrc(props.src);
+  }, [props]);
+
+  if (editAvatarImage && !onChange) {
+    console.warn("Avatars with the editAvatarImage flag on should also have an onChange property.");
+  }
+
+  const handleImageError = () => {
+    setIsImageLoaded(false);
+    console.warn("Image load error");
+  };
 
   const pickImage = async () => {
     // TODO: Add permission request to use camera to take a picture
     const result = await launchImageLibraryAsync({
       mediaTypes: MediaTypeOptions.Images,
       allowsEditing: true,
+      base64: true,
     });
 
     if (!result.cancelled) {
-      setSrc(result.uri);
+      const resizedImage = await resizeImage(result.uri);
+      setSrc(resizedImage.uri);
       if (onChange) {
-        onChange(result);
+        onChange({avatarImageFormat, ...resizedImage});
       }
     }
+  };
+
+  const resizeImage = async (imageUri: string): Promise<ImageResult> => {
+    return manipulateAsync(
+      imageUri,
+      [{resize: {width: avatarImageWidth, height: avatarImageHeight}}],
+      {format: avatarImageFormat}
+    );
   };
 
   return (
