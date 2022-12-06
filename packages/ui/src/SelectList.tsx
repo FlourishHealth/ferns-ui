@@ -15,6 +15,7 @@ export interface SelectListProps extends FieldWithLabelsProps {
   value?: string;
   disabled?: boolean;
   size?: "md" | "lg";
+  // TODO: Implement placeholder prop for Select Field for both Android and iOS
   placeholder?: string;
   style?: StyleProp;
 }

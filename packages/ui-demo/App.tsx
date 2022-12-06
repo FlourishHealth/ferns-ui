@@ -39,6 +39,7 @@ const App = () => {
     "Comfortaa-Bold": require("./assets/Comfortaa-Bold.ttf"),
     IMFellEnglishSC: require("./assets/IMFellEnglishSC-Regular.ttf"),
     "DancingScript-Regular": require("./assets/DancingScript-Regular.ttf"),
+    Cochin: require("./assets/Cochin.ttf"),
   });
 
   if (!loaded) {
