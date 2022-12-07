@@ -101,6 +101,7 @@ const textContentMap = {
 };
 
 export function TextField({
+  blurOnSubmit = true,
   value,
   height: propsHeight,
   onChange,
@@ -243,7 +244,7 @@ export function TextField({
               autoCapitalize={type === "text" ? "sentences" : "none"}
               autoCorrect={shouldAutocorrect}
               autoFocus={autoFocus}
-              blurOnSubmit
+              blurOnSubmit={blurOnSubmit}
               editable={isEditable}
               keyboardType={keyboardType as KeyboardTypeOptions}
               multiline={multiline}
