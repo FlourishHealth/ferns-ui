@@ -622,6 +622,7 @@ export default class RNPickerSelect extends PureComponent<any, any> {
           style={[
             Icon ? {backgroundColor: "transparent"} : {}, // to hide native icon
             style.inputAndroid,
+            {width: "100%"},
             this.getPlaceholderStyle(),
           ]}
           testID="android_picker"
