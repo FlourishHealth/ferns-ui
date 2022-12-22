@@ -16,7 +16,7 @@ export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   // Defaults to true
   editable?: boolean;
   // enable edit mode from outside the component
-  editingOverride?: boolean;
+  isEditing?: boolean;
   // For changing how the non-editing row renders
   rowBoxProps?: Partial<BoxProps>;
   transform?: (value: any) => string;
@@ -29,7 +29,7 @@ export const TapToEdit = ({
   title,
   onSave,
   editable = true,
-  editingOverride = false,
+  isEditing = false,
   rowBoxProps,
   transform,
   fieldComponent,
@@ -37,7 +37,7 @@ export const TapToEdit = ({
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
 
-  if (editable && (editing || editingOverride)) {
+  if (editable && (editing || isEditing)) {
     return (
       <Box direction="column">
         {fieldComponent ? (
@@ -45,7 +45,7 @@ export const TapToEdit = ({
         ) : (
           <Field label={title} value={value} onChange={setValue} {...fieldProps} />
         )}
-        {editing && !editingOverride && (
+        {editing && !isEditing && (
           <Box direction="row">
             <Button
               color="blue"
