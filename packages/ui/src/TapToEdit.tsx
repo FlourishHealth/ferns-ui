@@ -9,11 +9,14 @@ import {Text} from "./Text";
 
 export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   title: string;
-  initialValue: any;
+  value: any;
+  setValue: (value: any) => void;
   // Not required if not editable.
   onSave?: (value: any) => void | Promise<void>;
   // Defaults to true
   editable?: boolean;
+  // enable edit mode from outside the component
+  isEditing?: boolean;
   // For changing how the non-editing row renders
   rowBoxProps?: Partial<BoxProps>;
   transform?: (value: any) => string;
@@ -21,19 +24,20 @@ export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
 }
 
 export const TapToEdit = ({
-  initialValue,
+  value,
+  setValue,
   title,
   onSave,
   editable = true,
+  isEditing = false,
   rowBoxProps,
   transform,
   fieldComponent,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
-  const [value, setValue] = useState(initialValue);
 
-  if (editing) {
+  if (editable && (editing || isEditing)) {
     return (
       <Box direction="column">
         {fieldComponent ? (
@@ -41,38 +45,40 @@ export const TapToEdit = ({
         ) : (
           <Field label={title} value={value} onChange={setValue} {...fieldProps} />
         )}
-        <Box direction="row">
-          <Button
-            color="blue"
-            inline
-            text="Save"
-            onClick={async (): Promise<void> => {
-              if (!onSave) {
-                console.error("No onSave provided for editable TapToEdit");
-              } else {
-                await onSave(value);
-              }
-              setEditing(false);
-            }}
-          />
-          <Box marginLeft={2}>
+        {editing && !isEditing && (
+          <Box direction="row">
             <Button
-              color="red"
+              color="blue"
               inline
-              text="Cancel"
-              onClick={(): void => {
+              text="Save"
+              onClick={async (): Promise<void> => {
+                if (!onSave) {
+                  console.error("No onSave provided for editable TapToEdit");
+                } else {
+                  await onSave(value);
+                }
                 setEditing(false);
               }}
             />
+            <Box marginLeft={2}>
+              <Button
+                color="red"
+                inline
+                text="Cancel"
+                onClick={(): void => {
+                  setEditing(false);
+                }}
+              />
+            </Box>
           </Box>
-        </Box>
+        )}
       </Box>
     );
   } else {
-    let displayValue = initialValue;
+    let displayValue = value;
     // If a transform props is present, that takes priority
     if (transform) {
-      displayValue = transform(initialValue);
+      displayValue = transform(value);
     } else {
       // If no transform, try and display the value reasonably.
       if (fieldProps?.type === "boolean") {

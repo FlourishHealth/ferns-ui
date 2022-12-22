@@ -38,11 +38,6 @@ export interface FieldProps extends FieldWithLabelsProps {
   disabled?: boolean;
 }
 
-/**
- * Note: You MUST set a key={} prop for this component, otherwise you may wind up with stale data. Just changing
- * initialValue will not work.
- *
- */
 export const Field = ({
   name,
   label,
@@ -156,13 +151,14 @@ export const Field = ({
         />
       );
     } else if (type === "address") {
+      const addressValue = value ? value : {};
       const {
         address1 = "",
         address2 = "",
         city = "",
         state = "",
         zipcode = "",
-      }: AddressInterface = value;
+      }: AddressInterface = addressValue;
       return (
         <>
           <TextField
