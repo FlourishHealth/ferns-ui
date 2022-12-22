@@ -14,61 +14,65 @@ const TapStory = (): ReactElement => {
     <Box direction="column" display="flex" height="100%" width="100%">
       <TapToEdit
         key="text"
-        initialValue={text}
         name="text"
+        setValue={setText}
         title="Text"
         type="text"
+        value={text}
         onSave={(value): void => {
           setText(value);
         }}
       />
       <TapToEdit
         key="bool"
-        initialValue={bool}
         name="bool"
+        setValue={setBool}
         title="Boolean"
         type="boolean"
+        value={bool}
         onSave={(value): void => {
           setBool(value);
         }}
       />
       <TapToEdit
         key="currency"
-        initialValue={currency}
         name="currency"
+        setValue={setCurrency}
         title="Currency"
         type="currency"
+        value={currency}
         onSave={(value): void => {
           setCurrency(value);
         }}
       />
       <TapToEdit
         key="percent"
-        initialValue={percent}
         name="percent"
+        setValue={setPercent}
         title="Percent"
         type="percent"
+        value={percent}
         onSave={(value): void => {
           setPercent(value);
         }}
       />
       <TapToEdit
         key="select"
-        initialValue={select}
         name="select"
         options={[
           {label: "Option1", value: "Option1"},
           {label: "Option2", value: "Option2"},
         ]}
+        setValue={setSelect}
         title="Select"
         type="select"
+        value={select}
         onSave={(value): void => {
           setSelect(value);
         }}
       />
       <TapToEdit
         key="multiselect"
-        initialValue={multiselect}
         name="multiselect"
         options={[
           {label: "Option1", value: "Option1"},
@@ -79,8 +83,10 @@ const TapStory = (): ReactElement => {
             value: "Really long option for testing some wrap around and such",
           },
         ]}
+        setValue={setMultiselect}
         title="Multi Select"
         type="multiselect"
+        value={multiselect}
         onSave={(value): void => {
           setMultiselect(value);
         }}
