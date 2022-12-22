@@ -10,7 +10,8 @@ import {Text} from "./Text";
 export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   title: string;
   value: any;
-  setValue: (value: any) => void;
+  // Not required if not editable.
+  setValue?: (value: any) => void;
   // Not required if not editable.
   onSave?: (value: any) => void | Promise<void>;
   // Defaults to true
