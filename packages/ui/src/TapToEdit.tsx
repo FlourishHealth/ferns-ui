@@ -38,6 +38,10 @@ export const TapToEdit = ({
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
 
+  if (editable && !setValue) {
+    throw new Error("setValue is required if editable is true");
+  }
+
   if (editable && (editing || isEditing)) {
     return (
       <Box direction="column">
