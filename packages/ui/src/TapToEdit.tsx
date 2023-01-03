@@ -10,7 +10,8 @@ import {Text} from "./Text";
 export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   title: string;
   value: any;
-  setValue: (value: any) => void;
+  // Not required if not editable.
+  setValue?: (value: any) => void;
   // Not required if not editable.
   onSave?: (value: any) => void | Promise<void>;
   // Defaults to true
@@ -36,6 +37,10 @@ export const TapToEdit = ({
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
+
+  if (editable && !setValue) {
+    throw new Error("setValue is required if editable is true");
+  }
 
   if (editable && (editing || isEditing)) {
     return (
