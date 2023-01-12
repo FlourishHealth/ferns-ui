@@ -4,6 +4,7 @@ import React, {Component, createRef} from "react";
 import {
   Animated,
   Dimensions,
+  EmitterSubscription,
   findNodeHandle,
   FlatList,
   Keyboard,
@@ -491,6 +492,10 @@ export class ActionSheet extends Component<Props, State, any> {
 
   actionSheetHeight = 0;
 
+  keyboardDidShowListener: EmitterSubscription | null = null;
+
+  keyboardDidHideListener: EmitterSubscription | null = null;
+
   prevScroll = 0;
 
   timeout: any | null = null;
@@ -910,12 +915,12 @@ export class ActionSheet extends Component<Props, State, any> {
   };
 
   componentDidMount() {
-    Keyboard.addListener(
+    this.keyboardDidShowListener = Keyboard.addListener(
       Platform.OS === "android" ? "keyboardDidShow" : "keyboardWillShow",
       this._onKeyboardShow
     );
 
-    Keyboard.addListener(
+    this.keyboardDidHideListener = Keyboard.addListener(
       Platform.OS === "android" ? "keyboardDidHide" : "keyboardWillHide",
       this._onKeyboardHide
     );
@@ -1010,15 +1015,8 @@ export class ActionSheet extends Component<Props, State, any> {
   };
 
   componentWillUnmount() {
-    Keyboard.removeListener(
-      Platform.OS === "android" ? "keyboardDidShow" : "keyboardWillShow",
-      this._onKeyboardShow
-    );
-
-    Keyboard.removeListener(
-      Platform.OS === "android" ? "keyboardDidHide" : "keyboardWillHide",
-      this._onKeyboardHide
-    );
+    this.keyboardDidShowListener?.remove();
+    this.keyboardDidHideListener?.remove();
   }
 
   _onDeviceLayout = async (_event: any) => {

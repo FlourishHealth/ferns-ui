@@ -119,10 +119,12 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     });
 
     if (!result.cancelled) {
-      const resizedImage = await resizeImage(result.uri);
-      setSrc(resizedImage.uri);
-      if (onChange) {
-        onChange({avatarImageFormat, ...resizedImage});
+      if (result.uri) {
+        const resizedImage = await resizeImage(result.uri);
+        setSrc(resizedImage.uri);
+        if (onChange) {
+          onChange({avatarImageFormat, ...resizedImage});
+        }
       }
     }
   };
