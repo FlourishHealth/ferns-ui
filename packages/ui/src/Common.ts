@@ -578,6 +578,11 @@ export interface BoxProps {
   // Pattern Addition. Shadows!
   shadow?: boolean;
   border?: AllColors;
+  borderBottom?: AllColors;
+  borderTop?: AllColors;
+  borderLeft?: AllColors;
+  borderRight?: AllColors;
+
   avoidKeyboard?: boolean;
   keyboardOffset?: number;
   scrollRef?: any;

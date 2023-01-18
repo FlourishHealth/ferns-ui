@@ -41,6 +41,8 @@ const ALIGN_SELF = {
   stretch: "stretch",
 };
 
+const BORDER_WIDTH = 2;
+
 export class Box extends React.Component<BoxProps, {}> {
   BOX_STYLE_MAP: {
     [prop: string]: (
@@ -153,7 +155,31 @@ export class Box extends React.Component<BoxProps, {}> {
       if (!value) {
         return {};
       }
-      return {borderColor: Unifier.theme[value], borderWidth: 2};
+      return {borderColor: Unifier.theme[value], borderWidth: BORDER_WIDTH};
+    },
+    borderBottom: (value: keyof UnifiedTheme) => {
+      if (!value) {
+        return {};
+      }
+      return {borderBottomColor: Unifier.theme[value], borderBottomWidth: BORDER_WIDTH};
+    },
+    borderTop: (value: keyof UnifiedTheme) => {
+      if (!value) {
+        return {};
+      }
+      return {borderTopColor: Unifier.theme[value], borderTopWidth: BORDER_WIDTH};
+    },
+    borderRight: (value: keyof UnifiedTheme) => {
+      if (!value) {
+        return {};
+      }
+      return {borderRightColor: Unifier.theme[value], borderRightWidth: BORDER_WIDTH};
+    },
+    borderLeft: (value: keyof UnifiedTheme) => {
+      if (!value) {
+        return {};
+      }
+      return {borderLeftColor: Unifier.theme[value], borderLeftWidth: BORDER_WIDTH};
     },
   };
 
