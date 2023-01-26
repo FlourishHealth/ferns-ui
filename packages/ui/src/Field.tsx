@@ -56,7 +56,6 @@ export const Field = ({
   errorMessageColor,
   helperText,
   helperTextColor,
-  useCheckbox,
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
@@ -64,57 +63,6 @@ export const Field = ({
 
   const handleSwitchChange = (switchValue: boolean) => {
     onChange(switchValue);
-  };
-
-  const renderMultiCheckbox = (item: {label: string; value: any}) => {
-    return (
-      <CheckBox
-        key={item.label + item.value}
-        checked={(value ?? []).includes(item.value)}
-        disabled={disabled}
-        id={name}
-        name={name}
-        size="sm"
-        onChange={(result) => {
-          let newValue;
-          if (result.value) {
-            if (value.includes(item.value)) {
-              console.warn(`Tried to add value that already exists: ${item.value}`);
-              return;
-            }
-            newValue = [...value, item.value];
-          } else {
-            newValue = value.filter((v: string) => v !== item.value);
-          }
-          onChange(newValue);
-        }}
-      />
-    );
-  };
-
-  const renderMultiSwitch = (item: {label: string; value: any}) => {
-    return (
-      <Switch
-        key={item.label + item.value}
-        disabled={disabled}
-        id={name}
-        name={name}
-        switched={(value ?? []).includes(item.value)}
-        onChange={(result) => {
-          let newValue;
-          if (result) {
-            if (value.includes(item.value)) {
-              console.warn(`Tried to add value that already exists: ${item.value}`);
-              return;
-            }
-            newValue = [...value, item.value];
-          } else {
-            newValue = value.filter((v: string) => v !== item.value);
-          }
-          onChange(newValue);
-        }}
-      />
-    );
   };
 
   const renderField = () => {
@@ -150,7 +98,29 @@ export const Field = ({
               <Box flex="shrink" marginRight={2}>
                 <Text weight="bold">{o.label}</Text>
               </Box>
-              <Box>{useCheckbox ? renderMultiCheckbox(o) : renderMultiSwitch(o)}</Box>
+              <Box>
+                <CheckBox
+                  key={o.label + o.value}
+                  checked={(value ?? []).includes(o.value)}
+                  disabled={disabled}
+                  id={name}
+                  name={name}
+                  size="sm"
+                  onChange={(result) => {
+                    let newValue;
+                    if (result.value) {
+                      if (value.includes(o.value)) {
+                        console.warn(`Tried to add value that already exists: ${o.value}`);
+                        return;
+                      }
+                      newValue = [...value, o.value];
+                    } else {
+                      newValue = value.filter((v: string) => v !== o.value);
+                    }
+                    onChange(newValue);
+                  }}
+                />
+              </Box>
             </Box>
           ))}
         </Box>
