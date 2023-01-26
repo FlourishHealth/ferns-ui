@@ -200,7 +200,8 @@ const DateField = () => {
 };
 
 const MultiselectField = () => {
-  const [value, setValue] = useState("Option2");
+  const [toggleValue, setToggleValue] = useState(["Option1", "Option2"]);
+  const [checkboxValue, setCheckboxValue] = useState(["Option3"]);
   return (
     <StorybookContainer>
       <Box width={300}>
@@ -214,8 +215,24 @@ const MultiselectField = () => {
             {label: "Option3", value: "Option3"},
           ]}
           type="multiselect"
-          value={value}
-          onChange={setValue}
+          value={toggleValue}
+          onChange={setToggleValue}
+        />
+      </Box>
+      <Box width={300}>
+        <Field
+          helperText="Here's some help text"
+          label="Date Field"
+          name="text"
+          options={[
+            {label: "Option1", value: "Option1"},
+            {label: "Option2", value: "Option2"},
+            {label: "Option3", value: "Option3"},
+          ]}
+          type="multiselect"
+          useCheckbox
+          value={checkboxValue}
+          onChange={setCheckboxValue}
         />
       </Box>
     </StorybookContainer>
