@@ -200,7 +200,7 @@ const DateField = () => {
 };
 
 const MultiselectField = () => {
-  const [value, setValue] = useState("Option2");
+  const [checkboxValue, setCheckboxValue] = useState(["Option3"]);
   return (
     <StorybookContainer>
       <Box width={300}>
@@ -214,8 +214,8 @@ const MultiselectField = () => {
             {label: "Option3", value: "Option3"},
           ]}
           type="multiselect"
-          value={value}
-          onChange={setValue}
+          value={checkboxValue}
+          onChange={setCheckboxValue}
         />
       </Box>
     </StorybookContainer>
