@@ -3,6 +3,7 @@ import {useFonts} from "expo-font";
 import {StatusBar} from "expo-status-bar";
 import React, {ReactElement, useEffect, useState} from "react";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Host} from "react-native-portalize";
 import {SafeAreaProvider, useSafeAreaInsets} from "react-native-safe-area-context";
 
 import * as Stories from "./src/stories";
@@ -47,59 +48,61 @@ const App = () => {
   }
 
   return (
-    <View
-      style={{
-        ...styles.container,
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
-        paddingLeft: insets.left,
-        paddingRight: insets.right,
-        backgroundColor: "#fff",
-      }}
-    >
-      <StatusBar style="auto" />
-      <View style={styles.header}>
-        {!currentStory && <Text style={{fontWeight: "bold", fontSize: 20}}>Pick A Story:</Text>}
-        {currentStory && (
-          <Pressable
-            onPress={async () => {
-              setStory(null);
-              await AsyncStorage.setItem("story", "");
-            }}
-          >
-            <Text style={{fontWeight: "bold"}}>&lt; Back</Text>
-          </Pressable>
-        )}
-        <Text style={{marginLeft: 20, fontWeight: "bold"}}>{currentStory}</Text>
+    <Host>
+      <View
+        style={{
+          ...styles.container,
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+          backgroundColor: "#fff",
+        }}
+      >
+        <StatusBar style="auto" />
+        <View style={styles.header}>
+          {!currentStory && <Text style={{fontWeight: "bold", fontSize: 20}}>Pick A Story:</Text>}
+          {currentStory && (
+            <Pressable
+              onPress={async () => {
+                setStory(null);
+                await AsyncStorage.setItem("story", "");
+              }}
+            >
+              <Text style={{fontWeight: "bold"}}>&lt; Back</Text>
+            </Pressable>
+          )}
+          <Text style={{marginLeft: 20, fontWeight: "bold"}}>{currentStory}</Text>
+        </View>
+        <View style={styles.body}>
+          {currentStory && allStories[currentStory] && allStories[currentStory]()}
+          {!currentStory && (
+            <ScrollView>
+              <View style={styles.storyList}>
+                {stories.map((s) => (
+                  <React.Fragment key={s.title}>
+                    <Text style={{fontWeight: "bold", fontSize: 20, marginBottom: 12}}>
+                      {s.title}
+                    </Text>
+                    {Object.keys(s.stories).map((title) => (
+                      <Pressable
+                        key={title}
+                        onPress={async () => {
+                          setStory(title);
+                          await AsyncStorage.setItem("story", title);
+                        }}
+                      >
+                        <Text style={{fontSize: 16, marginBottom: 8}}>{title}</Text>
+                      </Pressable>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </View>
+            </ScrollView>
+          )}
+        </View>
       </View>
-      <View style={styles.body}>
-        {currentStory && allStories[currentStory] && allStories[currentStory]()}
-        {!currentStory && (
-          <ScrollView>
-            <View style={styles.storyList}>
-              {stories.map((s) => (
-                <React.Fragment key={s.title}>
-                  <Text style={{fontWeight: "bold", fontSize: 20, marginBottom: 12}}>
-                    {s.title}
-                  </Text>
-                  {Object.keys(s.stories).map((title) => (
-                    <Pressable
-                      key={title}
-                      onPress={async () => {
-                        setStory(title);
-                        await AsyncStorage.setItem("story", title);
-                      }}
-                    >
-                      <Text style={{fontSize: 16, marginBottom: 8}}>{title}</Text>
-                    </Pressable>
-                  ))}
-                </React.Fragment>
-              ))}
-            </View>
-          </ScrollView>
-        )}
-      </View>
-    </View>
+    </Host>
   );
 };
 
