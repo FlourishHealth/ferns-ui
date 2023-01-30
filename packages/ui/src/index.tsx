@@ -41,6 +41,7 @@ export * from "./TapToEdit";
 export * from "./Text";
 export * from "./TextArea";
 export * from "./TextField";
+export * from "./Tooltip";
 export * from "./UnifiedScreens";
 export * from "./Unifier";
 export * from "./WithLabel";

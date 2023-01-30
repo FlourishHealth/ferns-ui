@@ -24,4 +24,5 @@ export * from "./Text.stories";
 export * from "./Theme.stories";
 // export * from "./TextArea.stories";
 export * from "./TextField.stories";
+export * from "./Tooltip.stories";
 export * from "./DateTime.stories";
