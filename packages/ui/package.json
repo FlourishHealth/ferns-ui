@@ -117,7 +117,6 @@
     "@types/react": "17.0.44"
   },
   "dependencies": {
-    "expo-image-picker": "^13.3.1",
     "tsc-watch": "^5.0.3"
   },
   "devDependencies": {
@@ -148,6 +147,7 @@
     "expo-haptics": "~11.3.0",
     "expo-image-manipulator": "^10.4.0",
     "expo-image-picker": "^13.3.1",
+    "libphonenumber-js": "^1.10.16",
     "lodash": "^4.17.21",
     "mixpanel-browser": "^2.38.0",
     "moment-timezone": "^0.5.35",
@@ -181,6 +181,7 @@
     "expo-haptics": "~11.3.0",
     "expo-image-manipulator": "^10.4.0",
     "expo-image-picker": "^13.3.1",
+    "libphonenumber-js": "^1.10.16",
     "lodash": "^4.17.21",
     "mixpanel-browser": "^2.38.0",
     "moment-timezone": "^0.5.35",

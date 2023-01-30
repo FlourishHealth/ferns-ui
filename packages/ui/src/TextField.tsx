@@ -1,3 +1,9 @@
+import {
+  AsYouType,
+  isValidPhoneNumber,
+  parsePhoneNumber,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
 import moment from "moment-timezone";
 import React, {ReactElement, useState} from "react";
 import {ActivityIndicator, KeyboardTypeOptions, Platform, TextInput, View} from "react-native";
@@ -74,6 +80,7 @@ const keyboardMap = {
   decimal: "decimal-pad",
   height: "default",
   password: "default",
+  phoneNumber: "number-pad",
   search: "default",
   text: "default",
   url: Platform.select({
@@ -137,6 +144,7 @@ export function TextField({
   const [focused, setFocused] = useState(false);
   const [height, setHeight] = useState(propsHeight || 40);
   const [showDate, setShowDate] = useState(false);
+  const [internalError, setInternalError] = useState("");
 
   const renderIcon = () => {
     if (type !== "search") {
@@ -193,12 +201,27 @@ export function TextField({
     value = moment(value).format("MM/DD/YYYY");
   } else if (type === "height") {
     value = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
+  } else if (type === "phoneNumber") {
+    console.log("TEXT", value, isValidPhoneNumber(value ?? "", "US"));
+    if (isValidPhoneNumber(value ?? "", "US")) {
+      // setInternalError("");
+    } else if (validatePhoneNumberLength(value ?? "", "US") === "TOO_LONG") {
+      // setInternalError("Phone number too long");
+    } else if (validatePhoneNumberLength(value ?? "", "US") === "TOO_SHORT") {
+      // We don't want to set an error here, the user is still typing.
+    } else {
+      // Clear error if it exists.
+      // setInternalError("");
+    }
+
+    // TODO: Support international phone numbers.
+    value = new AsYouType("US").input(value ?? "");
   }
 
   return (
     <>
       <WithLabel
-        label={errorMessage}
+        label={errorMessage || internalError}
         labelColor={errorMessageColor || "red"}
         labelPlacement="after"
         labelSize="sm"
@@ -283,7 +306,20 @@ export function TextField({
                 // }
               }}
               onChangeText={(text) => {
-                onChange({value: text});
+                if (onChange) {
+                  if (type === "phoneNumber") {
+                    try {
+                      // Try to format the number like +1234567890
+                      // onChange({value: });
+                      // console.log("VAL", );
+                      text = parsePhoneNumber(value ?? "", "US").number;
+                    } catch (e) {
+                      console.error(e);
+                      // If it isn't a valid phone number, pass as is.
+                    }
+                  }
+                  onChange({value: text});
+                }
               }}
               onContentSizeChange={(event) => {
                 if (!grow) {
