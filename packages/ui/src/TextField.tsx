@@ -1,3 +1,4 @@
+import {AsYouType} from "libphonenumber-js";
 import moment from "moment-timezone";
 import React, {ReactElement, useState} from "react";
 import {ActivityIndicator, KeyboardTypeOptions, Platform, TextInput, View} from "react-native";
@@ -74,6 +75,7 @@ const keyboardMap = {
   decimal: "decimal-pad",
   height: "default",
   password: "default",
+  phoneNumber: "number-pad",
   search: "default",
   text: "default",
   url: Platform.select({
@@ -189,10 +191,24 @@ export function TextField({
     label,
     labelColor,
   };
-  if (type === "date") {
-    value = moment(value).format("MM/DD/YYYY");
-  } else if (type === "height") {
-    value = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
+  if (value) {
+    if (type === "date") {
+      value = moment(value).format("MM/DD/YYYY");
+    } else if (type === "height") {
+      value = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
+    } else if (type === "phoneNumber") {
+      // By default, if a value is something like `"(123)"`
+      // then Backspace would only erase the rightmost brace
+      // becoming something like `"(123"`
+      // which would give the same `"123"` value
+      // which would then be formatted back to `"(123)"`
+      // and so a user wouldn't be able to erase the phone number.
+      // This is the workaround for that.
+      const formattedPhoneNumber = new AsYouType("US").input(value);
+      if (value !== formattedPhoneNumber && value.length !== 4) {
+        value = formattedPhoneNumber;
+      }
+    }
   }
 
   return (
@@ -283,7 +299,19 @@ export function TextField({
                 // }
               }}
               onChangeText={(text) => {
-                onChange({value: text});
+                if (onChange) {
+                  if (type === "phoneNumber") {
+                    const formattedPhoneNumber = new AsYouType("US").input(text);
+                    // another workaround for the same issue as above with backspacing phone numbers
+                    if (formattedPhoneNumber === value) {
+                      onChange({value: text});
+                    } else {
+                      onChange({value: formattedPhoneNumber});
+                    }
+                  } else {
+                    onChange({value: text});
+                  }
+                }
               }}
               onContentSizeChange={(event) => {
                 if (!grow) {

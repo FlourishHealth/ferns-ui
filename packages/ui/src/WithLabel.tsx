@@ -8,9 +8,7 @@ export class WithLabel extends React.Component<WithLabelProps, {}> {
   render() {
     const {label, labelInline, labelColor, children} = this.props;
     // If show is undefined or true, show, only hide for actual false for simplicity.
-    if (this.props.show === false) {
-      return children;
-    }
+
     if (!children) {
       return null;
     }
@@ -25,7 +23,7 @@ export class WithLabel extends React.Component<WithLabelProps, {}> {
           {this.props.labelPlacement !== "after" && (
             <Box paddingY={1}>
               <Text color={labelColor || "darkGray"} size={this.props.labelSize} weight="bold">
-                {label}
+                {this.props.show !== false ? label : " "}
               </Text>
             </Box>
           )}
@@ -33,7 +31,7 @@ export class WithLabel extends React.Component<WithLabelProps, {}> {
           {this.props.labelPlacement === "after" && (
             <Box paddingY={1}>
               <Text color={labelColor || "darkGray"} size={this.props.labelSize}>
-                {label}
+                {this.props.show !== false ? label : " "}
               </Text>
             </Box>
           )}
