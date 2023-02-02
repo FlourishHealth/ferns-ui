@@ -1,9 +1,4 @@
-import {
-  AsYouType,
-  isValidPhoneNumber,
-  parsePhoneNumber,
-  validatePhoneNumberLength,
-} from "libphonenumber-js";
+import {AsYouType} from "libphonenumber-js";
 import moment from "moment-timezone";
 import React, {ReactElement, useState} from "react";
 import {ActivityIndicator, KeyboardTypeOptions, Platform, TextInput, View} from "react-native";
@@ -197,25 +192,24 @@ export function TextField({
     label,
     labelColor,
   };
-  if (type === "date") {
-    value = moment(value).format("MM/DD/YYYY");
-  } else if (type === "height") {
-    value = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
-  } else if (type === "phoneNumber") {
-    console.log("TEXT", value, isValidPhoneNumber(value ?? "", "US"));
-    if (isValidPhoneNumber(value ?? "", "US")) {
-      // setInternalError("");
-    } else if (validatePhoneNumberLength(value ?? "", "US") === "TOO_LONG") {
-      // setInternalError("Phone number too long");
-    } else if (validatePhoneNumberLength(value ?? "", "US") === "TOO_SHORT") {
-      // We don't want to set an error here, the user is still typing.
-    } else {
-      // Clear error if it exists.
-      // setInternalError("");
+  if (value) {
+    if (type === "date") {
+      value = moment(value).format("MM/DD/YYYY");
+    } else if (type === "height") {
+      value = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
+    } else if (type === "phoneNumber") {
+      // By default, if a value is something like `"(123)"`
+      // then Backspace would only erase the rightmost brace
+      // becoming something like `"(123"`
+      // which would give the same `"123"` value
+      // which would then be formatted back to `"(123)"`
+      // and so a user wouldn't be able to erase the phone number.
+      // This is the workaround for that.
+      const formattedPhoneNumber = new AsYouType("US").input(value);
+      if (value !== formattedPhoneNumber && value.length !== 4) {
+        value = formattedPhoneNumber;
+      }
     }
-
-    // TODO: Support international phone numbers.
-    value = new AsYouType("US").input(value ?? "");
   }
 
   return (
@@ -308,17 +302,16 @@ export function TextField({
               onChangeText={(text) => {
                 if (onChange) {
                   if (type === "phoneNumber") {
-                    try {
-                      // Try to format the number like +1234567890
-                      // onChange({value: });
-                      // console.log("VAL", );
-                      text = parsePhoneNumber(value ?? "", "US").number;
-                    } catch (e) {
-                      console.error(e);
-                      // If it isn't a valid phone number, pass as is.
+                    const formattedPhoneNumber = new AsYouType("US").input(text);
+                    // another workaround for the same issue as above with backspacing phone numbers
+                    if (formattedPhoneNumber === value) {
+                      onChange({value: text});
+                    } else {
+                      onChange({value: formattedPhoneNumber});
                     }
+                  } else {
+                    onChange({value: text});
                   }
-                  onChange({value: text});
                 }
               }}
               onContentSizeChange={(event) => {
