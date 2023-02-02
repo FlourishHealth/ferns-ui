@@ -139,7 +139,6 @@ export function TextField({
   const [focused, setFocused] = useState(false);
   const [height, setHeight] = useState(propsHeight || 40);
   const [showDate, setShowDate] = useState(false);
-  const [internalError, setInternalError] = useState("");
 
   const renderIcon = () => {
     if (type !== "search") {
@@ -215,7 +214,7 @@ export function TextField({
   return (
     <>
       <WithLabel
-        label={errorMessage || internalError}
+        label={errorMessage}
         labelColor={errorMessageColor || "red"}
         labelPlacement="after"
         labelSize="sm"
