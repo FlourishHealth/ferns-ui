@@ -340,17 +340,18 @@ export const SPACING = 4;
 
 export type TextFieldType =
   | "date"
+  | "decimal"
+  | "decimalRange"
   | "email"
+  | "height"
+  | "password"
+  | "phoneNumber"
   | "number"
   | "numberRange"
-  | "decimalRange"
-  | "decimal"
-  | "username"
-  | "password"
   | "search"
   | "text"
   | "url"
-  | "height";
+  | "username";
 
 export type IconSize = "xs" | "sm" | "md" | "lg" | "xl";
 

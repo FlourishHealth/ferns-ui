@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import {Box, Field} from "ferns-ui";
+import {Box, Field, Text} from "ferns-ui";
 import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -183,6 +183,23 @@ const URLField = () => {
   );
 };
 
+const PhoneNumberField = () => {
+  const [value, setValue] = useState("+15558675309");
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Phone Number Field"
+        name="text"
+        type="phoneNumber"
+        value={value}
+        onChange={setValue}
+      />
+      <Text>Phone number return: {value}</Text>
+    </StorybookContainer>
+  );
+};
+
 const DateField = () => {
   const [value, setValue] = useState(new Date());
   return (
@@ -300,6 +317,9 @@ export const FieldStories = {
     },
     "Password Field": function () {
       return <PasswordField />;
+    },
+    "Phone Number Field": function () {
+      return <PhoneNumberField />;
     },
     "URL Field": function () {
       return <URLField />;

@@ -17,20 +17,21 @@ export interface FieldProps extends FieldWithLabelsProps {
   label?: string;
   height?: number;
   type?:
+    | "address"
     | "boolean"
+    | "currency"
+    | "customSelect"
+    | "date"
     | "email"
+    | "multiselect"
+    | "number"
+    | "password"
+    | "percent"
+    | "phoneNumber"
+    | "select"
     | "text"
     | "textarea"
-    | "number"
-    | "currency"
-    | "percent"
-    | "select"
-    | "password"
-    | "url"
-    | "date"
-    | "multiselect"
-    | "address"
-    | "customSelect";
+    | "url";
   rows?: number;
   value?: any;
   onChange?: any;
@@ -222,7 +223,7 @@ export const Field = ({
       let tfValue: string = value;
       // Number is supported differently because we need fractional numbers and they don't work
       // well on iOS.
-      if (type && ["date", "email", "password", "url"].indexOf(type) > -1) {
+      if (type && ["date", "email", "phoneNumber", "password", "url"].indexOf(type) > -1) {
         tfType = type as TextFieldType;
       } else if (type === "percent" || type === "currency") {
         tfType = "text";
@@ -244,7 +245,7 @@ export const Field = ({
           disabled={disabled}
           id={name}
           placeholder={placeholder}
-          type={tfType as "date" | "email" | "number" | "password" | "text" | "url"}
+          type={tfType as "date" | "email" | "number" | "password" | "phoneNumber" | "text" | "url"}
           value={tfValue}
           onChange={(result) => onChange(result.value)}
         />
