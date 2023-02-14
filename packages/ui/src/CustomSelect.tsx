@@ -56,7 +56,7 @@ export const CustomSelect = ({
       <SelectList
         id="providedOptions"
         options={[...options, {label: "Custom", value: "custom"}]}
-        placeholder={placeholder || ""}
+        placeholder={placeholder}
         value={customValue}
         onChange={handleCustomSelectListChange}
       />
