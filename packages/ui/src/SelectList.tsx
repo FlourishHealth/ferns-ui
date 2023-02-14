@@ -35,7 +35,7 @@ export function SelectList({
     <WithLabel {...withLabelProps}>
       <RNPickerSelect
         items={options}
-        placeholder={{label: placeholder || "", value: ""}}
+        placeholder={placeholder ? {label: placeholder, value: ""} : {}}
         style={{
           viewContainer: {
             flexDirection: style?.flexDirection || "row",
