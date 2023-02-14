@@ -43,11 +43,6 @@ export const TapToEdit = ({
   }
 
   if (editable && (editing || isEditing)) {
-    // set the value to the default value if it is undefined
-    // this will avoid issues where the user wants the initial value to be saved, particularly on a Select component
-    if (fieldProps.options && fieldProps.options.length > 0 && !value && setValue) {
-      setValue(fieldProps.options[0].value);
-    }
     return (
       <Box direction="column">
         {fieldComponent ? (
