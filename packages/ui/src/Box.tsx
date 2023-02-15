@@ -41,7 +41,7 @@ const ALIGN_SELF = {
   stretch: "stretch",
 };
 
-const BORDER_WIDTH = 2;
+const BORDER_WIDTH = 1;
 
 export class Box extends React.Component<BoxProps, {}> {
   BOX_STYLE_MAP: {
