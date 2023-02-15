@@ -77,6 +77,7 @@ export const Field = ({
           disabled={disabled}
           id={name}
           options={options}
+          placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
@@ -216,7 +217,13 @@ export const Field = ({
         return null;
       }
       return (
-        <CustomSelect disabled={disabled} options={options} value={value} onChange={onChange} />
+        <CustomSelect
+          disabled={disabled}
+          options={options}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+        />
       );
     } else {
       let tfType: TextFieldType = "text";

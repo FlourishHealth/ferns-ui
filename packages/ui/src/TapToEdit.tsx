@@ -27,6 +27,7 @@ export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
 export const TapToEdit = ({
   value,
   setValue,
+  placeholder,
   title,
   onSave,
   editable = true,
@@ -43,17 +44,18 @@ export const TapToEdit = ({
   }
 
   if (editable && (editing || isEditing)) {
-    // set the value to the default value if it is undefined
-    // this will avoid issues where the user wants the initial value to be saved, particularly on a Select component
-    if (fieldProps.options && fieldProps.options.length > 0 && !value && setValue) {
-      setValue(fieldProps.options[0].value);
-    }
     return (
       <Box direction="column">
         {fieldComponent ? (
           fieldComponent(setValue as any)
         ) : (
-          <Field label={title} value={value} onChange={setValue} {...fieldProps} />
+          <Field
+            label={title}
+            placeholder={placeholder}
+            value={value}
+            onChange={setValue}
+            {...fieldProps}
+          />
         )}
         {editing && !isEditing && (
           <Box direction="row">

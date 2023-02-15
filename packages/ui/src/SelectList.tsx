@@ -20,14 +20,22 @@ export interface SelectListProps extends FieldWithLabelsProps {
   style?: StyleProp;
 }
 
-export function SelectList({options, value, onChange, label, labelColor, style}: SelectListProps) {
+export function SelectList({
+  options,
+  value,
+  onChange,
+  label,
+  labelColor,
+  style,
+  placeholder,
+}: SelectListProps) {
   const withLabelProps = {label, labelColor};
 
   return (
     <WithLabel {...withLabelProps}>
       <RNPickerSelect
         items={options}
-        placeholder={{}}
+        placeholder={placeholder ? {label: placeholder, value: ""} : {}}
         style={{
           viewContainer: {
             flexDirection: style?.flexDirection || "row",
