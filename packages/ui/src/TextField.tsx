@@ -193,7 +193,7 @@ export function TextField({
   };
   if (value) {
     if (type === "date") {
-      value = moment(value).format("MM/DD/YYYY");
+      value = moment.utc(value).format("MM/DD/YYYY");
     } else if (type === "height") {
       value = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
     } else if (type === "phoneNumber") {
