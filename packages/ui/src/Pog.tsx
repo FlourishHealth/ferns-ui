@@ -2,7 +2,7 @@
 import React from "react";
 
 import {Box} from "./Box";
-import {AllColors, IconPrefix, IconSize} from "./Common";
+import {AllColors, IconName, IconPrefix, IconSize} from "./Common";
 import {Icon} from "./Icon";
 
 const SIZE_NAME_TO_PIXEL = {
@@ -20,7 +20,7 @@ interface Props {
   hovered?: boolean;
   selected?: boolean;
   iconColor?: AllColors;
-  icon: string;
+  icon: IconName;
   iconPrefix?: IconPrefix;
   size?: IconSize;
 }

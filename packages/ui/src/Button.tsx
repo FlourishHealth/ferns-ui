@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {ActivityIndicator, TouchableOpacity} from "react-native";
 
 import {Box} from "./Box";
-import {ButtonColor, Color, GestaltIconName, IconPrefix, UnifiedTheme} from "./Common";
+import {ButtonColor, Color, IconName, IconPrefix, UnifiedTheme} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
@@ -23,7 +23,7 @@ export interface ButtonProps {
   type?: "solid" | "ghost" | "outline";
   loading?: boolean;
   onClick: any;
-  icon?: GestaltIconName | string;
+  icon?: IconName;
   iconPrefix?: IconPrefix;
   iconColor?: ButtonColor | Color;
   withConfirmation?: boolean;

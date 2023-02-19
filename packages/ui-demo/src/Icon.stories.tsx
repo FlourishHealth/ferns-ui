@@ -1,4 +1,4 @@
-import {Box, Icon} from "ferns-ui";
+import {Box, Icon, Text} from "ferns-ui";
 import React from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -19,24 +19,20 @@ export const IconStories = {
         </StorybookContainer>
       );
     },
-    // "Regular Icons": function () {
-    //   return (
-    //     <StorybookContainer>
-    //       <Box
-    //         direction="row"
-    //         display="flex"
-    //         height="100%"
-    //         justifyContent="between"
-    //         width="100%"
-    //       >
-    //         <Icon name="heart" prefix="far" />
-    //         <Icon name="plus" prefix="far" />
-    //         <Icon name="edit" prefix="far" />
-    //         <Icon name="heart" prefix="far" />
-    //       </Box>
-    //     </StorybookContainer>
-    //   );
-    // },
+    "Icon Styles": function () {
+      return (
+        <StorybookContainer>
+          <Box padding={6}>
+            <Text>Regular</Text>
+            <Icon name="heart" prefix="far" size="xl" />
+          </Box>
+          <Box padding={6}>
+            <Text>Solid</Text>
+            <Icon name="heart" prefix="fas" size="xl" />
+          </Box>
+        </StorybookContainer>
+      );
+    },
     "Icon Sizes": function () {
       return (
         <StorybookContainer>

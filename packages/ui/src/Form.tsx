@@ -153,7 +153,7 @@ export class FormLine extends React.Component<FormLineProps, FormLineState> {
       <Box direction="row" display="flex">
         <IconButton
           accessibilityLabel="edit"
-          icon="cancel"
+          icon="times"
           iconColor="darkGray"
           prefix="far"
           size="xs"
