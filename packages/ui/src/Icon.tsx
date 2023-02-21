@@ -1,4 +1,4 @@
-import {FontAwesome} from "@expo/vector-icons";
+import {FontAwesome5} from "@expo/vector-icons";
 import React from "react";
 
 import {IconProps, iconSizeToNumber} from "./Common";
@@ -9,10 +9,16 @@ export function initIcons() {
 }
 
 // TODO: Update <Icon /> to be closer to Expo's Vector Icon, letting multiple icon packs be used, etc.
-export class Icon extends React.Component<IconProps, {}> {
-  render() {
-    const color = Unifier.theme[this.props.color || "primary"];
-    const size = iconSizeToNumber(this.props.size);
-    return <FontAwesome color={color} name={this.props.name as any} size={size} />;
-  }
+export function Icon({color, size, name, prefix}: IconProps): React.ReactElement {
+  const iconColor = Unifier.theme[color || "primary"];
+  const iconSize = iconSizeToNumber(size);
+  return (
+    <FontAwesome5
+      color={iconColor}
+      name={name}
+      regular={prefix === "far"}
+      size={iconSize}
+      solid={!prefix || prefix === "fas"}
+    />
+  );
 }
