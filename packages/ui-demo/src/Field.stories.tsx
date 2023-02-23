@@ -264,13 +264,30 @@ const AddressField = () => {
 };
 
 const CustomSelectField = () => {
-  const [value, setValue] = useState("they/them/theirs");
+  const [value1, setValue1] = useState("they/them/theirs");
+  const [value2, setValue2] = useState("they/them/theirs");
   return (
     <StorybookContainer>
       <Box width={300}>
         <Field
           helperText="Helper text goes here"
-          label="Custom Select Field"
+          label="Custom Select Field With Placeholder"
+          name="customSelect"
+          options={[
+            {label: "she/her/hers", value: "she/her/hers"},
+            {label: "he/him/his", value: "he/him/his"},
+            {label: "they/them/theirs", value: "they/them/theirs"},
+          ]}
+          placeholder="None selected"
+          type="customSelect"
+          value={value1}
+          onChange={setValue1}
+        />
+      </Box>
+      <Box width={300}>
+        <Field
+          helperText="Helper text goes here"
+          label="Custom Select Field Without Placeholder"
           name="customSelect"
           options={[
             {label: "she/her/hers", value: "she/her/hers"},
@@ -278,8 +295,8 @@ const CustomSelectField = () => {
             {label: "they/them/theirs", value: "they/them/theirs"},
           ]}
           type="customSelect"
-          value={value}
-          onChange={setValue}
+          value={value2}
+          onChange={setValue2}
         />
       </Box>
     </StorybookContainer>
