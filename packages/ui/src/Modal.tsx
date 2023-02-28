@@ -108,43 +108,41 @@ export const Modal = ({
   }
 
   return (
-    <Box alignItems="center" flex="grow" height="100%" justifyContent="center" width="100%">
-      <RNModal animationType="slide" transparent visible={visible} onRequestClose={onDismiss}>
-        <Box
-          alignItems="center"
-          alignSelf="center"
-          color="white"
-          dangerouslySetInlineStyle={{
-            __style: {
-              zIndex: 1,
-              shadowColor: "#999",
-              shadowOffset: {
-                width: 4,
-                height: 6,
-              },
-              shadowRadius: 4,
-              shadowOpacity: 1.0,
-              elevation: 8,
+    <RNModal animationType="slide" transparent visible={visible} onRequestClose={onDismiss}>
+      <Box
+        alignItems="center"
+        alignSelf="center"
+        color="white"
+        dangerouslySetInlineStyle={{
+          __style: {
+            zIndex: 1,
+            shadowColor: "#999",
+            shadowOffset: {
+              width: 4,
+              height: 6,
             },
-          }}
-          direction="column"
-          justifyContent="center"
-          marginTop={12}
-          maxWidth={sizePx}
-          minWidth={300}
-          paddingX={8}
-          paddingY={2}
-          rounding={6}
-          shadow
-          width={sizePx}
-        >
-          <Box marginBottom={6} width="100%">
-            {renderHeader()}
-            <Box paddingY={4}>{children}</Box>
-            <Box paddingY={4}>{renderFooter()}</Box>
-          </Box>
+            shadowRadius: 4,
+            shadowOpacity: 1.0,
+            elevation: 8,
+          },
+        }}
+        direction="column"
+        justifyContent="center"
+        marginTop={12}
+        maxWidth={sizePx}
+        minWidth={300}
+        paddingX={8}
+        paddingY={2}
+        rounding={6}
+        shadow
+        width={sizePx}
+      >
+        <Box marginBottom={6} width="100%">
+          {renderHeader()}
+          <Box paddingY={4}>{children}</Box>
+          <Box paddingY={4}>{renderFooter()}</Box>
         </Box>
-      </RNModal>
-    </Box>
+      </Box>
+    </RNModal>
   );
 };
