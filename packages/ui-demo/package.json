@@ -47,7 +47,7 @@
     "expo-image-manipulator": "^10.4.0",
     "expo-image-picker": "~13.3.1",
     "expo-status-bar": "~1.4.0",
-    "ferns-ui": "~0.11.3",
+    "ferns-ui": "0.22.5",
     "libphonenumber-js": "^1.10.16",
     "moment-timezone": "^0.5.34",
     "react": "18.0.0",

@@ -5344,7 +5344,7 @@ expo-image-manipulator@^10.4.0:
   dependencies:
     expo-image-loader "~3.2.0"
 
-expo-image-picker@~13.3.1:
+expo-image-picker@^13.3.1, expo-image-picker@~13.3.1:
   version "13.3.1"
   resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-13.3.1.tgz#7e8fe1dd7a58ab9e0fa17569ab6b64256ece0c98"
   integrity sha512-IY84uDu9uxetAup5yw0CIIujigl/lM3grwyfpeZFMKGmWHzmKamptjd/sG8K65xkb6tF9awmGMW0qglHQ9hakQ==
@@ -5630,11 +5630,12 @@ fbjs@^3.0.0, fbjs@^3.0.4:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.30"
 
-ferns-ui@~0.11.3:
-  version "0.11.3"
-  resolved "https://registry.yarnpkg.com/ferns-ui/-/ferns-ui-0.11.3.tgz#b8698f5ccdb1ca1bbf36b730ae80fe33e05e3aed"
-  integrity sha512-9iD6dMIp+hwvUaDy3hYCZLPS532uakF2Mf9Km5Fh7LFP2K2FOA6n/JXyl7J6K1iBLoa5k4tDYg+5WyIMefqCJQ==
+ferns-ui@0.22.5:
+  version "0.22.5"
+  resolved "https://registry.yarnpkg.com/ferns-ui/-/ferns-ui-0.22.5.tgz#88357c0ce56cc0b0c8f8499ba66e7ab4fd8a3288"
+  integrity sha512-OZsOS6Xjxhk/4PsZOpZjWUoh6TKQsM5VN47/m/GnX+kfAij0FeypGY0PZBA7W4FAzXr9Ij9toKV/VHGKwZcTjg==
   dependencies:
+    expo-image-picker "^13.3.1"
     tsc-watch "^5.0.3"
 
 fetch-retry@^4.1.1:
