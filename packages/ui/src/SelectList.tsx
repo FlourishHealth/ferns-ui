@@ -1,6 +1,8 @@
 import React from "react";
+import {Platform} from "react-native";
 
 import {FieldWithLabelsProps, StyleProp} from "./Common";
+import {Icon} from "./Icon";
 import RNPickerSelect from "./PickerSelect";
 import {Unifier} from "./Unifier";
 import {WithLabel} from "./WithLabel";
@@ -34,6 +36,12 @@ export function SelectList({
   return (
     <WithLabel {...withLabelProps}>
       <RNPickerSelect
+        // Icon only needed for iOs, web and android use default icons
+        Icon={() => {
+          return Platform.OS === "ios" ? (
+            <Icon color="darkGray" name="angle-down" size="md" />
+          ) : null;
+        }}
         items={options}
         placeholder={placeholder ? {label: placeholder, value: ""} : {}}
         style={{
@@ -50,6 +58,17 @@ export function SelectList({
             borderWidth: style?.borderWidth || 1,
             borderRadius: style?.borderRadius || 5,
             backgroundColor: style?.backgroundColor || Unifier.theme.white,
+          },
+          inputIOS: {
+            paddingVertical: 12,
+            paddingHorizontal: 10,
+            paddingRight: 30,
+          },
+          iconContainer: {
+            top: 13,
+            right: 10,
+            bottom: 12,
+            paddingLeft: 40,
           },
         }}
         value={value}
