@@ -73,18 +73,6 @@ export function SelectList({
             paddingVertical: style?.paddingVertical || 4,
             borderRadius: style?.borderRadius || 5,
           },
-          inputAndroid: {
-            // Add padding so the border doesn't mess up layouts
-            paddingHorizontal: style?.paddingHorizontal || 6,
-            paddingVertical: style?.paddingVertical || 4,
-            borderRadius: style?.borderRadius || 5,
-          },
-          headlessAndroidPicker: {
-            // Add padding so the border doesn't mess up layouts
-            paddingHorizontal: style?.paddingHorizontal || 6,
-            paddingVertical: style?.paddingVertical || 4,
-            borderRadius: style?.borderRadius || 5,
-          },
         }}
         value={value}
         onValueChange={onChange}
