@@ -51,9 +51,6 @@ export function SelectList({
             alignItems: style?.alignItems || "center",
             minHeight: style?.minHeight || 50,
             width: style?.width || "100%",
-            // Add padding so the border doesn't mess up layouts
-            paddingHorizontal: style?.paddingHorizontal || 6,
-            paddingVertical: style?.paddingVertical || 4,
             borderColor: style?.borderColor || Unifier.theme.gray,
             borderWidth: style?.borderWidth || 1,
             borderRadius: style?.borderRadius || 5,
@@ -69,6 +66,24 @@ export function SelectList({
             right: 10,
             bottom: 12,
             paddingLeft: 40,
+          },
+          inputWeb: {
+            // Add padding so the border doesn't mess up layouts
+            paddingHorizontal: style?.paddingHorizontal || 6,
+            paddingVertical: style?.paddingVertical || 4,
+            borderRadius: style?.borderRadius || 5,
+          },
+          inputAndroid: {
+            // Add padding so the border doesn't mess up layouts
+            paddingHorizontal: style?.paddingHorizontal || 6,
+            paddingVertical: style?.paddingVertical || 4,
+            borderRadius: style?.borderRadius || 5,
+          },
+          headlessAndroidPicker: {
+            // Add padding so the border doesn't mess up layouts
+            paddingHorizontal: style?.paddingHorizontal || 6,
+            paddingVertical: style?.paddingVertical || 4,
+            borderRadius: style?.borderRadius || 5,
           },
         }}
         value={value}
