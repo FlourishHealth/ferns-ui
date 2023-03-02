@@ -4,6 +4,7 @@ import React, {Component, createRef} from "react";
 import {
   Animated,
   Dimensions,
+  EmitterSubscription,
   findNodeHandle,
   FlatList,
   Keyboard,
@@ -54,288 +55,288 @@ export type ActionSheetProps = {
     snapToOffset(offset: number): void;
   }>;
   /**
-      * Animate the opening and closing of ActionSheet.
+   * Animate the opening and closing of ActionSheet.
 
- | Type | Required |
- | ---- | -------- |
- | boolean | no |
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
 
- Default: `true`
-      */
+   Default: `true`
+   */
   animated?: boolean;
 
   /**
-      * Use if you want to show the ActionSheet Partially on Opening. **Requires `gestureEnabled=true`**
+   * Use if you want to show the ActionSheet Partially on Opening. **Requires `gestureEnabled=true`**
 
- | Type | Required |
- | ---- | -------- |
- | boolean | no |
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
 
- Default:`1`
-      */
+   Default:`1`
+   */
 
   initialOffsetFromBottom?: number;
 
   /**
-      * When touch ends and user has not moved farther from the set springOffset, the ActionSheet will return to previous position.
+   * When touch ends and user has not moved farther from the set springOffset, the ActionSheet will return to previous position.
 
- | Type | Required |
- | ---- | -------- |
- | number | no |
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
 
- Default: `50`
-      */
+   Default: `50`
+   */
   springOffset?: number;
   /**
-      * Add elevation to the ActionSheet container.
+   * Add elevation to the ActionSheet container.
 
- | Type | Required |
- | ---- | -------- |
- | number | no |
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
 
- Default: `0`
+   Default: `0`
 
- #
-      */
+   #
+   */
   elevation?: number;
 
   /**
-      * Color of the gestureEnabled Indicator.
+   * Color of the gestureEnabled Indicator.
 
- | Type | Required |
- | ---- | -------- |
- | string | no |
+   | Type | Required |
+   | ---- | -------- |
+   | string | no |
 
- Default: `"#f0f0f0"`
-      */
+   Default: `"#f0f0f0"`
+   */
   indicatorColor?: string;
 
   /**
-      * Normally when the ActionSheet is fully opened, a small portion from the bottom is hidden by default. Use this prop if you want the ActionSheet to hover over the bottom of screen and not hide a little behind it.
+   * Normally when the ActionSheet is fully opened, a small portion from the bottom is hidden by default. Use this prop if you want the ActionSheet to hover over the bottom of screen and not hide a little behind it.
 
- | Type | Required |
- | ---- | -------- |
- | number | no |
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
 
- Default:`0`
-      */
+   Default:`0`
+   */
   extraScroll?: number;
   /**
-      * Color of the overlay/backdrop.
+   * Color of the overlay/backdrop.
 
- | Type | Required |
- | ---- | -------- |
- | string | no |
+   | Type | Required |
+   | ---- | -------- |
+   | string | no |
 
- Default: `"black"`
-      */
+   Default: `"black"`
+   */
   overlayColor?: string;
 
   /**
-      * Keep the header always visible even when gestures are disabled.
+   * Keep the header always visible even when gestures are disabled.
 
- | Type | Required |
- | ---- | -------- |
- | boolean | no |
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
 
- Default: `false`
-      */
+   Default: `false`
+   */
   headerAlwaysVisible?: boolean;
 
   /**
-      * Delay draw of ActionSheet on open for android.
+   * Delay draw of ActionSheet on open for android.
 
- | Type | Required |
- | ---- | -------- |
- | boolean | no |
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
 
- Default: `false`
-      */
+   Default: `false`
+   */
 
   delayActionSheetDraw?: boolean;
 
   /**
-      * Delay draw of ActionSheet on open for android time.
+   * Delay draw of ActionSheet on open for android time.
 
- | Type | Required |
- | ---- | -------- |
- | number (ms) | no |
+   | Type | Required |
+   | ---- | -------- |
+   | number (ms) | no |
 
- Default: `50`
-      */
+   Default: `50`
+   */
 
   delayActionSheetDrawTime?: number;
 
   /**
-      * Your custom header component. Using this will hide the default indicator.
+   * Your custom header component. Using this will hide the default indicator.
 
- | Type | Required |
- | ---- | -------- |
- | React.Component | no |
-      */
+   | Type | Required |
+   | ---- | -------- |
+   | React.Component | no |
+   */
   CustomHeaderComponent?: React.ReactNode;
 
   /**
-      * Any custom styles for the container.
+   * Any custom styles for the container.
 
- | Type | Required |
- | ---- | -------- |
- | Object | no |
-      */
+   | Type | Required |
+   | ---- | -------- |
+   | Object | no |
+   */
   containerStyle?: ViewStyle;
 
   /**
-      * Control closing ActionSheet by touching on backdrop.
+   * Control closing ActionSheet by touching on backdrop.
 
- | Type | Required |
- | ---- | -------- |
- | boolean | no |
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
 
- Default: `true`
-      */
+   Default: `true`
+   */
   closeOnTouchBackdrop?: boolean;
 
   /**
-      * Speed of opening animation. Higher means the ActionSheet will open more quickly.
+   * Speed of opening animation. Higher means the ActionSheet will open more quickly.
 
- | Type | Required |
- | ---- | -------- |
- | number | no |
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
 
- Default: `12`
-      */
+   Default: `12`
+   */
   openAnimationSpeed?: number;
   /**
-      * Duration of closing animation.
+   * Duration of closing animation.
 
- | Type | Required |
- | ---- | -------- |
- | number | no |
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
 
- Default: `300`
-      */
+   Default: `300`
+   */
   closeAnimationDuration?: number;
   /**
-      *
- How much you want the ActionSheet to bounce when it is opened.
+   *
+   How much you want the ActionSheet to bounce when it is opened.
 
- | Type | Required |
- | ---- | -------- |
- | number | no |
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
 
- Default: `8`
-      */
+   Default: `8`
+   */
   bounciness?: number;
 
   /**
-      * Will the ActionSheet close on `hardwareBackPress` event.
+   * Will the ActionSheet close on `hardwareBackPress` event.
 
- | Type | Required |
- | ---- | -------- |
- | boolean | no |
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
 
- Default: `true`
-      */
+   Default: `true`
+   */
   closeOnPressBack?: boolean;
   /**
-      * Default opacity of the overlay/backdrop.
+   * Default opacity of the overlay/backdrop.
 
- | Type | Required |
- | ---- | -------- |
- | number 0 - 1 | no |
+   | Type | Required |
+   | ---- | -------- |
+   | number 0 - 1 | no |
 
- Default: `0.3`
-      */
+   Default: `0.3`
+   */
   defaultOverlayOpacity?: number;
 
   /**
-      * Enables gesture control of ActionSheet
+   * Enables gesture control of ActionSheet
 
- | Type | Required |
- | ---- | -------- |
- | boolean | no |
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
 
- Default: `false`
-      */
+   Default: `false`
+   */
   gestureEnabled?: boolean;
 
   /**
-      * Bounces the ActionSheet on open.
+   * Bounces the ActionSheet on open.
 
- | Type | Required |
- | ---- | -------- |
- | boolean | no |
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
 
- Default: `false`
-      */
+   Default: `false`
+   */
   bounceOnOpen?: boolean;
 
   /**
-      * Setting the keyboard persistance of the ScrollView component, should be one of "never", "always", or "handled"
+   * Setting the keyboard persistance of the ScrollView component, should be one of "never", "always", or "handled"
 
- | Type | Required |
- | ---- | -------- |
- | string | no |
+   | Type | Required |
+   | ---- | -------- |
+   | string | no |
 
- Default: `"never"`
-      */
+   Default: `"never"`
+   */
   keyboardShouldPersistTaps?: boolean | "always" | "never" | "handled";
 
   /**
-      * Determine whether the modal should go under the system statusbar.
+   * Determine whether the modal should go under the system statusbar.
 
- | Type | Required |
- | ---- | -------- |
- | boolean | no |
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
 
- Default: `true`
-      */
+   Default: `true`
+   */
   statusBarTranslucent?: boolean;
 
   /**
-      * Prevent ActionSheet from closing on
-      * gesture or tapping on backdrop.
-      * Instead snap it to `bottomOffset` location
-      *
-      *
-       * | Type | Required |
- | ---- | -------- |
- | boolean | no |
-       */
+   * Prevent ActionSheet from closing on
+   * gesture or tapping on backdrop.
+   * Instead snap it to `bottomOffset` location
+   *
+   *
+   * | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+   */
   closable?: boolean;
 
   /**
-     * Allow ActionSheet to draw under the StatusBar.
-     * This is enabled by default.
-     *
-     *
-      * | Type | Required |
- | ---- | -------- |
- | boolean | no |
- Default: `true`
-      */
+   * Allow ActionSheet to draw under the StatusBar.
+   * This is enabled by default.
+   *
+   *
+   * | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+   Default: `true`
+   */
   drawUnderStatusBar?: boolean;
 
   /**
-      * Snap ActionSheet to this location if `closable` is set to false;
-      *
-      *
-       * | Type | Required |
- | ---- | -------- |
- | number | no |
-       */
+   * Snap ActionSheet to this location if `closable` is set to false;
+   *
+   *
+   * | Type | Required |
+   | ---- | -------- |
+   | number | no |
+   */
 
   bottomOffset?: number;
 
   /**
-     * Change how ActionSheet behaves when keyboard is opened.
-     *
-     *
-      * | Type | Required |
- | ---- | -------- |
- | "padding" | "position" | no |
- Default:`padding`
-      */
+   * Change how ActionSheet behaves when keyboard is opened.
+   *
+   *
+   * | Type | Required |
+   | ---- | -------- |
+   | "padding" | "position" | no |
+   Default:`padding`
+   */
 
   keyboardMode?: "padding" | "position";
 
@@ -345,27 +346,27 @@ export type ActionSheetProps = {
   testID?: string;
 
   /**
-      *
- Event called when the ActionSheet closes.
+   *
+   Event called when the ActionSheet closes.
 
 
- * | Type | Required |
- | ---- | -------- |
- | function | no |
+   * | Type | Required |
+   | ---- | -------- |
+   | function | no |
 
 
- #
-      */
+   #
+   */
 
   onClose?: () => void;
 
   /**
-      * An event called when the ActionSheet Opens.
+   * An event called when the ActionSheet Opens.
 
- | Type | Required |
- | ---- | -------- |
- | function | no |
-      */
+   | Type | Required |
+   | ---- | -------- |
+   | function | no |
+   */
   onOpen?: () => void;
 
   /**
@@ -490,6 +491,10 @@ export class ActionSheet extends Component<Props, State, any> {
   static defaultProps = defaultProps;
 
   actionSheetHeight = 0;
+
+  keyboardDidShowListener: EmitterSubscription | null = null;
+
+  keyboardDidHideListener: EmitterSubscription | null = null;
 
   prevScroll = 0;
 
@@ -910,12 +915,12 @@ export class ActionSheet extends Component<Props, State, any> {
   };
 
   componentDidMount() {
-    Keyboard.addListener(
+    this.keyboardDidShowListener = Keyboard.addListener(
       Platform.OS === "android" ? "keyboardDidShow" : "keyboardWillShow",
       this._onKeyboardShow
     );
 
-    Keyboard.addListener(
+    this.keyboardDidHideListener = Keyboard.addListener(
       Platform.OS === "android" ? "keyboardDidHide" : "keyboardWillHide",
       this._onKeyboardHide
     );
@@ -1010,15 +1015,8 @@ export class ActionSheet extends Component<Props, State, any> {
   };
 
   componentWillUnmount() {
-    Keyboard.removeListener(
-      Platform.OS === "android" ? "keyboardDidShow" : "keyboardWillShow",
-      this._onKeyboardShow
-    );
-
-    Keyboard.removeListener(
-      Platform.OS === "android" ? "keyboardDidHide" : "keyboardWillHide",
-      this._onKeyboardHide
-    );
+    this.keyboardDidShowListener?.remove();
+    this.keyboardDidHideListener?.remove();
   }
 
   _onDeviceLayout = async (_event: any) => {
