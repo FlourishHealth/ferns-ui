@@ -110,6 +110,23 @@ export const TapToEdit = ({
       } else if (fieldProps?.type === "multiselect") {
         // ???
         displayValue = value.join(", ");
+      } else if (fieldProps?.type === "address") {
+        const city = value?.city
+          ? value?.state || value.zipcode
+            ? `${value.city}, `
+            : `${value.city}`
+          : "";
+        const state = value?.state ? (value?.zipcode ? `${value.state} ` : `${value.state}`) : "";
+        const zip = value?.zipcode;
+
+        const addressLineOne = value?.address1 ? value?.address1 : "";
+        const addressLineTwo = value?.address2 ? value?.address2 : "";
+        const addressLineThree = `${city}${state}${zip}`;
+
+        // Only add new lines if lines before and after are not empty to avoid awkward whitespace
+        displayValue = `${addressLineOne}${
+          addressLineOne && (addressLineTwo || addressLineThree) ? `\n` : ""
+        }${addressLineTwo}${addressLineTwo && addressLineThree ? `\n` : ""}${addressLineThree}`;
       }
     }
     return (
