@@ -29,6 +29,7 @@ export interface ButtonProps {
   withConfirmation?: boolean;
   confirmationText?: string;
   confirmationHeading?: string;
+  shape?: "rounded" | "pill";
 }
 
 const buttonTextColor: {[buttonColor: string]: "white" | "darkGray"} = {
@@ -67,6 +68,7 @@ export function Button({
   withConfirmation = false,
   confirmationText = "Are you sure you want to continue?",
   confirmationHeading = "Confirm",
+  shape = "rounded",
 }: ButtonProps) {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -136,7 +138,7 @@ export function Button({
           // flexGrow: inline ? 0 : 1,
           alignItems: "center",
           justifyContent: "center",
-          borderRadius: 5,
+          borderRadius: shape === "pill" ? 999 : 5,
           borderColor: getBorderColor(color),
           borderWidth: type === "outline" ? 2 : 0,
           opacity: disabled ? 0.4 : 1,

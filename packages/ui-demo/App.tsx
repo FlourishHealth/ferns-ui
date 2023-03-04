@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useFonts} from "expo-font";
 import {StatusBar} from "expo-status-bar";
+import {FernsProvider} from "ferns-ui";
 import React, {ReactElement, useEffect, useState} from "react";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {Host} from "react-native-portalize";
@@ -109,7 +110,9 @@ const App = () => {
 const AppRoot = (): ReactElement => {
   return (
     <SafeAreaProvider>
-      <App />
+      <FernsProvider>
+        <App />
+      </FernsProvider>
     </SafeAreaProvider>
   );
 };
