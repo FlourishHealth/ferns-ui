@@ -2004,24 +2004,11 @@ export interface IconProps {
   containerStyle?: any;
 }
 
-export interface IconButtonProps {
-  prefix?: IconPrefix;
-  icon: IconName;
-  accessibilityLabel: string;
-  iconColor: "darkGray" | ButtonColor | ThemeColor | Color;
-  onClick: () => void;
-  size?: IconSize;
-  bgColor?: "transparent" | "transparentDarkGray" | "gray" | "lightGray" | "white"; // default transparent
-  disabled?: boolean;
-  selected?: boolean;
-  withConfirmation?: boolean;
-  confirmationText?: string;
-  confirmationHeading?: string;
-}
-
 export interface NavigatorProps {
   config?: any;
 }
+
+export type TooltipDirection = "top" | "bottom" | "left" | "right";
 
 export interface PillProps {
   text: string;
