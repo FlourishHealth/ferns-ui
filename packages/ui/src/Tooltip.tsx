@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import {Portal} from "react-native-portalize";
 
+import {TooltipDirection} from "./Common";
 import {Text} from "./Text";
 import {Unifier} from "./Unifier";
 
@@ -24,12 +25,9 @@ type ChildrenMeasurement = {
   pageY: number;
 };
 
-type TooltipLayout = LayoutRectangle;
-
-type TooltipDirection = "top" | "bottom" | "left" | "right";
 type Measurement = {
   children: ChildrenMeasurement;
-  tooltip: TooltipLayout;
+  tooltip: LayoutRectangle;
   measured: boolean;
   idealDirection?: TooltipDirection;
 };
@@ -43,16 +41,24 @@ const overflowRight = (x: number): boolean => {
   return x + TOOLTIP_OVERFLOW_PADDING > layoutWidth;
 };
 
-const getPosition = (
-  {
+const getTooltipPosition = ({
+  children,
+  tooltip,
+  measured,
+  idealDirection,
+}: Measurement): {} | {left: number; top: number} => {
+  if (!measured) {
+    console.debug("No measurements for child yet, cannot show tooltip.");
+    return {};
+  }
+
+  const {
     pageY: childrenY,
     height: childrenHeight,
     pageX: childrenX,
     width: childrenWidth,
-  }: ChildrenMeasurement,
-  {width: tooltipWidth, height: tooltipHeight}: TooltipLayout,
-  idealDirection?: TooltipDirection
-): {left: number; top: number} => {
+  }: ChildrenMeasurement = children;
+  const {width: tooltipWidth, height: tooltipHeight} = tooltip;
   const horizontalCenter = childrenX + childrenWidth / 2;
   const right = childrenX + childrenWidth + TOOLTIP_OFFSET;
   const left = childrenX - tooltipWidth - TOOLTIP_OFFSET;
@@ -111,20 +117,6 @@ const getPosition = (
   }
 };
 
-const getTooltipPosition = ({
-  children,
-  tooltip,
-  measured,
-  idealDirection,
-}: Measurement): {} | {left: number; top: number} => {
-  if (!measured) {
-    console.debug("No measurements for child yet, cannot show tooltip.");
-    return {};
-  }
-
-  return getPosition(children, tooltip, idealDirection);
-};
-
 interface TooltipProps {
   children: React.ReactElement;
   text: string;
@@ -165,7 +157,9 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
   }, []);
 
   const handleOnLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
+    console.log("onLayout", layout, childrenWrapperRef?.current);
     childrenWrapperRef?.current?.measure((_x, _y, width, height, pageX, pageY) => {
+      console.log("MESAURED");
       setMeasurement({
         children: {pageX, pageY, height, width},
         tooltip: {...layout},
@@ -229,6 +223,7 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
     },
   };
 
+  console.log("RENDER", visible);
   return (
     <>
       {visible && (

@@ -34,6 +34,16 @@ const FiveTooltips = ({text}: {text?: string}): React.ReactElement => (
     <ChevronTooltip idealDirection="right" text={text} />
     <ChevronTooltip idealDirection="bottom" text={text} />
     <ChevronTooltip idealDirection="left" text={text} />
+    <IconButton
+      accessibilityLabel="delete"
+      bgColor="gray"
+      icon="trash"
+      iconColor="red"
+      tooltip={{text: "Deletes some stuff", idealDirection: "bottom"}}
+      onClick={() => {
+        console.info("Click delete");
+      }}
+    />
   </Box>
 );
 
