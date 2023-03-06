@@ -57,7 +57,7 @@ export class Text extends React.Component<TextProps, {}> {
     if (this.props.color) {
       style.color = Unifier.theme[this.props.color];
     } else {
-      style.color = Unifier.theme.darkGray;
+      style.color = Unifier.theme.blue;
     }
     // TODO: might be useful for wrapping/truncating
     // if (this.props.numberOfLines !== 1 && !this.props.inline) {
