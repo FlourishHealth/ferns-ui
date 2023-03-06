@@ -2,24 +2,24 @@ import {Box, Heading, IconButton, Tooltip} from "ferns-ui";
 import React from "react";
 
 const ChevronTooltip = ({
-  direction,
+  idealDirection,
   text = "Short Tooltip Text",
 }: {
-  direction: "left" | "right" | "top" | "bottom" | "none";
+  idealDirection: "left" | "right" | "top" | "bottom" | "none";
   text?: string;
 }): React.ReactElement => (
-  <Tooltip direction={direction === "none" ? undefined : direction} title={text}>
+  <Tooltip idealDirection={idealDirection === "none" ? undefined : idealDirection} text={text}>
     <IconButton
       accessibilityLabel="info"
       bgColor="white"
       icon={
-        direction === "none"
+        idealDirection === "none"
           ? "question"
-          : direction === "bottom"
+          : idealDirection === "bottom"
           ? "chevron-down"
-          : direction === "top"
+          : idealDirection === "top"
           ? "chevron-up"
-          : `chevron-${direction}`
+          : `chevron-${idealDirection}`
       }
       iconColor="blue"
       onClick={() => {}}
@@ -29,11 +29,11 @@ const ChevronTooltip = ({
 
 const FiveTooltips = ({text}: {text?: string}): React.ReactElement => (
   <Box direction="row">
-    <ChevronTooltip direction="none" text={text} />
-    <ChevronTooltip direction="top" text={text} />
-    <ChevronTooltip direction="right" text={text} />
-    <ChevronTooltip direction="bottom" text={text} />
-    <ChevronTooltip direction="left" text={text} />
+    <ChevronTooltip idealDirection="none" text={text} />
+    <ChevronTooltip idealDirection="top" text={text} />
+    <ChevronTooltip idealDirection="right" text={text} />
+    <ChevronTooltip idealDirection="bottom" text={text} />
+    <ChevronTooltip idealDirection="left" text={text} />
   </Box>
 );
 

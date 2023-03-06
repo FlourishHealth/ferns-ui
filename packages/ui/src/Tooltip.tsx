@@ -31,7 +31,7 @@ type Measurement = {
   children: ChildrenMeasurement;
   tooltip: TooltipLayout;
   measured: boolean;
-  direction?: TooltipDirection;
+  idealDirection?: TooltipDirection;
 };
 
 const overflowLeft = (x: number): boolean => {
@@ -51,7 +51,7 @@ const getPosition = (
     width: childrenWidth,
   }: ChildrenMeasurement,
   {width: tooltipWidth, height: tooltipHeight}: TooltipLayout,
-  direction?: TooltipDirection
+  idealDirection?: TooltipDirection
 ): {left: number; top: number} => {
   const horizontalCenter = childrenX + childrenWidth / 2;
   const right = childrenX + childrenWidth + TOOLTIP_OFFSET;
@@ -72,12 +72,12 @@ const getPosition = (
   // If it would overflow to the left, try to put it above, if not, put it to the right.
 
   // Happy path:
-  if (direction === "left" && !overflowLeft(left)) {
+  if (idealDirection === "left" && !overflowLeft(left)) {
     return {left, top: verticalCenter};
-  } else if (direction === "right" && !overflowRight(right + tooltipWidth)) {
+  } else if (idealDirection === "right" && !overflowRight(right + tooltipWidth)) {
     return {left: right, top: verticalCenter};
   } else if (
-    direction === "bottom" &&
+    idealDirection === "bottom" &&
     !overflowBottom &&
     !overflowLeft(horizontalCenter - tooltipWidth) &&
     !overflowRight(horizontalCenter + tooltipWidth)
@@ -87,7 +87,7 @@ const getPosition = (
     // At this point, we're either trying to place it above or below, and force it into the viewport.
 
     let y = top;
-    if ((direction === "bottom" && !overflowBottom) || overflowTop) {
+    if ((idealDirection === "bottom" && !overflowBottom) || overflowTop) {
       y = bottom;
     }
 
@@ -115,26 +115,26 @@ const getTooltipPosition = ({
   children,
   tooltip,
   measured,
-  direction,
+  idealDirection,
 }: Measurement): {} | {left: number; top: number} => {
   if (!measured) {
     console.debug("No measurements for child yet, cannot show tooltip.");
     return {};
   }
 
-  return getPosition(children, tooltip, direction);
+  return getPosition(children, tooltip, idealDirection);
 };
 
 interface TooltipProps {
   children: React.ReactElement;
-  title: string;
-  direction?: "top" | "bottom" | "left" | "right";
+  text: string;
+  idealDirection?: "top" | "bottom" | "left" | "right";
   bgColor?: "white" | "lightGray" | "gray" | "darkGray";
 }
 
 // eslint-disable-next-line react/display-name
 export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
-  const {title, children, bgColor, direction} = props;
+  const {text, children, bgColor, idealDirection} = props;
   const hoverDelay = 500;
   const hoverEndDelay = 1500;
   const [visible, setVisible] = React.useState(false);
@@ -244,7 +244,7 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
               display: "flex",
               flexShrink: 1,
               maxWidth: Math.max(Dimensions.get("window").width - 32, 300),
-              ...getTooltipPosition({...(measurement as Measurement), direction}),
+              ...getTooltipPosition({...(measurement as Measurement), idealDirection}),
               ...(measurement.measured ? {opacity: 1} : {opacity: 0}),
             }}
             testID="tooltip-container"
@@ -253,7 +253,7 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
               setVisible(false);
             }}
           >
-            <Text color="white">{title}</Text>
+            <Text color="white">{text}</Text>
           </Pressable>
         </Portal>
       )}
