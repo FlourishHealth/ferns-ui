@@ -157,9 +157,7 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
   }, []);
 
   const handleOnLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
-    console.log("onLayout", layout, childrenWrapperRef?.current);
     childrenWrapperRef?.current?.measure((_x, _y, width, height, pageX, pageY) => {
-      console.log("MESAURED");
       setMeasurement({
         children: {pageX, pageY, height, width},
         tooltip: {...layout},
@@ -223,7 +221,6 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
     },
   };
 
-  console.log("RENDER", visible);
   return (
     <>
       {visible && (

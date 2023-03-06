@@ -1,4 +1,4 @@
-import {Box, Heading, IconButton, Tooltip} from "ferns-ui";
+import {Box, Heading, IconButton, InfoTooltipButton, Tooltip} from "ferns-ui";
 import React from "react";
 
 const ChevronTooltip = ({
@@ -44,6 +44,7 @@ const FiveTooltips = ({text}: {text?: string}): React.ReactElement => (
         console.info("Click delete");
       }}
     />
+    <InfoTooltipButton text="This is info in a tooltip" />
   </Box>
 );
 

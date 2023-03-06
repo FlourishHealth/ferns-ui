@@ -61,7 +61,7 @@ export const IconButton = forwardRef(
       opacity = 0.8;
       color = Unifier.theme.darkGray;
     } else if (bgColor === "transparent" || !bgColor) {
-      opacity = 0.0;
+      opacity = 1.0;
       color = Unifier.theme.white;
     } else {
       color = Unifier.theme[bgColor];

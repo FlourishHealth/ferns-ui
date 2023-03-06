@@ -22,6 +22,7 @@ export * from "./Icon";
 export * from "./IconButton";
 export * from "./Image";
 export * from "./ImageBackground";
+export * from "./InfoTooltipButton";
 // export * from "./Layout";
 // export * from "./Drawer";
 export * from "./Link";
