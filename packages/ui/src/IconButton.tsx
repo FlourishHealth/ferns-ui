@@ -1,5 +1,5 @@
 import React, {forwardRef, useState} from "react";
-import {TouchableOpacity, View} from "react-native";
+import {Platform, TouchableOpacity, View} from "react-native";
 
 import {
   ButtonColor,
@@ -125,7 +125,10 @@ export const IconButton = forwardRef(
       );
     }
 
-    if (tooltip) {
+    // Only add for web. This doesn't make much sense for mobile, since the action would be performed for the button
+    // as well as the tooltip appearing.
+    // TODO: Add tooltip info button next to the icon button on mobile.
+    if (tooltip && Platform.OS === "web") {
       return (
         <Tooltip idealDirection={tooltip.idealDirection} text={tooltip.text}>
           {renderIconButton()}
