@@ -3,7 +3,7 @@ import {Platform} from "react-native";
 
 import {FieldWithLabelsProps, StyleProp} from "./Common";
 import {Icon} from "./Icon";
-import RNPickerSelect from "./PickerSelect";
+import {RNPickerSelect} from "./PickerSelect";
 import {Unifier} from "./Unifier";
 import {WithLabel} from "./WithLabel";
 

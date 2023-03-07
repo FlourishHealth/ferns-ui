@@ -143,10 +143,12 @@ const SelectField = () => {
           {label: "Option 5", value: "Option 5"},
           {label: "Option 6", value: "Option 6"},
         ]}
+        placeholder="Select option"
         type="select"
         value={value}
         onChange={setValue}
       />
+      <Text>This is the select value: {value}</Text>
     </StorybookContainer>
   );
 };
