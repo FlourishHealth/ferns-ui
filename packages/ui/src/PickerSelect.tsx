@@ -107,21 +107,6 @@ export const defaultStyles = StyleSheet.create({
   },
 });
 
-// interface RNPickerSelectItem {
-//   label: string;
-//   value: any;
-//   inputLabel?: string;
-//   key?: string | number;
-//   color?: string;
-// }
-
-// interface RNPickerSelectPlaceholder {
-//   label: string;
-//   value: any;
-//   key?: string | number;
-//   color?: string;
-// }
-
 interface RNPickerSelectProps {
   onValueChange: (value: any, index: any) => void;
   items: any[];
