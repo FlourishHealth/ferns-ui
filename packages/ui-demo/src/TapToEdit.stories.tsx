@@ -9,7 +9,13 @@ const TapStory = (): ReactElement => {
   const [percent, setPercent] = useState(1.957);
   const [select, setSelect] = useState("Option1");
   const [multiselect, setMultiselect] = useState(["Option2"]);
-
+  const [address, setAddress] = useState({
+    address1: "555 N Street Ave",
+    address2: "Apt 402",
+    city: "New York",
+    state: "New York",
+    zipcode: "12345",
+  });
   return (
     <Box direction="column" display="flex" height="100%" width="100%">
       <TapToEdit
@@ -89,6 +95,16 @@ const TapStory = (): ReactElement => {
         value={multiselect}
         onSave={(value): void => {
           setMultiselect(value);
+        }}
+      />
+      <TapToEdit
+        name="address"
+        setValue={setAddress}
+        title="Address"
+        type="address"
+        value={address}
+        onSave={(value): void => {
+          setAddress(value);
         }}
       />
     </Box>
