@@ -214,12 +214,6 @@ export function RNPickerSelect({
     setSelectedItem(item.selectedItem);
   }, [getSelectedItem, itemKey, value]);
 
-  // useEffect(() => {
-  //   if (placeholder && !isEqual(placeholder, {})) {
-  //     setOptions([placeholder, ...items]);
-  //   }
-  // }, [items, placeholder]);
-
   const onUpArrowEvent = () => {
     togglePicker(false, onUpArrow);
   };
