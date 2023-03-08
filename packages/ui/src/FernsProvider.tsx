@@ -1,4 +1,5 @@
 import React from "react";
+import {Host} from "react-native-portalize";
 import {ToastProvider} from "react-native-toast-notifications";
 
 import {Toast} from "./Toast";
@@ -14,7 +15,7 @@ export function FernsProvider({children}: {children: React.ReactNode}): React.Re
       renderToast={(toastOptions) => <Toast {...(toastOptions as any)} />}
       swipeEnabled
     >
-      {children}
+      <Host>{children}</Host>
     </ToastProvider>
   );
 }
