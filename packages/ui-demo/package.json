@@ -7,6 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "build-ui": "cd ../ui && yarn && yarn build && cp -a dist/. ../ui-demo/node_modules/ferns-ui/dist/ && cd ../ui-demo",
+    "build-preview": "yarn build-ui && yarn build-web",
     "build-web": "expo build:web",
     "build-ios": "expo build:ios",
     "build-android": "expo build:android",
