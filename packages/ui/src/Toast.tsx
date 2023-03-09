@@ -8,6 +8,8 @@ import {AllColors} from "./Common";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 
+const TOAST_DURATION_MS = 3 * 1000;
+
 export function useToast(): any {
   const toast = useRNToast();
   return {
@@ -21,6 +23,7 @@ export function useToast(): any {
     ): string => {
       return toast.show(text, {
         data: options,
+        duration: TOAST_DURATION_MS,
       });
     },
     hide: (id: string) => toast.hide(id),
