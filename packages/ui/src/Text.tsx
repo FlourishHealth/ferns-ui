@@ -9,7 +9,6 @@ export interface TextProps {
   align?: "left" | "right" | "center" | "justify"; // default "left"
   children?: React.ReactNode;
   color?: AllColors;
-
   inline?: boolean; // default false
   italic?: boolean; // default false
   overflow?: "normal" | "breakWord"; // deprecated
@@ -17,10 +16,10 @@ export interface TextProps {
   truncate?: boolean; // default false
   font?: Font;
   underline?: boolean;
-
   numberOfLines?: number;
   skipLinking?: boolean;
   weight?: "bold" | "normal";
+  testID?: string;
 }
 
 const fontSizes = {
@@ -42,6 +41,7 @@ export function Text({
   underline,
   numberOfLines,
   skipLinking,
+  testID,
   weight = "normal",
 }: TextProps): React.ReactElement {
   function propsToStyle(): any {
@@ -115,7 +115,7 @@ export function Text({
     lines = 1;
   }
   const inner = (
-    <NativeText numberOfLines={lines} style={propsToStyle()}>
+    <NativeText numberOfLines={lines} style={propsToStyle()} testID={testID}>
       {children}
     </NativeText>
   );

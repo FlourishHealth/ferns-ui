@@ -30,6 +30,7 @@ export interface ButtonProps {
   confirmationText?: string;
   confirmationHeading?: string;
   shape?: "rounded" | "pill";
+  testID?: string;
 }
 
 const buttonTextColor: {[buttonColor: string]: "white" | "darkGray"} = {
@@ -69,6 +70,7 @@ export function Button({
   confirmationText = "Are you sure you want to continue?",
   confirmationHeading = "Confirm",
   shape = "rounded",
+  testID,
 }: ButtonProps) {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -145,6 +147,7 @@ export function Button({
           flexDirection: "row",
           paddingHorizontal: 4 * 2,
         }}
+        testID={testID}
         onPress={debounce(
           async () => {
             Unifier.utils.haptic();

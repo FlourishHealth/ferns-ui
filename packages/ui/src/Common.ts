@@ -1949,6 +1949,7 @@ export interface BoxProps {
   scrollRef?: any;
   onScroll?: (offsetY: number) => void;
   onLayout?: (event: any) => void;
+  testID?: string;
 }
 
 export type BoxColor = AllColors | "transparent";
@@ -2624,7 +2625,7 @@ export interface PickerProps {
   onValueChange?: (itemValue: any, itemPosition: number) => void;
   selectedValue?: any;
   style?: StyleProp;
-  testId?: string;
+  testID?: string;
   itemStyle?: StyleProp;
   enabled?: boolean;
   mode?: "dialog" | "dropdown";
