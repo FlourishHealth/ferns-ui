@@ -41,17 +41,9 @@ export const TextStories = {
           <Box maxWidth={160}>
             <Box marginBottom={2}>
               <Text weight="bold">normal:</Text>
-              <Text overflow="normal">
+              <Text>
                 This is a long and Supercalifragilisticexpialidocious sentence.
                 次の単語グレートブリテンおよび北アイルランド連合王国で本当に大きな言葉&#39;
-              </Text>
-            </Box>
-            <Box marginBottom={2}>
-              <Text weight="bold">breakWord:</Text>
-              <Text overflow="breakWord">
-                This is a long and Supercalifragilisticexpialidocious sentence.
-                次の単語グレートブリテンおよび北アイルランド連合王国で本当に大きな言葉
-                ｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗｗ&#39;
               </Text>
             </Box>
             <Box marginBottom={2}>
