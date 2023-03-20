@@ -18,9 +18,7 @@ export interface ButtonProps {
   disabled?: boolean; // default false
   inline?: boolean; // default false
   size?: "sm" | "md" | "lg"; // default md
-
-  // Pattern Addition
-  type?: "solid" | "ghost" | "outline";
+  type?: "solid" | "ghost" | "outline"; // default solid
   loading?: boolean;
   onClick: any;
   icon?: IconName;
@@ -54,17 +52,17 @@ const HEIGHTS = {
 };
 
 export function Button({
-  disabled,
-  type,
+  disabled = false,
+  type = "solid",
   loading: propsLoading,
   children,
   text,
-  inline,
+  inline = false,
   icon,
   iconPrefix,
-  size,
+  size = "md",
   onClick,
-  color = "lightGray",
+  color = "gray",
   withConfirmation = false,
   confirmationText = "Are you sure you want to continue?",
   confirmationHeading = "Confirm",
@@ -143,7 +141,7 @@ export function Button({
           borderWidth: type === "outline" ? 2 : 0,
           opacity: disabled ? 0.4 : 1,
           flexDirection: "row",
-          paddingHorizontal: 4 * 2,
+          paddingHorizontal: 8 * 2,
         }}
         onPress={debounce(
           async () => {

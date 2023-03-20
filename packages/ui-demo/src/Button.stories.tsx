@@ -1,4 +1,4 @@
-import {Box, Button, ButtonProps} from "ferns-ui";
+import {Box, Button, ButtonProps, Heading} from "ferns-ui";
 import React from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -77,6 +77,88 @@ const confirmationButton = (props: Partial<ButtonProps>) => {
   );
 };
 
+const inlineButtons = () => {
+  return (
+    <>
+      <Box paddingX={8} paddingY={2}>
+        <Heading>Inline</Heading>
+      </Box>
+      <Box direction="row" paddingX={8} paddingY={8} width="100%">
+        <Button color="primary" inline text="Small" onClick={(): void => {}} />
+        <Box marginLeft={2} marginRight={2}>
+          <Button color="primary" icon="edit" inline text="Edit" onClick={(): void => {}} />
+        </Box>
+        <Button
+          color="primary"
+          inline
+          text="Bigger Button With A Bit More Text"
+          onClick={(): void => {}}
+        />
+      </Box>
+      <Box paddingX={8} paddingY={2}>
+        <Heading>Types</Heading>
+      </Box>
+      <Box direction="row" paddingX={8} paddingY={8} width="100%">
+        <Button color="primary" inline text="Ghost" type="ghost" onClick={(): void => {}} />
+        <Button color="primary" inline text="Outline" type="outline" onClick={(): void => {}} />
+        <Button color="primary" inline text="Solid" type="solid" onClick={(): void => {}} />
+
+        <Box marginLeft={2}>
+          <Button
+            color="primary"
+            icon="edit"
+            inline
+            text="Outline"
+            type="outline"
+            onClick={(): void => {}}
+          />
+        </Box>
+        <Box marginLeft={2}>
+          <Button
+            color="primary"
+            icon="edit"
+            inline
+            text="Ghost"
+            type="ghost"
+            onClick={(): void => {}}
+          />
+        </Box>
+        <Box marginLeft={2} marginRight={2}>
+          <Button
+            color="primary"
+            icon="edit"
+            inline
+            text="Solid"
+            type="solid"
+            onClick={(): void => {}}
+          />
+        </Box>
+        <Button
+          color="primary"
+          inline
+          text="Bigger Outline With A Bit More Text"
+          type="outline"
+          onClick={(): void => {}}
+        />
+        <Button
+          color="primary"
+          inline
+          text="Bigger Ghost With A Bit More Text"
+          type="ghost"
+          onClick={(): void => {}}
+        />
+      </Box>
+      <Box paddingX={8} paddingY={2}>
+        <Heading>Not inline</Heading>
+      </Box>
+
+      <Box paddingX={8} paddingY={8} width="100%">
+        <Button color="primary" text="Not inline" onClick={() => {}} />
+      </Box>
+    </>
+  );
+};
+
 export const ButtonStories = {
   title: "Button",
   component: Button,
@@ -86,5 +168,6 @@ export const ButtonStories = {
     Ghost: () => allColorButtons({type: "ghost"}),
     Outline: () => allColorButtons({type: "outline"}),
     Confirmation: () => confirmationButton({}),
+    Inline: () => inlineButtons(),
   },
 };
