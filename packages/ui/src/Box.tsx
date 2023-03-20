@@ -240,14 +240,14 @@ export class Box extends React.Component<BoxProps, {}> {
     if (this.props.onClick) {
       box = (
         <TouchableOpacity
+          style={this.propsToStyle()}
           testID={this.props.testID ? `${this.props.testID}-clickable` : undefined}
+          // TODO: refactor this better..
+          onLayout={this.props.onLayout}
           onPress={() => {
             Unifier.utils.haptic();
             this.props.onClick();
           }}
-          style={this.propsToStyle()}
-          // TODO: refactor this better..
-          onLayout={this.props.onLayout}
         >
           {this.props.children}
         </TouchableOpacity>
