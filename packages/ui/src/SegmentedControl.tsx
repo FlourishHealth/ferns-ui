@@ -69,7 +69,20 @@ export const SegmentedControl = ({
             height="100%"
             justifyContent="center"
             width="100%"
-            onClick={() => onChange({activeIndex: index})}
+            onClick={() => {
+              if (multiselect) {
+                if (selectedItemIndexes?.includes(index)) {
+                  onChange({activeIndex: selectedItemIndexes.filter((i) => i !== index)});
+                } else {
+                  const reversed = selectedItemIndexes?.reverse();
+                  reversed?.splice(1, 1);
+                  reversed?.push(index);
+                  onChange({activeIndex: reversed as number[]});
+                }
+              } else {
+                onChange({activeIndex: index});
+              }
+            }}
           >
             {renderItem(item)}
           </Box>

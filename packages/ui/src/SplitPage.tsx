@@ -142,15 +142,7 @@ export const SplitPage = ({
               selectLimit={tabs.length}
               selectedItemIndexes={activeTabs}
               onChange={(index) => {
-                if (activeTabs.includes(index.activeIndex)) {
-                  const singleTab = activeTabs.filter((tab) => tab !== index.activeIndex);
-                  setActiveTabs([...singleTab]);
-                } else {
-                  const reversed = activeTabs.reverse();
-                  reversed.splice(1, 1);
-                  reversed.push(index.activeIndex);
-                  setActiveTabs([...reversed]);
-                }
+                setActiveTabs([...(index.activeIndex as number[])]);
               }}
             />
           </Box>
@@ -162,7 +154,6 @@ export const SplitPage = ({
             width={activeTabs.length > 1 ? "100%" : "60%"}
           >
             {activeTabs.map((tabIndex) => {
-              console.log("rerendering scrollviews");
               return (
                 <ScrollView
                   key={tabIndex}

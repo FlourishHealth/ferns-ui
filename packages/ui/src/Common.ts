@@ -2001,8 +2001,8 @@ export interface PillProps {
 }
 
 export interface SegmentedControlProps {
-  items: (string | React.ReactNode)[];
-  onChange?: ({activeIndex}: {activeIndex: number}) => void;
+  items: string[];
+  onChange?: ({activeIndex}: {activeIndex: number | number[]}) => void;
   selectedItemIndex?: number;
   selectedItemIndexes?: number[];
   responsive?: boolean;
