@@ -113,13 +113,13 @@ const ManyChildren = () => {
       )}
       tabs={["First child", "Second child", "Third"]}
     >
-      <Box>
+      <Box color="green">
         <Text>First child with data: {selected}</Text>
       </Box>
-      <Box>
+      <Box color="blue">
         <Text>Second child with data: {selected}</Text>
       </Box>
-      <Box>
+      <Box color="purple">
         <Text>Third child with data: {selected}</Text>
       </Box>
     </SplitPage>

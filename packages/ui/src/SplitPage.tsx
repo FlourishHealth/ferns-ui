@@ -1,4 +1,4 @@
-import React, {Children, ReactChild, ReactElement, useMemo, useState} from "react";
+import React, {Children, ReactChild, ReactElement, useState} from "react";
 import {ListRenderItemInfo, ScrollView, StyleSheet, View} from "react-native";
 
 import {Box} from "./Box";
@@ -63,9 +63,7 @@ export const SplitPage = ({
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
   const [activeTabs, setActiveTabs] = useState<number[]>(tabs.length > 2 ? [0, 1] : []);
 
-  const elementArray = useMemo(() => {
-    return Children.toArray(children);
-  }, [children]);
+  const elementArray = Children.toArray(children);
 
   if (!children && !renderContent) {
     console.warn("A child node is required");
@@ -135,6 +133,7 @@ export const SplitPage = ({
 
   const renderChildrenContent = () => {
     if (Array.isArray(children) && children.length > 2) {
+      console.log({elementArray});
       console.log({activeTabs});
       return (
         <View style={defaultStyles.mainContentContainer}>
@@ -148,13 +147,16 @@ export const SplitPage = ({
                 console.log({index});
                 if (activeTabs.includes(index.activeIndex)) {
                   const singleTab = activeTabs.filter((tab) => tab !== index.activeIndex);
-                  setActiveTabs(singleTab);
+                  setActiveTabs([...singleTab]);
+                  console.log({activeTabs});
                 } else {
                   const reversed = activeTabs.reverse();
                   reversed.splice(1, 1);
                   reversed.push(index.activeIndex);
-                  setActiveTabs(reversed);
+                  setActiveTabs([...reversed]);
+                  console.log({activeTabs});
                 }
+                console.log({elementArray});
               }}
             />
           </Box>
