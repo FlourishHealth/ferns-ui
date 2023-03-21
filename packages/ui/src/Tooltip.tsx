@@ -157,6 +157,10 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
   }, []);
 
   const handleOnLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
+    if (childrenWrapperRef?.current && !childrenWrapperRef?.current?.measure) {
+      console.error("Tooltip: childrenWrapperRef does not have a measure method.");
+      return;
+    }
     childrenWrapperRef?.current?.measure((_x, _y, width, height, pageX, pageY) => {
       setMeasurement({
         children: {pageX, pageY, height, width},
