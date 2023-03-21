@@ -237,13 +237,6 @@ export class Box extends React.Component<BoxProps, {}> {
   render() {
     let box;
 
-    // We want to avoid giving the wrapper and child the same styles in
-    // the event that scroll is enabled. An example of where this can be
-    // an issue is if the parent (ScrollView) and the child
-    // (TouchableOpacity / View) both have a width of 50%. This will lead to
-    // stacking 50% widths which will cause the element to wind up with 25% width.
-    // const childStyle = this.props.scroll ? {} : this.propsToStyle();
-
     if (this.props.onClick) {
       box = (
         <TouchableOpacity
