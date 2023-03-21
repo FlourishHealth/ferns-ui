@@ -162,6 +162,7 @@ export const SplitPage = ({
             width={activeTabs.length > 1 ? "100%" : "60%"}
           >
             {activeTabs.map((tabIndex) => {
+              console.log("rerendering scrollviews");
               return (
                 <ScrollView
                   key={tabIndex}

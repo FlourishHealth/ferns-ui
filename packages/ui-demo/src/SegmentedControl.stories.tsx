@@ -28,6 +28,21 @@ const LargeControl = () => {
   );
 };
 
+const MultiSelectControl = () => {
+  const [itemIndexes, setItemIndexes] = useState([0,1]);
+
+  return (
+    <Box display="flex" width="100%">
+      <SegmentedControl
+        items={["One", "Two", "Three"]}
+        selectedItemIndexes={itemIndexes}
+        size="lg"
+        onChange={({activeIndex}) => setItemIndexes(activeIndex)}
+      />
+    </Box>
+  );
+}
+
 export const SegmentedControlStories = {
   title: "Segmented Control",
   component: SegmentedControl,
@@ -38,5 +53,8 @@ export const SegmentedControlStories = {
     LargeControl() {
       return <LargeControl />;
     },
+    MultiSelect() {
+      return <
+    }
   },
 };

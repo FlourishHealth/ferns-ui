@@ -7,7 +7,8 @@ import {Text} from "./Text";
 export const SegmentedControl = ({
   items,
   onChange = () => {},
-  selectedItemIndexes,
+  selectedItemIndexes = undefined,
+  selectedItemIndex = undefined,
   multiselect = false,
   selectLimit = 1,
 }: SegmentedControlProps) => {
@@ -20,15 +21,26 @@ export const SegmentedControl = ({
     // }
   };
 
-  if (!multiselect && selectedItemIndexes.length > 1) {
+  if (selectedItemIndex === undefined && selectedItemIndexes === undefined) {
+    console.warn("One of the following must be defined: selectedItemIndex, selectedItemIndexes");
+    return null;
+  }
+
+  if (!multiselect && selectedItemIndexes?.length && selectedItemIndexes?.length > 1) {
     console.warn("Muliple selections not allowed without multiselect flag");
     return null;
   }
 
-  if (selectedItemIndexes.length > selectLimit) {
+  if (selectedItemIndexes?.length && selectedItemIndexes?.length > selectLimit) {
     console.warn("The number of selected items exceeds the limit");
     return null;
   }
+
+  const isTabActive = (index: any) => {
+    return selectedItemIndex === index || selectedItemIndexes?.includes(index)
+      ? "white"
+      : "lightGray";
+  };
 
   return (
     <Box
@@ -44,7 +56,7 @@ export const SegmentedControl = ({
       {items.map((item, index) => (
         <Box
           key={index}
-          color={selectedItemIndexes.includes(index) ? "white" : "lightGray"}
+          color={isTabActive(index)}
           height="100%"
           paddingX={2}
           rounding={3}

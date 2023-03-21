@@ -2003,7 +2003,8 @@ export interface PillProps {
 export interface SegmentedControlProps {
   items: (string | React.ReactNode)[];
   onChange?: ({activeIndex}: {activeIndex: number}) => void;
-  selectedItemIndexes: number[];
+  selectedItemIndex?: number;
+  selectedItemIndexes?: number[];
   responsive?: boolean;
   size?: "md" | "lg"; // defaults to md
   multiselect?: boolean;
