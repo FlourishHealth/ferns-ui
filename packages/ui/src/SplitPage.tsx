@@ -133,8 +133,6 @@ export const SplitPage = ({
 
   const renderChildrenContent = () => {
     if (Array.isArray(children) && children.length > 2) {
-      console.log({elementArray});
-      console.log({activeTabs});
       return (
         <View style={defaultStyles.mainContentContainer}>
           <Box paddingX={4} paddingY={1} width="100%">
@@ -144,19 +142,15 @@ export const SplitPage = ({
               selectLimit={tabs.length}
               selectedItemIndexes={activeTabs}
               onChange={(index) => {
-                console.log({index});
                 if (activeTabs.includes(index.activeIndex)) {
                   const singleTab = activeTabs.filter((tab) => tab !== index.activeIndex);
                   setActiveTabs([...singleTab]);
-                  console.log({activeTabs});
                 } else {
                   const reversed = activeTabs.reverse();
                   reversed.splice(1, 1);
                   reversed.push(index.activeIndex);
                   setActiveTabs([...reversed]);
-                  console.log({activeTabs});
                 }
-                console.log({elementArray});
               }}
             />
           </Box>
