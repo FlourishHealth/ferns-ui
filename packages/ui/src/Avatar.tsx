@@ -118,8 +118,8 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       base64: true,
     });
 
-    if (!result.cancelled) {
-      const resizedImage = await resizeImage(result.uri);
+    if (!result.canceled && result.assets) {
+      const resizedImage = await resizeImage(result.assets[0].uri);
       setSrc(resizedImage.uri);
       if (onChange) {
         onChange({avatarImageFormat, ...resizedImage});
