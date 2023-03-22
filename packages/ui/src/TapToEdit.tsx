@@ -147,7 +147,7 @@ export const TapToEdit = ({
         </Box>
         <Box direction="row">
           <Box>
-            <Text overflow="breakWord">{displayValue}</Text>
+            <Text>{displayValue}</Text>
           </Box>
           {editable && (
             <Box marginLeft={2} onClick={(): void => setEditing(true)}>

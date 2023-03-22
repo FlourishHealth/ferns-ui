@@ -1,91 +1,131 @@
 import React from "react";
-import {Text as NativeText} from "react-native";
+import {Text as NativeText, TextStyle} from "react-native";
 
-import {TextProps} from "./Common";
+import {AllColors, Font, TextSize} from "./Common";
 import {Hyperlink} from "./Hyperlink";
 import {Unifier} from "./Unifier";
 
-export class Text extends React.Component<TextProps, {}> {
-  fontSizes = {
-    sm: 12,
-    md: 14,
-    lg: 16,
-  };
+export interface TextProps {
+  align?: "left" | "right" | "center" | "justify"; // default "left"
+  children?: React.ReactNode;
+  color?: AllColors;
+  inline?: boolean; // default false
+  italic?: boolean; // default false
+  overflow?: "normal" | "breakWord"; // deprecated
+  size?: TextSize; // default "md"
+  truncate?: boolean; // default false
+  font?: Font;
+  underline?: boolean;
+  numberOfLines?: number;
+  skipLinking?: boolean;
+  weight?: "bold" | "normal";
+  testID?: string;
+}
 
-  propsToStyle(): any {
-    const style: any = {};
+const fontSizes = {
+  sm: 12,
+  md: 14,
+  lg: 16,
+};
 
-    let font:
-      | "primaryFont"
-      | "primaryBoldFont"
-      | "secondaryFont"
-      | "secondaryBoldFont"
-      | "buttonFont"
-      | "accentFont"
-      | "accentBoldFont"
-      | "titleFont" = "primaryFont";
-    if (this.props.font === "primary" || !this.props.font) {
-      if (this.props.weight === "bold") {
-        font = "primaryBoldFont";
+export function Text({
+  align = "left",
+  children,
+  color,
+  inline = false,
+  italic = false,
+  overflow,
+  size = "md",
+  truncate = false,
+  font,
+  underline,
+  numberOfLines,
+  skipLinking,
+  testID,
+  weight = "normal",
+}: TextProps): React.ReactElement {
+  function propsToStyle(): any {
+    const style: TextStyle = {};
+    if (overflow) {
+      console.warn(
+        "Text overflow is deprecated. Use `truncate` to cut off the text and add ellipse, otherwise breakWord is the default."
+      );
+    }
+    let computedFont = "primary";
+    if (font === "primary" || !font) {
+      if (weight === "bold") {
+        computedFont = "primaryBoldFont";
       } else {
-        font = "primaryFont";
+        computedFont = "primaryFont";
       }
-    } else if (this.props.font === "secondary") {
-      if (this.props.weight === "bold") {
-        font = "secondaryBoldFont";
+    } else if (font === "secondary") {
+      if (weight === "bold") {
+        computedFont = "secondaryBoldFont";
       } else {
-        font = "secondaryFont";
+        computedFont = "secondaryFont";
       }
-    } else if (this.props.font === "button") {
-      font = "buttonFont";
-    } else if (this.props.font === "title") {
-      font = "titleFont";
-    } else if (this.props.font === "accent") {
-      if (this.props.weight === "bold") {
-        font = "accentBoldFont";
+    } else if (font === "button") {
+      computedFont = "buttonFont";
+    } else if (font === "title") {
+      computedFont = "titleFont";
+    } else if (font === "accent") {
+      if (weight === "bold") {
+        computedFont = "accentBoldFont";
       } else {
-        font = "accentFont";
+        computedFont = "accentFont";
       }
     }
-
-    style.fontFamily = Unifier.theme[font];
-
-    style.fontSize = this.fontSizes[this.props.size || "md"];
-    if (this.props.align) {
-      style.textAlign = this.props.align;
+    if (weight === "bold") {
+      style.fontWeight = "bold";
     }
-    if (this.props.color) {
-      style.color = Unifier.theme[this.props.color];
+
+    style.fontFamily = Unifier.theme[computedFont];
+
+    style.fontSize = fontSizes[size || "md"];
+    if (align) {
+      style.textAlign = align;
+    }
+    if (color) {
+      style.color = Unifier.theme[color];
     } else {
       style.color = Unifier.theme.darkGray;
     }
+
+    if (italic) {
+      style.fontStyle = "italic";
+    }
+    if (underline) {
+      style.textDecorationLine = "underline";
+    }
     // TODO: might be useful for wrapping/truncating
-    // if (this.props.numberOfLines !== 1 && !this.props.inline) {
+    // if (numberOfLines !== 1 && !inline) {
     //   style.flexWrap = "wrap";
     // }
+
     return style;
   }
 
-  render() {
-    let lines = 0;
-    if (this.props.numberOfLines) {
-      lines = this.props.numberOfLines;
-    } else if (this.props.inline) {
-      lines = 1;
-    }
-    const inner = (
-      <NativeText numberOfLines={lines} style={this.propsToStyle()}>
-        {this.props.children}
-      </NativeText>
+  let lines = 0;
+  if (numberOfLines && truncate && numberOfLines > 1) {
+    console.error(`Cannot truncate Text and have ${numberOfLines} lines`);
+  }
+  if (numberOfLines) {
+    lines = numberOfLines;
+  } else if (inline || truncate) {
+    lines = 1;
+  }
+  const inner = (
+    <NativeText numberOfLines={lines} style={propsToStyle()} testID={testID}>
+      {children}
+    </NativeText>
+  );
+  if (skipLinking) {
+    return inner;
+  } else {
+    return (
+      <Hyperlink linkDefault linkStyle={{textDecorationLine: "underline"}}>
+        {inner}
+      </Hyperlink>
     );
-    if (this.props.skipLinking) {
-      return inner;
-    } else {
-      return (
-        <Hyperlink linkDefault linkStyle={{textDecorationLine: "underline"}}>
-          {inner}
-        </Hyperlink>
-      );
-    }
   }
 }

@@ -234,14 +234,6 @@ export class Box extends React.Component<BoxProps, {}> {
     return style;
   }
 
-  renderBox() {
-    return (
-      <View style={!this.props.scroll && !this.props.overflow && this.propsToStyle()}>
-        {this.props.children}
-      </View>
-    );
-  }
-
   render() {
     let box;
 
@@ -249,6 +241,7 @@ export class Box extends React.Component<BoxProps, {}> {
       box = (
         <TouchableOpacity
           style={this.propsToStyle()}
+          testID={this.props.testID ? `${this.props.testID}-clickable` : undefined}
           // TODO: refactor this better..
           onLayout={this.props.onLayout}
           onPress={() => {
@@ -257,11 +250,14 @@ export class Box extends React.Component<BoxProps, {}> {
           }}
         >
           {this.props.children}
-          {/* <View pointerEvents="none">{box}</View> */}
         </TouchableOpacity>
       );
     } else {
-      box = <View style={this.propsToStyle()}>{this.props.children}</View>;
+      box = (
+        <View style={this.propsToStyle()} testID={this.props.testID}>
+          {this.props.children}
+        </View>
+      );
     }
 
     if (this.props.scroll) {

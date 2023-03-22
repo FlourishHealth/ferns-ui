@@ -1817,24 +1817,6 @@ export type IconPrefix = "far" | "fas";
 // | "simple-line"
 // | "feather";
 
-export interface TextProps {
-  align?: "left" | "right" | "center" | "justify"; // default "left"
-  children?: React.ReactNode;
-  color?: AllColors;
-
-  inline?: boolean; // default false
-  italic?: boolean; // default false
-  overflow?: "normal" | "breakWord"; // default "breakWord"
-  size?: TextSize; // default "md"
-  truncate?: boolean; // default false
-  font?: Font;
-  underline?: boolean;
-
-  numberOfLines?: number;
-  skipLinking?: boolean;
-  weight?: "bold" | "normal";
-}
-
 export interface ActionBannerProps {
   /** The text to show in the banner. */
   text: string;
@@ -1967,6 +1949,7 @@ export interface BoxProps {
   scrollRef?: any;
   onScroll?: (offsetY: number) => void;
   onLayout?: (event: any) => void;
+  testID?: string;
 }
 
 export type BoxColor = AllColors | "transparent";
@@ -2642,7 +2625,7 @@ export interface PickerProps {
   onValueChange?: (itemValue: any, itemPosition: number) => void;
   selectedValue?: any;
   style?: StyleProp;
-  testId?: string;
+  testID?: string;
   itemStyle?: StyleProp;
   enabled?: boolean;
   mode?: "dialog" | "dropdown";
