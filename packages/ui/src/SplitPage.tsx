@@ -1,5 +1,5 @@
 import React, {Children, ReactChild, ReactElement, useState} from "react";
-import {ListRenderItemInfo, ScrollView, StyleSheet, View} from "react-native";
+import {ListRenderItemInfo, ScrollView, View} from "react-native";
 
 import {Box} from "./Box";
 import {Color, SPACING} from "./Common";
@@ -26,24 +26,6 @@ interface SplitPageProps {
   listViewWidth?: number;
   renderChild?: () => ReactChild;
 }
-
-const defaultStyles = StyleSheet.create({
-  mainContentContainer: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-  },
-  elementContainer: {
-    flex: 1,
-    width: "60%",
-    padding: 3 * SPACING,
-    height: "100%",
-  },
-  elementContainerScrollWrapper: {
-    flex: 1,
-  },
-});
 
 // A component for rendering a list on one side and a details view on the right for large screens,
 // and a scrollable list where clicking an item takes you the details view.
@@ -136,7 +118,14 @@ export const SplitPage = ({
   const renderChildrenContent = () => {
     if (Array.isArray(children) && children.length > 2) {
       return (
-        <View style={defaultStyles.mainContentContainer}>
+        <View
+          style={{
+            flex: 1,
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+          }}
+        >
           <Box paddingX={4} paddingY={2} width="100%">
             <SegmentedControl
               items={tabs}
@@ -159,8 +148,15 @@ export const SplitPage = ({
               return (
                 <ScrollView
                   key={tabIndex}
-                  contentContainerStyle={defaultStyles.elementContainerScrollWrapper}
-                  style={defaultStyles.elementContainer}
+                  contentContainerStyle={{
+                    flex: 1,
+                  }}
+                  style={{
+                    flex: 1,
+                    width: "60%",
+                    padding: 3 * SPACING,
+                    height: "100%",
+                  }}
                 >
                   {elementArray[tabIndex]}
                 </ScrollView>
@@ -176,8 +172,15 @@ export const SplitPage = ({
             return (
               <ScrollView
                 key={index}
-                contentContainerStyle={defaultStyles.elementContainerScrollWrapper}
-                style={defaultStyles.elementContainer}
+                contentContainerStyle={{
+                  flex: 1,
+                }}
+                style={{
+                  flex: 1,
+                  width: "60%",
+                  padding: 3 * SPACING,
+                  height: "100%",
+                }}
               >
                 {element}
               </ScrollView>

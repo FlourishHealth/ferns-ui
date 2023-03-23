@@ -60,8 +60,7 @@ export const SegmentedControl = ({
           height="100%"
           paddingX={2}
           rounding={3}
-          // The additional 10% missing will act as padding between controls
-          width={`${90 / items.length}%`}
+          width={`${100 / items.length}%`}
         >
           <Box
             alignItems="center"
