@@ -99,6 +99,8 @@ export const SplitPage = ({
           flexGrow: 1,
           flexShrink: 0,
           display: "flex",
+          paddingTop: "12px",
+          paddingBottom: "12px",
           flexDirection: "column",
         }}
       >
@@ -135,7 +137,7 @@ export const SplitPage = ({
     if (Array.isArray(children) && children.length > 2) {
       return (
         <View style={defaultStyles.mainContentContainer}>
-          <Box paddingX={4} paddingY={1} width="100%">
+          <Box paddingX={4} paddingY={2} width="100%">
             <SegmentedControl
               items={tabs}
               multiselect
