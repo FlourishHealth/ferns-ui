@@ -2001,11 +2001,14 @@ export interface PillProps {
 }
 
 export interface SegmentedControlProps {
-  items: (string | React.ReactNode)[];
-  onChange: ({activeIndex}: {activeIndex: number}) => void;
-  selectedItemIndex: number;
+  items: string[];
+  onChange?: ({activeIndex}: {activeIndex: number | number[]}) => void;
+  selectedItemIndex?: number;
+  selectedItemIndexes?: number[];
   responsive?: boolean;
   size?: "md" | "lg"; // defaults to md
+  multiselect?: boolean;
+  selectLimit?: number;
 }
 
 // Shared props for fields with labels, subtext, and error messages.

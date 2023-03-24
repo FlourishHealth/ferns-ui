@@ -4,48 +4,89 @@ import {Box} from "./Box";
 import {SegmentedControlProps} from "./Common";
 import {Text} from "./Text";
 
-export class SegmentedControl extends React.Component<SegmentedControlProps, {}> {
-  renderItem(item: string | React.ReactNode) {
+export const SegmentedControl = ({
+  items,
+  onChange = () => {},
+  selectedItemIndexes = undefined,
+  selectedItemIndex = undefined,
+  multiselect = false,
+  selectLimit = 1,
+}: SegmentedControlProps) => {
+  const renderItem = (item: string | React.ReactNode) => {
     return <Text weight="bold">{item}</Text>;
     // if (typeof item === "string") {
     //   return <Text weight="bold">{item}</Text>;
     // } else {
     //   return item;
     // }
+  };
+
+  if (selectedItemIndex === undefined && selectedItemIndexes === undefined) {
+    console.warn("One of the following must be defined: selectedItemIndex, selectedItemIndexes");
+    return null;
   }
 
-  render() {
-    return (
-      <Box
-        color="lightGray"
-        direction="row"
-        display="flex"
-        height={40}
-        padding={1}
-        rounding={3}
-        width="100%"
-      >
-        {this.props.items.map((item, index) => (
-          <Box
-            key={index}
-            color={this.props.selectedItemIndex === index ? "white" : "lightGray"}
-            height="100%"
-            rounding={3}
-            width={`${100 / this.props.items.length}%`}
-          >
-            <Box
-              alignItems="center"
-              display="flex"
-              height="100%"
-              justifyContent="center"
-              width="100%"
-              onClick={() => this.props.onChange({activeIndex: index})}
-            >
-              {this.renderItem(item)}
-            </Box>
-          </Box>
-        ))}
-      </Box>
-    );
+  if (!multiselect && selectedItemIndexes?.length && selectedItemIndexes?.length > 1) {
+    console.warn("Muliple selections not allowed without multiselect flag");
+    return null;
   }
-}
+
+  if (selectedItemIndexes?.length && selectedItemIndexes?.length > selectLimit) {
+    console.warn("The number of selected items exceeds the limit");
+    return null;
+  }
+
+  const isTabActive = (index: any) => {
+    return selectedItemIndex === index || selectedItemIndexes?.includes(index)
+      ? "white"
+      : "lightGray";
+  };
+
+  return (
+    <Box
+      color="lightGray"
+      direction="row"
+      display="flex"
+      height={40}
+      justifyContent="between"
+      padding={1}
+      rounding={3}
+      width="100%"
+    >
+      {items.map((item, index) => (
+        <Box
+          key={index}
+          color={isTabActive(index)}
+          height="100%"
+          paddingX={2}
+          rounding={3}
+          width={`${100 / items.length}%`}
+        >
+          <Box
+            alignItems="center"
+            display="flex"
+            height="100%"
+            justifyContent="center"
+            width="100%"
+            onClick={() => {
+              if (multiselect) {
+                if (selectedItemIndexes?.includes(index)) {
+                  onChange({activeIndex: selectedItemIndexes.filter((i) => i !== index)});
+                } else {
+                  const reversed = selectedItemIndexes?.reverse();
+                  reversed?.splice(1, 1);
+                  reversed?.push(index);
+                  onChange({activeIndex: reversed as number[]});
+                }
+              } else {
+                onChange({activeIndex: index});
+              }
+            }}
+          >
+            {renderItem(item)}
+          </Box>
+        </Box>
+      ))}
+    </Box>
+  );
+};
