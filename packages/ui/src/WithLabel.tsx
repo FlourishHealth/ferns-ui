@@ -1,44 +1,51 @@
 import React from "react";
 
 import {Box} from "./Box";
-import {WithLabelProps} from "./Common";
+import {AllColors, JustifyContent, TextSize} from "./Common";
 import {Text} from "./Text";
 
-export class WithLabel extends React.Component<WithLabelProps, {}> {
-  render() {
-    const {label, labelInline, labelColor, children} = this.props;
-    // If show is undefined or true, show, only hide for actual false for simplicity.
+export interface WithLabelProps {
+  children: React.ReactNode;
+  show?: boolean;
+  label?: string;
+  labelInline?: boolean;
+  labelColor?: AllColors;
+  labelJustifyContent?: JustifyContent;
+  labelPlacement?: "before" | "after";
+  labelSize?: TextSize;
+}
 
-    if (!children) {
-      return null;
-    }
-
-    if (label) {
-      return (
-        <Box
-          direction={labelInline ? "row" : "column"}
-          justifyContent={this.props.labelJustifyContent}
-          width="100%"
-        >
-          {this.props.labelPlacement !== "after" && (
-            <Box paddingY={1}>
-              <Text color={labelColor || "darkGray"} size={this.props.labelSize} weight="bold">
-                {this.props.show !== false ? label : " "}
-              </Text>
-            </Box>
-          )}
-          {children}
-          {this.props.labelPlacement === "after" && (
-            <Box paddingY={1}>
-              <Text color={labelColor || "darkGray"} size={this.props.labelSize}>
-                {this.props.show !== false ? label : " "}
-              </Text>
-            </Box>
-          )}
+export function WithLabel({
+  label,
+  labelInline,
+  labelJustifyContent,
+  labelPlacement,
+  labelSize,
+  labelColor,
+  show,
+  children,
+}: WithLabelProps) {
+  return (
+    <Box
+      direction={labelInline ? "row" : "column"}
+      justifyContent={labelJustifyContent}
+      width="100%"
+    >
+      {Boolean(label && labelPlacement !== "after") && (
+        <Box paddingY={1}>
+          <Text color={labelColor || "darkGray"} size={labelSize} weight="bold">
+            {show !== false ? label : " "}
+          </Text>
         </Box>
-      );
-    } else {
-      return children;
-    }
-  }
+      )}
+      {children}
+      {Boolean(label && labelPlacement === "after") && (
+        <Box paddingY={1}>
+          <Text color={labelColor || "darkGray"} size={labelSize}>
+            {show !== false ? label : " "}
+          </Text>
+        </Box>
+      )}
+    </Box>
+  );
 }

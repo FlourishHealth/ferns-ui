@@ -2071,17 +2071,6 @@ export interface TextFieldProps extends FieldWithLabelsProps {
 
 export type TextAreaProps = TextFieldProps;
 
-export interface WithLabelProps {
-  children: React.ReactNode;
-  show?: boolean;
-  label?: string;
-  labelInline?: boolean;
-  labelColor?: AllColors;
-  labelJustifyContent?: JustifyContent;
-  labelPlacement?: "before" | "after";
-  labelSize?: TextSize;
-}
-
 export interface SubmittingFormProps {
   onSubmitEditting: () => void;
 }
