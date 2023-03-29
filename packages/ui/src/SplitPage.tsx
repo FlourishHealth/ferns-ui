@@ -1,31 +1,14 @@
-import React, {Children, ReactChild, ReactElement, useState} from "react";
+import React, {Children, useState} from "react";
 import {ListRenderItemInfo, ScrollView, View} from "react-native";
 
 import {Box} from "./Box";
-import {Color, SPACING} from "./Common";
+import {SPACING, SplitPageProps} from "./Common";
 import {FlatList} from "./FlatList";
 import {IconButton} from "./IconButton";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {SegmentedControl} from "./SegmentedControl";
 import {Spinner} from "./Spinner";
 import {Unifier} from "./Unifier";
-
-interface SplitPageProps {
-  children?: ReactChild | ReactChild[] | null;
-  tabs?: string[];
-  // TODO: figure out navigation
-  navigation?: any;
-  loading?: boolean;
-  color?: Color;
-  keyboardOffset?: number;
-  renderListViewItem: (itemInfo: ListRenderItemInfo<any>) => ReactElement | null;
-  renderListViewHeader?: () => ReactElement | null;
-  renderContent?: (index?: number) => ReactElement | ReactElement[] | null;
-  listViewData: any[];
-  listViewExtraData?: any;
-  listViewWidth?: number;
-  renderChild?: () => ReactChild;
-}
 
 // A component for rendering a list on one side and a details view on the right for large screens,
 // and a scrollable list where clicking an item takes you the details view.

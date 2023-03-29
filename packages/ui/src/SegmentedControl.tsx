@@ -27,7 +27,7 @@ export const SegmentedControl = ({
   }
 
   if (!multiselect && selectedItemIndexes?.length && selectedItemIndexes?.length > 1) {
-    console.warn("Muliple selections not allowed without multiselect flag");
+    console.warn("Multiple selections not allowed without multiselect flag");
     return null;
   }
 

@@ -10,12 +10,14 @@ const WithRenderContent = () => {
       }))}
       listViewWidth={250}
       navigation={{}}
-      renderContent={(index) => (
-        <Box color="lightGray" padding={2}>
-          {index === undefined && <Text weight="bold">Nothing selected</Text>}
-          {index !== undefined && <Text weight="bold">User {index}</Text>}
-        </Box>
-      )}
+      renderContent={(index) => {
+        return (
+          <Box color="lightGray" padding={2}>
+            {index === undefined && <Text weight="bold">Nothing selected</Text>}
+            {index !== undefined && <Text weight="bold">User {index}</Text>}
+          </Box>
+        );
+      }}
       renderListViewHeader={() => (
         <Box color="red" padding={2}>
           <Text weight="bold">Users:</Text>
@@ -39,18 +41,19 @@ const OneChild = () => {
         name: `user${i}`,
         id: i,
       }))}
+      renderListViewHeader={() => (
+        <Box color="red" padding={2}>
+          <Text weight="bold">Users:</Text>
+        </Box>
+      )}
       renderListViewItem={(item) => (
-        <Box
-          key={item.item.name}
-          color="blue"
-          padding={2}
-          onClick={() => {
-            setSelected(item.item.name);
-          }}
-        >
+        <Box key={item.item.name} color="blue" padding={2}>
           <Text>name: {item.item.name}</Text>
         </Box>
       )}
+      onSelectionChange={(val) => {
+        setSelected(val);
+      }}
     >
       <Box>
         <Text>{selected}</Text>

@@ -1,4 +1,5 @@
-import {SyntheticEvent} from "react";
+import {ReactChild, ReactElement, SyntheticEvent} from "react";
+import {ListRenderItemInfo} from "react-native";
 
 export interface BaseProfile {
   email: string;
@@ -2633,6 +2634,24 @@ export interface PickerProps {
   enabled?: boolean;
   mode?: "dialog" | "dropdown";
   prompt?: string;
+}
+
+export interface SplitPageProps {
+  children?: ReactChild | ReactChild[] | null;
+  tabs?: string[];
+  // TODO: figure out navigation
+  navigation?: any;
+  loading?: boolean;
+  color?: Color;
+  keyboardOffset?: number;
+  renderListViewItem: (itemInfo: ListRenderItemInfo<any>) => ReactElement | null;
+  renderListViewHeader?: () => ReactElement | null;
+  renderContent?: (index?: number) => ReactElement | ReactElement[] | null;
+  listViewData: any[];
+  listViewExtraData?: any;
+  listViewWidth?: number;
+  renderChild?: () => ReactChild;
+  onSelectionChange?: (value?: any) => void;
 }
 
 export type LogLevel = "fatal" | "error" | "warning" | "info" | "debug" | "critical";
