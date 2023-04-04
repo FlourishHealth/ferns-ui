@@ -2651,7 +2651,7 @@ export interface SplitPageProps {
   listViewExtraData?: any;
   listViewWidth?: number;
   renderChild?: () => ReactChild;
-  onSelectionChange?: (value?: any) => void;
+  onSelectionChange?: (value?: any) => void | Promise<void>;
 }
 
 export type LogLevel = "fatal" | "error" | "warning" | "info" | "debug" | "critical";

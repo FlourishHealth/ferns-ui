@@ -21,6 +21,7 @@ export const SplitPage = ({
   renderListViewItem,
   renderListViewHeader,
   renderContent,
+  onSelectionChange = () => {},
   listViewData,
   listViewExtraData,
   listViewWidth,
@@ -45,6 +46,7 @@ export const SplitPage = ({
       <Box
         onClick={() => {
           setSelectedId(itemInfo.index);
+          onSelectionChange(itemInfo);
         }}
       >
         {renderListViewItem(itemInfo)}

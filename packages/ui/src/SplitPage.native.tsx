@@ -1,5 +1,6 @@
 import React, {Children, useState} from "react";
-import {ListRenderItemInfo, View} from "react-native";
+import {Dimensions, ListRenderItemInfo, View} from "react-native";
+import {SwiperFlatList} from "react-native-swiper-flatlist";
 
 import {Box} from "./Box";
 import {SplitPageProps} from "./Common";
@@ -23,21 +24,16 @@ export const SplitPage = ({
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
 
   const elementArray = Children.toArray(children);
+  const {width} = Dimensions.get("window");
 
   if (!children && !renderContent) {
     console.warn("A child node is required");
     return null;
   }
 
-  if (Children.count(children) > 2 && Children.count(children)) {
-    console.warn("There must be a tab for each child");
-    return null;
-  }
-
   const renderItem = (itemInfo: ListRenderItemInfo<any>) => {
     return (
       <Box
-        style={{backgroundColor: "green"}}
         onClick={() => {
           console.log({itemInfo});
           Unifier.utils.haptic();
@@ -69,6 +65,12 @@ export const SplitPage = ({
         }}
       >
         {renderListViewHeader && renderListViewHeader()}
+        {/* <ScrollView>
+          {listViewData.map((item, index) => {
+            console.log({item});
+            return renderItem({item, index});
+          })}
+        </ScrollView> */}
         <FlatList
           data={listViewData}
           extraData={listViewExtraData}
@@ -99,25 +101,26 @@ export const SplitPage = ({
   };
 
   const renderChildrenContent = () => {
+    if (selectedId === undefined) {
+      return null;
+    }
     return (
-      <Box
-        alignItems="center"
-        color="green"
-        direction="row"
-        flex="grow"
-        justifyContent="center"
-        paddingX={2}
-      />
+      <SwiperFlatList nestedScrollEnabled renderAll showPagination style={{width: "100%"}}>
+        {elementArray.map((element, i) => {
+          return (
+            <View
+              key={i}
+              style={{width, height: elementArray.length > 1 ? "95%" : "100%", padding: 4}}
+            >
+              {element}
+            </View>
+          );
+        })}
+      </SwiperFlatList>
     );
   };
 
-  const renderMainContent = () => {
-    if (renderContent) {
-      return renderListContent();
-    } else {
-      return renderChildrenContent();
-    }
-  };
+  const renderMainContent = renderContent ? renderListContent() : renderChildrenContent();
 
   return (
     <Box
@@ -126,31 +129,10 @@ export const SplitPage = ({
       flex="grow"
       height="100%"
       keyboardOffset={keyboardOffset}
-      padding={2}
       width="100%"
     >
       {loading === true && <Spinner color={Unifier.theme.darkGray as any} size="md" />}
-      {Boolean(selectedId) ? renderMainContent() : renderList()}
+      {selectedId === undefined ? renderList() : renderMainContent}
     </Box>
   );
 };
-
-// {/* {elementArray.map((element, index) => {
-//   return (
-// 			<ScrollView
-// 				key={index}
-// 				contentContainerStyle={{
-// 					flex: 1,
-// 				}}
-// 				style={{
-// 					flex: 1,
-// 					width: "60%",
-// 					padding: 3 * SPACING,
-// 					height: "100%",
-// 				}}
-// 				>
-// 				{element}
-// 				{/* {SwipeContainer()} */}
-//         </ScrollView>
-//         );
-//       })} */}
