@@ -36,6 +36,23 @@ const BooleanField = () => {
   );
 };
 
+const FieldWithError = () => {
+  const [value, setValue] = useState("");
+  return (
+    <StorybookContainer>
+      <Field
+        errorMessage={value.length > 1 ? "Error message" : undefined}
+        helperText="Only enter 1 character, enter 2 to see the error label"
+        label="Field with error"
+        name="boolean"
+        type="text"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
 const EmailTextField = () => {
   const [value, setValue] = useState("test@email.com");
   return (
@@ -330,7 +347,6 @@ export const FieldStories = {
     "Percent Field": function () {
       return <PercentField />;
     },
-
     "Select Field": function () {
       return <SelectField />;
     },
@@ -354,6 +370,9 @@ export const FieldStories = {
     },
     "Custom Select Field": function () {
       return <CustomSelectField />;
+    },
+    "Field With Error Message": function () {
+      return <FieldWithError />;
     },
   },
 };

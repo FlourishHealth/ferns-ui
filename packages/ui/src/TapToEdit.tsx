@@ -121,7 +121,7 @@ export const TapToEdit = ({
           state = value?.zipcode ? `${value.state} ` : `${value.state}`;
         }
 
-        const zip = value?.zipcode;
+        const zip = value?.zipcode || "";
 
         const addressLineOne = value?.address1 ?? "";
         const addressLineTwo = value?.address2 ?? "";
