@@ -1,4 +1,4 @@
-import React, {Children, useState} from "react";
+import React, {Children, useCallback, useEffect, useState} from "react";
 import {Dimensions, ListRenderItemInfo, View} from "react-native";
 import {SwiperFlatList} from "react-native-swiper-flatlist";
 
@@ -20,11 +20,32 @@ export const SplitPage = ({
   onSelectionChange = () => {},
   listViewData,
   listViewExtraData,
+  bottomNavBarHeight,
+  showItemList,
 }: SplitPageProps) => {
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
 
   const elementArray = Children.toArray(children);
   const {width} = Dimensions.get("window");
+
+  const onItemSelect = useCallback(
+    (item: ListRenderItemInfo<any>) => {
+      setSelectedId(item.index);
+      onSelectionChange(item);
+    },
+    [onSelectionChange]
+  );
+
+  const onItemDeselect = useCallback(() => {
+    setSelectedId(undefined);
+    onSelectionChange(undefined);
+  }, [onSelectionChange]);
+
+  useEffect(() => {
+    if (showItemList) {
+      onItemDeselect();
+    }
+  }, [showItemList, onItemDeselect]);
 
   if (!children && !renderContent) {
     console.warn("A child node is required");
@@ -35,10 +56,8 @@ export const SplitPage = ({
     return (
       <Box
         onClick={() => {
-          console.log({itemInfo});
           Unifier.utils.haptic();
-          setSelectedId(itemInfo.index);
-          onSelectionChange(itemInfo);
+          onItemSelect(itemInfo);
         }}
       >
         {renderListViewItem(itemInfo)}
@@ -59,18 +78,11 @@ export const SplitPage = ({
           flexGrow: 1,
           flexShrink: 0,
           display: "flex",
-          paddingTop: parseFloat("12px"),
-          paddingBottom: parseFloat("12px"),
           flexDirection: "column",
+          paddingBottom: bottomNavBarHeight,
         }}
       >
         {renderListViewHeader && renderListViewHeader()}
-        {/* <ScrollView>
-          {listViewData.map((item, index) => {
-            console.log({item});
-            return renderItem({item, index});
-          })}
-        </ScrollView> */}
         <FlatList
           data={listViewData}
           extraData={listViewExtraData}
@@ -92,7 +104,7 @@ export const SplitPage = ({
             accessibilityLabel="close"
             icon="times"
             iconColor="darkGray"
-            onClick={() => setSelectedId(undefined)}
+            onClick={() => onItemDeselect()}
           />
         </Box>
         {renderContent && renderContent(selectedId)}

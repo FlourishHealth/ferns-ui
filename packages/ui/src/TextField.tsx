@@ -279,8 +279,6 @@ export function TextField({
                 width: "100%",
                 color: Unifier.theme.darkGray,
                 fontFamily: Unifier.theme.primaryFont,
-                // Remove border in web.
-                outlineWidth: 0,
                 ...style,
               }}
               // For react-native-autofocus

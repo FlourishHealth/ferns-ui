@@ -2637,10 +2637,19 @@ export interface PickerProps {
 }
 
 export interface SplitPageProps {
+  /**
+   * can accept either one React Child or any array of ReactChild. If this is not provided,
+   * renderContent must return one or many ReactChild.
+   */
   children?: ReactChild | ReactChild[] | null;
+  /**
+   * The names of the tabs that will be generated per ReactChild provided. Tabs will not be generated if renderContent is provided in place of children
+   */
   tabs?: string[];
-  // TODO: figure out navigation
-  navigation?: any;
+  // Provide in mobile if you have a bottomTabBar so that split page can adjust accordingly
+  bottomNavBarHeight?: number;
+  // boolean to initiate and handle state from the app that has imported ferns-ui
+  showItemList?: boolean;
   loading?: boolean;
   color?: Color;
   keyboardOffset?: number;
