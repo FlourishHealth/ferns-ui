@@ -1,4 +1,4 @@
-import {Box, SplitPage, Text} from "ferns-ui";
+import {Box, FlatList, SplitPage, Text} from "ferns-ui";
 import React, {useState} from "react";
 
 const WithRenderContent = () => {
@@ -9,7 +9,6 @@ const WithRenderContent = () => {
         id: i,
       }))}
       listViewWidth={250}
-      navigation={{}}
       renderContent={(index) => {
         return (
           <Box color="lightGray" padding={2}>
@@ -124,24 +123,17 @@ const ScrollableContent = () => {
   }));
 
   return (
-    // <FlatList
-    //   data={items}
-    //   keyExtractor={(item) => item.name}
-    //   renderItem={(item) => {
-    //     return (
-    //       <Box key={item.item.name} color="blue" padding={2}>
-    //         <Text>name: {item.item.name}</Text>
-    //       </Box>
-    //     );
-    //   }}
-    // />
-    <Box color="purple">
-      {items.map((i) => (
-        <Box key={i.name}>
-          <Text>{i.name}</Text>
-        </Box>
-      ))}
-    </Box>
+    <FlatList
+      data={items}
+      keyExtractor={(item) => item.name}
+      renderItem={(item) => {
+        return (
+          <Box key={item.item.name} color="purple" padding={2}>
+            <Text>name: {item.item.name}</Text>
+          </Box>
+        );
+      }}
+    />
   );
 };
 

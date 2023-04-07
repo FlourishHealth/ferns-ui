@@ -279,6 +279,7 @@ export function TextField({
                 width: "100%",
                 color: Unifier.theme.darkGray,
                 fontFamily: Unifier.theme.primaryFont,
+                // TODO: clean up the onFocus state so that the focus border matches the input border
                 ...style,
               }}
               // For react-native-autofocus
