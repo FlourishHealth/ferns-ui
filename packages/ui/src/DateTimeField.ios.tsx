@@ -1,9 +1,10 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment-timezone";
 import React, {ReactElement} from "react";
+import {View} from "react-native";
 
-import {Box} from "./Box";
 import {DateTimeFieldProps} from "./Common";
+import {Unifier} from "./Unifier";
 import {WithLabel} from "./WithLabel";
 
 export const DateTimeField = ({
@@ -12,19 +13,24 @@ export const DateTimeField = ({
   onChange,
   errorMessage,
   errorMessageColor,
+  pickerType = "compact",
+  label,
 }: DateTimeFieldProps): ReactElement => {
   return (
-    <WithLabel
-      label={errorMessage}
-      labelColor={errorMessageColor || "red"}
-      labelPlacement="after"
-      labelSize="sm"
-    >
-      <WithLabel>
-        <Box maxWidth={300}>
+    <WithLabel label={label} labelSize="lg">
+      <WithLabel
+        label={errorMessage}
+        labelColor={errorMessageColor || "red"}
+        labelPlacement="after"
+        labelSize="sm"
+      >
+        {/* <Box justifyContent="center"> */}
+        <View>
           <DateTimePicker
-            display="spinner"
+            accentColor={Unifier.theme.primary}
+            display={pickerType}
             mode={mode}
+            style={{alignSelf: "flex-start"}}
             testID="dateTimePicker"
             value={moment(value).toDate()}
             onChange={(event: any, date: any) => {
@@ -34,7 +40,8 @@ export const DateTimeField = ({
               onChange(value);
             }}
           />
-        </Box>
+        </View>
+        {/* </Box> */}
       </WithLabel>
     </WithLabel>
   );
