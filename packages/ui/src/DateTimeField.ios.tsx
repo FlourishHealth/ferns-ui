@@ -1,7 +1,7 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment-timezone";
-import React, {ReactElement} from "react";
-import {View} from "react-native";
+import React, {ReactElement, useMemo, useState} from "react";
+import {TextInput} from "react-native";
 
 import {DateTimeFieldProps} from "./Common";
 import {Unifier} from "./Unifier";
@@ -13,9 +13,26 @@ export const DateTimeField = ({
   onChange,
   errorMessage,
   errorMessageColor,
-  pickerType = "compact",
+  dateFormat,
+  pickerType = "inline",
   label,
 }: DateTimeFieldProps): ReactElement => {
+  const [showPicker, setShowPicker] = useState(false);
+
+  const defaultFormat = useMemo(() => {
+    if (dateFormat) {
+      return dateFormat;
+    } else {
+      if (mode === "date") {
+        return "MMMM Do YYYY";
+      } else if (mode === "time") {
+        return "h:mm a";
+      } else {
+        return "MMMM Do YYYY, h:mm a";
+      }
+    }
+  }, [mode, dateFormat]);
+
   return (
     <WithLabel label={label} labelSize="lg">
       <WithLabel
@@ -24,8 +41,27 @@ export const DateTimeField = ({
         labelPlacement="after"
         labelSize="sm"
       >
-        {/* <Box justifyContent="center"> */}
-        <View>
+        <TextInput
+          inputMode="none"
+          style={{
+            flex: 1,
+            paddingTop: 10,
+            paddingRight: 10,
+            paddingBottom: 10,
+            paddingLeft: 10,
+            height: 40,
+            width: "100%",
+            color: Unifier.theme.darkGray,
+            fontFamily: Unifier.theme.primaryFont,
+            borderWidth: 1,
+          }}
+          value={moment(value).format(defaultFormat)}
+          onPressIn={() => {
+            setShowPicker(!showPicker);
+          }}
+        />
+
+        {showPicker && (
           <DateTimePicker
             accentColor={Unifier.theme.primary}
             display={pickerType}
@@ -37,11 +73,10 @@ export const DateTimeField = ({
               if (!date) {
                 return;
               }
-              onChange(value);
+              onChange(date);
             }}
           />
-        </View>
-        {/* </Box> */}
+        )}
       </WithLabel>
     </WithLabel>
   );

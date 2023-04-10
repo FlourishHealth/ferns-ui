@@ -23,8 +23,8 @@ export const DateTimeStories = {
         // Placed two here to ensure that the calendar z-index does
         // not conflict with the second one
         <StorybookContainer>
-          <DateTime label="This is new" mode="datetime" />
-          {/* <DateTime mode="datetime" /> */}
+          <DateTime label="Birthday" mode="datetime" />
+          <DateTime label="Expiration Date" mode="datetime" />
         </StorybookContainer>
       );
     },

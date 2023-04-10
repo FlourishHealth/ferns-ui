@@ -2028,6 +2028,7 @@ export interface DateTimeFieldProps extends FieldWithLabelsProps {
   mode: "date" | "time" | "datetime";
   value: Date;
   onChange: (date: Date) => void;
+  dateFormat?: string;
   pickerType?: "default" | "compact" | "inline" | "spinner";
 }
 
