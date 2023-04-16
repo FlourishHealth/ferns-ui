@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   body: {
     width: "100%",
     display: "flex",
-    height: "100%",
+    flex: 1,
     flexDirection: "column",
     overflow: "scroll",
     backgroundColor: "#eee",

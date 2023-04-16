@@ -54,7 +54,7 @@ const OneChild = () => {
         setSelected(val.item.name);
       }}
     >
-      <Box color="green" height="100%">
+      <Box color="green" height="100%" padding={2}>
         <Text align="center">{selected}</Text>
       </Box>
     </SplitPage>
@@ -79,7 +79,7 @@ const TwoChildren = () => {
         setSelected(val.item.name);
       }}
     >
-      <Box color="green" height="100%">
+      <Box color="green" height="100%" padding={2}>
         <Text align="center">First child with data: {selected}</Text>
       </Box>
       {ScrollableContent()}
@@ -105,10 +105,10 @@ const ManyChildren = () => {
         setSelected(val.item.name);
       }}
     >
-      <Box color="green" height="100%">
+      <Box color="green" height="100%" padding={2}>
         <Text align="center">First child with data: {selected}</Text>
       </Box>
-      <Box color="blue" height="100%">
+      <Box color="blue" height="100%" padding={2}>
         <Text align="center">Second child with data: {selected}</Text>
       </Box>
       {ScrollableContent()}
@@ -124,6 +124,7 @@ const ScrollableContent = () => {
 
   return (
     <FlatList
+      contentContainerStyle={{height: "100%"}}
       data={items}
       keyExtractor={(item) => item.name}
       renderItem={(item) => {

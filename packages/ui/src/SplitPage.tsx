@@ -3,7 +3,7 @@ import {Dimensions, ListRenderItemInfo, ScrollView, View} from "react-native";
 import {SwiperFlatList} from "react-native-swiper-flatlist";
 
 import {Box} from "./Box";
-import {SPACING, SplitPageProps} from "./Common";
+import {SplitPageProps} from "./Common";
 import {FlatList} from "./FlatList";
 import {IconButton} from "./IconButton";
 import {mediaQueryLargerThan} from "./MediaQuery";
@@ -87,37 +87,7 @@ export const SplitPage = ({
           flexGrow: 1,
           flexShrink: 0,
           display: "flex",
-          paddingTop: "12px",
-          paddingBottom: "12px",
           flexDirection: "column",
-        }}
-      >
-        {renderListViewHeader && renderListViewHeader()}
-        <FlatList
-          data={listViewData}
-          extraData={listViewExtraData}
-          keyExtractor={(item) => item.id}
-          renderItem={renderItem}
-        />
-      </View>
-    );
-  };
-
-  const renderMobileList = () => {
-    if (isMobileDevice && selectedId !== undefined) {
-      return null;
-    }
-
-    return (
-      <View
-        style={{
-          width: "100%",
-          maxWidth: "100%",
-          flexGrow: 1,
-          flexShrink: 0,
-          display: "flex",
-          flexDirection: "column",
-          // paddingBottom: bottomNavBarHeight,
         }}
       >
         {renderListViewHeader && renderListViewHeader()}
@@ -136,6 +106,109 @@ export const SplitPage = ({
       <Box flex="grow" padding={2}>
         {renderContent && renderContent(selectedId)}
       </Box>
+    );
+  };
+
+  const renderChildrenContent = () => {
+    if (Array.isArray(children) && children.length > 2) {
+      return (
+        <View
+          style={{
+            flex: 1,
+            width: "100%",
+            height: "100%",
+            alignItems: "center",
+          }}
+        >
+          <Box marginBottom={4} paddingX={4} width="100%">
+            <SegmentedControl
+              items={tabs}
+              multiselect
+              selectLimit={tabs.length}
+              selectedItemIndexes={activeTabs}
+              onChange={(index) => {
+                setActiveTabs([...(index.activeIndex as number[])]);
+              }}
+            />
+          </Box>
+          <Box
+            direction="row"
+            flex="grow"
+            height="100%"
+            paddingX={4}
+            width={activeTabs.length > 1 ? "100%" : "60%"}
+          >
+            {activeTabs.map((tabIndex) => {
+              return (
+                <ScrollView
+                  key={tabIndex}
+                  contentContainerStyle={{
+                    flex: 1,
+                  }}
+                  style={{
+                    flex: 1,
+                    width: "60%",
+                    height: "100%",
+                  }}
+                >
+                  {elementArray[tabIndex]}
+                </ScrollView>
+              );
+            })}
+          </Box>
+        </View>
+      );
+    } else {
+      return (
+        <Box alignItems="center" direction="row" flex="grow" justifyContent="center" paddingX={2}>
+          {elementArray.map((element, index) => {
+            return (
+              <ScrollView
+                key={index}
+                contentContainerStyle={{
+                  flex: 1,
+                }}
+                style={{
+                  flex: 1,
+                  width: "60%",
+                  height: "100%",
+                }}
+              >
+                {element}
+              </ScrollView>
+            );
+          })}
+        </Box>
+      );
+    }
+  };
+
+  const renderMobileList = () => {
+    if (isMobileDevice && selectedId !== undefined) {
+      return null;
+    }
+
+    return (
+      <View
+        style={{
+          width: "100%",
+          maxWidth: "100%",
+          flexGrow: 1,
+          flexShrink: 0,
+          display: "flex",
+          flexDirection: "column",
+          paddingBottom: bottomNavBarHeight,
+        }}
+      >
+        {renderListViewHeader && renderListViewHeader()}
+        <FlatList
+          data={listViewData}
+          extraData={listViewExtraData}
+          keyExtractor={(item) => item.id}
+          nestedScrollEnabled
+          renderItem={renderItem}
+        />
+      </View>
     );
   };
 
@@ -161,88 +234,18 @@ export const SplitPage = ({
     );
   };
 
-  const renderChildrenContent = () => {
-    if (Array.isArray(children) && children.length > 2) {
-      return (
-        <View
-          style={{
-            flex: 1,
-            width: "100%",
-            height: "100%",
-            alignItems: "center",
-          }}
-        >
-          <Box paddingX={4} paddingY={2} width="100%">
-            <SegmentedControl
-              items={tabs}
-              multiselect
-              selectLimit={tabs.length}
-              selectedItemIndexes={activeTabs}
-              onChange={(index) => {
-                setActiveTabs([...(index.activeIndex as number[])]);
-              }}
-            />
-          </Box>
-          <Box
-            direction="row"
-            flex="grow"
-            height="100%"
-            paddingX={2}
-            width={activeTabs.length > 1 ? "100%" : "60%"}
-          >
-            {activeTabs.map((tabIndex) => {
-              return (
-                <ScrollView
-                  key={tabIndex}
-                  contentContainerStyle={{
-                    flex: 1,
-                  }}
-                  style={{
-                    flex: 1,
-                    width: "60%",
-                    padding: 3 * SPACING,
-                    height: "100%",
-                  }}
-                >
-                  {elementArray[tabIndex]}
-                </ScrollView>
-              );
-            })}
-          </Box>
-        </View>
-      );
-    } else {
-      return (
-        <Box alignItems="center" direction="row" flex="grow" justifyContent="center" paddingX={2}>
-          {elementArray.map((element, index) => {
-            return (
-              <ScrollView
-                key={index}
-                contentContainerStyle={{
-                  flex: 1,
-                }}
-                style={{
-                  flex: 1,
-                  width: "60%",
-                  padding: 3 * SPACING,
-                  height: "100%",
-                }}
-              >
-                {element}
-              </ScrollView>
-            );
-          })}
-        </Box>
-      );
-    }
-  };
-
   const renderMobileChildrenContent = () => {
     if (selectedId === undefined) {
       return null;
     }
     return (
-      <SwiperFlatList nestedScrollEnabled renderAll showPagination style={{width: "100%"}}>
+      <SwiperFlatList
+        contentContainerStyle={{}}
+        paginationStyle={{justifyContent: "center"}}
+        renderAll
+        showPagination
+        style={{width: "100%", height: elementArray.length > 1 ? "95%" : "100%", flex: 1}}
+      >
         {elementArray.map((element, i) => {
           return (
             <View
@@ -267,12 +270,10 @@ export const SplitPage = ({
   };
 
   const renderMobileSplitPage = () => {
-    return (
-      <>
-        {renderMobileList()}
-        {renderContent ? renderMobileListContent() : renderMobileChildrenContent()}
-      </>
-    );
+    const renderMainContent = renderContent
+      ? renderMobileListContent()
+      : renderMobileChildrenContent();
+    return selectedId === undefined ? renderMobileList() : renderMainContent;
   };
 
   return (
@@ -281,7 +282,6 @@ export const SplitPage = ({
       color={color || "lightGray"}
       direction="row"
       display="flex"
-      // flex="grow"
       height="100%"
       keyboardOffset={keyboardOffset}
       padding={2}
