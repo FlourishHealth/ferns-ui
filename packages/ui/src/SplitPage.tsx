@@ -240,17 +240,15 @@ export const SplitPage = ({
     }
     return (
       <SwiperFlatList
-        contentContainerStyle={{}}
-        paginationStyle={{justifyContent: "center"}}
+        paginationStyle={{justifyContent: "center", width: "95%"}}
         renderAll
         showPagination
-        style={{width: "100%", height: elementArray.length > 1 ? "95%" : "100%", flex: 1}}
       >
         {elementArray.map((element, i) => {
           return (
             <View
               key={i}
-              style={{width, height: elementArray.length > 1 ? "95%" : "100%", padding: 4}}
+              style={{width, padding: 4, height: elementArray.length > 1 ? "90vh" : "100vh"}}
             >
               {element}
             </View>

@@ -1,5 +1,6 @@
 export * from "./Constants";
 export * from "./Common";
+export * from "./MediaQuery";
 export * from "./ActionSheet";
 export * from "./Avatar";
 export * from "./Badge";
