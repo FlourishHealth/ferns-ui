@@ -111,6 +111,7 @@ const ManyChildren = () => {
           <Text>name: {item.item.name}</Text>
         </Box>
       )}
+      selectLimit={2}
       tabs={["First child", "Second child", "Third"]}
     >
       <Box color="green">
