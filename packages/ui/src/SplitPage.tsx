@@ -28,6 +28,7 @@ export const SplitPage = ({
   listViewWidth,
   bottomNavBarHeight,
   showItemList,
+  selectLimit,
 }: SplitPageProps) => {
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
   const [activeTabs, setActiveTabs] = useState<number[]>(tabs.length > 2 ? [0, 1] : []);
@@ -124,7 +125,7 @@ export const SplitPage = ({
             <SegmentedControl
               items={tabs}
               multiselect
-              selectLimit={tabs.length}
+              selectLimit={selectLimit || tabs.length}
               selectedItemIndexes={activeTabs}
               onChange={(index) => {
                 setActiveTabs([...(index.activeIndex as number[])]);

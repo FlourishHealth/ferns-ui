@@ -69,14 +69,19 @@ export const SegmentedControl = ({
             justifyContent="center"
             width="100%"
             onClick={() => {
+              if (
+                selectedItemIndexes?.length === selectLimit &&
+                !selectedItemIndexes?.includes(index)
+              ) {
+                return;
+              }
               if (multiselect) {
                 if (selectedItemIndexes?.includes(index)) {
                   onChange({activeIndex: selectedItemIndexes.filter((i) => i !== index)});
                 } else {
-                  const reversed = selectedItemIndexes?.reverse();
-                  reversed?.splice(1, 1);
-                  reversed?.push(index);
-                  onChange({activeIndex: reversed as number[]});
+                  const currentIndexes = [...(selectedItemIndexes as number[])];
+                  currentIndexes?.push(index);
+                  onChange({activeIndex: currentIndexes?.sort() as number[]});
                 }
               } else {
                 onChange({activeIndex: index});
