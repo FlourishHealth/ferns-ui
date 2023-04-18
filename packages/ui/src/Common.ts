@@ -2653,6 +2653,7 @@ export interface SplitPageProps {
   listViewWidth?: number;
   renderChild?: () => ReactChild;
   onSelectionChange?: (value?: any) => void | Promise<void>;
+  selectLimit?: number;
 }
 
 export type LogLevel = "fatal" | "error" | "warning" | "info" | "debug" | "critical";

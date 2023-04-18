@@ -196,11 +196,11 @@ export const SplitPage = ({
         style={{
           width: "100%",
           maxWidth: "100%",
+          height: "100%",
           flexGrow: 1,
           flexShrink: 0,
           display: "flex",
           flexDirection: "column",
-          paddingBottom: bottomNavBarHeight,
         }}
       >
         {renderListViewHeader && renderListViewHeader()}
@@ -251,7 +251,12 @@ export const SplitPage = ({
           return (
             <View
               key={i}
-              style={{width, padding: 4, height: elementArray.length > 1 ? "90vh" : "100vh"}}
+              style={{
+                width,
+                padding: 4,
+                height: elementArray.length > 1 ? "90vh" : "100vh",
+                paddingBottom: bottomNavBarHeight,
+              }}
             >
               {element}
             </View>
