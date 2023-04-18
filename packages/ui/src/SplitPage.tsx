@@ -138,7 +138,7 @@ export const SplitPage = ({
             paddingX={4}
             width={activeTabs.length > 1 ? "100%" : "60%"}
           >
-            {activeTabs.map((tabIndex) => {
+            {activeTabs.map((tabIndex, i) => {
               return (
                 <ScrollView
                   key={tabIndex}
@@ -149,6 +149,8 @@ export const SplitPage = ({
                     flex: 1,
                     width: "60%",
                     height: "100%",
+                    paddingRight: i ? 0 : 16,
+                    paddingLeft: i ? 16 : 0,
                   }}
                 >
                   {elementArray[tabIndex]}
