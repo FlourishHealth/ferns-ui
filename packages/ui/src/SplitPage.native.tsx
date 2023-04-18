@@ -117,7 +117,12 @@ export const SplitPage = ({
       return null;
     }
     return (
-      <SwiperFlatList nestedScrollEnabled renderAll showPagination style={{width: "100%"}}>
+      <SwiperFlatList
+        nestedScrollEnabled
+        renderAll
+        showPagination={elementArray.length > 1}
+        style={{width: "100%"}}
+      >
         {elementArray.map((element, i) => {
           return (
             <View

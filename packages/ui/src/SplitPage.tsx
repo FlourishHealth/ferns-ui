@@ -243,16 +243,18 @@ export const SplitPage = ({
     }
     return (
       <SwiperFlatList
+        nestedScrollEnabled
         paginationStyle={{justifyContent: "center", width: "95%"}}
         renderAll
         showPagination
+        style={{width: "100%"}}
       >
         {elementArray.map((element, i) => {
           return (
             <View
               key={i}
               style={{
-                width,
+                width: width - 8,
                 padding: 4,
                 height: elementArray.length > 1 ? "90vh" : "100vh",
                 paddingBottom: bottomNavBarHeight,
