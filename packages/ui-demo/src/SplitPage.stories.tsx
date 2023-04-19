@@ -1,4 +1,4 @@
-import {Box, FlatList, SplitPage, Text} from "ferns-ui";
+import {Box, FlatList, ScrollView, SplitPage, Text} from "ferns-ui";
 import React, {useState} from "react";
 
 const WithRenderContent = () => {
@@ -124,18 +124,20 @@ const ScrollableContent = () => {
   }));
 
   return (
-    <FlatList
-      contentContainerStyle={{height: "100%"}}
-      data={items}
-      keyExtractor={(item) => item.name}
-      renderItem={(item) => {
-        return (
-          <Box key={item.item.name} color="purple" padding={2}>
-            <Text>name: {item.item.name}</Text>
-          </Box>
-        );
-      }}
-    />
+    <ScrollView>
+      <FlatList
+        contentContainerStyle={{height: "100%"}}
+        data={items}
+        keyExtractor={(item) => item.name}
+        renderItem={(item) => {
+          return (
+            <Box key={item.item.name} color="purple" padding={2}>
+              <Text>name: {item.item.name}</Text>
+            </Box>
+          );
+        }}
+      />
+    </ScrollView>
   );
 };
 
