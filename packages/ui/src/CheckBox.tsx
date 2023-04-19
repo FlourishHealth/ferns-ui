@@ -1,27 +1,54 @@
-// import {library} from "@fortawesome/fontawesome-svg-core";
-// import {faCheck} from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 
 import {Box} from "./Box";
-import {CheckBoxProps} from "./Common";
+import {BoxColor, CheckBoxProps} from "./Common";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 
-// library.add(faCheck);
+export function CheckBox({
+  color,
+  checked,
+  size,
+  radio,
+  label,
+  labelColor,
+  subLabel,
+  disabled,
+  onChange,
+  onClick,
+  indeterminate,
+}: CheckBoxProps): React.ReactElement {
+  if (checked && indeterminate) {
+    console.error("CheckBox cannot be checked and indeterminate at the same time");
+  }
 
-export class CheckBox extends React.Component<CheckBoxProps, {}> {
-  renderCheckBox() {
+  const doOnClick = () => {
+    if (disabled) {
+      return;
+    }
+    if (!indeterminate) {
+      onChange({value: !checked});
+    }
+    onClick && onClick();
+  };
+
+  const renderCheckBox = () => {
+    let bgColor: BoxColor;
+    if (disabled) {
+      bgColor = "gray";
+    } else if (checked) {
+      bgColor = color || "darkGray";
+    } else {
+      bgColor = "white";
+    }
     return (
       <Box
-        border={this.props.color || "darkGray"}
-        color={this.props.checked ? this.props.color || "darkGray" : "white"}
-        height={this.props.size === "sm" ? 16 : 24}
-        rounding={this.props.radio ? "circle" : 3}
-        width={this.props.size === "sm" ? 16 : 24}
-        onClick={() => {
-          this.props.onChange({value: !this.props.checked});
-          this.props.onClick && this.props.onClick();
-        }}
+        border={color || "darkGray"}
+        color={bgColor}
+        height={size === "sm" ? 16 : 24}
+        rounding={radio ? "circle" : size === "sm" ? 2 : 3}
+        width={size === "sm" ? 16 : 24}
+        onClick={doOnClick}
       >
         <Box
           alignItems="center"
@@ -31,63 +58,61 @@ export class CheckBox extends React.Component<CheckBoxProps, {}> {
           justifyContent="center"
           width="100%"
         >
-          {this.props.checked && (
+          {checked && (
+            <Icon color="white" name="check" prefix="fas" size={size === "sm" ? "sm" : "md"} />
+          )}
+          {indeterminate && (
             <Icon
-              color="white"
-              name="check"
+              color={color || "darkGray"}
+              name="circle"
               prefix="fas"
-              size={this.props.size === "sm" ? "sm" : "md"}
+              size={size === "sm" ? "sm" : "md"}
             />
           )}
         </Box>
       </Box>
     );
-  }
+  };
 
-  render() {
-    return (
+  return (
+    <Box
+      alignItems="center"
+      direction="row"
+      display="flex"
+      maxHeight={60}
+      paddingY={1}
+      width="100%"
+    >
       <Box
-        alignItems="center"
-        direction="row"
         display="flex"
-        maxHeight={60}
-        paddingY={1}
-        width="100%"
+        justifyContent="center"
+        maxWidth={size === "sm" ? 14 : 20}
+        width={size === "sm" ? 14 : 20}
       >
-        <Box
-          display="flex"
-          justifyContent="center"
-          maxWidth={this.props.size === "sm" ? 14 : 20}
-          width={this.props.size === "sm" ? 14 : 20}
-        >
-          {this.renderCheckBox()}
-        </Box>
-        <Box
-          direction="column"
-          display="flex"
-          height="100%"
-          justifyContent="center"
-          marginLeft={4}
-          onClick={() => {
-            this.props.onChange({value: !this.props.checked});
-            this.props.onClick && this.props.onClick();
-          }}
-        >
-          <Text
-            color={this.props.labelColor || "darkGray"}
-            numberOfLines={this.props.subLabel ? 1 : 2}
-            size={this.props.size}
-            weight="bold"
-          >
-            {this.props.label}
-          </Text>
-          {Boolean(this.props.subLabel) && (
-            <Text color={this.props.labelColor || "darkGray"} size="sm" weight="bold">
-              {this.props.subLabel}
-            </Text>
-          )}
-        </Box>
+        {renderCheckBox()}
       </Box>
-    );
-  }
+      <Box
+        direction="column"
+        display="flex"
+        height="100%"
+        justifyContent="center"
+        marginLeft={4}
+        onClick={doOnClick}
+      >
+        <Text
+          color={labelColor || "darkGray"}
+          numberOfLines={subLabel ? 1 : 2}
+          size={size}
+          weight="bold"
+        >
+          {label}
+        </Text>
+        {Boolean(subLabel) && (
+          <Text color={labelColor || "darkGray"} size="sm" weight="bold">
+            {subLabel!}
+          </Text>
+        )}
+      </Box>
+    </Box>
+  );
 }

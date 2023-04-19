@@ -2,7 +2,7 @@ import React from "react";
 
 import {Box} from "./Box";
 import {CheckBox} from "./CheckBox";
-import {AddressInterface, FieldWithLabelsProps, TextFieldType} from "./Common";
+import {AddressInterface, FieldWithLabelsProps, ReactChildren, TextFieldType} from "./Common";
 import {USSTATESLIST} from "./Constants";
 import {CustomSelect} from "./CustomSelect";
 import {FieldWithLabels} from "./FieldWithLabels";
@@ -66,11 +66,11 @@ export const Field = ({
     onChange(switchValue);
   };
 
-  const renderField = () => {
+  const renderField = (): ReactChildren => {
     if (type === "select") {
       if (!options) {
         console.error("Field with type=select require options");
-        return null;
+        return undefined;
       }
       return (
         <SelectList
@@ -85,7 +85,7 @@ export const Field = ({
     } else if (type === "multiselect") {
       if (!options) {
         console.error("Field with type=multiselect require options");
-        return null;
+        return undefined;
       }
       return (
         <Box width="100%">

@@ -30,18 +30,25 @@ export function SelectList({
   labelColor,
   style,
   placeholder,
+  disabled,
 }: SelectListProps) {
   const withLabelProps = {label, labelColor};
+
+  let backgroundColor = style?.backgroundColor || Unifier.theme.white;
+  if (disabled) {
+    backgroundColor = Unifier.theme.lightGray;
+  }
 
   return (
     <WithLabel {...withLabelProps}>
       <RNPickerSelect
-        // Icon only needed for iOs, web and android use default icons
         Icon={() => {
+          // Icon only needed for iOS, web and android use default icons
           return Platform.OS === "ios" ? (
             <Icon color="darkGray" name="angle-down" size="md" />
           ) : null;
         }}
+        disabled={disabled}
         items={options}
         placeholder={placeholder ? {label: placeholder, value: ""} : {}}
         style={{
@@ -54,7 +61,7 @@ export function SelectList({
             borderColor: style?.borderColor || Unifier.theme.gray,
             borderWidth: style?.borderWidth || 1,
             borderRadius: style?.borderRadius || 5,
-            backgroundColor: style?.backgroundColor || Unifier.theme.white,
+            backgroundColor,
           },
           inputIOS: {
             paddingVertical: 12,
