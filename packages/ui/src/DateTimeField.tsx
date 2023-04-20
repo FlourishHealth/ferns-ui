@@ -1,4 +1,5 @@
 import React, {ReactElement} from "react";
+import DatePicker from "react-date-picker";
 import DateTimePickerWeb from "react-datetime-picker";
 import TimePicker from "react-time-picker";
 
@@ -24,7 +25,7 @@ export const DateTimeField = ({
         {mode === "datetime" && (
           <DateTimePickerWeb disableClock value={value} onChange={onChange} />
         )}
-        {/* {mode === "date" && <DatePicker value={value} onChange={onChange} />} */}
+        {mode === "date" && <DatePicker value={value} onChange={onChange} />}
         {mode === "time" && (
           <TimePicker
             disableClock
