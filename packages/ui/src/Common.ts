@@ -2638,6 +2638,8 @@ export interface SplitPageProps {
    * The names of the tabs that will be generated per ReactChild provided. Tabs will not be generated if renderContent is provided in place of children
    */
   tabs?: string[];
+  // The select limit for the number of tabs that can be selected
+  selectLimit?: number;
   // Provide in mobile if you have a bottomTabBar so that split page can adjust accordingly
   bottomNavBarHeight?: number;
   // boolean to initiate and handle state from the app that has imported ferns-ui
@@ -2653,7 +2655,6 @@ export interface SplitPageProps {
   listViewWidth?: number;
   renderChild?: () => ReactChild;
   onSelectionChange?: (value?: any) => void | Promise<void>;
-  selectLimit?: number;
 }
 
 export type LogLevel = "fatal" | "error" | "warning" | "info" | "debug" | "critical";

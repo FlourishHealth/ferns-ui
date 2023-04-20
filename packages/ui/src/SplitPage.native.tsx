@@ -1,3 +1,4 @@
+// TODO: Update SplitPage native to have desktop UX for tablet sized screens
 import React, {Children, useCallback, useEffect, useState} from "react";
 import {Dimensions, ListRenderItemInfo, View} from "react-native";
 import {SwiperFlatList} from "react-native-swiper-flatlist";
