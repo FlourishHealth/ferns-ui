@@ -76,7 +76,7 @@ const SortableExpandableTable = () => {
           <Text>{row[0]}</Text>
           <Text>{row[1]}</Text>
           <Text>{row[2]}</Text>
-          <Text>{`$${(row[2] as number).toFixed(2)}`}</Text>
+          <Text>{`$${(row[3] as number).toFixed(2)}`}</Text>
         </TableRow>
       ))}
     </Table>
