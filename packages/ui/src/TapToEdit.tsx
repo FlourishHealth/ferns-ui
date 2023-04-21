@@ -1,4 +1,5 @@
 import React, {ReactElement, useState} from "react";
+import {Linking} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
@@ -110,6 +111,10 @@ export const TapToEdit = ({
       } else if (fieldProps?.type === "multiselect") {
         // ???
         displayValue = value.join(", ");
+      } else if (fieldProps?.type === "url") {
+        // Show only the domain, full links are likely too long.
+        const url = new URL(value);
+        displayValue = url?.hostname ?? value;
       } else if (fieldProps?.type === "address") {
         let city = "";
         if (value?.city) {
@@ -133,6 +138,13 @@ export const TapToEdit = ({
         }${addressLineTwo}${addressLineTwo && addressLineThree ? `\n` : ""}${addressLineThree}`;
       }
     }
+
+    const openLink = (): void => {
+      if (fieldProps?.type === "url") {
+        Linking.openURL(value);
+      }
+    };
+
     return (
       <Box
         direction="row"
@@ -146,8 +158,8 @@ export const TapToEdit = ({
           <Text weight="bold">{title}:</Text>
         </Box>
         <Box direction="row">
-          <Box>
-            <Text>{displayValue}</Text>
+          <Box onClick={fieldProps?.type === "url" ? openLink : undefined}>
+            <Text underline={fieldProps?.type === "url"}>{displayValue}</Text>
           </Box>
           {editable && (
             <Box marginLeft={2} onClick={(): void => setEditing(true)}>

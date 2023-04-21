@@ -16,6 +16,7 @@ const TapStory = (): ReactElement => {
     state: "New York",
     zipcode: "12345",
   });
+  const [url, setURL] = useState("https://en.wikipedia.org/wiki/React_Native#Implementation");
   return (
     <Box direction="column" display="flex" height="100%" width="100%">
       <TapToEdit
@@ -105,6 +106,16 @@ const TapStory = (): ReactElement => {
         value={address}
         onSave={(value): void => {
           setAddress(value);
+        }}
+      />
+      <TapToEdit
+        name="url"
+        setValue={setURL}
+        title="URL"
+        type="url"
+        value={url}
+        onSave={(value): void => {
+          setURL(value);
         }}
       />
     </Box>
