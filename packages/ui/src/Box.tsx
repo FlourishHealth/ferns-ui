@@ -269,6 +269,7 @@ export class Box extends React.Component<BoxProps, {}> {
           contentContainerStyle={{justifyContent, alignContent, alignItems}}
           horizontal={this.props.overflow === "scrollX"}
           keyboardShouldPersistTaps="handled"
+          nestedScrollEnabled
           scrollEventThrottle={50}
           style={scrollStyle}
           onScroll={(event) => {
