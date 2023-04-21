@@ -39,6 +39,9 @@ export function Table({children, columns, borderStyle, maxHeight}: TableProps): 
     width = columns.reduce((acc, curr) => {
       return (acc as number) + (curr as number);
     }, 0);
+    if (hasDrawerContents) {
+      width = (width as number) + 30;
+    }
   } else {
     width = "100%";
   }
