@@ -7,6 +7,7 @@ import {BoxProps} from "./Common";
 import {Field, FieldProps} from "./Field";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
+import {formatAddress} from "./Utilities";
 
 export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   title: string;
@@ -116,26 +117,7 @@ export const TapToEdit = ({
         const url = new URL(value);
         displayValue = url?.hostname ?? value;
       } else if (fieldProps?.type === "address") {
-        let city = "";
-        if (value?.city) {
-          city = value?.state || value.zipcode ? `${value.city}, ` : `${value.city}`;
-        }
-
-        let state = "";
-        if (value?.state) {
-          state = value?.zipcode ? `${value.state} ` : `${value.state}`;
-        }
-
-        const zip = value?.zipcode || "";
-
-        const addressLineOne = value?.address1 ?? "";
-        const addressLineTwo = value?.address2 ?? "";
-        const addressLineThree = `${city}${state}${zip}`;
-
-        // Only add new lines if lines before and after are not empty to avoid awkward whitespace
-        displayValue = `${addressLineOne}${
-          addressLineOne && (addressLineTwo || addressLineThree) ? `\n` : ""
-        }${addressLineTwo}${addressLineTwo && addressLineThree ? `\n` : ""}${addressLineThree}`;
+        displayValue = formatAddress(value);
       }
     }
 

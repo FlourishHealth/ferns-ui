@@ -97,7 +97,6 @@ export class Page extends React.Component<PageProps, {}> {
           padding={this.props.padding !== undefined ? this.props.padding : 2}
           scroll={this.props.scroll === undefined ? true : this.props.scroll}
           width="100%"
-          // color="ligh"
         >
           {this.renderHeader()}
           {this.props.loading === true && (
