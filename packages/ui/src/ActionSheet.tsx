@@ -272,7 +272,7 @@ export type ActionSheetProps = {
   bounceOnOpen?: boolean;
 
   /**
-      * Setting the keyboard persistance of the ScrollView component, should be one of "never", "always", or "handled"
+      * Setting the keyboard persistence of the ScrollView component, should be one of "never", "always", or "handled"
 
  | Type | Required |
  | ---- | -------- |
@@ -950,8 +950,7 @@ export class ActionSheet extends Component<Props, State, any> {
 
       UIManager.measure(currentlyFocusedField, (originX, originY, width, height, pageX, pageY) => {
         const fieldHeight = height;
-        const fieldTop = pageY;
-        const gap = windowHeight - keyboardHeight - (fieldTop + fieldHeight);
+        const gap = windowHeight - keyboardHeight - (pageY + fieldHeight);
         if (gap >= 0) {
           return;
         }

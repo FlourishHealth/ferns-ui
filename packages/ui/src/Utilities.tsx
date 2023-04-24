@@ -4,14 +4,12 @@ import get from "lodash/get";
 
 export function mergeInlineStyles(inlineStyle?: any, newStyle?: any) {
   const inline = get(inlineStyle, "__style");
-  const dangerouslySetInlineStyle = {
+  return {
     __style: {
       ...inline,
       ...newStyle,
     },
   };
-
-  return dangerouslySetInlineStyle;
 }
 
 /*
@@ -159,3 +157,26 @@ export const union =
   <T,>(...fns: Functor<T>[]) =>
   (val: T) =>
     concat(fns.map((fn) => fn(val)));
+
+export function formatAddress(address: any): string {
+  let city = "";
+  if (address?.city) {
+    city = address?.state || address.zipcode ? `${address.city}, ` : `${address.city}`;
+  }
+
+  let state = "";
+  if (address?.state) {
+    state = address?.zipcode ? `${address.state} ` : `${address.state}`;
+  }
+
+  const zip = address?.zipcode || "";
+
+  const addressLineOne = address?.address1 ?? "";
+  const addressLineTwo = address?.address2 ?? "";
+  const addressLineThree = `${city}${state}${zip}`;
+
+  // Only add new lines if lines before and after are not empty to avoid awkward whitespace
+  return `${addressLineOne}${
+    addressLineOne && (addressLineTwo || addressLineThree) ? `\n` : ""
+  }${addressLineTwo}${addressLineTwo && addressLineThree ? `\n` : ""}${addressLineThree}`;
+}
