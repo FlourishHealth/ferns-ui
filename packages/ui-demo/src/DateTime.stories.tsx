@@ -5,12 +5,13 @@ import {StorybookContainer} from "./StorybookContainer";
 
 interface DateTimeProps {
   mode: "date" | "time" | "datetime";
+  label?: string;
 }
 
-const DateTime = ({mode}: DateTimeProps) => {
+const DateTime = ({mode, label}: DateTimeProps) => {
   const [value, setValue] = useState(new Date());
 
-  return <DateTimeField mode={mode} value={value} onChange={setValue} />;
+  return <DateTimeField label={label} mode={mode} value={value} onChange={setValue} />;
 };
 
 export const DateTimeStories = {
@@ -22,15 +23,15 @@ export const DateTimeStories = {
         // Placed two here to ensure that the calendar z-index does
         // not conflict with the second one
         <StorybookContainer>
-          <DateTime mode="datetime" />
-          <DateTime mode="datetime" />
+          <DateTime label="Birthday" mode="datetime" />
+          <DateTime label="Expiration Date" mode="datetime" />
         </StorybookContainer>
       );
     },
     "Date without Time": function () {
       return (
         <StorybookContainer>
-          <DateTime mode="date" />
+          <DateTime label="birthday" mode="date" />
         </StorybookContainer>
       );
     },

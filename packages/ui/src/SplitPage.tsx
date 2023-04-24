@@ -1,32 +1,15 @@
-import React, {Children, ReactChild, ReactElement, useState} from "react";
-import {ListRenderItemInfo, ScrollView, View} from "react-native";
+import React, {Children, useCallback, useEffect, useState} from "react";
+import {Dimensions, ListRenderItemInfo, ScrollView, View} from "react-native";
+import {SwiperFlatList} from "react-native-swiper-flatlist";
 
 import {Box} from "./Box";
-import {Color, SPACING} from "./Common";
+import {SplitPageProps} from "./Common";
 import {FlatList} from "./FlatList";
 import {IconButton} from "./IconButton";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {SegmentedControl} from "./SegmentedControl";
 import {Spinner} from "./Spinner";
 import {Unifier} from "./Unifier";
-
-interface SplitPageProps {
-  children?: ReactChild | ReactChild[] | null;
-  tabs?: string[];
-  // TODO: figure out navigation
-  navigation?: any;
-  loading?: boolean;
-  color?: Color;
-  keyboardOffset?: number;
-  renderListViewItem: (itemInfo: ListRenderItemInfo<any>) => ReactElement | null;
-  renderListViewHeader?: () => ReactElement | null;
-  renderContent?: (index?: number) => ReactElement | ReactElement[] | null;
-  listViewData: any[];
-  listViewExtraData?: any;
-  listViewWidth?: number;
-  renderChild?: () => ReactChild;
-  selectLimit?: number;
-}
 
 // A component for rendering a list on one side and a details view on the right for large screens,
 // and a scrollable list where clicking an item takes you the details view.
@@ -39,15 +22,40 @@ export const SplitPage = ({
   renderListViewItem,
   renderListViewHeader,
   renderContent,
+  onSelectionChange = () => {},
   listViewData,
   listViewExtraData,
   listViewWidth,
+  bottomNavBarHeight,
+  showItemList,
   selectLimit,
 }: SplitPageProps) => {
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
   const [activeTabs, setActiveTabs] = useState<number[]>(tabs.length > 2 ? [0, 1] : []);
+  const {width} = Dimensions.get("window");
+
+  const isMobileDevice = !mediaQueryLargerThan("sm");
 
   const elementArray = Children.toArray(children);
+
+  const onItemSelect = useCallback(
+    (item: ListRenderItemInfo<any>) => {
+      setSelectedId(item.index);
+      onSelectionChange(item);
+    },
+    [onSelectionChange]
+  );
+
+  const onItemDeselect = useCallback(() => {
+    setSelectedId(undefined);
+    onSelectionChange(undefined);
+  }, [onSelectionChange]);
+
+  useEffect(() => {
+    if (showItemList) {
+      onItemDeselect();
+    }
+  }, [showItemList, onItemDeselect]);
 
   if (!children && !renderContent) {
     console.warn("A child node is required");
@@ -63,7 +71,7 @@ export const SplitPage = ({
     return (
       <Box
         onClick={() => {
-          setSelectedId(itemInfo.index);
+          onItemSelect(itemInfo);
         }}
       >
         {renderListViewItem(itemInfo)}
@@ -72,19 +80,14 @@ export const SplitPage = ({
   };
 
   const renderList = () => {
-    if (!mediaQueryLargerThan("sm") && selectedId) {
-      return null;
-    }
     return (
       <View
         style={{
-          width: mediaQueryLargerThan("sm") ? listViewWidth ?? 300 : "100%",
-          maxWidth: mediaQueryLargerThan("sm") ? listViewWidth ?? 300 : "100%",
+          width: listViewWidth ?? 300,
+          maxWidth: listViewWidth ?? 300,
           flexGrow: 1,
           flexShrink: 0,
           display: "flex",
-          paddingTop: "12px",
-          paddingBottom: "12px",
           flexDirection: "column",
         }}
       >
@@ -102,16 +105,6 @@ export const SplitPage = ({
   const renderListContent = () => {
     return (
       <Box flex="grow" padding={2}>
-        {!mediaQueryLargerThan("sm") && (
-          <Box width="100%">
-            <IconButton
-              accessibilityLabel="close"
-              icon="times"
-              iconColor="darkGray"
-              onClick={() => setSelectedId(undefined)}
-            />
-          </Box>
-        )}
         {renderContent && renderContent(selectedId)}
       </Box>
     );
@@ -128,7 +121,7 @@ export const SplitPage = ({
             alignItems: "center",
           }}
         >
-          <Box paddingX={4} paddingY={2} width="100%">
+          <Box marginBottom={4} paddingX={4} width="100%">
             <SegmentedControl
               items={tabs}
               multiselect
@@ -143,10 +136,10 @@ export const SplitPage = ({
             direction="row"
             flex="grow"
             height="100%"
-            paddingX={2}
+            paddingX={4}
             width={activeTabs.length > 1 ? "100%" : "60%"}
           >
-            {activeTabs.map((tabIndex) => {
+            {activeTabs.map((tabIndex, i) => {
               return (
                 <ScrollView
                   key={tabIndex}
@@ -156,8 +149,9 @@ export const SplitPage = ({
                   style={{
                     flex: 1,
                     width: "60%",
-                    padding: 3 * SPACING,
                     height: "100%",
+                    paddingRight: i ? 0 : 16,
+                    paddingLeft: i ? 16 : 0,
                   }}
                 >
                   {elementArray[tabIndex]}
@@ -180,7 +174,6 @@ export const SplitPage = ({
                 style={{
                   flex: 1,
                   width: "60%",
-                  padding: 3 * SPACING,
                   height: "100%",
                 }}
               >
@@ -193,21 +186,117 @@ export const SplitPage = ({
     }
   };
 
+  const renderMobileList = () => {
+    if (isMobileDevice && selectedId !== undefined) {
+      return null;
+    }
+
+    return (
+      <View
+        style={{
+          width: "100%",
+          maxWidth: "100%",
+          height: "100%",
+          flexGrow: 1,
+          flexShrink: 0,
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        {renderListViewHeader && renderListViewHeader()}
+        <FlatList
+          data={listViewData}
+          extraData={listViewExtraData}
+          keyExtractor={(item) => item.id}
+          nestedScrollEnabled
+          renderItem={renderItem}
+        />
+      </View>
+    );
+  };
+
+  const renderMobileListContent = () => {
+    if (isMobileDevice && selectedId === undefined) {
+      return null;
+    }
+
+    return (
+      <Box flex="grow" padding={2}>
+        {isMobileDevice && (
+          <Box width="100%">
+            <IconButton
+              accessibilityLabel="close"
+              icon="times"
+              iconColor="darkGray"
+              onClick={() => onItemDeselect()}
+            />
+          </Box>
+        )}
+        {renderContent && renderContent(selectedId)}
+      </Box>
+    );
+  };
+
+  const renderMobileChildrenContent = () => {
+    if (selectedId === undefined) {
+      return null;
+    }
+    return (
+      <SwiperFlatList
+        nestedScrollEnabled
+        paginationStyle={{justifyContent: "center", width: "95%"}}
+        renderAll
+        showPagination
+        style={{width: "100%"}}
+      >
+        {elementArray.map((element, i) => {
+          return (
+            <View
+              key={i}
+              style={{
+                width: width - 8,
+                padding: 4,
+                height: elementArray.length > 1 ? "90vh" : "100vh",
+                paddingBottom: bottomNavBarHeight,
+              }}
+            >
+              {element}
+            </View>
+          );
+        })}
+      </SwiperFlatList>
+    );
+  };
+
+  const renderSplitPage = () => {
+    return (
+      <>
+        {renderList()}
+        {renderContent ? renderListContent() : renderChildrenContent()}
+      </>
+    );
+  };
+
+  const renderMobileSplitPage = () => {
+    const renderMainContent = renderContent
+      ? renderMobileListContent()
+      : renderMobileChildrenContent();
+    return selectedId === undefined ? renderMobileList() : renderMainContent;
+  };
+
   return (
     <Box
       avoidKeyboard
       color={color || "lightGray"}
       direction="row"
       display="flex"
-      flex="grow"
       height="100%"
       keyboardOffset={keyboardOffset}
       padding={2}
       width="100%"
     >
       {loading === true && <Spinner color={Unifier.theme.darkGray as any} size="md" />}
-      {renderList()}
-      {renderContent ? renderListContent() : renderChildrenContent()}
+      {Boolean(isMobileDevice) ? renderMobileSplitPage() : renderSplitPage()}
     </Box>
   );
 };

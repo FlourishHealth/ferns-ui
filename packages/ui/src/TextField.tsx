@@ -1,6 +1,6 @@
 import {AsYouType} from "libphonenumber-js";
 import moment from "moment-timezone";
-import React, {ReactElement, useState} from "react";
+import React, {ReactElement, useCallback, useMemo, useState} from "react";
 import {ActivityIndicator, KeyboardTypeOptions, Platform, TextInput, View} from "react-native";
 import {Calendar} from "react-native-calendars";
 
@@ -168,7 +168,7 @@ export function TextField({
     borderColor = Unifier.theme.gray;
   }
 
-  const getHeight = () => {
+  const getHeight = useCallback(() => {
     if (grow) {
       return Math.max(40, height);
     } else if (multiline) {
@@ -176,7 +176,29 @@ export function TextField({
     } else {
       return 40;
     }
-  };
+  }, [grow, height, multiline]);
+
+  const defaultTextInputStyles = useMemo(() => {
+    const defaultStyles = {
+      flex: 1,
+      paddingTop: 10,
+      paddingRight: 10,
+      paddingBottom: 10,
+      paddingLeft: 0,
+      height: getHeight(),
+      width: "100%",
+      color: Unifier.theme.darkGray,
+      fontFamily: Unifier.theme.primaryFont,
+      ...style,
+    };
+
+    if (Platform.OS === "web") {
+      defaultStyles.outline = 0;
+    }
+
+    return defaultStyles;
+  }, [getHeight, style]);
+
   const isHandledByModal =
     type === "date" || type === "numberRange" || type === "decimalRange" || type === "height";
 
@@ -269,20 +291,7 @@ export function TextField({
               placeholderTextColor={Unifier.theme.gray}
               returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
               secureTextEntry={type === "password"}
-              style={{
-                flex: 1,
-                paddingTop: 10,
-                paddingRight: 10,
-                paddingBottom: 10,
-                paddingLeft: 0,
-                height: getHeight(),
-                width: "100%",
-                color: Unifier.theme.darkGray,
-                fontFamily: Unifier.theme.primaryFont,
-                // Remove border in web.
-                outlineWidth: 0,
-                ...style,
-              }}
+              style={defaultTextInputStyles}
               // For react-native-autofocus
               textContentType={textContentType}
               underlineColorAndroid="transparent"

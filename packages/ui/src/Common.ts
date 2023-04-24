@@ -1,4 +1,5 @@
-import {SyntheticEvent} from "react";
+import {ReactChild, ReactElement, SyntheticEvent} from "react";
+import {ListRenderItemInfo} from "react-native";
 
 export interface BaseProfile {
   email: string;
@@ -2023,9 +2024,12 @@ export interface FieldWithLabelsProps {
 }
 
 export interface DateTimeFieldProps extends FieldWithLabelsProps {
+  label?: string;
   mode: "date" | "time" | "datetime";
   value: Date;
   onChange: (date: Date) => void;
+  dateFormat?: string;
+  pickerType?: "default" | "compact" | "inline" | "spinner";
 }
 
 export interface TextFieldProps extends FieldWithLabelsProps {
@@ -2622,6 +2626,35 @@ export interface PickerProps {
   enabled?: boolean;
   mode?: "dialog" | "dropdown";
   prompt?: string;
+}
+
+export interface SplitPageProps {
+  /**
+   * can accept either one React Child or any array of ReactChild. If this is not provided,
+   * renderContent must return one or many ReactChild.
+   */
+  children?: ReactChild | ReactChild[] | null;
+  /**
+   * The names of the tabs that will be generated per ReactChild provided. Tabs will not be generated if renderContent is provided in place of children
+   */
+  tabs?: string[];
+  // The select limit for the number of tabs that can be selected
+  selectLimit?: number;
+  // Provide in mobile if you have a bottomTabBar so that split page can adjust accordingly
+  bottomNavBarHeight?: number;
+  // boolean to initiate and handle state from the app that has imported ferns-ui
+  showItemList?: boolean;
+  loading?: boolean;
+  color?: Color;
+  keyboardOffset?: number;
+  renderListViewItem: (itemInfo: ListRenderItemInfo<any>) => ReactElement | null;
+  renderListViewHeader?: () => ReactElement | null;
+  renderContent?: (index?: number) => ReactElement | ReactElement[] | null;
+  listViewData: any[];
+  listViewExtraData?: any;
+  listViewWidth?: number;
+  renderChild?: () => ReactChild;
+  onSelectionChange?: (value?: any) => void | Promise<void>;
 }
 
 export type LogLevel = "fatal" | "error" | "warning" | "info" | "debug" | "critical";

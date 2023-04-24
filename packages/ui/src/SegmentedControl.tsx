@@ -49,7 +49,7 @@ export const SegmentedControl = ({
       display="flex"
       height={40}
       justifyContent="between"
-      padding={1}
+      // padding={1}
       rounding={3}
       width="100%"
     >
@@ -58,7 +58,7 @@ export const SegmentedControl = ({
           key={index}
           color={isTabActive(index)}
           height="100%"
-          paddingX={2}
+          // paddingX={2}
           rounding={3}
           width={`${100 / items.length}%`}
         >

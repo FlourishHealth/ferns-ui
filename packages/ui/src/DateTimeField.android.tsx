@@ -1,9 +1,10 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment-timezone";
-import React, {ReactElement} from "react";
+import React, {ReactElement, useMemo, useState} from "react";
+import {TextInput} from "react-native";
 
-import {Box} from "./Box";
 import {DateTimeFieldProps} from "./Common";
+import {Unifier} from "./Unifier";
 import {WithLabel} from "./WithLabel";
 
 export const DateTimeField = ({
@@ -11,8 +12,45 @@ export const DateTimeField = ({
   value,
   onChange,
   errorMessage,
+  pickerType = "default",
+  dateFormat,
   errorMessageColor,
 }: DateTimeFieldProps): ReactElement => {
+  // const [showCalendar, setShowCalendar] = useState(false);
+  // const [showClock, setShowClock] = useState(false);
+  // const [tempDate, setTempDate] = useState<Date>();
+  const [pickerMode, setPickerMode] = useState(mode);
+  const [showPicker, setShowPicker] = useState(false);
+
+  const showCalendarFirst = mode === "datetime" || mode === "date";
+
+  const defaultFormat = useMemo(() => {
+    if (dateFormat) {
+      return dateFormat;
+    } else {
+      if (mode === "date") {
+        return "MMMM Do YYYY";
+      } else if (mode === "time") {
+        return "h:mm a";
+      } else {
+        return "MMMM Do YYYY, h:mm a";
+      }
+    }
+  }, [mode, dateFormat]);
+
+  const showMode = (currentMode: "date" | "time") => {
+    setShowPicker(true);
+    setPickerMode(currentMode);
+  };
+
+  const showDatePicker = () => {
+    showMode("date");
+  };
+
+  const showTimePicker = () => {
+    showMode("time");
+  };
+
   return (
     <WithLabel
       label={errorMessage}
@@ -21,35 +59,42 @@ export const DateTimeField = ({
       labelSize="sm"
     >
       <WithLabel>
-        <Box maxWidth={300}>
+        <TextInput
+          inputMode="none"
+          style={{
+            flex: 1,
+            paddingTop: 10,
+            paddingRight: 10,
+            paddingBottom: 10,
+            paddingLeft: 10,
+            height: 40,
+            width: "100%",
+            color: Unifier.theme.darkGray,
+            fontFamily: Unifier.theme.primaryFont,
+            borderWidth: 1,
+          }}
+          value={moment(value).format(defaultFormat)}
+          onPressIn={() => {
+            showCalendarFirst ? showDatePicker() : showTimePicker();
+          }}
+        />
+        {showPicker && (
           <DateTimePicker
-            display="spinner"
-            mode={mode === "datetime" ? "date" : mode}
+            display={pickerType}
+            mode={pickerMode}
             testID="dateTimePicker"
-            value={moment(value).toDate()}
-            onChange={(event: any, date: any) => {
-              if (!date) {
-                return;
+            value={value}
+            onChange={(event, date) => {
+              if (date) {
+                onChange(date);
+                if (pickerMode === "date" && mode === "datetime") {
+                  showTimePicker();
+                }
               }
-              onChange(value);
+              setShowPicker(false);
             }}
           />
-          {mode === "datetime" && (
-            <DateTimePicker
-              display="spinner"
-              mode="time"
-              testID="dateTimePicker"
-              value={moment(value).toDate()}
-              onChange={(event: any, date: any) => {
-                // fix to append to date object
-                if (!date) {
-                  return;
-                }
-                onChange(value);
-              }}
-            />
-          )}
-        </Box>
+        )}
       </WithLabel>
     </WithLabel>
   );
