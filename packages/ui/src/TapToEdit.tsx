@@ -114,8 +114,13 @@ export const TapToEdit = ({
         displayValue = value.join(", ");
       } else if (fieldProps?.type === "url") {
         // Show only the domain, full links are likely too long.
-        const url = new URL(value);
-        displayValue = url?.hostname ?? value;
+        try {
+          const url = new URL(value);
+          displayValue = url?.hostname ?? value;
+        } catch (e) {
+          console.debug(`Invalid URL: ${value}`);
+          displayValue = value;
+        }
       } else if (fieldProps?.type === "address") {
         displayValue = formatAddress(value);
       }
