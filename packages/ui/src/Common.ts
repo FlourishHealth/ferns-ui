@@ -1,4 +1,4 @@
-import {SyntheticEvent} from "react";
+import React, {SyntheticEvent} from "react";
 
 export interface BaseProfile {
   email: string;

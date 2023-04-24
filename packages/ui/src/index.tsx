@@ -69,7 +69,7 @@ interface Insets {
   right?: number;
 }
 
-// Lifted from react-native-navigatino
+// Lifted from react-native-navigation
 // import {Options} from "./Options";
 export interface LayoutComponent<P = {}> {
   /**
@@ -453,7 +453,7 @@ export interface OptionsTopBarTitle {
     passProps?: object;
   };
   /**
-   * Top Bar title height in densitiy pixels
+   * Top Bar title height in density pixels
    * #### (Android specific)
    */
   height?: number;
@@ -496,7 +496,7 @@ export interface OptionsTopBarBackButton {
    */
   icon?: ImageRequireSource;
   /**
-   * Weither the back button is visible or not
+   * Whether the back button is visible or not
    * @default true
    */
   visible?: boolean;
@@ -1005,14 +1005,14 @@ export interface OverlayOptions {
    */
   interceptTouchOutside?: boolean;
   /**
-   * Control wether this Overlay should handle Keyboard events.
+   * Control whether this Overlay should handle Keyboard events.
    * Set this to true if your Overlay contains a TextInput.
    */
   handleKeyboardEvents?: boolean;
 }
 export interface ModalOptions {
   /**
-   * Control wether this modal should be dismiss using swipe gesture when the modalPresentationStyle = 'pageSheet'
+   * Control whether this modal should be dismiss using swipe gesture when the modalPresentationStyle = 'pageSheet'
    * #### (iOS specific)
    */
   swipeToDismiss?: boolean;
