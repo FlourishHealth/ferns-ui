@@ -4,7 +4,7 @@ import DateTimePickerWeb from "react-datetime-picker";
 import TimePicker from "react-time-picker";
 
 import {Box} from "./Box";
-import {DateTimeFieldProps} from "./Common";
+import {DateTimeFieldProps, WithChildren} from "./Common";
 import {WithLabel} from "./WithLabel";
 
 export const DateTimeField = ({
@@ -13,7 +13,7 @@ export const DateTimeField = ({
   onChange,
   errorMessage,
   errorMessageColor,
-}: DateTimeFieldProps): ReactElement => {
+}: WithChildren<DateTimeFieldProps>): ReactElement => {
   return (
     <WithLabel
       label={errorMessage}

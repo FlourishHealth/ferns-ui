@@ -1,9 +1,9 @@
 import React from "react";
 import {View} from "react-native";
 
-import {MaskProps} from "./Common";
+import {MaskProps, ReactChildren} from "./Common";
 
-export function Mask(props: MaskProps): React.ReactElement | null {
+export function Mask(props: MaskProps): ReactChildren {
   if (props.shape === "rounded") {
     return <View style={{overflow: "hidden", borderRadius: 12}}>{props.children}</View>;
   } else if (props.shape === "circle") {

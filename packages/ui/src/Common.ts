@@ -1,4 +1,4 @@
-import {ReactChild, ReactElement, SyntheticEvent} from "react";
+import {ReactElement, ReactNode, SyntheticEvent} from "react";
 import {ListRenderItemInfo} from "react-native";
 
 export interface BaseProfile {
@@ -1833,16 +1833,16 @@ export interface BlurBoxProps extends BoxProps {
 }
 
 export interface LayerProps {
-  children: React.ReactNode;
+  children: ReactChildren;
 }
 
 export interface ModalProps {
   header?: React.ReactNode;
   accessibilityModalLabel: string;
-  children?: React.ReactNode;
+  children?: ReactChildren;
   closeOnOutsideClick?: boolean;
-  footer?: React.ReactNode;
-  heading?: string | React.ReactNode;
+  footer?: ReactChild;
+  heading?: string | ReactChild;
   onDismiss: () => void;
   role?: "alertdialog" | "dialog";
   size?: "sm" | "md" | "lg" | number;
@@ -1853,7 +1853,7 @@ export interface BoxProps {
   alignItems?: AlignItems;
   alignSelf?: AlignSelf;
   bottom?: boolean;
-  children?: React.ReactNode;
+  children?: ReactChildren;
   color?: BoxColor;
   column?: UnsignedUpTo12;
   smColumn?: UnsignedUpTo12;
@@ -2020,7 +2020,7 @@ export interface FieldWithLabelsProps {
   labelColor?: AllColors;
   helperText?: string;
   helperTextColor?: AllColors;
-  children?: React.ReactNode;
+  children?: ReactChildren;
 }
 
 export interface DateTimeFieldProps extends FieldWithLabelsProps {
@@ -2095,7 +2095,7 @@ export interface SpinnerProps {
 }
 
 export interface MaskProps {
-  children?: React.ReactElement;
+  children?: ReactChildren;
   shape?: "circle" | "rounded" | "square";
   height?: number | string;
   width?: number | string;
@@ -2115,7 +2115,7 @@ export interface IconRowProps {
 export interface LinkProps {
   href: string;
   inline?: boolean;
-  children?: React.ReactNode;
+  children?: ReactChild;
   onClick?: () => void;
   target?: null | "blank";
 }
@@ -2148,7 +2148,7 @@ export interface ImageProps {
   maxWidth?: number;
   maxHeight?: number;
   src: string;
-  children?: React.ReactNode;
+  children?: ReactChildren;
   fit?: "cover" | "contain" | "none";
   onError?: () => void;
   onLoad?: () => void;
@@ -2731,3 +2731,9 @@ export interface AddressInterface {
   state: string;
   zipcode: string;
 }
+
+// TODO: Tighten up type to exclude string, which is almost never an acceptable type for React Native children
+//  (except Heading or Text for example.).
+export type ReactChild = ReactNode;
+export type ReactChildren = ReactNode;
+export type WithChildren<P> = P & {children?: ReactNode};

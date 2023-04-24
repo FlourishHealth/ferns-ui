@@ -1,11 +1,11 @@
 import React from "react";
 
 import {Box} from "./Box";
-import {AllColors, JustifyContent, TextSize} from "./Common";
+import {AllColors, JustifyContent, ReactChildren, TextSize} from "./Common";
 import {Text} from "./Text";
 
 export interface WithLabelProps {
-  children: React.ReactNode;
+  children?: ReactChildren;
   show?: boolean;
   label?: string;
   labelInline?: boolean;
@@ -24,7 +24,10 @@ export function WithLabel({
   labelColor,
   show,
   children,
-}: WithLabelProps) {
+}: WithLabelProps): React.ReactElement | null {
+  if (!children) {
+    return null;
+  }
   return (
     <Box
       direction={labelInline ? "row" : "column"}

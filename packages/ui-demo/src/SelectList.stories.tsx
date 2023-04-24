@@ -65,13 +65,13 @@ export const SelectListStories = {
   title: "Select List",
   component: SelectList,
   stories: {
-    SelectLists() {
+    "Select Lists": function () {
       return <SelectLists />;
     },
-    WithLabel() {
+    "Select List Label": function () {
       return <WithLabel />;
     },
-    Disabled() {
+    "Select List Disabled": function () {
       return <Disabled />;
     },
   },
