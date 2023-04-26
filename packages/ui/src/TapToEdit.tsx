@@ -7,7 +7,29 @@ import {BoxProps} from "./Common";
 import {Field, FieldProps} from "./Field";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
-import {formatAddress} from "./Utilities";
+
+export function formatAddress(address: any): string {
+  let city = "";
+  if (address?.city) {
+    city = address?.state || address.zipcode ? `${address.city}, ` : `${address.city}`;
+  }
+
+  let state = "";
+  if (address?.state) {
+    state = address?.zipcode ? `${address.state} ` : `${address.state}`;
+  }
+
+  const zip = address?.zipcode || "";
+
+  const addressLineOne = address?.address1 ?? "";
+  const addressLineTwo = address?.address2 ?? "";
+  const addressLineThree = `${city}${state}${zip}`;
+
+  // Only add new lines if lines before and after are not empty to avoid awkward whitespace
+  return `${addressLineOne}${
+    addressLineOne && (addressLineTwo || addressLineThree) ? `\n` : ""
+  }${addressLineTwo}${addressLineTwo && addressLineThree ? `\n` : ""}${addressLineThree}`;
+}
 
 export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   title: string;
