@@ -8,23 +8,22 @@ const ChevronTooltip = ({
   idealDirection: "left" | "right" | "top" | "bottom" | "none";
   text?: string;
 }): React.ReactElement => (
-  <Tooltip idealDirection={idealDirection === "none" ? undefined : idealDirection} text={text}>
-    <IconButton
-      accessibilityLabel="info"
-      bgColor="white"
-      icon={
-        idealDirection === "none"
-          ? "question"
-          : idealDirection === "bottom"
-          ? "chevron-down"
-          : idealDirection === "top"
-          ? "chevron-up"
-          : `chevron-${idealDirection}`
-      }
-      iconColor="blue"
-      onClick={() => {}}
-    />
-  </Tooltip>
+  <IconButton
+    accessibilityLabel="info"
+    bgColor="white"
+    icon={
+      idealDirection === "none"
+        ? "question"
+        : idealDirection === "bottom"
+        ? "chevron-down"
+        : idealDirection === "top"
+        ? "chevron-up"
+        : `chevron-${idealDirection}`
+    }
+    iconColor="blue"
+    tooltip={{text, idealDirection: idealDirection === "none" ? undefined : idealDirection}}
+    onClick={() => {}}
+  />
 );
 
 const FiveTooltips = ({text}: {text?: string}): React.ReactElement => (

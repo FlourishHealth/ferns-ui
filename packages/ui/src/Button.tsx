@@ -1,12 +1,13 @@
 import debounce from "lodash/debounce";
 import React, {useState} from "react";
-import {ActivityIndicator, TouchableOpacity} from "react-native";
+import {ActivityIndicator, TouchableOpacity, View} from "react-native";
 
 import {Box} from "./Box";
-import {ButtonColor, Color, IconName, IconPrefix, UnifiedTheme} from "./Common";
+import {ButtonColor, Color, IconName, IconPrefix, TooltipDirection, UnifiedTheme} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
+import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 
 export interface ButtonProps {
@@ -29,6 +30,10 @@ export interface ButtonProps {
   confirmationHeading?: string;
   shape?: "rounded" | "pill";
   testID?: string;
+  tooltip?: {
+    text: string;
+    idealDirection?: TooltipDirection;
+  };
 }
 
 const buttonTextColor: {[buttonColor: string]: "white" | "darkGray"} = {
@@ -69,6 +74,7 @@ export function Button({
   confirmationHeading = "Confirm",
   shape = "rounded",
   testID,
+  tooltip,
 }: ButtonProps) {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -125,77 +131,89 @@ export function Button({
     );
   };
 
-  return (
-    <>
-      <TouchableOpacity
-        disabled={disabled || loading}
-        style={{
-          alignSelf: inline === true ? undefined : "stretch",
-          height: HEIGHTS[size || "md"],
-          backgroundColor: getBackgroundColor(color),
-          // width: inline === true ? undefined : "100%",
-          flexShrink: inline ? 1 : 0,
-          // flexGrow: inline ? 0 : 1,
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: shape === "pill" ? 999 : 5,
-          borderColor: getBorderColor(color),
-          borderWidth: type === "outline" ? 2 : 0,
-          opacity: disabled ? 0.4 : 1,
-          flexDirection: "row",
-          paddingHorizontal: 8 * 2,
-        }}
-        testID={testID}
-        onPress={debounce(
-          async () => {
-            Unifier.utils.haptic();
-            setLoading(true);
-            try {
-              if (withConfirmation && !showConfirmation) {
-                setShowConfirmation(true);
-              } else if (onClick) {
-                await onClick();
+  const renderButton = () => {
+    return (
+      <View>
+        <TouchableOpacity
+          disabled={disabled || loading}
+          style={{
+            alignSelf: inline === true ? undefined : "stretch",
+            height: HEIGHTS[size || "md"],
+            backgroundColor: getBackgroundColor(color),
+            // width: inline === true ? undefined : "100%",
+            flexShrink: inline ? 1 : 0,
+            // flexGrow: inline ? 0 : 1,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: shape === "pill" ? 999 : 5,
+            borderColor: getBorderColor(color),
+            borderWidth: type === "outline" ? 2 : 0,
+            opacity: disabled ? 0.4 : 1,
+            flexDirection: "row",
+            paddingHorizontal: 8 * 2,
+          }}
+          testID={testID}
+          onPress={debounce(
+            async () => {
+              Unifier.utils.haptic();
+              setLoading(true);
+              try {
+                if (withConfirmation && !showConfirmation) {
+                  setShowConfirmation(true);
+                } else if (onClick) {
+                  await onClick();
+                }
+              } catch (e) {
+                setLoading(false);
+                throw e;
               }
-            } catch (e) {
               setLoading(false);
-              throw e;
-            }
-            setLoading(false);
-          },
-          500,
-          {leading: true}
-        )}
-      >
-        {icon !== undefined && (
-          <Box paddingX={2}>
-            <Icon
+            },
+            500,
+            {leading: true}
+          )}
+        >
+          {icon !== undefined && (
+            <Box paddingX={2}>
+              <Icon
+                color={getTextColor(color as Color)}
+                name={icon}
+                prefix={iconPrefix || "far"}
+                size={size}
+              />
+            </Box>
+          )}
+          {Boolean(children) && children}
+          {Boolean(text) && (
+            <Text
               color={getTextColor(color as Color)}
-              name={icon}
-              prefix={iconPrefix || "far"}
+              font="button"
+              inline={inline}
               size={size}
-            />
-          </Box>
-        )}
-        {Boolean(children) && children}
-        {Boolean(text) && (
-          <Text
-            color={getTextColor(color as Color)}
-            font="button"
-            inline={inline}
-            size={size}
-            skipLinking
-            weight="bold"
-          >
-            {text}
-          </Text>
-        )}
-        {Boolean(loading) && (
-          <Box marginLeft={2}>
-            <ActivityIndicator color={getTextColor(color as Color)} size="small" />
-          </Box>
-        )}
-      </TouchableOpacity>
-      {Boolean(withConfirmation) && renderConfirmation()}
-    </>
-  );
+              skipLinking
+              weight="bold"
+            >
+              {text}
+            </Text>
+          )}
+          {Boolean(loading) && (
+            <Box marginLeft={2}>
+              <ActivityIndicator color={getTextColor(color as Color)} size="small" />
+            </Box>
+          )}
+        </TouchableOpacity>
+        {Boolean(withConfirmation) && renderConfirmation()}
+      </View>
+    );
+  };
+
+  if (tooltip) {
+    return (
+      <Tooltip idealDirection={tooltip.idealDirection} text={tooltip.text}>
+        {renderButton()}
+      </Tooltip>
+    );
+  } else {
+    return renderButton();
+  }
 }

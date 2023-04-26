@@ -11,7 +11,13 @@ const allColorButtons = (props: Partial<ButtonProps>) => {
         <Button text="Default" onClick={() => action("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
-        <Button color="primary" text="Primary" onClick={() => action("clicked")} {...props} />
+        <Button
+          color="primary"
+          text="Primary"
+          tooltip={{text: "Primary Button"}}
+          onClick={() => action("clicked")}
+          {...props}
+        />
       </Box>
       <Box paddingY={1}>
         <Button color="secondary" text="Secondary" onClick={() => action("clicked")} {...props} />
