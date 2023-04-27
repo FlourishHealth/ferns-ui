@@ -31,12 +31,12 @@ export const SplitPage = ({
   selectLimit,
 }: SplitPageProps) => {
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
-  const [activeTabs, setActiveTabs] = useState<number[]>(tabs.length > 2 ? [0, 1] : []);
+  const [activeTabs, setActiveTabs] = useState<number[]>([0, 1]);
   const {width} = Dimensions.get("window");
 
   const isMobileDevice = !mediaQueryLargerThan("sm");
 
-  const elementArray = Children.toArray(children);
+  const elementArray = Children.toArray(children).filter((c) => c !== null);
 
   const onItemSelect = useCallback(
     (item: ListRenderItemInfo<any>) => {
@@ -62,7 +62,7 @@ export const SplitPage = ({
     return null;
   }
 
-  if (Children.count(children) > 2 && Children.count(children) !== tabs.length) {
+  if (elementArray.length > 2 && elementArray.length !== tabs.length) {
     console.warn("There must be a tab for each child");
     return null;
   }
@@ -111,7 +111,7 @@ export const SplitPage = ({
   };
 
   const renderChildrenContent = () => {
-    if (Array.isArray(children) && children.length > 2) {
+    if (Array.isArray(children) && elementArray.length > 2) {
       return (
         <View
           style={{
