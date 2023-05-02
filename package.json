@@ -10,9 +10,7 @@
     "ios": "yarn --cwd packages/ui-demo ios",
     "android": "yarn --cwd packages/ui-demo android",
     "build": "yarn --cwd packages/ui build",
-    "preview": "yarn --cwd packages/ui-demo build-web"
-  },
-  "devDependencies": {
+    "preview": "yarn build && yarn --cwd packages/ui-demo build-web"
   },
   "resolutions": {
     "@types/react": "17.0.44"
