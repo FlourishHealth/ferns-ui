@@ -58,7 +58,7 @@ You can see the [web demo here](https://ferns-ui.netlify.app)
 
 You must wrap your app in a FernsProvider to use the theme, Toasts, and other features.
 
-      import { FernsProvider } from 'ferns-ui';
+    import { FernsProvider } from 'ferns-ui';
 
     const AppRoot = (): ReactElement => {
         return (
@@ -73,21 +73,12 @@ You must wrap your app in a FernsProvider to use the theme, Toasts, and other fe
 
 ## Dev
 
-To make developing easier, you can use the following script to link ferns-ui with the ui-demo:
-
-    # sync ui to ui-demo
-    syncuid() {
-        cd <PATH>/ferns-ui/packages/ui && yarn build && rsync -avp <PATH>/ferns-ui/packages/ui/dist/* <PATH>/ferns-ui/packages/ui-demo/node_modules/ferns-ui/dist/
-    }
-
-Now you will be using the local ferns-ui package and the demo will update as you change the code. You'll need to be
-compiling the ui code and running the demo in separate terminals:
-
-    # In two different terminals:
-    yarn dev
+    yarn install
+    # Run one of the following:
     yarn web
-
-`yarn dev` will start the Typescript compiler. `yarn web` will launch the ui-demo in Expo for web.
+    yarn ios
+    yarn android
+    
 
 ## Dev with other projects
 
