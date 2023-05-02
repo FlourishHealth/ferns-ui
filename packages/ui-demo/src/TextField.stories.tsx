@@ -6,15 +6,17 @@ import {StorybookContainer} from "./StorybookContainer";
 const TextFieldStory = ({
   initialValue,
   type,
+  label,
 }: {
   initialValue: string;
   type: string;
+  label: string;
 }): ReactElement => {
   const [value, setValue] = useState(initialValue);
   return (
     <TextField
       id="none"
-      label="Pick a date"
+      label={label}
       type={type as any}
       value={value}
       onChange={(v) => {
@@ -50,7 +52,13 @@ export const TextFieldStories = {
     Date() {
       return (
         <StorybookContainer>
-          <TextFieldStory initialValue="2021-05-01" type="date" />
+          <TextFieldStory initialValue="2021-01-30T19:20:31.493Z" label="Pick a date" type="date" />
+          <TextFieldStory initialValue="2021-01-30T19:20:31.493Z" label="Pick a time" type="time" />
+          <TextFieldStory
+            initialValue="2021-01-30T19:20:31.493Z"
+            label="Pick a date and time"
+            type="datetime"
+          />
         </StorybookContainer>
       );
     },

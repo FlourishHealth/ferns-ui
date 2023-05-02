@@ -1,70 +1,17 @@
 import {AsYouType} from "libphonenumber-js";
 import moment from "moment-timezone";
 import React, {ReactElement, useCallback, useMemo, useState} from "react";
-import {ActivityIndicator, KeyboardTypeOptions, Platform, TextInput, View} from "react-native";
-import {Calendar} from "react-native-calendars";
+import {ActivityIndicator, KeyboardTypeOptions, Platform, Pressable, TextInput} from "react-native";
 
 import {Box} from "./Box";
 import {TextFieldProps} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
 import {DecimalRangeActionSheet} from "./DecimalRangeActionSheet";
-import {Heading} from "./Heading";
 import {HeightActionSheet} from "./HeightActionSheet";
 import {Icon} from "./Icon";
-import {IconButton} from "./IconButton";
 import {NumberPickerActionSheet} from "./NumberPickerActionSheet";
 import {Unifier} from "./Unifier";
 import {WithLabel} from "./WithLabel";
-
-function CalendarHeader(props: any) {
-  const {addMonth, month} = props;
-  const displayDate = moment(month[0]).format("MMM YYYY");
-  return (
-    <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
-      <IconButton
-        accessibilityLabel="arrow"
-        bgColor="white"
-        icon="angle-double-left"
-        iconColor="blue"
-        size="md"
-        onClick={() => {
-          addMonth(-12);
-        }}
-      />
-      <IconButton
-        accessibilityLabel="arrow"
-        bgColor="white"
-        icon="angle-left"
-        iconColor="blue"
-        size="md"
-        onClick={() => {
-          addMonth(-1);
-        }}
-      />
-      <Heading size="sm">{displayDate}</Heading>
-      <IconButton
-        accessibilityLabel="arrow"
-        bgColor="white"
-        icon="angle-right"
-        iconColor="blue"
-        size="md"
-        onClick={() => {
-          addMonth(1);
-        }}
-      />
-      <IconButton
-        accessibilityLabel="arrow"
-        bgColor="white"
-        icon="angle-double-right"
-        iconColor="blue"
-        size="md"
-        onClick={() => {
-          addMonth(12);
-        }}
-      />
-    </Box>
-  );
-}
 
 const keyboardMap = {
   date: "default",
@@ -144,7 +91,7 @@ export function TextField({
     if (type !== "search") {
       return null;
     }
-    if (searching === true) {
+    if (searching) {
       return (
         <Box marginRight={4}>
           <ActivityIndicator color={Unifier.theme.primary} size="small" />
@@ -181,9 +128,9 @@ export function TextField({
   const defaultTextInputStyles = useMemo(() => {
     const defaultStyles = {
       flex: 1,
-      paddingTop: 10,
-      paddingRight: 10,
-      paddingBottom: 10,
+      paddingTop: 4,
+      paddingRight: 4,
+      paddingBottom: 4,
       paddingLeft: 0,
       height: getHeight(),
       width: "100%",
@@ -199,8 +146,14 @@ export function TextField({
     return defaultStyles;
   }, [getHeight, style]);
 
-  const isHandledByModal =
-    type === "date" || type === "numberRange" || type === "decimalRange" || type === "height";
+  const isHandledByModal = [
+    "date",
+    "datetime",
+    "time",
+    "numberRange",
+    "decimalRange",
+    "height",
+  ].includes(type);
 
   const isEditable = !disabled && !isHandledByModal;
 
@@ -213,11 +166,29 @@ export function TextField({
     label,
     labelColor,
   };
-  if (value) {
-    if (type === "date") {
-      value = moment.utc(value).format("MM/DD/YYYY");
+
+  const onTap = useCallback((): void => {
+    if (["date", "datetime", "time"].includes(type)) {
+      setShowDate(true);
+    } else if (type === "numberRange") {
+      numberRangeActionSheetRef?.current?.show();
+    } else if (type === "decimalRange") {
+      decimalRangeActionSheetRef?.current?.show();
     } else if (type === "height") {
-      value = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
+      weightActionSheetRef?.current?.show();
+    }
+  }, [decimalRangeActionSheetRef, numberRangeActionSheetRef, type, weightActionSheetRef]);
+
+  let displayValue = value;
+  if (displayValue) {
+    if (type === "date") {
+      displayValue = moment(value).format("MM/DD/YYYY");
+    } else if (type === "time") {
+      displayValue = moment(value).format("h:mm A");
+    } else if (type === "datetime") {
+      displayValue = moment(value).format("MM/DD/YYYY h:mm A");
+    } else if (type === "height") {
+      displayValue = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
     } else if (type === "phoneNumber") {
       // By default, if a value is something like `"(123)"`
       // then Backspace would only erase the rightmost brace
@@ -226,9 +197,9 @@ export function TextField({
       // which would then be formatted back to `"(123)"`
       // and so a user wouldn't be able to erase the phone number.
       // This is the workaround for that.
-      const formattedPhoneNumber = new AsYouType("US").input(value);
-      if (value !== formattedPhoneNumber && value.length !== 4) {
-        value = formattedPhoneNumber;
+      const formattedPhoneNumber = new AsYouType("US").input(displayValue);
+      if (displayValue !== formattedPhoneNumber && displayValue.length !== 4) {
+        displayValue = formattedPhoneNumber;
       }
     }
   }
@@ -242,34 +213,30 @@ export function TextField({
         labelSize="sm"
       >
         <WithLabel {...withLabelProps}>
-          <View
+          <Pressable
             style={{
               flexDirection: "row",
               justifyContent: "center",
               alignItems: "center",
-              // height: 40,
-              // minHeight: getHeight(),
+              // height: multiline || grow ? undefined : 40,
               minHeight: getHeight(),
               width: "100%",
               // Add padding so the border doesn't mess up layouts
               paddingHorizontal: paddingX || focused ? 10 : 14,
               paddingVertical: paddingY || focused ? 0 : 4,
               borderColor,
-              borderWidth: focused && !errorMessage ? 5 : 1,
+              borderWidth: focused ? 5 : 1,
               borderRadius: 16,
               backgroundColor: disabled ? Unifier.theme.gray : Unifier.theme.white,
               overflow: "hidden",
             }}
-            onTouchEnd={() => {
-              if (type === "date") {
-                dateActionSheetRef?.current?.setModalVisible(true);
-              } else if (type === "numberRange") {
-                numberRangeActionSheetRef?.current?.setModalVisible(true);
-              } else if (type === "decimalRange") {
-                decimalRangeActionSheetRef?.current?.setModalVisible(true);
-              } else if (type === "height") {
-                weightActionSheetRef?.current?.setModalVisible(true);
-              }
+            onPress={() => {
+              // This runs on web
+              onTap();
+            }}
+            onTouchStart={() => {
+              // This runs on mobile
+              onTap();
             }}
           >
             {renderIcon()}
@@ -292,10 +259,9 @@ export function TextField({
               returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
               secureTextEntry={type === "password"}
               style={defaultTextInputStyles}
-              // For react-native-autofocus
               textContentType={textContentType}
               underlineColorAndroid="transparent"
-              value={value}
+              value={displayValue}
               onBlur={() => {
                 if (!isHandledByModal) {
                   setFocused(false);
@@ -304,7 +270,7 @@ export function TextField({
                   onBlur({value});
                 }
                 // if (type === "date") {
-                //   actionSheetRef?.current?.setModalVisible(false);
+                //   actionSheetRef?.current?.hide();
                 // }
               }}
               onChangeText={(text) => {
@@ -332,9 +298,6 @@ export function TextField({
                 if (!isHandledByModal) {
                   setFocused(true);
                 }
-                if (Platform.OS === "web" && type === "date") {
-                  setShowDate(true);
-                }
               }}
               onSubmitEditing={() => {
                 if (onEnter) {
@@ -345,30 +308,36 @@ export function TextField({
                 }
               }}
             />
-          </View>
+          </Pressable>
         </WithLabel>
       </WithLabel>
-      {type === "date" && Platform.OS !== "web" && (
+      {(type === "date" || type === "time" || type === "datetime") && (
         <DateTimeActionSheet
           actionSheetRef={dateActionSheetRef}
-          mode="date"
+          mode={type}
           value={value}
-          onChange={(result) => onChange(result)}
+          visible={showDate}
+          onChange={(result) => {
+            onChange(result);
+            setShowDate(false);
+            setFocused(false);
+          }}
+          onDismiss={() => setShowDate(false)}
         />
       )}
-      {type === "date" && Platform.OS === "web" && showDate && (
-        <Box maxWidth={300}>
-          {/* TODO: Calendar should disappear when you click away from it. */}
-          <Calendar
-            customHeader={CalendarHeader}
-            initialDate={value}
-            onDayPress={(day: any) => {
-              onChange({value: day.dateString});
-              setShowDate(false);
-            }}
-          />
-        </Box>
-      )}
+      {/* {type === "date" && showDate && ( */}
+      {/*  <Box maxWidth={300}> */}
+      {/*    /!* TODO: Calendar should disappear when you click away from it. *!/ */}
+      {/*    <Calendar */}
+      {/*      customHeader={CalendarHeader} */}
+      {/*      initialDate={value} */}
+      {/*      onDayPress={(day: any) => { */}
+      {/*        onChange({value: day.dateString}); */}
+      {/*        setShowDate(false); */}
+      {/*      }} */}
+      {/*    /> */}
+      {/*  </Box> */}
+      {/* )} */}
       {type === "numberRange" && value && (
         <NumberPickerActionSheet
           actionSheetRef={numberRangeActionSheetRef}

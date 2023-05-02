@@ -22,6 +22,7 @@ export interface FieldProps extends FieldWithLabelsProps {
     | "currency"
     | "customSelect"
     | "date"
+    | "datetime"
     | "email"
     | "multiselect"
     | "number"
@@ -31,6 +32,7 @@ export interface FieldProps extends FieldWithLabelsProps {
     | "select"
     | "text"
     | "textarea"
+    | "time"
     | "url";
   rows?: number;
   value?: any;
@@ -149,14 +151,12 @@ export const Field = ({
           onChange={(result) => handleSwitchChange(result)}
         />
       );
-    } else if (type === "date") {
+    } else if (type && ["date", "time", "datetime"].includes(type)) {
       return (
         <TextField
-          disabled
           id={name}
           placeholder={placeholder}
-          type="date"
-          // TODO: allow editing with a date picker
+          type={type as "date" | "time" | "datetime"}
           value={value}
           onChange={(result) => onChange(result.value)}
         />
@@ -230,7 +230,10 @@ export const Field = ({
       let tfValue: string = value;
       // Number is supported differently because we need fractional numbers and they don't work
       // well on iOS.
-      if (type && ["date", "email", "phoneNumber", "password", "url"].indexOf(type) > -1) {
+      if (
+        type &&
+        ["date", "time", "datetime", "email", "phoneNumber", "password", "url"].includes(type)
+      ) {
         tfType = type as TextFieldType;
       } else if (type === "percent" || type === "currency") {
         tfType = "text";
@@ -252,7 +255,18 @@ export const Field = ({
           disabled={disabled}
           id={name}
           placeholder={placeholder}
-          type={tfType as "date" | "email" | "number" | "password" | "phoneNumber" | "text" | "url"}
+          type={
+            tfType as
+              | "date"
+              | "datetime"
+              | "email"
+              | "number"
+              | "password"
+              | "phoneNumber"
+              | "text"
+              | "time"
+              | "url"
+          }
           value={tfValue}
           onChange={(result) => onChange(result.value)}
         />
