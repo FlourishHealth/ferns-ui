@@ -16,5 +16,9 @@
   "resolutions": {
     "@types/react": "17.0.44"
   },
-  "workspaces": ["packages/*"]
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  }
 }
