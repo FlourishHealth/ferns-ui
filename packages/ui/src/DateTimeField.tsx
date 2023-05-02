@@ -1,3 +1,4 @@
+import isArray from "lodash/isArray";
 import React, {ReactElement} from "react";
 import DatePicker from "react-date-picker";
 import DateTimePickerWeb from "react-datetime-picker";
@@ -23,14 +24,39 @@ export const DateTimeField = ({
     >
       <Box flex="grow" maxWidth={300} zIndex="auto">
         {mode === "datetime" && (
-          <DateTimePickerWeb disableClock value={value} onChange={onChange} />
+          <DateTimePickerWeb
+            disableClock
+            value={value}
+            onChange={(newVal) => {
+              if (isArray(newVal) || !newVal) {
+                console.warn("DateTimePicker returned an array", newVal);
+                return;
+              }
+              onChange(newVal);
+            }}
+          />
         )}
-        {mode === "date" && <DatePicker value={value} onChange={onChange} />}
+        {mode === "date" && (
+          <DatePicker
+            value={value}
+            onChange={(newVal) => {
+              if (isArray(newVal) || !newVal) {
+                console.warn("DatePicker returned an array", newVal);
+                return;
+              }
+              onChange(newVal);
+            }}
+          />
+        )}
         {mode === "time" && (
           <TimePicker
             disableClock
             value={value}
             onChange={(newVal) => {
+              if (isArray(newVal) || !newVal) {
+                console.warn("TimePicker returned an array", newVal);
+                return;
+              }
               // TimePicker returns a string or Date, so we need to make sure it's a Date
               const newDate = new Date(newVal);
               onChange(newDate);

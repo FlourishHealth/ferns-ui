@@ -7,13 +7,17 @@
   "license": "Apache-2.0",
   "scripts": {
     "web": "yarn --cwd packages/ui-demo web",
+    "ios": "yarn --cwd packages/ui-demo ios",
+    "android": "yarn --cwd packages/ui-demo android",
     "build": "yarn --cwd packages/ui build",
-    "dev": "yarn --cwd packages/ui dev",
-    "make-links": "cd packages/ui && yarn link && cd ../ui-demo && yarn link ferns-ui"
-  },
-  "devDependencies": {
+    "preview": "yarn build && yarn --cwd packages/ui-demo build-web"
   },
   "resolutions": {
     "@types/react": "17.0.44"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   }
 }
