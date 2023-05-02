@@ -1,4 +1,4 @@
-import {isArray} from "lodash";
+import isArray from "lodash/isArray";
 import React, {ReactElement} from "react";
 import DatePicker from "react-date-picker";
 import DateTimePickerWeb from "react-datetime-picker";
