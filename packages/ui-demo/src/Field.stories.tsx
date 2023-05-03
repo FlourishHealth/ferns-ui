@@ -1,5 +1,6 @@
 /* eslint-disable react/display-name */
 import {Box, Field, Text} from "ferns-ui";
+import moment from "moment-timezone";
 import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -235,6 +236,38 @@ const DateField = () => {
   );
 };
 
+const DateTimeField = () => {
+  const [value, setValue] = useState(new Date());
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Date Time Field"
+        name="text"
+        type="datetime"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
+const TimeField = () => {
+  const [value, setValue] = useState(moment().hour(12).minute(0).toISOString());
+  return (
+    <StorybookContainer>
+      <Field
+        helperText="Here's some help text"
+        label="Time Field"
+        name="text"
+        type="time"
+        value={value}
+        onChange={setValue}
+      />
+    </StorybookContainer>
+  );
+};
+
 const MultiselectField = () => {
   const [checkboxValue, setCheckboxValue] = useState(["Option3"]);
   return (
@@ -361,6 +394,12 @@ export const FieldStories = {
     },
     "Date Field": function () {
       return <DateField />;
+    },
+    "Time Field": function () {
+      return <TimeField />;
+    },
+    "Date Time Field": function () {
+      return <DateTimeField />;
     },
     "Multiselect Field": function () {
       return <MultiselectField />;
