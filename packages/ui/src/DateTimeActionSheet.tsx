@@ -2,6 +2,7 @@ import {Picker} from "@react-native-picker/picker";
 import range from "lodash/range";
 import moment from "moment";
 import React, {useState} from "react";
+import {Platform, StyleProp, TextInput, TextStyle, View} from "react-native";
 import {Calendar} from "react-native-calendars";
 
 import {Box} from "./Box";
@@ -11,10 +12,91 @@ import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
 import {SelectList} from "./SelectList";
-import {TextField} from "./TextField";
 import {Unifier} from "./Unifier";
 
 const TIME_PICKER_HEIGHT = 104;
+const INPUT_HEIGHT = 40;
+
+const hours = range(1, 13).map((n) => String(n));
+// TODO: support limited picker minutes, e.g. 5 or 15 minute increments.
+const minutes = range(0, 60).map((n) => String(n).padStart(2, "0"));
+const minutesOptions = [...minutes, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+
+function TimeInput({
+  type,
+  value,
+  onChange,
+}: {
+  type: "hour" | "minute";
+  value: number;
+  onChange: (value: number) => void;
+}): React.ReactElement {
+  const defaultText = type === "minute" ? String(value).padStart(2, "0") : String(value);
+  const [text, setText] = useState(defaultText);
+  const [focused, setFocused] = useState(false);
+  let error = false;
+  if (type === "hour") {
+    error = !hours.includes(String(Number(text)));
+  } else if (type === "minute") {
+    error = !minutesOptions.includes(String(Number(text)));
+  }
+
+  // Broken out because types don't think "outline" is a valid style.
+  const textInputStyle: StyleProp<TextStyle> = {
+    flex: 1,
+    paddingTop: 4,
+    paddingRight: 4,
+    paddingBottom: 4,
+    paddingLeft: 0,
+    height: INPUT_HEIGHT,
+    width: "100%",
+    color: Unifier.theme.darkGray,
+    fontFamily: Unifier.theme.primaryFont,
+  };
+
+  return (
+    <View
+      style={{
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        height: INPUT_HEIGHT,
+        width: "100%",
+        // Add padding so the border doesn't mess up layouts
+        paddingHorizontal: focused ? 10 : 14,
+        paddingVertical: focused ? 0 : 4,
+        borderColor: error ? Unifier.theme.red : Unifier.theme.blue,
+        borderWidth: focused ? 5 : 1,
+        borderRadius: 5,
+        backgroundColor: Unifier.theme.white,
+      }}
+    >
+      <TextInput
+        keyboardType="number-pad"
+        returnKeyType="done"
+        style={
+          {
+            ...textInputStyle,
+            outline: Platform.select({web: "none"}),
+          } as any
+        }
+        textContentType="none"
+        underlineColorAndroid="transparent"
+        value={text}
+        onBlur={() => {
+          setFocused(false);
+        }}
+        onChangeText={(t) => {
+          setText(t);
+          onChange(Number(t));
+        }}
+        onFocus={() => {
+          setFocused(true);
+        }}
+      />
+    </View>
+  );
+}
 
 function CalendarHeader({
   addMonth,
@@ -109,15 +191,10 @@ export function DateTimeActionSheet({
     hr = 12;
   }
 
-  const [hour, setHour] = useState<string>(String(hr));
-  const [minute, setMinute] = useState<string>(String(moment(m).minute()));
+  const [hour, setHour] = useState<number>(hr);
+  const [minute, setMinute] = useState<number>(moment(m).minute());
   const [amPm, setAmPm] = useState<"am" | "pm">(moment(m).format("a") === "am" ? "am" : "pm");
   const [date, setDate] = useState<string>(moment(m).toISOString());
-
-  const hours = range(1, 13).map((n) => String(n));
-  // TODO: support limited picker minutes, e.g. 5 or 15 minute increments.
-  const minutes = range(0, 60).map((n) => String(n).padStart(2, "0"));
-  const minutesOptions = [...minutes, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
   // TODO Support 24 hour time for time picker.
   const renderMobileTime = () => {
@@ -182,25 +259,19 @@ export function DateTimeActionSheet({
     return (
       <Box direction="row" justifyContent="center" width="100%">
         <Box width={60}>
-          <TextField
-            errorMessage={!hours.includes(String(Number(hour))) ? "Invalid" : undefined}
-            value={hour}
-            onChange={(result) => {
-              setHour(result.value);
-            }}
-          />
+          <TimeInput type="hour" value={hour} onChange={(v) => setHour(v)} />
         </Box>
-        <Box alignItems="center" height={50} justifyContent="center" marginLeft={2} marginRight={2}>
+        <Box
+          alignItems="center"
+          height={INPUT_HEIGHT}
+          justifyContent="center"
+          marginLeft={2}
+          marginRight={2}
+        >
           <Heading size="md">:</Heading>
         </Box>
         <Box marginRight={2} width={60}>
-          <TextField
-            errorMessage={!minutesOptions.includes(minute) ? "Invalid" : undefined}
-            value={minute}
-            onChange={(result) => {
-              setMinute(result.value);
-            }}
-          />
+          <TimeInput type="minute" value={minute} onChange={(v) => setMinute(v)} />
         </Box>
 
         <Box width={60}>
@@ -209,6 +280,7 @@ export function DateTimeActionSheet({
               {label: "am", value: "am"},
               {label: "pm", value: "pm"},
             ]}
+            style={{minHeight: INPUT_HEIGHT}}
             value={amPm}
             onChange={(result) => {
               setAmPm(result as "am" | "pm");
@@ -230,21 +302,16 @@ export function DateTimeActionSheet({
 
   // Note: do not call this if waiting on a state change.
   const sendOnChange = () => {
+    const hourChange = amPm === "pm" && hour !== 12 ? Number(hour) + 12 : Number(hour);
     if (mode === "date") {
       onChange({value: date});
     } else if (mode === "time") {
       onChange({
-        value: moment()
-          .hour(amPm === "pm" ? Number(hour) + 12 : Number(hour))
-          .minute(Number(minute))
-          .toISOString(),
+        value: moment().hour(hourChange).minute(Number(minute)).toISOString(),
       });
     } else if (mode === "datetime") {
       onChange({
-        value: moment(date)
-          .hour(amPm === "pm" ? Number(hour) + 12 : Number(hour))
-          .minute(Number(minute))
-          .toISOString(),
+        value: moment(date).hour(hourChange).minute(Number(minute)).toISOString(),
       });
     }
     onDismiss();
