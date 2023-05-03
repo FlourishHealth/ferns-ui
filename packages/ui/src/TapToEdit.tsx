@@ -140,7 +140,10 @@ export const TapToEdit = ({
           const url = new URL(value);
           displayValue = url?.hostname ?? value;
         } catch (e) {
-          console.debug(`Invalid URL: ${value}`);
+          // Don't print an error message for empty values.
+          if (value) {
+            console.debug(`Invalid URL: ${value}`);
+          }
           displayValue = value;
         }
       } else if (fieldProps?.type === "address") {

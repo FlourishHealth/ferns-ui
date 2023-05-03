@@ -40,3 +40,7 @@ export function mediaQuerySmallerThan(size: "xs" | "sm" | "md" | "lg"): boolean 
   }
   return false;
 }
+
+export function isMobileDevice(): boolean {
+  return !mediaQueryLargerThan("sm");
+}

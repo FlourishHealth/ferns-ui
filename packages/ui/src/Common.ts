@@ -1719,6 +1719,7 @@ export const SPACING = 4;
 
 export type TextFieldType =
   | "date"
+  | "datetime"
   | "decimal"
   | "decimalRange"
   | "email"
@@ -1729,6 +1730,7 @@ export type TextFieldType =
   | "numberRange"
   | "search"
   | "text"
+  | "time"
   | "url"
   | "username";
 
