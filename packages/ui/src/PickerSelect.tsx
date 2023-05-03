@@ -364,7 +364,11 @@ export function RNPickerSelect({
     }
 
     return (
-      <View style={[defaultStyles.iconContainer, style.iconContainer]} testID="icon_container">
+      <View
+        pointerEvents="none"
+        style={[defaultStyles.iconContainer, style.iconContainer]}
+        testID="icon_container"
+      >
         <Icon testID="icon" />
       </View>
     );
