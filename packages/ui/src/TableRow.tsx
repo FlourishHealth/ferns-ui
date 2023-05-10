@@ -51,13 +51,7 @@ export function TableRow({
   const border = {__style: {borderBottom: `${headerRow ? 2 : 1}px solid #e0e0e0`}};
 
   return (
-    <Box
-      ref={rowRef}
-      dangerouslySetInlineStyle={border}
-      marginBottom={1}
-      marginTop={1}
-      width="100%"
-    >
+    <Box ref={rowRef} dangerouslySetInlineStyle={border} paddingY={1} width="100%">
       <Box direction="row" width="100%">
         {Boolean(drawerContents) && (
           <Box width={30}>

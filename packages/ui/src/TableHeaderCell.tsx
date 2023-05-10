@@ -68,7 +68,7 @@ export function TableHeaderCell({children, index, sortable, onSortChange}: Props
     );
   } else {
     return (
-      <Box marginBottom={2} marginTop={2} width={width}>
+      <Box flex="grow" justifyContent="center" marginBottom={2} marginTop={2} width={width}>
         {children}
       </Box>
     );

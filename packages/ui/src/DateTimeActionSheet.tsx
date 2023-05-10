@@ -180,7 +180,12 @@ export function DateTimeActionSheet({
   onDismiss,
 }: DateTimeActionSheetProps) {
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for mode=time
-  const m = moment(value, [moment.ISO_8601, "HH:mm", "hh:mm A"]);
+  let m;
+  if (value) {
+    m = moment(value, [moment.ISO_8601, "HH:mm", "hh:mm A"]);
+  } else {
+    m = moment();
+  }
 
   if (!m.isValid()) {
     throw new Error(`Invalid date/time value ${value}`);
