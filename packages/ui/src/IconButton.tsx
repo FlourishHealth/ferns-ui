@@ -1,5 +1,5 @@
 import React, {forwardRef, useState} from "react";
-import {Platform, TouchableOpacity, View} from "react-native";
+import {Platform, TouchableOpacity} from "react-native";
 
 import {
   ButtonColor,
@@ -55,14 +55,12 @@ export const IconButton = forwardRef(
   ) => {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
-    let opacity = 1;
+    const opacity = 1;
     let color: string;
     if (bgColor === "transparentDarkGray") {
-      opacity = 0.8;
-      color = Unifier.theme.darkGray;
+      color = "rgba(0, 0, 0, 0.5)";
     } else if (bgColor === "transparent" || !bgColor) {
-      opacity = 1.0;
-      color = Unifier.theme.white;
+      color = "rgba(0, 0, 0, 0.0)";
     } else {
       color = Unifier.theme[bgColor];
     }
@@ -91,7 +89,7 @@ export const IconButton = forwardRef(
 
     function renderIconButton(): React.ReactElement {
       return (
-        <View>
+        <>
           <TouchableOpacity
             ref={ref as any}
             hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
@@ -121,7 +119,7 @@ export const IconButton = forwardRef(
             <Icon color={iconColor} name={icon} prefix={prefix || "fas"} size={size} />
           </TouchableOpacity>
           {Boolean(withConfirmation) && renderConfirmation()}
-        </View>
+        </>
       );
     }
 

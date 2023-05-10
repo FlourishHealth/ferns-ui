@@ -1,8 +1,37 @@
-import {Box, IconButton} from "ferns-ui";
+import {Box, Heading, IconButton, IconButtonProps} from "ferns-ui";
 import React from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
 import {action} from "./tools";
+
+interface DisplayProps extends IconButtonProps {
+  title: string;
+}
+
+const IconButtonDisplay = (props: DisplayProps): React.ReactElement => {
+  const {title, ...rest} = props;
+  return (
+    <Box paddingY={2}>
+      <Box paddingY={1}>
+        <Heading size="sm">{title}</Heading>
+      </Box>
+      <Box direction="row" width="100%">
+        <Box color="white" padding={4}>
+          <IconButton {...rest} />
+        </Box>
+        <Box color="lightGray" padding={4}>
+          <IconButton {...rest} />
+        </Box>
+        <Box color="darkGray" padding={4}>
+          <IconButton {...rest} />
+        </Box>
+        <Box color="blue" padding={4}>
+          <IconButton {...rest} />
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
 export const IconButtonStories = {
   title: "IconButton",
@@ -11,70 +40,96 @@ export const IconButtonStories = {
     Colors() {
       return (
         <StorybookContainer>
-          <IconButton
+          <IconButtonDisplay
             accessibilityLabel="label"
             icon="plus"
             iconColor="primary"
             prefix="fas"
+            title="Primary, Transparent Background"
             onClick={() => {}}
           />
-          <IconButton
+          <IconButtonDisplay
             accessibilityLabel="label"
             icon="plus"
             iconColor="secondary"
             prefix="fas"
+            title="Secondary, Transparent Background"
             onClick={() => {}}
           />
-          <IconButton
+
+          <IconButtonDisplay
             accessibilityLabel="label"
             icon="plus"
             iconColor="primary"
             prefix="fas"
+            size="sm"
+            title="Small Size"
             onClick={() => {}}
           />
-          <IconButton
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            prefix="fas"
+            size="md"
+            title="Medium Size"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            prefix="fas"
+            size="lg"
+            title="Large Size"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
             accessibilityLabel="label"
             icon="plus"
             iconColor="primary"
             prefix="fas"
             size="xl"
+            title="XL Size"
             onClick={() => {}}
           />
 
-          <IconButton
+          <IconButtonDisplay
             accessibilityLabel="label"
             bgColor="lightGray"
             icon="plus"
             iconColor="primary"
             prefix="fas"
+            title="Light Gray Background"
             onClick={() => {}}
           />
-          <IconButton
+          <IconButtonDisplay
             accessibilityLabel="label"
             bgColor="gray"
             icon="plus"
             iconColor="primary"
             prefix="fas"
+            title="Gray Background"
             onClick={() => {}}
           />
-          <IconButton
+          <IconButtonDisplay
             accessibilityLabel="label"
             bgColor="transparentDarkGray"
             icon="plus"
             iconColor="primary"
             prefix="fas"
+            title="Primary, Dark Gray Transparent"
             onClick={() => {}}
           />
-          <Box color="darkGray" padding={4}>
-            <IconButton
-              accessibilityLabel="label"
-              bgColor="white"
-              icon="plus"
-              iconColor="primary"
-              prefix="fas"
-              onClick={() => {}}
-            />
-          </Box>
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            bgColor="transparentDarkGray"
+            icon="plus"
+            iconColor="white"
+            prefix="fas"
+            title="White, Dark Gray Transparent"
+            onClick={() => {}}
+          />
         </StorybookContainer>
       );
     },
