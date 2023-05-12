@@ -1,7 +1,14 @@
 import {AsYouType} from "libphonenumber-js";
 import moment from "moment-timezone";
 import React, {ReactElement, useCallback, useMemo, useState} from "react";
-import {ActivityIndicator, KeyboardTypeOptions, Platform, Pressable, TextInput} from "react-native";
+import {
+  ActivityIndicator,
+  KeyboardTypeOptions,
+  Platform,
+  Pressable,
+  TextInput,
+  View,
+} from "react-native";
 
 import {Box} from "./Box";
 import {TextFieldProps} from "./Common";
@@ -204,6 +211,8 @@ export function TextField({
     }
   }
 
+  const Wrapper = isHandledByModal ? Pressable : View;
+
   return (
     <>
       <WithLabel
@@ -213,7 +222,7 @@ export function TextField({
         labelSize="sm"
       >
         <WithLabel {...withLabelProps}>
-          <Pressable
+          <Wrapper
             style={{
               flexDirection: "row",
               justifyContent: "center",
@@ -308,7 +317,7 @@ export function TextField({
                 }
               }}
             />
-          </Pressable>
+          </Wrapper>
         </WithLabel>
       </WithLabel>
       {(type === "date" || type === "time" || type === "datetime") && (
