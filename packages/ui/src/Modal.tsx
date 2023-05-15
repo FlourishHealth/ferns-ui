@@ -192,6 +192,7 @@ export const Modal = ({
               <Button
                 color="darkGray"
                 inline
+                size="lg"
                 text={secondaryButtonText ?? ""}
                 type="ghost"
                 onClick={secondaryButtonOnClick}
@@ -203,11 +204,12 @@ export const Modal = ({
                 bgColor="white"
                 icon="times"
                 iconColor="darkGray"
+                size="lg"
                 onClick={() => onDismiss()}
               />
             )}
           </Box>
-          <Box direction="column" flex="grow">
+          <Box alignItems="center" direction="column" flex="grow" justifyContent="center">
             <Heading align={align === "center" ? "center" : undefined} size="sm">
               {heading}
             </Heading>
@@ -224,6 +226,7 @@ export const Modal = ({
                 color="primary"
                 disabled={primaryButtonDisabled}
                 inline
+                size="lg"
                 text={primaryButtonText!}
                 type="ghost"
                 onClick={primaryButtonOnClick}
@@ -231,7 +234,9 @@ export const Modal = ({
             )}
           </Box>
         </Box>
-        <Box marginBottom={12}>{children}</Box>
+        <Box marginBottom={12} paddingX={4}>
+          {children}
+        </Box>
       </ActionSheet>
     );
   };
