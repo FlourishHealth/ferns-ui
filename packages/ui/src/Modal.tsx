@@ -188,16 +188,6 @@ export const Modal = ({
       <ActionSheet ref={actionSheetRef} onClose={onDismiss}>
         <Box direction="row" marginBottom={2} paddingX={2} paddingY={2} width="100%">
           <Box marginRight={4}>
-            {Boolean(secondaryButtonText) && (
-              <Button
-                color="darkGray"
-                inline
-                size="lg"
-                text={secondaryButtonText ?? ""}
-                type="ghost"
-                onClick={secondaryButtonOnClick}
-              />
-            )}
             {Boolean(showClose) && (
               <IconButton
                 accessibilityLabel="close"
@@ -206,6 +196,16 @@ export const Modal = ({
                 iconColor="darkGray"
                 size="lg"
                 onClick={() => onDismiss()}
+              />
+            )}
+            {Boolean(secondaryButtonText) && (
+              <Button
+                color="darkGray"
+                inline
+                size="lg"
+                text={secondaryButtonText ?? ""}
+                type="ghost"
+                onClick={secondaryButtonOnClick}
               />
             )}
           </Box>

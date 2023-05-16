@@ -209,6 +209,12 @@ export function TextField({
         displayValue = formattedPhoneNumber;
       }
     }
+  } else {
+    // Set some default values for modal-edited fields so we don't go from uncontrolled to controlled when setting
+    // the date.
+    if (["date", "datetime", "time"].includes(type)) {
+      displayValue = "";
+    }
   }
 
   const Wrapper = isHandledByModal ? Pressable : View;
