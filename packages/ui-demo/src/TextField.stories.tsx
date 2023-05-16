@@ -8,7 +8,7 @@ const TextFieldStory = ({
   type,
   label,
 }: {
-  initialValue: string;
+  initialValue?: string;
   type: string;
   label: string;
 }): ReactElement => {
@@ -59,6 +59,7 @@ export const TextFieldStories = {
             label="Pick a date and time"
             type="datetime"
           />
+          <TextFieldStory label="Datetime starting from undefined" type="datetime" />
         </StorybookContainer>
       );
     },

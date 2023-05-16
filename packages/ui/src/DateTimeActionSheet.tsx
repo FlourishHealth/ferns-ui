@@ -322,6 +322,13 @@ export function DateTimeActionSheet({
     onDismiss();
   };
 
+  const sendClear = () => {
+    onChange({
+      value: "",
+    });
+    onDismiss();
+  };
+
   // Renders our custom calendar component on mobile or web.
   const renderDateCalendar = () => {
     const markedDates = {};
@@ -373,8 +380,9 @@ export function DateTimeActionSheet({
     <Modal
       primaryButtonOnClick={sendOnChange}
       primaryButtonText="Save"
-      secondaryButtonOnClick={onDismiss}
-      secondaryButtonText="Cancel"
+      secondaryButtonOnClick={sendClear}
+      secondaryButtonText="Clear"
+      showClose
       visible={visible}
       onDismiss={onDismiss}
     >
