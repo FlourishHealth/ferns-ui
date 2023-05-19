@@ -46,6 +46,9 @@ export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   rowBoxProps?: Partial<BoxProps>;
   transform?: (value: any) => string;
   fieldComponent?: (setValue: () => void) => ReactElement;
+  withConfirmation?: boolean;
+  confirmationText?: string;
+  confirmationHeading?: string;
 }
 
 export const TapToEdit = ({
@@ -59,6 +62,9 @@ export const TapToEdit = ({
   rowBoxProps,
   transform,
   fieldComponent,
+  withConfirmation = false,
+  confirmationText = "Are you sure you want to save your changes?",
+  confirmationHeading = "Confirm",
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
@@ -85,8 +91,11 @@ export const TapToEdit = ({
           <Box direction="row">
             <Button
               color="blue"
+              confirmationHeading={confirmationHeading}
+              confirmationText={confirmationText}
               inline
               text="Save"
+              withConfirmation={withConfirmation}
               onClick={async (): Promise<void> => {
                 if (!onSave) {
                   console.error("No onSave provided for editable TapToEdit");

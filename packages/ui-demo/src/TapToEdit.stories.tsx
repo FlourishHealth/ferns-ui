@@ -118,6 +118,19 @@ const TapStory = (): ReactElement => {
           setURL(value);
         }}
       />
+
+      <TapToEdit
+        key="textWithConfirmation"
+        name="textWithConfirmation"
+        setValue={setText}
+        title="Text With Confirmation"
+        type="text"
+        value={text}
+        withConfirmation
+        onSave={(value): void => {
+          setText(value);
+        }}
+      />
     </Box>
   );
 };
