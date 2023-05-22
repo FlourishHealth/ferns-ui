@@ -62,6 +62,7 @@ export const TapToEdit = ({
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
+  const [initialValue] = useState(value);
 
   if (editable && !setValue) {
     throw new Error("setValue is required if editable is true");
@@ -102,6 +103,9 @@ export const TapToEdit = ({
                 inline
                 text="Cancel"
                 onClick={(): void => {
+                  if (setValue) {
+                    setValue(initialValue);
+                  }
                   setEditing(false);
                 }}
               />
