@@ -5248,13 +5248,6 @@ fbjs@^3.0.0, fbjs@^3.0.4:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.30"
 
-ferns-ui@0.25.0:
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/ferns-ui/-/ferns-ui-0.25.0.tgz#2af3c58fea0d1e305c5bfb4d065fbb29bdcc3abb"
-  integrity sha512-hSB9wrRK2dWSO9bcw3pT64ZMrDRwaQAz/0B327rF5uP0/8XK7jeCsJ4WE3OziRoPPvR850ejGXa3JXuxC3jIWA==
-  dependencies:
-    tsc-watch "^5.0.3"
-
 fetch-retry@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/fetch-retry/-/fetch-retry-4.1.1.tgz#fafe0bb22b54f4d0a9c788dff6dd7f8673ca63f3"
