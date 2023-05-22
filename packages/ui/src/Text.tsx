@@ -79,7 +79,7 @@ export function Text({
       style.fontWeight = "bold";
     }
 
-    style.fontFamily = Unifier.theme[computedFont];
+    style.fontFamily = Unifier.theme[computedFont as keyof typeof Unifier.theme];
 
     style.fontSize = fontSizes[size || "md"];
     if (align) {

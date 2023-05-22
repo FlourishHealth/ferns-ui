@@ -172,10 +172,10 @@ class UnifierClass {
   private get fontMap() {
     const fontMap: {[id: string]: FontSource} = {};
     for (const key of fontKeys) {
-      if (typeof this.theme[key] === "string") {
+      if (typeof this.theme[key as keyof typeof Unifier.theme] === "string") {
         fontMap[key] = key;
       } else {
-        fontMap[this.theme[key].name] = this.theme[key].source;
+        fontMap[(this.theme as any)[key].name] = (this.theme as any)[key].source;
       }
     }
     return fontMap;
@@ -191,8 +191,11 @@ class UnifierClass {
     }
     for (const luminance of luminances) {
       const capitalized = capitalize(luminance);
-      if (!theme[`${color}${capitalized}`] && theme[color]) {
-        theme[`${color}${capitalized}`] = changeColorLuminance(theme[color] as string, luminance);
+      if (!theme[`${color}${capitalized}` as keyof typeof Unifier.theme] && theme[color]) {
+        theme[`${color}${capitalized}` as keyof typeof Unifier.theme] = changeColorLuminance(
+          theme[color] as string,
+          luminance
+        );
       }
     }
   }
