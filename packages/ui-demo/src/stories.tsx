@@ -17,6 +17,7 @@ export * from "./Modal.stories";
 export * from "./Pill.stories";
 export * from "./SegmentedControl.stories";
 export * from "./SelectList.stories";
+export * from "./SideDrawer.stories";
 export * from "./Spinner.stories";
 export * from "./SplitPage.stories";
 export * from "./Switch.stories";

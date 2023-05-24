@@ -112,6 +112,11 @@
       "jest-watch-typeahead/testname"
     ]
   },
+  "dependencies": {
+    "react-native-drawer-layout": "^3.2.0",
+    "react-native-gesture-handler": "^2.10.1",
+    "react-native-reanimated": "^3.1.0"
+  },
   "devDependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "1.17.11",
