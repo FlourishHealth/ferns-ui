@@ -6235,7 +6235,7 @@
 
 "ferns-ui@file:/home/runner/work/ferns-ui/ferns-ui/packages/ui":
   "resolved" "file:packages/ui"
-  "version" "0.28.6"
+  "version" "0.28.7"
 
 "fetch-retry@^4.1.1":
   "integrity" "sha512-e6eB7zN6UBSwGVwrbWVH+gdLnkW9WwHhmq2YDK1Sh30pzx1onRVGBvogTlUeWxwTa+L86NYdo4hFkh7O8ZjSnA=="
