@@ -189,11 +189,11 @@ export function TextField({
   let displayValue = value;
   if (displayValue) {
     if (type === "date") {
-      displayValue = moment.utc(value).format("MM/DD/YYYY");
+      displayValue = moment(value).format("MM/DD/YYYY");
     } else if (type === "time") {
-      displayValue = moment.utc(value).format("h:mm A");
+      displayValue = moment(value).format("h:mm A");
     } else if (type === "datetime") {
-      displayValue = moment.utc(value).format("MM/DD/YYYY h:mm A");
+      displayValue = moment(value).format("MM/DD/YYYY h:mm A");
     } else if (type === "height") {
       displayValue = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
     } else if (type === "phoneNumber") {
