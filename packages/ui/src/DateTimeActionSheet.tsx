@@ -105,7 +105,7 @@ function CalendarHeader({
   addMonth: (num: number) => void;
   month: Date[];
 }): React.ReactElement {
-  const displayDate = moment.utc(month[0]).format("MMM YYYY");
+  const displayDate = moment(month[0]).format("MMM YYYY");
   return (
     <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
       <IconButton
@@ -182,24 +182,24 @@ export function DateTimeActionSheet({
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for mode=time
   let m;
   if (value) {
-    m = moment.utc(value, [moment.ISO_8601, "HH:mm", "hh:mm A"]);
+    m = moment(value, [moment.ISO_8601, "HH:mm", "hh:mm A"]);
   } else {
-    m = moment.utc();
+    m = moment();
   }
 
   if (!m.isValid()) {
     throw new Error(`Invalid date/time value ${value}`);
   }
 
-  let hr = moment.utc(m).hour() % 12;
+  let hr = moment(m).hour() % 12;
   if (hr === 0) {
     hr = 12;
   }
 
   const [hour, setHour] = useState<number>(hr);
-  const [minute, setMinute] = useState<number>(moment.utc(m).minute());
-  const [amPm, setAmPm] = useState<"am" | "pm">(moment.utc(m).format("a") === "am" ? "am" : "pm");
-  const [date, setDate] = useState<string>(moment.utc(m).toISOString());
+  const [minute, setMinute] = useState<number>(moment(m).minute());
+  const [amPm, setAmPm] = useState<"am" | "pm">(moment(m).format("a") === "am" ? "am" : "pm");
+  const [date, setDate] = useState<string>(moment(m).toISOString());
 
   // TODO Support 24 hour time for time picker.
   const renderMobileTime = () => {
@@ -312,11 +312,11 @@ export function DateTimeActionSheet({
       onChange({value: date});
     } else if (mode === "time") {
       onChange({
-        value: moment.utc().hour(hourChange).minute(Number(minute)).toISOString(),
+        value: moment().hour(hourChange).minute(Number(minute)).toISOString(),
       });
     } else if (mode === "datetime") {
       onChange({
-        value: moment.utc(date).hour(hourChange).minute(Number(minute)).toISOString(),
+        value: moment(date).hour(hourChange).minute(Number(minute)).toISOString(),
       });
     }
     onDismiss();
@@ -333,7 +333,7 @@ export function DateTimeActionSheet({
   const renderDateCalendar = () => {
     const markedDates = {};
     if (date) {
-      markedDates[moment.utc(date).format("YYYY-MM-DD")] = {
+      markedDates[moment(date).format("YYYY-MM-DD")] = {
         selected: true,
         selectedColor: Unifier.theme.primary,
       };
@@ -341,7 +341,7 @@ export function DateTimeActionSheet({
     return (
       <Calendar
         customHeader={CalendarHeader}
-        initialDate={moment.utc(date).format("YYYY-MM-DD")}
+        initialDate={moment(date).format("YYYY-MM-DD")}
         markedDates={markedDates}
         onDayPress={(day) => {
           setDate(day.dateString);
