@@ -1,8 +1,6 @@
 import React, {ReactElement} from "react";
+import {StyleProp, ViewStyle} from "react-native/types";
 import {Drawer} from "react-native-drawer-layout";
-
-import {Box} from "./Box";
-import {Text} from "./Text";
 
 export interface SideDrawerProps {
   position?: "right" | "left";
@@ -11,7 +9,15 @@ export interface SideDrawerProps {
   onClose?: () => void;
   onOpen?: () => void;
   drawerType?: "front" | "back" | "slide" | "permanent";
+  children?: ReactElement;
 }
+
+const DEFAULT_STYLES: StyleProp<ViewStyle> = {
+  width: "40%",
+  backgroundColor: "lightgray",
+  borderWidth: 1,
+  borderColor: "gray",
+};
 
 export const SideDrawer = ({
   position = "left",
@@ -20,20 +26,19 @@ export const SideDrawer = ({
   onClose = () => {},
   onOpen = () => {},
   drawerType = "front",
+  children,
 }: SideDrawerProps): ReactElement => {
   return (
     <Drawer
       drawerPosition={position}
-      drawerStyle={{height: "100%"}}
+      drawerStyle={DEFAULT_STYLES}
       drawerType={drawerType}
       open={isOpen}
       renderDrawerContent={renderContent}
       onClose={onClose}
       onOpen={onOpen}
     >
-      <Box>
-        <Text>Child</Text>
-      </Box>
+      {children}
     </Drawer>
   );
 };
