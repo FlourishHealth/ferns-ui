@@ -20,7 +20,7 @@ import {NumberPickerActionSheet} from "./NumberPickerActionSheet";
 import {Unifier} from "./Unifier";
 import {WithLabel} from "./WithLabel";
 
-const keyboardMap = {
+const keyboardMap: {[id: string]: string | undefined} = {
   date: "default",
   email: "email-address",
   number: "number-pad",
@@ -39,7 +39,10 @@ const keyboardMap = {
   username: "default",
 };
 
-const textContentMap = {
+// Not an exhaustive list of all the textContent types, but the ones we use.
+const textContentMap: {
+  [id: string]: "none" | "emailAddress" | "password" | "username" | "URL" | undefined;
+} = {
   date: "none",
   email: "emailAddress",
   number: "none",

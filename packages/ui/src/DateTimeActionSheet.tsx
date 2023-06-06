@@ -331,7 +331,7 @@ export function DateTimeActionSheet({
 
   // Renders our custom calendar component on mobile or web.
   const renderDateCalendar = () => {
-    const markedDates = {};
+    const markedDates: {[id: string]: {selected: boolean; selectedColor: string}} = {};
     if (date) {
       markedDates[moment(date).format("YYYY-MM-DD")] = {
         selected: true,
