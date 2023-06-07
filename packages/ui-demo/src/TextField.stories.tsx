@@ -1,4 +1,5 @@
-import {TextField} from "ferns-ui";
+import {Text, TextField} from "ferns-ui";
+import moment from "moment-timezone";
 import React, {ReactElement, useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -14,15 +15,19 @@ const TextFieldStory = ({
 }): ReactElement => {
   const [value, setValue] = useState(initialValue);
   return (
-    <TextField
-      id="none"
-      label={label}
-      type={type as any}
-      value={value}
-      onChange={(v) => {
-        setValue(v.value);
-      }}
-    />
+    <>
+      <TextField
+        id="none"
+        label={label}
+        type={type as any}
+        value={value}
+        onChange={(v) => {
+          // Handle this the way it would when sent to a DB and back.
+          setValue(moment.utc(v.value).toISOString());
+        }}
+      />
+      <Text>Value: {value}</Text>
+    </>
   );
 };
 
