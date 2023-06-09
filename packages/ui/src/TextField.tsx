@@ -192,7 +192,17 @@ export function TextField({
   let displayValue = value;
   if (displayValue) {
     if (type === "date") {
-      displayValue = moment(value).format("MM/DD/YYYY");
+      // We get off by one errors because UTC midnight might be yesterday. So we add the timezone offset.
+      if (
+        moment.utc(value).hour() === 0 &&
+        moment.utc(value).minute() === 0 &&
+        moment.utc(value).second() === 0
+      ) {
+        const timezoneOffset = new Date().getTimezoneOffset();
+        displayValue = moment.utc(value).add(timezoneOffset, "minutes").format("MM/DD/YYYY");
+      } else {
+        displayValue = moment(value).format("MM/DD/YYYY");
+      }
     } else if (type === "time") {
       displayValue = moment(value).format("h:mm A");
     } else if (type === "datetime") {
