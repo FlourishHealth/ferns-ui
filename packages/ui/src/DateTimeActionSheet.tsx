@@ -1,7 +1,7 @@
 import {Picker} from "@react-native-picker/picker";
 import range from "lodash/range";
 import moment from "moment";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Platform, StyleProp, TextInput, TextStyle, View} from "react-native";
 import {Calendar} from "react-native-calendars";
 
@@ -200,6 +200,22 @@ export function DateTimeActionSheet({
   const [minute, setMinute] = useState<number>(moment(m).minute());
   const [amPm, setAmPm] = useState<"am" | "pm">(moment(m).format("a") === "am" ? "am" : "pm");
   const [date, setDate] = useState<string>(moment(m).toISOString());
+
+  useEffect(() => {
+    if (value) {
+      m = moment(value, [moment.ISO_8601, "HH:mm", "hh:mm A"]);
+    } else {
+      m = moment();
+    }
+    let h = moment(m).hour() % 12;
+    if (h === 0) {
+      h = 12;
+    }
+    setHour(h);
+    setMinute(moment(m).minute());
+    setAmPm(moment(m).format("a") === "am" ? "am" : "pm");
+    setDate(moment(m).toISOString());
+  }, [value]);
 
   // TODO Support 24 hour time for time picker.
   const renderMobileTime = () => {
