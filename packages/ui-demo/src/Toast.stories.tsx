@@ -100,7 +100,6 @@ const Toasts = () => {
             const id = toast.show("Normal Toast", {
               buttonText: "X",
               buttonOnClick: () => {
-                // this does not work
                 toast.hide(id);
               },
               duration: 0,
