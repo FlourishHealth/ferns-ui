@@ -19,11 +19,13 @@ export function useToast(): any {
         variant?: "default" | "warning" | "error";
         buttonText?: string;
         buttonOnClick: () => void | Promise<void>;
+        duration?: number;
       }
     ): string => {
       return toast.show(text, {
         data: options,
-        duration: TOAST_DURATION_MS,
+        // a duration of 0 keeps the toast up infinitely until hidden
+        duration: options?.duration === 0 ? options.duration : TOAST_DURATION_MS,
       });
     },
     hide: (id: string) => toast.hide(id),
@@ -39,6 +41,7 @@ export function Toast({
     variant?: "default" | "warning" | "error";
     buttonText?: string;
     buttonOnClick?: () => void | Promise<void>;
+    duration?: number;
   };
 }): React.ReactElement {
   // margin 8 on either side, times the standard 4px we multiply by.
