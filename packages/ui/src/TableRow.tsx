@@ -1,6 +1,7 @@
 import React, {Children, useRef} from "react";
 
 import {Box} from "./Box";
+import {BoxColor} from "./Common";
 import {IconButton} from "./IconButton";
 import {useTableContext} from "./tableContext";
 
@@ -21,6 +22,10 @@ interface Props {
    * When the row is expanded, the drawerContents are shown. If not
    */
   drawerContents?: React.ReactNode | React.ReactNode[];
+  /**
+   * Background color of the row. Defaults to white.
+   */
+  color?: BoxColor;
 }
 
 /**
@@ -31,6 +36,7 @@ export function TableRow({
   headerRow = false,
   expanded,
   drawerContents,
+  color = "white",
 }: Props): React.ReactElement {
   const [isExpanded, setIsExpanded] = React.useState(expanded || false);
   const {columns, hasDrawerContents} = useTableContext();
@@ -51,8 +57,8 @@ export function TableRow({
   const border = {__style: {borderBottom: `${headerRow ? 2 : 1}px solid #e0e0e0`}};
 
   return (
-    <Box ref={rowRef} dangerouslySetInlineStyle={border} paddingY={1} width="100%">
-      <Box direction="row" width="100%">
+    <Box ref={rowRef} color={color} dangerouslySetInlineStyle={border} width="100%">
+      <Box direction="row" paddingY={1} width="100%">
         {Boolean(drawerContents) && (
           <Box width={30}>
             <IconButton
