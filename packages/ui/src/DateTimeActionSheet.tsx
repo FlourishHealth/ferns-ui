@@ -202,19 +202,20 @@ export function DateTimeActionSheet({
   const [date, setDate] = useState<string>(moment(m).toISOString());
 
   useEffect(() => {
+    let datetime;
     if (value) {
-      m = moment(value, [moment.ISO_8601, "HH:mm", "hh:mm A"]);
+      datetime = moment(value, [moment.ISO_8601, "HH:mm", "hh:mm A"]);
     } else {
-      m = moment();
+      datetime = moment();
     }
-    let h = moment(m).hour() % 12;
+    let h = moment(datetime).hour() % 12;
     if (h === 0) {
       h = 12;
     }
     setHour(h);
-    setMinute(moment(m).minute());
-    setAmPm(moment(m).format("a") === "am" ? "am" : "pm");
-    setDate(moment(m).toISOString());
+    setMinute(moment(datetime).minute());
+    setAmPm(moment(datetime).format("a") === "am" ? "am" : "pm");
+    setDate(moment(datetime).toISOString());
   }, [value]);
 
   // TODO Support 24 hour time for time picker.
