@@ -118,11 +118,10 @@ export const TableStories = {
             </TableHeader>
             {rows.map((row) => (
               <TableRow key={row}>
-                <Text key={1}>{row}</Text>
-                <Text key={2}>Data</Text>
-                <Text key={3}>Other Data</Text>
-                <Text key={row}>Data</Text>
-                <Text key={row}>$2.00</Text>
+                <Text key={`${row}1`}>{row}</Text>
+                <Text key={`${row}2`}>Data</Text>
+                <Text key={`${row}3`}>Other Data</Text>
+                <Text key={`${row}4`}>$2.00</Text>
               </TableRow>
             ))}
           </Table>
