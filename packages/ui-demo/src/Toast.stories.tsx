@@ -95,14 +95,13 @@ const Toasts = () => {
           }}
         />
         <Button
-          text="Dismissable "
+          text="Dismissable"
           onClick={() => {
             const id = toast.show("Normal Toast", {
-              buttonText: "X",
-              buttonOnClick: () => {
+              dismissable: true,
+              onDismiss: () => {
                 toast.hide(id);
               },
-              duration: 0,
             });
           }}
         />
