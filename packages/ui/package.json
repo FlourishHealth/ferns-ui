@@ -112,7 +112,9 @@
       "jest-watch-typeahead/testname"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "dayjs": "^1.11.9"
+  },
   "devDependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "1.17.11",
@@ -142,7 +144,6 @@
     "libphonenumber-js": "^1.10.21",
     "lodash": "^4.17.21",
     "mdurl": "^1.0.1",
-    "moment-timezone": "^0.5.41",
     "prettier": "^2.8.4",
     "react": "18.2.0",
     "react-app-polyfill": "^3.0.0",
@@ -182,7 +183,6 @@
     "expo-image-picker": "~14.1.1",
     "libphonenumber-js": "^1.10.21",
     "lodash": "^4.17.21",
-    "moment-timezone": "^0.5.41",
     "react": "18.2.0",
     "react-app-polyfill": "^3.0.0",
     "react-date-picker": "^10.0.3",
