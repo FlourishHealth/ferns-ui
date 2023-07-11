@@ -40,6 +40,7 @@
     "@react-native-community/blur": "^4.3.0",
     "@react-native-community/datetimepicker": "6.7.3",
     "@react-native-picker/picker": "2.4.8",
+    "dayjs": "^1.11.9",
     "expo": "^48.0.17",
     "expo-font": "~11.1.1",
     "expo-haptics": "~12.2.1",
