@@ -88,8 +88,19 @@ export const TableStories = {
   component: Table,
   stories: {
     StandardTable() {
+      const rows = [
+        "Data 1 has some data in it",
+        "Row 2 short",
+        "Row 2 long",
+        10,
+        2000.0,
+        "Row 3 very long, lots of overflow here, wow is this still going? I hope it all fits!",
+        "Row 3 long",
+        1,
+        2,
+      ];
       return (
-        <Box color="white" width="100%">
+        <Box color="white" height={190} scroll width={400}>
           <Table columns={[80, 200, 200, 80]}>
             <TableHeader>
               <TableHeaderCell index={0}>
@@ -105,11 +116,14 @@ export const TableStories = {
                 <Text>Cost</Text>
               </TableHeaderCell>
             </TableHeader>
-            <TableRow>
-              <Text>Data 1 has some data in it</Text>
-              <Text>Data 2 has some longer data in it</Text>
-              <Text>Data 3 is short</Text>
-            </TableRow>
+            {rows.map((row) => (
+              <TableRow key={row}>
+                <Text key={`${row}1`}>{row}</Text>
+                <Text key={`${row}2`}>Data</Text>
+                <Text key={`${row}3`}>Other Data</Text>
+                <Text key={`${row}4`}>$2.00</Text>
+              </TableRow>
+            ))}
           </Table>
         </Box>
       );

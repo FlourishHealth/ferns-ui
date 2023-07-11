@@ -22,7 +22,9 @@
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "downlevelIteration": true
+    "suppressImplicitAnyIndexErrors": true,
+    "downlevelIteration": true,
+    "ignoreDeprecations": "5.0"
   },
   "include": ["src"],
 }

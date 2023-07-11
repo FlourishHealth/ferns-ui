@@ -1,6 +1,5 @@
-import React, {Children, ReactElement, useRef} from "react";
+import React, {Children, ReactElement} from "react";
 
-import {Box} from "./Box";
 import {ScrollView} from "./ScrollView";
 import {ColumnSortInterface, TableContextProvider} from "./tableContext";
 
@@ -21,10 +20,24 @@ interface TableProps {
    * Use numbers for pixels: `maxHeight={100}` and strings for percentages: `maxHeight="100%"`.
    */
   maxHeight?: number | string;
+  /**
+   * If true, the header will stick to the top of the table when scrolling. Defaults to true.
+   */
+  stickyHeader?: boolean;
+  /**
+   * If true, alternate rows will have a light gray background. Defaults to true.
+   */
+  alternateRowBackground?: boolean;
 }
 
-export function Table({children, columns, borderStyle, maxHeight}: TableProps): React.ReactElement {
-  const tableRef = useRef(null);
+export function Table({
+  children,
+  columns,
+  borderStyle,
+  alternateRowBackground = true,
+  maxHeight,
+  stickyHeader = true,
+}: TableProps): React.ReactElement {
   const arrayChildren = Children.toArray(children);
   const [sortColumn, setSortColumn] = React.useState<ColumnSortInterface | undefined>(undefined);
 
@@ -48,21 +61,25 @@ export function Table({children, columns, borderStyle, maxHeight}: TableProps): 
 
   return (
     <TableContextProvider
+      alternateRowBackground={alternateRowBackground}
+      borderStyle={borderStyle}
       columns={columns}
       hasDrawerContents={hasDrawerContents}
       setSortColumn={setSortColumn}
       sortColumn={sortColumn}
+      stickyHeader={stickyHeader}
     >
       <ScrollView horizontal style={{width, maxWidth: "100%"}}>
-        <Box
-          width={width}
-          {...(borderStyle === "sm" ? {borderStyle: "sm", rounding: 1} : {})}
-          ref={tableRef}
-          flex="grow"
-          maxHeight={maxHeight}
+        <ScrollView
+          stickyHeaderIndices={stickyHeader ? [0] : undefined}
+          style={{width, maxWidth: "100%", flex: 1, maxHeight}}
         >
-          {children}
-        </Box>
+          {Children.map(children, (child, index) =>
+            React.cloneElement(child as any, {
+              color: index % 2 === 1 && alternateRowBackground ? "lightGray" : "white",
+            })
+          )}
+        </ScrollView>
       </ScrollView>
     </TableContextProvider>
   );
