@@ -95,10 +95,10 @@ const Toasts = () => {
           }}
         />
         <Button
-          text="Dismissable"
+          text="Persistent"
           onClick={() => {
-            const id = toast.show("Normal Toast", {
-              dismissable: true,
+            const id = toast.show("Persistent Toast", {
+              persistent: true,
               onDismiss: () => {
                 toast.hide(id);
               },

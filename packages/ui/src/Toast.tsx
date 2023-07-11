@@ -20,14 +20,14 @@ export function useToast(): any {
         variant?: "default" | "warning" | "error";
         buttonText?: string;
         buttonOnClick: () => void | Promise<void>;
-        dismissable?: boolean;
+        persistent?: boolean;
         onDismiss?: () => void | Promise<void>;
       }
     ): string => {
       return toast.show(text, {
         data: options,
         // a duration of 0 keeps the toast up infinitely until hidden
-        duration: options?.dismissable ? 0 : TOAST_DURATION_MS,
+        duration: options?.persistent ? 0 : TOAST_DURATION_MS,
       });
     },
     hide: (id: string) => toast.hide(id),
@@ -43,13 +43,13 @@ export function Toast({
     variant?: "default" | "warning" | "error";
     buttonText?: string;
     buttonOnClick?: () => void | Promise<void>;
-    dismissable?: boolean;
+    persistent?: boolean;
     onDismiss?: () => void;
   };
 }): React.ReactElement {
   // margin 8 on either side, times the standard 4px we multiply by.
   const width = Math.min(Dimensions.get("window").width - 16 * 4, 712);
-  const {variant, buttonText, buttonOnClick, dismissable, onDismiss} = data ?? {};
+  const {variant, buttonText, buttonOnClick, persistent, onDismiss} = data ?? {};
   let color: AllColors = "darkGray";
   if (variant === "warning") {
     color = "orange";
@@ -91,7 +91,7 @@ export function Toast({
           <Button color="lightGray" shape="pill" text={buttonText!} onClick={buttonOnClick} />
         </Box>
       )}
-      {Boolean(onDismiss && dismissable) && (
+      {Boolean(onDismiss && persistent) && (
         <Box alignItems="center" justifyContent="center" marginLeft={4}>
           <IconButton
             accessibilityLabel="Dismiss notification"
