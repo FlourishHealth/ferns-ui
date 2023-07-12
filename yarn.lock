@@ -6046,6 +6046,7 @@
     "@react-native-community/blur" "^4.3.0"
     "@react-native-community/datetimepicker" "6.7.3"
     "@react-native-picker/picker" "2.4.8"
+    "dayjs" "^1.11.9"
     "expo" "^48.0.17"
     "expo-font" "~11.1.1"
     "expo-haptics" "~12.2.1"
@@ -6053,7 +6054,6 @@
     "expo-image-picker" "~14.1.1"
     "expo-status-bar" "~1.4.4"
     "libphonenumber-js" "^1.10.21"
-    "moment-timezone" "^0.5.41"
     "postcss" "8.4.23"
     "react" "18.2.0"
     "react-app-polyfill" "^3.0.0"
@@ -6084,7 +6084,7 @@
 
 "ferns-ui@file:/home/runner/work/ferns-ui/ferns-ui/packages/ui":
   "resolved" "file:packages/ui"
-  "version" "0.31.0"
+  "version" "0.32.0"
 
 "fetch-retry@^4.1.1":
   "integrity" "sha512-e6eB7zN6UBSwGVwrbWVH+gdLnkW9WwHhmq2YDK1Sh30pzx1onRVGBvogTlUeWxwTa+L86NYdo4hFkh7O8ZjSnA=="
