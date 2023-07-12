@@ -94,6 +94,17 @@ const Toasts = () => {
             );
           }}
         />
+        <Button
+          text="Persistent"
+          onClick={() => {
+            const id = toast.show("Persistent Toast", {
+              persistent: true,
+              onDismiss: () => {
+                toast.hide(id);
+              },
+            });
+          }}
+        />
       </Box>
     </StorybookContainer>
   );
