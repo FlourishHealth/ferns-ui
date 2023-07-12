@@ -48,7 +48,6 @@
     "expo-image-picker": "~14.1.1",
     "expo-status-bar": "~1.4.4",
     "libphonenumber-js": "^1.10.21",
-    "moment-timezone": "^0.5.41",
     "postcss": "8.4.23",
     "react": "18.2.0",
     "react-app-polyfill": "^3.0.0",
