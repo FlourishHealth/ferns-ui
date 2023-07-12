@@ -1,8 +1,11 @@
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import {Text, TextField} from "ferns-ui";
-import moment from "moment-timezone";
 import React, {ReactElement, useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
+
+dayjs.extend(utc);
 
 const TextFieldStory = ({
   initialValue,
@@ -23,7 +26,7 @@ const TextFieldStory = ({
         value={value}
         onChange={(v) => {
           // Handle this the way it would when sent to a DB and back.
-          setValue(moment.utc(v.value).toISOString());
+          setValue(dayjs.utc(v.value).toISOString());
         }}
       />
       <Text>Value: {value}</Text>

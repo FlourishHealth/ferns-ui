@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
+import dayjs from "dayjs";
 import {Box, Field, Text} from "ferns-ui";
-import moment from "moment-timezone";
 import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -253,7 +253,7 @@ const DateTimeField = () => {
 };
 
 const TimeField = () => {
-  const [value, setValue] = useState(moment().hour(12).minute(0).toISOString());
+  const [value, setValue] = useState(dayjs().hour(12).minute(0).toISOString());
   return (
     <StorybookContainer>
       <Field

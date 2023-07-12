@@ -1,5 +1,4 @@
 import {AsYouType} from "libphonenumber-js";
-import moment from "moment-timezone";
 import React, {ReactElement, useCallback, useMemo, useState} from "react";
 import {
   ActivityIndicator,
@@ -13,6 +12,7 @@ import {
 import {Box} from "./Box";
 import {TextFieldProps} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
+import dayjs from "./dayjsExtended";
 import {DecimalRangeActionSheet} from "./DecimalRangeActionSheet";
 import {HeightActionSheet} from "./HeightActionSheet";
 import {Icon} from "./Icon";
@@ -194,19 +194,19 @@ export function TextField({
     if (type === "date") {
       // We get off by one errors because UTC midnight might be yesterday. So we add the timezone offset.
       if (
-        moment.utc(value).hour() === 0 &&
-        moment.utc(value).minute() === 0 &&
-        moment.utc(value).second() === 0
+        dayjs.utc(value).hour() === 0 &&
+        dayjs.utc(value).minute() === 0 &&
+        dayjs.utc(value).second() === 0
       ) {
         const timezoneOffset = new Date().getTimezoneOffset();
-        displayValue = moment.utc(value).add(timezoneOffset, "minutes").format("MM/DD/YYYY");
+        displayValue = dayjs.utc(value).add(timezoneOffset, "minutes").format("MM/DD/YYYY");
       } else {
-        displayValue = moment(value).format("MM/DD/YYYY");
+        displayValue = dayjs(value).format("MM/DD/YYYY");
       }
     } else if (type === "time") {
-      displayValue = moment(value).format("h:mm A");
+      displayValue = dayjs(value).format("h:mm A");
     } else if (type === "datetime") {
-      displayValue = moment(value).format("MM/DD/YYYY h:mm A");
+      displayValue = dayjs(value).format("MM/DD/YYYY h:mm A");
     } else if (type === "height") {
       displayValue = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
     } else if (type === "phoneNumber") {

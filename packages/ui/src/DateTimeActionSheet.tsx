@@ -1,12 +1,12 @@
 import {Picker} from "@react-native-picker/picker";
 import range from "lodash/range";
-import moment from "moment";
 import React, {useEffect, useState} from "react";
 import {Platform, StyleProp, TextInput, TextStyle, View} from "react-native";
 import {Calendar} from "react-native-calendars";
 
 import {Box} from "./Box";
 import {OnChangeCallback} from "./Common";
+import dayjs from "./dayjsExtended";
 import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
@@ -105,7 +105,7 @@ function CalendarHeader({
   addMonth: (num: number) => void;
   month: Date[];
 }): React.ReactElement {
-  const displayDate = moment(month[0]).format("MMM YYYY");
+  const displayDate = dayjs(month[0]).format("MMM YYYY");
   return (
     <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
       <IconButton
@@ -182,40 +182,40 @@ export function DateTimeActionSheet({
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for mode=time
   let m;
   if (value) {
-    m = moment(value, [moment.ISO_8601, "HH:mm", "hh:mm A"]);
+    m = dayjs(value, ["YYYY", "YYYY-MM-DD", "HH:mm", "hh:mm A"]);
   } else {
-    m = moment();
+    m = dayjs();
   }
 
   if (!m.isValid()) {
     throw new Error(`Invalid date/time value ${value}`);
   }
 
-  let hr = moment(m).hour() % 12;
+  let hr = dayjs(m).hour() % 12;
   if (hr === 0) {
     hr = 12;
   }
 
   const [hour, setHour] = useState<number>(hr);
-  const [minute, setMinute] = useState<number>(moment(m).minute());
-  const [amPm, setAmPm] = useState<"am" | "pm">(moment(m).format("a") === "am" ? "am" : "pm");
-  const [date, setDate] = useState<string>(moment(m).toISOString());
+  const [minute, setMinute] = useState<number>(dayjs(m).minute());
+  const [amPm, setAmPm] = useState<"am" | "pm">(dayjs(m).format("a") === "am" ? "am" : "pm");
+  const [date, setDate] = useState<string>(dayjs(m).toISOString());
 
   useEffect(() => {
     let datetime;
     if (value) {
-      datetime = moment(value, [moment.ISO_8601, "HH:mm", "hh:mm A"]);
+      datetime = dayjs(value, ["YYYY", "YYYY-MM-DD", "HH:mm", "hh:mm A"]);
     } else {
-      datetime = moment();
+      datetime = dayjs();
     }
-    let h = moment(datetime).hour() % 12;
+    let h = dayjs(datetime).hour() % 12;
     if (h === 0) {
       h = 12;
     }
     setHour(h);
-    setMinute(moment(datetime).minute());
-    setAmPm(moment(datetime).format("a") === "am" ? "am" : "pm");
-    setDate(moment(datetime).toISOString());
+    setMinute(dayjs(datetime).minute());
+    setAmPm(dayjs(datetime).format("a") === "am" ? "am" : "pm");
+    setDate(dayjs(datetime).toISOString());
   }, [value]);
 
   // TODO Support 24 hour time for time picker.
@@ -329,11 +329,11 @@ export function DateTimeActionSheet({
       onChange({value: date});
     } else if (mode === "time") {
       onChange({
-        value: moment().hour(hourChange).minute(Number(minute)).toISOString(),
+        value: dayjs().hour(hourChange).minute(Number(minute)).toISOString(),
       });
     } else if (mode === "datetime") {
       onChange({
-        value: moment(date).hour(hourChange).minute(Number(minute)).toISOString(),
+        value: dayjs(date).hour(hourChange).minute(Number(minute)).toISOString(),
       });
     }
     onDismiss();
@@ -350,7 +350,7 @@ export function DateTimeActionSheet({
   const renderDateCalendar = () => {
     const markedDates: {[id: string]: {selected: boolean; selectedColor: string}} = {};
     if (date) {
-      markedDates[moment(date).format("YYYY-MM-DD")] = {
+      markedDates[dayjs(date).format("YYYY-MM-DD")] = {
         selected: true,
         selectedColor: Unifier.theme.primary,
       };
@@ -358,7 +358,7 @@ export function DateTimeActionSheet({
     return (
       <Calendar
         customHeader={CalendarHeader}
-        initialDate={moment(date).format("YYYY-MM-DD")}
+        initialDate={dayjs(date).format("YYYY-MM-DD")}
         markedDates={markedDates}
         onDayPress={(day) => {
           setDate(day.dateString);

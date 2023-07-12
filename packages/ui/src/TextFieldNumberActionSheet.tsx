@@ -1,11 +1,11 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import moment from "moment-timezone";
 import React from "react";
 
 import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
 import {OnChangeCallback} from "./Common";
+import dayjs from "./dayjsExtended";
 
 interface NumberPickerActionSheetProps {
   value?: string;
@@ -46,7 +46,7 @@ export class NumberPickerActionSheet extends React.Component<
             is24Hour
             mode={this.props.mode}
             testID="dateTimePicker"
-            value={moment(this.props.value).toDate()}
+            value={dayjs(this.props.value).toDate()}
             onChange={(event: any, date?: Date) => {
               if (!date) {
                 return;

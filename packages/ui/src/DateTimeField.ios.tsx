@@ -1,9 +1,9 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import moment from "moment-timezone";
 import React, {ReactElement, useMemo, useState} from "react";
 import {TextInput} from "react-native";
 
 import {DateTimeFieldProps} from "./Common";
+import dayjs from "./dayjsExtended";
 import {Unifier} from "./Unifier";
 import {WithLabel} from "./WithLabel";
 
@@ -55,7 +55,7 @@ export const DateTimeField = ({
             fontFamily: Unifier.theme.primaryFont,
             borderWidth: 1,
           }}
-          value={moment(value).format(defaultFormat)}
+          value={dayjs(value).format(defaultFormat)}
           onPressIn={() => {
             setShowPicker(!showPicker);
           }}
@@ -68,7 +68,7 @@ export const DateTimeField = ({
             mode={mode}
             style={{alignSelf: "flex-start"}}
             testID="dateTimePicker"
-            value={moment(value).toDate()}
+            value={dayjs(value).toDate()}
             onChange={(event: any, date: any) => {
               if (!date) {
                 return;
