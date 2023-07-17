@@ -48,7 +48,7 @@ const getTooltipPosition = ({
   idealDirection,
 }: Measurement): {} | {left: number; top: number} => {
   if (!measured) {
-    console.debug("No measurements for child yet, cannot show tooltip.");
+    console.debug("No measurements for child yet, cannot show tooltip yet.");
     return {};
   }
 
@@ -160,6 +160,8 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
     if (childrenWrapperRef?.current && !childrenWrapperRef?.current?.measure) {
       console.error("Tooltip: childrenWrapperRef does not have a measure method.");
       return;
+    } else if (!childrenWrapperRef?.current) {
+      console.error("Tooltip: childrenWrapperRef is null.");
     }
     childrenWrapperRef?.current?.measure((_x, _y, width, height, pageX, pageY) => {
       setMeasurement({
@@ -253,10 +255,12 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
           </Pressable>
         </Portal>
       )}
-      <Pressable onTouchStart={handleTouchStart} {...(isWeb ? webPressProps : mobilePressProps)}>
-        {React.cloneElement(children, {
-          ref: childrenWrapperRef,
-        })}
+      <Pressable
+        ref={childrenWrapperRef}
+        onTouchStart={handleTouchStart}
+        {...(isWeb ? webPressProps : mobilePressProps)}
+      >
+        {children}
       </Pressable>
     </>
   );
