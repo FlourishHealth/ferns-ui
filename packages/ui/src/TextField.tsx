@@ -178,6 +178,9 @@ export function TextField({
   };
 
   const onTap = useCallback((): void => {
+    if (disabled) {
+      return;
+    }
     if (["date", "datetime", "time"].includes(type)) {
       setShowDate(true);
     } else if (type === "numberRange") {
