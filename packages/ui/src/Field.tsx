@@ -154,6 +154,7 @@ export const Field = ({
     } else if (type && ["date", "time", "datetime"].includes(type)) {
       return (
         <TextField
+          disabled={disabled}
           id={name}
           placeholder={placeholder}
           type={type as "date" | "time" | "datetime"}
@@ -173,6 +174,7 @@ export const Field = ({
       return (
         <>
           <TextField
+            disabled={disabled}
             id="address1"
             label="Street Address"
             type="text"
@@ -180,6 +182,7 @@ export const Field = ({
             onChange={(result) => handleAddressChange("address1", result.value)}
           />
           <TextField
+            disabled={disabled}
             id="address2"
             label="Apt, suite, etc"
             type="text"
@@ -187,6 +190,7 @@ export const Field = ({
             onChange={(result) => handleAddressChange("address2", result.value)}
           />
           <TextField
+            disabled={disabled}
             id="city"
             label="City"
             type="text"
@@ -194,6 +198,7 @@ export const Field = ({
             onChange={(result) => handleAddressChange("city", result.value)}
           />
           <SelectList
+            disabled={disabled}
             id="state"
             label="State"
             options={USSTATESLIST}
@@ -203,6 +208,7 @@ export const Field = ({
             onChange={(result) => handleAddressChange("state", result)}
           />
           <TextField
+            disabled={disabled}
             id="zipcode"
             label="Zipcode"
             type="text"
