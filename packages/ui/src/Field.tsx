@@ -85,7 +85,7 @@ export const Field = ({
         />
       );
     } else if (type === "multiselect") {
-      if (!options) {
+      if (options === undefined) {
         console.error("Field with type=multiselect require options");
         return undefined;
       }
