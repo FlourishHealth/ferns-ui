@@ -8,7 +8,7 @@ import {Field, FieldProps} from "./Field";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 
-export function formatAddress(address: any): string {
+export function formatAddress(address: any, asString = false): string {
   let city = "";
   if (address?.city) {
     city = address?.state || address.zipcode ? `${address.city}, ` : `${address.city}`;
@@ -25,10 +25,16 @@ export function formatAddress(address: any): string {
   const addressLineTwo = address?.address2 ?? "";
   const addressLineThree = `${city}${state}${zip}`;
 
-  // Only add new lines if lines before and after are not empty to avoid awkward whitespace
-  return `${addressLineOne}${
-    addressLineOne && (addressLineTwo || addressLineThree) ? `\n` : ""
-  }${addressLineTwo}${addressLineTwo && addressLineThree ? `\n` : ""}${addressLineThree}`;
+  if (!asString) {
+    // Only add new lines if lines before and after are not empty to avoid awkward whitespace
+    return `${addressLineOne}${
+      addressLineOne && (addressLineTwo || addressLineThree) ? `\n` : ""
+    }${addressLineTwo}${addressLineTwo && addressLineThree ? `\n` : ""}${addressLineThree}`;
+  } else {
+    return `${addressLineOne}${
+      addressLineOne && (addressLineTwo || addressLineThree) ? `, ` : ""
+    }${addressLineTwo}${addressLineTwo && addressLineThree ? `, ` : ""}${addressLineThree}`;
+  }
 }
 
 export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
@@ -181,6 +187,21 @@ export const TapToEdit = ({
       >
         <Box>
           <Text weight="bold">{title}:</Text>
+          {fieldProps?.type === "address" && (
+            <Box
+              onClick={
+                () =>
+                  Linking.openURL(
+                    `https://www.google.com/maps/search/?q=${formatAddress(value, true)}`
+                  )
+                // eslint-disable-next-line react/jsx-curly-newline
+              }
+            >
+              <Text color="blue" underline={fieldProps?.type === "address"}>
+                Google Maps
+              </Text>
+            </Box>
+          )}
         </Box>
         <Box direction="row">
           <Box onClick={fieldProps?.type === "url" ? openLink : undefined}>
