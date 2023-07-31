@@ -2,6 +2,9 @@ import React, {ReactElement} from "react";
 import {Platform, StyleProp, ViewStyle} from "react-native";
 import {Drawer} from "react-native-drawer-layout";
 
+import {Box} from "./Box";
+import {IconButton} from "./IconButton";
+
 export interface SideDrawerProps {
   // Position of the drawer relative to the child
   position?: "right" | "left";
@@ -18,7 +21,7 @@ export interface SideDrawerProps {
 }
 
 const DEFAULT_STYLES: StyleProp<ViewStyle> = {
-  width: Platform.OS === "web" ? "40%" : "100%",
+  width: Platform.OS === "web" ? "40%" : "95%",
   backgroundColor: "lightgray",
   borderWidth: 1,
   borderColor: "gray",
@@ -34,13 +37,35 @@ export const SideDrawer = ({
   children,
   drawerStyles = {},
 }: SideDrawerProps): ReactElement => {
+  const renderDrawerHeader = (): ReactElement => {
+    return (
+      <Box>
+        <IconButton
+          accessibilityLabel="close side drawer"
+          icon="times"
+          iconColor="darkGray"
+          onClick={onClose}
+        />
+      </Box>
+    );
+  };
+
+  const renderDrawerContent = (): ReactElement => {
+    return (
+      <>
+        {renderDrawerHeader()}
+        {renderContent()}
+      </>
+    );
+  };
+
   return (
     <Drawer
       drawerPosition={position}
       drawerStyle={[DEFAULT_STYLES, drawerStyles]}
       drawerType={drawerType}
       open={isOpen}
-      renderDrawerContent={renderContent}
+      renderDrawerContent={renderDrawerContent}
       onClose={onClose}
       onOpen={onOpen}
     >
