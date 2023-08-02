@@ -119,7 +119,7 @@
     "@react-native-community/datetimepicker": "7.2.0",
     "@react-native-picker/picker": "2.4.10",
     "@types/mdurl": "^1.0.2",
-    "@types/react": "~18.2.14",
+    "@types/react": "^18.2.18",
     "@types/react-datetime-picker": "^5.0.0",
     "@types/react-time-picker": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^6.2.1",
