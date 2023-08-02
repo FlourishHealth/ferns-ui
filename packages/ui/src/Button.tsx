@@ -1,6 +1,6 @@
 import debounce from "lodash/debounce";
 import React, {useState} from "react";
-import {ActivityIndicator, TouchableOpacity, View} from "react-native";
+import {ActivityIndicator, Pressable, View} from "react-native";
 
 import {Box} from "./Box";
 import {ButtonColor, Color, IconName, IconPrefix, TooltipDirection, UnifiedTheme} from "./Common";
@@ -134,7 +134,7 @@ export function Button({
   const renderButton = () => {
     return (
       <View>
-        <TouchableOpacity
+        <Pressable
           disabled={disabled || loading}
           style={{
             alignSelf: inline === true ? undefined : "stretch",
@@ -201,7 +201,7 @@ export function Button({
               <ActivityIndicator color={getTextColor(color as Color)} size="small" />
             </Box>
           )}
-        </TouchableOpacity>
+        </Pressable>
         {Boolean(withConfirmation) && renderConfirmation()}
       </View>
     );

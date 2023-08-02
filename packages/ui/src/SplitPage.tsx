@@ -256,7 +256,7 @@ export const SplitPage = ({
               style={{
                 width: width - 8,
                 padding: 4,
-                height: elementArray.length > 1 ? "90vh" : "100vh",
+                height: elementArray.length > 1 ? "90%" : "100%",
                 paddingBottom: bottomNavBarHeight,
               }}
             >
