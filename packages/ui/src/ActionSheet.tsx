@@ -14,11 +14,11 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   Platform,
+  Pressable,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
   UIManager,
   View,
   ViewStyle,
@@ -1151,7 +1151,7 @@ export class ActionSheet extends Component<Props, State, any> {
                   onTouchMove={this._onTouchMove}
                   onTouchStart={this._onTouchStart}
                 >
-                  <TouchableOpacity
+                  <Pressable
                     style={{
                       height: this.state.deviceHeight * 1.15,
                       width: "100%",

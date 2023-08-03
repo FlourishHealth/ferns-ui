@@ -1,4 +1,5 @@
 import React, {Children, ReactElement} from "react";
+import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 import {ScrollView} from "./ScrollView";
 import {ColumnSortInterface, TableContextProvider} from "./tableContext";
@@ -19,7 +20,7 @@ interface TableProps {
   /**
    * Use numbers for pixels: `maxHeight={100}` and strings for percentages: `maxHeight="100%"`.
    */
-  maxHeight?: number | string;
+  maxHeight?: DimensionValue;
   /**
    * If true, the header will stick to the top of the table when scrolling. Defaults to true.
    */
@@ -47,11 +48,11 @@ export function Table({
   });
 
   // Calculate the total width of the table. If the table has only number widths, calculate a width. Otherwise use 100%.
-  let width: string | number;
+  let width: DimensionValue;
   if (columns.every((column) => typeof column === "number")) {
     width = columns.reduce((acc, curr) => {
       return (acc as number) + (curr as number);
-    }, 0);
+    }, 0) as number;
     if (hasDrawerContents) {
       width = (width as number) + 30;
     }

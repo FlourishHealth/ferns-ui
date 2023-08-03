@@ -30,6 +30,7 @@ import {
   Keyboard,
   Modal,
   Platform,
+  Pressable,
   StyleSheet,
   Text,
   TextInput,
@@ -191,7 +192,7 @@ export function RNPickerSelect({
   }, [items, placeholder]);
 
   const getSelectedItem = useCallback(
-    (key, val) => {
+    (key: any, val: any) => {
       let idx = options.findIndex((item: any) => {
         if (item.key && key) {
           return isEqual(item.key, key);
@@ -326,7 +327,7 @@ export function RNPickerSelect({
             />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
+        <Pressable
           hitSlop={{top: 4, right: 4, bottom: 4, left: 4}}
           testID="done_button"
           onPress={() => {
@@ -353,7 +354,7 @@ export function RNPickerSelect({
               {doneText}
             </Text>
           </View>
-        </TouchableOpacity>
+        </Pressable>
       </View>
     );
   };
@@ -406,7 +407,7 @@ export function RNPickerSelect({
   const renderIOS = () => {
     return (
       <View style={[defaultStyles.viewContainer, style.viewContainer]}>
-        <TouchableOpacity
+        <Pressable
           activeOpacity={1}
           style={{
             flexDirection: "row",
@@ -422,7 +423,7 @@ export function RNPickerSelect({
           {...touchableWrapperProps}
         >
           {renderTextInputOrChildren()}
-        </TouchableOpacity>
+        </Pressable>
         <Modal
           animationType={animationType}
           supportedOrientations={["portrait", "landscape"]}
@@ -432,7 +433,7 @@ export function RNPickerSelect({
           onOrientationChange={onOrientationChange}
           {...modalProps}
         >
-          <TouchableOpacity
+          <Pressable
             style={[defaultStyles.modalViewTop, style.modalViewTop]}
             testID="ios_modal_top"
             onPress={() => {
@@ -462,7 +463,7 @@ export function RNPickerSelect({
   };
 
   const renderAndroidHeadless = () => {
-    const Component: any = fixAndroidTouchableBug ? View : TouchableOpacity;
+    const Component: any = fixAndroidTouchableBug ? View : Pressable;
     return (
       <Component
         activeOpacity={1}

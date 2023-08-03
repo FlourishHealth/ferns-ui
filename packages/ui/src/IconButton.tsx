@@ -1,5 +1,5 @@
 import React, {forwardRef, useState} from "react";
-import {Platform, TouchableOpacity} from "react-native";
+import {Platform, Pressable} from "react-native";
 
 import {
   ButtonColor,
@@ -90,7 +90,7 @@ export const IconButton = forwardRef(
     function renderIconButton(): React.ReactElement {
       return (
         <>
-          <TouchableOpacity
+          <Pressable
             ref={ref as any}
             hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
             style={{
@@ -117,7 +117,7 @@ export const IconButton = forwardRef(
             }}
           >
             <Icon color={iconColor} name={icon} prefix={prefix || "fas"} size={size} />
-          </TouchableOpacity>
+          </Pressable>
           {Boolean(withConfirmation) && renderConfirmation()}
         </>
       );
