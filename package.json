@@ -14,9 +14,6 @@
     "preview": "yarn build && yarn --cwd packages/ui-demo build-web",
     "clean": "rm -rf node_modules && rm -rf packages/ui/node_modules && rm -rf packages/ui-demo/node_modules && yarn"
   },
-  "resolutions": {
-    "@types/react": "17.0.44"
-  },
   "workspaces": {
     "packages": [
       "packages/*"

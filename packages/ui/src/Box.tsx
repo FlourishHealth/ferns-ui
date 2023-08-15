@@ -2,9 +2,9 @@ import React from "react";
 import {
   KeyboardAvoidingView,
   Platform,
+  Pressable,
   SafeAreaView,
   ScrollView,
-  TouchableOpacity,
   View,
 } from "react-native";
 
@@ -239,7 +239,7 @@ export class Box extends React.Component<BoxProps, {}> {
 
     if (this.props.onClick) {
       box = (
-        <TouchableOpacity
+        <Pressable
           style={this.propsToStyle()}
           testID={this.props.testID ? `${this.props.testID}-clickable` : undefined}
           // TODO: refactor this better..
@@ -250,7 +250,7 @@ export class Box extends React.Component<BoxProps, {}> {
           }}
         >
           {this.props.children}
-        </TouchableOpacity>
+        </Pressable>
       );
     } else {
       box = (

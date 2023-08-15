@@ -1974,6 +1974,7 @@ export type DrawerDirection = "left" | "right" | "bottom" | "top";
 
 export interface ErrorBoundaryProps {
   onError?: (error: Error, stack: any) => void;
+  children?: ReactNode;
 }
 
 export interface FaceBookButtonProps {
@@ -2140,6 +2141,7 @@ export interface MetaProps {
   itemType?: string;
   key?: string;
   property?: string;
+  children?: ReactNode;
 }
 
 export interface ImageProps {
@@ -2195,6 +2197,7 @@ export interface BodyProps {
   padding?: UnsignedUpTo12;
   height?: number | string;
   avoidKeyboard?: boolean; // default true
+  children?: ReactNode;
 }
 
 export interface ChatPaneProps {
