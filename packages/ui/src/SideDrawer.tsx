@@ -1,9 +1,6 @@
 import React, {ReactElement} from "react";
-import {Platform, StyleProp, ViewStyle} from "react-native";
+import {Platform, SafeAreaView, StyleProp, ViewStyle} from "react-native";
 import {Drawer} from "react-native-drawer-layout";
-
-import {Box} from "./Box";
-import {IconButton} from "./IconButton";
 
 export interface SideDrawerProps {
   // Position of the drawer relative to the child
@@ -25,6 +22,7 @@ const DEFAULT_STYLES: StyleProp<ViewStyle> = {
   backgroundColor: "lightgray",
   borderWidth: 1,
   borderColor: "gray",
+  overflow: "scroll",
 };
 
 export const SideDrawer = ({
@@ -37,26 +35,8 @@ export const SideDrawer = ({
   children,
   drawerStyles = {},
 }: SideDrawerProps): ReactElement => {
-  const renderDrawerHeader = (): ReactElement => {
-    return (
-      <Box>
-        <IconButton
-          accessibilityLabel="close side drawer"
-          icon="times"
-          iconColor="darkGray"
-          onClick={onClose}
-        />
-      </Box>
-    );
-  };
-
   const renderDrawerContent = (): ReactElement => {
-    return (
-      <>
-        {renderDrawerHeader()}
-        {renderContent()}
-      </>
-    );
+    return <SafeAreaView>{renderContent()}</SafeAreaView>;
   };
 
   return (
