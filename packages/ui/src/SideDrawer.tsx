@@ -2,6 +2,8 @@ import React, {ReactElement} from "react";
 import {Platform, SafeAreaView, StyleProp, ViewStyle} from "react-native";
 import {Drawer} from "react-native-drawer-layout";
 
+import {isMobileDevice} from "./MediaQuery";
+
 export interface SideDrawerProps {
   // Position of the drawer relative to the child
   position?: "right" | "left";
@@ -22,7 +24,7 @@ const DEFAULT_STYLES: StyleProp<ViewStyle> = {
   backgroundColor: "lightgray",
   borderWidth: 1,
   borderColor: "gray",
-  overflow: "scroll",
+  overflow: isMobileDevice() ? undefined : "scroll",
 };
 
 export const SideDrawer = ({
@@ -42,7 +44,7 @@ export const SideDrawer = ({
   return (
     <Drawer
       drawerPosition={position}
-      drawerStyle={[DEFAULT_STYLES, drawerStyles]}
+      drawerStyle={[DEFAULT_STYLES, drawerStyles, {display: isOpen ? "flex" : "none"}]}
       drawerType={drawerType}
       open={isOpen}
       renderDrawerContent={renderDrawerContent}
