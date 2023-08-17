@@ -11006,7 +11006,7 @@ react-native-calendars@^1.1295.0, react-native-calendars@^1.1300.0:
   optionalDependencies:
     moment "^2.29.4"
 
-react-native-drawer-layout@^3.2.0:
+react-native-drawer-layout@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer-layout/-/react-native-drawer-layout-3.2.1.tgz#eb626216181965e72de6d9377ca619fab40226f2"
   integrity sha512-9GDzSLBblxox1zEACcbdXHMU8m22gCTdpT9g1G3Za4Bu766IDxVnIbgRGz6Z2dL99EMtz5E2JoWx257tdHkbpw==
@@ -11062,16 +11062,6 @@ react-native-portalize@^1.0.7:
   version "1.0.7"
   resolved "https://registry.npmjs.org/react-native-portalize/-/react-native-portalize-1.0.7.tgz"
   integrity sha512-icqopPh9ZSV+I8C5LlZN9pQJ0OMeBDNqHhP80+qDx0hOGEcsDC09wgjogbEMfJE0GcMDM7PDYtyQkqa9gIqd1g==
-
-react-native-reanimated@^3.1.0:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.4.2.tgz#744154fead6d8d31d5bd9ac617d8c84d74a6f697"
-  integrity sha512-FbtG+f1PB005vDTJSv4zAnTK7nNXi+FjFgbAM5gOzIZDajfph2BFMSUstzIsN8T77+OKuugUBmcTqLnQ24EBVg==
-  dependencies:
-    "@babel/plugin-transform-object-assign" "^7.16.7"
-    "@babel/preset-typescript" "^7.16.7"
-    convert-source-map "^2.0.0"
-    invariant "^2.2.4"
 
 react-native-reanimated@~3.3.0:
   version "3.3.0"
