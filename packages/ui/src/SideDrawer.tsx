@@ -11,6 +11,7 @@ export interface SideDrawerProps {
   isOpen: boolean;
   // Content within the drawer
   renderContent: () => ReactElement | ReactElement[];
+  // TODO: Allow the hardware back button on Android to close the SideDrawer
   onClose?: () => void;
   onOpen?: () => void;
   drawerType?: "front" | "back" | "slide" | "permanent";
