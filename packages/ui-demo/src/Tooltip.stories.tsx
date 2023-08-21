@@ -1,4 +1,4 @@
-import {Box, Heading, IconButton, InfoTooltipButton, Tooltip} from "ferns-ui";
+import {Box, Heading, IconButton, InfoTooltipButton, Text, Tooltip} from "ferns-ui";
 import React from "react";
 
 const ChevronTooltip = ({
@@ -51,14 +51,24 @@ const TooltipIcon = () => {
   return (
     <Box direction="column" display="flex" height="100%" padding={4} width="100%">
       <Box alignItems="center" height="100%" justifyContent="center" width="100%">
-        <Heading size="sm">Small Tooltip</Heading>
-        <FiveTooltips />
-        <Heading size="sm">Large Tooltip</Heading>
-        <FiveTooltips
-          text={
-            "Here's a much longer tooltip, to test overflows, especially on mobile, and multiple lines too!"
-          }
-        />
+        <Box paddingY={2}>
+          <Heading size="sm">Small Tooltip</Heading>
+          <FiveTooltips />
+        </Box>
+        <Box paddingY={2}>
+          <Heading size="sm">Large Tooltip</Heading>
+          <FiveTooltips
+            text={
+              "Here's a much longer tooltip, to test overflows, especially on mobile, and multiple lines too!"
+            }
+          />
+        </Box>
+        <Box paddingY={2}>
+          <Heading size="sm">Tooltip on Text</Heading>
+          <Tooltip text="Text Tooltip">
+            <Text>This text has a tooltip.</Text>
+          </Tooltip>
+        </Box>
       </Box>
     </Box>
   );

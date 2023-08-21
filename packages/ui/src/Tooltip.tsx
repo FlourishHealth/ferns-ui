@@ -1,5 +1,4 @@
 import * as React from "react";
-import {forwardRef} from "react";
 import {
   Dimensions,
   LayoutChangeEvent,
@@ -124,8 +123,7 @@ interface TooltipProps {
   bgColor?: "white" | "lightGray" | "gray" | "darkGray";
 }
 
-// eslint-disable-next-line react/display-name
-export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
+export const Tooltip = (props: TooltipProps) => {
   const {text, children, bgColor, idealDirection} = props;
   const hoverDelay = 500;
   const hoverEndDelay = 1500;
@@ -180,7 +178,7 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
     showTooltipTimer.current = setTimeout(() => {
       touched.current = true;
       setVisible(true);
-    }, 100) as unknown as NodeJS.Timeout;
+    }, 100);
   };
 
   const handleHoverIn = () => {
@@ -191,7 +189,7 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
     showTooltipTimer.current = setTimeout(() => {
       touched.current = true;
       setVisible(true);
-    }, hoverDelay) as unknown as NodeJS.Timeout;
+    }, hoverDelay);
   };
 
   const handleHoverOut = () => {
@@ -203,7 +201,7 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
     hideTooltipTimer.current = setTimeout(() => {
       setVisible(false);
       setMeasurement({children: {}, tooltip: {}, measured: false});
-    }, hoverEndDelay) as unknown as NodeJS.Timeout;
+    }, hoverEndDelay);
   };
 
   const mobilePressProps = {
@@ -214,17 +212,6 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
         return children.props.onClick?.();
       }
     }, [children.props]),
-  };
-
-  const webPressProps = {
-    onHoverIn: () => {
-      handleHoverIn();
-      children.props.onHoverIn?.();
-    },
-    onHoverOut: () => {
-      handleHoverOut();
-      children.props.onHoverOut?.();
-    },
   };
 
   return (
@@ -255,13 +242,21 @@ export const Tooltip = forwardRef((props: TooltipProps, _ref: any) => {
           </Pressable>
         </Portal>
       )}
-      <Pressable
+      <View
         ref={childrenWrapperRef}
+        onPointerEnter={() => {
+          handleHoverIn();
+          children.props.onHoverIn?.();
+        }}
+        onPointerLeave={() => {
+          handleHoverOut();
+          children.props.onHoverOut?.();
+        }}
         onTouchStart={handleTouchStart}
-        {...(isWeb ? webPressProps : mobilePressProps)}
+        {...(!isWeb && mobilePressProps)}
       >
         {children}
-      </Pressable>
+      </View>
     </>
   );
-});
+};
