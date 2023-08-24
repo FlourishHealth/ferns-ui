@@ -7,7 +7,7 @@ import {WithLabel} from "./WithLabel";
 export class Switch extends React.Component<SwitchProps, {}> {
   render() {
     return (
-      <WithLabel labelInline labelJustifyContent="between" {...this.props}>
+      <WithLabel labelAlignItems="center" labelInline labelJustifyContent="between" {...this.props}>
         <NativeSwitch
           disabled={this.props.disabled}
           value={this.props.switched}

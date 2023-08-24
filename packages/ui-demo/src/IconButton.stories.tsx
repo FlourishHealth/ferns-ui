@@ -130,6 +130,59 @@ export const IconButtonStories = {
             title="White, Dark Gray Transparent"
             onClick={() => {}}
           />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            prefix="fas"
+            size="sm"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            indicatorStyle={{position: "topRight", color: "red"}}
+            prefix="fas"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            indicatorStyle={{position: "bottomRight", color: "green"}}
+            prefix="fas"
+            size="lg"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            indicatorStyle={{position: "bottomLeft", color: "blue"}}
+            prefix="fas"
+            size="lg"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            indicatorStyle={{position: "topLeft", color: "purple"}}
+            prefix="fas"
+            size="lg"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
         </StorybookContainer>
       );
     },
