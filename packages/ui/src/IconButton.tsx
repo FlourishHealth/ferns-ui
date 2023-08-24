@@ -1,13 +1,15 @@
 import React, {forwardRef, useState} from "react";
-import {Platform, Pressable, View} from "react-native";
+import {Platform, Pressable, View, ViewStyle} from "react-native";
 
 import {
+  AllColors,
   ButtonColor,
   Color,
   IconName,
   IconPrefix,
   IconSize,
   iconSizeToNumber,
+  IndicatorDirection,
   ThemeColor,
   TooltipDirection,
 } from "./Common";
@@ -35,6 +37,7 @@ export interface IconButtonProps {
     idealDirection?: TooltipDirection;
   };
   indicator?: boolean;
+  indicatorStyle?: {position: IndicatorDirection; color: AllColors};
 }
 
 // eslint-disable-next-line react/display-name
@@ -52,6 +55,7 @@ export const IconButton = forwardRef(
       confirmationHeading = "Confirm",
       tooltip,
       indicator,
+      indicatorStyle = {position: "bottomRight", color: "primary"},
     }: IconButtonProps,
     ref
   ) => {
@@ -66,6 +70,15 @@ export const IconButton = forwardRef(
     } else {
       color = Unifier.theme[bgColor];
     }
+
+    const IndicatorPosition = {
+      bottomRight: {bottom: "20%", right: "20%"},
+      bottomLeft: {bottom: "20%", left: "20%"},
+      topRight: {top: "20%", right: "20%"},
+      topLeft: {top: "20%", left: "20%"},
+    };
+
+    const indicatorPosition = {position: "absolute", ...IndicatorPosition[indicatorStyle.position]};
 
     const renderConfirmation = () => {
       return (
@@ -120,8 +133,13 @@ export const IconButton = forwardRef(
           >
             <Icon color={iconColor} name={icon} prefix={prefix || "fas"} size={size} />
             {indicator && (
-              <View style={{position: "absolute", bottom: "20%", right: "20%"}}>
-                <Icon color="primary" name="circle" prefix={prefix || "fas"} size="sm" />
+              <View style={indicatorPosition as ViewStyle}>
+                <Icon
+                  color={indicatorStyle.color}
+                  name="circle"
+                  prefix={prefix || "fas"}
+                  size="sm"
+                />
               </View>
             )}
           </Pressable>

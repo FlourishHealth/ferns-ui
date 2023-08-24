@@ -1997,6 +1997,8 @@ export interface NavigatorProps {
 
 export type TooltipDirection = "top" | "bottom" | "left" | "right";
 
+export type IndicatorDirection = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
+
 export interface PillProps {
   text: string;
   color: AllColors;
