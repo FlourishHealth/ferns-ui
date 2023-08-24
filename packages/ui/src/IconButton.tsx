@@ -1,5 +1,5 @@
 import React, {forwardRef, useState} from "react";
-import {Platform, Pressable} from "react-native";
+import {Platform, Pressable, View} from "react-native";
 
 import {
   ButtonColor,
@@ -34,6 +34,7 @@ export interface IconButtonProps {
     text: string;
     idealDirection?: TooltipDirection;
   };
+  indicator?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
@@ -50,6 +51,7 @@ export const IconButton = forwardRef(
       confirmationText = "Are you sure you want to continue?",
       confirmationHeading = "Confirm",
       tooltip,
+      indicator,
     }: IconButtonProps,
     ref
   ) => {
@@ -117,7 +119,13 @@ export const IconButton = forwardRef(
             }}
           >
             <Icon color={iconColor} name={icon} prefix={prefix || "fas"} size={size} />
+            {indicator && (
+              <View style={{position: "absolute", bottom: "20%", right: "20%"}}>
+                <Icon color="primary" name="circle" prefix={prefix || "fas"} size="sm" />
+              </View>
+            )}
           </Pressable>
+
           {Boolean(withConfirmation) && renderConfirmation()}
         </>
       );

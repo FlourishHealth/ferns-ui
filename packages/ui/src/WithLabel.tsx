@@ -1,7 +1,7 @@
 import React from "react";
 
 import {Box} from "./Box";
-import {AllColors, JustifyContent, ReactChildren, TextSize} from "./Common";
+import {AlignItems, AllColors, JustifyContent, ReactChildren, TextSize} from "./Common";
 import {Text} from "./Text";
 
 export interface WithLabelProps {
@@ -11,6 +11,7 @@ export interface WithLabelProps {
   labelInline?: boolean;
   labelColor?: AllColors;
   labelJustifyContent?: JustifyContent;
+  labelAlignItems?: AlignItems;
   labelPlacement?: "before" | "after";
   labelSize?: TextSize;
 }
@@ -19,6 +20,7 @@ export function WithLabel({
   label,
   labelInline,
   labelJustifyContent,
+  labelAlignItems,
   labelPlacement,
   labelSize,
   labelColor,
@@ -30,6 +32,7 @@ export function WithLabel({
   }
   return (
     <Box
+      alignItems={labelAlignItems}
       direction={labelInline ? "row" : "column"}
       justifyContent={labelJustifyContent}
       width="100%"
