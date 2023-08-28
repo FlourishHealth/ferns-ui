@@ -49,7 +49,7 @@
     "expo-image-picker": "~14.3.2",
     "expo-status-bar": "~1.6.0",
     "libphonenumber-js": "^1.10.38",
-    "postcss": "8.4.27",
+    "postcss": "8.4.28",
     "react": "18.2.0",
     "react-app-polyfill": "^3.0.0",
     "react-date-picker": "^10.5.0",
