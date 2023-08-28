@@ -17,5 +17,5 @@ jobs:
           # "github.event.release.target_commitish" is a global variable and specifies the branch the release targeted
           ref: ${{ github.event.release.target_commitish }}
       - name: "TODO to Issue"
-        uses: "alstr/todo-to-issue-action@v4.5"
+        uses: "alstr/todo-to-issue-action@v4.10"
         id: "todo"
