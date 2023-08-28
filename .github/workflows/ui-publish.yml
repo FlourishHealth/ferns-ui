@@ -28,7 +28,7 @@ jobs:
           # Specifies the registry, this field is required!
           registry-url: https://registry.npmjs.org/
       - name: Start MongoDB
-        uses: supercharge/mongodb-github-action@1.6.0
+        uses: supercharge/mongodb-github-action@1.10.0
         with:
           mongodb-version: 4.4
       - name: Install project dependencies
