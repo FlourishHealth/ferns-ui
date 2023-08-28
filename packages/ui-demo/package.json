@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^13.0.0",
-    "@expo/webpack-config": "^18.1.2",
+    "@expo/webpack-config": "^19.0.0",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-community/blur": "^4.3.2",
     "@react-native-community/datetimepicker": "7.2.0",
