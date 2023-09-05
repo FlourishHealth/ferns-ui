@@ -2,11 +2,12 @@
 import {ImageResult, manipulateAsync, SaveFormat} from "expo-image-manipulator";
 import {launchImageLibraryAsync, MediaTypeOptions} from "expo-image-picker";
 import React, {useEffect, useState} from "react";
-import {Image, ImageResizeMode, Text, View} from "react-native";
+import {Image, ImageResizeMode, Platform, Text, View} from "react-native";
 
 import {Box} from "./Box";
-import {AllColors, iconSizeToNumber} from "./Common";
+import {AllColors, IconName, UnsignedUpTo12} from "./Common";
 import {Icon} from "./Icon";
+import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 
 const sizes = {
@@ -16,6 +17,37 @@ const sizes = {
   lg: 64,
   xl: 120,
 };
+
+const sizeIconPadding: {[id: string]: UnsignedUpTo12} = {
+  xs: 0,
+  sm: 0,
+  md: 1,
+  lg: 1,
+  xl: 2,
+};
+
+const statusIcons: {[id: string]: {icon: IconName; color: AllColors; label: string}} = {
+  online: {icon: "circle", color: "green", label: "Online"},
+  offline: {icon: "circle", color: "gray", label: "Offline"},
+  doNotDisturb: {icon: "minus-circle", color: "red", label: "Do Not Disturb"},
+  away: {icon: "moon", color: "orange", label: "Away"},
+  meeting: {icon: "calendar", color: "orange", label: "In a Meeting"},
+  vacation: {icon: "plane", color: "orange", label: "On Vacation"},
+  sick: {icon: "clinic-medical", color: "orange", label: "Sick"},
+  outOfOffice: {icon: "clock", color: "orange", label: "Out of Office"},
+  commuting: {icon: "car", color: "orange", label: "Commuting"},
+};
+
+export type AvatarStatus =
+  | "online"
+  | "offline"
+  | "doNotDisturb"
+  | "away"
+  | "meeting"
+  | "vacation"
+  | "sick"
+  | "outOfOffice"
+  | "commuting";
 
 interface AvatarProps {
   // Color for the background of the circle when no src picture is present.
@@ -67,10 +99,24 @@ interface AvatarProps {
    * The image format that the image will be saved as after any edits by the expo-image-manipulator
    */
   avatarImageFormat?: SaveFormat;
+  /**
+   * The status of the user to display with the avatar.
+   */
+  status?: AvatarStatus;
+  /**
+   * If true, the status indicator will show a mobile icon instead of a dot, if status is one of
+   * "online", "away", "offline", or "doNotDisturb". Will show the normal status icon in other cases.
+   */
+  statusMobile?: boolean;
+  /**
+   * Text to show when hovering over the avatar image. Only works on web.
+   */
+  statusText?: string;
 }
 
 export const Avatar = (props: AvatarProps): React.ReactElement => {
   const [isImageLoaded, setIsImageLoaded] = useState(true);
+  const [hovered, setHovered] = useState(false);
   const [src, setSrc] = useState(props.src ?? undefined);
   const {
     name,
@@ -135,56 +181,134 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     );
   };
 
-  return (
-    <Box
-      border={outline ? "white" : undefined}
-      height={height}
-      overflow="hidden"
-      position="relative"
-      rounding="circle"
-      width={editAvatarImage ? width + iconSizeToNumber(size) : width}
-    >
-      {editAvatarImage && (
-        <Box bottom position="absolute" right zIndex={5} onClick={pickImage}>
+  const renderEditIcon = () => {
+    if (editAvatarImage && hovered && Platform.OS === "web") {
+      return (
+        <Box
+          alignItems="center"
+          dangerouslySetInlineStyle={{
+            __style: {backgroundColor: "rgba(255,255,255,0.5)", borderRadius: radius},
+          }}
+          height={height}
+          justifyContent="center"
+          position="absolute"
+          width={width}
+          zIndex={5}
+          onClick={pickImage}
+        >
+          <Icon color="darkGray" name="edit" size={size} />
+        </Box>
+      );
+    } else if (editAvatarImage && Platform.OS !== "web" && !props.status) {
+      return (
+        <Box
+          bottom
+          paddingX={sizeIconPadding[size]}
+          position="absolute"
+          right
+          zIndex={5}
+          onClick={pickImage}
+        >
           <Icon color="black" name="edit" size={size} />
         </Box>
-      )}
-      {src && isImageLoaded ? (
-        // TODO: Make our Image component rounding work so that we can use it for Avatar. Currently it creates an
-        // unrounded box around the Image.
-        <Image
-          resizeMode={imageFit as ImageResizeMode}
-          source={{uri: src, cache: "force-cache"}}
-          style={{
-            borderRadius: radius,
-            height,
-            width,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            overflow: "hidden",
-          }}
-          onError={handleImageError}
-        />
-      ) : (
-        <View
-          style={{
-            height,
-            width,
-            borderRadius: radius,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: props.backgroundColor
-              ? Unifier.theme[props.backgroundColor]
-              : Unifier.theme.gray,
-          }}
-        >
-          <Text style={{fontSize, color: props.textColor ?? Unifier.theme.darkGray}}>
-            {computedInitials}
-          </Text>
-        </View>
-      )}
+      );
+    }
+    return null;
+  };
+
+  const renderStatusIcon = () => {
+    if (!props.status) {
+      return null;
+    }
+    // eslint-disable-next-line prefer-const
+    let {icon, color} = statusIcons[props.status];
+    if (
+      props.statusMobile &&
+      ["online", "away", "offline", "doNotDisturb"].includes(props.status)
+    ) {
+      icon = "mobile-alt";
+    }
+    if (!icon || !color) {
+      console.warn(`Avatar: Invalid status ${props.status}`);
+      return null;
+    }
+    return (
+      <Box bottom paddingX={sizeIconPadding[size]} position="absolute" right zIndex={5}>
+        <Icon color={color} name={icon} size={size} />
+      </Box>
+    );
+  };
+
+  const avatar = (
+    <Box height={height} position="relative" width={width}>
+      <Box
+        border={outline ? "white" : undefined}
+        height={height}
+        overflow="hidden"
+        position="relative"
+        rounding="circle"
+        width={width}
+        onHoverEnd={() => setHovered(false)}
+        onHoverStart={() => setHovered(true)}
+      >
+        {src && isImageLoaded ? (
+          // TODO: Make our Image component rounding work so that we can use it for Avatar. Currently it creates an
+          // unrounded box around the Image.
+          <Image
+            resizeMode={imageFit as ImageResizeMode}
+            source={{uri: src, cache: "force-cache"}}
+            style={{
+              borderRadius: radius,
+              height,
+              width,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden",
+            }}
+            onError={handleImageError}
+          />
+        ) : (
+          <View
+            style={{
+              height,
+              width,
+              borderRadius: radius,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: props.backgroundColor
+                ? Unifier.theme[props.backgroundColor]
+                : Unifier.theme.gray,
+            }}
+          >
+            <Text style={{fontSize, color: props.textColor ?? Unifier.theme.darkGray}}>
+              {computedInitials}
+            </Text>
+          </View>
+        )}
+        {/* Needs to come after the image so it renders on top. */}
+        {renderEditIcon()}
+      </Box>
+      {renderStatusIcon()}
     </Box>
   );
+
+  let status = props.statusText;
+  if (!status && props.status) {
+    status = statusIcons[props.status]?.label;
+  }
+
+  if (status) {
+    // Need to wrap the tooltip so it doesn't expand to 100% width and render the tooltip off.
+    return (
+      <Box width={width}>
+        <Tooltip idealDirection="top" text={status}>
+          {avatar}
+        </Tooltip>
+      </Box>
+    );
+  } else {
+    return avatar;
+  }
 };
