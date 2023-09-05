@@ -40,7 +40,7 @@ export function TableRow({
 }: Props): React.ReactElement {
   const [isExpanded, setIsExpanded] = React.useState(expanded || false);
   const {columns, hasDrawerContents} = useTableContext();
-  const rowRef = useRef<Box>(null);
+  const rowRef = useRef<typeof Box>(null);
 
   const renderCellWithColumnIndex = (child: React.ReactNode, index: number) => {
     if (!columns[index]) {

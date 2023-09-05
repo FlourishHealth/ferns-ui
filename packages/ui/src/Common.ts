@@ -1,4 +1,4 @@
-import {ReactElement, ReactNode, SyntheticEvent} from "react";
+import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
 import {ListRenderItemInfo} from "react-native";
 
 export interface BaseProfile {
@@ -1932,14 +1932,12 @@ export interface BoxProps {
   wrap?: boolean;
   zIndex?: number | "auto";
 
-  // Pattern additions
-  onClick?: any;
-  className?: any;
+  onClick?: () => void | Promise<void>;
+  className?: string;
   style?: any;
-
-  // Pattern Addition. Adds keyboard aware scrollview
+  onHoverStart?: () => void | Promise<void>;
+  onHoverEnd?: () => void | Promise<void>;
   scroll?: boolean;
-  // Pattern Addition. Shadows!
   shadow?: boolean;
   border?: AllColors;
   borderBottom?: AllColors;
@@ -1949,9 +1947,9 @@ export interface BoxProps {
 
   avoidKeyboard?: boolean;
   keyboardOffset?: number;
-  scrollRef?: any;
+  scrollRef?: React.RefObject<any>;
   onScroll?: (offsetY: number) => void;
-  onLayout?: (event: any) => void;
+  onLayout?: (event: LayoutChangeEvent) => void;
   testID?: string;
 }
 

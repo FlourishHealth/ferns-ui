@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable react/prop-types */
+import React, {useImperativeHandle} from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -43,8 +44,33 @@ const ALIGN_SELF = {
 
 const BORDER_WIDTH = 1;
 
-export class Box extends React.Component<BoxProps, {}> {
-  BOX_STYLE_MAP: {
+// eslint-disable-next-line react/display-name
+export const Box = React.forwardRef((props: BoxProps, ref) => {
+  useImperativeHandle(ref, () => ({
+    scrollToEnd: () => {
+      if (scrollRef && scrollRef.current) {
+        // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout to
+        // avoid this, but it works well enough.
+        setTimeout(() => {
+          scrollRef && scrollRef.current && (scrollRef.current as any).scrollToEnd();
+        }, 50);
+      }
+    },
+
+    scrollTo: (y: number) => {
+      if (scrollRef && scrollRef.current) {
+        // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout to
+        // avoid this, but it works well enough.
+        setTimeout(() => {
+          scrollRef && scrollRef.current && (scrollRef.current as any).scrollTo({y});
+        }, 50);
+      }
+    },
+  }));
+
+  const [_, setHovered] = React.useState(false);
+
+  const BOX_STYLE_MAP: {
     [prop: string]: (
       value: any,
       all: {[prop: string]: any}
@@ -78,7 +104,7 @@ export class Box extends React.Component<BoxProps, {}> {
     },
     justifyContent: (value: JustifyContent) => ({justifyContent: ALIGN_CONTENT[value]}),
     height: (value) => {
-      if (this.props.border && !isNaN(Number(value))) {
+      if (props.border && !isNaN(Number(value))) {
         return {height: Number(value) + 2 * 2};
       } else {
         return {height: value};
@@ -124,7 +150,7 @@ export class Box extends React.Component<BoxProps, {}> {
       return {overflow: value};
     },
     width: (value) => {
-      if (this.props.border && !isNaN(Number(value))) {
+      if (props.border && !isNaN(Number(value))) {
         return {width: Number(value) + 2 * 2};
       } else {
         return {width: value};
@@ -181,119 +207,106 @@ export class Box extends React.Component<BoxProps, {}> {
     },
   };
 
-  scrollRef = React.createRef();
+  const scrollRef = props.scrollRef ?? React.createRef();
 
-  constructor(props: BoxProps) {
-    super(props);
-    if (props.scrollRef) {
-      this.scrollRef = props.scrollRef;
-    }
-  }
-
-  public scrollToEnd = () => {
-    if (this.scrollRef && this.scrollRef.current) {
-      // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout to
-      // avoid this, but it works well enough.
-      setTimeout(() => {
-        this.scrollRef && this.scrollRef.current && (this.scrollRef.current as any).scrollToEnd();
-      }, 50);
-    }
-  };
-
-  public scrollTo = (y: number) => {
-    if (this.scrollRef && this.scrollRef.current) {
-      // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout to
-      // avoid this, but it works well enough.
-      setTimeout(() => {
-        this.scrollRef && this.scrollRef.current && (this.scrollRef.current as any).scrollTo({y});
-      }, 50);
-    }
-  };
-
-  propsToStyle(): any {
+  const propsToStyle = (): any => {
     let style: any = {};
-    for (const prop of Object.keys(this.props)) {
-      const value = (this.props as any)[prop];
-      if (this.BOX_STYLE_MAP[prop]) {
-        Object.assign(style, this.BOX_STYLE_MAP[prop](value, this.props));
+    for (const prop of Object.keys(props)) {
+      const value = (props as any)[prop];
+      if (BOX_STYLE_MAP[prop]) {
+        Object.assign(style, BOX_STYLE_MAP[prop](value, props));
       } else if (prop !== "children" && prop !== "onClick") {
         style[prop] = value;
         // console.warn(`Box: unknown property ${prop}`);
       }
     }
 
-    if (this.props.wrap && this.props.alignItems) {
+    if (props.wrap && props.alignItems) {
       console.warn("React Native doesn't support wrap and alignItems together.");
     }
 
     // Finally, dangerously set overrides.
-    if (this.props.dangerouslySetInlineStyle) {
-      style = {...style, ...this.props.dangerouslySetInlineStyle.__style};
+    if (props.dangerouslySetInlineStyle) {
+      style = {...style, ...props.dangerouslySetInlineStyle.__style};
     }
 
     return style;
+  };
+
+  const onHoverIn = () => {
+    setHovered(true);
+    props.onHoverStart?.();
+  };
+
+  const onHoverOut = () => {
+    setHovered(false);
+    props.onHoverEnd?.();
+  };
+
+  let box;
+
+  if (props.onClick) {
+    box = (
+      <Pressable
+        style={propsToStyle()}
+        testID={props.testID ? `${props.testID}-clickable` : undefined}
+        onLayout={props.onLayout}
+        onPointerEnter={onHoverIn}
+        onPointerLeave={onHoverOut}
+        onPress={() => {
+          Unifier.utils.haptic();
+          props.onClick!();
+        }}
+      >
+        {props.children}
+      </Pressable>
+    );
+  } else {
+    box = (
+      <View
+        style={propsToStyle()}
+        testID={props.testID}
+        onPointerEnter={onHoverIn}
+        onPointerLeave={onHoverOut}
+      >
+        {props.children}
+      </View>
+    );
   }
 
-  render() {
-    let box;
+  if (props.scroll) {
+    const {justifyContent, alignContent, alignItems, ...scrollStyle} = propsToStyle();
 
-    if (this.props.onClick) {
-      box = (
-        <Pressable
-          style={this.propsToStyle()}
-          testID={this.props.testID ? `${this.props.testID}-clickable` : undefined}
-          // TODO: refactor this better..
-          onLayout={this.props.onLayout}
-          onPress={() => {
-            Unifier.utils.haptic();
-            this.props.onClick();
-          }}
-        >
-          {this.props.children}
-        </Pressable>
-      );
-    } else {
-      box = (
-        <View style={this.propsToStyle()} testID={this.props.testID}>
-          {this.props.children}
-        </View>
-      );
-    }
-
-    if (this.props.scroll) {
-      const {justifyContent, alignContent, alignItems, ...scrollStyle} = this.propsToStyle();
-
-      box = (
-        <ScrollView
-          ref={this.props.scrollRef || this.scrollRef}
-          contentContainerStyle={{justifyContent, alignContent, alignItems}}
-          horizontal={this.props.overflow === "scrollX"}
-          keyboardShouldPersistTaps="handled"
-          nestedScrollEnabled
-          scrollEventThrottle={50}
-          style={scrollStyle}
-          onScroll={(event) => {
-            if (this.props.onScroll && event) {
-              this.props.onScroll(event.nativeEvent.contentOffset.y);
-            }
-          }}
-        >
-          {box}
-        </ScrollView>
-      );
-    }
-
-    if (this.props.avoidKeyboard) {
-      box = (
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={this.props.keyboardOffset}
-          style={{flex: 1, display: "flex"}}
-        >
-          <SafeAreaView style={{flex: 1, display: "flex"}}>{box}</SafeAreaView>
-        </KeyboardAvoidingView>
-      );
-    }
-    return box;
+    box = (
+      <ScrollView
+        ref={props.scrollRef || scrollRef}
+        contentContainerStyle={{justifyContent, alignContent, alignItems}}
+        horizontal={props.overflow === "scrollX"}
+        keyboardShouldPersistTaps="handled"
+        nestedScrollEnabled
+        scrollEventThrottle={50}
+        style={scrollStyle}
+        onScroll={(event) => {
+          if (props.onScroll && event) {
+            props.onScroll(event.nativeEvent.contentOffset.y);
+          }
+        }}
+      >
+        {box}
+      </ScrollView>
+    );
   }
-}
+
+  if (props.avoidKeyboard) {
+    box = (
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={props.keyboardOffset}
+        style={{flex: 1, display: "flex"}}
+      >
+        <SafeAreaView style={{flex: 1, display: "flex"}}>{box}</SafeAreaView>
+      </KeyboardAvoidingView>
+    );
+  }
+  return box;
+});
