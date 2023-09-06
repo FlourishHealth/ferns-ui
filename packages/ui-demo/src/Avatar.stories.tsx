@@ -228,6 +228,7 @@ const AvatarImage = (): ReactElement => {
         name="Tony Stark"
         size="xl"
         src={xlImage.uri}
+        status="doNotDisturb"
         onChange={(image) => setXLImage(image)}
       />
     </>

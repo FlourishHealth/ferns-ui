@@ -68,8 +68,6 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     },
   }));
 
-  const [_, setHovered] = React.useState(false);
-
   const BOX_STYLE_MAP: {
     [prop: string]: (
       value: any,
@@ -234,12 +232,10 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
   };
 
   const onHoverIn = () => {
-    setHovered(true);
     props.onHoverStart?.();
   };
 
   const onHoverOut = () => {
-    setHovered(false);
     props.onHoverEnd?.();
   };
 
