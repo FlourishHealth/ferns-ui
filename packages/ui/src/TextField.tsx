@@ -297,8 +297,8 @@ export function TextField({
                 if (!isHandledByModal) {
                   setFocused(false);
                 }
-                if (onBlur && value) {
-                  onBlur({value});
+                if (onBlur) {
+                  onBlur({value: value ?? ""});
                 }
                 // if (type === "date") {
                 //   actionSheetRef?.current?.hide();
