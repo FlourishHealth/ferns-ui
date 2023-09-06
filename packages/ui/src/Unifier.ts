@@ -2,10 +2,11 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Clipboard from "expo-clipboard";
 import * as Font from "expo-font";
 import {FontSource} from "expo-font";
 import * as Haptics from "expo-haptics";
-import {Clipboard, Dimensions, Keyboard, Linking, Platform, Vibration} from "react-native";
+import {Dimensions, Keyboard, Linking, Platform, Vibration} from "react-native";
 
 import {PermissionKind, UnifiedTheme} from "./Common";
 import {requestPermissions} from "./Permissions";

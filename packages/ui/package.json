@@ -112,7 +112,6 @@
       "jest-watch-typeahead/testname"
     ]
   },
-  "dependencies": {},
   "devDependencies": {
     "@expo/vector-icons": "^13.0.0",
     "@react-native-async-storage/async-storage": "1.18.2",
@@ -137,6 +136,7 @@
     "eslint-plugin-react-native": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "3.0.0",
+    "expo-clipboard": "~4.3.1",
     "expo-font": "~11.4.0",
     "expo-haptics": "~12.4.0",
     "expo-image-manipulator": "~11.3.0",
@@ -180,6 +180,7 @@
     "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "dayjs": "^1.11.9",
+    "expo-clipboard": "~4.3.1",
     "expo-font": "~11.4.0",
     "expo-haptics": "~12.4.0",
     "expo-image-manipulator": "~11.3.0",
