@@ -192,24 +192,25 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
           height={height}
           justifyContent="center"
           position="absolute"
-          width={width}
+          // width={width}
           zIndex={5}
           onClick={pickImage}
         >
           <Icon color="darkGray" name="edit" size={size} />
         </Box>
       );
-    } else if (editAvatarImage && Platform.OS !== "web" && !props.status) {
+    } else if (editAvatarImage && Platform.OS !== "web") {
       return (
         <Box
           bottom
+          left={Boolean(props.status)}
           paddingX={sizeIconPadding[size]}
           position="absolute"
-          right
+          right={!Boolean(props.status)}
           zIndex={5}
           onClick={pickImage}
         >
-          <Icon color="black" name="edit" size={size} />
+          <Icon color="darkGray" name="edit" size={size} />
         </Box>
       );
     }
@@ -287,9 +288,9 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
             </Text>
           </View>
         )}
-        {/* Needs to come after the image so it renders on top. */}
-        {renderEditIcon()}
       </Box>
+      {/* Needs to come after the image so it renders on top. */}
+      {renderEditIcon()}
       {renderStatusIcon()}
     </Box>
   );

@@ -169,7 +169,7 @@ const AvatarImage = (): ReactElement => {
   });
 
   return (
-    <>
+    <Box height="100%" scroll>
       <Heading>Edit Image</Heading>
       <Text>Width: {xsImage.width}</Text>
       <Text>Height: {xsImage.height}</Text>
@@ -231,6 +231,6 @@ const AvatarImage = (): ReactElement => {
         status="doNotDisturb"
         onChange={(image) => setXLImage(image)}
       />
-    </>
+    </Box>
   );
 };
