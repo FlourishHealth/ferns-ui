@@ -118,7 +118,8 @@ const getTooltipPosition = ({
 
 interface TooltipProps {
   children: React.ReactElement;
-  text: string;
+  // If text is undefined, the children will be rendered without a tooltip.
+  text?: string;
   idealDirection?: "top" | "bottom" | "left" | "right";
   bgColor?: "white" | "lightGray" | "gray" | "darkGray";
 }
@@ -213,6 +214,12 @@ export const Tooltip = (props: TooltipProps) => {
       }
     }, [children.props]),
   };
+
+  // Allow disabling tooltips when there is no string, otherwise you need to wrap the children in a function to
+  // determine if there should be a tooltip or not, which gets messy.
+  if (!text) {
+    return children;
+  }
 
   return (
     <>
