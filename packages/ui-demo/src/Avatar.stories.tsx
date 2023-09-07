@@ -1,4 +1,4 @@
-import {Avatar, Box, Heading, Text} from "ferns-ui";
+import {Avatar, AvatarStatus, Box, Heading, Text} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 export const AvatarStories = {
@@ -86,6 +86,58 @@ export const AvatarStories = {
         </Box>
       );
     },
+    Status() {
+      const renderIcon = (
+        text: string,
+        size: "xs" | "sm" | "md" | "lg" | "xl",
+        status: AvatarStatus,
+        mobile = false,
+        statusText?: string
+      ) => {
+        return (
+          <Box paddingY={1}>
+            <Text>{text}</Text>
+            <Avatar
+              name="Tony Stark"
+              size={size}
+              src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+              status={status}
+              statusMobile={mobile}
+              statusText={statusText}
+            />
+          </Box>
+        );
+      };
+      return (
+        <Box color="blue" direction="column" display="flex" height="100%" width="100%">
+          {renderIcon("Online", "xs", "online")}
+          {renderIcon("Offline (with tooltip)", "sm", "offline", false, "Offline at 1:30pm")}
+          {renderIcon("Do Not Disturb", "md", "doNotDisturb")}
+          {renderIcon("Away", "lg", "away")}
+          {renderIcon("Meeting", "xl", "meeting")}
+          {renderIcon("Vacation", "xl", "vacation")}
+          {renderIcon("Sick", "xl", "sick")}
+          {renderIcon(
+            "Out Of Office (tooltip)",
+            "xl",
+            "outOfOffice",
+            false,
+            "Out Of Office Until 1/3/24"
+          )}
+          {renderIcon("Commuting", "xl", "commuting")}
+          {renderIcon("Online Mobile", "xl", "online", true)}
+          {renderIcon("Offline Mobile", "xl", "offline", true)}
+          {renderIcon("Away Mobile", "xl", "away", true)}
+          {renderIcon(
+            "DND Mobile (tooltip)",
+            "xl",
+            "doNotDisturb",
+            true,
+            "Deep Work, Do Not Disturb"
+          )}
+        </Box>
+      );
+    },
   },
 };
 
@@ -117,7 +169,7 @@ const AvatarImage = (): ReactElement => {
   });
 
   return (
-    <>
+    <Box height="100%" scroll>
       <Heading>Edit Image</Heading>
       <Text>Width: {xsImage.width}</Text>
       <Text>Height: {xsImage.height}</Text>
@@ -176,8 +228,9 @@ const AvatarImage = (): ReactElement => {
         name="Tony Stark"
         size="xl"
         src={xlImage.uri}
+        status="doNotDisturb"
         onChange={(image) => setXLImage(image)}
       />
-    </>
+    </Box>
   );
 };

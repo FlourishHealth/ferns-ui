@@ -190,7 +190,7 @@ export function TextField({
     } else if (type === "height") {
       weightActionSheetRef?.current?.show();
     }
-  }, [decimalRangeActionSheetRef, numberRangeActionSheetRef, type, weightActionSheetRef]);
+  }, [decimalRangeActionSheetRef, disabled, numberRangeActionSheetRef, type, weightActionSheetRef]);
 
   let displayValue = value;
   if (displayValue) {
