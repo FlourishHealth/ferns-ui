@@ -7,6 +7,7 @@ import {Image, ImageResizeMode, Platform, Text, View} from "react-native";
 import {Box} from "./Box";
 import {AllColors, IconName, UnsignedUpTo12} from "./Common";
 import {Icon} from "./Icon";
+import {isMobileDevice} from "./MediaQuery";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 
@@ -301,10 +302,11 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
   }
 
   if (status) {
-    // Need to wrap the tooltip so it doesn't expand to 100% width and render the tooltip off.
+    // Need to wrap the tooltip so it doesn't expand to 100% width and render the tooltip off. Don't show the
+    // tooltips on mobile because they intercept the edit avatar clicks.
     return (
       <Box width={width}>
-        <Tooltip idealDirection="top" text={status}>
+        <Tooltip idealDirection="top" text={isMobileDevice() ? undefined : status}>
           {avatar}
         </Tooltip>
       </Box>
