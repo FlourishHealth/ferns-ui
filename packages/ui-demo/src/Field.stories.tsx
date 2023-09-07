@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import dayjs from "dayjs";
-import {Box, Field, Text} from "ferns-ui";
+import {Box, Field, TapToEdit, Text} from "ferns-ui";
 import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -309,6 +309,15 @@ const AddressField = () => {
           type="address"
           value={value}
           onChange={setValue}
+        />
+        <TapToEdit
+          isEditing={false}
+          name="address"
+          setValue={setValue}
+          title="Address"
+          type="address"
+          value={value}
+          onSave={setValue}
         />
       </Box>
     </StorybookContainer>
