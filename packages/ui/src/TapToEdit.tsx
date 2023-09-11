@@ -192,7 +192,9 @@ export const TapToEdit = ({
               onClick={
                 () =>
                   Linking.openURL(
-                    `https://www.google.com/maps/search/?q=${formatAddress(value, true)}`
+                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      formatAddress(value, true)
+                    )}`
                   )
                 // eslint-disable-next-line react/jsx-curly-newline
               }
