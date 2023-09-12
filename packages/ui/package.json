@@ -124,7 +124,6 @@
     "@types/react-time-picker": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^6.7.0",
     "@typescript-eslint/parser": "^6.7.0",
-    "clsx": "^2.0.0",
     "dayjs": "^1.11.9",
     "eslint": "^8.49.0",
     "eslint-config-ferns": "^0.4.0",
