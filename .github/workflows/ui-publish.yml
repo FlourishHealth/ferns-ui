@@ -21,27 +21,27 @@ jobs:
           # "github.event.release.target_commitish" is a global variable and specifies the branch the release targeted
           ref: ${{ github.event.release.target_commitish }}
       # install Node.js
-      - name: Use Node.js 16
+      - name: Use Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           # Specifies the registry, this field is required!
           registry-url: https://registry.npmjs.org/
       - name: Start MongoDB
         uses: supercharge/mongodb-github-action@1.10.0
         with:
-          mongodb-version: 4.4
+          mongodb-version: 6.0
       - name: Install project dependencies
         run: yarn install --frozen-lockfile
       # set up git since we will later push to the repo
       - run: git config --global user.name "GitHub CD bot"
       - run: git config --global user.email "github-cd-bot@nang.io"
-      # upgrade npm version in package.json to the tag used in the release.
-      - run: cd src && npm version ${{ github.event.release.tag_name }}
+      # upgrade version in package.json to the tag used in the release.
+      - run: cd src && yarn version ${{ github.event.release.tag_name }}
       # build the project
       - run: yarn build
       # publish to NPM -> there is one caveat, continue reading for the fix
-      - run: npm publish
+      - run: yarn publish
         env:
           # Use a token to publish to NPM. See below for how to set it up
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
