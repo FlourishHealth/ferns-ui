@@ -2,6 +2,7 @@ import React from "react";
 import {Host} from "react-native-portalize";
 import {ToastProvider} from "react-native-toast-notifications";
 
+import {ThemeProvider} from "./Theme";
 import {Toast} from "./Toast";
 
 export function FernsProvider({children}: {children: React.ReactNode}): React.ReactElement {
@@ -15,7 +16,9 @@ export function FernsProvider({children}: {children: React.ReactNode}): React.Re
       renderToast={(toastOptions) => <Toast {...(toastOptions as any)} />}
       swipeEnabled
     >
-      <Host>{children}</Host>
+      <ThemeProvider>
+        <Host>{children}</Host>
+      </ThemeProvider>
     </ToastProvider>
   );
 }

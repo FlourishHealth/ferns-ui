@@ -18,15 +18,24 @@ function capitalize(string: string) {
 const DEFAULT_FONT = "Cochin";
 const DEFAULT_BOLD_FONT = "Cochin";
 
+const darkGray = "#111111";
+const lightGray = "#efefef";
+const gray = "#8e8e8e";
+const white = "#fdfdfd";
+const primary = "#5c58bb";
+const secondary = "#8d58bb";
+const accent = "#58b3bb";
+const tertiary = "#b7956f";
+
 const DefaultTheme: UnifiedTheme = {
   // Primary colors
-  red: "#bd081c",
-  white: "#fdfdfd",
-  lightGray: "#efefef",
-  gray: "#8e8e8e",
-  darkGray: "#111",
+  white,
+  lightGray,
+  gray,
+  darkGray,
   // secondary colors
   green: "#0fa573",
+  red: "#bd081c",
   springGreen: "#008753",
   pine: "#0a6955",
   olive: "#364a4c",
@@ -41,29 +50,36 @@ const DefaultTheme: UnifiedTheme = {
   orange: "#e3780c",
   black: "#000000",
 
-  primaryLighter: "#4ED456",
-  primaryLight: "#28CA32",
-  primary: "#00BD0C",
-  primaryDark: "#00960A",
-  primaryDarker: "#007508",
+  primaryLighter: changeColorLuminance(primary, "lighter"),
+  primaryLight: changeColorLuminance(primary, "light"),
+  primary,
+  primaryDark: changeColorLuminance(primary, "dark"),
+  primaryDarker: changeColorLuminance(primary, "darker"),
 
-  secondaryLighter: "#41AAAE",
-  secondaryLight: "#20989D",
-  secondary: "#018B91",
-  secondaryDark: "#016E73",
-  secondaryDarker: "#00565A",
+  secondaryLighter: changeColorLuminance(secondary, "lighter"),
+  secondaryLight: changeColorLuminance(secondary, "light"),
+  secondary,
+  secondaryDark: changeColorLuminance(secondary, "dark"),
+  secondaryDarker: changeColorLuminance(secondary, "darker"),
 
-  accentLighter: "#FF625D",
-  accentLight: "#FF3732",
-  accent: "#F00600",
-  accentDark: "#BE0500",
-  accentDarker: "#950400",
+  accentLighter: changeColorLuminance(accent, "lighter"),
+  accentLight: changeColorLuminance(accent, "light"),
+  accent,
+  accentDark: changeColorLuminance(accent, "dark"),
+  accentDarker: changeColorLuminance(accent, "darker"),
 
-  tertiaryLighter: "#FFCF67",
-  tertiaryLight: "#FFC23E",
-  tertiary: "#FFB109",
-  tertiaryDark: "#CA8A00",
-  tertiaryDarker: "#9F6D00",
+  tertiaryLighter: changeColorLuminance(tertiary, "lighter"),
+  tertiaryLight: changeColorLuminance(tertiary, "light"),
+  tertiary,
+  tertiaryDark: changeColorLuminance(tertiary, "dark"),
+  tertiaryDarker: changeColorLuminance(tertiary, "darker"),
+
+  background: white,
+  backgroundSecondary: lightGray,
+  textPrimary: darkGray,
+  textSecondary: lightGray,
+  textDisabled: gray,
+  divider: gray,
 
   // From the Atlassian templates
   neutral900: "#091E42",

@@ -120,6 +120,14 @@ export interface UnifiedTheme {
   tertiaryDark: string;
   tertiaryDarker: string;
 
+  // Support for light and dark mode.
+  background: string;
+  backgroundSecondary: string;
+  textPrimary: string;
+  textSecondary: string;
+  textDisabled: string;
+  divider: string;
+
   neutral900: string;
   neutral800: string;
   neutral700: string;
