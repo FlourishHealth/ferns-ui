@@ -1,10 +1,10 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import React, {ReactElement, useMemo, useState} from "react";
+import React, {ReactElement, useContext, useMemo, useState} from "react";
 import {TextInput} from "react-native";
 
 import {DateTimeFieldProps} from "./Common";
 import dayjs from "./dayjsExtended";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 import {WithLabel} from "./WithLabel";
 
 export const DateTimeField = ({
@@ -18,6 +18,7 @@ export const DateTimeField = ({
   label,
 }: DateTimeFieldProps): ReactElement => {
   const [showPicker, setShowPicker] = useState(false);
+  const {theme} = useContext(ThemeContext);
 
   const defaultFormat = useMemo(() => {
     if (dateFormat) {
@@ -51,8 +52,8 @@ export const DateTimeField = ({
             paddingLeft: 10,
             height: 40,
             width: "100%",
-            color: Unifier.theme.darkGray,
-            fontFamily: Unifier.theme.primaryFont,
+            color: theme.darkGray,
+            fontFamily: theme.primaryFont,
             borderWidth: 1,
           }}
           value={dayjs(value).format(defaultFormat)}
@@ -63,7 +64,7 @@ export const DateTimeField = ({
 
         {showPicker && (
           <DateTimePicker
-            accentColor={Unifier.theme.primary}
+            accentColor={theme.primary}
             display={pickerType}
             mode={mode}
             style={{alignSelf: "flex-start"}}

@@ -99,6 +99,7 @@ export class Page extends React.Component<PageProps, {}> {
           width="100%"
         >
           {this.renderHeader()}
+          {/* TODO: Use Theme */}
           {this.props.loading === true && (
             <Spinner color={Unifier.theme.darkGray as any} size="md" />
           )}

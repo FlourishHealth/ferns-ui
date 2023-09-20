@@ -1,5 +1,5 @@
 // TODO: Update SplitPage native to have desktop UX for tablet sized screens
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import flattenChildren from "react-keyed-flatten-children";
 import {Dimensions, ListRenderItemInfo, View} from "react-native";
 import {SwiperFlatList} from "react-native-swiper-flatlist";
@@ -9,6 +9,7 @@ import {SplitPageProps} from "./Common";
 import {FlatList} from "./FlatList";
 import {IconButton} from "./IconButton";
 import {Spinner} from "./Spinner";
+import {ThemeContext} from "./Theme";
 import {Unifier} from "./Unifier";
 
 export const SplitPage = ({
@@ -25,6 +26,7 @@ export const SplitPage = ({
   bottomNavBarHeight,
   showItemList,
 }: SplitPageProps) => {
+  const {theme} = useContext(ThemeContext);
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
 
   // flattenChildren is necessary to pull children from a React Fragment. Without this,
@@ -153,7 +155,7 @@ export const SplitPage = ({
       keyboardOffset={keyboardOffset}
       width="100%"
     >
-      {loading === true && <Spinner color={Unifier.theme.darkGray as any} size="md" />}
+      {loading === true && <Spinner color={theme.darkGray as any} size="md" />}
       {selectedId === undefined ? renderList() : renderMainContent}
     </Box>
   );

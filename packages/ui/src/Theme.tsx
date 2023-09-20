@@ -3,12 +3,6 @@ import React, {createContext, useState} from "react";
 import {UnifiedTheme} from "./Common";
 import {changeColorLuminance} from "./Unifier";
 
-export const ThemeContext = createContext({
-  setTheme: (_theme: Partial<UnifiedTheme>) => {},
-  theme: {},
-  resetTheme: () => {},
-});
-
 const DEFAULT_FONT = "Cochin";
 const DEFAULT_BOLD_FONT = "Cochin";
 
@@ -107,6 +101,12 @@ const defaultTheme: UnifiedTheme = {
   buttonFont: DEFAULT_FONT,
   titleFont: DEFAULT_FONT,
 };
+
+export const ThemeContext = createContext({
+  setTheme: (_theme: Partial<UnifiedTheme>) => {},
+  theme: defaultTheme,
+  resetTheme: () => {},
+});
 
 interface ThemeProviderProps {
   children: any;

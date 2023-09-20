@@ -1,4 +1,4 @@
-import React, {Children, useCallback, useEffect, useState} from "react";
+import React, {Children, useCallback, useContext, useEffect, useState} from "react";
 import {Dimensions, ListRenderItemInfo, ScrollView, View} from "react-native";
 import {SwiperFlatList} from "react-native-swiper-flatlist";
 
@@ -9,7 +9,7 @@ import {IconButton} from "./IconButton";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {SegmentedControl} from "./SegmentedControl";
 import {Spinner} from "./Spinner";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 
 // A component for rendering a list on one side and a details view on the right for large screens,
 // and a scrollable list where clicking an item takes you the details view.
@@ -30,6 +30,7 @@ export const SplitPage = ({
   showItemList,
   selectLimit,
 }: SplitPageProps) => {
+  const {theme} = useContext(ThemeContext);
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
   const [activeTabs, setActiveTabs] = useState<number[]>([0, 1]);
   const {width} = Dimensions.get("window");
@@ -295,7 +296,7 @@ export const SplitPage = ({
       padding={2}
       width="100%"
     >
-      {loading === true && <Spinner color={Unifier.theme.darkGray as any} size="md" />}
+      {loading === true && <Spinner color={theme.darkGray as any} size="md" />}
       {Boolean(isMobileDevice) ? renderMobileSplitPage() : renderSplitPage()}
     </Box>
   );

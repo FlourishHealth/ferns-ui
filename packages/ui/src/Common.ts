@@ -2196,17 +2196,6 @@ export interface CheckBoxProps {
   labelColor?: AllColors;
 }
 
-export interface BodyProps {
-  scroll?: boolean;
-  loading?: boolean;
-  useBox?: boolean; // defaults false
-  style?: any;
-  padding?: UnsignedUpTo12;
-  height?: number | string;
-  avoidKeyboard?: boolean; // default true
-  children?: ReactNode;
-}
-
 export interface ChatPaneProps {
   messagesView: any;
   textFormView: any;
@@ -2729,11 +2718,6 @@ export interface NavConfig {
   wrapper?: (component: any) => any;
   store?: any;
   provider?: any;
-}
-
-export interface ProgressBarProps {
-  color: Color;
-  completed: number;
 }
 
 export interface AddressInterface {

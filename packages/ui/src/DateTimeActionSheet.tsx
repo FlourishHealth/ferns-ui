@@ -1,6 +1,6 @@
 import {Picker} from "@react-native-picker/picker";
 import range from "lodash/range";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Platform, StyleProp, TextInput, TextStyle, View} from "react-native";
 import {Calendar} from "react-native-calendars";
 
@@ -12,7 +12,7 @@ import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
 import {SelectList} from "./SelectList";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 
 const TIME_PICKER_HEIGHT = 104;
 const INPUT_HEIGHT = 40;
@@ -31,6 +31,8 @@ function TimeInput({
   value: number;
   onChange: (value: number) => void;
 }): React.ReactElement {
+  const {theme} = useContext(ThemeContext);
+
   const defaultText = type === "minute" ? String(value).padStart(2, "0") : String(value);
   const [text, setText] = useState(defaultText);
   const [focused, setFocused] = useState(false);
@@ -50,8 +52,8 @@ function TimeInput({
     paddingLeft: 0,
     height: INPUT_HEIGHT,
     width: "100%",
-    color: Unifier.theme.darkGray,
-    fontFamily: Unifier.theme.primaryFont,
+    color: theme.darkGray,
+    fontFamily: theme.primaryFont,
   };
 
   return (
@@ -65,10 +67,10 @@ function TimeInput({
         // Add padding so the border doesn't mess up layouts
         paddingHorizontal: focused ? 10 : 14,
         paddingVertical: focused ? 0 : 4,
-        borderColor: error ? Unifier.theme.red : Unifier.theme.blue,
+        borderColor: error ? theme.red : theme.blue,
         borderWidth: focused ? 5 : 1,
         borderRadius: 5,
-        backgroundColor: Unifier.theme.white,
+        backgroundColor: theme.white,
       }}
     >
       <TextInput
@@ -179,6 +181,8 @@ export function DateTimeActionSheet({
   visible,
   onDismiss,
 }: DateTimeActionSheetProps) {
+  const {theme} = useContext(ThemeContext);
+
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for mode=time
   let m;
   if (value) {
@@ -352,7 +356,7 @@ export function DateTimeActionSheet({
     if (date) {
       markedDates[dayjs(date).format("YYYY-MM-DD")] = {
         selected: true,
-        selectedColor: Unifier.theme.primary,
+        selectedColor: theme.primary,
       };
     }
     return (

@@ -1,53 +1,53 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Text as NativeText} from "react-native";
 
 import {HeadingProps} from "./Common";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 
-export class Heading extends React.Component<HeadingProps, {}> {
-  fontSizes = {
+export function Heading({align, children, color, size}: HeadingProps): React.ReactElement {
+  const {theme} = useContext(ThemeContext);
+
+  const fontSizes = {
     sm: 20,
     md: 28,
     lg: 36,
   };
 
-  propsToStyle(): any {
+  const propsToStyle = (): any => {
     const style: any = {};
 
-    // let font = this.props.font || "primary";
-    // if (this.props.bold) {
+    // let font = font || "primary";
+    // if (bold) {
     //   font += "Bold";
     // }
-    style.fontFamily = Unifier.theme.titleFont;
+    style.fontFamily = theme.titleFont;
 
-    style.fontSize = this.fontSizes[this.props.size || "md"];
-    if (this.props.align) {
-      style.textAlign = this.props.align;
+    style.fontSize = fontSizes[size || "md"];
+    if (align) {
+      style.textAlign = align;
     }
-    if (this.props.color) {
-      style.color = Unifier.theme[this.props.color];
+    if (color) {
+      style.color = theme[color];
     } else {
-      style.color = Unifier.theme.darkGray;
+      style.color = theme.darkGray;
     }
     // TODO: might be useful for wrapping/truncating
-    // if (this.props.numberOfLines !== 1 && !this.props.inline) {
+    // if (numberOfLines !== 1 && !inline) {
     //   style.flexWrap = "wrap";
     // }
 
     return style;
-  }
+  };
 
-  render() {
-    const lines = 0;
-    // if (this.props.numberOfLines) {
-    //   lines = this.props.numberOfLines;
-    // } else if (this.props.inline) {
-    //   lines = 1;
-    // }
-    return (
-      <NativeText numberOfLines={lines} style={this.propsToStyle()}>
-        {this.props.children}
-      </NativeText>
-    );
-  }
+  const lines = 0;
+  // if (numberOfLines) {
+  //   lines = numberOfLines;
+  // } else if (inline) {
+  //   lines = 1;
+  // }
+  return (
+    <NativeText numberOfLines={lines} style={propsToStyle()}>
+      {children}
+    </NativeText>
+  );
 }

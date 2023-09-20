@@ -53,7 +53,7 @@ const ButtonStories = () => {
         // Leaving accent as default
       });
     }
-  }, [themeName]);
+  }, [setTheme, themeName]);
   return (
     <Box
       direction="column"

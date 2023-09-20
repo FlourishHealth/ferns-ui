@@ -1,15 +1,15 @@
 /* eslint-disable no-console */
 import {ImageResult, manipulateAsync, SaveFormat} from "expo-image-manipulator";
 import {launchImageLibraryAsync, MediaTypeOptions} from "expo-image-picker";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Image, ImageResizeMode, Platform, Text, View} from "react-native";
 
 import {Box} from "./Box";
 import {AllColors, IconName, UnsignedUpTo12} from "./Common";
 import {Icon} from "./Icon";
 import {isMobileDevice} from "./MediaQuery";
+import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
-import {Unifier} from "./Unifier";
 
 const sizes = {
   xs: 24,
@@ -116,6 +116,8 @@ interface AvatarProps {
 }
 
 export const Avatar = (props: AvatarProps): React.ReactElement => {
+  const {theme} = useContext(ThemeContext);
+
   const [isImageLoaded, setIsImageLoaded] = useState(true);
   const [hovered, setHovered] = useState(false);
   const [src, setSrc] = useState(props.src ?? undefined);
@@ -279,12 +281,10 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: props.backgroundColor
-                ? Unifier.theme[props.backgroundColor]
-                : Unifier.theme.gray,
+              backgroundColor: props.backgroundColor ? theme[props.backgroundColor] : theme.gray,
             }}
           >
-            <Text style={{fontSize, color: props.textColor ?? Unifier.theme.darkGray}}>
+            <Text style={{fontSize, color: props.textColor ?? theme.darkGray}}>
               {computedInitials}
             </Text>
           </View>
