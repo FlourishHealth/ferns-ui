@@ -210,7 +210,9 @@ export type ThemeColor =
   | "accentLight"
   | "accent"
   | "accentDark"
-  | "accentDarker";
+  | "accentDarker"
+  | "background"
+  | "backgroundSecondary";
 export type NeutralColor =
   | "neutral900"
   | "neutral800"

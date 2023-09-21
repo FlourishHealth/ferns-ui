@@ -27,7 +27,14 @@ export interface IconButtonProps {
   iconColor: "darkGray" | ButtonColor | ThemeColor | Color;
   onClick: () => void;
   size?: IconSize;
-  bgColor?: "transparent" | "transparentDarkGray" | "gray" | "lightGray" | "white"; // default transparent
+  bgColor?:
+    | "transparent"
+    | "transparentDarkGray"
+    | "gray"
+    | "lightGray"
+    | "white"
+    | "background"
+    | "backgroundSecondary"; // default transparent
   disabled?: boolean;
   selected?: boolean;
   withConfirmation?: boolean;

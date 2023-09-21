@@ -118,6 +118,7 @@ function setThemeWithLuminances(
 ): UnifiedTheme {
   return {
     ...oldTheme,
+    ...newTheme,
     primaryLighter:
       newTheme.primaryLighter ??
       changeColorLuminance(newTheme.primary ?? oldTheme.primary, "lighter"),
