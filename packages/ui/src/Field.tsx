@@ -13,7 +13,7 @@ import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 
 export interface FieldProps extends FieldWithLabelsProps {
-  name: string;
+  name?: string;
   label?: string;
   height?: number;
   type?:
