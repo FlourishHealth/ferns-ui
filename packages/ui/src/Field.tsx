@@ -107,7 +107,6 @@ export const Field = ({
                   key={o.label + o.value}
                   checked={(value ?? []).includes(o.value)}
                   disabled={disabled}
-                  id={name}
                   name={name}
                   size="sm"
                   onChange={(result) => {
