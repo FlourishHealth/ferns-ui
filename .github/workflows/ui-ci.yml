@@ -38,6 +38,9 @@ jobs:
         # but use the cache?
         run: yarn --frozen-lockfile
         working-directory: 'packages/ui'
+      - name: Ensure dependencies don't conflict with Expo
+        run: npx expo-doctor
+        working-directory: 'packages/ui'
       - name: yarn lint
         run: yarn lint
         working-directory: 'packages/ui'
