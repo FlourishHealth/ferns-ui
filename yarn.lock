@@ -1502,7 +1502,7 @@
     node-forge "^1.2.1"
     nullthrows "^1.1.1"
 
-"@expo/config-plugins@7.2.5", "@expo/config-plugins@~7.2.0":
+"@expo/config-plugins@7.2.5", "@expo/config-plugins@~7.2.0", "@expo/config-plugins@~7.2.2":
   version "7.2.5"
   resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-7.2.5.tgz"
   integrity sha512-w+5ccu1IxBHgyQk9CPFKLZOk8yZQEyTjbJwOzESK1eR7QwosbcsLkN1c1WWUZYiCXwORu3UTwJYll4+X2xxJhQ==
@@ -1523,12 +1523,13 @@
     xcode "^3.0.1"
     xml2js "0.6.0"
 
-"@expo/config-plugins@~7.4.0":
-  version "7.4.0"
-  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-7.4.0.tgz#3803521b8849c036e4f7db68521a3c99de67ebeb"
-  integrity sha512-/BwYRl6QQ9ZKYpVaIqHE5sSPqNZI9CUtfLfYHhpnShQUA1KHRMi6y9zjb3IXJisk0/fcrtRm2yP3A7F0l304sQ==
+"@expo/config-plugins@~7.5.0":
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-7.5.0.tgz#323d70d50ce46fc45d10f5e4fbc8b5e1fc55c091"
+  integrity sha512-qOKjmgbddLh1vj9ytUT6AduhEans2cHgS42nopVgh5Wz8X+QUvPcCr1Yc8MvLM3OlbswBMCJceeosZa463i0uA==
   dependencies:
     "@expo/config-types" "^50.0.0-alpha.1"
+    "@expo/fingerprint" "^0.2.0"
     "@expo/json-file" "~8.2.37"
     "@expo/plist" "^0.0.20"
     "@expo/sdk-runtime-versions" "^1.0.0"
@@ -1550,9 +1551,9 @@
   integrity sha512-8eyREVi+K2acnMBe/rTIu1dOfyR2+AMnTLHlut+YpMV9OZPdeKV0Bs9BxAewGqBA2slslbQ9N39IS2CuTKpXkA==
 
 "@expo/config-types@^50.0.0-alpha.1":
-  version "50.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-50.0.0-alpha.1.tgz#781ee44aee9b2612b9cbb4032b96a097d02234ad"
-  integrity sha512-bfQzw3bzdR3x6Nup/FN/2TAWwpJKTgx0j/uZxyoOBiBVNof2P0q193tsgDd3GYxbQJnoVMNhSI6Mjxu5hzuXRw==
+  version "50.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@expo/config-types/-/config-types-50.0.0-alpha.2.tgz#52b4e3238544f5e38f91a21ac41f612de3b82e39"
+  integrity sha512-eAUMUg4wnw0bYovs+isibq4l9ssMacS/r0NolDxDdIX/N+ZjIEZ5DEl5GO8dnD0dKbN/DPWwUln7SG/nSYHfmw==
 
 "@expo/config@8.1.2", "@expo/config@~8.1.0":
   version "8.1.2"
@@ -1572,12 +1573,12 @@
     sucrase "^3.20.0"
 
 "@expo/config@~8.3.0":
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/@expo/config/-/config-8.3.0.tgz#d8e6f2c2b8e0e32d944a0718e1fb2c9153e31f0b"
-  integrity sha512-BjgYDrle/UCS+FtXc9yUzQ0HOLHt5c4HvbINyGicxq6GyQZ2uu9eCRmXw5k4Qdl0DlmPKj6h7XbvDg5CEJTHtA==
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/@expo/config/-/config-8.3.1.tgz#2b417ddb81891d4b65be91469e7f4b830b430645"
+  integrity sha512-5fNGAw5h/MDOc8Ulv9nonafPtOT042B7dF6vrVxSP3CY5qiVu0tCsmbL412wEcrAZ8MY7UMv9e6IzpGTgleYgg==
   dependencies:
     "@babel/code-frame" "~7.10.4"
-    "@expo/config-plugins" "~7.4.0"
+    "@expo/config-plugins" "~7.5.0"
     "@expo/config-types" "^50.0.0-alpha.1"
     "@expo/json-file" "^8.2.37"
     getenv "^1.0.0"
@@ -1649,6 +1650,19 @@
     dotenv "~16.0.3"
     dotenv-expand "~10.0.0"
     getenv "^1.0.0"
+
+"@expo/fingerprint@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@expo/fingerprint/-/fingerprint-0.2.0.tgz#ea8b41ba2bfa94cc8815d758b60d57764e47aef4"
+  integrity sha512-k6MhJTrX4CYEwsyGemiLT8rnBwjRBYe0eKYAM3kqw0WbSHzkOJm739sgdswGLmA53iiX6FbB1TsiLnqt+h2U2w==
+  dependencies:
+    "@expo/spawn-async" "^1.5.0"
+    chalk "^4.1.2"
+    debug "^4.3.4"
+    find-up "^5.0.0"
+    minimatch "^3.0.4"
+    p-limit "^3.1.0"
+    resolve-from "^5.0.0"
 
 "@expo/image-utils@0.3.22":
   version "0.3.22"
@@ -6288,7 +6302,7 @@ expo-status-bar@~1.6.0:
   resolved "https://registry.yarnpkg.com/expo-status-bar/-/expo-status-bar-1.6.0.tgz#e79ffdb9a84d2e0ec9a0dc7392d9ab364fefa9cf"
   integrity sha512-e//Oi2WPdomMlMDD3skE4+1ZarKCJ/suvcB4Jo/nO427niKug5oppcPNYO+csR6y3ZglGuypS+3pp/hJ+Xp6fQ==
 
-expo-yarn-workspaces@^2.1.0:
+expo-yarn-workspaces@~2.2.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/expo-yarn-workspaces/-/expo-yarn-workspaces-2.2.2.tgz#53fa7a6a7f325131f83f0227d585d746fa029964"
   integrity sha512-kZs2daz0a8sjvaNo/XHD7MbciJgeo9rCfJuyf/oGUtu3+Quo0aAPbOFSo/ePHtGqN5nTkjEZPZIjdeg1Yol/Pg==
@@ -9969,7 +9983,7 @@ p-limit@^2.0.0, p-limit@^2.2.0:
   dependencies:
     p-try "^2.0.0"
 
-p-limit@^3.0.2:
+p-limit@^3.0.2, p-limit@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/p-limit/-/p-limit-3.1.0.tgz#e1daccbe78d0d1388ca18c64fea38e3e57e3706b"
   integrity sha512-TYOanM3wGwNGsZN2cVTYPArw454xnXj5qmWF1bEoAc4+cU/ol7GVh7odevjp1FNHduHc3KZMcFduxU5Xc6uJRQ==
