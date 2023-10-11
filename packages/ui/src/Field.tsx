@@ -13,7 +13,7 @@ import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 
 export interface FieldProps extends FieldWithLabelsProps {
-  name: string;
+  name?: string;
   label?: string;
   height?: number;
   type?:
@@ -107,7 +107,6 @@ export const Field = ({
                   key={o.label + o.value}
                   checked={(value ?? []).includes(o.value)}
                   disabled={disabled}
-                  id={name}
                   name={name}
                   size="sm"
                   onChange={(result) => {

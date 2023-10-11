@@ -2172,7 +2172,6 @@ export interface BackButtonInterface {
 }
 
 export interface CheckBoxProps {
-  id: string;
   onChange: ({value}: {value: boolean}) => void;
   checked?: boolean;
   disabled?: boolean;
