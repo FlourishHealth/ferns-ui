@@ -32,9 +32,10 @@ export const Banner = ({
   id,
   text,
   subtext,
-  color,
-  textColor,
-  negativeXMargin,
+  color = "secondaryDark",
+  iconName,
+  textColor = "white",
+  negativeXMargin = 0,
   shape,
   type = "dismiss",
   onClick,
@@ -73,7 +74,7 @@ export const Banner = ({
           <IconButton
             accessibilityLabel=""
             icon="times-circle"
-            iconColor={(textColor || "white") as ButtonColor}
+            iconColor={textColor as ButtonColor}
             prefix="fas"
             onClick={dismiss}
           />
@@ -82,7 +83,7 @@ export const Banner = ({
           <IconButton
             accessibilityLabel=""
             icon="arrow-right"
-            iconColor={(textColor || "white") as ButtonColor}
+            iconColor={textColor as ButtonColor}
             prefix="fas"
             onClick={(): void => onClick?.()}
           />
@@ -99,11 +100,11 @@ export const Banner = ({
     console.warn("Banners with type action require an onClick property.");
   }
 
-  const negativeMargin = (negativeXMargin || 0) * -4;
+  const negativeMargin = negativeXMargin * -4;
 
   return (
     <Box
-      color={color || "secondaryDark"}
+      color={color}
       dangerouslySetInlineStyle={{
         __style: {
           marginLeft: negativeMargin,
@@ -121,15 +122,20 @@ export const Banner = ({
       width={Unifier.utils.dimensions().width || "100%"}
       onClick={type === "permanent" ? undefined : dismiss}
     >
+      {iconName && (
+        <Box justifyContent="center" marginRight={2} width={32}>
+          <Icon color={textColor} name={iconName} size="lg" />
+        </Box>
+      )}
       <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
         <Box paddingY={1}>
-          <Text align="center" color={textColor || "white"} weight="bold">
+          <Text align="center" color={textColor} weight="bold">
             {text}
           </Text>
         </Box>
         {subtext && (
           <Box paddingY={1}>
-            <Text align="center" color={textColor || "white"}>
+            <Text align="center" color={textColor}>
               {subtext}
             </Text>
           </Box>
