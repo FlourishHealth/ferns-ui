@@ -4,9 +4,9 @@ import React, {useState} from "react";
 const DefaultControl = () => {
   const [itemIndex, setItemIndex] = useState(0);
   return (
-    <Box display="flex" width="100%">
+    <Box display="flex" width={300}>
       <SegmentedControl
-        items={["One", "Two", "Three"]}
+        items={["One", "Two", "Three Four Five Six Seven"]}
         selectedItemIndex={itemIndex}
         onChange={({activeIndex}) => setItemIndex(activeIndex as number)}
       />

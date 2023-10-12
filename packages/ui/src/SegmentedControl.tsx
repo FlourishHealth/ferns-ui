@@ -13,7 +13,11 @@ export const SegmentedControl = ({
   selectLimit = 1,
 }: SegmentedControlProps) => {
   const renderItem = (item: string | React.ReactNode) => {
-    return <Text weight="bold">{item}</Text>;
+    return (
+      <Text align="center" weight="bold">
+        {item}
+      </Text>
+    );
     // if (typeof item === "string") {
     //   return <Text weight="bold">{item}</Text>;
     // } else {
@@ -67,6 +71,7 @@ export const SegmentedControl = ({
             display="flex"
             height="100%"
             justifyContent="center"
+            paddingX={1}
             width="100%"
             onClick={() => {
               if (

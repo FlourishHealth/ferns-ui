@@ -23,9 +23,10 @@ const Modals = () => {
         align={modalToShow === "start" ? "start" : "center"}
         heading={`${modalToShow} modal`}
         primaryButtonOnClick={() => setModalToShow("")}
-        primaryButtonText="Close"
+        primaryButtonText="Accept"
         secondaryButtonOnClick={() => {}}
         secondaryButtonText={modalToShow === "secondary" ? "Secondary" : undefined}
+        showClose
         size={size as "sm" | "md" | "lg"}
         subHeading="Sub heading"
         visible={

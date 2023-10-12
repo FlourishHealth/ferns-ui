@@ -85,31 +85,31 @@ export const Modal = ({
       return null;
     }
     return (
-      <Box padding={3} width="100%">
-        <IconButton
-          accessibilityLabel="close"
-          bgColor="white"
-          icon="times"
-          iconColor="darkGray"
-          onClick={() => onDismiss()}
-        />
-      </Box>
+      <IconButton
+        accessibilityLabel="close"
+        bgColor="white"
+        icon="times"
+        iconColor="darkGray"
+        onClick={() => onDismiss()}
+      />
     );
   };
 
   const renderModalHeader = (): React.ReactElement => {
     return (
-      <Box paddingY={3} width="100%">
-        <Box>
+      <Box direction="row" padding={3} width="100%">
+        <Box width={40}>{renderClose()}</Box>
+        <Box direction="column" flex="grow">
           <Heading align={align === "center" ? "center" : undefined} size="sm">
             {heading}
           </Heading>
+          {Boolean(subHeading) && (
+            <Box paddingY={2}>
+              <Text align={align === "center" ? "center" : undefined}>{subHeading}</Text>
+            </Box>
+          )}
         </Box>
-        {Boolean(subHeading) && (
-          <Box paddingY={2}>
-            <Text align={align === "center" ? "center" : undefined}>{subHeading}</Text>
-          </Box>
-        )}
+        <Box width={40} />
       </Box>
     );
   };
@@ -173,7 +173,6 @@ export const Modal = ({
           width={sizePx}
         >
           <Box marginBottom={6} width="100%">
-            {renderClose()}
             {renderModalHeader()}
             <Box paddingY={4}>{children}</Box>
             <Box paddingY={4}>{renderModalFooter()}</Box>
@@ -220,13 +219,13 @@ export const Modal = ({
             )}
           </Box>
 
-          <Box alignSelf="end">
+          <Box alignSelf="start" height="100%" justifyContent="start">
             {Boolean(primaryButtonText) && (
               <Button
                 color="primary"
                 disabled={primaryButtonDisabled}
                 inline
-                size="lg"
+                size="md"
                 text={primaryButtonText!}
                 type="ghost"
                 onClick={primaryButtonOnClick}

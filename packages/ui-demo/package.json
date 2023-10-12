@@ -34,6 +34,7 @@
     "useTabs": false
   },
   "dependencies": {
+    "@expo/config-plugins": "~7.2.2",
     "@expo/vector-icons": "^13.0.0",
     "@expo/webpack-config": "^19.0.0",
     "@react-native-async-storage/async-storage": "1.18.2",
@@ -57,7 +58,7 @@
     "react-datetime-picker": "^5.5.1",
     "react-dom": "18.2.0",
     "react-keyed-flatten-children": "^2.2.1",
-    "react-native": "0.72.4",
+    "react-native": "0.72.5",
     "react-native-actions-sheet": "^0.9.0-alpha.21",
     "react-native-calendars": "^1.1300.0",
     "react-native-drawer-layout": "^3.2.1",
@@ -94,7 +95,7 @@
     "eslint-plugin-react-native": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "3.0.0",
-    "expo-yarn-workspaces": "^2.1.0",
+    "expo-yarn-workspaces": "~2.2.0",
     "prettier": "^3.0.0",
     "typescript": "^5.0.4"
   },
