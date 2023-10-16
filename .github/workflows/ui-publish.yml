@@ -37,7 +37,7 @@ jobs:
       - run: git config --global user.name "GitHub CD bot"
       - run: git config --global user.email "github-cd-bot@nang.io"
       # upgrade version in package.json to the tag used in the release.
-      - run: cd src && yarn version ${{ github.event.release.tag_name }}
+      - run: cd src && yarn version --new-version ${{ github.event.release.tag_name }}
       # build the project
       - run: yarn build
       # publish to NPM -> there is one caveat, continue reading for the fix
