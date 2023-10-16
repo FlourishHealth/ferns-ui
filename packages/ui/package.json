@@ -113,9 +113,8 @@
     ]
   },
   "files": [
-    "dist/*.js",
-    "dist/*.d.ts",
-    "dist/*.map"
+    "dist/**/*",
+    "src/**/*"
   ],
   "devDependencies": {
     "@expo/config-plugins": "~7.2.2",
