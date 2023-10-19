@@ -22,6 +22,19 @@ export const BannerStories = {
         </Box>
       );
     },
+    PermanentBanner() {
+      return (
+        <Box direction="column" display="flex" height="100%" width="100%">
+          <Banner
+            color="primary"
+            id="banner"
+            text="This banner is not clickable or dismissable"
+            textColor="white"
+            type="permanent"
+          />
+        </Box>
+      );
+    },
     ShapeBanner() {
       return (
         <Box direction="column" display="flex" height="100%" width="100%">
