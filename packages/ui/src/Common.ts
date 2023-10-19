@@ -2102,11 +2102,6 @@ export interface SwitchProps extends FieldWithLabelsProps {
   label?: string;
 }
 
-export interface SpinnerProps {
-  size?: "sm" | "md";
-  color?: Color;
-}
-
 export interface MaskProps {
   children?: ReactChildren;
   shape?: "circle" | "rounded" | "square";

@@ -1,7 +1,12 @@
 import React, {ReactElement, useEffect, useState} from "react";
 import {ActivityIndicator} from "react-native";
 
-import {SpinnerProps} from "./Common";
+import {Color} from "./Common";
+
+export interface SpinnerProps {
+  size?: "sm" | "md";
+  color?: Color;
+}
 
 export function Spinner({size, color}: SpinnerProps): ReactElement | null {
   const [show, setShow] = useState(false);
@@ -16,5 +21,5 @@ export function Spinner({size, color}: SpinnerProps): ReactElement | null {
     return null;
   }
   const spinnerSize: "small" | "large" = size === "sm" ? "small" : "large";
-  return <ActivityIndicator color={color || "darkGray"} size={spinnerSize} />;
+  return <ActivityIndicator color={color ?? "darkGray"} size={spinnerSize} />;
 }
