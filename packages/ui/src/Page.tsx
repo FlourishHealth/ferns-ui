@@ -6,7 +6,6 @@ import {Color, UnsignedUpTo12} from "./Common";
 import {ErrorBoundary} from "./ErrorBoundary";
 import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
-// import {KeyboardAccessoryNavigation} from "react-native-keyboard-accessory";
 import {Spinner} from "./Spinner";
 import {Unifier} from "./Unifier";
 
