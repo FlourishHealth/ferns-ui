@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 import {Unifier} from "./Unifier";
 
@@ -8,20 +8,23 @@ export const useStoredState = <T>(
 ): [T | undefined | null, (value: T | undefined | null) => Promise<void>] => {
   const [state, setState] = useState<T | undefined | null>(initialValue);
 
-  useEffect(() => {
-    // Function to fetch data from AsyncStorage
-    const fetchData = async (): Promise<void> => {
-      try {
-        const storedValue = await Unifier.storage.getItem(key);
-        setState(storedValue);
-      } catch (error) {
-        console.error("Error reading data from AsyncStorage:", error);
-      }
-    };
+  // Function to fetch data from AsyncStorage
+  const fetchData = useCallback(async (): Promise<T | undefined> => {
+    try {
+      return await Unifier.storage.getItem(key);
+    } catch (error) {
+      console.error("Error reading data from AsyncStorage:", error);
+      return initialValue;
+    }
+  }, [initialValue, key]);
 
-    // Fetch data when the component mounts
-    fetchData();
-  }, [key]);
+  // Fetch data when the component mounts
+  useEffect(() => {
+    fetchData().then((value) => {
+      setState(value);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setAsyncStorageState = async (newValue: T | undefined | null): Promise<void> => {
     try {
