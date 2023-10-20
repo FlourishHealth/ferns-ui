@@ -61,6 +61,7 @@ export * from "./Table";
 export * from "./TableHeader";
 export * from "./TableHeaderCell";
 export * from "./TableRow";
+export * from "./useStoredState";
 
 // Lifted from react-native
 type ImageRequireSource = number;

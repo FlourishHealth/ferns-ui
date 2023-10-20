@@ -1,4 +1,4 @@
-import {Box, SegmentedControl} from "ferns-ui";
+import {Box, SegmentedControl, Text, useStoredState} from "ferns-ui";
 import React, {useState} from "react";
 
 const DefaultControl = () => {
@@ -45,6 +45,25 @@ const MultiSelectControl = () => {
   );
 };
 
+const PersistentControl = () => {
+  const [itemIndex, setItemIndex] = useStoredState("segmented-persistent", 0);
+
+  return (
+    <Box display="flex" width="100%">
+      <Box padding={6}>
+        <Text weight="bold">
+          Refresh your page after changing the control to see the persistence.
+        </Text>
+      </Box>
+      <SegmentedControl
+        items={["One", "Two", "Three Four Five Six Seven"]}
+        selectedItemIndex={itemIndex!}
+        onChange={({activeIndex}) => setItemIndex(activeIndex as number)}
+      />
+    </Box>
+  );
+};
+
 export const SegmentedControlStories = {
   title: "Segmented Control",
   component: SegmentedControl,
@@ -57,6 +76,9 @@ export const SegmentedControlStories = {
     },
     MultiSelect() {
       return <MultiSelectControl />;
+    },
+    PersistentControl() {
+      return <PersistentControl />;
     },
   },
 };
