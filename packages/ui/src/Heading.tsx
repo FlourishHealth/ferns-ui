@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import {StyleProp, Text as NativeText, TextStyle} from "react-native";
 
 import {HeadingProps} from "./Common";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 
 const fontSizes = {
   sm: 20,
@@ -11,15 +11,17 @@ const fontSizes = {
 };
 
 export const Heading = ({align, children, color, size}: HeadingProps): React.ReactElement => {
+  const {theme} = useContext(ThemeContext);
+
   const style: StyleProp<TextStyle> = {};
 
-  style.fontFamily = Unifier.theme.titleFont;
+  style.fontFamily = theme.titleFont;
 
   style.fontSize = fontSizes[size || "md"];
   if (align) {
     style.textAlign = align;
   }
-  style.color = Unifier.theme[color ?? "darkGray"];
+  style.color = theme[color ?? "darkGray"];
   // TODO: might be useful for wrapping/truncating
   // if (numberOfLines !== 1 && !inline) {
   //   style.flexWrap = "wrap";

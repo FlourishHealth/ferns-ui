@@ -156,7 +156,7 @@ export function TextField({
     }
 
     return defaultStyles;
-  }, [getHeight, style]);
+  }, [getHeight, style, theme.darkGray, theme.primaryFont]);
 
   const isHandledByModal = [
     "date",

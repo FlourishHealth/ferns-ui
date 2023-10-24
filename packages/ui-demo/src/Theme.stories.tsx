@@ -1,4 +1,4 @@
-import {Box, Button, Field, Heading, SelectList, Text, ThemeContext, Unifier} from "ferns-ui";
+import {Box, Button, Field, Heading, SelectList, Text, ThemeContext} from "ferns-ui";
 import React, {useContext, useEffect, useState} from "react";
 
 function buttonsForColor(color: "primary" | "secondary" | "accent" | "tertiary") {
@@ -83,6 +83,59 @@ const ButtonStories = () => {
   );
 };
 
+const FontStories = () => {
+  const [font, setFont] = useState("DancingScript-Regular");
+  const {setTheme} = useContext(ThemeContext);
+  const fonts = ["Comfortaa-Light", "Comfortaa-Bold", "IMFellEnglishSC", "DancingScript-Regular"];
+  useEffect(() => {
+    setTheme({
+      primaryFont: "DancingScript-Regular",
+      primaryBoldFont: "DancingScript-Regular",
+      buttonFont: "DancingScript-Regular",
+      titleFont: "DancingScript-Regular",
+    });
+  }, []);
+
+  return (
+    <Box
+      direction="column"
+      display="flex"
+      height={300}
+      justifyContent="around"
+      padding={4}
+      width={300}
+    >
+      <Field
+        options={fonts.map((f) => ({label: f, value: f}))}
+        type="select"
+        value={font}
+        onChange={(value: string) => {
+          setFont(value);
+          setTheme({
+            primaryFont: value,
+            primaryBoldFont: value,
+            buttonFont: value,
+            titleFont: value,
+          });
+        }}
+      />
+      <Heading>This is a heading</Heading>
+      <Text>This is some text in a new font</Text>
+      <Text weight="bold">And some bolded text in a new font</Text>
+      <Button color="blue" text="Some Button Text" onClick={() => {}} />
+      <Field
+        helperText="Here's some help text"
+        label="Text Field"
+        name="text"
+        placeholder="Placeholder text"
+        type="text"
+        value=""
+        onChange={(): void => {}}
+      />
+    </Box>
+  );
+};
+
 export const ThemeStories = {
   title: "Theme",
   stories: {
@@ -90,35 +143,7 @@ export const ThemeStories = {
       return <ButtonStories />;
     },
     FontTheme() {
-      Unifier.setTheme({
-        primaryFont: "Comfortaa-Light",
-        primaryBoldFont: "Comfortaa-Bold",
-        buttonFont: "IMFellEnglishSC",
-        titleFont: "DancingScript-Regular",
-      });
-      return (
-        <Box
-          direction="column"
-          display="flex"
-          height={300}
-          justifyContent="around"
-          padding={4}
-          width={300}
-        >
-          <Heading>This is a heading</Heading>
-          <Text>This is some text in a new font</Text>
-          <Text weight="bold">And some bolded text in a new font</Text>
-          <Button color="blue" text="Some Button Text" onClick={() => {}} />
-          <Field
-            helperText="Here's some help text"
-            label="Text Field"
-            name="text"
-            type="text"
-            value="Cannot change"
-            onChange={(): void => {}}
-          />
-        </Box>
-      );
+      return <FontStories />;
     },
   },
 };

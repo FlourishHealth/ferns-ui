@@ -4,7 +4,6 @@ import {Text as NativeText, TextStyle} from "react-native";
 import {AllColors, Font, TextSize} from "./Common";
 import {Hyperlink} from "./Hyperlink";
 import {ThemeContext} from "./Theme";
-import {Unifier} from "./Unifier";
 
 export interface TextProps {
   align?: "left" | "right" | "center" | "justify"; // default "left"
@@ -82,7 +81,7 @@ export function Text({
       style.fontWeight = "bold";
     }
 
-    style.fontFamily = theme[computedFont as keyof typeof Unifier.theme];
+    style.fontFamily = theme[computedFont as keyof typeof theme];
 
     style.fontSize = fontSizes[size || "md"];
     if (align) {
