@@ -2068,9 +2068,6 @@ export interface TextFieldProps extends FieldWithLabelsProps {
   multiline?: boolean;
   rows?: number;
   height?: number;
-  paddingX?: number;
-  paddingY?: number;
-
   // Required for type=numberRange
   min?: number;
   max?: number;
