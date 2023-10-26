@@ -10,6 +10,7 @@
     "ios": "yarn --cwd packages/ui-demo ios",
     "android": "yarn --cwd packages/ui-demo android",
     "lint": "yarn --cwd packages/ui-demo lint && yarn --cwd packages/ui lint",
+    "lintfix": "yarn --cwd packages/ui-demo lintfix && yarn --cwd packages/ui lintfix",
     "build": "yarn --cwd packages/ui build",
     "preview": "yarn build && yarn --cwd packages/ui-demo build-web",
     "clean": "rm -rf node_modules && rm -rf packages/ui/node_modules && rm -rf packages/ui-demo/node_modules && yarn"

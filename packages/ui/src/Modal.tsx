@@ -8,6 +8,7 @@ import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {Text} from "./Text";
+import {isNative} from "./Utilities";
 
 interface ModalProps {
   onDismiss: () => void;
@@ -240,7 +241,7 @@ export const Modal = ({
     );
   };
 
-  if (isMobileDevice()) {
+  if (isMobileDevice() && isNative()) {
     return renderActionSheet();
   } else {
     return renderModal();
