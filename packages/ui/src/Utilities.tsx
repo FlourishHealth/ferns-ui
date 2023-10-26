@@ -1,6 +1,7 @@
 // Originally based on https://github.com/pinterest/gestalt
 // Forked, updated to Typescript, and added features.
 import get from "lodash/get";
+import {Platform} from "react-native";
 
 export function mergeInlineStyles(inlineStyle?: any, newStyle?: any) {
   const inline = get(inlineStyle, "__style");
@@ -157,3 +158,7 @@ export const union =
   <T,>(...fns: Functor<T>[]) =>
   (val: T) =>
     concat(fns.map((fn) => fn(val)));
+
+export const isNative = (): boolean => {
+  return ["android", "ios"].includes(Platform.OS);
+};
