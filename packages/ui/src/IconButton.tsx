@@ -1,4 +1,4 @@
-import React, {forwardRef, useState} from "react";
+import React, {forwardRef, useContext, useState} from "react";
 import {Platform, Pressable, View, ViewStyle} from "react-native";
 
 import {
@@ -16,6 +16,7 @@ import {
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
+import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 
@@ -26,7 +27,14 @@ export interface IconButtonProps {
   iconColor: "darkGray" | ButtonColor | ThemeColor | Color;
   onClick: () => void;
   size?: IconSize;
-  bgColor?: "transparent" | "transparentDarkGray" | "gray" | "lightGray" | "white"; // default transparent
+  bgColor?:
+    | "transparent"
+    | "transparentDarkGray"
+    | "gray"
+    | "lightGray"
+    | "white"
+    | "background"
+    | "backgroundSecondary"; // default transparent
   disabled?: boolean;
   selected?: boolean;
   withConfirmation?: boolean;
@@ -59,6 +67,7 @@ export const IconButton = forwardRef(
     }: IconButtonProps,
     ref
   ) => {
+    const {theme} = useContext(ThemeContext);
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const opacity = 1;
@@ -68,7 +77,7 @@ export const IconButton = forwardRef(
     } else if (bgColor === "transparent" || !bgColor) {
       color = "rgba(0, 0, 0, 0.0)";
     } else {
-      color = Unifier.theme[bgColor];
+      color = theme[bgColor];
     }
 
     const IndicatorPosition = {

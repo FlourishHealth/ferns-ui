@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {useImperativeHandle} from "react";
+import React, {useContext, useImperativeHandle} from "react";
 import {
   KeyboardAvoidingView,
   Platform,
@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 
-import {UnifiedTheme} from ".";
+import {ThemeContext, UnifiedTheme} from ".";
 import {AlignContent, AlignItems, AlignSelf, BoxProps, JustifyContent, SPACING} from "./Common";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {Unifier} from "./Unifier";
@@ -46,6 +46,8 @@ const BORDER_WIDTH = 1;
 
 // eslint-disable-next-line react/display-name
 export const Box = React.forwardRef((props: BoxProps, ref) => {
+  const {theme} = useContext(ThemeContext);
+
   useImperativeHandle(ref, () => ({
     scrollToEnd: () => {
       if (scrollRef && scrollRef.current) {
@@ -77,7 +79,7 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     alignItems: (value: AlignItems) => ({alignItems: ALIGN_ITEMS[value]}),
     alignContent: (value: AlignContent) => ({alignContent: ALIGN_CONTENT[value]}),
     alignSelf: (value: AlignSelf) => ({alignSelf: ALIGN_SELF[value]}),
-    color: (value: keyof UnifiedTheme) => ({backgroundColor: Unifier.theme[value]}),
+    color: (value: keyof UnifiedTheme) => ({backgroundColor: theme[value]}),
     direction: (value: any) => ({flexDirection: value, display: "flex"}),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     smDirection: (value: any) =>
@@ -177,31 +179,31 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
       if (!value) {
         return {};
       }
-      return {borderColor: Unifier.theme[value], borderWidth: BORDER_WIDTH};
+      return {borderColor: theme[value], borderWidth: BORDER_WIDTH};
     },
     borderBottom: (value: keyof UnifiedTheme) => {
       if (!value) {
         return {};
       }
-      return {borderBottomColor: Unifier.theme[value], borderBottomWidth: BORDER_WIDTH};
+      return {borderBottomColor: theme[value], borderBottomWidth: BORDER_WIDTH};
     },
     borderTop: (value: keyof UnifiedTheme) => {
       if (!value) {
         return {};
       }
-      return {borderTopColor: Unifier.theme[value], borderTopWidth: BORDER_WIDTH};
+      return {borderTopColor: theme[value], borderTopWidth: BORDER_WIDTH};
     },
     borderRight: (value: keyof UnifiedTheme) => {
       if (!value) {
         return {};
       }
-      return {borderRightColor: Unifier.theme[value], borderRightWidth: BORDER_WIDTH};
+      return {borderRightColor: theme[value], borderRightWidth: BORDER_WIDTH};
     },
     borderLeft: (value: keyof UnifiedTheme) => {
       if (!value) {
         return {};
       }
-      return {borderLeftColor: Unifier.theme[value], borderLeftWidth: BORDER_WIDTH};
+      return {borderLeftColor: theme[value], borderLeftWidth: BORDER_WIDTH};
     },
   };
 

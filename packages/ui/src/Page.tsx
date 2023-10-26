@@ -6,9 +6,7 @@ import {Color, UnsignedUpTo12} from "./Common";
 import {ErrorBoundary} from "./ErrorBoundary";
 import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
-// import {KeyboardAccessoryNavigation} from "react-native-keyboard-accessory";
 import {Spinner} from "./Spinner";
-import {Unifier} from "./Unifier";
 
 interface PageProps {
   // TODO: figure out navigation
@@ -99,9 +97,7 @@ export class Page extends React.Component<PageProps, {}> {
           width="100%"
         >
           {this.renderHeader()}
-          {this.props.loading === true && (
-            <Spinner color={Unifier.theme.darkGray as any} size="md" />
-          )}
+          {this.props.loading === true && <Spinner color="darkGray" size="md" />}
           {/* <KeyboardAccessoryNavigation
           avoidKeyboard
           doneButton={true}

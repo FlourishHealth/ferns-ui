@@ -120,6 +120,14 @@ export interface UnifiedTheme {
   tertiaryDark: string;
   tertiaryDarker: string;
 
+  // Support for light and dark mode.
+  background: string;
+  backgroundSecondary: string;
+  textPrimary: string;
+  textSecondary: string;
+  textDisabled: string;
+  divider: string;
+
   neutral900: string;
   neutral800: string;
   neutral700: string;
@@ -202,7 +210,9 @@ export type ThemeColor =
   | "accentLight"
   | "accent"
   | "accentDark"
-  | "accentDarker";
+  | "accentDarker"
+  | "background"
+  | "backgroundSecondary";
 export type NeutralColor =
   | "neutral900"
   | "neutral800"
@@ -2092,11 +2102,6 @@ export interface SwitchProps extends FieldWithLabelsProps {
   label?: string;
 }
 
-export interface SpinnerProps {
-  size?: "sm" | "md";
-  color?: Color;
-}
-
 export interface MaskProps {
   children?: ReactChildren;
   shape?: "circle" | "rounded" | "square";
@@ -2186,17 +2191,6 @@ export interface CheckBoxProps {
   label?: string;
   subLabel?: string;
   labelColor?: AllColors;
-}
-
-export interface BodyProps {
-  scroll?: boolean;
-  loading?: boolean;
-  useBox?: boolean; // defaults false
-  style?: any;
-  padding?: UnsignedUpTo12;
-  height?: number | string;
-  avoidKeyboard?: boolean; // default true
-  children?: ReactNode;
 }
 
 export interface ChatPaneProps {
@@ -2721,11 +2715,6 @@ export interface NavConfig {
   wrapper?: (component: any) => any;
   store?: any;
   provider?: any;
-}
-
-export interface ProgressBarProps {
-  color: Color;
-  completed: number;
 }
 
 export interface AddressInterface {

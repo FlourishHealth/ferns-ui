@@ -1,5 +1,5 @@
 import {AsYouType} from "libphonenumber-js";
-import React, {ReactElement, useCallback, useMemo, useState} from "react";
+import React, {ReactElement, useCallback, useContext, useMemo, useState} from "react";
 import {
   ActivityIndicator,
   KeyboardTypeOptions,
@@ -17,7 +17,7 @@ import {DecimalRangeActionSheet} from "./DecimalRangeActionSheet";
 import {HeightActionSheet} from "./HeightActionSheet";
 import {Icon} from "./Icon";
 import {NumberPickerActionSheet} from "./NumberPickerActionSheet";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 import {WithLabel} from "./WithLabel";
 
 const keyboardMap: {[id: string]: string | undefined} = {
@@ -88,6 +88,8 @@ export function TextField({
   onEnter,
   onSubmitEditing,
 }: TextFieldProps): ReactElement {
+  const {theme} = useContext(ThemeContext);
+
   const dateActionSheetRef: React.RefObject<any> = React.createRef();
   const numberRangeActionSheetRef: React.RefObject<any> = React.createRef();
   const decimalRangeActionSheetRef: React.RefObject<any> = React.createRef();
@@ -104,7 +106,7 @@ export function TextField({
     if (searching) {
       return (
         <Box marginRight={4}>
-          <ActivityIndicator color={Unifier.theme.primary} size="small" />
+          <ActivityIndicator color={theme.primary} size="small" />
         </Box>
       );
     } else {
@@ -118,11 +120,11 @@ export function TextField({
 
   let borderColor;
   if (errorMessage) {
-    borderColor = Unifier.theme.red;
+    borderColor = theme.red;
   } else if (focused) {
-    borderColor = Unifier.theme.blue;
+    borderColor = theme.blue;
   } else {
-    borderColor = Unifier.theme.gray;
+    borderColor = theme.gray;
   }
 
   const getHeight = useCallback(() => {
@@ -144,8 +146,8 @@ export function TextField({
       paddingLeft: 0,
       height: getHeight(),
       width: "100%",
-      color: Unifier.theme.darkGray,
-      fontFamily: Unifier.theme.primaryFont,
+      color: theme.darkGray,
+      fontFamily: theme.primaryFont,
       ...style,
     };
 
@@ -154,7 +156,7 @@ export function TextField({
     }
 
     return defaultStyles;
-  }, [getHeight, style]);
+  }, [getHeight, style, theme.darkGray, theme.primaryFont]);
 
   const isHandledByModal = [
     "date",
@@ -258,7 +260,7 @@ export function TextField({
               borderColor,
               borderWidth: focused ? 5 : 1,
               borderRadius: 16,
-              backgroundColor: disabled ? Unifier.theme.gray : Unifier.theme.white,
+              backgroundColor: disabled ? theme.gray : theme.white,
               overflow: "hidden",
             }}
             onPress={() => {
@@ -286,7 +288,7 @@ export function TextField({
               multiline={multiline}
               numberOfLines={rows || 4}
               placeholder={placeholder}
-              placeholderTextColor={Unifier.theme.gray}
+              placeholderTextColor={theme.gray}
               returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
               secureTextEntry={type === "password"}
               style={defaultTextInputStyles}

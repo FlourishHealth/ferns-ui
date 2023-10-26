@@ -1,32 +1,43 @@
-import React from "react";
+import React, {ReactNode, useContext} from "react";
 import {ActivityIndicator, KeyboardAvoidingView} from "react-native";
 
 import {Box} from "./Box";
-import {BodyProps} from "./Common";
-import {Unifier} from "./Unifier";
+import {UnsignedUpTo12} from "./Common";
+import {ThemeContext} from "./Theme";
 
-export class Body extends React.Component<BodyProps, {}> {
-  renderBody() {
+export interface BodyProps {
+  scroll?: boolean;
+  loading?: boolean;
+  padding?: UnsignedUpTo12;
+  height?: number | string;
+  avoidKeyboard?: boolean; // default true
+  children?: ReactNode;
+}
+
+export function Body({
+  scroll,
+  loading,
+  padding,
+  height,
+  avoidKeyboard,
+  children,
+}: BodyProps): React.ReactElement {
+  const {theme} = useContext(ThemeContext);
+
+  const renderBody = () => {
     return (
-      <Box avoidKeyboard height="100%" scroll={this.props.scroll}>
-        <Box
-          height={this.props.height || "100%"}
-          padding={this.props.padding !== undefined ? this.props.padding : 5}
-        >
-          {this.props.loading === true && (
-            <ActivityIndicator color={Unifier.theme.darkGray} size="large" />
-          )}
-          {this.props.children}
+      <Box avoidKeyboard height="100%" scroll={scroll}>
+        <Box height={height || "100%"} padding={padding !== undefined ? padding : 5}>
+          {loading === true && <ActivityIndicator color={theme.darkGray} size="large" />}
+          {children}
         </Box>
       </Box>
     );
-  }
+  };
 
-  render() {
-    if (this.props.avoidKeyboard === false) {
-      return this.renderBody();
-    } else {
-      return <KeyboardAvoidingView behavior="position">{this.renderBody()}</KeyboardAvoidingView>;
-    }
+  if (avoidKeyboard === false) {
+    return renderBody();
+  } else {
+    return <KeyboardAvoidingView behavior="position">{renderBody()}</KeyboardAvoidingView>;
   }
 }

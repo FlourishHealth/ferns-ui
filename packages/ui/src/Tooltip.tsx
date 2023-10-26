@@ -1,4 +1,5 @@
 import * as React from "react";
+import {useContext} from "react";
 import {
   Dimensions,
   LayoutChangeEvent,
@@ -11,7 +12,7 @@ import {Portal} from "react-native-portalize";
 
 import {TooltipDirection} from "./Common";
 import {Text} from "./Text";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 
 const TOOLTIP_OFFSET = 8;
 // How many pixels to leave between the tooltip and the edge of the screen
@@ -125,6 +126,7 @@ interface TooltipProps {
 }
 
 export const Tooltip = (props: TooltipProps) => {
+  const {theme} = useContext(ThemeContext);
   const {text, children, bgColor, idealDirection} = props;
   const hoverDelay = 500;
   const hoverEndDelay = 1500;
@@ -230,7 +232,7 @@ export const Tooltip = (props: TooltipProps) => {
               alignSelf: "flex-start",
               justifyContent: "center",
               paddingHorizontal: 16,
-              backgroundColor: Unifier.theme[bgColor ?? "darkGray"],
+              backgroundColor: theme[bgColor ?? "darkGray"],
               borderRadius: 16,
               paddingVertical: 8,
               display: "flex",

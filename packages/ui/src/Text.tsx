@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Text as NativeText, TextStyle} from "react-native";
 
 import {AllColors, Font, TextSize} from "./Common";
 import {Hyperlink} from "./Hyperlink";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 
 export interface TextProps {
   align?: "left" | "right" | "center" | "justify"; // default "left"
@@ -44,6 +44,8 @@ export function Text({
   testID,
   weight = "normal",
 }: TextProps): React.ReactElement {
+  const {theme} = useContext(ThemeContext);
+
   function propsToStyle(): any {
     const style: TextStyle = {};
     if (overflow) {
@@ -79,16 +81,16 @@ export function Text({
       style.fontWeight = "bold";
     }
 
-    style.fontFamily = Unifier.theme[computedFont as keyof typeof Unifier.theme];
+    style.fontFamily = theme[computedFont as keyof typeof theme];
 
     style.fontSize = fontSizes[size || "md"];
     if (align) {
       style.textAlign = align;
     }
     if (color) {
-      style.color = Unifier.theme[color];
+      style.color = theme[color];
     } else {
-      style.color = Unifier.theme.darkGray;
+      style.color = theme.darkGray;
     }
 
     if (italic) {

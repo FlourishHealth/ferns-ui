@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Platform} from "react-native";
 
 import {FieldWithLabelsProps, StyleProp} from "./Common";
 import {Icon} from "./Icon";
 import {RNPickerSelect} from "./PickerSelect";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 import {WithLabel} from "./WithLabel";
 
 // Use "" if you want to have an "unset" value.
@@ -32,11 +32,13 @@ export function SelectList({
   placeholder,
   disabled,
 }: SelectListProps) {
+  const {theme} = useContext(ThemeContext);
+
   const withLabelProps = {label, labelColor};
 
-  let backgroundColor = style?.backgroundColor || Unifier.theme.white;
+  let backgroundColor = style?.backgroundColor || theme.white;
   if (disabled) {
-    backgroundColor = Unifier.theme.lightGray;
+    backgroundColor = theme.lightGray;
   }
 
   return (
@@ -58,7 +60,7 @@ export function SelectList({
             alignItems: style?.alignItems || "center",
             minHeight: style?.minHeight || 50,
             width: style?.width || "100%",
-            borderColor: style?.borderColor || Unifier.theme.gray,
+            borderColor: style?.borderColor || theme.gray,
             borderWidth: style?.borderWidth || 1,
             borderRadius: style?.borderRadius || 5,
             backgroundColor,

@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Text, View} from "react-native";
 
 import {AllColors} from "./Common";
-import {Unifier} from "./Unifier";
+import {ThemeContext} from "./Theme";
 
 interface BadgeProps {
   // The text to display inside the badge.
@@ -29,6 +29,8 @@ export function Badge({
   type = "info",
   color,
 }: BadgeProps): React.ReactElement {
+  const {theme} = useContext(ThemeContext);
+
   if (color && type !== "custom") {
     console.warn('Badge color only supported when `type` is set to "custom".');
   }
@@ -37,7 +39,7 @@ export function Badge({
   return (
     <View
       style={{
-        backgroundColor: Unifier.theme[badgeColor],
+        backgroundColor: theme[badgeColor],
         borderRadius: 2,
         height: 14,
         paddingTop: 2,

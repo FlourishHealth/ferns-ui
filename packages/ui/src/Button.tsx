@@ -1,5 +1,5 @@
 import debounce from "lodash/debounce";
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {ActivityIndicator, Pressable, View} from "react-native";
 
 import {Box} from "./Box";
@@ -7,6 +7,7 @@ import {ButtonColor, Color, IconName, IconPrefix, TooltipDirection, UnifiedTheme
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
+import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 
@@ -78,12 +79,13 @@ export function Button({
 }: ButtonProps) {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const {theme} = useContext(ThemeContext);
 
   const getBackgroundColor = (backgroundColor: string): string => {
     if (type === "ghost" || type === "outline") {
       return "transparent";
     } else {
-      return Unifier.theme[backgroundColor as keyof UnifiedTheme];
+      return theme[backgroundColor as keyof UnifiedTheme];
     }
   };
 
@@ -99,7 +101,7 @@ export function Button({
 
   const getBorderColor = (borderColor: string): string => {
     if (type === "outline") {
-      return Unifier.theme[getTextColor(borderColor as Color)];
+      return theme[getTextColor(borderColor as Color)];
     } else {
       return "transparent";
     }
