@@ -94,6 +94,7 @@ const FontStories = () => {
       buttonFont: "DancingScript-Regular",
       titleFont: "DancingScript-Regular",
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
