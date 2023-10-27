@@ -195,9 +195,10 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
           height={height}
           justifyContent="center"
           position="absolute"
-          // width={width}
           zIndex={5}
           onClick={pickImage}
+          onHoverEnd={() => setHovered(false)}
+          onHoverStart={() => setHovered(true)}
         >
           <Icon color="darkGray" name="edit" size={size} />
         </Box>
