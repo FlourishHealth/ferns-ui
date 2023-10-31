@@ -11,6 +11,7 @@ export interface TextProps {
   color?: AllColors;
   inline?: boolean; // default false
   italic?: boolean; // default false
+  onPress?: () => void;
   overflow?: "normal" | "breakWord"; // deprecated
   size?: TextSize; // default "md"
   truncate?: boolean; // default false
@@ -38,6 +39,7 @@ export function Text({
   size = "md",
   truncate = false,
   font,
+  onPress,
   underline,
   numberOfLines,
   skipLinking,
@@ -117,7 +119,7 @@ export function Text({
     lines = 1;
   }
   const inner = (
-    <NativeText numberOfLines={lines} style={propsToStyle()} testID={testID}>
+    <NativeText numberOfLines={lines} style={propsToStyle()} testID={testID} onPress={onPress}>
       {children}
     </NativeText>
   );
