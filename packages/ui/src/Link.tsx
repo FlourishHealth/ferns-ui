@@ -1,17 +1,16 @@
 import React from "react";
+import {Linking} from "react-native";
 
-import {LinkProps} from "./Common";
-import {Text} from "./Text";
+import {Text, TextProps} from "./Text";
 
-interface LinkState {}
+interface LinkProps extends TextProps {
+  href: string;
+}
 
-export class Link extends React.Component<LinkProps, LinkState> {
-  constructor(props: LinkProps) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return <Text>{this.props.children}</Text>;
-  }
+export function Link(props: LinkProps): React.ReactElement {
+  return (
+    <Text {...props} color={props.color || "blue"} onPress={() => Linking.openURL(props.href)}>
+      {props.children}
+    </Text>
+  );
 }

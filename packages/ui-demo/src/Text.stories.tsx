@@ -58,7 +58,7 @@ export const TextStories = {
         </StorybookContainer>
       );
     },
-    Links() {
+    TextLinks() {
       return (
         <StorybookContainer>
           <Box direction="column" display="flex" height="100%" width="100%">
