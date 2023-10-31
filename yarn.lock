@@ -11597,13 +11597,6 @@ react-native-calendars@^1.1300.0, react-native-calendars@^1.1301.0:
   optionalDependencies:
     moment "^2.29.4"
 
-react-native-drawer-layout@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-drawer-layout/-/react-native-drawer-layout-3.2.1.tgz#eb626216181965e72de6d9377ca619fab40226f2"
-  integrity sha512-9GDzSLBblxox1zEACcbdXHMU8m22gCTdpT9g1G3Za4Bu766IDxVnIbgRGz6Z2dL99EMtz5E2JoWx257tdHkbpw==
-  dependencies:
-    use-latest-callback "^0.1.5"
-
 react-native-drawer-layout@^4.0.0-alpha.1:
   version "4.0.0-alpha.1"
   resolved "https://registry.yarnpkg.com/react-native-drawer-layout/-/react-native-drawer-layout-4.0.0-alpha.1.tgz#458f2f060e0d175b161d546aeb306f350e42a3ae"
