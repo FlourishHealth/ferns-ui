@@ -96,6 +96,12 @@ export interface UnifiedTheme {
   white: string;
   black: string;
 
+  info: string;
+  error: string;
+  warning: string;
+  success: string;
+  neutral: string;
+
   primaryLighter: string;
   primaryLight: string;
   primary: string;
@@ -232,7 +238,10 @@ export type NeutralColor =
   | "neutral30"
   | "neutral20"
   | "neutral10";
-export type AllColors = Color | ThemeColor | NeutralColor;
+
+export type StatusIndicatorColor = "info" | "error" | "warning" | "success" | "neutral";
+
+export type AllColors = Color | ThemeColor | NeutralColor | StatusIndicatorColor;
 
 export interface OnChangeResult {
   event?: SyntheticEvent<any>;

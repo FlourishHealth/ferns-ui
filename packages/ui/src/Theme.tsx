@@ -38,6 +38,12 @@ const defaultTheme: UnifiedTheme = {
   orange: "#e3780c",
   black: "#000000",
 
+  info: "#4a90e2", // blue
+  error: "#bd081c", // red
+  warning: "#e3780c", // orange
+  success: "#008753", // springGreen
+  neutral: gray,
+
   primaryLighter: changeColorLuminance(primary, "lighter"),
   primaryLight: changeColorLuminance(primary, "light"),
   primary,
