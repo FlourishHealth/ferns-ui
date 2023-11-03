@@ -29,6 +29,11 @@ const colors: AllColors[] = [
   "neutral200",
   "neutral70",
   "neutral10",
+  "info",
+  "error",
+  "warning",
+  "success",
+  "neutral",
 ];
 
 export const BoxStories = {
@@ -62,10 +67,18 @@ export const BoxStories = {
         <StorybookContainer>
           {colors.map((c) => (
             <Box key={c} direction="column" display="flex">
-              <Box marginBottom={2}>
+              <Box alignSelf="start" marginBottom={2}>
                 <Text align="center">{c}</Text>
               </Box>
-              <Box key={c} color={c} height={50} rounding="circle" width={50}>
+              <Box
+                key={c}
+                alignSelf="start"
+                color={c}
+                height={50}
+                marginBottom={2}
+                rounding="circle"
+                width={50}
+              >
                 <Text> </Text>
               </Box>
             </Box>
