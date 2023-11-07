@@ -53,7 +53,8 @@ const ButtonStories = () => {
         // Leaving accent as default
       });
     }
-  }, [setTheme, themeName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [themeName]);
   return (
     <Box
       direction="column"

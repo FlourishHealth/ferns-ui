@@ -15,14 +15,6 @@ interface BadgeProps {
   color?: AllColors;
 }
 
-const BADGE_COLORS: {[key: string]: AllColors} = {
-  info: "blue",
-  error: "red",
-  warning: "orange",
-  success: "springGreen",
-  neutral: "gray",
-};
-
 export function Badge({
   title,
   position = "middle",
@@ -34,7 +26,7 @@ export function Badge({
   if (color && type !== "custom") {
     console.warn('Badge color only supported when `type` is set to "custom".');
   }
-  const badgeColor = type === "custom" ? color! : BADGE_COLORS[type];
+  const badgeColor = type === "custom" ? color! : type;
 
   return (
     <View

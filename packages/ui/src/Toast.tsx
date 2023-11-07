@@ -51,10 +51,8 @@ export function Toast({
   const width = Math.min(Dimensions.get("window").width - 16 * 4, 712);
   const {variant, buttonText, buttonOnClick, persistent, onDismiss} = data ?? {};
   let color: AllColors = "darkGray";
-  if (variant === "warning") {
-    color = "orange";
-  } else if (variant === "error") {
-    color = "red";
+  if (variant === "warning" || variant === "error") {
+    color = variant;
   }
   return (
     <Box
