@@ -119,7 +119,7 @@
   "devDependencies": {
     "@expo/config-plugins": "~7.2.2",
     "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "1.19.3",
+    "@react-native-async-storage/async-storage": "1.19.5",
     "@react-native-community/blur": "^4.3.0",
     "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-picker/picker": "2.5.1",
@@ -178,7 +178,7 @@
   },
   "peerDependencies": {
     "@expo/vector-icons": "^13.0.0",
-    "@react-native-async-storage/async-storage": "1.19.3",
+    "@react-native-async-storage/async-storage": "1.19.5",
     "@react-native-community/blur": "^4.3.0",
     "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-picker/picker": "2.5.1",
