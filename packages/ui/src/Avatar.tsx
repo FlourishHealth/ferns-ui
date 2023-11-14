@@ -206,9 +206,9 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
             __style: {backgroundColor: "rgba(255,255,255,0.8)", borderRadius: radius},
           }}
           height={height}
-          width={width}
           justifyContent="center"
           position="absolute"
+          width={width}
           zIndex={5}
           onClick={pickImage}
           onHoverEnd={() => setHovered(false)}
