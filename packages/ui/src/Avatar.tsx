@@ -113,6 +113,10 @@ interface AvatarProps {
    * Text to show when hovering over the avatar image. Only works on web.
    */
   statusText?: string;
+  /**
+   * If edit icon should be present when no image is present
+   */
+  shouldShowEditIconIfNoImage?: boolean;
 }
 
 export const Avatar = (props: AvatarProps): React.ReactElement => {
@@ -132,6 +136,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     avatarImageWidth = sizes[size],
     avatarImageHeight,
     avatarImageFormat = SaveFormat.PNG,
+    shouldShowEditIconIfNoImage = false,
   } = props;
   const width = sizes[size];
   const height = sizes[size];
@@ -184,26 +189,36 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     );
   };
 
+  function shouldShowEditIcon() {
+    if (Platform.OS === "web") {
+      return (shouldShowEditIconIfNoImage && !src) || (editAvatarImage && hovered);
+    } else {
+      return (shouldShowEditIconIfNoImage && !src) || editAvatarImage;
+    }
+  }
+
   const renderEditIcon = () => {
-    if (editAvatarImage && hovered && Platform.OS === "web") {
+    if (shouldShowEditIcon() && Platform.OS === "web") {
       return (
         <Box
           alignItems="center"
           dangerouslySetInlineStyle={{
-            __style: {backgroundColor: "rgba(255,255,255,0.5)", borderRadius: radius},
+            __style: {backgroundColor: "rgba(255,255,255,0.8)", borderRadius: radius},
           }}
           height={height}
           justifyContent="center"
           position="absolute"
+          width={width}
           zIndex={5}
           onClick={pickImage}
           onHoverEnd={() => setHovered(false)}
           onHoverStart={() => setHovered(true)}
         >
           <Icon color="darkGray" name="edit" size={size} />
+          <Text style={{fontWeight: "bold"}}>Upload Image</Text>
         </Box>
       );
-    } else if (editAvatarImage && Platform.OS !== "web") {
+    } else if (shouldShowEditIcon() && Platform.OS !== "web") {
       return (
         <Box
           bottom
