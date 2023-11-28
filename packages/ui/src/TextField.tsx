@@ -316,7 +316,7 @@ export function TextField({
                     }
                   } else if (type === "number") {
                     text = text.replace(/[^0-9]/g, "");
-                    onChange({value: parseInt(text).toString()});
+                    onChange({value: !isNaN(parseInt(text)) ? parseInt(text).toString() : ""});
                   } else {
                     onChange({value: text});
                   }
