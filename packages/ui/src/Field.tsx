@@ -230,6 +230,17 @@ export const Field = ({
           onChange={onChange}
         />
       );
+    } else if (type === "number") {
+      return (
+        <TextField
+          disabled={disabled}
+          id={name}
+          placeholder={placeholder}
+          type="number"
+          value={value}
+          onChange={(result) => onChange(result.value)}
+        />
+      );
     } else {
       let tfType: TextFieldType = "text";
       let tfValue: string = value;

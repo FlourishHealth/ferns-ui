@@ -314,6 +314,9 @@ export function TextField({
                     } else {
                       onChange({value: formattedPhoneNumber});
                     }
+                  } else if (type === "number") {
+                    text = text.replace(/[^0-9]/g, "");
+                    onChange({value: !isNaN(parseInt(text)) ? parseInt(text).toString() : ""});
                   } else {
                     onChange({value: text});
                   }
