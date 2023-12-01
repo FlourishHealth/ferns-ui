@@ -9,6 +9,12 @@ import {Dimensions, Keyboard, Linking, Platform, Vibration} from "react-native";
 import {PermissionKind, UnifiedTheme} from "./Common";
 import {requestPermissions} from "./Permissions";
 
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
 export type PlatformOS = "ios" | "android" | "web";
 
 type Luminance = "light" | "lighter" | "dark" | "darker";

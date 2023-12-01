@@ -30,6 +30,7 @@ export * from "./InfoTooltipButton";
 export * from "./Link";
 export * from "./Mask";
 export * from "./Meta";
+export * from "./MobileAddressAutoComplete";
 export * from "./Modal";
 
 export * from "./Page";
@@ -48,6 +49,7 @@ export * from "./Tooltip";
 export * from "./Toast";
 export * from "./UnifiedScreens";
 export * from "./Unifier";
+export * from "./UnifiedAddressAutoComplete";
 export * from "./WithLabel";
 export * from "./DecimalRangeActionSheet";
 export * from "./HeightActionSheet";
@@ -63,6 +65,7 @@ export * from "./TableHeaderCell";
 export * from "./TableRow";
 export * from "./Theme";
 export * from "./useStoredState";
+export * from "./WebAddressAutocomplete";
 
 // Lifted from react-native
 type ImageRequireSource = number;
