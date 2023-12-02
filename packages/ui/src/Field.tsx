@@ -147,7 +147,6 @@ export const Field = ({
         />
       );
     } else if (type && ["date", "time", "datetime"].includes(type)) {
-      console.log("mobile here");
       return (
         <TextField
           disabled={disabled}

@@ -176,10 +176,7 @@ export const DateTimeActionSheet = ({
 
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for mode=time
   let m;
-  console.log({transformValue});
-  console.log({value});
   if (value) {
-    console.log("There is a value");
     m = dayjs(value, [
       "YYYY",
       "YYYY-MM-DD",
@@ -188,13 +185,11 @@ export const DateTimeActionSheet = ({
       transformValue?.options?.transformFormat,
     ]).tz(transformValue?.options?.timezone);
   } else {
-    console.log("no value");
     m = dayjs().tz(transformValue?.options?.timezone);
   }
 
-  console.log({m});
   if (!m.isValid()) {
-    // throw new Error(`Invalid date/time value ${value}`);
+    throw new Error(`Invalid date/time value ${value}`);
   }
 
   let hr = m.hour() % 12;
