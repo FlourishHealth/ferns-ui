@@ -182,6 +182,7 @@ export const Field = ({
       return (
         <>
           <UnifiedAddressAutoCompleteField
+            disabled={disabled}
             googleMapsApiKey={googleMapsApiKey}
             handleAddressChange={(result) => handleAddressChange("address1", result.value)}
             handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}

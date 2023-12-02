@@ -1,21 +1,100 @@
-import React from "react";
-import {Button, TextInput, View} from "react-native";
-import RNGooglePlaces from "react-native-google-places";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import {TouchableOpacity, View} from "react-native";
+import {
+  GooglePlacesAutocomplete,
+  GooglePlacesAutocompleteRef,
+} from "react-native-google-places-autocomplete";
 
-export const MobileAddressAutocomplete = () => {
-  const openSearchModal = () => {
-    RNGooglePlaces.openAutocompleteModal()
-      .then((place) => {
-        console.log(place);
-        // process the details and assign to the input
-      })
-      .catch((error) => console.log(error.message));
+import {AddressInterface, OnChangeCallback} from "./Common";
+import {TextField} from "./TextField";
+import {ThemeContext} from "./Theme";
+import {processAddressComponents} from "./UnifiedAddressAutoComplete";
+
+export const MobileAddressAutocomplete = ({
+  disabled,
+  googleMapsApiKey,
+  inputValue,
+  handleAddressChange,
+  handleAutoCompleteChange,
+}: {
+  disabled?: boolean;
+  googleMapsApiKey?: string;
+  inputValue: string;
+  handleAddressChange: OnChangeCallback;
+  handleAutoCompleteChange: (value: AddressInterface) => void;
+}) => {
+  const {theme} = useContext(ThemeContext);
+  const ref = useRef<GooglePlacesAutocompleteRef | null>(null);
+  const [isFocused, setIsFocused] = useState(false);
+
+  useEffect(() => {
+    if (!googleMapsApiKey) return;
+    if (ref.current) {
+      ref.current.setAddressText(inputValue);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const textInputStyles = {
+    borderRadius: 16,
+    borderColor: isFocused ? theme.blue : theme.gray,
+    borderWidth: isFocused ? 5 : 1,
+    paddingHorizontal: isFocused ? 10 : 14,
+    paddingVertical: isFocused ? 0 : 4,
   };
 
+  if (!googleMapsApiKey) {
+    return (
+      <TextField
+        disabled={disabled}
+        id="address1"
+        label="Street Address"
+        type="text"
+        value={inputValue}
+        onChange={(result) => handleAddressChange(result)}
+      />
+    );
+  }
+
   return (
-    <View>
-      <TextInput placeholder="Enter address" />
-      <Button title="Search Address" onPress={openSearchModal} />
-    </View>
+    <TouchableOpacity activeOpacity={1} style={{flex: 1}} onPress={() => setIsFocused(false)}>
+      <View>
+        <GooglePlacesAutocomplete
+          ref={ref}
+          fetchDetails
+          placeholder="Street Address"
+          query={{
+            key: googleMapsApiKey,
+            language: "en",
+            components: "country:us",
+          }}
+          styles={{
+            textInputContainer: {
+              ...textInputStyles,
+            },
+            textInput: {
+              fontFamily: theme.primaryFont,
+            },
+          }}
+          textInputProps={{
+            onFocus: () => setIsFocused(true),
+            onBlur: () => setIsFocused(false),
+            onChange: (event) => {
+              handleAddressChange({value: event.nativeEvent.text});
+            },
+          }}
+          onPress={(data, details = null) => {
+            const addressComponents = details?.address_components;
+            const formattedAddressObject = processAddressComponents(addressComponents);
+            const {address1} = formattedAddressObject;
+            handleAutoCompleteChange(formattedAddressObject);
+            if (ref.current) {
+              ref.current.setAddressText(address1);
+            }
+            setIsFocused(false);
+          }}
+        />
+      </View>
+    </TouchableOpacity>
   );
 };

@@ -11288,6 +11288,11 @@ qs@^6.11.0:
   dependencies:
     side-channel "^1.0.4"
 
+qs@~6.9.1:
+  version "6.9.7"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.7.tgz#4610846871485e1e048f44ae3b94033f0e675afe"
+  integrity sha512-IhMFgUmuNpyRfxA90umL7ByLlgRXu6tIfKPpF5TmcfRLlLCckfP/g3IQmju6jjpu+Hh8rA+2p6A27ZSPOOHdKw==
+
 querystring-es3@^0.2.0:
   version "0.2.1"
   resolved "https://registry.npmjs.org/querystring-es3/-/querystring-es3-0.2.1.tgz"
@@ -11626,10 +11631,14 @@ react-native-gesture-handler@~2.13.4:
     lodash "^4.17.21"
     prop-types "^15.7.2"
 
-react-native-google-places@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/react-native-google-places/-/react-native-google-places-3.1.2.tgz#6aa11f76da6bd58aa9ec1d1b3e2c85edb4ced2ce"
-  integrity sha512-aKPbGHga3k/Vkfw9NMf/1t0sivdqxn4qzCbEyAfmhxO7Mlqv9Nljjnez6rp6MZGwh89ss3/a9lhM4ulyZ6o0ew==
+react-native-google-places-autocomplete@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/react-native-google-places-autocomplete/-/react-native-google-places-autocomplete-2.5.6.tgz#94be31b17ed53ecf4a4a6670fd9acd7a46c2ff6d"
+  integrity sha512-Dy7mFKyEoiNeWPLd7HUkrI/SzJYe7GST55FGtiXzXDoPs05LYHIOCPrT9qFE51COh5X8kgDKm+f7D5aMY/aMbg==
+  dependencies:
+    lodash.debounce "^4.0.8"
+    prop-types "^15.7.2"
+    qs "~6.9.1"
 
 react-native-haptic-feedback@^2.0.3:
   version "2.2.0"

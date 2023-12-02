@@ -2,6 +2,7 @@ import React, {ReactElement, useEffect, useRef} from "react";
 
 import {AddressInterface, OnChangeCallback} from "./Common";
 import {TextField} from "./TextField";
+import {processAddressComponents} from "./UnifiedAddressAutoComplete";
 
 const loadGooglePlacesScript = (googleMapsApiKey: string, callbackName: any): Promise<void> => {
   return new Promise<void>((resolve, reject): undefined => {
@@ -21,11 +22,13 @@ const loadGooglePlacesScript = (googleMapsApiKey: string, callbackName: any): Pr
 };
 
 export const WebAddressAutocomplete = ({
+  disabled,
   googleMapsApiKey,
   inputValue,
   handleAddressChange,
   handleAutoCompleteChange,
 }: {
+  disabled?: boolean;
   googleMapsApiKey?: string;
   inputValue: string;
   handleAddressChange: OnChangeCallback;
@@ -39,43 +42,17 @@ export const WebAddressAutocomplete = ({
     loadGooglePlacesScript(googleMapsApiKey, callbackName)
       .then(() => {
         const autocomplete = new window.google.maps.places.Autocomplete(
-          autocompleteInputRef.current
+          autocompleteInputRef.current,
+          {
+            componentRestrictions: {country: "us"},
+            fields: ["address_components", "formatted_address"],
+          }
         );
         autocomplete.addListener("place_changed", () => {
           const place = autocomplete.getPlace();
-          if (place.formatted_address) {
-            // handle the selected address here (e.g., saving to state, sending to a backend, etc.)
-            const streetNumber =
-              place.address_components.find((component: any) =>
-                component.types.includes("street_number")
-              )?.long_name ?? "";
-            const streetName =
-              place.address_components.find((component: any) => component.types.includes("route"))
-                ?.long_name ?? "";
-            const city =
-              place.address_components.find((component: any) =>
-                component.types.includes("locality")
-              )?.long_name ?? "";
-            const state =
-              place.address_components.find((component: any) =>
-                component.types.includes("administrative_area_level_1")
-              )?.long_name ?? "";
-            const zipcode =
-              place.address_components.find((component: any) =>
-                component.types.includes("postal_code")
-              )?.long_name ?? "";
-            const countyName =
-              place.address_components.find((component: any) =>
-                component.types.includes("administrative_area_level_2")
-              )?.long_name ?? "";
-            handleAutoCompleteChange({
-              address1: `${streetNumber} ${streetName}`,
-              city,
-              state,
-              zipcode,
-              countyName,
-            });
-          }
+          const addressComponents = place?.address_components;
+          const formattedAddressObject = processAddressComponents(addressComponents);
+          handleAutoCompleteChange(formattedAddressObject);
         });
       })
       .catch((error) => console.error(error));
@@ -88,6 +65,7 @@ export const WebAddressAutocomplete = ({
 
   return (
     <TextField
+      disabled={disabled}
       inputRef={
         !googleMapsApiKey ? undefined : (ref: any): void => (autocompleteInputRef.current = ref)
       }
