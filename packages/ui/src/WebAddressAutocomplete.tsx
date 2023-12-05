@@ -1,4 +1,4 @@
-import React, {ReactElement, useCallback, useEffect, useRef, useState} from "react";
+import React, {ReactElement, useEffect, useRef, useState} from "react";
 
 import {AddressInterface, OnChangeCallback} from "./Common";
 import {GOOGLE_PLACES_API_RESTRICTIONS} from "./Constants";
@@ -38,26 +38,14 @@ export const WebAddressAutocomplete = ({
   const [scriptLoaded, setScriptLoaded] = useState(true);
   const autocompleteInputRef = useRef(null);
 
-  const handlePlaceChange = useCallback(
-    (autocomplete: any) => {
-      const place = autocomplete.getPlace();
-      const addressComponents = place?.address_components;
-      const formattedAddressObject = processAddressComponents(addressComponents);
-      handleAutoCompleteChange(formattedAddressObject);
-    },
-    [handleAutoCompleteChange]
-  );
-
   useEffect(() => {
     const callbackName = "initAutocomplete";
     if (!googleMapsApiKey) {
       setScriptLoaded(false);
       return;
     }
-
-    const loadScript = async () => {
-      try {
-        await loadGooglePlacesScript(googleMapsApiKey, callbackName);
+    loadGooglePlacesScript(googleMapsApiKey, callbackName)
+      .then(() => {
         const autocomplete = new window.google.maps.places.Autocomplete(
           autocompleteInputRef.current,
           {
@@ -65,20 +53,22 @@ export const WebAddressAutocomplete = ({
             fields: Object.values(GOOGLE_PLACES_API_RESTRICTIONS.fields),
           }
         );
-        autocomplete.addListener("place_changed", handlePlaceChange);
-      } catch (error) {
+        autocomplete.addListener("place_changed", () => {
+          const place = autocomplete.getPlace();
+          const addressComponents = place?.address_components;
+          const formattedAddressObject = processAddressComponents(addressComponents);
+          handleAutoCompleteChange(formattedAddressObject);
+        });
+      })
+      .catch((error) => {
         console.warn(error);
         setScriptLoaded(false);
-      }
-    };
-
-    loadScript();
-
+      });
     // Cleanup
     return () => {
       (window as any)[callbackName] = null;
     };
-  }, [googleMapsApiKey, handlePlaceChange]);
+  }, [googleMapsApiKey, handleAutoCompleteChange]);
 
   return (
     <TextField
