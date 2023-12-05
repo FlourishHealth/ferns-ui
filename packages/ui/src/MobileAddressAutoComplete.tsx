@@ -6,9 +6,10 @@ import {
 } from "react-native-google-places-autocomplete";
 
 import {AddressInterface, OnChangeCallback} from "./Common";
+import {GOOGLE_PLACES_API_RESTRICTIONS} from "./Constants";
 import {TextField} from "./TextField";
 import {ThemeContext} from "./Theme";
-import {processAddressComponents} from "./UnifiedAddressAutoComplete";
+import {processAddressComponents} from "./Utilities";
 
 export const MobileAddressAutocomplete = ({
   disabled,
@@ -29,7 +30,7 @@ export const MobileAddressAutocomplete = ({
 
   useEffect(() => {
     if (!googleMapsApiKey) return;
-    if (ref.current) {
+    if (ref?.current) {
       ref.current.setAddressText(inputValue);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -41,6 +42,7 @@ export const MobileAddressAutocomplete = ({
     borderWidth: isFocused ? 5 : 1,
     paddingHorizontal: isFocused ? 10 : 14,
     paddingVertical: isFocused ? 0 : 4,
+    backgroundColor: theme.white,
   };
 
   if (!googleMapsApiKey) {
@@ -61,12 +63,16 @@ export const MobileAddressAutocomplete = ({
       <View>
         <GooglePlacesAutocomplete
           ref={ref}
+          GooglePlacesDetailsQuery={{
+            fields: Object.values(GOOGLE_PLACES_API_RESTRICTIONS.fields).join(","),
+          }}
+          disableScroll
           fetchDetails
           placeholder="Street Address"
           query={{
             key: googleMapsApiKey,
             language: "en",
-            components: "country:us",
+            components: `country:${GOOGLE_PLACES_API_RESTRICTIONS.components.country}`,
           }}
           styles={{
             textInputContainer: {

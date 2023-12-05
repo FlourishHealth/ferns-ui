@@ -3,6 +3,8 @@
 import get from "lodash/get";
 import {Platform} from "react-native";
 
+import {COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES} from "./Constants";
+
 export function mergeInlineStyles(inlineStyle?: any, newStyle?: any) {
   const inline = get(inlineStyle, "__style");
   return {
@@ -162,3 +164,88 @@ export const union =
 export const isNative = (): boolean => {
   return ["android", "ios"].includes(Platform.OS);
 };
+
+// Find more information about the address component types here: https://developers.google.com/maps/documentation/javascript/place-autocomplete
+export type AddressComponentType = {
+  long_name: string;
+  short_name: string;
+  types: string[];
+};
+
+export const findAddressComponent = (components: AddressComponentType[], type: string): string => {
+  return (
+    components.find((component: AddressComponentType) => component.types.includes(type))
+      ?.long_name ?? ""
+  );
+};
+
+export const processAddressComponents = (addressComponents: AddressComponentType[] | undefined) => {
+  if (!addressComponents || addressComponents.length === 0) {
+    return {
+      address1: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      countyName: "",
+    };
+  }
+  const streetNumber = findAddressComponent(addressComponents, "street_number");
+  const streetName = findAddressComponent(addressComponents, "route");
+  const city = findAddressComponent(addressComponents, "locality");
+  const state = findAddressComponent(addressComponents, "administrative_area_level_1");
+  const zipcode = findAddressComponent(addressComponents, "postal_code");
+  const countyName = findAddressComponent(addressComponents, "administrative_area_level_2");
+
+  if (state && countyName) {
+    const countyCode = formattedCountyCode(state, countyName);
+    return {
+      address1: `${streetNumber} ${streetName}`.trim(),
+      city,
+      state,
+      zipcode,
+      countyName,
+      countyCode,
+    };
+  }
+  return {
+    address1: `${streetNumber} ${streetName}`.trim(),
+    city,
+    state,
+    zipcode,
+    countyName,
+  };
+};
+
+// Google does not provide a way to validate API keys, so we have to do it ourselves
+export const isValidGoogleApiKey = (apiKey: string): boolean => {
+  if (typeof apiKey !== "string" || apiKey.trim().length === 0) {
+    return false;
+  }
+  // Typical Google API keys are around 39 characters
+  if (apiKey.length < 30 || apiKey.length > 50) {
+    return false;
+  }
+  // Check the presence of alphanumeric characters and dashes
+  const apiKeyRegex = /^[A-Za-z0-9-_]+$/;
+  if (!apiKeyRegex.test(apiKey)) {
+    return false;
+  }
+  return true;
+};
+
+export function formattedCountyCode(state: string, countyName: string): string {
+  // Remove whitespace and convert to lowercase for comparison
+  const stateKey = state.replace(/\s+/g, "").toLowerCase();
+  // Remove whitespace, periods, apostrophes, and dashes for comparison
+  const countyKey = countyName
+    .trim()
+    .toLowerCase()
+    .replace(/[\s.'-]/g, "");
+
+  const countyData = COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES[stateKey]?.[countyKey];
+  if (!countyData) {
+    return "";
+  }
+
+  return `${countyData.stateFP}${countyData.countyFP}`;
+}

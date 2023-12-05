@@ -43,6 +43,7 @@ export interface FieldProps extends FieldWithLabelsProps {
   disabled?: boolean;
   useCheckbox?: boolean;
   googleMapsApiKey?: string;
+  includeCounty?: boolean;
 }
 
 export const Field = ({
@@ -62,6 +63,7 @@ export const Field = ({
   helperText,
   helperTextColor,
   googleMapsApiKey,
+  includeCounty = false,
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
@@ -186,7 +188,7 @@ export const Field = ({
             googleMapsApiKey={googleMapsApiKey}
             handleAddressChange={(result) => handleAddressChange("address1", result.value)}
             handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
-            value={address1}
+            inputValue={address1}
           />
           <TextField
             disabled={disabled}
@@ -222,22 +224,26 @@ export const Field = ({
             value={zipcode}
             onChange={(result) => handleAddressChange("zipcode", result.value)}
           />
-          <TextField
-            disabled={disabled}
-            id="countyName"
-            label="County Name"
-            type="text"
-            value={countyName}
-            onChange={(result) => handleAddressChange("countyName", result.value)}
-          />
-          <TextField
-            disabled={disabled}
-            id="countyCode"
-            label="County Code"
-            type="text"
-            value={countyCode}
-            onChange={(result) => handleAddressChange("countyCode", result.value)}
-          />
+          {includeCounty && (
+            <>
+              <TextField
+                disabled={disabled}
+                id="countyName"
+                label="County Name"
+                type="text"
+                value={countyName}
+                onChange={(result) => handleAddressChange("countyName", result.value)}
+              />
+              <TextField
+                disabled={disabled}
+                id="countyCode"
+                label="County Code"
+                type="number"
+                value={countyCode}
+                onChange={(result) => handleAddressChange("countyCode", result.value)}
+              />
+            </>
+          )}
         </>
       );
     } else if (type === "customSelect") {

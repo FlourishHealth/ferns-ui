@@ -1,8 +1,9 @@
-import React, {ReactElement, useEffect, useRef} from "react";
+import React, {ReactElement, useCallback, useEffect, useRef, useState} from "react";
 
 import {AddressInterface, OnChangeCallback} from "./Common";
+import {GOOGLE_PLACES_API_RESTRICTIONS} from "./Constants";
 import {TextField} from "./TextField";
-import {processAddressComponents} from "./UnifiedAddressAutoComplete";
+import {processAddressComponents} from "./Utilities";
 
 const loadGooglePlacesScript = (googleMapsApiKey: string, callbackName: any): Promise<void> => {
   return new Promise<void>((resolve, reject): undefined => {
@@ -34,41 +35,55 @@ export const WebAddressAutocomplete = ({
   handleAddressChange: OnChangeCallback;
   handleAutoCompleteChange: (value: AddressInterface) => void;
 }): ReactElement => {
+  const [scriptLoaded, setScriptLoaded] = useState(true);
   const autocompleteInputRef = useRef(null);
+
+  const handlePlaceChange = useCallback(
+    (autocomplete: any) => {
+      const place = autocomplete.getPlace();
+      const addressComponents = place?.address_components;
+      const formattedAddressObject = processAddressComponents(addressComponents);
+      handleAutoCompleteChange(formattedAddressObject);
+    },
+    [handleAutoCompleteChange]
+  );
 
   useEffect(() => {
     const callbackName = "initAutocomplete";
-    if (!googleMapsApiKey) return;
-    loadGooglePlacesScript(googleMapsApiKey, callbackName)
-      .then(() => {
+    if (!googleMapsApiKey) {
+      setScriptLoaded(false);
+      return;
+    }
+
+    const loadScript = async () => {
+      try {
+        await loadGooglePlacesScript(googleMapsApiKey, callbackName);
         const autocomplete = new window.google.maps.places.Autocomplete(
           autocompleteInputRef.current,
           {
-            componentRestrictions: {country: "us"},
-            fields: ["address_components", "formatted_address"],
+            componentRestrictions: {country: GOOGLE_PLACES_API_RESTRICTIONS.components.country},
+            fields: Object.values(GOOGLE_PLACES_API_RESTRICTIONS.fields),
           }
         );
-        autocomplete.addListener("place_changed", () => {
-          const place = autocomplete.getPlace();
-          const addressComponents = place?.address_components;
-          const formattedAddressObject = processAddressComponents(addressComponents);
-          handleAutoCompleteChange(formattedAddressObject);
-        });
-      })
-      .catch((error) => console.error(error));
+        autocomplete.addListener("place_changed", handlePlaceChange);
+      } catch (error) {
+        console.warn(error);
+        setScriptLoaded(false);
+      }
+    };
+
+    loadScript();
 
     // Cleanup
     return () => {
       (window as any)[callbackName] = null;
     };
-  }, [googleMapsApiKey, handleAutoCompleteChange]);
+  }, [googleMapsApiKey, handlePlaceChange]);
 
   return (
     <TextField
       disabled={disabled}
-      inputRef={
-        !googleMapsApiKey ? undefined : (ref: any): void => (autocompleteInputRef.current = ref)
-      }
+      inputRef={scriptLoaded ? (ref: any): void => (autocompleteInputRef.current = ref) : undefined}
       label="Street Address"
       placeholder="Enter an address"
       type="text"

@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import dayjs from "dayjs";
-import {Box, Field, TapToEdit, Text} from "ferns-ui";
+import {Box, Field, Heading, TapToEdit, Text} from "ferns-ui";
 import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -298,12 +298,35 @@ const AddressField = () => {
     city: "San Francisco",
     state: "CA",
     zip: "94105",
+    countyName: "San Francisco",
+    countyCode: "00000",
   });
+  const [googleMapsApiKey, setGoogleMapsApiKey] = useState("");
+
   return (
     <StorybookContainer>
       <Box width={300}>
         <Field
           helperText="Address Fields Helper Text"
+          label="Address Field"
+          name="address"
+          type="address"
+          value={value}
+          onChange={setValue}
+        />
+        <Heading>Auto Complete & County</Heading>
+        <Field
+          helperText="Test Your API Key Here"
+          label="Google Maps API Key"
+          name="googleMapsApiKey"
+          type="text"
+          value={googleMapsApiKey}
+          onChange={setGoogleMapsApiKey}
+        />
+        <Field
+          googleMapsApiKey={googleMapsApiKey}
+          helperText="Address Fields Helper Text"
+          includeCounty
           label="Address Field"
           name="address"
           type="address"
