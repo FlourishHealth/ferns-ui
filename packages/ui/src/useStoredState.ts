@@ -5,8 +5,8 @@ import {Unifier} from "./Unifier";
 export const useStoredState = <T>(
   key: string,
   initialValue?: T
-): [T | undefined | null, (value: T | undefined | null) => Promise<void>] => {
-  const [state, setState] = useState<T | undefined | null>(initialValue);
+): [T | undefined, (value: T | undefined) => Promise<void>] => {
+  const [state, setState] = useState<T | undefined>(initialValue);
 
   // Function to fetch data from AsyncStorage
   const fetchData = useCallback(async (): Promise<T | undefined> => {
@@ -26,7 +26,7 @@ export const useStoredState = <T>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const setAsyncStorageState = async (newValue: T | undefined | null): Promise<void> => {
+  const setAsyncStorageState = async (newValue: T | undefined): Promise<void> => {
     try {
       await Unifier.storage.setItem(key, newValue);
       setState(newValue);
