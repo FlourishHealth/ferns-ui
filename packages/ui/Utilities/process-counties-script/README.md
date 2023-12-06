@@ -19,9 +19,12 @@ Update `countyData.csv` by selecting **United States** in [Census Bureau's Link]
 
 ## Warning
 
-County codes, although uncommon, are subject to change. The Census Bureau may periodically update county codes, potentially affecting the accuracy of the `COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES` object. To maintain data accuracy, it is advisable to periodically check and update the script based on the latest information available from the Census Bureau's website: [Census Bureau County Codes](https://www.census.gov/library/reference/code-lists/ansi.html#cou).
+County codes, although uncommon, are subject to change. The Census Bureau may periodically update county codes, potentially affecting the accuracy of the `COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES` object. To maintain data accuracy, it is advisable to periodically check and update `COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES` based on the latest information available from the Census Bureau's website: [Census Bureau County Codes](https://www.census.gov/library/reference/code-lists/ansi.html#cou).
 
-Some county names may lack standardized formats. In such instances, it is to comment out entries until standardization is determined.
+Some county names may lack standardized formats. In such instances, it is comment out entries until standardization is determined.
+**Counties not supported:**
+-New Mexico - Doña Ana County
+
 **States not supported:**
 -American Samoa
 -Commonwealth of Northern Mariana Islands
@@ -29,6 +32,3 @@ Some county names may lack standardized formats. In such instances, it is to com
 -Puerto Rico
 -U.S. Minor Outlying Islands
 -U.S. Virgin Islands
-
-**Counties not supported:**
--New Mexico - Doña Ana County

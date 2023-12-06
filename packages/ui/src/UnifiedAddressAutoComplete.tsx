@@ -1,4 +1,5 @@
 import React, {useMemo} from "react";
+import {Styles} from "react-native-google-places-autocomplete";
 
 import {AddressInterface, OnChangeCallback} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
@@ -10,12 +11,16 @@ import {WebAddressAutocomplete} from "./WebAddressAutocomplete";
 export const UnifiedAddressAutoCompleteField = ({
   disabled,
   googleMapsApiKey,
+  googlePlacesMobileStyles,
+  includeCounty,
   inputValue,
   handleAddressChange,
   handleAutoCompleteChange,
 }: {
   disabled?: boolean;
   googleMapsApiKey?: string;
+  googlePlacesMobileStyles?: Styles;
+  includeCounty?: boolean;
   inputValue: string;
   handleAddressChange: OnChangeCallback;
   handleAutoCompleteChange: (value: AddressInterface) => void;
@@ -33,6 +38,7 @@ export const UnifiedAddressAutoCompleteField = ({
         googleMapsApiKey={googleMapsApiKey}
         handleAddressChange={handleAddressChange}
         handleAutoCompleteChange={handleAutoCompleteChange}
+        includeCounty={includeCounty}
         inputValue={inputValue}
       />
     );
@@ -43,7 +49,9 @@ export const UnifiedAddressAutoCompleteField = ({
         googleMapsApiKey={googleMapsApiKey}
         handleAddressChange={handleAddressChange}
         handleAutoCompleteChange={handleAutoCompleteChange}
+        includeCounty={includeCounty}
         inputValue={inputValue}
+        styles={googlePlacesMobileStyles}
       />
     );
   } else {

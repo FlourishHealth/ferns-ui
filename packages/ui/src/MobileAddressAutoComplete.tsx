@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import {TouchableOpacity, View} from "react-native";
+import {TextStyle, TouchableOpacity, View} from "react-native";
 import {
   GooglePlacesAutocomplete,
   GooglePlacesAutocompleteRef,
+  Styles,
 } from "react-native-google-places-autocomplete";
 
 import {AddressInterface, OnChangeCallback} from "./Common";
@@ -14,13 +15,18 @@ import {processAddressComponents} from "./Utilities";
 export const MobileAddressAutocomplete = ({
   disabled,
   googleMapsApiKey,
+  includeCounty,
   inputValue,
+  // More on react-native-google-places-autocomplete styles here: https://github.com/FaridSafi/react-native-google-places-autocomplete#styling
+  styles,
   handleAddressChange,
   handleAutoCompleteChange,
 }: {
   disabled?: boolean;
   googleMapsApiKey?: string;
+  includeCounty?: boolean;
   inputValue: string;
+  styles?: Styles;
   handleAddressChange: OnChangeCallback;
   handleAutoCompleteChange: (value: AddressInterface) => void;
 }) => {
@@ -36,13 +42,27 @@ export const MobileAddressAutocomplete = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const textInputStyles = {
-    borderRadius: 16,
+  const textInputContainerStyles = {
+    backgroundColor: theme.white,
     borderColor: isFocused ? theme.blue : theme.gray,
     borderWidth: isFocused ? 5 : 1,
+    borderRadius: 16,
     paddingHorizontal: isFocused ? 10 : 14,
     paddingVertical: isFocused ? 0 : 4,
+    ...(styles?.textInputContainer as object),
+  };
+
+  const textInputStyles = {
     backgroundColor: theme.white,
+    borderRadius: 16,
+    color: theme.darkGray,
+    fontFamily: theme.primaryFont,
+    fontSize: (styles?.textInput as TextStyle)?.fontSize ?? 14,
+    height: 40,
+    marginBottom: 0,
+    paddingHorizontal: 0,
+    paddingVertical: 4,
+    ...(styles?.textInput as object),
   };
 
   if (!googleMapsApiKey) {
@@ -76,11 +96,12 @@ export const MobileAddressAutocomplete = ({
           }}
           styles={{
             textInputContainer: {
-              ...textInputStyles,
+              ...textInputContainerStyles,
             },
             textInput: {
-              fontFamily: theme.primaryFont,
+              ...textInputStyles,
             },
+            ...styles,
           }}
           textInputProps={{
             onFocus: () => setIsFocused(true),
@@ -91,7 +112,9 @@ export const MobileAddressAutocomplete = ({
           }}
           onPress={(data, details = null) => {
             const addressComponents = details?.address_components;
-            const formattedAddressObject = processAddressComponents(addressComponents);
+            const formattedAddressObject = processAddressComponents(addressComponents, {
+              includeCounty,
+            });
             const {address1} = formattedAddressObject;
             handleAutoCompleteChange(formattedAddressObject);
             if (ref.current) {

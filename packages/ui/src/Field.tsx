@@ -1,4 +1,5 @@
 import React from "react";
+import {Styles} from "react-native-google-places-autocomplete";
 
 import {Box} from "./Box";
 import {CheckBox} from "./CheckBox";
@@ -42,8 +43,9 @@ export interface FieldProps extends FieldWithLabelsProps {
   placeholder?: string;
   disabled?: boolean;
   useCheckbox?: boolean;
-  googleMapsApiKey?: string;
   includeCounty?: boolean;
+  googleMapsApiKey?: string;
+  googlePlacesMobileStyles?: Styles;
 }
 
 export const Field = ({
@@ -62,8 +64,9 @@ export const Field = ({
   errorMessageColor,
   helperText,
   helperTextColor,
-  googleMapsApiKey,
   includeCounty = false,
+  googleMapsApiKey,
+  googlePlacesMobileStyles,
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
@@ -186,8 +189,10 @@ export const Field = ({
           <UnifiedAddressAutoCompleteField
             disabled={disabled}
             googleMapsApiKey={googleMapsApiKey}
+            googlePlacesMobileStyles={googlePlacesMobileStyles}
             handleAddressChange={(result) => handleAddressChange("address1", result.value)}
             handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
+            includeCounty={includeCounty}
             inputValue={address1}
           />
           <TextField

@@ -25,12 +25,14 @@ const loadGooglePlacesScript = (googleMapsApiKey: string, callbackName: any): Pr
 export const WebAddressAutocomplete = ({
   disabled,
   googleMapsApiKey,
+  includeCounty,
   inputValue,
   handleAddressChange,
   handleAutoCompleteChange,
 }: {
   disabled?: boolean;
   googleMapsApiKey?: string;
+  includeCounty?: boolean;
   inputValue: string;
   handleAddressChange: OnChangeCallback;
   handleAutoCompleteChange: (value: AddressInterface) => void;
@@ -56,7 +58,9 @@ export const WebAddressAutocomplete = ({
         autocomplete.addListener("place_changed", () => {
           const place = autocomplete.getPlace();
           const addressComponents = place?.address_components;
-          const formattedAddressObject = processAddressComponents(addressComponents);
+          const formattedAddressObject = processAddressComponents(addressComponents, {
+            includeCounty,
+          });
           handleAutoCompleteChange(formattedAddressObject);
         });
       })
@@ -68,7 +72,7 @@ export const WebAddressAutocomplete = ({
     return () => {
       (window as any)[callbackName] = null;
     };
-  }, [googleMapsApiKey, handleAutoCompleteChange]);
+  }, [googleMapsApiKey, includeCounty, handleAutoCompleteChange]);
 
   return (
     <TextField

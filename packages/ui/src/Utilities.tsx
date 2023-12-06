@@ -179,55 +179,88 @@ export const findAddressComponent = (components: AddressComponentType[], type: s
   );
 };
 
-export const processAddressComponents = (addressComponents: AddressComponentType[] | undefined) => {
+interface ProcessAddressComponentOptions {
+  includeCounty?: boolean;
+}
+
+export const processAddressComponents = (
+  addressComponents: AddressComponentType[] | undefined,
+  options?: ProcessAddressComponentOptions
+) => {
+  let processedAddressComponents: {
+    address1: string;
+    city: string;
+    state: string;
+    zipcode: string;
+    countyName?: string;
+    countyCode?: string;
+  } = {
+    address1: "",
+    city: "",
+    state: "",
+    zipcode: "",
+  };
+
   if (!addressComponents || addressComponents.length === 0) {
-    return {
-      address1: "",
-      city: "",
-      state: "",
-      zipcode: "",
-      countyName: "",
-    };
+    console.warn("Invalid address components");
+    if (options?.includeCounty) {
+      return {
+        ...processedAddressComponents,
+        countyName: "",
+        countyCode: "",
+      };
+    } else {
+      return processedAddressComponents;
+    }
   }
+
   const streetNumber = findAddressComponent(addressComponents, "street_number");
   const streetName = findAddressComponent(addressComponents, "route");
   const city = findAddressComponent(addressComponents, "locality");
   const state = findAddressComponent(addressComponents, "administrative_area_level_1");
   const zipcode = findAddressComponent(addressComponents, "postal_code");
-  const countyName = findAddressComponent(addressComponents, "administrative_area_level_2");
 
-  if (state && countyName) {
-    const countyCode = formattedCountyCode(state, countyName);
-    return {
-      address1: `${streetNumber} ${streetName}`.trim(),
-      city,
-      state,
-      zipcode,
-      countyName,
-      countyCode,
-    };
-  }
-  return {
+  processedAddressComponents = {
     address1: `${streetNumber} ${streetName}`.trim(),
     city,
     state,
     zipcode,
-    countyName,
   };
+
+  if (options?.includeCounty) {
+    const countyName = findAddressComponent(addressComponents, "administrative_area_level_2");
+    if (state && countyName) {
+      const countyCode = formattedCountyCode(state, countyName);
+      processedAddressComponents = {
+        ...processedAddressComponents,
+        countyName,
+        countyCode,
+      };
+    } else {
+      processedAddressComponents = {
+        ...processedAddressComponents,
+        countyName,
+      };
+    }
+  }
+  return processedAddressComponents;
 };
 
 // Google does not provide a way to validate API keys, so we have to do it ourselves
 export const isValidGoogleApiKey = (apiKey: string): boolean => {
   if (typeof apiKey !== "string" || apiKey.trim().length === 0) {
+    console.warn("Google API key validation failed: key is not a string or is empty");
     return false;
   }
   // Typical Google API keys are around 39 characters
   if (apiKey.length < 30 || apiKey.length > 50) {
+    console.warn("Google API key validation failed: key is invalid length");
     return false;
   }
   // Check the presence of alphanumeric characters and dashes
   const apiKeyRegex = /^[A-Za-z0-9-_]+$/;
   if (!apiKeyRegex.test(apiKey)) {
+    console.warn("Google API key validation failed: key contains invalid characters");
     return false;
   }
   return true;
