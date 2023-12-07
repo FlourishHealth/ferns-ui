@@ -1,5 +1,5 @@
 const fs = require("fs");
-import {USSTATESLIST} from "../../src/Constants";
+import {USSTATESLIST} from "../src/Constants";
 
 // It takes a single optional argument, which is the path to the csv file. If no argument is provided, it will default to the file in the current directory named countyData.csv.
 // It will output a file named CountyAndEquivalentEntities.tsx with a single object, COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES
