@@ -3,6 +3,8 @@
 import get from "lodash/get";
 import {Platform} from "react-native";
 
+import {COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES} from "./Constants";
+
 export function mergeInlineStyles(inlineStyle?: any, newStyle?: any) {
   const inline = get(inlineStyle, "__style");
   return {
@@ -162,3 +164,121 @@ export const union =
 export const isNative = (): boolean => {
   return ["android", "ios"].includes(Platform.OS);
 };
+
+// Find more information about the address component types here: https://developers.google.com/maps/documentation/javascript/place-autocomplete
+export type AddressComponentType = {
+  long_name: string;
+  short_name: string;
+  types: string[];
+};
+
+export const findAddressComponent = (components: AddressComponentType[], type: string): string => {
+  return (
+    components.find((component: AddressComponentType) => component.types.includes(type))
+      ?.long_name ?? ""
+  );
+};
+
+interface ProcessAddressComponentOptions {
+  includeCounty?: boolean;
+}
+
+export const processAddressComponents = (
+  addressComponents: AddressComponentType[] | undefined,
+  options?: ProcessAddressComponentOptions
+) => {
+  let processedAddressComponents: {
+    address1: string;
+    city: string;
+    state: string;
+    zipcode: string;
+    countyName?: string;
+    countyCode?: string;
+  } = {
+    address1: "",
+    city: "",
+    state: "",
+    zipcode: "",
+  };
+
+  if (!addressComponents || addressComponents.length === 0) {
+    console.warn("Invalid address components");
+    if (options?.includeCounty) {
+      return {
+        ...processedAddressComponents,
+        countyName: "",
+        countyCode: "",
+      };
+    } else {
+      return processedAddressComponents;
+    }
+  }
+
+  const streetNumber = findAddressComponent(addressComponents, "street_number");
+  const streetName = findAddressComponent(addressComponents, "route");
+  const city = findAddressComponent(addressComponents, "locality");
+  const state = findAddressComponent(addressComponents, "administrative_area_level_1");
+  const zipcode = findAddressComponent(addressComponents, "postal_code");
+
+  processedAddressComponents = {
+    address1: `${streetNumber} ${streetName}`.trim(),
+    city,
+    state,
+    zipcode,
+  };
+
+  if (options?.includeCounty) {
+    const countyName = findAddressComponent(addressComponents, "administrative_area_level_2");
+    if (state && countyName) {
+      const countyCode = formattedCountyCode(state, countyName);
+      processedAddressComponents = {
+        ...processedAddressComponents,
+        countyName,
+        countyCode,
+      };
+    } else {
+      processedAddressComponents = {
+        ...processedAddressComponents,
+        countyName,
+      };
+    }
+  }
+  return processedAddressComponents;
+};
+
+// Google does not provide a way to validate API keys, so we have to do it ourselves
+export const isValidGoogleApiKey = (apiKey: string): boolean => {
+  if (typeof apiKey !== "string" || apiKey.trim().length === 0) {
+    console.warn("Google API key validation failed: key is not a string or is empty");
+    return false;
+  }
+  // Typical Google API keys are around 39 characters
+  if (apiKey.length < 30 || apiKey.length > 50) {
+    console.warn("Google API key validation failed: key is invalid length");
+    return false;
+  }
+  // Check the presence of alphanumeric characters and dashes
+  const apiKeyRegex = /^[A-Za-z0-9-_]+$/;
+  if (!apiKeyRegex.test(apiKey)) {
+    console.warn("Google API key validation failed: key contains invalid characters");
+    return false;
+  }
+  return true;
+};
+
+export function formattedCountyCode(state: string, countyName: string): string {
+  // Remove whitespace and convert to lowercase for comparison
+  const stateKey = state.replace(/\s+/g, "").toLowerCase();
+  // Remove whitespace, periods, apostrophes, and dashes for comparison
+  const countyKey = countyName
+    .trim()
+    .toLowerCase()
+    .replace(/[\s.'-]/g, "");
+
+  const countyData = COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES[stateKey]?.[countyKey];
+  if (!countyData) {
+    return "";
+  }
+
+  return `${countyData.stateFP}${countyData.countyFP}`;
+}

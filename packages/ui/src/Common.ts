@@ -2729,6 +2729,8 @@ export interface AddressInterface {
   city: string;
   state: string;
   zipcode: string;
+  countyName?: string;
+  countyCode?: string;
 }
 
 // TODO: Tighten up type to exclude string, which is almost never an acceptable type for React Native children

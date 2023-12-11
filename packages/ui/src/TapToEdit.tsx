@@ -21,19 +21,28 @@ export function formatAddress(address: any, asString = false): string {
 
   const zip = address?.zipcode || "";
 
+  const countyName = address?.countyName ?? "";
+
+  const countyCode = address?.countyCode ?? "";
+
   const addressLineOne = address?.address1 ?? "";
   const addressLineTwo = address?.address2 ?? "";
   const addressLineThree = `${city}${state}${zip}`;
+  const addressLineFour = `${countyName}${address?.countyCode ? ` [${countyCode}]` : ""}`;
 
   if (!asString) {
     // Only add new lines if lines before and after are not empty to avoid awkward whitespace
     return `${addressLineOne}${
       addressLineOne && (addressLineTwo || addressLineThree) ? `\n` : ""
-    }${addressLineTwo}${addressLineTwo && addressLineThree ? `\n` : ""}${addressLineThree}`;
+    }${addressLineTwo}${addressLineTwo && addressLineThree ? `\n` : ""}${addressLineThree}${
+      addressLineThree && addressLineFour ? `\n` : ""
+    }${addressLineFour}`;
   } else {
     return `${addressLineOne}${
       addressLineOne && (addressLineTwo || addressLineThree) ? `, ` : ""
-    }${addressLineTwo}${addressLineTwo && addressLineThree ? `, ` : ""}${addressLineThree}`;
+    }${addressLineTwo}${addressLineTwo && addressLineThree ? `, ` : ""}${addressLineThree}${
+      addressLineThree && addressLineFour ? `, ` : ""
+    }${addressLineFour}`;
   }
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import {Styles} from "react-native-google-places-autocomplete";
 
 import {Box} from "./Box";
 import {CheckBox} from "./CheckBox";
@@ -11,6 +12,7 @@ import {Switch} from "./Switch";
 import {Text} from "./Text";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
+import {UnifiedAddressAutoCompleteField} from "./UnifiedAddressAutoComplete";
 
 export interface FieldProps extends FieldWithLabelsProps {
   name?: string;
@@ -41,6 +43,9 @@ export interface FieldProps extends FieldWithLabelsProps {
   placeholder?: string;
   disabled?: boolean;
   useCheckbox?: boolean;
+  includeCounty?: boolean;
+  googleMapsApiKey?: string;
+  googlePlacesMobileStyles?: Styles;
 }
 
 export const Field = ({
@@ -59,9 +64,16 @@ export const Field = ({
   errorMessageColor,
   helperText,
   helperTextColor,
+  includeCounty = false,
+  googleMapsApiKey,
+  googlePlacesMobileStyles,
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
+  };
+
+  const handleAutoCompleteChange = (newValue: AddressInterface) => {
+    onChange({...value, ...newValue});
   };
 
   const handleSwitchChange = (switchValue: boolean) => {
@@ -169,16 +181,19 @@ export const Field = ({
         city = "",
         state = "",
         zipcode = "",
+        countyName = "",
+        countyCode = "",
       }: AddressInterface = addressValue;
       return (
         <>
-          <TextField
+          <UnifiedAddressAutoCompleteField
             disabled={disabled}
-            id="address1"
-            label="Street Address"
-            type="text"
-            value={address1}
-            onChange={(result) => handleAddressChange("address1", result.value)}
+            googleMapsApiKey={googleMapsApiKey}
+            googlePlacesMobileStyles={googlePlacesMobileStyles}
+            handleAddressChange={(result) => handleAddressChange("address1", result.value)}
+            handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
+            includeCounty={includeCounty}
+            inputValue={address1}
           />
           <TextField
             disabled={disabled}
@@ -214,6 +229,26 @@ export const Field = ({
             value={zipcode}
             onChange={(result) => handleAddressChange("zipcode", result.value)}
           />
+          {includeCounty && (
+            <>
+              <TextField
+                disabled={disabled}
+                id="countyName"
+                label="County Name"
+                type="text"
+                value={countyName}
+                onChange={(result) => handleAddressChange("countyName", result.value)}
+              />
+              <TextField
+                disabled={disabled}
+                id="countyCode"
+                label="County Code"
+                type="number"
+                value={countyCode}
+                onChange={(result) => handleAddressChange("countyCode", result.value)}
+              />
+            </>
+          )}
         </>
       );
     } else if (type === "customSelect") {

@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import dayjs from "dayjs";
-import {Box, Field, TapToEdit, Text} from "ferns-ui";
+import {Box, Field, Heading, TapToEdit, Text} from "ferns-ui";
 import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -299,6 +299,27 @@ const AddressField = () => {
     state: "CA",
     zip: "94105",
   });
+
+  const [secondValue, setSecondValue] = useState({
+    address1: "456 Main St",
+    address2: "",
+    city: "San Francisco",
+    state: "CA",
+    zip: "94105",
+  });
+
+  const [thirdVal, setThirdVal] = useState({
+    address1: "789 Main St",
+    address2: "",
+    city: "San Francisco",
+    state: "CA",
+    zip: "94105",
+    countyName: "San Francisco",
+    countyCode: "00000",
+  });
+
+  const [googleMapsApiKey, setGoogleMapsApiKey] = useState("");
+
   return (
     <StorybookContainer>
       <Box width={300}>
@@ -318,6 +339,57 @@ const AddressField = () => {
           type="address"
           value={value}
           onSave={setValue}
+        />
+        <Box paddingY={2} />
+        <Heading>Auto Complete </Heading>
+        <Field
+          helperText="Test Your API Key Here"
+          label="Google Maps API Key"
+          name="googleMapsApiKey"
+          type="text"
+          value={googleMapsApiKey}
+          onChange={setGoogleMapsApiKey}
+        />
+        <Heading size="sm">Without County</Heading>
+        <Field
+          googleMapsApiKey={googleMapsApiKey}
+          label="Address Field"
+          name="address"
+          type="address"
+          value={secondValue}
+          onChange={setSecondValue}
+        />
+        <TapToEdit
+          googleMapsApiKey={googleMapsApiKey}
+          isEditing={false}
+          name="address"
+          setValue={setSecondValue}
+          title="Address"
+          type="address"
+          value={secondValue}
+          onSave={setSecondValue}
+        />
+        <Box padding={2} />
+        <Heading size="sm">With County</Heading>
+        <Field
+          googleMapsApiKey={googleMapsApiKey}
+          includeCounty
+          label="Address Field"
+          name="address"
+          type="address"
+          value={thirdVal}
+          onChange={setThirdVal}
+        />
+        <TapToEdit
+          googleMapsApiKey={googleMapsApiKey}
+          includeCounty
+          isEditing={false}
+          name="address"
+          setValue={setThirdVal}
+          title="Address"
+          type="address"
+          value={thirdVal}
+          onSave={setThirdVal}
         />
       </Box>
     </StorybookContainer>
