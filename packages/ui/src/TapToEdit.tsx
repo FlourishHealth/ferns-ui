@@ -179,9 +179,9 @@ export const TapToEdit = ({
       }
     }
 
-    const openLink = (): void => {
+    const openLink = async (): Promise<void> => {
       if (fieldProps?.type === "url") {
-        Linking.openURL(value);
+        await Linking.openURL(value);
       }
     };
 

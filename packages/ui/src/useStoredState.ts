@@ -20,7 +20,7 @@ export const useStoredState = <T>(
 
   // Fetch data when the component mounts
   useEffect(() => {
-    fetchData().then((value) => {
+    void fetchData().then((value) => {
       setState(value);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

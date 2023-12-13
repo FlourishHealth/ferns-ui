@@ -36,21 +36,21 @@ export const SplitPage = ({
   const {width} = Dimensions.get("window");
 
   const onItemSelect = useCallback(
-    (item: ListRenderItemInfo<any>) => {
+    async (item: ListRenderItemInfo<any>) => {
       setSelectedId(item.index);
-      onSelectionChange(item);
+      await onSelectionChange(item);
     },
     [onSelectionChange]
   );
 
-  const onItemDeselect = useCallback(() => {
+  const onItemDeselect = useCallback(async (): Promise<void> => {
     setSelectedId(undefined);
-    onSelectionChange(undefined);
+    await onSelectionChange(undefined);
   }, [onSelectionChange]);
 
   useEffect(() => {
     if (showItemList) {
-      onItemDeselect();
+      void onItemDeselect();
     }
   }, [showItemList, onItemDeselect]);
 
@@ -62,9 +62,9 @@ export const SplitPage = ({
   const renderItem = (itemInfo: ListRenderItemInfo<any>) => {
     return (
       <Box
-        onClick={() => {
-          Unifier.utils.haptic();
-          onItemSelect(itemInfo);
+        onClick={async () => {
+          await Unifier.utils.haptic();
+          await onItemSelect(itemInfo);
         }}
       >
         {renderListViewItem(itemInfo)}

@@ -233,12 +233,12 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     return style;
   };
 
-  const onHoverIn = () => {
-    props.onHoverStart?.();
+  const onHoverIn = async () => {
+    await props.onHoverStart?.();
   };
 
-  const onHoverOut = () => {
-    props.onHoverEnd?.();
+  const onHoverOut = async () => {
+    await props.onHoverEnd?.();
   };
 
   let box;
@@ -251,9 +251,9 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
         onLayout={props.onLayout}
         onPointerEnter={onHoverIn}
         onPointerLeave={onHoverOut}
-        onPress={() => {
-          Unifier.utils.haptic();
-          props.onClick!();
+        onPress={async () => {
+          await Unifier.utils.haptic();
+          await props.onClick!();
         }}
       >
         {props.children}

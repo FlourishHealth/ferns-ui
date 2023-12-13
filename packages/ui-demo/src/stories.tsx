@@ -1,6 +1,6 @@
 export * from "./Avatar.stories";
-export * from "./Banner.stories";
 export * from "./Badge.stories";
+export * from "./Banner.stories";
 export * from "./Box.stories";
 export * from "./Button.stories";
 export * from "./Card.stories";

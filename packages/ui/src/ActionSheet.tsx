@@ -640,7 +640,7 @@ export class ActionSheet extends Component<Props, State, any> {
       }),
     ]).start();
 
-    waitAsync((closeAnimationDuration as number) / 1.5).then(() => {
+    void waitAsync((closeAnimationDuration as number) / 1.5).then(() => {
       if (!closable) {
         if (bottomOffset && bottomOffset > 0) {
           this.snapToOffset(bottomOffset);

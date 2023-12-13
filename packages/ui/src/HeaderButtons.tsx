@@ -87,8 +87,8 @@ export class UseButton extends React.Component<SearchButtonProps, {}> {
     return (
       <Button
         text="Use"
-        onClick={() => {
-          Unifier.utils.haptic();
+        onClick={async () => {
+          await Unifier.utils.haptic();
           this.props.onClick();
         }}
       />

@@ -157,7 +157,7 @@ export function Button({
           testID={testID}
           onPress={debounce(
             async () => {
-              Unifier.utils.haptic();
+              await Unifier.utils.haptic();
               setLoading(true);
               try {
                 if (withConfirmation && !showConfirmation) {
