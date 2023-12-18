@@ -131,8 +131,8 @@ export const IconButton = forwardRef(
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress={() => {
-              Unifier.utils.haptic();
+            onPress={async () => {
+              await Unifier.utils.haptic();
               if (withConfirmation && !showConfirmation) {
                 setShowConfirmation(true);
               } else if (onClick) {

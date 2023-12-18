@@ -15,10 +15,10 @@ const ChevronTooltip = ({
       idealDirection === "none"
         ? "question"
         : idealDirection === "bottom"
-        ? "chevron-down"
-        : idealDirection === "top"
-        ? "chevron-up"
-        : `chevron-${idealDirection}`
+          ? "chevron-down"
+          : idealDirection === "top"
+            ? "chevron-up"
+            : `chevron-${idealDirection}`
     }
     iconColor="blue"
     tooltip={{text, idealDirection: idealDirection === "none" ? undefined : idealDirection}}

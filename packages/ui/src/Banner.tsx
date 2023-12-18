@@ -52,17 +52,17 @@ export const Banner = ({
       return;
     }
 
-    Unifier.storage.getItem(getKey(id)).then((isSeen) => {
+    void Unifier.storage.getItem(getKey(id)).then((isSeen) => {
       console.debug(`[banner] ${getKey(id)} seen? ${isSeen}`);
       setShow(!isSeen);
     });
   }, [id, type]);
 
-  const dismiss = (): void => {
+  const dismiss = async (): Promise<void> => {
     if (type === "permanent") {
       return;
     }
-    hideBanner(id);
+    await hideBanner(id);
     setShow(false);
   };
 

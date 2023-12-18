@@ -170,7 +170,7 @@ export function Hyperlink(props: Props) {
     urlObject.protocol = urlObject.protocol.toLowerCase();
     const normalizedURL = mdurl.format(urlObject);
 
-    Linking.canOpenURL(normalizedURL).then(
+    void Linking.canOpenURL(normalizedURL).then(
       (supported) => supported && Linking.openURL(normalizedURL)
     );
   };

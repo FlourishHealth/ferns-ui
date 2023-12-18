@@ -29,7 +29,7 @@ const App = () => {
   const insets = useSafeAreaInsets();
   const [currentStory, setStory] = useState<string | null>(null);
   useEffect(() => {
-    AsyncStorage.getItem("story").then((story) => {
+    void AsyncStorage.getItem("story").then((story) => {
       if (story && allStories[story]) {
         setStory(story);
       }
