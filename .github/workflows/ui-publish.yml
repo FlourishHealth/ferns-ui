@@ -22,7 +22,7 @@ jobs:
           ref: ${{ github.event.release.target_commitish }}
       # install Node.js
       - name: Use Node.js 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           # Specifies the registry, this field is required!
