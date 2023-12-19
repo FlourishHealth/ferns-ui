@@ -26,6 +26,7 @@ interface PageProps {
   rightButton?: string;
   rightButtonOnClick?: () => void;
   children?: any;
+  onError?: (error: Error, stack: any) => void;
 }
 
 export class Page extends React.Component<PageProps, {}> {
@@ -82,7 +83,7 @@ export class Page extends React.Component<PageProps, {}> {
 
   render() {
     return (
-      <ErrorBoundary>
+      <ErrorBoundary onError={this.props.onError}>
         <Box
           alignSelf="center"
           avoidKeyboard
