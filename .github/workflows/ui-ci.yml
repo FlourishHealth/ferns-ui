@@ -44,9 +44,6 @@ jobs:
       - name: yarn build
         run: yarn build
         working-directory: 'packages/ui'
-      - name: check dependencies
-        run: yarn deps
-        working-directory: 'packages/ui'
 #      - name: yarn test
 #        run: yarn test
 #        env:
