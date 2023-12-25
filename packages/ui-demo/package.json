@@ -50,7 +50,7 @@
     "@babel/core": "^7.23.6",
     "@expo/config-plugins": "~7.2.2",
     "@expo/webpack-config": "^19.0.0",
-    "@shopify/flash-list": "1.4.3",
+    "@shopify/flash-list": "1.6.3",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^8.55.0",
