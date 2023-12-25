@@ -72,7 +72,7 @@
     "react-keyed-flatten-children": "^2.2.1",
     "react-native-haptic-feedback": "^2.0.3",
     "react-native-hyperlink": "^0.0.22",
-    "react-native-safe-area-context": "4.6.3",
+    "react-native-safe-area-context": "4.8.2",
     "react-native-swiper-flatlist": "^3.2.3",
     "react-native-web": "~0.19.9",
     "swiper": "^11.0.1",
