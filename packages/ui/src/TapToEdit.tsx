@@ -3,8 +3,8 @@ import {Linking} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {BoxProps} from "./Common";
-import {Field, FieldProps} from "./Field";
+import {BoxProps, FieldProps} from "./Common";
+import {Field} from "./Field";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 

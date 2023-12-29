@@ -108,7 +108,7 @@ export const defaultStyles = StyleSheet.create({
   },
 });
 
-interface RNPickerSelectProps {
+export interface RNPickerSelectProps {
   onValueChange: (value: any, index: any) => void;
   items: any[];
   value?: any;

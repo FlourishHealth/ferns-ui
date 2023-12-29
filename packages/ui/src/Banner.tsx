@@ -1,25 +1,11 @@
 import React, {useEffect, useState} from "react";
 
 import {Box} from "./Box";
-import {BoxColor, ButtonColor, IconName, Rounding, TextColor} from "./Common";
+import {BannerProps, ButtonColor} from "./Common";
 import {Icon} from "./Icon";
 import {IconButton} from "./IconButton";
 import {Text} from "./Text";
 import {Unifier} from "./Unifier";
-
-export interface BannerProps {
-  id: string;
-  dismissible?: boolean;
-  text: string;
-  subtext?: string;
-  iconName?: IconName;
-  color?: BoxColor;
-  textColor?: TextColor;
-  negativeXMargin?: number;
-  shape?: Rounding;
-  type?: "dismiss" | "action" | "permanent";
-  onClick?: () => void;
-}
 
 function getKey(id: string): string {
   return `@FernsUI:${id}`;

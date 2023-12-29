@@ -5,7 +5,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {Image, ImageResizeMode, Platform, Text, View} from "react-native";
 
 import {Box} from "./Box";
-import {AllColors, IconName, UnsignedUpTo12} from "./Common";
+import {AllColors, AvatarProps, IconName, UnsignedUpTo12} from "./Common";
 import {Icon} from "./Icon";
 import {isMobileDevice} from "./MediaQuery";
 import {ThemeContext} from "./Theme";
@@ -38,86 +38,6 @@ const statusIcons: {[id: string]: {icon: IconName; color: AllColors; label: stri
   outOfOffice: {icon: "clock", color: "orange", label: "Out of Office"},
   commuting: {icon: "car", color: "orange", label: "Commuting"},
 };
-
-export type AvatarStatus =
-  | "online"
-  | "offline"
-  | "doNotDisturb"
-  | "away"
-  | "meeting"
-  | "vacation"
-  | "sick"
-  | "outOfOffice"
-  | "commuting";
-
-interface AvatarProps {
-  // Color for the background of the circle when no src picture is present.
-  backgroundColor?: AllColors;
-  // Color for the initials when no src picture is present.
-  textColor?: AllColors;
-  /**
-   * The name of the user. This is used for the placeholder treatment if an image is not available.
-   */
-  name: string;
-  /**
-   * Override the generated initials from `name`.
-   */
-  initials?: string;
-  /**
-   * Adds a white border around Avatar so it's visible when displayed on other images.
-   */
-  outline?: boolean;
-  /**
-   * xs: 24px, sm: 32px, md: 48px, lg: 64px, xl: 120px.
-   */
-  size?: "xs" | "sm" | "md" | "lg" | "xl";
-  /**
-   * The URL of the user's image.
-   */
-  src?: string;
-  /**
-   * The fit for the image within the Avatar: "cover" | "contain" | "none".
-   * Default is undefined. See Image.tsx for more info
-   */
-  imageFit?: "cover" | "contain" | "none";
-  /**
-   * Allow user to edit the image of the avatar
-   */
-  editAvatarImage?: boolean;
-  /**
-   * Function to handle the avatar image edit
-   */
-  onChange?: (val: any) => void;
-  /**
-   * Resize image width. If only the width is provided, the image will preserve aspect ratio
-   */
-  avatarImageWidth?: number;
-  /**
-   * Resize image height. If avatarImageWidth is also provided, the image aspect ratio may be distorted.
-   */
-  avatarImageHeight?: number;
-  /**
-   * The image format that the image will be saved as after any edits by the expo-image-manipulator
-   */
-  avatarImageFormat?: SaveFormat;
-  /**
-   * The status of the user to display with the avatar.
-   */
-  status?: AvatarStatus;
-  /**
-   * If true, the status indicator will show a mobile icon instead of a dot, if status is one of
-   * "online", "away", "offline", or "doNotDisturb". Will show the normal status icon in other cases.
-   */
-  statusMobile?: boolean;
-  /**
-   * Text to show when hovering over the avatar image. Only works on web.
-   */
-  statusText?: string;
-  /**
-   * If edit icon should be present when no image is present
-   */
-  shouldShowEditIconIfNoImage?: boolean;
-}
 
 export const Avatar = (props: AvatarProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);

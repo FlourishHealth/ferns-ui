@@ -4,20 +4,13 @@ import React from "react";
 import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {OnChangeCallback} from "./Common";
+import {NumberPickerActionSheetProps, TextFieldPickerActionSheetProps} from "./Common";
 import dayjs from "./dayjsExtended";
-
-interface NumberPickerActionSheetProps {
-  value?: string;
-  mode?: "date" | "time";
-  onChange: OnChangeCallback;
-  actionSheetRef: React.RefObject<any>;
-}
 
 interface NumberPickerActionSheetState {}
 
 export class NumberPickerActionSheet extends React.Component<
-  NumberPickerActionSheetProps,
+  TextFieldPickerActionSheetProps,
   NumberPickerActionSheetState
 > {
   constructor(props: NumberPickerActionSheetProps) {

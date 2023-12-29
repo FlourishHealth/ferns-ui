@@ -1,5 +1,10 @@
+import {SaveFormat} from "expo-image-manipulator";
 import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
-import {ListRenderItemInfo} from "react-native";
+import {ListRenderItemInfo, StyleProp, ViewStyle} from "react-native";
+import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import {Styles} from "react-native-google-places-autocomplete";
+
+import {SelectListOptions} from "./SelectList";
 
 export interface BaseProfile {
   email: string;
@@ -7,70 +12,6 @@ export interface BaseProfile {
   backOffice: {
     testUser?: boolean;
   };
-}
-
-export interface TrackingConfig {
-  MIXPANEL_TOKEN: string;
-  SENTRY_WEB_DSN: string;
-  SENTRY_MOBILE_DSN: string;
-  USER_PROPERTY_KEYS: string[];
-}
-
-export interface IConfig extends TrackingConfig {
-  FEEDBACK_URL: string;
-  PRIVACY_POLICY_URL: string;
-  // The collection name to store profiles in for Firebase/redux.
-  PROFILE_COLLECTION: string;
-  TERMS_URL: string;
-  BASE_URL: string;
-  PRODUCTION: boolean;
-
-  // Useful for generating:
-  // http://paletton.com/#uid=72Q0u0kw0u8khBrpJx0z7nUEPiG
-  primaryLighterColor: string;
-  primaryLightColor: string;
-  primaryColor: string;
-  primaryDarkColor: string;
-  primaryDarkerColor: string;
-
-  secondaryLighterColor: string;
-  secondaryLightColor: string;
-  secondaryColor: string;
-  secondaryDarkColor: string;
-  secondaryDarkerColor: string;
-
-  accentLighterColor: string;
-  accentLightColor: string;
-  accentColor: string;
-  accentDarkColor: string;
-  accentDarkerColor: string;
-
-  tertiaryLighterColor: string;
-  tertiaryLightColor: string;
-  tertiaryColor: string;
-  tertiaryDarkColor: string;
-  tertiaryDarkerColor: string;
-
-  // firebaseConfig: any;
-
-  neutral900: string;
-  neutral800: string;
-  neutral700: string;
-  neutral600: string;
-  neutral500: string;
-  neutral400: string;
-  neutral300: string;
-  neutral200: string;
-  neutral100: string;
-  neutral90: string;
-  neutral80: string;
-  neutral70: string;
-  neutral60: string;
-  neutral50: string;
-  neutral40: string;
-  neutral30: string;
-  neutral20: string;
-  neutral10: string;
 }
 
 // For using a theme.
@@ -1765,34 +1706,6 @@ export const iconSizeToNumber = (size?: IconSize) => {
   }[size || "md"];
 };
 
-export const iconNumberToSize = (size = 16): IconSize => {
-  let iconSize: IconSize;
-  if (size < 8) {
-    iconSize = "xs";
-  } else if (size < 12) {
-    iconSize = "sm";
-  } else if (size < 14) {
-    iconSize = "md";
-  } else if (size < 20) {
-    iconSize = "lg";
-  } else {
-    iconSize = "xl";
-  }
-  return iconSize;
-};
-
-export function getSectionColor(section: "Breakfast" | "Lunch" | "Dinner" | "Snack" | "workouts") {
-  return ({
-    Breakfast: "orchid",
-    Lunch: "blue",
-    Dinner: "orange",
-    Snack: "red",
-    "Second Snack": "red",
-    Workout: "pine",
-    workouts: "pine",
-  }[section] || "blue") as Color;
-}
-
 export type TextSize = "sm" | "md" | "lg";
 export type TextColor =
   | "blue"
@@ -1823,31 +1736,8 @@ export type ButtonColor =
   | "secondary"
   | "accent"
   | "tertiary";
-// | "twitter"
-// | "facebook"
-// | "google";
 
 export type IconPrefix = "far" | "fas";
-// | "ant"
-// | "entypo"
-// | "evil"
-// | "material"
-// | "material-community";
-// | "ionicon"
-// | "octicon"
-// | "zocial"
-// | "simple-line"
-// | "feather";
-
-export interface ActionBannerProps {
-  /** The text to show in the banner. */
-  text: string;
-  color?: AllColors;
-  textColor?: TextColor;
-  negativeXMargin?: number;
-  onClick: () => void;
-  shape?: Rounding;
-}
 
 export interface BlurBoxProps extends BoxProps {
   blurType?: "regular" | "dark" | "prominent";
@@ -1855,18 +1745,6 @@ export interface BlurBoxProps extends BoxProps {
 
 export interface LayerProps {
   children: ReactChildren;
-}
-
-export interface ModalProps {
-  header?: React.ReactNode;
-  accessibilityModalLabel: string;
-  children?: ReactChildren;
-  closeOnOutsideClick?: boolean;
-  footer?: ReactChild;
-  heading?: string | ReactChild;
-  onDismiss: () => void;
-  role?: "alertdialog" | "dialog";
-  size?: "sm" | "md" | "lg" | number;
 }
 
 export interface BoxProps {
@@ -1974,29 +1852,9 @@ export interface BoxProps {
 
 export type BoxColor = AllColors | "transparent";
 
-export interface DrawerProps {
-  animationOpenTime: number;
-  animationCloseTime: number;
-  direction: Direction;
-  dismissWhenTouchOutside?: boolean;
-  fadeOpacity?: number;
-  drawerScreenWidth: number;
-  drawerScreenHeight: number;
-  style?: any;
-  parent: any;
-  dismiss?: any;
-}
-
-export type DrawerDirection = "left" | "right" | "bottom" | "top";
-
 export interface ErrorBoundaryProps {
   onError?: (error: Error, stack: any) => void;
   children?: ReactNode;
-}
-
-export interface FaceBookButtonProps {
-  errorMessageColor?: "red" | "white";
-  signUp: boolean;
 }
 
 export interface IconProps {
@@ -2006,10 +1864,6 @@ export interface IconProps {
   size?: IconSize;
   iconStyle?: any;
   containerStyle?: any;
-}
-
-export interface NavigatorProps {
-  config?: any;
 }
 
 export type TooltipDirection = "top" | "bottom" | "left" | "right";
@@ -2093,10 +1947,6 @@ export interface TextFieldProps extends FieldWithLabelsProps {
 }
 
 export type TextAreaProps = TextFieldProps;
-
-export interface SubmittingFormProps {
-  onSubmitEditting: () => void;
-}
 
 export interface SwitchProps extends FieldWithLabelsProps {
   id?: string;
@@ -2199,206 +2049,6 @@ export interface CheckBoxProps {
   labelColor?: AllColors;
 }
 
-export interface ChatPaneProps {
-  messagesView: any;
-  textFormView: any;
-  ref: any;
-}
-
-export interface ScrollViewProps {
-  scrollTo?: (
-    y?: number | {x?: number; y?: number; animated?: boolean},
-    x?: number,
-    animated?: boolean
-  ) => void;
-  /**
-   * These styles will be applied to the scroll view content container which
-   * wraps all of the child views. Example:
-   *
-   *   return (
-   *     <ScrollView contentContainerStyle={styles.contentContainer}>
-   *     </ScrollView>
-   *   );
-   *   ...
-   *   const styles = StyleSheet.create({
-   *     contentContainer: {
-   *       paddingVertical: 20
-   *     }
-   *   });
-   */
-  contentContainerStyle?: any;
-
-  /**
-   * When true the scroll view's children are arranged horizontally in a row
-   * instead of vertically in a column. The default value is false.
-   */
-  horizontal?: boolean | null;
-
-  /**
-   * If sticky headers should stick at the bottom instead of the top of the
-   * ScrollView. This is usually used with inverted ScrollViews.
-   */
-  // invertStickyHeaders?: boolean;
-
-  /**
-   * Determines whether the keyboard gets dismissed in response to a drag.
-   *   - 'none' (the default) drags do not dismiss the keyboard.
-   *   - 'onDrag' the keyboard is dismissed when a drag begins.
-   *   - 'interactive' the keyboard is dismissed interactively with the drag
-   *     and moves in synchrony with the touch; dragging upwards cancels the
-   *     dismissal.
-   */
-  // keyboardDismissMode?: "none" | "interactive" | "on-drag";
-
-  /**
-   * Determines when the keyboard should stay visible after a tap.
-   * - 'never' (the default), tapping outside of the focused text input when the keyboard is up dismisses the keyboard. When this happens, children won't receive the tap.
-   * - 'always', the keyboard will not dismiss automatically, and the scroll view will not catch taps, but children of the scroll view can catch taps.
-   * - 'handled', the keyboard will not dismiss automatically when the tap was handled by a children, (or captured by an ancestor).
-   * - false, deprecated, use 'never' instead
-   * - true, deprecated, use 'always' instead
-   */
-  keyboardShouldPersistTaps?: boolean | "always" | "never" | "handled";
-
-  /**
-   * Called when scrollable content view of the ScrollView changes.
-   * Handler function is passed the content width and content height as parameters: (contentWidth, contentHeight)
-   * It's implemented using onLayout handler attached to the content container which this ScrollView renders.
-   *
-   */
-  // onContentSizeChange?: (w: number, h: number) => void;
-
-  /**
-   * Fires at most once per frame during scrolling.
-   * The frequency of the events can be contolled using the scrollEventThrottle prop.
-   */
-  onScroll?: (event: any) => void;
-
-  /**
-   * Fires if a user initiates a scroll gesture.
-   */
-  // onScrollBeginDrag?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-
-  /**
-   * Fires when a user has finished scrolling.
-   */
-  // onScrollEndDrag?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-
-  /**
-   * Fires when scroll view has finished moving
-   */
-  // onMomentumScrollEnd?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-
-  /**
-   * Fires when scroll view has begun moving
-   */
-  // onMomentumScrollBegin?: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
-
-  /**
-   * When true the scroll view stops on multiples of the scroll view's size
-   * when scrolling. This can be used for horizontal pagination. The default
-   * value is false.
-   */
-  // pagingEnabled?: boolean;
-
-  /**
-   * When false, the content does not scroll. The default value is true
-   */
-  // scrollEnabled?: boolean; // true
-
-  /**
-   * Experimental: When true offscreen child views (whose `overflow` value is
-   * `hidden`) are removed from their native backing superview when offscreen.
-   * This canimprove scrolling performance on long lists. The default value is
-   * false.
-   */
-  // removeClippedSubviews?: boolean;
-
-  /**
-   * When true, shows a horizontal scroll indicator.
-   */
-  // showsHorizontalScrollIndicator?: boolean;
-
-  /**
-   * When true, shows a vertical scroll indicator.
-   */
-  // showsVerticalScrollIndicator?: boolean;
-
-  /**
-   * Style
-   */
-  style?: any;
-
-  /**
-   * A RefreshControl component, used to provide pull-to-refresh
-   * functionality for the ScrollView.
-   */
-  // refreshControl?: React.ReactElement<RefreshControlProps>;
-
-  /**
-   * When `snapToInterval` is set, `snapToAlignment` will define the relationship of the the snapping to the scroll view.
-   *      - `start` (the default) will align the snap at the left (horizontal) or top (vertical)
-   *      - `center` will align the snap in the center
-   *      - `end` will align the snap at the right (horizontal) or bottom (vertical)
-   */
-  // snapToAlignment?: "start" | "center" | "end";
-
-  /**
-   * When set, causes the scroll view to stop at multiples of the value of `snapToInterval`.
-   * This can be used for paginating through children that have lengths smaller than the scroll view.
-   * Used in combination with `snapToAlignment` and `decelerationRate="fast"`. Overrides less
-   * configurable `pagingEnabled` prop.
-   */
-  // snapToInterval?: number;
-
-  /**
-   * When set, causes the scroll view to stop at the defined offsets. This can be used for
-   * paginating through variously sized children that have lengths smaller than the scroll view.
-   * Typically used in combination with `decelerationRate="fast"`. Overrides less configurable
-   * `pagingEnabled` and `snapToInterval` props.
-   */
-  // snapToOffsets?: number[];
-
-  /**
-   * Use in conjuction with `snapToOffsets`. By default, the beginning of the list counts as a
-   * snap offset. Set `snapToStart` to false to disable this behavior and allow the list to scroll
-   * freely between its start and the first `snapToOffsets` offset. The default value is true.
-   */
-  // snapToStart?: boolean;
-
-  /**
-   * Use in conjuction with `snapToOffsets`. By default, the end of the list counts as a snap
-   * offset. Set `snapToEnd` to false to disable this behavior and allow the list to scroll freely
-   * between its end and the last `snapToOffsets` offset. The default value is true.
-   */
-  // snapToEnd?: boolean;
-
-  /**
-   * When true, the scroll view stops on the next index (in relation to scroll position at release)
-   * regardless of how fast the gesture is. This can be used for horizontal pagination when the page
-   * is less than the width of the ScrollView. The default value is false.
-   */
-  // disableIntervalMomentum?: boolean;
-
-  /**
-   * When true, the default JS pan responder on the ScrollView is disabled, and full control over
-   * touches inside the ScrollView is left to its child components. This is particularly useful
-   * if `snapToInterval` is enabled, since it does not follow typical touch patterns. Do not use
-   * this on regular ScrollView use cases without `snapToInterval` as it may cause unexpected
-   * touches to occur while scrolling. The default value is false.
-   */
-  // disableScrollViewPanResponder?: boolean;
-  // scrollToEnd(options?: {animated: boolean}): void;
-  // getScrollResponder(): JSX.Element;
-  // getScrollableNode(): any;
-}
-
-type ItemT = any;
-type ViewStyle = any;
-export interface StyleProp {
-  [key: string]: any;
-}
-
 interface LayoutRectangle {
   x: number;
   y: number;
@@ -2410,226 +2060,6 @@ interface LayoutChangeEvent {
   nativeEvent: {
     layout: LayoutRectangle;
   };
-}
-
-interface RenderItemData {
-  item: any;
-  index: number;
-}
-
-export interface FlatListProps extends ScrollViewProps {
-  /**
-   * Rendered in between each item, but not at the top or bottom
-   */
-  ItemSeparatorComponent?: React.ComponentType<any> | null;
-
-  /**
-   * Rendered when the list is empty.
-   */
-  ListEmptyComponent?: React.ComponentType<any> | React.ReactElement | null;
-
-  /**
-   * Rendered at the very end of the list.
-   */
-  ListFooterComponent?: React.ComponentType<any> | React.ReactElement | null;
-
-  /**
-   * Styling for internal View for ListFooterComponent
-   */
-  ListFooterComponentStyle?: ViewStyle | null;
-
-  /**
-   * Rendered at the very beginning of the list.
-   */
-  ListHeaderComponent?: React.ComponentType<any> | React.ReactElement | null;
-
-  /**
-   * Styling for internal View for ListHeaderComponent
-   */
-  ListHeaderComponentStyle?: ViewStyle | null;
-
-  /**
-   * Optional custom style for multi-item rows generated when numColumns > 1
-   */
-  columnWrapperStyle?: StyleProp;
-
-  /**
-   * Determines when the keyboard should stay visible after a tap.
-   * - 'never' (the default), tapping outside of the focused text input when the keyboard is up dismisses the keyboard. When this happens, children won't receive the tap.
-   * - 'always', the keyboard will not dismiss automatically, and the scroll view will not catch taps, but children of the scroll view can catch taps.
-   * - 'handled', the keyboard will not dismiss automatically when the tap was handled by a children, (or captured by an ancestor).
-   * - false, deprecated, use 'never' instead
-   * - true, deprecated, use 'always' instead
-   */
-  keyboardShouldPersistTaps?: boolean | "always" | "never" | "handled";
-
-  /**
-   * Multiple columns can only be rendered with `horizontal={false}` and will zig-zag like a `flexWrap` layout.
-   * Items should all be the same height - masonry layouts are not supported.
-   */
-  numColumns?: number;
-
-  /**
-   * The default accessor functions assume this is an Array<{key: string}> but you can override
-   * getItem, getItemCount, and keyExtractor to handle any type of index-based data.
-   */
-  data?: any;
-
-  /**
-   * `debug` will turn on extra logging and visual overlays to aid with debugging both usage and
-   * implementation, but with a significant perf hit.
-   */
-  debug?: boolean;
-
-  /**
-   * DEPRECATED: Virtualization provides significant performance and memory optimizations, but fully
-   * unmounts react instances that are outside of the render window. You should only need to disable
-   * this for debugging purposes.
-   */
-  disableVirtualization?: boolean;
-
-  /**
-   * A marker property for telling the list to re-render (since it implements `PureComponent`). If
-   * any of your `renderItem`, Header, Footer, etc. functions depend on anything outside of the
-   * `data` prop, stick it here and treat it immutably.
-   */
-  extraData?: any;
-
-  /**
-   * A generic accessor for extracting an item from any sort of data blob.
-   */
-  getItem?: (data: any, index: number) => ItemT;
-
-  /**
-   * Determines how many items are in the data blob.
-   */
-  getItemCount?: (data: any) => number;
-
-  getItemLayout?: (
-    data: any,
-    index: number
-  ) => {
-    length: number;
-    offset: number;
-    index: number;
-  };
-
-  horizontal?: boolean | null;
-
-  /**
-   * How many items to render in the initial batch. This should be enough to fill the screen but not
-   * much more. Note these items will never be unmounted as part of the windowed rendering in order
-   * to improve perceived performance of scroll-to-top actions.
-   */
-  initialNumToRender?: number;
-
-  /**
-   * Instead of starting at the top with the first item, start at `initialScrollIndex`. This
-   * disables the "scroll to top" optimization that keeps the first `initialNumToRender` items
-   * always rendered and immediately renders the items starting at this initial index. Requires
-   * `getItemLayout` to be implemented.
-   */
-  initialScrollIndex?: number | null;
-
-  /**
-   * Reverses the direction of scroll. Uses scale transforms of -1.
-   */
-  inverted?: boolean | null;
-
-  keyExtractor?: (item: ItemT, index: number) => string;
-
-  listKey?: string;
-
-  /**
-   * The maximum number of items to render in each incremental render batch. The more rendered at
-   * once, the better the fill rate, but responsiveness my suffer because rendering content may
-   * interfere with responding to button taps or other interactions.
-   */
-  maxToRenderPerBatch?: number;
-
-  onEndReached?: ((info: {distanceFromEnd: number}) => void) | null;
-
-  onEndReachedThreshold?: number | null;
-
-  onLayout?: (event: LayoutChangeEvent) => void;
-
-  /**
-   * If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make
-   * sure to also set the `refreshing` prop correctly.
-   */
-  onRefresh?: (() => void) | null;
-
-  /**
-   * Used to handle failures when scrolling to an index that has not been measured yet.
-   * Recommended action is to either compute your own offset and `scrollTo` it, or scroll as far
-   * as possible and then try again after more items have been rendered.
-   */
-  onScrollToIndexFailed?: (info: {
-    index: number;
-    highestMeasuredFrameIndex: number;
-    averageItemLength: number;
-  }) => void;
-
-  /**
-   * Called when the viewability of rows changes, as defined by the
-   * `viewabilityConfig` prop.
-   */
-  onViewableItemsChanged?: ((info: {viewableItems: any[]; changed: any[]}) => void) | null;
-
-  /**
-   * Set this when offset is needed for the loading indicator to show correctly.
-   * @platform android
-   */
-  progressViewOffset?: number;
-
-  /**
-   * Set this true while waiting for new data from a refresh.
-   */
-  refreshing?: boolean | null;
-
-  /**
-   * Note: may have bugs (missing content) in some circumstances - use at your own risk.
-   *
-   * This may improve scroll performance for large lists.
-   */
-  removeClippedSubviews?: boolean;
-
-  /**
-   * Render a custom scroll component, e.g. with a differently styled `RefreshControl`.
-   */
-  renderScrollComponent?: (props: ScrollViewProps) => React.ReactElement<ScrollViewProps>;
-
-  /**
-   * Amount of time between low-pri item render batches, e.g. for rendering items quite a ways off
-   * screen. Similar fill rate/responsiveness tradeoff as `maxToRenderPerBatch`.
-   */
-  updateCellsBatchingPeriod?: number;
-
-  viewabilityConfig?: any;
-
-  viewabilityConfigCallbackPairs?: any;
-
-  /**
-   * Determines the maximum number of items rendered outside of the visible area, in units of
-   * visible lengths. So if your list fills the screen, then `windowSize={21}` (the default) will
-   * render the visible screen area plus up to 10 screens above and 10 below the viewport. Reducing
-   * this number will reduce memory consumption and may improve performance, but will increase the
-   * chance that fast scrolling may reveal momentary blank areas of unrendered content.
-   */
-  windowSize?: number;
-
-  renderItem: (info: RenderItemData) => React.ReactElement | null;
-}
-
-export interface PickerProps {
-  onValueChange?: (itemValue: any, itemPosition: number) => void;
-  selectedValue?: any;
-  style?: StyleProp;
-  testID?: string;
-  itemStyle?: StyleProp;
-  enabled?: boolean;
-  mode?: "dialog" | "dropdown";
-  prompt?: string;
 }
 
 export interface SplitPageProps {
@@ -2661,7 +2091,6 @@ export interface SplitPageProps {
   onSelectionChange?: (value?: any) => void | Promise<void>;
 }
 
-export type LogLevel = "fatal" | "error" | "warning" | "info" | "debug" | "critical";
 export type PermissionKind =
   | "location"
   | "locationAlways"
@@ -2684,45 +2113,6 @@ export type PermissionStatus =
   | "restricted"
   | "undetermined";
 
-export interface TrackingProperties {
-  [name: string]: any;
-}
-
-export function isTestUser(profile?: BaseProfile) {
-  return (
-    profile &&
-    profile.email &&
-    (profile.email.indexOf("nang.io") > -1 || profile.email.indexOf("example.com") > -1)
-  );
-}
-
-export interface TrackerInterface {
-  initFinished: boolean;
-  init: (config: TrackingConfig) => void;
-  trackPages: () => void;
-  setUser: (user: BaseProfile) => void;
-  setUserProperty: (property: string, value: string | {object: {[id: string]: any}}) => void;
-  track: (eventName: string, properties?: TrackingProperties) => void;
-  trackNavigation: (screen: string, properties?: TrackingProperties) => void;
-  trackLogin: (method: string, success: boolean, properties?: TrackingProperties) => void;
-  trackSignup: (method: string, success: boolean, properties?: TrackingProperties) => void;
-  trackSignOut: () => void;
-  log: (message: string, properties?: TrackingProperties, level?: LogLevel) => void;
-  error: (message: string, properties?: TrackingProperties) => void;
-  warn: (message: string, properties?: TrackingProperties) => void;
-  debug: (message: string, properties?: TrackingProperties) => void;
-  handleErrorAlert: (text: string, exception?: Error, showAlert?: boolean) => void;
-  trackPermission: (kind: PermissionKind, status: PermissionStatus, requested: boolean) => void;
-  updateAppInfo: () => void;
-}
-
-export interface NavConfig {
-  url?: string;
-  wrapper?: (component: any) => any;
-  store?: any;
-  provider?: any;
-}
-
 export interface AddressInterface {
   address1: string;
   address2?: string;
@@ -2738,3 +2128,862 @@ export interface AddressInterface {
 export type ReactChild = ReactNode;
 export type ReactChildren = ReactNode;
 export type WithChildren<P> = P & {children?: ReactNode};
+
+export interface AddressAutocompleteProps {
+  disabled?: boolean;
+  googleMapsApiKey?: string;
+  includeCounty?: boolean;
+  inputValue: string;
+  styles?: Styles;
+  handleAddressChange: OnChangeCallback;
+  handleAutoCompleteChange: (value: AddressInterface) => void;
+  googlePlacesMobileStyles?: Styles;
+}
+
+export type ActionSheetProps = {
+  children?: React.ReactNode;
+  ref?: React.MutableRefObject<{
+    /**
+     * Open or close the ActionSheet.
+     */
+    setModalVisible(visible?: boolean): void;
+
+    /**
+     * Open the Action Sheet.
+     */
+    show(): void;
+
+    /**
+     * Close the ActionSheet.
+     */
+    hide(): void;
+
+    /**
+     * Attach this to any child ScrollView Component's onScrollEndDrag,
+     * onMomentumScrollEnd,onScrollAnimationEnd callbacks to handle the ActionSheet
+     * closing and bouncing back properly.
+     */
+    handleChildScrollEnd(): void;
+
+    /**
+     * Snap ActionSheet to given offset
+     */
+    snapToOffset(offset: number): void;
+  }>;
+  /**
+   * Animate the opening and closing of ActionSheet.
+
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+
+   Default: `true`
+   */
+  animated?: boolean;
+
+  /**
+   * Use if you want to show the ActionSheet Partially on Opening. **Requires `gestureEnabled=true`**
+
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+
+   Default:`1`
+   */
+
+  initialOffsetFromBottom?: number;
+
+  /**
+   * When touch ends and user has not moved farther from the set springOffset, the ActionSheet will return to previous position.
+
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
+
+   Default: `50`
+   */
+  springOffset?: number;
+  /**
+   * Add elevation to the ActionSheet container.
+
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
+
+   Default: `0`
+
+   #
+   */
+  elevation?: number;
+
+  /**
+   * Color of the gestureEnabled Indicator.
+
+   | Type | Required |
+   | ---- | -------- |
+   | string | no |
+
+   Default: `"#f0f0f0"`
+   */
+  indicatorColor?: string;
+
+  /**
+   * Normally when the ActionSheet is fully opened, a small portion from the bottom is hidden by default. Use this prop if you want the ActionSheet to hover over the bottom of screen and not hide a little behind it.
+
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
+
+   Default:`0`
+   */
+  extraScroll?: number;
+  /**
+   * Color of the overlay/backdrop.
+
+   | Type | Required |
+   | ---- | -------- |
+   | string | no |
+
+   Default: `"black"`
+   */
+  overlayColor?: string;
+
+  /**
+   * Keep the header always visible even when gestures are disabled.
+
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+
+   Default: `false`
+   */
+  headerAlwaysVisible?: boolean;
+
+  /**
+   * Delay draw of ActionSheet on open for android.
+
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+
+   Default: `false`
+   */
+
+  delayActionSheetDraw?: boolean;
+
+  /**
+   * Delay draw of ActionSheet on open for android time.
+
+   | Type | Required |
+   | ---- | -------- |
+   | number (ms) | no |
+
+   Default: `50`
+   */
+
+  delayActionSheetDrawTime?: number;
+
+  /**
+   * Your custom header component. Using this will hide the default indicator.
+
+   | Type | Required |
+   | ---- | -------- |
+   | React.Component | no |
+   */
+  CustomHeaderComponent?: React.ReactNode;
+
+  /**
+   * Any custom styles for the container.
+
+   | Type | Required |
+   | ---- | -------- |
+   | Object | no |
+   */
+  containerStyle?: ViewStyle;
+
+  /**
+   * Control closing ActionSheet by touching on backdrop.
+
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+
+   Default: `true`
+   */
+  closeOnTouchBackdrop?: boolean;
+
+  /**
+   * Speed of opening animation. Higher means the ActionSheet will open more quickly.
+
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
+
+   Default: `12`
+   */
+  openAnimationSpeed?: number;
+  /**
+   * Duration of closing animation.
+
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
+
+   Default: `300`
+   */
+  closeAnimationDuration?: number;
+  /**
+   *
+   How much you want the ActionSheet to bounce when it is opened.
+
+   | Type | Required |
+   | ---- | -------- |
+   | number | no |
+
+   Default: `8`
+   */
+  bounciness?: number;
+
+  /**
+   * Will the ActionSheet close on `hardwareBackPress` event.
+
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+
+   Default: `true`
+   */
+  closeOnPressBack?: boolean;
+  /**
+   * Default opacity of the overlay/backdrop.
+
+   | Type | Required |
+   | ---- | -------- |
+   | number 0 - 1 | no |
+
+   Default: `0.3`
+   */
+  defaultOverlayOpacity?: number;
+
+  /**
+   * Enables gesture control of ActionSheet
+
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+
+   Default: `false`
+   */
+  gestureEnabled?: boolean;
+
+  /**
+   * Bounces the ActionSheet on open.
+
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+
+   Default: `false`
+   */
+  bounceOnOpen?: boolean;
+
+  /**
+   * Setting the keyboard persistence of the ScrollView component, should be one of "never", "always", or "handled"
+
+   | Type | Required |
+   | ---- | -------- |
+   | string | no |
+
+   Default: `"never"`
+   */
+  keyboardShouldPersistTaps?: boolean | "always" | "never" | "handled";
+
+  /**
+   * Determine whether the modal should go under the system statusbar.
+
+   | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+
+   Default: `true`
+   */
+  statusBarTranslucent?: boolean;
+
+  /**
+   * Prevent ActionSheet from closing on
+   * gesture or tapping on backdrop.
+   * Instead snap it to `bottomOffset` location
+   *
+   *
+   * | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+   */
+  closable?: boolean;
+
+  /**
+   * Allow ActionSheet to draw under the StatusBar.
+   * This is enabled by default.
+   *
+   *
+   * | Type | Required |
+   | ---- | -------- |
+   | boolean | no |
+   Default: `true`
+   */
+  drawUnderStatusBar?: boolean;
+
+  /**
+   * Snap ActionSheet to this location if `closable` is set to false;
+   *
+   *
+   * | Type | Required |
+   | ---- | -------- |
+   | number | no |
+   */
+
+  bottomOffset?: number;
+
+  /**
+   * Change how ActionSheet behaves when keyboard is opened.
+   *
+   *
+   * | Type | Required |
+   | ---- | -------- |
+   | "padding" | "position" | no |
+   Default:`padding`
+   */
+
+  keyboardMode?: "padding" | "position";
+
+  /**
+   * Test ID for unit testing
+   */
+  testID?: string;
+
+  /**
+   *
+   Event called when the ActionSheet closes.
+
+
+   * | Type | Required |
+   | ---- | -------- |
+   | function | no |
+
+
+   #
+   */
+
+  onClose?: () => void;
+
+  /**
+   * An event called when the ActionSheet Opens.
+
+   | Type | Required |
+   | ---- | -------- |
+   | function | no |
+   */
+  onOpen?: () => void;
+
+  /**
+   * Event called when position of ActionSheet changes.
+   */
+  onPositionChanged?: (hasReachedTop: boolean) => void;
+};
+
+export type AvatarStatus =
+  | "online"
+  | "offline"
+  | "doNotDisturb"
+  | "away"
+  | "meeting"
+  | "vacation"
+  | "sick"
+  | "outOfOffice"
+  | "commuting";
+
+export interface AvatarProps {
+  // Color for the background of the circle when no src picture is present.
+  backgroundColor?: AllColors;
+  // Color for the initials when no src picture is present.
+  textColor?: AllColors;
+  /**
+   * The name of the user. This is used for the placeholder treatment if an image is not available.
+   */
+  name: string;
+  /**
+   * Override the generated initials from `name`.
+   */
+  initials?: string;
+  /**
+   * Adds a white border around Avatar so it's visible when displayed on other images.
+   */
+  outline?: boolean;
+  /**
+   * xs: 24px, sm: 32px, md: 48px, lg: 64px, xl: 120px.
+   */
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  /**
+   * The URL of the user's image.
+   */
+  src?: string;
+  /**
+   * The fit for the image within the Avatar: "cover" | "contain" | "none".
+   * Default is undefined. See Image.tsx for more info
+   */
+  imageFit?: "cover" | "contain" | "none";
+  /**
+   * Allow user to edit the image of the avatar
+   */
+  editAvatarImage?: boolean;
+  /**
+   * Function to handle the avatar image edit
+   */
+  onChange?: (val: any) => void;
+  /**
+   * Resize image width. If only the width is provided, the image will preserve aspect ratio
+   */
+  avatarImageWidth?: number;
+  /**
+   * Resize image height. If avatarImageWidth is also provided, the image aspect ratio may be distorted.
+   */
+  avatarImageHeight?: number;
+  /**
+   * The image format that the image will be saved as after any edits by the expo-image-manipulator
+   */
+  avatarImageFormat?: SaveFormat;
+  /**
+   * The status of the user to display with the avatar.
+   */
+  status?: AvatarStatus;
+  /**
+   * If true, the status indicator will show a mobile icon instead of a dot, if status is one of
+   * "online", "away", "offline", or "doNotDisturb". Will show the normal status icon in other cases.
+   */
+  statusMobile?: boolean;
+  /**
+   * Text to show when hovering over the avatar image. Only works on web.
+   */
+  statusText?: string;
+  /**
+   * If edit icon should be present when no image is present
+   */
+  shouldShowEditIconIfNoImage?: boolean;
+}
+
+export interface BadgeProps {
+  // The text to display inside the badge.
+  title: string;
+  // Position relative to the text. Top should only be used with headings.
+  position?: "top" | "middle"; // default "middle"
+  // Some default badge types. Occasionally, a custom badge might be required for different color schemes.
+  type?: "info" | "error" | "warning" | "success" | "neutral" | "custom"; // default "info
+  // If `type` is set to "custom", a custom theme color should be provided.
+  color?: AllColors;
+}
+
+export interface BannerProps {
+  id: string;
+  dismissible?: boolean;
+  text: string;
+  subtext?: string;
+  iconName?: IconName;
+  color?: BoxColor;
+  textColor?: TextColor;
+  negativeXMargin?: number;
+  shape?: Rounding;
+  type?: "dismiss" | "action" | "permanent";
+  onClick?: () => void;
+}
+
+export interface BodyProps {
+  scroll?: boolean;
+  loading?: boolean;
+  padding?: UnsignedUpTo12;
+  height?: number | string;
+  avoidKeyboard?: boolean; // default true
+  children?: ReactNode;
+}
+
+export interface ButtonProps {
+  children?: React.ReactElement;
+  text: string;
+  // TODO make this work for all colors
+  color?: ButtonColor | Color;
+  // default gray
+  disabled?: boolean; // default false
+  inline?: boolean; // default false
+  size?: "sm" | "md" | "lg"; // default md
+  type?: "solid" | "ghost" | "outline"; // default solid
+  loading?: boolean;
+  onClick: any;
+  icon?: IconName;
+  iconPrefix?: IconPrefix;
+  iconColor?: ButtonColor | Color;
+  withConfirmation?: boolean;
+  confirmationText?: string;
+  confirmationHeading?: string;
+  shape?: "rounded" | "pill";
+  testID?: string;
+  tooltip?: {
+    text: string;
+    idealDirection?: TooltipDirection;
+  };
+}
+
+export interface CustomSelectProps {
+  value: string;
+  onChange: (value: string) => void;
+  options: Array<{label: string; value: string}>;
+  placeholder?: string;
+  disabled?: boolean;
+  label?: string;
+  labelColor?: string;
+}
+export interface DateTimeActionSheetProps {
+  value?: string;
+  mode?: "date" | "time" | "datetime";
+  // Returns an ISO 8601 string. If mode is "time", the date portion is today.
+  onChange: OnChangeCallback;
+  actionSheetRef: React.RefObject<any>;
+  visible: boolean;
+  onDismiss: () => void;
+}
+
+export interface DecimalRangeActionSheetProps {
+  value: string;
+  min: number;
+  max: number;
+  onChange: OnChangeCallback;
+  actionSheetRef: React.RefObject<any>;
+}
+
+export interface DecimalRangeActionSheetState {
+  whole: string;
+  decimal: string;
+}
+
+export interface ErrorPageProps {
+  error: Error;
+  resetError: () => void;
+}
+
+export interface FieldProps extends FieldWithLabelsProps {
+  name?: string;
+  label?: string;
+  height?: number;
+  type?:
+    | "address"
+    | "boolean"
+    | "currency"
+    | "customSelect"
+    | "date"
+    | "datetime"
+    | "email"
+    | "multiselect"
+    | "number"
+    | "password"
+    | "percent"
+    | "phoneNumber"
+    | "select"
+    | "text"
+    | "textarea"
+    | "time"
+    | "url";
+  rows?: number;
+  value?: any;
+  onChange?: any;
+  options?: SelectListOptions;
+  placeholder?: string;
+  disabled?: boolean;
+  useCheckbox?: boolean;
+  includeCounty?: boolean;
+  googleMapsApiKey?: string;
+  googlePlacesMobileStyles?: Styles;
+}
+
+export interface FormLineProps {
+  name: string;
+  value: any;
+  onSave: (value: any) => void;
+  kind: "boolean" | "string" | "textarea" | "select" | "multiboolean";
+  options?: string[];
+}
+
+export interface HeightActionSheetProps {
+  value?: string;
+  onChange: OnChangeCallback;
+  actionSheetRef: React.RefObject<any>;
+}
+
+export interface HyperlinkProps {
+  linkDefault?: boolean;
+  linkify?: any;
+  linkStyle?: StyleProp<any>;
+  linkText?: string | ((url: string) => string);
+  onPress?: (url: string) => void;
+  onLongPress?: (url: string, text: string) => void;
+  injectViewProps?: (url: string) => any;
+  children?: React.ReactNode;
+  style?: StyleProp<any>;
+}
+
+export interface IconButtonProps {
+  prefix?: IconPrefix;
+  icon: IconName;
+  accessibilityLabel: string;
+  iconColor: "darkGray" | ButtonColor | ThemeColor | Color;
+  onClick: () => void;
+  size?: IconSize;
+  bgColor?:
+    | "transparent"
+    | "transparentDarkGray"
+    | "gray"
+    | "lightGray"
+    | "white"
+    | "background"
+    | "backgroundSecondary"; // default transparent
+  disabled?: boolean;
+  selected?: boolean;
+  withConfirmation?: boolean;
+  confirmationText?: string;
+  confirmationHeading?: string;
+  tooltip?: {
+    text: string;
+    idealDirection?: TooltipDirection;
+  };
+  indicator?: boolean;
+  indicatorStyle?: {position: IndicatorDirection; color: AllColors};
+}
+
+export interface InfoTooltipButtonProps {
+  text: string;
+  size?: IconSize;
+}
+
+export interface ModalProps {
+  onDismiss: () => void;
+  visible: boolean;
+  // Alignment of the header. Default is "center".
+  align?: "center" | "start";
+  // Element to render in the middle part of the modal.
+  children?: React.ReactElement;
+  // Element to render in the bottom of the modal. This takes precedence over primaryButton and secondaryButton.
+  footer?: React.ReactElement;
+  heading?: string;
+  size?: "sm" | "md" | "lg";
+  subHeading?: string;
+  // Renders a primary colored button all the way to the right in the footer, if no footer prop is provided.
+  primaryButtonText?: string;
+  primaryButtonOnClick?: (value?: any) => void;
+  primaryButtonDisabled?: boolean;
+  // Renders a gray button to the left of the primary button in the footer, if no footer prop is provided.
+  // Requires primaryButtonText to be defined, but is not required itself.
+  secondaryButtonText?: string;
+  secondaryButtonOnClick?: (value?: any) => void;
+  // Whether to show a close button in the upper left of modals or action sheets.
+  showClose?: boolean;
+}
+
+export interface NumberPickerActionSheetProps {
+  value: string;
+  min: number;
+  max: number;
+  onChange: OnChangeCallback;
+  actionSheetRef: React.RefObject<any>;
+}
+
+export interface PageProps {
+  // TODO: figure out navigation
+  navigation: any;
+  scroll?: boolean;
+  loading?: boolean;
+  display?: "flex" | "none" | "block" | "inlineBlock";
+  title?: string;
+  backButton?: boolean;
+  closeButton?: boolean;
+  direction?: "row" | "column";
+  padding?: UnsignedUpTo12;
+  color?: Color;
+  maxWidth?: number | string;
+  keyboardOffset?: number;
+  footer?: any;
+  rightButton?: string;
+  rightButtonOnClick?: () => void;
+  children?: any;
+  onError?: (error: Error, stack: any) => void;
+}
+
+export interface PogProps {
+  active?: boolean;
+  bgColor?: "transparent" | "transparentDarkGray" | "gray" | "lightGray" | "white" | "blue";
+  focused?: boolean;
+  hovered?: boolean;
+  selected?: boolean;
+  iconColor?: AllColors;
+  icon: IconName;
+  iconPrefix?: IconPrefix;
+  size?: IconSize;
+}
+
+export interface ProgressBarProps {
+  color: Color;
+  completed: number;
+}
+
+export interface SideDrawerProps {
+  // Position of the drawer relative to the child
+  position?: "right" | "left";
+  // Used to open/hide drawer. Use the onClose and onOpen props to control state
+  isOpen: boolean;
+  // Content within the drawer
+  renderContent: () => ReactElement | ReactElement[];
+  // TODO: Allow the hardware back button on Android to close the SideDrawer
+  onClose?: () => void;
+  onOpen?: () => void;
+  drawerType?: "front" | "back" | "slide" | "permanent";
+  // Content that is wrapped by the drawer. The drawer will use the height of the child it wraps. Can be overwritten via styles prop
+  children?: ReactElement;
+  drawerStyles?: StyleProp<ViewStyle>;
+}
+
+export interface SpinnerProps {
+  size?: "sm" | "md";
+  color?: Color;
+}
+
+export interface TableProps {
+  /**
+   * Must be instances of TableHeader, TableRow, and/or TableFooter components.
+   */
+  children: React.ReactNode | React.ReactNode[];
+  /**
+   * Width of columns in the table. This is used to calculate the width of each column. Can be numbers for pixels or strings for percentages.
+   */
+  columns: Array<number | string>;
+  /**
+   * Specify a border width for Table: "sm" is 1px.
+   */
+  borderStyle?: "sm" | "none";
+  /**
+   * Use numbers for pixels: `maxHeight={100}` and strings for percentages: `maxHeight="100%"`.
+   */
+  maxHeight?: DimensionValue;
+  /**
+   * If true, the header will stick to the top of the table when scrolling. Defaults to true.
+   */
+  stickyHeader?: boolean;
+  /**
+   * If true, alternate rows will have a light gray background. Defaults to true.
+   */
+  alternateRowBackground?: boolean;
+}
+
+export interface TableHeaderProps {
+  /**
+   * Must be an instance of TableRow.
+   */
+  children: React.ReactNode | React.ReactNode[];
+  /**
+   * Display `visuallyHidden` ensures the component is visually hidden but still is read by screen readers.
+   */
+  display?: "tableHeaderGroup" | "visuallyHidden";
+  /**
+   * If true, the table header will be sticky and the table body will be scrollable. Not yet implemented.
+   */
+  sticky?: boolean;
+  color?: BoxColor;
+}
+
+export interface TableHeaderCellProps {
+  /**
+   * The content of the table header cell.
+   */
+  children: ReactElement;
+  index: number;
+  sortable?: boolean;
+  onSortChange?: (direction: "asc" | "desc" | undefined) => void;
+}
+
+export interface TableRowProps {
+  /**
+   * Must be instances of TableCell or TableHeaderCell.
+   */
+  children: React.ReactNode | React.ReactNode[];
+  /**
+   * Header rows have an extra thick bottom border.
+   */
+  headerRow?: boolean;
+  /**
+   * Whether the row should start expanded or not.
+   */
+  expanded?: boolean;
+  /**
+   * When the row is expanded, the drawerContents are shown. If not
+   */
+  drawerContents?: React.ReactNode | React.ReactNode[];
+  /**
+   * Background color of the row. Defaults to white.
+   */
+  color?: BoxColor;
+}
+
+export interface TextProps {
+  align?: "left" | "right" | "center" | "justify"; // default "left"
+  children?: React.ReactNode;
+  color?: AllColors;
+  inline?: boolean; // default false
+  italic?: boolean; // default false
+  onPress?: () => void;
+  overflow?: "normal" | "breakWord"; // deprecated
+  size?: TextSize; // default "md"
+  truncate?: boolean; // default false
+  font?: Font;
+  underline?: boolean;
+  numberOfLines?: number;
+  skipLinking?: boolean;
+  weight?: "bold" | "normal";
+  testID?: string;
+}
+
+export interface TextFieldPickerActionSheetProps {
+  value?: string;
+  mode?: "date" | "time";
+  onChange: OnChangeCallback;
+  actionSheetRef: React.RefObject<any>;
+}
+
+export interface ToastProps {
+  message: string;
+  data: {
+    variant?: "default" | "warning" | "error";
+    buttonText?: string;
+    buttonOnClick?: () => void | Promise<void>;
+    persistent?: boolean;
+    onDismiss?: () => void;
+  };
+}
+
+export interface TooltipProps {
+  children: React.ReactElement;
+  // If text is undefined, the children will be rendered without a tooltip.
+  text?: string;
+  idealDirection?: "top" | "bottom" | "left" | "right";
+  bgColor?: "white" | "lightGray" | "gray" | "darkGray";
+}
+
+export interface LinkProps extends TextProps {
+  href: string;
+}
+
+export interface WithLabelProps {
+  children?: ReactChildren;
+  show?: boolean;
+  label?: string;
+  labelInline?: boolean;
+  labelColor?: AllColors;
+  labelJustifyContent?: JustifyContent;
+  labelAlignItems?: AlignItems;
+  labelPlacement?: "before" | "after";
+  labelSize?: TextSize;
+}

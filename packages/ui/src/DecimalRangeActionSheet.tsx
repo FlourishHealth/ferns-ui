@@ -5,22 +5,9 @@ import React from "react";
 import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {OnChangeCallback} from "./Common";
+import {DecimalRangeActionSheetProps, DecimalRangeActionSheetState} from "./Common";
 
 const PICKER_HEIGHT = 104;
-
-interface DecimalRangeActionSheetProps {
-  value: string;
-  min: number;
-  max: number;
-  onChange: OnChangeCallback;
-  actionSheetRef: React.RefObject<any>;
-}
-
-interface DecimalRangeActionSheetState {
-  whole: string;
-  decimal: string;
-}
 
 export class DecimalRangeActionSheet extends React.Component<
   DecimalRangeActionSheetProps,

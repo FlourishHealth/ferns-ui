@@ -1,18 +1,9 @@
 import React, {ReactElement, useEffect, useMemo, useState} from "react";
 
 import {Box} from "./Box";
+import {CustomSelectProps} from "./Common";
 import {SelectList} from "./SelectList";
 import {TextField} from "./TextField";
-
-export interface CustomSelectProps {
-  value: string;
-  onChange: (value: string) => void;
-  options: Array<{label: string; value: string}>;
-  placeholder?: string;
-  disabled?: boolean;
-  label?: string;
-  labelColor?: string;
-}
 
 export const CustomSelect = ({
   value,

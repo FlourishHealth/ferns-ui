@@ -1,23 +1,19 @@
 import React, {ReactElement} from "react";
 
 import {Box} from "./Box";
+import {TableHeaderCellProps} from "./Common";
 import {IconButton} from "./IconButton";
 import {useTableContext} from "./tableContext";
-
-interface Props {
-  /**
-   * The content of the table header cell.
-   */
-  children: ReactElement;
-  index: number;
-  sortable?: boolean;
-  onSortChange?: (direction: "asc" | "desc" | undefined) => void;
-}
 
 /**
  * Use TableHeaderCell to define a header cell in Table.
  */
-export function TableHeaderCell({children, index, sortable, onSortChange}: Props): ReactElement {
+export function TableHeaderCell({
+  children,
+  index,
+  sortable,
+  onSortChange,
+}: TableHeaderCellProps): ReactElement {
   const {columns, setSortColumn, sortColumn} = useTableContext();
   const width = columns[index];
   if (!width) {

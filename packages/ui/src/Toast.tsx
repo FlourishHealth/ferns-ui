@@ -4,7 +4,7 @@ import {useToast as useRNToast} from "react-native-toast-notifications";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {AllColors} from "./Common";
+import {AllColors, ToastProps} from "./Common";
 import {Icon} from "./Icon";
 import {IconButton} from "./IconButton";
 import {Text} from "./Text";
@@ -34,19 +34,7 @@ export function useToast(): any {
   };
 }
 
-export function Toast({
-  message,
-  data,
-}: {
-  message: string;
-  data: {
-    variant?: "default" | "warning" | "error";
-    buttonText?: string;
-    buttonOnClick?: () => void | Promise<void>;
-    persistent?: boolean;
-    onDismiss?: () => void;
-  };
-}): React.ReactElement {
+export function Toast({message, data}: ToastProps): React.ReactElement {
   // margin 8 on either side, times the standard 4px we multiply by.
   const width = Math.min(Dimensions.get("window").width - 16 * 4, 712);
   const {variant, buttonText, buttonOnClick, persistent, onDismiss} = data ?? {};

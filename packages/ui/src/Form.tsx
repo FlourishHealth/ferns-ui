@@ -2,6 +2,7 @@ import React from "react";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
+import {FormLineProps} from "./Common";
 import {IconButton} from "./IconButton";
 import {SelectList} from "./SelectList";
 import {Switch} from "./Switch";
@@ -14,14 +15,6 @@ function objToJoinedString(obj: any) {
     .map((k) => (obj[k] ? k : undefined))
     .filter((v) => v)
     .join(", ");
-}
-
-interface FormLineProps {
-  name: string;
-  value: any;
-  onSave: (value: any) => void;
-  kind: "boolean" | "string" | "textarea" | "select" | "multiboolean";
-  options?: string[];
 }
 
 interface FormLineState {

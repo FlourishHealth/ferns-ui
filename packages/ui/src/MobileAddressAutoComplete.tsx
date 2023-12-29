@@ -3,10 +3,9 @@ import {TextStyle, TouchableOpacity, View} from "react-native";
 import {
   GooglePlacesAutocomplete,
   GooglePlacesAutocompleteRef,
-  Styles,
 } from "react-native-google-places-autocomplete";
 
-import {AddressInterface, OnChangeCallback} from "./Common";
+import {AddressAutocompleteProps} from "./Common";
 import {GOOGLE_PLACES_API_RESTRICTIONS} from "./Constants";
 import {TextField} from "./TextField";
 import {ThemeContext} from "./Theme";
@@ -21,15 +20,7 @@ export const MobileAddressAutocomplete = ({
   styles,
   handleAddressChange,
   handleAutoCompleteChange,
-}: {
-  disabled?: boolean;
-  googleMapsApiKey?: string;
-  includeCounty?: boolean;
-  inputValue: string;
-  styles?: Styles;
-  handleAddressChange: OnChangeCallback;
-  handleAutoCompleteChange: (value: AddressInterface) => void;
-}) => {
+}: AddressAutocompleteProps) => {
   const {theme} = useContext(ThemeContext);
   const ref = useRef<GooglePlacesAutocompleteRef | null>(null);
   const [isFocused, setIsFocused] = useState(false);

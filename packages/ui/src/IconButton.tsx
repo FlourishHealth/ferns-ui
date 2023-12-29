@@ -1,52 +1,13 @@
 import React, {forwardRef, useContext, useState} from "react";
 import {Platform, Pressable, View, ViewStyle} from "react-native";
 
-import {
-  AllColors,
-  ButtonColor,
-  Color,
-  IconName,
-  IconPrefix,
-  IconSize,
-  iconSizeToNumber,
-  IndicatorDirection,
-  ThemeColor,
-  TooltipDirection,
-} from "./Common";
+import {IconButtonProps, iconSizeToNumber} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
-
-export interface IconButtonProps {
-  prefix?: IconPrefix;
-  icon: IconName;
-  accessibilityLabel: string;
-  iconColor: "darkGray" | ButtonColor | ThemeColor | Color;
-  onClick: () => void;
-  size?: IconSize;
-  bgColor?:
-    | "transparent"
-    | "transparentDarkGray"
-    | "gray"
-    | "lightGray"
-    | "white"
-    | "background"
-    | "backgroundSecondary"; // default transparent
-  disabled?: boolean;
-  selected?: boolean;
-  withConfirmation?: boolean;
-  confirmationText?: string;
-  confirmationHeading?: string;
-  tooltip?: {
-    text: string;
-    idealDirection?: TooltipDirection;
-  };
-  indicator?: boolean;
-  indicatorStyle?: {position: IndicatorDirection; color: AllColors};
-}
 
 // eslint-disable-next-line react/display-name
 export const IconButton = forwardRef(

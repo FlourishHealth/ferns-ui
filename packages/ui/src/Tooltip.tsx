@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import {Portal} from "react-native-portalize";
 
-import {TooltipDirection} from "./Common";
+import {TooltipDirection, TooltipProps} from "./Common";
 import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 
@@ -116,14 +116,6 @@ const getTooltipPosition = ({
     }
   }
 };
-
-interface TooltipProps {
-  children: React.ReactElement;
-  // If text is undefined, the children will be rendered without a tooltip.
-  text?: string;
-  idealDirection?: "top" | "bottom" | "left" | "right";
-  bgColor?: "white" | "lightGray" | "gray" | "darkGray";
-}
 
 export const Tooltip = (props: TooltipProps) => {
   const {theme} = useContext(ThemeContext);

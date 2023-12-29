@@ -5,7 +5,7 @@ import {Platform, StyleProp, TextInput, TextStyle, View} from "react-native";
 import {Calendar} from "react-native-calendars";
 
 import {Box} from "./Box";
-import {OnChangeCallback} from "./Common";
+import {DateTimeActionSheetProps} from "./Common";
 import dayjs from "./dayjsExtended";
 import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
@@ -153,16 +153,6 @@ function CalendarHeader({
       />
     </Box>
   );
-}
-
-interface DateTimeActionSheetProps {
-  value?: string;
-  mode?: "date" | "time" | "datetime";
-  // Returns an ISO 8601 string. If mode is "time", the date portion is today.
-  onChange: OnChangeCallback;
-  actionSheetRef: React.RefObject<any>;
-  visible: boolean;
-  onDismiss: () => void;
 }
 
 // For mobile, renders all components in an action sheet.

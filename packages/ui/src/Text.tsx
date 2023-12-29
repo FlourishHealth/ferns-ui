@@ -1,27 +1,9 @@
 import React, {useContext} from "react";
 import {Text as NativeText, TextStyle} from "react-native";
 
-import {AllColors, Font, TextSize} from "./Common";
+import {TextProps} from "./Common";
 import {Hyperlink} from "./Hyperlink";
 import {ThemeContext} from "./Theme";
-
-export interface TextProps {
-  align?: "left" | "right" | "center" | "justify"; // default "left"
-  children?: React.ReactNode;
-  color?: AllColors;
-  inline?: boolean; // default false
-  italic?: boolean; // default false
-  onPress?: () => void;
-  overflow?: "normal" | "breakWord"; // deprecated
-  size?: TextSize; // default "md"
-  truncate?: boolean; // default false
-  font?: Font;
-  underline?: boolean;
-  numberOfLines?: number;
-  skipLinking?: boolean;
-  weight?: "bold" | "normal";
-  testID?: string;
-}
 
 const fontSizes = {
   sm: 12,

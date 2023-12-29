@@ -5,15 +5,9 @@ import React from "react";
 import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {OnChangeCallback} from "./Common";
+import {HeightActionSheetProps} from "./Common";
 
 const PICKER_HEIGHT = 104;
-
-interface HeightActionSheetProps {
-  value?: string;
-  onChange: OnChangeCallback;
-  actionSheetRef: React.RefObject<any>;
-}
 
 interface HeightActionSheetState {
   feet: string;
