@@ -6,6 +6,7 @@ import {Button} from "./Button";
 import {BoxProps, FieldProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
+import {useOpenAPISpec} from "./OpenAPIContext";
 import {Text} from "./Text";
 
 export function formatAddress(address: any, asString = false): string {
@@ -64,6 +65,8 @@ export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   withConfirmation?: boolean;
   confirmationText?: string;
   confirmationHeading?: string;
+  openApiModel?: string;
+  openApiField?: string;
 }
 
 export const TapToEdit = ({
@@ -80,10 +83,18 @@ export const TapToEdit = ({
   withConfirmation = false,
   confirmationText = "Are you sure you want to save your changes?",
   confirmationHeading = "Confirm",
+  openApiModel,
+  openApiField,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
   const [initialValue] = useState(value);
+  const {getModelField} = useOpenAPISpec();
+
+  let description: string | undefined;
+  if (openApiModel && openApiField) {
+    description = getModelField(openApiModel, openApiField)?.description;
+  }
 
   if (editable && !setValue) {
     throw new Error("setValue is required if editable is true");
@@ -96,6 +107,7 @@ export const TapToEdit = ({
           fieldComponent(setValue as any)
         ) : (
           <Field
+            helperText={description}
             label={title}
             placeholder={placeholder}
             value={value}
@@ -182,8 +194,15 @@ export const TapToEdit = ({
     const openLink = async (): Promise<void> => {
       if (fieldProps?.type === "url") {
         await Linking.openURL(value);
+      } else if (fieldProps?.type === "address") {
+        await Linking.openURL(
+          `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+            formatAddress(value, true)
+          )}`
+        );
       }
     };
+    const isClickable = fieldProps?.type === "url" || fieldProps?.type === "address";
 
     return (
       <Box
@@ -194,29 +213,15 @@ export const TapToEdit = ({
         width="100%"
         {...rowBoxProps}
       >
-        <Box>
+        <Box flex="grow">
           <Text weight="bold">{title}:</Text>
-          {fieldProps?.type === "address" && (
-            <Box
-              onClick={
-                () =>
-                  Linking.openURL(
-                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      formatAddress(value, true)
-                    )}`
-                  )
-                // eslint-disable-next-line react/jsx-curly-newline
-              }
-            >
-              <Text color="blue" underline={fieldProps?.type === "address"}>
-                Google Maps
-              </Text>
-            </Box>
-          )}
+          {description && <Text>{description}</Text>}
         </Box>
-        <Box direction="row">
-          <Box onClick={fieldProps?.type === "url" ? openLink : undefined}>
-            <Text underline={fieldProps?.type === "url"}>{displayValue}</Text>
+        <Box direction="row" justifyContent="start">
+          <Box justifyContent="start" onClick={isClickable ? openLink : undefined}>
+            <Text align="right" underline={isClickable}>
+              {displayValue}
+            </Text>
           </Box>
           {editable && (
             <Box marginLeft={2} onClick={(): void => setEditing(true)}>

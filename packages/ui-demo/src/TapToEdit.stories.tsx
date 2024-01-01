@@ -1,4 +1,4 @@
-import {Box, TapToEdit} from "ferns-ui";
+import {Box, OpenAPIProvider, TapToEdit} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 const TapStory = (): ReactElement => {
@@ -22,6 +22,8 @@ const TapStory = (): ReactElement => {
       <TapToEdit
         key="text"
         name="text"
+        openApiField="name"
+        openApiModel="users"
         setValue={setText}
         title="Text"
         type="text"
@@ -33,6 +35,8 @@ const TapStory = (): ReactElement => {
       <TapToEdit
         key="bool"
         name="bool"
+        openApiField="staffRoles.SuperUser"
+        openApiModel="users"
         setValue={setBool}
         title="Boolean"
         type="boolean"
@@ -44,6 +48,8 @@ const TapStory = (): ReactElement => {
       <TapToEdit
         key="currency"
         name="currency"
+        openApiField="name"
+        openApiModel="users"
         setValue={setCurrency}
         title="Currency"
         type="currency"
@@ -55,6 +61,8 @@ const TapStory = (): ReactElement => {
       <TapToEdit
         key="percent"
         name="percent"
+        openApiField="name"
+        openApiModel="users"
         setValue={setPercent}
         title="Percent"
         type="percent"
@@ -66,6 +74,8 @@ const TapStory = (): ReactElement => {
       <TapToEdit
         key="select"
         name="select"
+        openApiField="name"
+        openApiModel="users"
         options={[
           {label: "Option1", value: "Option1"},
           {label: "Option2", value: "Option2"},
@@ -81,6 +91,8 @@ const TapStory = (): ReactElement => {
       <TapToEdit
         key="multiselect"
         name="multiselect"
+        openApiField="name"
+        openApiModel="users"
         options={[
           {label: "Option1", value: "Option1"},
           {label: "Option2", value: "Option2"},
@@ -100,6 +112,8 @@ const TapStory = (): ReactElement => {
       />
       <TapToEdit
         name="address"
+        openApiField="name"
+        openApiModel="users"
         setValue={setAddress}
         title="Address"
         type="address"
@@ -110,6 +124,8 @@ const TapStory = (): ReactElement => {
       />
       <TapToEdit
         name="url"
+        openApiField="name"
+        openApiModel="users"
         setValue={setURL}
         title="URL"
         type="url"
@@ -122,6 +138,8 @@ const TapStory = (): ReactElement => {
       <TapToEdit
         key="textWithConfirmation"
         name="textWithConfirmation"
+        openApiField="name"
+        openApiModel="users"
         setValue={setText}
         title="Text With Confirmation"
         type="text"
@@ -141,8 +159,17 @@ export const TapToEditStories = {
   stories: {
     TapToEdit() {
       return (
-        <Box width={300}>
+        <Box color="white" width={300}>
           <TapStory />
+        </Box>
+      );
+    },
+    TapToEditWithOpenAPI() {
+      return (
+        <Box color="white" width={300}>
+          <OpenAPIProvider specUrl="http://localhost:3000/openapi.json">
+            <TapStory />
+          </OpenAPIProvider>
         </Box>
       );
     },
