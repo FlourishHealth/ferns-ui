@@ -217,7 +217,7 @@ export const TapToEdit = ({
           <Text weight="bold">{title}:</Text>
           {description && <Text>{description}</Text>}
         </Box>
-        <Box direction="row" justifyContent="start">
+        <Box direction="row" justifyContent="start" marginLeft={2}>
           <Box justifyContent="start" onClick={isClickable ? openLink : undefined}>
             <Text align="right" underline={isClickable}>
               {displayValue}

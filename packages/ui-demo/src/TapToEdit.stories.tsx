@@ -48,7 +48,7 @@ const TapStory = (): ReactElement => {
       <TapToEdit
         key="currency"
         name="currency"
-        openApiField="name"
+        openApiField="namePronunciation"
         openApiModel="users"
         setValue={setCurrency}
         title="Currency"
@@ -112,7 +112,7 @@ const TapStory = (): ReactElement => {
       />
       <TapToEdit
         name="address"
-        openApiField="name"
+        openApiField="staffRoles.SuperUser"
         openApiModel="users"
         setValue={setAddress}
         title="Address"
