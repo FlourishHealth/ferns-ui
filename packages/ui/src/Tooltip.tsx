@@ -129,7 +129,7 @@ export const Tooltip = (props: TooltipProps) => {
   const {theme} = useContext(ThemeContext);
   const {text, children, bgColor, idealDirection} = props;
   const hoverDelay = 500;
-  const hoverEndDelay = 1500;
+  const hoverEndDelay = 0;
   const [visible, setVisible] = React.useState(false);
 
   const [measurement, setMeasurement] = React.useState({
