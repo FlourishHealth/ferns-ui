@@ -2048,6 +2048,7 @@ export interface CheckBoxProps {
   label?: string;
   subLabel?: string;
   labelColor?: AllColors;
+  testID?: string;
 }
 
 interface LayoutRectangle {
@@ -2139,6 +2140,7 @@ export interface AddressAutocompleteProps {
   handleAddressChange: OnChangeCallback;
   handleAutoCompleteChange: (value: AddressInterface) => void;
   googlePlacesMobileStyles?: Styles;
+  testID?: string;
 }
 
 export type ActionSheetProps = {

@@ -15,6 +15,7 @@ export const UnifiedAddressAutoCompleteField = ({
   inputValue,
   handleAddressChange,
   handleAutoCompleteChange,
+  testID,
 }: AddressAutocompleteProps) => {
   const isWeb = typeof document !== "undefined";
   const isValidatedGoogleApiKey = useMemo(
@@ -31,6 +32,7 @@ export const UnifiedAddressAutoCompleteField = ({
         handleAutoCompleteChange={handleAutoCompleteChange}
         includeCounty={includeCounty}
         inputValue={inputValue}
+        testID={testID}
       />
     );
   } else if (isMobileDevice() && isNative() && isValidatedGoogleApiKey) {
@@ -43,6 +45,7 @@ export const UnifiedAddressAutoCompleteField = ({
         includeCounty={includeCounty}
         inputValue={inputValue}
         styles={googlePlacesMobileStyles}
+        testID={testID}
       />
     );
   } else {
@@ -51,6 +54,7 @@ export const UnifiedAddressAutoCompleteField = ({
         disabled={disabled}
         label="Street Address"
         placeholder="Enter an address"
+        testID={testID}
         type="text"
         value={inputValue}
         onChange={({value}): void => {
