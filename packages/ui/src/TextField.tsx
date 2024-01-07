@@ -85,6 +85,7 @@ export function TextField({
   style,
   onEnter,
   onSubmitEditing,
+  testID,
 }: TextFieldProps): ReactElement {
   const {theme} = useContext(ThemeContext);
 
@@ -290,6 +291,7 @@ export function TextField({
               returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
               secureTextEntry={type === "password"}
               style={defaultTextInputStyles}
+              testID={testID}
               textContentType={textContentType}
               underlineColorAndroid="transparent"
               value={displayValue}

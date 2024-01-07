@@ -1890,6 +1890,7 @@ export interface SegmentedControlProps {
 
 // Shared props for fields with labels, subtext, and error messages.
 export interface FieldWithLabelsProps {
+  testID?: string;
   errorMessage?: string;
   errorMessageColor?: AllColors; // Default: red.
   label?: string;
