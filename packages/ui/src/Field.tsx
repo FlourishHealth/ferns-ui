@@ -1,52 +1,17 @@
 import React from "react";
-import {Styles} from "react-native-google-places-autocomplete";
 
 import {Box} from "./Box";
 import {CheckBox} from "./CheckBox";
-import {AddressInterface, FieldWithLabelsProps, ReactChildren, TextFieldType} from "./Common";
+import {AddressInterface, FieldProps, ReactChildren, TextFieldType} from "./Common";
 import {USSTATESLIST} from "./Constants";
 import {CustomSelect} from "./CustomSelect";
 import {FieldWithLabels} from "./FieldWithLabels";
-import {SelectList, SelectListOptions} from "./SelectList";
+import {SelectList} from "./SelectList";
 import {Switch} from "./Switch";
 import {Text} from "./Text";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 import {UnifiedAddressAutoCompleteField} from "./UnifiedAddressAutoComplete";
-
-export interface FieldProps extends FieldWithLabelsProps {
-  name?: string;
-  label?: string;
-  height?: number;
-  type?:
-    | "address"
-    | "boolean"
-    | "currency"
-    | "customSelect"
-    | "date"
-    | "datetime"
-    | "email"
-    | "multiselect"
-    | "number"
-    | "password"
-    | "percent"
-    | "phoneNumber"
-    | "select"
-    | "text"
-    | "textarea"
-    | "time"
-    | "url";
-  rows?: number;
-  value?: any;
-  onChange?: any;
-  options?: SelectListOptions;
-  placeholder?: string;
-  disabled?: boolean;
-  useCheckbox?: boolean;
-  includeCounty?: boolean;
-  googleMapsApiKey?: string;
-  googlePlacesMobileStyles?: Styles;
-}
 
 export const Field = ({
   name,

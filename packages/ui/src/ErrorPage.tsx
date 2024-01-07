@@ -2,11 +2,8 @@ import React from "react";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
+import {ErrorPageProps} from "./Common";
 import {Text} from "./Text";
-interface ErrorPageProps {
-  error: Error;
-  resetError: () => void;
-}
 
 export class ErrorPage extends React.Component<ErrorPageProps, {}> {
   constructor(props: ErrorPageProps) {

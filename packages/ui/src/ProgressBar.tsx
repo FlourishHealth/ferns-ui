@@ -1,13 +1,8 @@
 import React, {useContext} from "react";
 import {View} from "react-native";
 
-import {Color} from "./Common";
+import {ProgressBarProps} from "./Common";
 import {ThemeContext} from "./Theme";
-
-export interface ProgressBarProps {
-  color: Color;
-  completed: number;
-}
 
 export function ProgressBar({color, completed}: ProgressBarProps): React.ReactElement {
   const {theme} = useContext(ThemeContext);

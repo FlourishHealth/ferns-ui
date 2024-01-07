@@ -1,6 +1,6 @@
 import React, {ReactElement, useEffect, useRef, useState} from "react";
 
-import {AddressInterface, OnChangeCallback} from "./Common";
+import {AddressAutocompleteProps} from "./Common";
 import {GOOGLE_PLACES_API_RESTRICTIONS} from "./Constants";
 import {TextField} from "./TextField";
 import {processAddressComponents} from "./Utilities";
@@ -19,6 +19,7 @@ const loadGooglePlacesScript = (googleMapsApiKey: string, callbackName: any): Pr
     script.defer = true;
     script.onerror = (): any => reject(new Error("Google Maps script failed to load"));
     document.head.appendChild(script);
+    return;
   });
 };
 
@@ -29,14 +30,7 @@ export const WebAddressAutocomplete = ({
   inputValue,
   handleAddressChange,
   handleAutoCompleteChange,
-}: {
-  disabled?: boolean;
-  googleMapsApiKey?: string;
-  includeCounty?: boolean;
-  inputValue: string;
-  handleAddressChange: OnChangeCallback;
-  handleAutoCompleteChange: (value: AddressInterface) => void;
-}): ReactElement => {
+}: AddressAutocompleteProps): ReactElement => {
   const [scriptLoaded, setScriptLoaded] = useState(true);
   const autocompleteInputRef = useRef(null);
 

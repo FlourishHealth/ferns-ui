@@ -3,39 +3,13 @@ import React, {useContext, useState} from "react";
 import {ActivityIndicator, Pressable, View} from "react-native";
 
 import {Box} from "./Box";
-import {ButtonColor, Color, IconName, IconPrefix, TooltipDirection, UnifiedTheme} from "./Common";
+import {ButtonProps, Color, UnifiedTheme} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
-
-export interface ButtonProps {
-  children?: React.ReactElement;
-  text: string;
-  // TODO make this work for all colors
-  color?: ButtonColor | Color;
-  // default gray
-  disabled?: boolean; // default false
-  inline?: boolean; // default false
-  size?: "sm" | "md" | "lg"; // default md
-  type?: "solid" | "ghost" | "outline"; // default solid
-  loading?: boolean;
-  onClick: any;
-  icon?: IconName;
-  iconPrefix?: IconPrefix;
-  iconColor?: ButtonColor | Color;
-  withConfirmation?: boolean;
-  confirmationText?: string;
-  confirmationHeading?: string;
-  shape?: "rounded" | "pill";
-  testID?: string;
-  tooltip?: {
-    text: string;
-    idealDirection?: TooltipDirection;
-  };
-}
 
 const buttonTextColor: {[buttonColor: string]: "white" | "darkGray"} = {
   blue: "white",

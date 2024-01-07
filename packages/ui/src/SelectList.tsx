@@ -1,9 +1,9 @@
 import React, {useContext} from "react";
-import {Platform} from "react-native";
+import {Platform, StyleProp} from "react-native";
 
-import {FieldWithLabelsProps, StyleProp} from "./Common";
+import {FieldWithLabelsProps} from "./Common";
 import {Icon} from "./Icon";
-import {RNPickerSelect} from "./PickerSelect";
+import {RNPickerSelect, RNPickerSelectProps} from "./PickerSelect";
 import {ThemeContext} from "./Theme";
 import {WithLabel} from "./WithLabel";
 
@@ -18,7 +18,7 @@ export interface SelectListProps extends FieldWithLabelsProps {
   disabled?: boolean;
   size?: "md" | "lg";
   placeholder?: string;
-  style?: StyleProp;
+  style?: StyleProp<RNPickerSelectProps["style"]>;
 }
 
 export function SelectList({

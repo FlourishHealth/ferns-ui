@@ -5,17 +5,9 @@ import React from "react";
 import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {OnChangeCallback} from "./Common";
+import {NumberPickerActionSheetProps} from "./Common";
 
 const PICKER_HEIGHT = 104;
-
-interface NumberPickerActionSheetProps {
-  value: string;
-  min: number;
-  max: number;
-  onChange: OnChangeCallback;
-  actionSheetRef: React.RefObject<any>;
-}
 
 interface NumberPickerActionSheetState {}
 

@@ -1,32 +1,9 @@
 import React, {Children, useRef} from "react";
 
 import {Box} from "./Box";
-import {BoxColor} from "./Common";
+import {TableRowProps} from "./Common";
 import {IconButton} from "./IconButton";
 import {useTableContext} from "./tableContext";
-
-interface Props {
-  /**
-   * Must be instances of TableCell or TableHeaderCell.
-   */
-  children: React.ReactNode | React.ReactNode[];
-  /**
-   * Header rows have an extra thick bottom border.
-   */
-  headerRow?: boolean;
-  /**
-   * Whether the row should start expanded or not.
-   */
-  expanded?: boolean;
-  /**
-   * When the row is expanded, the drawerContents are shown. If not
-   */
-  drawerContents?: React.ReactNode | React.ReactNode[];
-  /**
-   * Background color of the row. Defaults to white.
-   */
-  color?: BoxColor;
-}
 
 /**
  * Use TableRow to define a row in Table.
@@ -37,7 +14,7 @@ export function TableRow({
   expanded,
   drawerContents,
   color = "white",
-}: Props): React.ReactElement {
+}: TableRowProps): React.ReactElement {
   const [isExpanded, setIsExpanded] = React.useState(expanded || false);
   const {columns, hasDrawerContents} = useTableContext();
   const rowRef = useRef<typeof Box>(null);

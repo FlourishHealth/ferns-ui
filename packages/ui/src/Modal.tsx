@@ -4,35 +4,12 @@ import ActionSheet, {ActionSheetRef} from "react-native-actions-sheet";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
+import {ModalProps} from "./Common";
 import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {Text} from "./Text";
 import {isNative} from "./Utilities";
-
-interface ModalProps {
-  onDismiss: () => void;
-  visible: boolean;
-  // Alignment of the header. Default is "center".
-  align?: "center" | "start";
-  // Element to render in the middle part of the modal.
-  children?: React.ReactElement;
-  // Element to render in the bottom of the modal. This takes precedence over primaryButton and secondaryButton.
-  footer?: React.ReactElement;
-  heading?: string;
-  size?: "sm" | "md" | "lg";
-  subHeading?: string;
-  // Renders a primary colored button all the way to the right in the footer, if no footer prop is provided.
-  primaryButtonText?: string;
-  primaryButtonOnClick?: (value?: any) => void;
-  primaryButtonDisabled?: boolean;
-  // Renders a gray button to the left of the primary button in the footer, if no footer prop is provided.
-  // Requires primaryButtonText to be defined, but is not required itself.
-  secondaryButtonText?: string;
-  secondaryButtonOnClick?: (value?: any) => void;
-  // Whether to show a close button in the upper left of modals or action sheets.
-  showClose?: boolean;
-}
 
 export const Modal = ({
   onDismiss,

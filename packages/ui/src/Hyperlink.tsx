@@ -29,26 +29,16 @@
 
 import mdurl from "mdurl";
 import React from "react";
-import {Linking, Platform, StyleProp, Text, View} from "react-native";
+import {Linking, Platform, Text, View} from "react-native";
+
+import {HyperlinkProps} from "./Common";
 
 const linkifyLib = require("linkify-it")();
 
 const {OS} = Platform;
 
-interface Props {
-  linkDefault?: boolean;
-  linkify?: any;
-  linkStyle?: StyleProp<any>;
-  linkText?: string | ((url: string) => string);
-  onPress?: (url: string) => void;
-  onLongPress?: (url: string, text: string) => void;
-  injectViewProps?: (url: string) => any;
-  children?: React.ReactNode;
-  style?: StyleProp<any>;
-}
-
 // Leaving this as a class component because it was easier to handle the `pasrse(this)` in `render()`
-class HyperlinkComponent extends React.Component<Props> {
+class HyperlinkComponent extends React.Component<HyperlinkProps> {
   isTextNested = (component: any) => {
     if (!React.isValidElement(component)) throw new Error("Invalid component");
     const {type: {displayName} = {} as any} = component;
@@ -164,7 +154,7 @@ class HyperlinkComponent extends React.Component<Props> {
   }
 }
 
-export function Hyperlink(props: Props) {
+export function Hyperlink(props: HyperlinkProps) {
   const handleLink = (url: string) => {
     const urlObject = mdurl.parse(url);
     urlObject.protocol = urlObject.protocol.toLowerCase();

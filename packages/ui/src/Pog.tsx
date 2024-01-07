@@ -2,7 +2,7 @@
 import React from "react";
 
 import {Box} from "./Box";
-import {AllColors, IconName, IconPrefix, IconSize} from "./Common";
+import {AllColors, PogProps} from "./Common";
 import {Icon} from "./Icon";
 
 const SIZE_NAME_TO_PIXEL = {
@@ -12,18 +12,6 @@ const SIZE_NAME_TO_PIXEL = {
   lg: 48,
   xl: 56,
 };
-
-interface Props {
-  active?: boolean;
-  bgColor?: "transparent" | "transparentDarkGray" | "gray" | "lightGray" | "white" | "blue";
-  focused?: boolean;
-  hovered?: boolean;
-  selected?: boolean;
-  iconColor?: AllColors;
-  icon: IconName;
-  iconPrefix?: IconPrefix;
-  size?: IconSize;
-}
 
 const defaultIconButtonIconColors = {
   blue: "white",
@@ -35,7 +23,7 @@ const defaultIconButtonIconColors = {
   white: "gray",
 };
 
-export default function Pog(props: Props) {
+export default function Pog(props: PogProps) {
   const {
     bgColor = "transparent",
     iconColor,

@@ -2,32 +2,11 @@ import React from "react";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {Color, UnsignedUpTo12} from "./Common";
+import {PageProps} from "./Common";
 import {ErrorBoundary} from "./ErrorBoundary";
 import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
 import {Spinner} from "./Spinner";
-
-interface PageProps {
-  // TODO: figure out navigation
-  navigation: any;
-  scroll?: boolean;
-  loading?: boolean;
-  display?: "flex" | "none" | "block" | "inlineBlock";
-  title?: string;
-  backButton?: boolean;
-  closeButton?: boolean;
-  direction?: "row" | "column";
-  padding?: UnsignedUpTo12;
-  color?: Color;
-  maxWidth?: number | string;
-  keyboardOffset?: number;
-  footer?: any;
-  rightButton?: string;
-  rightButtonOnClick?: () => void;
-  children?: any;
-  onError?: (error: Error, stack: any) => void;
-}
 
 export class Page extends React.Component<PageProps, {}> {
   actionSheetRef: React.RefObject<any> = React.createRef();

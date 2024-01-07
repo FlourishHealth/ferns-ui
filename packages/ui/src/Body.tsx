@@ -1,18 +1,9 @@
-import React, {ReactNode, useContext} from "react";
+import React, {useContext} from "react";
 import {ActivityIndicator, KeyboardAvoidingView} from "react-native";
 
 import {Box} from "./Box";
-import {UnsignedUpTo12} from "./Common";
+import {BodyProps} from "./Common";
 import {ThemeContext} from "./Theme";
-
-export interface BodyProps {
-  scroll?: boolean;
-  loading?: boolean;
-  padding?: UnsignedUpTo12;
-  height?: number | string;
-  avoidKeyboard?: boolean; // default true
-  children?: ReactNode;
-}
 
 export function Body({
   scroll,

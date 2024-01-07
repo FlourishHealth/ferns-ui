@@ -1,20 +1,8 @@
 import React from "react";
 
 import {Box} from "./Box";
-import {AlignItems, AllColors, JustifyContent, ReactChildren, TextSize} from "./Common";
+import {WithLabelProps} from "./Common";
 import {Text} from "./Text";
-
-export interface WithLabelProps {
-  children?: ReactChildren;
-  show?: boolean;
-  label?: string;
-  labelInline?: boolean;
-  labelColor?: AllColors;
-  labelJustifyContent?: JustifyContent;
-  labelAlignItems?: AlignItems;
-  labelPlacement?: "before" | "after";
-  labelSize?: TextSize;
-}
 
 export function WithLabel({
   label,

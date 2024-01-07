@@ -1,19 +1,8 @@
 import React, {useContext} from "react";
 import {Text, View} from "react-native";
 
-import {AllColors} from "./Common";
+import {BadgeProps} from "./Common";
 import {ThemeContext} from "./Theme";
-
-interface BadgeProps {
-  // The text to display inside the badge.
-  title: string;
-  // Position relative to the text. Top should only be used with headings.
-  position?: "top" | "middle"; // default "middle"
-  // Some default badge types. Occasionally, a custom badge might be required for different color schemes.
-  type?: "info" | "error" | "warning" | "success" | "neutral" | "custom"; // default "info
-  // If `type` is set to "custom", a custom theme color should be provided.
-  color?: AllColors;
-}
 
 export function Badge({
   title,

@@ -1,7 +1,6 @@
 import React, {useMemo} from "react";
-import {Styles} from "react-native-google-places-autocomplete";
 
-import {AddressInterface, OnChangeCallback} from "./Common";
+import {AddressAutocompleteProps} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
 import {MobileAddressAutocomplete} from "./MobileAddressAutoComplete";
 import {TextField} from "./TextField";
@@ -16,15 +15,7 @@ export const UnifiedAddressAutoCompleteField = ({
   inputValue,
   handleAddressChange,
   handleAutoCompleteChange,
-}: {
-  disabled?: boolean;
-  googleMapsApiKey?: string;
-  googlePlacesMobileStyles?: Styles;
-  includeCounty?: boolean;
-  inputValue: string;
-  handleAddressChange: OnChangeCallback;
-  handleAutoCompleteChange: (value: AddressInterface) => void;
-}) => {
+}: AddressAutocompleteProps) => {
   const isWeb = typeof document !== "undefined";
   const isValidatedGoogleApiKey = useMemo(
     () => (googleMapsApiKey ? isValidGoogleApiKey(googleMapsApiKey) : false),

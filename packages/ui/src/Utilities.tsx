@@ -3,6 +3,7 @@
 import get from "lodash/get";
 import {Platform} from "react-native";
 
+import {BaseProfile, IconSize} from "./Common";
 import {COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES} from "./Constants";
 
 export function mergeInlineStyles(inlineStyle?: any, newStyle?: any) {
@@ -14,6 +15,30 @@ export function mergeInlineStyles(inlineStyle?: any, newStyle?: any) {
     },
   };
 }
+
+export function isTestUser(profile?: BaseProfile) {
+  return (
+    profile &&
+    profile.email &&
+    (profile.email.indexOf("nang.io") > -1 || profile.email.indexOf("example.com") > -1)
+  );
+}
+
+export const iconNumberToSize = (size = 16): IconSize => {
+  let iconSize: IconSize;
+  if (size < 8) {
+    iconSize = "xs";
+  } else if (size < 12) {
+    iconSize = "sm";
+  } else if (size < 14) {
+    iconSize = "md";
+  } else if (size < 20) {
+    iconSize = "lg";
+  } else {
+    iconSize = "xl";
+  }
+  return iconSize;
+};
 
 /*
 

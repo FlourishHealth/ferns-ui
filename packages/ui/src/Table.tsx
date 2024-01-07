@@ -1,35 +1,9 @@
 import React, {Children, ReactElement} from "react";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
+import {TableProps} from "./Common";
 import {ScrollView} from "./ScrollView";
 import {ColumnSortInterface, TableContextProvider} from "./tableContext";
-
-interface TableProps {
-  /**
-   * Must be instances of TableHeader, TableRow, and/or TableFooter components.
-   */
-  children: React.ReactNode | React.ReactNode[];
-  /**
-   * Width of columns in the table. This is used to calculate the width of each column. Can be numbers for pixels or strings for percentages.
-   */
-  columns: Array<number | string>;
-  /**
-   * Specify a border width for Table: "sm" is 1px.
-   */
-  borderStyle?: "sm" | "none";
-  /**
-   * Use numbers for pixels: `maxHeight={100}` and strings for percentages: `maxHeight="100%"`.
-   */
-  maxHeight?: DimensionValue;
-  /**
-   * If true, the header will stick to the top of the table when scrolling. Defaults to true.
-   */
-  stickyHeader?: boolean;
-  /**
-   * If true, alternate rows will have a light gray background. Defaults to true.
-   */
-  alternateRowBackground?: boolean;
-}
 
 export function Table({
   children,
