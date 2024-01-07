@@ -90,7 +90,8 @@ const getTooltipPosition = ({
   ) {
     return {left: horizontalCenter - tooltipWidth / 2, top: bottom};
   } else {
-    // At this point, we're either trying to place it above or below, and force it into the viewport.
+    // At this point, we're either trying to place it above or below, and force it into the
+    // viewport.
 
     let y = top;
     if ((idealDirection === "bottom" && !overflowBottom) || overflowTop) {
@@ -104,8 +105,8 @@ const getTooltipPosition = ({
     ) {
       return {left: horizontalCenter - tooltipWidth / 2, top: y};
     }
-    // Failing that, if it fits on the left, put it there, otherwise to the right. We know it's smaller than the
-    // viewport.
+    // Failing that, if it fits on the left, put it there, otherwise to the right.
+    // We know it's smaller than the viewport.
     else if (overflowLeft(horizontalCenter - tooltipWidth)) {
       return {left: TOOLTIP_OVERFLOW_PADDING, top: y};
     } else {
@@ -209,8 +210,9 @@ export const Tooltip = (props: TooltipProps) => {
     }, [children.props]),
   };
 
-  // Allow disabling tooltips when there is no string, otherwise you need to wrap the children in a function to
-  // determine if there should be a tooltip or not, which gets messy.
+  // Allow disabling tooltips when there is no string,
+  // otherwise you need to wrap the children in a function to determine if there should be a tooltip
+  // or not, which gets messy.
   if (!text) {
     return children;
   }

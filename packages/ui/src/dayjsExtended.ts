@@ -7,4 +7,5 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(relativeTime);
 
+// eslint-disable-next-line import/no-default-export
 export default dayjs;

@@ -155,14 +155,12 @@ function CalendarHeader({
   );
 }
 
-// For mobile, renders all components in an action sheet.
-// For web, renders all components in a modal.
-// For mobile:
-//   If mode is "time", renders a spinner picker for time picker on both platforms.
-//   If mode is "date", renders our custom calendar on both platforms.
-//   If mode is "datetime", renders a spinner picker for time picker and our custom calendar on both platforms.
-// For web, renders a simplistic text box for time picker and a calendar for date picker in a modal
-//   In the future, web time picker should be a typeahead dropdown like Google calendar.
+// For mobile, renders all components in an action sheet. For web, renders all components in a
+// modal. For mobile: If mode is "time", renders a spinner picker for time picker on both platforms.
+// If mode is "date", renders our custom calendar on both platforms. If mode is "datetime",
+// renders a spinner picker for time picker and our custom calendar on both platforms. For web,
+// renders a simplistic text box for time picker and a calendar for date picker in a modal In the
+// future, web time picker should be a typeahead dropdown like Google calendar.
 export function DateTimeActionSheet({
   // actionSheetRef,
   mode,
@@ -356,8 +354,8 @@ export function DateTimeActionSheet({
         markedDates={markedDates}
         onDayPress={(day) => {
           setDate(day.dateString);
-          // If mode is just date, we can shortcut and close right away. time and datetime need to wait for the
-          // primary button.
+          // If mode is just date, we can shortcut and close right away.
+          // time and datetime need to wait for the primary button.
           if (mode === "date") {
             onChange({value: day.dateString});
             onDismiss();

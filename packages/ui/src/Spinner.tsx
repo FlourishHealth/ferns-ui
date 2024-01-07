@@ -6,7 +6,8 @@ import {SpinnerProps} from "./Common";
 export function Spinner({size, color}: SpinnerProps): ReactElement | null {
   const [show, setShow] = useState(false);
 
-  // The delay is for perceived performance. You don't want to show a spinner when you're doing a quick action.
+  // The delay is for perceived performance. You don't want to show a spinner when you're doing a
+  // quick action.
   useEffect(() => {
     const timer = setTimeout(() => setShow(true), 300);
     return () => clearTimeout(timer);

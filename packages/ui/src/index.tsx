@@ -353,8 +353,8 @@ export interface OptionsLayout {
    */
   backgroundColor?: Color;
   /**
-   * Set background color only for components, helps reduce overdraw if background color is set in default options.
-   * #### (Android specific)
+   * Set background color only for components, helps reduce overdraw if background color is set in
+   * default options. #### (Android specific)
    */
   componentBackgroundColor?: Color;
   /**
@@ -1016,8 +1016,8 @@ export interface OverlayOptions {
 }
 export interface ModalOptions {
   /**
-   * Control whether this modal should be dismiss using swipe gesture when the modalPresentationStyle = 'pageSheet'
-   * #### (iOS specific)
+   * Control whether this modal should be dismiss using swipe gesture when the
+   * modalPresentationStyle = 'pageSheet' #### (iOS specific)
    */
   swipeToDismiss?: boolean;
 }
@@ -1194,7 +1194,8 @@ export interface StackAnimationOptions {
    */
   content?: ViewAnimationOptions;
   /**
-   * Animations to be applied on elements which are shared between the appearing and disappearing screens
+   * Animations to be applied on elements which are shared between the appearing and disappearing
+   * screens
    */
   sharedElementTransitions?: SharedElementTransition[];
   /**

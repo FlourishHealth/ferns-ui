@@ -37,7 +37,8 @@ const linkifyLib = require("linkify-it")();
 
 const {OS} = Platform;
 
-// Leaving this as a class component because it was easier to handle the `pasrse(this)` in `render()`
+// Leaving this as a class component because it was easier to handle the `pasrse(this)` in
+// `render()`
 class HyperlinkComponent extends React.Component<HyperlinkProps> {
   isTextNested = (component: any) => {
     if (!React.isValidElement(component)) throw new Error("Invalid component");

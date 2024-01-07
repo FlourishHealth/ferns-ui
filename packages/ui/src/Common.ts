@@ -1864,6 +1864,7 @@ export interface IconProps {
   size?: IconSize;
   iconStyle?: any;
   containerStyle?: any;
+  testID?: string;
 }
 
 export type TooltipDirection = "top" | "bottom" | "left" | "right";
@@ -1995,6 +1996,7 @@ export interface HeadingProps {
   overflow?: "normal" | "breakWord"; // default "breakWord"
   size?: "sm" | "md" | "lg";
   truncate?: boolean; // default false
+  testID?: string;
 }
 
 export interface MetaProps {
@@ -2071,7 +2073,8 @@ export interface SplitPageProps {
    */
   children?: ReactChild | ReactChild[] | null;
   /**
-   * The names of the tabs that will be generated per ReactChild provided. Tabs will not be generated if renderContent is provided in place of children
+   * The names of the tabs that will be generated per ReactChild provided.
+   * Tabs will not be generated if renderContent is provided in place of children
    */
   tabs?: string[];
   // The select limit for the number of tabs that can be selected
@@ -2125,8 +2128,8 @@ export interface AddressInterface {
   countyCode?: string;
 }
 
-// TODO: Tighten up type to exclude string, which is almost never an acceptable type for React Native children
-//  (except Heading or Text for example.).
+// TODO: Tighten up type to exclude string, which is almost never an acceptable type for React
+// Native children (except Heading or Text for example.).
 export type ReactChild = ReactNode;
 export type ReactChildren = ReactNode;
 export type WithChildren<P> = P & {children?: ReactNode};
@@ -2185,7 +2188,8 @@ export type ActionSheetProps = {
   animated?: boolean;
 
   /**
-   * Use if you want to show the ActionSheet Partially on Opening. **Requires `gestureEnabled=true`**
+   * Use if you want to show the ActionSheet Partially on Opening.
+   * **Requires `gestureEnabled=true`**
 
    | Type | Required |
    | ---- | -------- |
@@ -2197,7 +2201,8 @@ export type ActionSheetProps = {
   initialOffsetFromBottom?: number;
 
   /**
-   * When touch ends and user has not moved farther from the set springOffset, the ActionSheet will return to previous position.
+   * When touch ends and user has not moved farther from the set springOffset,
+   * the ActionSheet will return to previous position.
 
    | Type | Required |
    | ---- | -------- |
@@ -2231,7 +2236,9 @@ export type ActionSheetProps = {
   indicatorColor?: string;
 
   /**
-   * Normally when the ActionSheet is fully opened, a small portion from the bottom is hidden by default. Use this prop if you want the ActionSheet to hover over the bottom of screen and not hide a little behind it.
+   * Normally when the ActionSheet is fully opened, a small portion from the bottom is hidden by
+   * default. Use this prop if you want the ActionSheet to hover over the bottom of screen and not
+   * hide a little behind it.
 
    | Type | Required |
    | ---- | -------- |
@@ -2391,7 +2398,8 @@ export type ActionSheetProps = {
   bounceOnOpen?: boolean;
 
   /**
-   * Setting the keyboard persistence of the ScrollView component, should be one of "never", "always", or "handled"
+   * Setting the keyboard persistence of the ScrollView component, should be one of "never",
+   * "always", or "handled"
 
    | Type | Required |
    | ---- | -------- |
@@ -2548,7 +2556,8 @@ export interface AvatarProps {
    */
   avatarImageWidth?: number;
   /**
-   * Resize image height. If avatarImageWidth is also provided, the image aspect ratio may be distorted.
+   * Resize image height. If avatarImageWidth is also provided, the image aspect ratio may be
+   * distorted.
    */
   avatarImageHeight?: number;
   /**
@@ -2561,7 +2570,8 @@ export interface AvatarProps {
   status?: AvatarStatus;
   /**
    * If true, the status indicator will show a mobile icon instead of a dot, if status is one of
-   * "online", "away", "offline", or "doNotDisturb". Will show the normal status icon in other cases.
+   * "online", "away", "offline", or "doNotDisturb". Will show the normal status icon in other
+   * cases.
    */
   statusMobile?: boolean;
   /**
@@ -2579,7 +2589,8 @@ export interface BadgeProps {
   title: string;
   // Position relative to the text. Top should only be used with headings.
   position?: "top" | "middle"; // default "middle"
-  // Some default badge types. Occasionally, a custom badge might be required for different color schemes.
+  // Some default badge types. Occasionally, a custom badge might be required for different color
+  // schemes.
   type?: "info" | "error" | "warning" | "success" | "neutral" | "custom"; // default "info
   // If `type` is set to "custom", a custom theme color should be provided.
   color?: AllColors;
@@ -2757,6 +2768,7 @@ export interface IconButtonProps {
   };
   indicator?: boolean;
   indicatorStyle?: {position: IndicatorDirection; color: AllColors};
+  testID?: string;
 }
 
 export interface InfoTooltipButtonProps {
@@ -2771,17 +2783,19 @@ export interface ModalProps {
   align?: "center" | "start";
   // Element to render in the middle part of the modal.
   children?: React.ReactElement;
-  // Element to render in the bottom of the modal. This takes precedence over primaryButton and secondaryButton.
+  // Element to render in the bottom of the modal. This takes precedence over primaryButton and
+  // secondaryButton.
   footer?: React.ReactElement;
   heading?: string;
   size?: "sm" | "md" | "lg";
   subHeading?: string;
-  // Renders a primary colored button all the way to the right in the footer, if no footer prop is provided.
+  // Renders a primary colored button all the way to the right in the footer, if no footer prop is
+  // provided.
   primaryButtonText?: string;
   primaryButtonOnClick?: (value?: any) => void;
   primaryButtonDisabled?: boolean;
-  // Renders a gray button to the left of the primary button in the footer, if no footer prop is provided.
-  // Requires primaryButtonText to be defined, but is not required itself.
+  // Renders a gray button to the left of the primary button in the footer, if no footer prop is
+  // provided. Requires primaryButtonText to be defined, but is not required itself.
   secondaryButtonText?: string;
   secondaryButtonOnClick?: (value?: any) => void;
   // Whether to show a close button in the upper left of modals or action sheets.
@@ -2845,7 +2859,8 @@ export interface SideDrawerProps {
   onClose?: () => void;
   onOpen?: () => void;
   drawerType?: "front" | "back" | "slide" | "permanent";
-  // Content that is wrapped by the drawer. The drawer will use the height of the child it wraps. Can be overwritten via styles prop
+  // Content that is wrapped by the drawer. The drawer will use the height of the child it wraps.
+  // Can be overwritten via styles prop
   children?: ReactElement;
   drawerStyles?: StyleProp<ViewStyle>;
 }
@@ -2861,7 +2876,8 @@ export interface TableProps {
    */
   children: React.ReactNode | React.ReactNode[];
   /**
-   * Width of columns in the table. This is used to calculate the width of each column. Can be numbers for pixels or strings for percentages.
+   * Width of columns in the table. This is used to calculate the width of each column.
+   * Can be numbers for pixels or strings for percentages.
    */
   columns: Array<number | string>;
   /**
@@ -2888,11 +2904,13 @@ export interface TableHeaderProps {
    */
   children: React.ReactNode | React.ReactNode[];
   /**
-   * Display `visuallyHidden` ensures the component is visually hidden but still is read by screen readers.
+   * Display `visuallyHidden` ensures the component is visually hidden but still is read by screen
+   * readers.
    */
   display?: "tableHeaderGroup" | "visuallyHidden";
   /**
-   * If true, the table header will be sticky and the table body will be scrollable. Not yet implemented.
+   * If true, the table header will be sticky and the table body will be scrollable. Not yet
+   * implemented.
    */
   sticky?: boolean;
   color?: BoxColor;

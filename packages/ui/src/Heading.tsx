@@ -10,7 +10,13 @@ const fontSizes = {
   lg: 36,
 };
 
-export const Heading = ({align, children, color, size}: HeadingProps): React.ReactElement => {
+export const Heading = ({
+  align,
+  children,
+  color,
+  size,
+  testID,
+}: HeadingProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
   const style: StyleProp<TextStyle> = {};
@@ -29,7 +35,7 @@ export const Heading = ({align, children, color, size}: HeadingProps): React.Rea
 
   const lines = 0;
   return (
-    <NativeText numberOfLines={lines} style={style}>
+    <NativeText numberOfLines={lines} style={style} testID={testID}>
       {children}
     </NativeText>
   );

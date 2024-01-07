@@ -192,8 +192,8 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
         onHoverStart={() => setHovered(true)}
       >
         {src && isImageLoaded ? (
-          // TODO: Make our Image component rounding work so that we can use it for Avatar. Currently it creates an
-          // unrounded box around the Image.
+          // TODO: Make our Image component rounding work so that we can use it for Avatar.
+          // Currently it creates an unrounded box around the Image.
           <Image
             resizeMode={imageFit as ImageResizeMode}
             source={{uri: src, cache: "force-cache"}}
@@ -238,8 +238,8 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
   }
 
   if (status) {
-    // Need to wrap the tooltip so it doesn't expand to 100% width and render the tooltip off. Don't show the
-    // tooltips on mobile because they intercept the edit avatar clicks.
+    // Need to wrap the tooltip so it doesn't expand to 100% width and render the tooltip off.
+    // Don't show the tooltips on mobile because they intercept the edit avatar clicks.
     return (
       <Box width={width}>
         <Tooltip idealDirection="top" text={isMobileDevice() ? undefined : status}>
