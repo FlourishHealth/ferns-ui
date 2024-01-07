@@ -125,7 +125,8 @@ export const toProps = ({
 
 Transforms
 
-These are a collection of a few functors that take values and returns Style's. OMG, I used the word functor - it's really just a fancy word for function.
+  These are a collection of a few functors that take values and returns Style's. OMG,
+  I used the word functor - it's really just a fancy word for function.
 
 */
 type Functor<T> = (n: T) => Style;

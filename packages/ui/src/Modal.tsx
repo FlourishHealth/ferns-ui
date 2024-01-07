@@ -164,7 +164,7 @@ export const Modal = ({
     return (
       <ActionSheet ref={actionSheetRef} onClose={onDismiss}>
         <Box direction="row" marginBottom={2} paddingX={2} paddingY={2} width="100%">
-          <Box marginRight={4}>
+          <Box marginRight={4} minWidth={50}>
             {Boolean(showClose) && (
               <IconButton
                 accessibilityLabel="close"
@@ -197,7 +197,7 @@ export const Modal = ({
             )}
           </Box>
 
-          <Box alignSelf="start" height="100%" justifyContent="start">
+          <Box alignSelf="start" height="100%" justifyContent="start" marginLeft={4} minWidth={50}>
             {Boolean(primaryButtonText) && (
               <Button
                 color="primary"

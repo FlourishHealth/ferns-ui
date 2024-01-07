@@ -23,7 +23,7 @@ const defaultIconButtonIconColors = {
   white: "gray",
 };
 
-export default function Pog(props: PogProps) {
+export function Pog(props: PogProps) {
   const {
     bgColor = "transparent",
     iconColor,

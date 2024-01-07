@@ -85,6 +85,7 @@ export function TextField({
   style,
   onEnter,
   onSubmitEditing,
+  testID,
 }: TextFieldProps): ReactElement {
   const {theme} = useContext(ThemeContext);
 
@@ -195,7 +196,8 @@ export function TextField({
   let displayValue = value;
   if (displayValue) {
     if (type === "date") {
-      // We get off by one errors because UTC midnight might be yesterday. So we add the timezone offset.
+      // We get off by one errors because UTC midnight might be yesterday. So we add the timezone
+      // offset.
       if (
         dayjs.utc(value).hour() === 0 &&
         dayjs.utc(value).minute() === 0 &&
@@ -226,8 +228,8 @@ export function TextField({
       }
     }
   } else {
-    // Set some default values for modal-edited fields so we don't go from uncontrolled to controlled when setting
-    // the date.
+    // Set some default values for modal-edited fields so we don't go from uncontrolled to
+    // controlled when setting the date.
     if (["date", "datetime", "time"].includes(type)) {
       displayValue = "";
     }
@@ -290,6 +292,7 @@ export function TextField({
               returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
               secureTextEntry={type === "password"}
               style={defaultTextInputStyles}
+              testID={testID}
               textContentType={textContentType}
               underlineColorAndroid="transparent"
               value={displayValue}

@@ -25,6 +25,7 @@ export const IconButton = forwardRef(
       tooltip,
       indicator,
       indicatorStyle = {position: "bottomRight", color: "primary"},
+      testID,
     }: IconButtonProps,
     ref
   ) => {
@@ -92,6 +93,7 @@ export const IconButton = forwardRef(
               justifyContent: "center",
               alignItems: "center",
             }}
+            testID={testID}
             onPress={async () => {
               await Unifier.utils.haptic();
               if (withConfirmation && !showConfirmation) {
@@ -119,9 +121,9 @@ export const IconButton = forwardRef(
       );
     }
 
-    // Only add for web. This doesn't make much sense for mobile, since the action would be performed for the button
-    // as well as the tooltip appearing.
-    // TODO: Add tooltip info button next to the icon button on mobile.
+    // Only add for web. This doesn't make much sense for mobile,
+    // since the action would be performed for the button as well as the tooltip appearing. TODO:
+    // Add tooltip info button next to the icon button on mobile.
     if (tooltip && Platform.OS === "web") {
       return (
         <Tooltip idealDirection={tooltip.idealDirection} text={tooltip.text}>

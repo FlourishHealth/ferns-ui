@@ -16,12 +16,14 @@ export function Table({
   const arrayChildren = Children.toArray(children);
   const [sortColumn, setSortColumn] = React.useState<ColumnSortInterface | undefined>(undefined);
 
-  // Check if any of the rows below have a drawerContents prop to see if we need to render space for the caret.
+  // Check if any of the rows below have a drawerContents prop to see if we need to render space
+  // for the caret.
   const hasDrawerContents = arrayChildren.some((child) => {
     return (child as ReactElement).props?.drawerContents;
   });
 
-  // Calculate the total width of the table. If the table has only number widths, calculate a width. Otherwise use 100%.
+  // Calculate the total width of the table. If the table has only number widths, calculate a
+  // width. Otherwise use 100%.
   let width: DimensionValue;
   if (columns.every((column) => typeof column === "number")) {
     width = columns.reduce((acc, curr) => {

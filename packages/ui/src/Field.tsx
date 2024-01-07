@@ -32,6 +32,7 @@ export const Field = ({
   includeCounty = false,
   googleMapsApiKey,
   googlePlacesMobileStyles,
+  testID,
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
@@ -57,6 +58,7 @@ export const Field = ({
           id={name}
           options={options}
           placeholder={placeholder}
+          testID={testID}
           value={value}
           onChange={onChange}
         />
@@ -86,6 +88,7 @@ export const Field = ({
                   disabled={disabled}
                   name={name}
                   size="sm"
+                  testID={`${testID}-${o.value}`}
                   onChange={(result) => {
                     let newValue;
                     if (result.value) {
@@ -113,6 +116,7 @@ export const Field = ({
           id={name}
           placeholder={Boolean(value) ? "" : placeholder}
           rows={rows}
+          testID={testID}
           value={String(value)}
           onChange={(result) => onChange(result.value)}
         />
@@ -124,6 +128,7 @@ export const Field = ({
           id={name}
           name={name}
           switched={Boolean(value)}
+          testID={testID}
           onChange={(result) => handleSwitchChange(result)}
         />
       );
@@ -133,6 +138,7 @@ export const Field = ({
           disabled={disabled}
           id={name}
           placeholder={placeholder}
+          testID={testID}
           type={type as "date" | "time" | "datetime"}
           value={value}
           onChange={(result) => onChange(result.value)}
@@ -159,11 +165,13 @@ export const Field = ({
             handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
             includeCounty={includeCounty}
             inputValue={address1}
+            testID={`${testID}-address1`}
           />
           <TextField
             disabled={disabled}
             id="address2"
             label="Apt, suite, etc"
+            testID={`${testID}-address2`}
             type="text"
             value={address2}
             onChange={(result) => handleAddressChange("address2", result.value)}
@@ -172,6 +180,7 @@ export const Field = ({
             disabled={disabled}
             id="city"
             label="City"
+            testID={`${testID}-city`}
             type="text"
             value={city}
             onChange={(result) => handleAddressChange("city", result.value)}
@@ -183,6 +192,7 @@ export const Field = ({
             options={USSTATESLIST}
             placeholder="Select state"
             style={{borderRadius: 16}}
+            testID={`${testID}-state`}
             value={state}
             onChange={(result) => handleAddressChange("state", result)}
           />
@@ -190,6 +200,7 @@ export const Field = ({
             disabled={disabled}
             id="zipcode"
             label="Zipcode"
+            testID={`${testID}-zip`}
             type="text"
             value={zipcode}
             onChange={(result) => handleAddressChange("zipcode", result.value)}
@@ -200,6 +211,7 @@ export const Field = ({
                 disabled={disabled}
                 id="countyName"
                 label="County Name"
+                testID={`${testID}-county`}
                 type="text"
                 value={countyName}
                 onChange={(result) => handleAddressChange("countyName", result.value)}
@@ -208,6 +220,7 @@ export const Field = ({
                 disabled={disabled}
                 id="countyCode"
                 label="County Code"
+                testID={`${testID}-county-code`}
                 type="number"
                 value={countyCode}
                 onChange={(result) => handleAddressChange("countyCode", result.value)}
@@ -236,6 +249,7 @@ export const Field = ({
           disabled={disabled}
           id={name}
           placeholder={placeholder}
+          testID={testID}
           type="number"
           value={value}
           onChange={(result) => onChange(result.value)}
@@ -271,6 +285,7 @@ export const Field = ({
           disabled={disabled}
           id={name}
           placeholder={placeholder}
+          testID={testID}
           type={
             tfType as
               | "date"

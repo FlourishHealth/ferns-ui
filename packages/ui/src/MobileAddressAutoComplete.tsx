@@ -20,6 +20,7 @@ export const MobileAddressAutocomplete = ({
   styles,
   handleAddressChange,
   handleAutoCompleteChange,
+  testID,
 }: AddressAutocompleteProps) => {
   const {theme} = useContext(ThemeContext);
   const ref = useRef<GooglePlacesAutocompleteRef | null>(null);
@@ -62,6 +63,7 @@ export const MobileAddressAutocomplete = ({
         disabled={disabled}
         id="address1"
         label="Street Address"
+        testID={testID}
         type="text"
         value={inputValue}
         onChange={(result) => handleAddressChange(result)}

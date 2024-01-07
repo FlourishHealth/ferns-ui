@@ -26,7 +26,8 @@
       "sourceType": "module"
     },
     "extends": [
-      "ferns"
+      "ferns",
+      "plugin:comment-length/recommended"
     ],
     "settings": {
       "react": {
@@ -54,14 +55,16 @@
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^8.55.0",
-    "eslint-config-ferns": "^0.4.8",
+    "eslint-config-ferns": "^0.5.1",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-comment-length": "^1.7.2",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-lodash": "^7.1.0",
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-native": "^4.1.0",
+    "eslint-plugin-react-perf": "^3.3.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "3.0.0",
     "expo": "^49.0.21",

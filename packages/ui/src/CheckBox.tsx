@@ -17,6 +17,7 @@ export function CheckBox({
   onChange,
   onClick,
   indeterminate,
+  testID,
 }: CheckBoxProps): React.ReactElement {
   if (checked && indeterminate) {
     console.error("CheckBox cannot be checked and indeterminate at the same time");
@@ -47,6 +48,7 @@ export function CheckBox({
         color={bgColor}
         height={size === "sm" ? 16 : 24}
         rounding={radio ? "circle" : size === "sm" ? 2 : 3}
+        testID={testID}
         width={size === "sm" ? 16 : 24}
         onClick={doOnClick}
       >

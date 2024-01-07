@@ -51,8 +51,8 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
   useImperativeHandle(ref, () => ({
     scrollToEnd: () => {
       if (scrollRef && scrollRef.current) {
-        // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout to
-        // avoid this, but it works well enough.
+        // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout
+        // to avoid this, but it works well enough.
         setTimeout(() => {
           scrollRef && scrollRef.current && (scrollRef.current as any).scrollToEnd();
         }, 50);
@@ -61,8 +61,8 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
 
     scrollTo: (y: number) => {
       if (scrollRef && scrollRef.current) {
-        // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout to
-        // avoid this, but it works well enough.
+        // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout
+        // to avoid this, but it works well enough.
         setTimeout(() => {
           scrollRef && scrollRef.current && (scrollRef.current as any).scrollTo({y});
         }, 50);

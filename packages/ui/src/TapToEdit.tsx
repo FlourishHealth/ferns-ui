@@ -148,8 +148,8 @@ export const TapToEdit = ({
       if (fieldProps?.type === "boolean") {
         displayValue = value ? "Yes" : "No";
       } else if (fieldProps?.type === "percent") {
-        // Prevent floating point errors from showing up by using parseFloat and precision. Pass through parseFloat again
-        // to trim off insignificant zeroes.
+        // Prevent floating point errors from showing up by using parseFloat and precision.
+        // Pass through parseFloat again to trim off insignificant zeroes.
         displayValue = `${parseFloat(parseFloat(String(value * 100)).toPrecision(7))}%`;
       } else if (fieldProps?.type === "currency") {
         // TODO: support currencies other than USD in Field and related components.
