@@ -3,10 +3,12 @@ import {Linking} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {BoxProps, FieldProps} from "./Common";
+import {TapToEditProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
+import {useOpenAPISpec} from "./OpenAPIContext";
 import {Text} from "./Text";
+import {Tooltip} from "./Tooltip";
 
 export function formatAddress(address: any, asString = false): string {
   let city = "";
@@ -46,26 +48,6 @@ export function formatAddress(address: any, asString = false): string {
   }
 }
 
-export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
-  title: string;
-  value: any;
-  // Not required if not editable.
-  setValue?: (value: any) => void;
-  // Not required if not editable.
-  onSave?: (value: any) => void | Promise<void>;
-  // Defaults to true
-  editable?: boolean;
-  // enable edit mode from outside the component
-  isEditing?: boolean;
-  // For changing how the non-editing row renders
-  rowBoxProps?: Partial<BoxProps>;
-  transform?: (value: any) => string;
-  fieldComponent?: (setValue: () => void) => ReactElement;
-  withConfirmation?: boolean;
-  confirmationText?: string;
-  confirmationHeading?: string;
-}
-
 export const TapToEdit = ({
   value,
   setValue,
@@ -80,10 +62,20 @@ export const TapToEdit = ({
   withConfirmation = false,
   confirmationText = "Are you sure you want to save your changes?",
   confirmationHeading = "Confirm",
+  description: propsDescription,
+  openApiModel,
+  openApiField,
+  showDescriptionAsTooltip = false,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
   const [initialValue] = useState(value);
+  const {getModelField} = useOpenAPISpec();
+
+  let description: string | undefined = propsDescription;
+  if (!description && openApiModel && openApiField) {
+    description = getModelField(openApiModel, openApiField)?.description;
+  }
 
   if (editable && !setValue) {
     throw new Error("setValue is required if editable is true");
@@ -96,6 +88,7 @@ export const TapToEdit = ({
           fieldComponent(setValue as any)
         ) : (
           <Field
+            helperText={description}
             label={title}
             placeholder={placeholder}
             value={value}
@@ -182,7 +175,23 @@ export const TapToEdit = ({
     const openLink = async (): Promise<void> => {
       if (fieldProps?.type === "url") {
         await Linking.openURL(value);
+      } else if (fieldProps?.type === "address") {
+        await Linking.openURL(
+          `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+            formatAddress(value, true)
+          )}`
+        );
       }
+    };
+    const isClickable = fieldProps?.type === "url" || fieldProps?.type === "address";
+
+    const renderTitleDescription = (): React.ReactElement => {
+      return (
+        <Box flex="grow">
+          <Text weight="bold">{title}:</Text>
+          {Boolean(description && !showDescriptionAsTooltip) && <Text>{description}</Text>}
+        </Box>
+      );
     };
 
     return (
@@ -194,29 +203,18 @@ export const TapToEdit = ({
         width="100%"
         {...rowBoxProps}
       >
-        <Box>
-          <Text weight="bold">{title}:</Text>
-          {fieldProps?.type === "address" && (
-            <Box
-              onClick={
-                () =>
-                  Linking.openURL(
-                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      formatAddress(value, true)
-                    )}`
-                  )
-                // eslint-disable-next-line react/jsx-curly-newline
-              }
-            >
-              <Text color="blue" underline={fieldProps?.type === "address"}>
-                Google Maps
-              </Text>
-            </Box>
-          )}
-        </Box>
-        <Box direction="row">
-          <Box onClick={fieldProps?.type === "url" ? openLink : undefined}>
-            <Text underline={fieldProps?.type === "url"}>{displayValue}</Text>
+        {showDescriptionAsTooltip ? (
+          <Tooltip idealDirection="top" text={description}>
+            {renderTitleDescription()}
+          </Tooltip>
+        ) : (
+          renderTitleDescription()
+        )}
+        <Box direction="row" justifyContent="start" marginLeft={2}>
+          <Box justifyContent="start" onClick={isClickable ? openLink : undefined}>
+            <Text align="right" underline={isClickable}>
+              {displayValue}
+            </Text>
           </Box>
           {editable && (
             <Box marginLeft={2} onClick={(): void => setEditing(true)}>

@@ -3008,3 +3008,27 @@ export interface WithLabelProps {
   labelPlacement?: "before" | "after";
   labelSize?: TextSize;
 }
+
+export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
+  title: string;
+  value: any;
+  // Not required if not editable.
+  setValue?: (value: any) => void;
+  // Not required if not editable.
+  onSave?: (value: any) => void | Promise<void>;
+  // Defaults to true
+  editable?: boolean;
+  // enable edit mode from outside the component
+  isEditing?: boolean;
+  // For changing how the non-editing row renders
+  rowBoxProps?: Partial<BoxProps>;
+  transform?: (value: any) => string;
+  fieldComponent?: (setValue: () => void) => ReactElement;
+  withConfirmation?: boolean;
+  confirmationText?: string;
+  confirmationHeading?: string;
+  description?: string;
+  openApiModel?: string;
+  openApiField?: string;
+  showDescriptionAsTooltip?: boolean;
+}
