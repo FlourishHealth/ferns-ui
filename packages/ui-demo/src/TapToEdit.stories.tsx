@@ -33,6 +33,20 @@ const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
+        key="text"
+        name="text"
+        openApiField="name"
+        openApiModel="users"
+        setValue={setText}
+        showDescriptionAsTooltip
+        title="Text Tooltip"
+        type="text"
+        value={text}
+        onSave={(value): void => {
+          setText(value);
+        }}
+      />
+      <TapToEdit
         key="bool"
         name="bool"
         openApiField="staffRoles.SuperUser"
