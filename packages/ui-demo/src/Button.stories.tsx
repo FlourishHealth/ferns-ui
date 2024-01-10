@@ -165,6 +165,16 @@ const inlineButtons = () => {
   );
 };
 
+const multilineButtons = () => (
+  <Box maxWidth={400} paddingX={8} paddingY={8}>
+    <Button
+      color="primary"
+      text={"Here is some text\nAnd a second line which is much longer"}
+      onClick={() => {}}
+    />
+  </Box>
+);
+
 export const ButtonStories = {
   title: "Button",
   component: Button,
@@ -175,5 +185,6 @@ export const ButtonStories = {
     Outline: () => allColorButtons({type: "outline"}),
     Confirmation: () => confirmationButton({}),
     Inline: () => inlineButtons(),
+    Multiline: () => multilineButtons(),
   },
 };

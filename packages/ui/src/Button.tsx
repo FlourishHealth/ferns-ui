@@ -162,6 +162,7 @@ export function Button({
           {Boolean(children) && children}
           {Boolean(text) && (
             <Text
+              align="center"
               color={getTextColor(color as Color)}
               font="button"
               inline={inline}
