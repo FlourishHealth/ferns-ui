@@ -24,6 +24,7 @@ export const Banner = ({
   iconName,
   textColor = "white",
   negativeXMargin = 0,
+  width,
   shape,
   type = "dismiss",
   onClick,
@@ -101,13 +102,11 @@ export const Banner = ({
       }}
       direction="row"
       justifyContent="between"
-      marginBottom={3}
-      marginTop={3}
       paddingX={3}
       paddingY={2}
       rounding={shape}
       shadow
-      width={Unifier.utils.dimensions().width || "100%"}
+      width={width || Unifier.utils.dimensions().width || "100%"}
       onClick={type === "permanent" ? undefined : dismiss}
     >
       {iconName && (
