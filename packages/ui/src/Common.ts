@@ -2598,16 +2598,17 @@ export interface BadgeProps {
 
 export interface BannerProps {
   id: string;
-  dismissible?: boolean;
-  text: string;
-  subtext?: string;
-  iconName?: IconName;
   color?: BoxColor;
-  textColor?: TextColor;
+  dismissible?: boolean;
+  iconName?: IconName;
   negativeXMargin?: number;
-  shape?: Rounding;
-  type?: "dismiss" | "action" | "permanent";
   onClick?: () => void;
+  shape?: Rounding;
+  subtext?: string;
+  text: string;
+  textColor?: TextColor;
+  type?: "dismiss" | "action" | "permanent";
+  width?: number | string;
 }
 
 export interface BodyProps {
