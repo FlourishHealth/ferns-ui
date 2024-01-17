@@ -105,6 +105,15 @@ export const IconButtonStories = {
           />
           <IconButtonDisplay
             accessibilityLabel="label"
+            bgColor="primary"
+            icon="plus"
+            iconColor="white"
+            prefix="fas"
+            title="Active State White Icon with Primary Background"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
             bgColor="gray"
             icon="plus"
             iconColor="primary"
