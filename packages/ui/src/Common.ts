@@ -2756,6 +2756,7 @@ export interface IconButtonProps {
     | "gray"
     | "lightGray"
     | "white"
+    | "primary" // used for active states
     | "background"
     | "backgroundSecondary"; // default transparent
   disabled?: boolean;
