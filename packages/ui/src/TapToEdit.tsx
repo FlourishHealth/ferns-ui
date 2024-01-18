@@ -70,12 +70,12 @@ export const TapToEdit = ({
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
   const [initialValue] = useState(value);
-  const {getModelField} = useOpenAPISpec();
+  // const {getModelField} = useOpenAPISpec();
 
   let description: string | undefined = propsDescription;
-  if (!description && openApiModel && openApiField) {
-    description = getModelField(openApiModel, openApiField)?.description;
-  }
+  // if (!description && openApiModel && openApiField) {
+  //   description = getModelField(openApiModel, openApiField)?.description;
+  // }
 
   if (editable && !setValue) {
     throw new Error("setValue is required if editable is true");
