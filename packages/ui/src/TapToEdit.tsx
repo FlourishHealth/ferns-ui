@@ -6,7 +6,7 @@ import {Button} from "./Button";
 import {TapToEditProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
-import {useOpenAPISpec} from "./OpenAPIContext";
+// import {useOpenAPISpec} from "./OpenAPIContext";
 import {Text} from "./Text";
 import {Tooltip} from "./Tooltip";
 
@@ -63,8 +63,8 @@ export const TapToEdit = ({
   confirmationText = "Are you sure you want to save your changes?",
   confirmationHeading = "Confirm",
   description: propsDescription,
-  openApiModel,
-  openApiField,
+  // openApiModel,
+  // openApiField,
   showDescriptionAsTooltip = false,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
@@ -72,7 +72,7 @@ export const TapToEdit = ({
   const [initialValue] = useState(value);
   // const {getModelField} = useOpenAPISpec();
 
-  let description: string | undefined = propsDescription;
+  const description: string | undefined = propsDescription;
   // if (!description && openApiModel && openApiField) {
   //   description = getModelField(openApiModel, openApiField)?.description;
   // }
