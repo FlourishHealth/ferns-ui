@@ -2598,6 +2598,7 @@ export interface BadgeProps {
 
 export interface BannerProps {
   id: string;
+  customButtonProps?: ButtonProps;
   color?: BoxColor;
   dismissible?: boolean;
   iconName?: IconName;
@@ -2607,7 +2608,7 @@ export interface BannerProps {
   subtext?: string;
   text: string;
   textColor?: TextColor;
-  type?: "dismiss" | "action" | "permanent";
+  type?: "dismiss" | "action" | "permanent" /* deprectiated */ | "customButton";
   width?: number | string;
 }
 
