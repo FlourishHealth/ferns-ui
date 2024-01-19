@@ -24,6 +24,7 @@ export const IconButton = forwardRef(
       confirmationHeading = "Confirm",
       tooltip,
       indicator,
+      indicatorNumber,
       indicatorStyle = {position: "bottomRight", color: "primary"},
       testID,
     }: IconButtonProps,
@@ -50,6 +51,46 @@ export const IconButton = forwardRef(
     };
 
     const indicatorPosition = {position: "absolute", ...IndicatorPosition[indicatorStyle.position]};
+
+    const IndicatorNumPosition = {
+      bottomRight: {bottom: "10%", right: "10%"},
+      bottomLeft: {bottom: "10%", left: "10%"},
+      topRight: {top: "10%", right: "10%"},
+      topLeft: {top: "10%", left: "10%"},
+    };
+
+    const numberIndicatorProps = {
+      backgroundColor: indicatorStyle.color,
+      borderRadius: 10,
+      minWidth: 15,
+      minHeight: 15,
+      padding: 3,
+      justifyContent: "center",
+      alignItems: "center",
+      position: "absolute",
+      fontSize: 12,
+      ...IndicatorNumPosition[indicatorStyle.position],
+    };
+
+    function renderIndicator(): React.ReactElement | null {
+      if (indicator && indicatorNumber && indicatorNumber > 0) {
+        return (
+          <View style={numberIndicatorProps as ViewStyle}>
+            <Text color="white" weight="bold">
+              {indicatorNumber}
+            </Text>
+          </View>
+        );
+      } else if (indicator) {
+        return (
+          <View style={indicatorPosition as ViewStyle}>
+            <Icon color={indicatorStyle.color} name="circle" prefix={prefix || "fas"} size="sm" />
+          </View>
+        );
+      } else {
+        return null;
+      }
+    }
 
     const renderConfirmation = () => {
       return (
@@ -104,16 +145,7 @@ export const IconButton = forwardRef(
             }}
           >
             <Icon color={iconColor} name={icon} prefix={prefix || "fas"} size={size} />
-            {indicator && (
-              <View style={indicatorPosition as ViewStyle}>
-                <Icon
-                  color={indicatorStyle.color}
-                  name="circle"
-                  prefix={prefix || "fas"}
-                  size="sm"
-                />
-              </View>
-            )}
+            {renderIndicator()}
           </Pressable>
 
           {Boolean(withConfirmation) && renderConfirmation()}

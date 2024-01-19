@@ -192,6 +192,65 @@ export const IconButtonStories = {
             title="Button with indicator"
             onClick={() => {}}
           />
+
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            indicatorNumber={33}
+            prefix="fas"
+            size="sm"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            indicatorNumber={33}
+            indicatorStyle={{position: "topRight", color: "red"}}
+            prefix="fas"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            indicatorNumber={33}
+            indicatorStyle={{position: "bottomRight", color: "green"}}
+            prefix="fas"
+            size="lg"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            indicatorNumber={33}
+            indicatorStyle={{position: "bottomLeft", color: "blue"}}
+            prefix="fas"
+            size="lg"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
+          <IconButtonDisplay
+            accessibilityLabel="label"
+            icon="plus"
+            iconColor="primary"
+            indicator
+            indicatorNumber={33}
+            indicatorStyle={{position: "topLeft", color: "purple"}}
+            prefix="fas"
+            size="lg"
+            title="Button with indicator"
+            onClick={() => {}}
+          />
         </StorybookContainer>
       );
     },

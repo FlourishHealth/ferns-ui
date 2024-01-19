@@ -2770,6 +2770,7 @@ export interface IconButtonProps {
     idealDirection?: TooltipDirection;
   };
   indicator?: boolean;
+  indicatorNumber?: number;
   indicatorStyle?: {position: IndicatorDirection; color: AllColors};
   testID?: string;
 }
