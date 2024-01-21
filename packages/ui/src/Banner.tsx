@@ -26,13 +26,7 @@ export const BannerType = {
 
 export const Banner = ({
   id,
-  // customButton Props
-  customButtonProps = {
-    text: "",
-    color: "primary",
-    type: "solid",
-    onClick: () => {},
-  },
+  customButtonProps,
   text,
   subtext,
   color = "secondaryDark",
@@ -68,7 +62,15 @@ export const Banner = ({
 
   const renderButton = (): React.ReactElement | null => {
     if (type === CUSTOM_BUTTON) {
-      return <Button {...customButtonProps} onClick={onClick} />;
+      return (
+        <Button
+          {...customButtonProps}
+          color={customButtonProps?.color ?? "primary"}
+          size={customButtonProps?.size ?? "sm"}
+          text={customButtonProps?.text ?? ""}
+          onClick={onClick}
+        />
+      );
     } else if (type === ACTION) {
       return (
         <Box alignItems="center" display="block" justifyContent="center" width={40}>
