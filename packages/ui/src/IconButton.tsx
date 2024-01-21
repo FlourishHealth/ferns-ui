@@ -1,6 +1,7 @@
 import React, {forwardRef, useContext, useState} from "react";
 import {Platform, Pressable, View, ViewStyle} from "react-native";
 
+import {Box} from "./Box";
 import {IconButtonProps, iconSizeToNumber} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
@@ -53,22 +54,14 @@ export const IconButton = forwardRef(
     const indicatorPosition = {position: "absolute", ...IndicatorPosition[indicatorStyle.position]};
 
     const IndicatorNumPosition = {
-      bottomRight: {bottom: "10%", right: "10%"},
+      bottomRight: {bottom: "18%", right: "12%"},
       bottomLeft: {bottom: "10%", left: "10%"},
-      topRight: {top: "10%", right: "10%"},
+      topRight: {top: "-5%", right: "-5%"},
       topLeft: {top: "10%", left: "10%"},
     };
 
     const numberIndicatorProps = {
-      backgroundColor: indicatorStyle.color,
-      borderRadius: 10,
-      minWidth: 15,
-      minHeight: 15,
-      padding: 3,
-      justifyContent: "center",
-      alignItems: "center",
       position: "absolute",
-      fontSize: 12,
       ...IndicatorNumPosition[indicatorStyle.position],
     };
 
@@ -76,9 +69,23 @@ export const IconButton = forwardRef(
       if (indicator && indicatorNumber && indicatorNumber > 0) {
         return (
           <View style={numberIndicatorProps as ViewStyle}>
-            <Text color="white" weight="bold">
-              {indicatorNumber}
-            </Text>
+            <Box
+              alignItems="center"
+              color={indicatorStyle.color}
+              dangerouslySetInlineStyle={{
+                __style: {
+                  padding: indicatorNumber && indicatorNumber > 9 ? 2 : 0,
+                },
+              }}
+              justifyContent="center"
+              minHeight={15}
+              minWidth={15}
+              rounding="pill"
+            >
+              <Text color="white" size="sm" weight="bold">
+                {indicatorNumber}
+              </Text>
+            </Box>
           </View>
         );
       } else if (indicator) {
