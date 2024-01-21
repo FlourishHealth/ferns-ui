@@ -2598,7 +2598,7 @@ export interface BadgeProps {
 
 export interface BannerProps {
   id: string;
-  customButtonProps?: ButtonProps;
+  customButtonProps?: Partial<ButtonProps>;
   color?: BoxColor;
   dismissible?: boolean;
   iconName?: IconName;
@@ -2645,6 +2645,17 @@ export interface ButtonProps {
     text: string;
     idealDirection?: TooltipDirection;
   };
+}
+
+export interface ChipProps {
+  label?: string;
+  fontColor?: AllColors;
+  fontWeight?: TextProps["weight"];
+  bgColor?: AllColors;
+  boxProps?: BoxProps;
+  iconName?: IconName;
+  iconColor?: AllColors;
+  iconPrefix?: IconPrefix;
 }
 
 export interface CustomSelectProps {

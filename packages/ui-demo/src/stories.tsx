@@ -5,6 +5,7 @@ export * from "./Box.stories";
 export * from "./Button.stories";
 export * from "./Card.stories";
 export * from "./CheckBox.stories";
+export * from "./Chip.stories";
 export * from "./DateTime.stories";
 export * from "./Field.stories";
 export * from "./Form.stories";
