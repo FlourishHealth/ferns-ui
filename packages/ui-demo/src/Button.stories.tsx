@@ -175,6 +175,26 @@ const multilineButtons = () => (
   </Box>
 );
 
+const sizesButtons = () => {
+  return (
+    <Box>
+      <Box paddingX={8} paddingY={2}>
+        <Heading>Sizes</Heading>
+      </Box>
+      <Box direction="row" paddingX={8} paddingY={8} width="100%">
+        <Button color="primary" size="xs" text="Extra Small" onClick={() => {}} />
+        <Box marginLeft={2} marginRight={2}>
+          <Button color="primary" size="sm" text="Small" onClick={() => {}} />
+        </Box>
+        <Button color="primary" size="md" text="Medium" onClick={() => {}} />
+        <Box marginLeft={2} marginRight={2}>
+          <Button color="primary" size="lg" text="Large" onClick={() => {}} />
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
 export const ButtonStories = {
   title: "Button",
   component: Button,
@@ -186,5 +206,6 @@ export const ButtonStories = {
     Confirmation: () => confirmationButton({}),
     Inline: () => inlineButtons(),
     Multiline: () => multilineButtons(),
+    Sizes: () => sizesButtons(),
   },
 };

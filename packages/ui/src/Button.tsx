@@ -27,12 +27,14 @@ const buttonTextColor: {[buttonColor: string]: "white" | "darkGray"} = {
 };
 
 const HEIGHTS = {
+  xs: 30,
   sm: 36,
   md: 40,
   lg: 48,
 };
 
 export function Button({
+  alignSelf,
   disabled = false,
   type = "solid",
   loading: propsLoading,
@@ -109,7 +111,7 @@ export function Button({
 
   const renderButton = () => {
     return (
-      <View>
+      <View style={{alignSelf: inline === true ? undefined : alignSelf}}>
         <Pressable
           disabled={disabled || loading}
           style={{
@@ -126,7 +128,7 @@ export function Button({
             borderWidth: type === "outline" ? 2 : 0,
             opacity: disabled ? 0.4 : 1,
             flexDirection: "row",
-            paddingHorizontal: 8 * 2,
+            paddingHorizontal: size === "xs" ? 6 : size === "sm" ? 12 : 8 * 2,
           }}
           testID={testID}
           onPress={debounce(
@@ -150,12 +152,12 @@ export function Button({
           )}
         >
           {icon !== undefined && (
-            <Box paddingX={2}>
+            <Box marginRight={2}>
               <Icon
                 color={getTextColor(color as Color)}
                 name={icon}
                 prefix={iconPrefix || "far"}
-                size={size}
+                size={size === "xs" ? "sm" : size}
               />
             </Box>
           )}
@@ -166,7 +168,7 @@ export function Button({
               color={getTextColor(color as Color)}
               font="button"
               inline={inline}
-              size={size}
+              size={size === "xs" ? "sm" : size}
               skipLinking
               weight="bold"
             >
