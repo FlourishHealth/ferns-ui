@@ -169,7 +169,7 @@
     "dayjs": "^1.11.10",
     "expo-clipboard": "~4.3.1",
     "expo-font": "~11.4.0",
-    "expo-haptics": "~12.4.0",
+    "expo-haptics": "~12.8.1",
     "expo-image-manipulator": "~11.3.0",
     "expo-image-picker": "~14.3.2",
     "libphonenumber-js": "^1.10.48",
