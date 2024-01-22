@@ -171,7 +171,7 @@
     "expo-font": "~11.4.0",
     "expo-haptics": "~12.4.0",
     "expo-image-manipulator": "~11.3.0",
-    "expo-image-picker": "~14.3.2",
+    "expo-image-picker": "~14.7.1",
     "libphonenumber-js": "^1.10.48",
     "lodash": "^4.17.21",
     "react-app-polyfill": "^3.0.0",
