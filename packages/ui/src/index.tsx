@@ -8,7 +8,6 @@ export * from "./Box";
 export * from "./Button";
 export * from "./Card";
 export * from "./CheckBox";
-export * from "./Chip";
 export * from "./Common";
 export * from "./Constants";
 export * from "./DateTimeActionSheet";

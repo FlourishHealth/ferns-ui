@@ -1706,7 +1706,7 @@ export const iconSizeToNumber = (size?: IconSize) => {
   }[size || "md"];
 };
 
-export type TextSize = "sm" | "md" | "lg";
+export type TextSize = "xs" | "sm" | "md" | "lg";
 export type TextColor =
   | "blue"
   | "darkGray"
@@ -2585,15 +2585,20 @@ export interface AvatarProps {
 }
 
 export interface BadgeProps {
+  // If `type` is set to "custom", a custom theme color should be provided.
+  color?: AllColors;
+  fontColor?: AllColors; // default "white"
+  fontWeight?: TextProps["weight"]; // default "bold"
+  iconProps?: IconProps;
   // The text to display inside the badge.
-  title: string;
+  title?: string;
   // Position relative to the text. Top should only be used with headings.
-  position?: "top" | "middle"; // default "middle"
+  position?: "bottom" | "top" | "middle"; // default "middle"
+  rounding?: Rounding;
+  size?: "xs" | "sm" | "md" | "lg"; // default "xs'
   // Some default badge types. Occasionally, a custom badge might be required for different color
   // schemes.
   type?: "info" | "error" | "warning" | "success" | "neutral" | "custom"; // default "info
-  // If `type` is set to "custom", a custom theme color should be provided.
-  color?: AllColors;
 }
 
 export interface BannerProps {
@@ -2646,17 +2651,6 @@ export interface ButtonProps {
     text: string;
     idealDirection?: TooltipDirection;
   };
-}
-
-export interface ChipProps {
-  label?: string;
-  fontColor?: AllColors;
-  fontWeight?: TextProps["weight"];
-  bgColor?: AllColors;
-  boxProps?: BoxProps;
-  iconName?: IconName;
-  iconColor?: AllColors;
-  iconPrefix?: IconPrefix;
 }
 
 export interface CustomSelectProps {
