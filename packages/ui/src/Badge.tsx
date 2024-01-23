@@ -14,7 +14,7 @@ export function Badge({
   iconProps,
   fontColor = "white",
   fontWeight = "bold",
-  rounding = 2,
+  rounding = "pill",
 }: BadgeProps): React.ReactElement {
   if (color && type !== "custom") {
     console.warn('Badge color only supported when `type` is set to "custom".');

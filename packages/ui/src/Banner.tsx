@@ -17,7 +17,7 @@ export const hideBanner = (id: string): Promise<void> => {
   return Unifier.storage.setItem(getKey(id), "true");
 };
 
-export const BannerType = {
+const BannerType = {
   ACTION: "action",
   DISMISS: "dismiss",
   PERMANENT: "permanent", // deprecated in favor of default behavior
