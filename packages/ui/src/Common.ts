@@ -1,7 +1,7 @@
 import {SaveFormat} from "expo-image-manipulator";
 import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
 import {ListRenderItemInfo, StyleProp, ViewStyle} from "react-native";
-import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import {DimensionValue, FlexStyle} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
 
 import {SelectListOptions} from "./SelectList";
@@ -1706,7 +1706,7 @@ export const iconSizeToNumber = (size?: IconSize) => {
   }[size || "md"];
 };
 
-export type TextSize = "sm" | "md" | "lg";
+export type TextSize = "xs" | "sm" | "md" | "lg";
 export type TextColor =
   | "blue"
   | "darkGray"
@@ -2585,19 +2585,25 @@ export interface AvatarProps {
 }
 
 export interface BadgeProps {
+  // If `type` is set to "custom", a custom theme color should be provided.
+  color?: AllColors;
+  fontColor?: AllColors; // default "white"
+  fontWeight?: TextProps["weight"]; // default "bold"
+  iconProps?: IconProps;
   // The text to display inside the badge.
-  title: string;
+  title?: string;
   // Position relative to the text. Top should only be used with headings.
-  position?: "top" | "middle"; // default "middle"
+  position?: "bottom" | "top" | "middle"; // default "middle"
+  rounding?: Rounding;
+  size?: "xs" | "sm" | "md" | "lg"; // default "xs'
   // Some default badge types. Occasionally, a custom badge might be required for different color
   // schemes.
   type?: "info" | "error" | "warning" | "success" | "neutral" | "custom"; // default "info
-  // If `type` is set to "custom", a custom theme color should be provided.
-  color?: AllColors;
 }
 
 export interface BannerProps {
   id: string;
+  customButtonProps?: Partial<ButtonProps>;
   color?: BoxColor;
   dismissible?: boolean;
   iconName?: IconName;
@@ -2607,7 +2613,7 @@ export interface BannerProps {
   subtext?: string;
   text: string;
   textColor?: TextColor;
-  type?: "dismiss" | "action" | "permanent";
+  type?: "dismiss" | "action" | "permanent" /* deprectiated */ | "customButton";
   width?: number | string;
 }
 
@@ -2621,6 +2627,7 @@ export interface BodyProps {
 }
 
 export interface ButtonProps {
+  alignSelf?: FlexStyle["alignSelf"];
   children?: React.ReactElement;
   text: string;
   // TODO make this work for all colors
@@ -2628,7 +2635,7 @@ export interface ButtonProps {
   // default gray
   disabled?: boolean; // default false
   inline?: boolean; // default false
-  size?: "sm" | "md" | "lg"; // default md
+  size?: "xs" | "sm" | "md" | "lg"; // default md
   type?: "solid" | "ghost" | "outline"; // default solid
   loading?: boolean;
   onClick: any;
@@ -2769,6 +2776,7 @@ export interface IconButtonProps {
     idealDirection?: TooltipDirection;
   };
   indicator?: boolean;
+  indicatorNumber?: number;
   indicatorStyle?: {position: IndicatorDirection; color: AllColors};
   testID?: string;
 }

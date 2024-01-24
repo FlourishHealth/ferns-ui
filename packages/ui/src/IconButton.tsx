@@ -1,6 +1,7 @@
 import React, {forwardRef, useContext, useState} from "react";
 import {Platform, Pressable, View, ViewStyle} from "react-native";
 
+import {Box} from "./Box";
 import {IconButtonProps, iconSizeToNumber} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
@@ -24,6 +25,7 @@ export const IconButton = forwardRef(
       confirmationHeading = "Confirm",
       tooltip,
       indicator,
+      indicatorNumber,
       indicatorStyle = {position: "bottomRight", color: "primary"},
       testID,
     }: IconButtonProps,
@@ -50,6 +52,52 @@ export const IconButton = forwardRef(
     };
 
     const indicatorPosition = {position: "absolute", ...IndicatorPosition[indicatorStyle.position]};
+
+    const IndicatorNumPosition = {
+      bottomRight: {bottom: "18%", right: "12%"},
+      bottomLeft: {bottom: "10%", left: "10%"},
+      topRight: {top: "-5%", right: "-5%"},
+      topLeft: {top: "10%", left: "10%"},
+    };
+
+    const numberIndicatorProps = {
+      position: "absolute",
+      ...IndicatorNumPosition[indicatorStyle.position],
+    };
+
+    function renderIndicator(): React.ReactElement | null {
+      if (indicator && indicatorNumber && indicatorNumber > 0) {
+        return (
+          <View style={numberIndicatorProps as ViewStyle}>
+            <Box
+              alignItems="center"
+              color={indicatorStyle.color}
+              dangerouslySetInlineStyle={{
+                __style: {
+                  padding: indicatorNumber && indicatorNumber > 9 ? 2 : 0,
+                },
+              }}
+              justifyContent="center"
+              minHeight={15}
+              minWidth={15}
+              rounding="pill"
+            >
+              <Text color="white" size="sm" weight="bold">
+                {indicatorNumber}
+              </Text>
+            </Box>
+          </View>
+        );
+      } else if (indicator) {
+        return (
+          <View style={indicatorPosition as ViewStyle}>
+            <Icon color={indicatorStyle.color} name="circle" prefix={prefix || "fas"} size="sm" />
+          </View>
+        );
+      } else {
+        return null;
+      }
+    }
 
     const renderConfirmation = () => {
       return (
@@ -104,16 +152,7 @@ export const IconButton = forwardRef(
             }}
           >
             <Icon color={iconColor} name={icon} prefix={prefix || "fas"} size={size} />
-            {indicator && (
-              <View style={indicatorPosition as ViewStyle}>
-                <Icon
-                  color={indicatorStyle.color}
-                  name="circle"
-                  prefix={prefix || "fas"}
-                  size="sm"
-                />
-              </View>
-            )}
+            {renderIndicator()}
           </Pressable>
 
           {Boolean(withConfirmation) && renderConfirmation()}

@@ -6,6 +6,7 @@ import {Hyperlink} from "./Hyperlink";
 import {ThemeContext} from "./Theme";
 
 const fontSizes = {
+  xs: 10,
   sm: 12,
   md: 14,
   lg: 16,

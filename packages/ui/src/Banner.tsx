@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 
 import {Box} from "./Box";
+import {Button} from "./Button";
 import {BannerProps, ButtonColor} from "./Common";
 import {Icon} from "./Icon";
 import {IconButton} from "./IconButton";
@@ -16,8 +17,16 @@ export const hideBanner = (id: string): Promise<void> => {
   return Unifier.storage.setItem(getKey(id), "true");
 };
 
+const BannerType = {
+  ACTION: "action",
+  DISMISS: "dismiss",
+  PERMANENT: "permanent", // deprecated in favor of default behavior
+  CUSTOM_BUTTON: "customButton",
+};
+
 export const Banner = ({
   id,
+  customButtonProps,
   text,
   subtext,
   color = "secondaryDark",
@@ -26,27 +35,25 @@ export const Banner = ({
   negativeXMargin = 0,
   width,
   shape,
-  type = "dismiss",
+  type,
   onClick,
 }: BannerProps): React.ReactElement | null => {
-  // If the banner is permanent, show it immediately.
-  const [show, setShow] = useState(type === "permanent");
-
+  // If the banner is not type dismiss, show it immediately.
+  const {ACTION, DISMISS, CUSTOM_BUTTON} = BannerType;
+  const [show, setShow] = useState(type !== DISMISS);
   // Load seen from async storage.
   useEffect(() => {
-    // Always show permanent banners.
-    if (type === "permanent") {
-      return;
+    if (type === DISMISS) {
+      void Unifier.storage.getItem(getKey(id)).then((isSeen) => {
+        console.debug(`[banner] ${getKey(id)} seen? ${isSeen}`);
+        setShow(!isSeen);
+      });
     }
-
-    void Unifier.storage.getItem(getKey(id)).then((isSeen) => {
-      console.debug(`[banner] ${getKey(id)} seen? ${isSeen}`);
-      setShow(!isSeen);
-    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, type]);
 
   const dismiss = async (): Promise<void> => {
-    if (type === "permanent") {
+    if (type !== DISMISS) {
       return;
     }
     await hideBanner(id);
@@ -54,21 +61,19 @@ export const Banner = ({
   };
 
   const renderButton = (): React.ReactElement | null => {
-    if (type === "permanent") {
-      return null;
-    }
-    return (
-      <Box alignItems="center" display="block" justifyContent="center" width={40}>
-        {type === "dismiss" && (
-          <IconButton
-            accessibilityLabel=""
-            icon="times-circle"
-            iconColor={textColor as ButtonColor}
-            prefix="fas"
-            onClick={dismiss}
-          />
-        )}
-        {type === "action" && (
+    if (type === CUSTOM_BUTTON) {
+      return (
+        <Button
+          {...customButtonProps}
+          color={customButtonProps?.color ?? "primary"}
+          size={customButtonProps?.size ?? "sm"}
+          text={customButtonProps?.text ?? ""}
+          onClick={onClick}
+        />
+      );
+    } else if (type === ACTION) {
+      return (
+        <Box alignItems="center" display="block" justifyContent="center" width={40}>
           <IconButton
             accessibilityLabel=""
             icon="arrow-right"
@@ -76,16 +81,30 @@ export const Banner = ({
             prefix="fas"
             onClick={(): void => onClick?.()}
           />
-        )}
-      </Box>
-    );
+        </Box>
+      );
+    } else if (type === DISMISS) {
+      return (
+        <Box alignItems="center" display="block" justifyContent="center" width={40}>
+          <IconButton
+            accessibilityLabel=""
+            icon="times-circle"
+            iconColor={textColor as ButtonColor}
+            prefix="fas"
+            onClick={dismiss}
+          />
+        </Box>
+      );
+    } else {
+      return null;
+    }
   };
 
   if (!show) {
     return null;
   }
 
-  if (type === "action" && !onClick) {
+  if ((type === ACTION && !onClick) || (type === CUSTOM_BUTTON && !onClick)) {
     console.warn("Banners with type action require an onClick property.");
   }
 
@@ -107,10 +126,10 @@ export const Banner = ({
       rounding={shape}
       shadow
       width={width || Unifier.utils.dimensions().width || "100%"}
-      onClick={type === "permanent" ? undefined : dismiss}
+      onClick={type === DISMISS ? dismiss : undefined}
     >
       {iconName && (
-        <Box justifyContent="center" marginRight={2} width={32}>
+        <Box justifyContent="center" width={32}>
           <Icon color={textColor} name={iconName} size="lg" />
         </Box>
       )}
