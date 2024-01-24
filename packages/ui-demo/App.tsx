@@ -9,7 +9,7 @@ import {SafeAreaProvider, useSafeAreaInsets} from "react-native-safe-area-contex
 
 import * as Stories from "./src/stories";
 
-type StoryFunc = () => JSX.Element;
+type StoryFunc = (setScrollEnabled?: any) => ReactElement;
 
 export interface Story {
   title: string;
@@ -28,6 +28,16 @@ for (const story of stories) {
 const App = () => {
   const insets = useSafeAreaInsets();
   const [currentStory, setStory] = useState<string | null>(null);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
+
+  // set scroll to enabled if no current story
+  useEffect(() => {
+    if (!currentStory) {
+      setScrollEnabled(true);
+    }
+  }, [currentStory]);
+
+  // get story from storage instead of going back to list view on every reload
   useEffect(() => {
     void AsyncStorage.getItem("story").then((story) => {
       if (story && allStories[story]) {
@@ -76,9 +86,9 @@ const App = () => {
           <Text style={{marginLeft: 20, fontWeight: "bold"}}>{currentStory}</Text>
         </View>
         <View style={styles.body}>
-          {currentStory && allStories[currentStory] && allStories[currentStory]()}
+          {currentStory && allStories[currentStory] && allStories[currentStory](setScrollEnabled)}
           {!currentStory && (
-            <ScrollView>
+            <ScrollView scrollEnabled={scrollEnabled}>
               <View style={styles.storyList}>
                 {stories.map((s) => (
                   <React.Fragment key={s.title}>

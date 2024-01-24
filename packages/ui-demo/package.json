@@ -45,7 +45,8 @@
     "useTabs": false
   },
   "dependencies": {
-    "react": "18.2.0"
+    "react": "18.2.0",
+    "react-native-webview": "13.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.23.6",

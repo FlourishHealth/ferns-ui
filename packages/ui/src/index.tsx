@@ -42,6 +42,7 @@ export * from "./ScrollView";
 export * from "./SegmentedControl";
 export * from "./SelectList";
 export * from "./SideDrawer";
+export * from "./Signature";
 export * from "./Spinner";
 export * from "./SplitPage";
 export * from "./Switch";

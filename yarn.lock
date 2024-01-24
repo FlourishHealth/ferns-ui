@@ -2455,12 +2455,29 @@
   dependencies:
     react-datetime-picker "*"
 
+"@types/react-signature-canvas@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react-signature-canvas/-/react-signature-canvas-1.0.5.tgz#7fa2e091bda04a336e5e8d992548143e3bb8e3a2"
+  integrity sha512-jzqEeDR6kxxhg1Ck462zH+C+qMu8hoV5zz0hqnQCp0Q0tHuFEAN2/f0c4NlHyDUfAALX+HPi+eK5SBRdqsEeEg==
+  dependencies:
+    "@types/react" "*"
+    "@types/signature_pad" "*"
+
 "@types/react-time-picker@^6.0.0":
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/@types/react-time-picker/-/react-time-picker-6.0.0.tgz#bc84f77dd18e6e022557ee6e87d9b0a21c834c0f"
   integrity sha512-gPLlu6PmI2Jyl2xk4hJnaDyr7PSqQjZqr9qQBIW/ib1E6pEG1N8+8b4SEJQgf8EUalLOThS7xFe2VgwRlLRymA==
   dependencies:
     react-time-picker "*"
+
+"@types/react@*":
+  version "18.2.48"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.48.tgz#11df5664642d0bd879c1f58bc1d37205b064e8f1"
+  integrity sha512-qboRCl6Ie70DQQG9hhNREz81jqC1cs9EVNcjQ1AU+jH6NFfSAhVVbrrY/+nSF+Bsk4AOwm9Qa61InvMCyV+H3w==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
 
 "@types/react@~18.2.43":
   version "18.2.43"
@@ -2509,6 +2526,11 @@
     "@types/http-errors" "*"
     "@types/mime" "*"
     "@types/node" "*"
+
+"@types/signature_pad@*":
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/@types/signature_pad/-/signature_pad-2.3.6.tgz#8bbd6c8b763d7e2d2f10b95bc3ddab62557a4869"
+  integrity sha512-v3j92gCQJoxomHhd+yaG4Vsf8tRS/XbzWKqDv85UsqjMGy4zhokuwKe4b6vhbgncKkh+thF+gpz6+fypTtnFqQ==
 
 "@types/sockjs@^0.3.33":
   version "0.3.36"
@@ -7540,7 +7562,7 @@ internal-slot@^1.0.5:
     hasown "^2.0.0"
     side-channel "^1.0.4"
 
-invariant@*, invariant@^2.2.4:
+invariant@*, invariant@2.2.4, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -11334,6 +11356,11 @@ react-native-safe-area-context@4.6.3:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.6.3.tgz#f06cfea05b1c4b018aa9758667a109f619c62b55"
   integrity sha512-3CeZM9HFXkuqiU9HqhOQp1yxhXw6q99axPWrT+VJkITd67gnPSU03+U27Xk2/cr9XrLUnakM07kj7H0hdPnFiQ==
 
+react-native-signature-canvas@^4.7.1:
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/react-native-signature-canvas/-/react-native-signature-canvas-4.7.1.tgz#76043753c962c944f47723e0d1f1f9c0324dcfc0"
+  integrity sha512-80+FwydjaVMZGE/QXNVQyObnM/rAWikpnYnunDJ01H0zCJ5GY860E121ztmT8vAWr+Z6RsXCID2ff6hsSeM0yw==
+
 react-native-svg@13.9.0:
   version "13.9.0"
   resolved "https://registry.yarnpkg.com/react-native-svg/-/react-native-svg-13.9.0.tgz#8df8a690dd00362601f074dec5d3a86dd0f99c7f"
@@ -11370,6 +11397,14 @@ react-native-web@~0.19.9:
     nullthrows "^1.1.1"
     postcss-value-parser "^4.2.0"
     styleq "^0.1.3"
+
+react-native-webview@13.2.2:
+  version "13.2.2"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-13.2.2.tgz#06b04db8e1f4ed57a9dc92f4094aa0e41271b89b"
+  integrity sha512-uT70y2GUqQzaj2RwRb/QuKRdXeDjXM6oN3DdPqYQlOOMFTCT8r62fybyjVVRoik8io+KLa5KnmuSoS5B2O1BmA==
+  dependencies:
+    escape-string-regexp "2.0.0"
+    invariant "2.2.4"
 
 react-native@0.72.6:
   version "0.72.6"
@@ -11440,6 +11475,14 @@ react-shallow-renderer@^16.15.0:
   dependencies:
     object-assign "^4.1.1"
     react-is "^16.12.0 || ^17.0.0 || ^18.0.0"
+
+react-signature-canvas@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/react-signature-canvas/-/react-signature-canvas-1.0.6.tgz#095a8c2341cb7ba0b23ddd167955147b062c91ee"
+  integrity sha512-NoMHomYu9HxFeLjUGbIeV9abPdWSROfFxFNDekGdwmmaIx+w5ziOEiU2C34X0Ao4GxFnwqyUy/BpYlA4lCD1CA==
+  dependencies:
+    signature_pad "^2.3.2"
+    trim-canvas "^0.1.0"
 
 react-time-picker@*, react-time-picker@^6.5.0, react-time-picker@^6.5.2:
   version "6.6.0"
@@ -12217,6 +12260,11 @@ signal-exit@^3.0.0, signal-exit@^3.0.2, signal-exit@^3.0.3, signal-exit@^3.0.7:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.7.tgz#a9a1767f8af84155114eaabd73f99273c8f59ad9"
   integrity sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==
+
+signature_pad@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/signature_pad/-/signature_pad-2.3.2.tgz#ca7230021c89cedeead27b33d8d16ff254e5f04a"
+  integrity sha512-peYXLxOsIY6MES2TrRLDiNg2T++8gGbpP2yaC+6Ohtxr+a2dzoaqWosWDY9sWqTAAk6E/TyQO+LJw9zQwyu5kA==
 
 simple-plist@^1.1.0:
   version "1.3.1"
@@ -13085,6 +13133,11 @@ traverse@~0.6.6:
   version "0.6.7"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.7.tgz#46961cd2d57dd8706c36664acde06a248f1173fe"
   integrity sha512-/y956gpUo9ZNCb99YjxG7OaslxZWHfCHAUUfshwqOXmxUIvqLjVO581BT+gM59+QV9tFe6/CGG53tsA1Y7RSdg==
+
+trim-canvas@^0.1.0:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/trim-canvas/-/trim-canvas-0.1.2.tgz#620457f5fecf564b521d35c5fcd4da58304d6e45"
+  integrity sha512-nd4Ga3iLFV94mdhW9JFMLpQbHUyCQuhFOD71PEAt1NjtMD5wbZctzhX8c3agHNybMR5zXD1XTGoIEWk995E6pQ==
 
 ts-api-utils@^1.0.1:
   version "1.0.3"

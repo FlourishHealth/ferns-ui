@@ -2701,6 +2701,7 @@ export interface FieldProps extends FieldWithLabelsProps {
     | "percent"
     | "phoneNumber"
     | "select"
+    | "signature"
     | "text"
     | "textarea"
     | "time"
@@ -2708,6 +2709,8 @@ export interface FieldProps extends FieldWithLabelsProps {
   rows?: number;
   value?: any;
   onChange?: any;
+  onStart?: any;
+  onEnd?: any;
   options?: SelectListOptions;
   placeholder?: string;
   disabled?: boolean;
