@@ -28,9 +28,12 @@ for (const story of stories) {
 const App = () => {
   const insets = useSafeAreaInsets();
   const [currentStory, setStory] = useState<string | null>(null);
+  // this is just for the signature field, because we need to disable scroll while signing or else
+  // it will scroll the page instead of signing in the box with the signature pad
   const [scrollEnabled, setScrollEnabled] = useState(true);
 
-  // set scroll to enabled if no current story
+  // set scroll to enabled if no current story. it should be enabled for all stories except
+  // signature
   useEffect(() => {
     if (!currentStory) {
       setScrollEnabled(true);
