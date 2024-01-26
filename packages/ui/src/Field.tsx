@@ -7,6 +7,7 @@ import {USSTATESLIST} from "./Constants";
 import {CustomSelect} from "./CustomSelect";
 import {FieldWithLabels} from "./FieldWithLabels";
 import {SelectList} from "./SelectList";
+import {Signature} from "./Signature";
 import {Switch} from "./Switch";
 import {Text} from "./Text";
 import {TextArea} from "./TextArea";
@@ -22,6 +23,8 @@ export const Field = ({
   rows,
   value,
   onChange,
+  onStart,
+  onEnd,
   options,
   placeholder,
   disabled,
@@ -255,6 +258,8 @@ export const Field = ({
           onChange={(result) => onChange(result.value)}
         />
       );
+    } else if (type === "signature") {
+      return <Signature onChange={onChange} onEnd={onEnd} onStart={onStart} />;
     } else {
       let tfType: TextFieldType = "text";
       let tfValue: string = value;

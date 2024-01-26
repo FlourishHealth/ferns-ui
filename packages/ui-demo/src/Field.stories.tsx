@@ -436,6 +436,26 @@ const CustomSelectField = () => {
   );
 };
 
+interface SignatureFieldProps {
+  setScrollEnabled: (scrollEnabled: boolean) => void;
+}
+
+const SignatureField = ({setScrollEnabled}: SignatureFieldProps) => {
+  const [_, setValue] = useState("");
+  return (
+    <StorybookContainer>
+      <Field
+        label="Signature Field"
+        name="signature"
+        type="signature"
+        onChange={setValue}
+        onEnd={() => setScrollEnabled(true)}
+        onStart={() => setScrollEnabled(false)}
+      />
+    </StorybookContainer>
+  );
+};
+
 export const FieldStories = {
   title: "Field",
   component: Field,
@@ -493,6 +513,9 @@ export const FieldStories = {
     },
     "Field With Error Message": function () {
       return <FieldWithError />;
+    },
+    "Signature Field": function (setScrollEnabled: any) {
+      return <SignatureField setScrollEnabled={setScrollEnabled} />;
     },
   },
 };
