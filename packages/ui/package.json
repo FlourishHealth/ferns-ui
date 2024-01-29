@@ -148,6 +148,7 @@
     "@react-native-community/blur": "^4.4.0",
     "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-picker/picker": "2.6.1",
+    "@reduxjs/toolkit": "^2.1.0",
     "dayjs": "^1.11.10",
     "expo-clipboard": "~5.0.1",
     "expo-font": "~11.10.3",

@@ -1,14 +1,11 @@
 import React, {useContext} from "react";
 import {Platform, StyleProp} from "react-native";
 
-import {FieldWithLabelsProps} from "./Common";
+import {FieldWithLabelsProps, SelectListOptions} from "./Common";
 import {Icon} from "./Icon";
 import {RNPickerSelect, RNPickerSelectProps} from "./PickerSelect";
 import {ThemeContext} from "./Theme";
 import {WithLabel} from "./WithLabel";
-
-// Use "" if you want to have an "unset" value.
-export type SelectListOptions = {label: string; value: string}[];
 
 export type SelectListProps = FieldWithLabelsProps &
   (

@@ -1,8 +1,8 @@
 import React, {Children, useRef} from "react";
 
-import {Box} from "./Box";
-import {TableRowProps} from "./Common";
-import {IconButton} from "./IconButton";
+import {Box} from "../Box";
+import {TableRowProps} from "../Common";
+import {IconButton} from "../IconButton";
 import {useTableContext} from "./tableContext";
 
 /**

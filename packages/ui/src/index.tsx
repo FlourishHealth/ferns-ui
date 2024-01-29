@@ -1,4 +1,5 @@
 export * from "./ActionSheet";
+export * from "./admin";
 export * from "./Avatar";
 export * from "./Badge";
 export * from "./Banner";
@@ -46,10 +47,7 @@ export * from "./Signature";
 export * from "./Spinner";
 export * from "./SplitPage";
 export * from "./Switch";
-export * from "./Table";
-export * from "./TableHeader";
-export * from "./TableHeaderCell";
-export * from "./TableRow";
+export * from "./tables";
 export * from "./TapToEdit";
 export * from "./Text";
 export * from "./TextArea";

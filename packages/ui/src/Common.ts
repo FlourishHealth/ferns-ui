@@ -4,8 +4,9 @@ import {ListRenderItemInfo, StyleProp, ViewStyle} from "react-native";
 import {DimensionValue, FlexStyle} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
 
-import {SelectListOptions} from "./SelectList";
-import {ColumnSortInterface} from "./tableContext";
+import {InstanceFieldOverride, OpenAPIAdminNavigate} from "./admin";
+
+export type SelectListOptions = {label: string; value: string}[];
 
 export interface BaseProfile {
   email: string;
@@ -3085,4 +3086,122 @@ export interface APIError {
     parameter?: string;
     meta?: {[id: string]: any};
   };
+}
+
+export type ModelAdminDisplay = (instance: any) => {title: string; subtitle?: string};
+export type ModelFieldOverride = {[id: string]: Partial<ModelAdminFieldConfig>};
+
+// The props for a custom column component for ModelAdmin.
+export interface ModelAdminFieldComponentProps extends Omit<FieldProps, "name"> {
+  doc: any; // The rest of the document.
+  fieldKey: string; // Dot notation representation of the field.
+  // user: User;
+  editing: boolean; // Allow for inline editing of the field.
+}
+
+// The config for a single column in the table display of a model.
+export interface ModelAdminFieldConfig {
+  fieldKey: string; // Dot notation representation of the field.
+  title: string;
+  description?: string;
+  type: OpenApiPropertyType;
+  width?: number;
+  minWidth?: number;
+  options?: string[];
+  sort?: string;
+  CustomComponent?: (props: ModelAdminFieldComponentProps) => React.ReactElement | null;
+}
+
+export interface ModelAdminProps {
+  navigate: (params: {model?: string; id?: string; page?: number; sort?: string}) => void;
+  // TODO move this in so we can use model admin without openapi admin.
+  useList: any;
+  page?: number;
+  sort?: string;
+  model: string;
+  overrides?: {[id: string]: Partial<ModelAdminFieldConfig>};
+}
+
+export interface OpenAPISpec {
+  paths: {
+    [key: string]: any;
+  };
+}
+
+// This needs better typing.
+export type ModelFieldConfig = any;
+
+export interface OpenAPIAdminProps {
+  navigate: OpenAPIAdminNavigate;
+
+  // The OpenAPI SDK to use for interacting with the API.
+  sdk: any;
+
+  // Used for displaying either a model overview page (along with page and sort) or a specific
+  // model instance
+  model?: string;
+  id?: string;
+  page?: number;
+  sort?: string;
+  // Override in the table view
+  modelOverrides?: {[modelName: string]: ModelFieldOverride};
+  // Override in the instance view
+  instanceOverrides?: {[modelName: string]: InstanceFieldOverride};
+}
+
+export type OpenApiPropertyType =
+  | "string"
+  | "date"
+  | "datetime"
+  | "boolean"
+  | "array"
+  | "object"
+  | "number"
+  | "any";
+
+export type OpenApiProperty = {
+  type?: OpenApiPropertyType;
+  format?: string;
+  properties?: OpenApiProperty;
+  items?: OpenApiProperty[];
+  description?: string;
+  // TODO: is this actually there?
+  required?: string[];
+};
+
+export type ModelFields = {
+  type: "object" | "array";
+  required: string[];
+  properties: {[name: string]: OpenApiProperty};
+};
+
+export interface OpenAPIContextType {
+  spec: OpenAPISpec | null;
+  getModelFields: (modelName: string) => ModelFields | null;
+  getModelField: (modelName: string, field: string) => OpenApiProperty;
+}
+
+export interface OpenAPIProviderProps {
+  children: React.ReactElement;
+  specUrl?: string;
+}
+
+export interface ColumnSortInterface {
+  column: number | undefined;
+  direction: "asc" | "desc" | undefined;
+}
+
+export interface TableContextType {
+  columns: Array<number | string>;
+  hasDrawerContents: boolean;
+  sortColumn?: ColumnSortInterface | undefined;
+  setSortColumn?: (sort: ColumnSortInterface | undefined) => void;
+  stickyHeader?: boolean;
+  borderStyle?: "sm" | "none";
+  alternateRowBackground?: boolean;
+  page?: number;
+}
+
+export interface TableContextProviderProps extends TableContextType {
+  children: React.ReactElement;
 }

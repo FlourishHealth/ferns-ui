@@ -5,6 +5,7 @@ import {Platform} from "react-native";
 
 import {APIError, BaseProfile, IconSize} from "./Common";
 import {COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES} from "./Constants";
+import dayjs from "./dayjsExtended";
 
 export function mergeInlineStyles(inlineStyle?: any, newStyle?: any) {
   const inline = get(inlineStyle, "__style");
@@ -320,3 +321,36 @@ export function printAPIError(error: APIError, details = true): string {
   }
   return message;
 }
+
+// Print date in the format of M/D/YY, taking timezones into account.
+export const printDate = (date: string | Date | undefined): string => {
+  if (!date) {
+    return "";
+  }
+  if (
+    dayjs.utc(date).hour() === 0 &&
+    dayjs.utc(date).minute() === 0 &&
+    dayjs.utc(date).second() === 0
+  ) {
+    const offset = new Date().getTimezoneOffset();
+    return dayjs.utc(date).add(offset, "minutes").format("M/D/YY");
+  } else {
+    return dayjs.utc(date).tz(dayjs.tz.guess()).format("M/D/YY");
+  }
+};
+
+export const printDateTime = (date: string | Date | undefined): string => {
+  if (!date) {
+    return "";
+  }
+  if (
+    dayjs.utc(date).hour() === 0 &&
+    dayjs.utc(date).minute() === 0 &&
+    dayjs.utc(date).second() === 0
+  ) {
+    const offset = new Date().getTimezoneOffset();
+    return dayjs.utc(date).add(offset, "minutes").format("M/D/YY ");
+  } else {
+    return dayjs.utc(date).tz(dayjs.tz.guess()).format("M/D/YYYY h:mm A");
+  }
+};

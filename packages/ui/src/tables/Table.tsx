@@ -1,11 +1,11 @@
 import React, {Children, ReactElement} from "react";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
-import {Box} from "./Box";
-import {TableProps} from "./Common";
-import {PaginationControl} from "./Pagination";
-import {ScrollView} from "./ScrollView";
-import {ColumnSortInterface, TableContextProvider} from "./tableContext";
+import {Box} from "../Box";
+import {ColumnSortInterface, TableProps} from "../Common";
+import {PaginationControl} from "../Pagination";
+import {ScrollView} from "../ScrollView";
+import {TableContextProvider} from "./tableContext";
 
 export const Table = ({
   children,

@@ -1,8 +1,8 @@
 import React, {ReactElement} from "react";
 
-import {Box} from "./Box";
-import {TableHeaderCellProps} from "./Common";
-import {IconButton} from "./IconButton";
+import {Box} from "../Box";
+import {TableHeaderCellProps} from "../Common";
+import {IconButton} from "../IconButton";
 import {useTableContext} from "./tableContext";
 
 /**
