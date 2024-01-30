@@ -23,6 +23,7 @@ export const Field = ({
   rows,
   value,
   onChange,
+  onBlur,
   onStart,
   onEnd,
   options,
@@ -39,6 +40,7 @@ export const Field = ({
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
+    onBlur && onBlur({...value, [field]: newValue});
   };
 
   const handleAutoCompleteChange = (newValue: AddressInterface) => {
@@ -47,6 +49,7 @@ export const Field = ({
 
   const handleSwitchChange = (switchValue: boolean) => {
     onChange(switchValue);
+    onBlur && onBlur(switchValue);
   };
 
   const renderField = (): ReactChildren => {
@@ -63,7 +66,10 @@ export const Field = ({
           placeholder={placeholder}
           testID={testID}
           value={value}
-          onChange={onChange}
+          onChange={(result) => {
+            onChange(result);
+            onBlur && onBlur(result);
+          }}
         />
       );
     } else if (type === "multiselect") {
@@ -104,6 +110,7 @@ export const Field = ({
                       newValue = value.filter((v: string) => v !== o.value);
                     }
                     onChange(newValue);
+                    onBlur && onBlur(newValue);
                   }}
                 />
               </Box>
@@ -121,6 +128,7 @@ export const Field = ({
           rows={rows}
           testID={testID}
           value={String(value)}
+          onBlur={onBlur}
           onChange={(result) => onChange(result.value)}
         />
       );
@@ -132,7 +140,9 @@ export const Field = ({
           name={name}
           switched={Boolean(value)}
           testID={testID}
-          onChange={(result) => handleSwitchChange(result)}
+          onChange={(result) => {
+            handleSwitchChange(result);
+          }}
         />
       );
     } else if (type && ["date", "time", "datetime"].includes(type)) {
@@ -144,6 +154,9 @@ export const Field = ({
           testID={testID}
           type={type as "date" | "time" | "datetime"}
           value={value}
+          onBlur={(result) => {
+            onBlur && onBlur(result.value);
+          }}
           onChange={(result) => onChange(result.value)}
         />
       );
@@ -197,7 +210,9 @@ export const Field = ({
             style={{borderRadius: 16}}
             testID={`${testID}-state`}
             value={state}
-            onChange={(result) => handleAddressChange("state", result)}
+            onChange={(result) => {
+              handleAddressChange("state", result);
+            }}
           />
           <TextField
             disabled={disabled}
@@ -243,7 +258,10 @@ export const Field = ({
           options={options}
           placeholder={placeholder}
           value={value}
-          onChange={onChange}
+          onChange={(val) => {
+            onChange(val);
+            onBlur && onBlur(val);
+          }}
         />
       );
     } else if (type === "number") {
@@ -255,7 +273,12 @@ export const Field = ({
           testID={testID}
           type="number"
           value={value}
-          onChange={(result) => onChange(result.value)}
+          onBlur={(result) => {
+            onBlur && onBlur(result.value);
+          }}
+          onChange={(result) => {
+            onChange(result.value);
+          }}
         />
       );
     } else if (type === "signature") {
@@ -304,6 +327,9 @@ export const Field = ({
               | "url"
           }
           value={tfValue}
+          onBlur={(result) => {
+            onBlur && onBlur(result.value);
+          }}
           onChange={(result) => onChange(result.value)}
         />
       );

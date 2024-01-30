@@ -2716,6 +2716,7 @@ export interface FieldProps extends FieldWithLabelsProps {
   rows?: number;
   value?: any;
   onChange?: any;
+  onBlur?: any;
   onStart?: any;
   onEnd?: any;
   options?: SelectListOptions;
