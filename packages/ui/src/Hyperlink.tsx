@@ -27,7 +27,7 @@
  * SOFTWARE.
  * */
 
-import mdurl from "mdurl";
+import * as mdurl from "mdurl";
 import React from "react";
 import {Linking, Platform, Text, View} from "react-native";
 
