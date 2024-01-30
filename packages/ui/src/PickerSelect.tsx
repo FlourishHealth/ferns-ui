@@ -210,6 +210,7 @@ export function RNPickerSelect({
     [options]
   );
 
+  // Set selected item
   useEffect(() => {
     const item = getSelectedItem(itemKey, value);
     setSelectedItem(item.selectedItem);

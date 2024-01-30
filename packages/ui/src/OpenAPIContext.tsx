@@ -37,7 +37,7 @@ interface OpenAPIProviderProps {
   specUrl?: string;
 }
 
-export function OpenAPIProvider({children, specUrl}: OpenAPIProviderProps): React.ReactElement {
+export const OpenAPIProvider = ({children, specUrl}: OpenAPIProviderProps): React.ReactElement => {
   const [spec, setSpec] = useState<OpenAPISpec | null>(null);
 
   const getModelFields = (modelName: string): ModelFields | null => {
@@ -71,6 +71,7 @@ export function OpenAPIProvider({children, specUrl}: OpenAPIProviderProps): Reac
     return field;
   };
 
+  // Fetch the OpenAPI spec from the provided URL.
   useEffect((): void => {
     if (!specUrl) {
       return;
@@ -81,7 +82,7 @@ export function OpenAPIProvider({children, specUrl}: OpenAPIProviderProps): Reac
         const data = (await response.json()) as OpenAPISpec;
         setSpec(data);
       })
-      .catch((err) => console.error(`Error fetching OpenAPI spec: ${err}`));
+      .catch((error: any) => console.error(`Error fetching OpenAPI spec: ${error}`));
   }, [specUrl]);
 
   return (
@@ -89,7 +90,7 @@ export function OpenAPIProvider({children, specUrl}: OpenAPIProviderProps): Reac
       {children}
     </OpenAPIContext.Provider>
   );
-}
+};
 
 export const useOpenAPISpec = () => {
   const context = useContext(OpenAPIContext);

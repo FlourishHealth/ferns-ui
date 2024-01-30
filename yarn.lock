@@ -5778,6 +5778,11 @@ eslint-plugin-comment-length@^1.7.2:
   dependencies:
     "@typescript-eslint/utils" "^6.10.0"
 
+eslint-plugin-ferns@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ferns/-/eslint-plugin-ferns-0.3.0.tgz#d63eb88811d68f9805bcebc508411e8985e25f0a"
+  integrity sha512-YUW2TOh71csB89VGOF0pt42OUoWFry8XSmJzaKicTfgE2dakD3Bn1Rpn3nJaVYbabxvQOwiN+z6oZWPi9k+MTg==
+
 eslint-plugin-import@^2.29.0:
   version "2.29.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-import/-/eslint-plugin-import-2.29.0.tgz#8133232e4329ee344f2f612885ac3073b0b7e155"

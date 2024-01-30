@@ -22,7 +22,7 @@ const hours = range(1, 13).map((n) => String(n));
 const minutes = range(0, 60).map((n) => String(n).padStart(2, "0"));
 const minutesOptions = [...minutes, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-function TimeInput({
+const TimeInput = ({
   type,
   value,
   onChange,
@@ -30,7 +30,7 @@ function TimeInput({
   type: "hour" | "minute";
   value: number;
   onChange: (value: number) => void;
-}): React.ReactElement {
+}): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
   const defaultText = type === "minute" ? String(value).padStart(2, "0") : String(value);
@@ -98,15 +98,15 @@ function TimeInput({
       />
     </View>
   );
-}
+};
 
-function CalendarHeader({
+const CalendarHeader = ({
   addMonth,
   month,
 }: {
   addMonth: (num: number) => void;
   month: Date[];
-}): React.ReactElement {
+}): React.ReactElement => {
   const displayDate = dayjs(month[0]).format("MMM YYYY");
   return (
     <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
@@ -153,7 +153,7 @@ function CalendarHeader({
       />
     </Box>
   );
-}
+};
 
 // For mobile, renders all components in an action sheet. For web, renders all components in a
 // modal. For mobile: If mode is "time", renders a spinner picker for time picker on both platforms.
@@ -161,14 +161,14 @@ function CalendarHeader({
 // renders a spinner picker for time picker and our custom calendar on both platforms. For web,
 // renders a simplistic text box for time picker and a calendar for date picker in a modal In the
 // future, web time picker should be a typeahead dropdown like Google calendar.
-export function DateTimeActionSheet({
+export const DateTimeActionSheet = ({
   // actionSheetRef,
   mode,
   value,
   onChange,
   visible,
   onDismiss,
-}: DateTimeActionSheetProps) {
+}: DateTimeActionSheetProps) => {
   const {theme} = useContext(ThemeContext);
 
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for mode=time
@@ -193,6 +193,7 @@ export function DateTimeActionSheet({
   const [amPm, setAmPm] = useState<"am" | "pm">(dayjs(m).format("a") === "am" ? "am" : "pm");
   const [date, setDate] = useState<string>(dayjs(m).toISOString());
 
+  // If the value changes in the props, update the state for the date and time.
   useEffect(() => {
     let datetime;
     if (value) {
@@ -398,4 +399,4 @@ export function DateTimeActionSheet({
       {renderContent()}
     </Modal>
   );
-}
+};

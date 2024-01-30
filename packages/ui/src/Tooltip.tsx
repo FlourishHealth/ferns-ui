@@ -138,6 +138,7 @@ export const Tooltip = (props: TooltipProps) => {
 
   const isWeb = Platform.OS === "web";
 
+  // If the tooltip is visible, and the user clicks outside of the tooltip, hide it.
   React.useEffect(() => {
     return () => {
       if (showTooltipTimer.current) {

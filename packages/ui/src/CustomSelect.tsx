@@ -23,6 +23,7 @@ export const CustomSelect = ({
     return ![...options, {value: ""}].map((i) => i.value).includes(customValue);
   }, [options, customValue]);
 
+  // If the value is set to custom, show the custom input
   useEffect(() => {
     setShowCustomInput(isValueCustom);
     if (!showCustomInput) {

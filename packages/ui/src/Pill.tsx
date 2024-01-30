@@ -4,7 +4,7 @@ import {Box} from "./Box";
 import {PillProps} from "./Common";
 import {Text} from "./Text";
 
-export function Pill({onClick, enabled, color = "white", text}: PillProps): React.ReactElement {
+export const Pill = ({onClick, enabled, color = "white", text}: PillProps): React.ReactElement => {
   return (
     <Box
       border={color}
@@ -19,4 +19,4 @@ export function Pill({onClick, enabled, color = "white", text}: PillProps): Reac
       </Text>
     </Box>
   );
-}
+};

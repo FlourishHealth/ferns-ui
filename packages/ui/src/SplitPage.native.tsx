@@ -48,6 +48,7 @@ export const SplitPage = ({
     await onSelectionChange(undefined);
   }, [onSelectionChange]);
 
+  // If the list is showing, deselect the item.
   useEffect(() => {
     if (showItemList) {
       void onItemDeselect();

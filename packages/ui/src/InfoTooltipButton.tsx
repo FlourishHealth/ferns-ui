@@ -3,7 +3,7 @@ import React from "react";
 import {InfoTooltipButtonProps} from "./Common";
 import {IconButton} from "./IconButton";
 
-export function InfoTooltipButton({text, size}: InfoTooltipButtonProps): React.ReactElement {
+export const InfoTooltipButton = ({text, size}: InfoTooltipButtonProps): React.ReactElement => {
   return (
     <IconButton
       accessibilityLabel="info"
@@ -15,4 +15,4 @@ export function InfoTooltipButton({text, size}: InfoTooltipButtonProps): React.R
       onClick={() => {}}
     />
   );
-}
+};

@@ -5,14 +5,14 @@ import {TableProps} from "./Common";
 import {ScrollView} from "./ScrollView";
 import {ColumnSortInterface, TableContextProvider} from "./tableContext";
 
-export function Table({
+export const Table = ({
   children,
   columns,
   borderStyle,
   alternateRowBackground = true,
   maxHeight,
   stickyHeader = true,
-}: TableProps): React.ReactElement {
+}: TableProps): React.ReactElement => {
   const arrayChildren = Children.toArray(children);
   const [sortColumn, setSortColumn] = React.useState<ColumnSortInterface | undefined>(undefined);
 
@@ -60,4 +60,4 @@ export function Table({
       </ScrollView>
     </TableContextProvider>
   );
-}
+};

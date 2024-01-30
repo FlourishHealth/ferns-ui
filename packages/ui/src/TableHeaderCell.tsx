@@ -8,12 +8,12 @@ import {useTableContext} from "./tableContext";
 /**
  * Use TableHeaderCell to define a header cell in Table.
  */
-export function TableHeaderCell({
+export const TableHeaderCell = ({
   children,
   index,
   sortable,
   onSortChange,
-}: TableHeaderCellProps): ReactElement {
+}: TableHeaderCellProps): ReactElement => {
   const {columns, setSortColumn, sortColumn} = useTableContext();
   const width = columns[index];
   if (!width) {
@@ -69,4 +69,4 @@ export function TableHeaderCell({
       </Box>
     );
   }
-}
+};

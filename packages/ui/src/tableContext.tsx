@@ -31,7 +31,7 @@ const TableContext: Context<TableContextType> = createContext<TableContextType>(
 
 export const {Provider} = TableContext;
 
-export function TableContextProvider({
+export const TableContextProvider = ({
   children,
   columns,
   hasDrawerContents,
@@ -40,7 +40,7 @@ export function TableContextProvider({
   stickyHeader,
   borderStyle,
   alternateRowBackground,
-}: Props): React.ReactElement<typeof Provider> {
+}: Props): React.ReactElement<typeof Provider> => {
   return (
     <Provider
       value={{
@@ -56,7 +56,7 @@ export function TableContextProvider({
       {children}
     </Provider>
   );
-}
+};
 
 export function useTableContext(): TableContextType {
   const {

@@ -4,7 +4,7 @@ import {Box} from "./Box";
 import {WithLabelProps} from "./Common";
 import {Text} from "./Text";
 
-export function WithLabel({
+export const WithLabel = ({
   label,
   labelInline,
   labelJustifyContent,
@@ -14,7 +14,7 @@ export function WithLabel({
   labelColor,
   show,
   children,
-}: WithLabelProps): React.ReactElement | null {
+}: WithLabelProps): React.ReactElement | null => {
   if (!children) {
     return null;
   }
@@ -42,4 +42,4 @@ export function WithLabel({
       )}
     </Box>
   );
-}
+};

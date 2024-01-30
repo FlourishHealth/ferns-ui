@@ -12,7 +12,7 @@ const fontSizes = {
   lg: 16,
 };
 
-export function Text({
+export const Text = ({
   align = "left",
   children,
   color,
@@ -28,7 +28,7 @@ export function Text({
   skipLinking,
   testID,
   weight = "normal",
-}: TextProps): React.ReactElement {
+}: TextProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
   function propsToStyle(): any {
@@ -115,4 +115,4 @@ export function Text({
       </Hyperlink>
     );
   }
-}
+};

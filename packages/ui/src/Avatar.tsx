@@ -71,6 +71,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       .join("")
       .toLocaleUpperCase();
 
+  // If the src changes, update the image.
   useEffect(() => {
     setSrc(props.src);
   }, [props]);

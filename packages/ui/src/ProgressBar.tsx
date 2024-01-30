@@ -4,7 +4,7 @@ import {View} from "react-native";
 import {ProgressBarProps} from "./Common";
 import {ThemeContext} from "./Theme";
 
-export function ProgressBar({color, completed}: ProgressBarProps): React.ReactElement {
+export const ProgressBar = ({color, completed}: ProgressBarProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
   return (
@@ -44,4 +44,4 @@ export function ProgressBar({color, completed}: ProgressBarProps): React.ReactEl
       />
     </View>
   );
-}
+};

@@ -104,7 +104,7 @@ class HyperlinkComponent extends React.Component<HyperlinkProps> {
         component.props.children.substring(_lastIndex, component.props.children.length)
       );
       return React.cloneElement(component, componentProps, elements);
-    } catch (err) {
+    } catch (error) {
       return component;
     }
   };
@@ -155,7 +155,7 @@ class HyperlinkComponent extends React.Component<HyperlinkProps> {
   }
 }
 
-export function Hyperlink(props: HyperlinkProps) {
+export const Hyperlink = (props: HyperlinkProps) => {
   const handleLink = (url: string) => {
     const urlObject = mdurl.parse(url);
     urlObject.protocol = urlObject.protocol.toLowerCase();
@@ -169,4 +169,4 @@ export function Hyperlink(props: HyperlinkProps) {
   const onPress = handleLink || props.onPress;
   if (props.linkDefault) return <HyperlinkComponent {...props} onPress={onPress} />;
   return <HyperlinkComponent {...props} />;
-}
+};

@@ -3,7 +3,7 @@ import {ActivityIndicator} from "react-native";
 
 import {SpinnerProps} from "./Common";
 
-export function Spinner({size, color}: SpinnerProps): ReactElement | null {
+export const Spinner = ({size, color}: SpinnerProps): ReactElement | null => {
   const [show, setShow] = useState(false);
 
   // The delay is for perceived performance. You don't want to show a spinner when you're doing a
@@ -18,4 +18,4 @@ export function Spinner({size, color}: SpinnerProps): ReactElement | null {
   }
   const spinnerSize: "small" | "large" = size === "sm" ? "small" : "large";
   return <ActivityIndicator color={color ?? "darkGray"} size={spinnerSize} />;
-}
+};

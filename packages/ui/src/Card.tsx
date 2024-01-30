@@ -3,7 +3,7 @@ import React from "react";
 import {Box} from "./Box";
 import {BoxProps} from "./Common";
 
-export function Card({children, color = "white", padding = 4, width, ...rest}: BoxProps) {
+export const Card = ({children, color = "white", padding = 4, width, ...rest}: BoxProps) => {
   return (
     <Box
       color={color}
@@ -18,4 +18,4 @@ export function Card({children, color = "white", padding = 4, width, ...rest}: B
       {children}
     </Box>
   );
-}
+};

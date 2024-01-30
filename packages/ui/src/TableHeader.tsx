@@ -7,14 +7,14 @@ import {TableRow} from "./TableRow";
 /**
  * Use TableHeader to group the header content in Table.
  */
-export function TableHeader({
+export const TableHeader = ({
   children,
   display = "tableHeaderGroup",
   color,
-}: TableHeaderProps): React.ReactElement {
+}: TableHeaderProps): React.ReactElement => {
   return (
     <Box color={color ?? "white"} display={display === "visuallyHidden" ? "none" : "flex"}>
       <TableRow headerRow>{children}</TableRow>
     </Box>
   );
-}
+};

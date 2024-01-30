@@ -5,7 +5,7 @@ import {ToastProvider} from "react-native-toast-notifications";
 import {ThemeProvider} from "./Theme";
 import {Toast} from "./Toast";
 
-export function FernsProvider({children}: {children: React.ReactNode}): React.ReactElement {
+export const FernsProvider = ({children}: {children: React.ReactNode}): React.ReactElement => {
   return (
     <ThemeProvider>
       <ToastProvider
@@ -21,4 +21,4 @@ export function FernsProvider({children}: {children: React.ReactNode}): React.Re
       </ToastProvider>
     </ThemeProvider>
   );
-}
+};
