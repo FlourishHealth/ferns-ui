@@ -1,18 +1,20 @@
 import {Picker} from "@react-native-picker/picker";
+import {getCalendars} from "expo-localization";
 import range from "lodash/range";
+import {DateTime} from "luxon";
 import React, {useContext, useEffect, useState} from "react";
 import {Platform, StyleProp, TextInput, TextStyle, View} from "react-native";
 import {Calendar} from "react-native-calendars";
 
 import {Box} from "./Box";
 import {DateTimeActionSheetProps} from "./Common";
-import dayjs from "./dayjsExtended";
 import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
 import {SelectList} from "./SelectList";
 import {ThemeContext} from "./Theme";
+import {TimezonePicker} from "./TimezonePicker";
 
 const TIME_PICKER_HEIGHT = 104;
 const INPUT_HEIGHT = 40;
@@ -107,7 +109,7 @@ const CalendarHeader = ({
   addMonth: (num: number) => void;
   month: Date[];
 }): React.ReactElement => {
-  const displayDate = dayjs(month[0]).format("MMM YYYY");
+  const displayDate = DateTime.fromJSDate(month[0]).toFormat("MMM yyyy");
   return (
     <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
       <IconButton
@@ -174,57 +176,50 @@ export const DateTimeActionSheet = ({
 }: DateTimeActionSheetProps) => {
   const {theme} = useContext(ThemeContext);
 
+  const calendar = getCalendars()[0];
+  const [timezone, setTimezone] = useState<string | undefined>(
+    transformValue?.options?.timezone || calendar?.timeZone
+  );
+  if (!timezone) {
+    console.error(
+      "Could not automatically determine timezone and none was provided to DateTimeActionSheet."
+    );
+  }
+
+  if (typeof value !== "string" && typeof value !== "undefined") {
+    console.error(`Datetime only accepts string or undefined value, not ${typeof value}: ${value}`);
+  }
+
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for mode=time
-  let m;
-  if (value) {
-    m = dayjs(value, [
-      "YYYY",
-      "YYYY-MM-DD",
-      "HH:mm",
-      "hh:mm A",
-      transformValue?.options?.transformFormat,
-    ]).tz(transformValue?.options?.timezone);
-  } else {
-    m = dayjs().tz(transformValue?.options?.timezone);
-  }
 
-  if (!m.isValid()) {
-    throw new Error(`Invalid date/time value ${value}`);
-  }
-
-  let hr = m.hour() % 12;
-  if (hr === 0) {
-    hr = 12;
-  }
-
-  const [hour, setHour] = useState<number>(hr);
-  const [minute, setMinute] = useState<number>(m.minute());
-  const [amPm, setAmPm] = useState<"am" | "pm">(m.format("a") === "am" ? "am" : "pm");
-  const [date, setDate] = useState<string>(m.toISOString());
+  const [hour, setHour] = useState<number>(0);
+  const [minute, setMinute] = useState<number>(0);
+  const [amPm, setAmPm] = useState<"am" | "pm">("am");
+  const [date, setDate] = useState<string>("");
 
   // If the value changes in the props, update the state for the date and time.
   useEffect(() => {
     let datetime;
     if (value) {
-      datetime = dayjs(value, [
-        "YYYY",
-        "YYYY-MM-DD",
-        "HH:mm",
-        "hh:mm A",
-        transformValue?.options?.transformFormat,
-      ]).tz(transformValue?.options?.timezone);
+      datetime = DateTime.fromISO(value).setZone(timezone).set({millisecond: 0, second: 0});
     } else {
-      datetime = dayjs().tz(transformValue?.options?.timezone);
+      datetime = DateTime.now().setZone(timezone).set({millisecond: 0, second: 0});
     }
-    let h = datetime.hour() % 12;
+    if (!datetime.isValid) {
+      throw new Error(
+        `Invalid date/time value ${value}, datetime ${datetime} timezone: ${timezone}`
+      );
+    }
+
+    let h = datetime.hour % 12;
     if (h === 0) {
       h = 12;
     }
     setHour(h);
-    setMinute(datetime.minute());
-    setAmPm(datetime.format("a") === "am" ? "am" : "pm");
-    setDate(datetime.toISOString());
-  }, [value, transformValue]);
+    setMinute(datetime.minute);
+    setAmPm(datetime.toFormat("a") === "am" ? "am" : "pm");
+    setDate(datetime.toISO());
+  }, [value, transformValue, timezone]);
 
   // TODO Support 24 hour time for time picker.
   const renderMobileTime = () => {
@@ -304,7 +299,7 @@ export const DateTimeActionSheet = ({
           <TimeInput type="minute" value={minute} onChange={(v) => setMinute(v)} />
         </Box>
 
-        <Box width={60}>
+        <Box marginRight={2} width={60}>
           <SelectList
             options={[
               {label: "am", value: "am"},
@@ -316,6 +311,9 @@ export const DateTimeActionSheet = ({
               setAmPm(result as "am" | "pm");
             }}
           />
+        </Box>
+        <Box>
+          <TimezonePicker showLabel={false} timezone={timezone} onChange={setTimezone} />
         </Box>
       </Box>
     );
@@ -332,24 +330,31 @@ export const DateTimeActionSheet = ({
 
   // Note: do not call this if waiting on a state change.
   const sendOnChange = () => {
-    const hourChange = amPm === "pm" && hour !== 12 ? Number(hour) + 12 : Number(hour);
+    const militaryHour = amPm === "pm" && hour !== 12 ? Number(hour) + 12 : Number(hour);
+    console.log("sendOnChange", {date, hour, hourChange: militaryHour, minute, amPm, timezone});
+
     if (mode === "date") {
-      onChange({value: date});
+      onChange({
+        value: DateTime.fromISO(date)
+          .setZone("UTC")
+          .set({hour: 0, minute: 0, second: 0, millisecond: 0})
+          .toISO()!,
+      });
     } else if (mode === "time") {
       onChange({
-        value: dayjs()
-          .tz(transformValue?.options?.timezone)
-          .hour(hourChange)
-          .minute(Number(minute))
-          .toISOString(),
+        value: DateTime.fromISO(date)
+          .setZone(timezone)
+          .set({hour: militaryHour, minute, second: 0, millisecond: 0})
+          .setZone("UTC")
+          .toISO()!,
       });
     } else if (mode === "datetime") {
       onChange({
-        value: dayjs(date)
-          .tz(transformValue?.options?.timezone)
-          .hour(hourChange)
-          .minute(Number(minute))
-          .toISOString(),
+        value: DateTime.fromISO(date)
+          .setZone(timezone)
+          .set({hour: militaryHour, minute, second: 0, millisecond: 0})
+          .setZone("UTC")
+          .toISO()!,
       });
     }
     onDismiss();
@@ -366,26 +371,31 @@ export const DateTimeActionSheet = ({
   const renderDateCalendar = () => {
     const markedDates: {[id: string]: {selected: boolean; selectedColor: string}} = {};
     if (date) {
-      markedDates[dayjs(date).format("YYYY-MM-DD")] = {
+      markedDates[DateTime.fromISO(date).toFormat("YYYY-MM-DD")] = {
         selected: true,
         selectedColor: theme.primary,
       };
     }
     return (
-      <Calendar
-        customHeader={CalendarHeader}
-        initialDate={dayjs(date).format("YYYY-MM-DD")}
-        markedDates={markedDates}
-        onDayPress={(day) => {
-          setDate(day.dateString);
-          // If mode is just date, we can shortcut and close right away.
-          // time and datetime need to wait for the primary button.
-          if (mode === "date") {
-            onChange({value: day.dateString});
-            onDismiss();
-          }
-        }}
-      />
+      <Box width="100%">
+        <Box marginBottom={4} width="100%">
+          <Calendar
+            customHeader={CalendarHeader}
+            initialDate={DateTime.fromISO(date).toFormat("YYYY-MM-DD")}
+            markedDates={markedDates}
+            onDayPress={(day) => {
+              setDate(day.dateString);
+              // If mode is just date, we can shortcut and close right away.
+              // time and datetime need to wait for the primary button.
+              if (mode === "date") {
+                onChange({value: day.dateString});
+                onDismiss();
+              }
+            }}
+          />
+        </Box>
+        <TimezonePicker timezone={timezone} onChange={setTimezone} />
+      </Box>
     );
   };
 

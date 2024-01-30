@@ -1908,6 +1908,13 @@ export interface DateTimeFieldProps extends FieldWithLabelsProps {
   onChange: (date: Date) => void;
   dateFormat?: string;
   pickerType?: "default" | "compact" | "inline" | "spinner";
+  showTimezone?: boolean; // defaults to true
+}
+
+export interface TimezonePickerProps {
+  timezone?: string;
+  onChange: (tz: string | undefined) => void | Promise<void>;
+  showLabel?: boolean; // defaults to true
 }
 
 export interface TextFieldProps extends FieldWithLabelsProps {

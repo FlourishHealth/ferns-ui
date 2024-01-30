@@ -9,7 +9,9 @@
     "lintfix": "eslint --fix \"src/**/*.ts*\"",
     "build": "tsc",
     "dev": "tsc -w",
-    "deps": "node checkDeps.js"
+    "deps": "node checkDeps.js",
+    "test": "TZ=America/New_York jest --watchAll",
+    "test:ci": "TZ=America/New_York jest --ci"
   },
   "babel": {
     "presets": [
@@ -50,62 +52,25 @@
       "@typescript-eslint/explicit-function-return-type": "off"
     }
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
-    ],
-    "moduleFileExtensions": [
-      "web.js",
-      "js",
-      "web.ts",
-      "ts",
-      "web.tsx",
-      "tsx",
-      "json",
-      "web.jsx",
-      "jsx",
-      "node"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web",
-      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
-    },
-    "modulePaths": [],
-    "roots": [
-      "<rootDir>/src"
-    ],
-    "setupFiles": [
-      "react-app-polyfill/jsdom"
-    ],
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.ts"
-    ],
-    "testEnvironment": "jest-environment-jsdom-fourteen",
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
-    ],
-    "transform": {
-      "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
-      "^.+\\.module\\.(css|sass|scss)$"
-    ],
-    "watchPlugins": [
-      "jest-watch-typeahead/filename",
-      "jest-watch-typeahead/testname"
-    ]
-  },
   "files": [
     "dist/**/*",
     "src/**/*"
   ],
   "devDependencies": {
+    "@babel/core": "^7.23.6",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0-0",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0-0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/plugin-transform-arrow-functions": "^7.23.3",
+    "@babel/plugin-transform-flow-strip-types": "^7.23.3",
+    "@babel/plugin-transform-shorthand-properties": "^7.23.3",
+    "@babel/plugin-transform-template-literals": "^7.23.3",
+    "@babel/preset-env": "^7.23.6",
+    "@babel/preset-typescript": "^7.23.3",
+    "@babel/runtime": "^7.23.6",
     "@expo/config-plugins": "~7.8.0",
+    "@types/jest": "^29.5.12",
+    "@types/luxon": "^3.4.2",
     "@types/mdurl": "^1.0.4",
     "@types/react": "~18.2.57",
     "@types/react-datetime-picker": "^5.0.0",
@@ -113,6 +78,8 @@
     "@types/react-time-picker": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
+    "babel-jest": "^29.7.0",
+    "babel-preset-react-app": "^10.0.1",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-comment-length": "^1.7.3",
@@ -125,6 +92,9 @@
     "eslint-plugin-react-native": "^4.1.0",
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "eslint-plugin-unused-imports": "3.1.0",
+    "jest": "^29.7.0",
+    "jest-expo": "~49.0.0",
+    "jest-github-actions-reporter": "^1.0.3",
     "mdurl": "^2.0.0",
     "prettier": "^3.2.5",
     "react": "18.2.0",
@@ -145,7 +115,6 @@
     "@react-native-community/blur": "^4.4.0",
     "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-picker/picker": "2.6.1",
-    "dayjs": "^1.11.10",
     "expo-clipboard": "~5.0.1",
     "expo-font": "~11.10.3",
     "expo-haptics": "~12.8.1",
@@ -154,6 +123,7 @@
     "expo-localization": "~14.8.3",
     "libphonenumber-js": "^1.10.56",
     "lodash": "^4.17.21",
+    "luxon": "^3.4.4",
     "react-app-polyfill": "^3.0.0",
     "react-date-picker": "^10.5.2",
     "react-datetime-picker": "^5.5.3",

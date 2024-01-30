@@ -1,3 +1,4 @@
+import {getCalendars} from "expo-localization";
 import {AsYouType} from "libphonenumber-js";
 import React, {ReactElement, useCallback, useContext, useMemo, useState} from "react";
 import {
@@ -12,7 +13,7 @@ import {
 import {Box} from "./Box";
 import {TextFieldProps} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
-import dayjs from "./dayjsExtended";
+import {printDate, printDateAndTime, printTime} from "./DateUtilities";
 import {DecimalRangeActionSheet} from "./DecimalRangeActionSheet";
 import {HeightActionSheet} from "./HeightActionSheet";
 import {Icon} from "./Icon";
@@ -94,6 +95,12 @@ export const TextField = ({
   const numberRangeActionSheetRef: React.RefObject<any> = React.createRef();
   const decimalRangeActionSheetRef: React.RefObject<any> = React.createRef();
   const weightActionSheetRef: React.RefObject<any> = React.createRef();
+
+  const calendar = getCalendars()[0];
+  const localTimeZone = calendar?.timeZone;
+  if (!localTimeZone) {
+    console.warn("Could not automatically determine timezone.");
+  }
 
   const [focused, setFocused] = useState(false);
   const [height, setHeight] = useState(propsHeight || 40);
@@ -195,33 +202,15 @@ export const TextField = ({
   }, [decimalRangeActionSheetRef, disabled, numberRangeActionSheetRef, type, weightActionSheetRef]);
 
   let displayValue = value;
-  if (displayValue) {
+  if (value) {
+    const timezone = transformValue?.options?.timezone || localTimeZone;
+
     if (type === "date") {
-      // We get off by one errors because UTC midnight might be yesterday. So we add the timezone
-      // offset.
-      if (
-        dayjs.utc(value).hour() === 0 &&
-        dayjs.utc(value).minute() === 0 &&
-        dayjs.utc(value).second() === 0
-      ) {
-        const timezoneOffset = new Date().getTimezoneOffset();
-        displayValue = dayjs
-          .utc(value)
-          .add(timezoneOffset, "minutes")
-          .format(transformValue?.options?.transformFormat ?? "MM/DD/YYYY");
-      } else {
-        displayValue = dayjs(value)
-          .tz(transformValue?.options?.timezone)
-          .format(transformValue?.options?.transformFormat ?? "MM/DD/YYYY");
-      }
+      displayValue = printDate(value, {ignoreTime: true});
     } else if (type === "time") {
-      displayValue = dayjs(value)
-        .tz(transformValue?.options?.timezone)
-        .format(transformValue?.options?.transformFormat ?? "h:mm A");
+      displayValue = printTime(value, {timezone, showTimezone: true});
     } else if (type === "datetime") {
-      displayValue = dayjs(value)
-        .tz(transformValue?.options?.timezone)
-        .format(transformValue?.options?.transformFormat ?? "MM/DD/YYYY h:mm A");
+      displayValue = printDateAndTime(value, {timezone, showTimezone: true});
     } else if (type === "height") {
       displayValue = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
     } else if (type === "phoneNumber") {
@@ -232,8 +221,8 @@ export const TextField = ({
       // which would then be formatted back to `"(123)"`
       // and so a user wouldn't be able to erase the phone number.
       // This is the workaround for that.
-      const formattedPhoneNumber = new AsYouType("US").input(displayValue);
-      if (displayValue !== formattedPhoneNumber && displayValue.length !== 4) {
+      const formattedPhoneNumber = new AsYouType("US").input(value);
+      if (displayValue !== formattedPhoneNumber && value.length !== 4) {
         displayValue = formattedPhoneNumber;
       }
     }
@@ -244,6 +233,8 @@ export const TextField = ({
       displayValue = "";
     }
   }
+
+  console.log("DISPLAY VALUE TEXT FIELD", displayValue, value, type);
 
   const Wrapper = isHandledByModal ? Pressable : View;
 
@@ -318,21 +309,22 @@ export const TextField = ({
                 // }
               }}
               onChangeText={(text) => {
-                if (onChange) {
-                  if (type === "phoneNumber") {
-                    const formattedPhoneNumber = new AsYouType("US").input(text);
-                    // another workaround for the same issue as above with backspacing phone numbers
-                    if (formattedPhoneNumber === value) {
-                      onChange({value: text});
-                    } else {
-                      onChange({value: formattedPhoneNumber});
-                    }
-                  } else if (type === "number") {
-                    text = text.replace(/[^0-9]/g, "");
-                    onChange({value: !isNaN(parseInt(text)) ? parseInt(text).toString() : ""});
-                  } else {
+                if (!onChange) {
+                  return;
+                }
+                if (type === "phoneNumber") {
+                  const formattedPhoneNumber = new AsYouType("US").input(text);
+                  // another workaround for the same issue as above with backspacing phone numbers
+                  if (formattedPhoneNumber === value) {
                     onChange({value: text});
+                  } else {
+                    onChange({value: formattedPhoneNumber});
                   }
+                } else if (type === "number") {
+                  text = text.replace(/[^0-9]/g, "");
+                  onChange({value: !isNaN(parseInt(text)) ? parseInt(text).toString() : ""});
+                } else {
+                  onChange({value: text});
                 }
               }}
               onContentSizeChange={(event) => {

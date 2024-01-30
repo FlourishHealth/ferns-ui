@@ -1,9 +1,10 @@
 /* eslint-disable react/display-name */
 import {Box, Field, Heading, TapToEdit, Text} from "ferns-ui";
+import {printDateAndTime} from "ferns-ui/dist/DateUtilities";
+import {DateTime} from "luxon";
 import React, {useState} from "react";
 import {Image} from "react-native";
 
-import dayjs from "./dayjsExtended";
 import {StorybookContainer} from "./StorybookContainer";
 
 const TextField = () => {
@@ -223,6 +224,7 @@ const PhoneNumberField = () => {
 
 const DateField = () => {
   const [value, setValue] = useState(new Date());
+  console.log("DATE FIELD", value);
   return (
     <StorybookContainer>
       <Field
@@ -230,7 +232,7 @@ const DateField = () => {
         label="Date Field"
         name="text"
         type="date"
-        value={value}
+        value={value.toISOString()}
         onChange={setValue}
       />
     </StorybookContainer>
@@ -238,13 +240,15 @@ const DateField = () => {
 };
 
 const DateTimeField = () => {
-  const [value, setValue] = useState(new Date());
+  const [value, setValue] = useState<string>(DateTime.now().toISO());
+  console.log("DTF", value);
   const [timezone, setTimezone] = useState<string>("America/New_York");
   return (
     <StorybookContainer>
       <Field
         label="Timezone"
         options={[
+          {label: "Guess", value: ""},
           {label: "EST", value: "America/New_York"},
           {label: "CST", value: "America/Chicago"},
           {label: "MST", value: "America/Denver"},
@@ -259,24 +263,28 @@ const DateTimeField = () => {
         label="Date Time Field"
         name="text"
         transformValue={{
-          options: {timezone, transformFormat: "MM/DD/YYYY h:mm A z"},
+          options: {timezone},
         }}
         type="datetime"
         value={value}
-        onChange={setValue}
+        onChange={(v: string) => {
+          console.log("SET VAL", v);
+          setValue(v);
+        }}
       />
       <Field
         disabled
         label="Time in local timezone"
         type="text"
-        value={dayjs(value).format("MM/DD/YYYY h:mm A z")}
+        value={printDateAndTime(value, {showTimezone: true})}
       />
     </StorybookContainer>
   );
 };
 
 const TimeField = () => {
-  const [value, setValue] = useState(dayjs().hour(12).minute(0).toISOString());
+  const [value, setValue] = useState(DateTime.now().set({hour: 12, minute: 0, second: 0}).toISO());
+  console.log("TIME FIELd", value);
   return (
     <StorybookContainer>
       <Field
@@ -298,7 +306,7 @@ const MultiselectField = () => {
       <Box width={300}>
         <Field
           helperText="Here's some help text"
-          label="Date Field"
+          label="Multiselect Field"
           name="text"
           options={[
             {label: "Option1", value: "Option1"},

@@ -1,9 +1,10 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
-import React, {ReactElement, useContext, useMemo, useState} from "react";
+import {getCalendars} from "expo-localization";
+import React, {ReactElement, useContext, useState} from "react";
 import {TextInput} from "react-native";
 
 import {DateTimeFieldProps} from "./Common";
-import dayjs from "./dayjsExtended";
+import {printDate, printDateAndTime, printTime} from "./DateUtilities";
 import {ThemeContext} from "./Theme";
 import {WithLabel} from "./WithLabel";
 
@@ -20,19 +21,20 @@ export const DateTimeField = ({
   const [showPicker, setShowPicker] = useState(false);
   const {theme} = useContext(ThemeContext);
 
-  const defaultFormat = useMemo(() => {
-    if (dateFormat) {
-      return dateFormat;
-    } else {
-      if (mode === "date") {
-        return "MMMM Do YYYY";
-      } else if (mode === "time") {
-        return "h:mm a";
-      } else {
-        return "MMMM Do YYYY, h:mm a";
-      }
-    }
-  }, [mode, dateFormat]);
+  const calendar = getCalendars()[0];
+  const timezone = calendar?.timeZone;
+
+  let formattedValue;
+  if (mode === "date") {
+    formattedValue = printDate(value.toISOString(), {showTimezone: true, ignoreTime: true});
+  } else if (mode === "time") {
+    formattedValue = printTime(value.toISOString(), {
+      timezone: timezone ?? "America/New_York",
+      showTimezone: true,
+    });
+  } else {
+    formattedValue = printDateAndTime(value.toISOString(), {showTimezone: true});
+  }
 
   return (
     <WithLabel label={label} labelSize="lg">
@@ -56,7 +58,7 @@ export const DateTimeField = ({
             fontFamily: theme.primaryFont,
             borderWidth: 1,
           }}
-          value={dayjs(value).format(defaultFormat)}
+          value={formattedValue}
           onPressIn={() => {
             setShowPicker(!showPicker);
           }}
@@ -69,7 +71,7 @@ export const DateTimeField = ({
             mode={mode}
             style={{alignSelf: "flex-start"}}
             testID="dateTimePicker"
-            value={dayjs(value).toDate()}
+            value={value}
             onChange={(event: any, date: any) => {
               if (!date) {
                 return;
