@@ -44,6 +44,9 @@ jobs:
       - name: yarn build
         run: yarn build
         working-directory: 'packages/ui'
+      - name: Ensure dependencies don't conflict with Expo
+        run: npx expo-doctor
+        working-directory: 'packages/ui'
 #      - name: yarn test
 #        run: yarn test
 #        env:
