@@ -259,10 +259,8 @@ export const Field = ({
           placeholder={placeholder}
           value={value}
           onChange={(val) => {
-            {
-              onChange(val);
-              onBlur && onBlur(val);
-            }
+            onChange(val);
+            onBlur && onBlur(val);
           }}
         />
       );
