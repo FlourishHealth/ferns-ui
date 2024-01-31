@@ -35,6 +35,7 @@ export const Signature: React.FC<Props> = ({onChange, onStart, onEnd}: Props) =>
       <Box border="black" height={100}>
         <SignatureScreen
           ref={ref}
+          trimWhitespace
           webStyle={style}
           onBegin={onBegin}
           onEnd={handleEnd}
