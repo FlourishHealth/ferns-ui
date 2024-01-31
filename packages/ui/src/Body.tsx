@@ -5,14 +5,14 @@ import {Box} from "./Box";
 import {BodyProps} from "./Common";
 import {ThemeContext} from "./Theme";
 
-export function Body({
+export const Body = ({
   scroll,
   loading,
   padding,
   height,
   avoidKeyboard,
   children,
-}: BodyProps): React.ReactElement {
+}: BodyProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
   const renderBody = () => {
@@ -31,4 +31,4 @@ export function Body({
   } else {
     return <KeyboardAvoidingView behavior="position">{renderBody()}</KeyboardAvoidingView>;
   }
-}
+};

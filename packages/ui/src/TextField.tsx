@@ -59,7 +59,7 @@ const textContentMap: {
   username: "username",
 };
 
-export function TextField({
+export const TextField = ({
   blurOnSubmit = true,
   value,
   height: propsHeight,
@@ -86,7 +86,7 @@ export function TextField({
   onEnter,
   onSubmitEditing,
   testID,
-}: TextFieldProps): ReactElement {
+}: TextFieldProps): ReactElement => {
   const {theme} = useContext(ThemeContext);
 
   const dateActionSheetRef: React.RefObject<any> = React.createRef();
@@ -404,4 +404,4 @@ export function TextField({
       )}
     </>
   );
-}
+};

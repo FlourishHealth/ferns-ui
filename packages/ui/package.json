@@ -38,31 +38,16 @@
     "useTabs": false
   },
   "eslintConfig": {
+    "extends": [
+      "plugin:ferns/recommended"
+    ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "project": "./tsconfig.json",
-      "tsconfigRootDir": "./",
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
+      "tsconfigRootDir": "./"
     },
-    "settings": {
-      "react": {
-        "version": "17.0.2"
-      }
-    },
-    "plugins": [
-      "prettier",
-      "lodash"
-    ],
-    "extends": [
-      "ferns",
-      "plugin:comment-length/recommended"
-    ],
     "rules": {
-      "react/function-component-definition": "off"
+      "@typescript-eslint/explicit-function-return-type": "off"
     }
   },
   "jest": {
@@ -130,9 +115,9 @@
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "eslint": "^8.55.0",
-    "eslint-config-ferns": "^0.5.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-comment-length": "^1.7.2",
+    "eslint-plugin-ferns": "^0.3.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-lodash": "^7.1.0",
     "eslint-plugin-prettier": "^5.0.1",

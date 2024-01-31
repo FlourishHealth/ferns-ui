@@ -8,13 +8,13 @@ import {useTableContext} from "./tableContext";
 /**
  * Use TableRow to define a row in Table.
  */
-export function TableRow({
+export const TableRow = ({
   children,
   headerRow = false,
   expanded,
   drawerContents,
   color = "white",
-}: TableRowProps): React.ReactElement {
+}: TableRowProps): React.ReactElement => {
   const [isExpanded, setIsExpanded] = React.useState(expanded || false);
   const {columns, hasDrawerContents} = useTableContext();
   const rowRef = useRef<typeof Box>(null);
@@ -61,4 +61,4 @@ export function TableRow({
       )}
     </Box>
   );
-}
+};

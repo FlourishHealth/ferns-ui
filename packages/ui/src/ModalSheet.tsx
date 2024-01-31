@@ -7,6 +7,7 @@ import {Portal} from "react-native-portalize";
 export const useCombinedRefs = (...refs: any) => {
   const targetRef = useRef();
 
+  // Iterate through the refs array, and set the ref.current value to the targetRef
   useEffect(() => {
     refs.forEach((ref: any) => {
       if (!ref) {

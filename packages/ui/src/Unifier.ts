@@ -151,8 +151,8 @@ class UnifierClass {
         } else {
           return null;
         }
-      } catch (e) {
-        console.error(`[storage] Error reading ${key}`, e);
+      } catch (error) {
+        console.error(`[storage] Error reading ${key}`, error);
         return defaultValue || null;
       }
     },
@@ -160,9 +160,9 @@ class UnifierClass {
       try {
         const jsonValue = JSON.stringify(item);
         await AsyncStorage.setItem(key, jsonValue);
-      } catch (e) {
-        console.error(`[storage] Error storing ${key}`, item, e);
-        throw new Error(e as any);
+      } catch (error) {
+        console.error(`[storage] Error storing ${key}`, item, error);
+        throw new Error(error as any);
       }
     },
   };

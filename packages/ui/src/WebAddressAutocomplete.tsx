@@ -34,6 +34,7 @@ export const WebAddressAutocomplete = ({
   const [scriptLoaded, setScriptLoaded] = useState(true);
   const autocompleteInputRef = useRef(null);
 
+  // Load the Google Maps script and initialize the autocomplete.
   useEffect(() => {
     const callbackName = "initAutocomplete";
     if (!googleMapsApiKey) {

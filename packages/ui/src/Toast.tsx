@@ -34,7 +34,7 @@ export function useToast(): any {
   };
 }
 
-export function Toast({message, data}: ToastProps): React.ReactElement {
+export const Toast = ({message, data}: ToastProps): React.ReactElement => {
   // margin 8 on either side, times the standard 4px we multiply by.
   const width = Math.min(Dimensions.get("window").width - 16 * 4, 712);
   const {variant, buttonText, buttonOnClick, persistent, onDismiss} = data ?? {};
@@ -89,4 +89,4 @@ export function Toast({message, data}: ToastProps): React.ReactElement {
       )}
     </Box>
   );
-}
+};

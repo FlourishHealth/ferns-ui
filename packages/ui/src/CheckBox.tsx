@@ -5,7 +5,7 @@ import {BoxColor, CheckBoxProps} from "./Common";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 
-export function CheckBox({
+export const CheckBox = ({
   color,
   checked,
   size,
@@ -18,7 +18,7 @@ export function CheckBox({
   onClick,
   indeterminate,
   testID,
-}: CheckBoxProps): React.ReactElement {
+}: CheckBoxProps): React.ReactElement => {
   if (checked && indeterminate) {
     console.error("CheckBox cannot be checked and indeterminate at the same time");
   }
@@ -117,4 +117,4 @@ export function CheckBox({
       </Box>
     </Box>
   );
-}
+};

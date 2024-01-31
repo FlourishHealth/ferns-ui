@@ -10,7 +10,7 @@ export function initIcons() {
 
 // TODO: Update <Icon /> to be closer to Expo's Vector Icon, letting multiple icon packs be used,
 // etc.
-export function Icon({color, size, name, prefix, testID}: IconProps): React.ReactElement {
+export const Icon = ({color, size, name, prefix, testID}: IconProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
   const iconColor = theme[color || "primary"];
   const iconSize = iconSizeToNumber(size);
@@ -24,4 +24,4 @@ export function Icon({color, size, name, prefix, testID}: IconProps): React.Reac
       testID={testID}
     />
   );
-}
+};

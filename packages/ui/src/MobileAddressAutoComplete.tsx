@@ -26,6 +26,7 @@ export const MobileAddressAutocomplete = ({
   const ref = useRef<GooglePlacesAutocompleteRef | null>(null);
   const [isFocused, setIsFocused] = useState(false);
 
+  // Load the Google Maps script and initialize the autocomplete.
   useEffect(() => {
     if (!googleMapsApiKey) return;
     if (ref?.current) {

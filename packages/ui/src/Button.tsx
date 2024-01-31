@@ -33,7 +33,7 @@ const HEIGHTS = {
   lg: 48,
 };
 
-export function Button({
+export const Button = ({
   alignSelf,
   disabled = false,
   type = "solid",
@@ -52,7 +52,7 @@ export function Button({
   shape = "rounded",
   testID,
   tooltip,
-}: ButtonProps) {
+}: ButtonProps) => {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const {theme} = useContext(ThemeContext);
@@ -141,9 +141,9 @@ export function Button({
                 } else if (onClick) {
                   await onClick();
                 }
-              } catch (e) {
+              } catch (error) {
                 setLoading(false);
-                throw e;
+                throw error;
               }
               setLoading(false);
             },
@@ -195,4 +195,4 @@ export function Button({
   } else {
     return renderButton();
   }
-}
+};

@@ -21,7 +21,7 @@ export interface SelectListProps extends FieldWithLabelsProps {
   style?: StyleProp<RNPickerSelectProps["style"]>;
 }
 
-export function SelectList({
+export const SelectList = ({
   options,
   value,
   onChange,
@@ -30,7 +30,7 @@ export function SelectList({
   style,
   placeholder,
   disabled,
-}: SelectListProps) {
+}: SelectListProps) => {
   const {theme} = useContext(ThemeContext);
 
   const withLabelProps = {label, labelColor};
@@ -87,4 +87,4 @@ export function SelectList({
       />
     </WithLabel>
   );
-}
+};

@@ -15,24 +15,16 @@
   },
   "license": "Apache-2.0",
   "eslintConfig": {
+    "extends": [
+      "plugin:ferns/recommended"
+    ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
       "project": "./tsconfig.json",
-      "tsconfigRootDir": "./",
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 2018,
-      "sourceType": "module"
+      "tsconfigRootDir": "./"
     },
-    "extends": [
-      "ferns",
-      "plugin:comment-length/recommended"
-    ],
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
+    "rules": {
+      "@typescript-eslint/explicit-function-return-type": "off"
     }
   },
   "prettier": {

@@ -5,7 +5,7 @@ import {BadgeProps} from "./Common";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
 
-export function Badge({
+export const Badge = ({
   title,
   position = "middle",
   type = "info",
@@ -15,7 +15,7 @@ export function Badge({
   fontColor = "white",
   fontWeight = "bold",
   rounding = "pill",
-}: BadgeProps): React.ReactElement {
+}: BadgeProps): React.ReactElement => {
   if (color && type !== "custom") {
     console.warn('Badge color only supported when `type` is set to "custom".');
   }
@@ -63,4 +63,4 @@ export function Badge({
       {renderLabel()}
     </Box>
   );
-}
+};

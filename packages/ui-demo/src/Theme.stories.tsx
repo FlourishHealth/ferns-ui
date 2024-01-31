@@ -37,6 +37,7 @@ const ButtonStories = () => {
   const [themeName, setThemeName] = useState<"purple" | "pink">("purple");
   const {setTheme} = useContext(ThemeContext);
 
+  // Set the theme based on the theme name
   useEffect(() => {
     if (themeName === "pink") {
       setTheme({
@@ -88,6 +89,8 @@ const FontStories = () => {
   const [font, setFont] = useState("DancingScript-Regular");
   const {setTheme} = useContext(ThemeContext);
   const fonts = ["Comfortaa-Light", "Comfortaa-Bold", "IMFellEnglishSC", "DancingScript-Regular"];
+
+  // Set the theme on mount.
   useEffect(() => {
     setTheme({
       primaryFont: "DancingScript-Regular",

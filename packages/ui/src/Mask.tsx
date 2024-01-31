@@ -3,7 +3,7 @@ import {View} from "react-native";
 
 import {MaskProps, ReactChildren} from "./Common";
 
-export function Mask(props: MaskProps): ReactChildren {
+export const Mask = (props: MaskProps): ReactChildren => {
   if (props.shape === "rounded") {
     return <View style={{overflow: "hidden", borderRadius: 12}}>{props.children}</View>;
   } else if (props.shape === "circle") {
@@ -18,4 +18,4 @@ export function Mask(props: MaskProps): ReactChildren {
   } else {
     return props.children || null;
   }
-}
+};

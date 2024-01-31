@@ -10,7 +10,7 @@ export interface SignatureProps {
   onEnd?: () => void;
 }
 
-export function Signature({onChange}: SignatureProps): ReactElement | null {
+export const Signature = ({onChange}: SignatureProps): ReactElement | null => {
   const ref = useRef<SignatureCanvas>(null);
 
   const onClear = () => {
@@ -33,4 +33,4 @@ export function Signature({onChange}: SignatureProps): ReactElement | null {
       </Box>
     </Box>
   );
-}
+};
