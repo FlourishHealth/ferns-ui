@@ -2,6 +2,7 @@
 import dayjs from "dayjs";
 import {Box, Field, Heading, TapToEdit, Text} from "ferns-ui";
 import React, {useState} from "react";
+import {Image} from "react-native";
 
 import {StorybookContainer} from "./StorybookContainer";
 
@@ -441,7 +442,7 @@ interface SignatureFieldProps {
 }
 
 const SignatureField = ({setScrollEnabled}: SignatureFieldProps) => {
-  const [_, setValue] = useState("");
+  const [signature, setValue] = useState("");
   return (
     <StorybookContainer>
       <Field
@@ -451,6 +452,16 @@ const SignatureField = ({setScrollEnabled}: SignatureFieldProps) => {
         onChange={setValue}
         onEnd={() => setScrollEnabled(true)}
         onStart={() => setScrollEnabled(false)}
+      />
+      <Image
+        resizeMode="contain"
+        source={{uri: signature}}
+        style={{
+          width: 300,
+          height: 80,
+          borderWidth: 1,
+          borderColor: "black",
+        }}
       />
     </StorybookContainer>
   );
