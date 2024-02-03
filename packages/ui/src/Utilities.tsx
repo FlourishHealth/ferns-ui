@@ -3,7 +3,7 @@
 import get from "lodash/get";
 import {Platform} from "react-native";
 
-import {BaseProfile, IconSize} from "./Common";
+import {APIError, BaseProfile, IconSize} from "./Common";
 import {COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES} from "./Constants";
 
 export function mergeInlineStyles(inlineStyle?: any, newStyle?: any) {
@@ -307,4 +307,16 @@ export function formattedCountyCode(state: string, countyName: string): string {
   }
 
   return `${countyData.stateFP}${countyData.countyFP}`;
+}
+
+export function isAPIError(error: any): error is APIError {
+  return error && error.data?.title;
+}
+
+export function printAPIError(error: APIError, details = true): string {
+  let message = error.data?.title;
+  if (error.data?.detail && details) {
+    message = `${message}: ${error.data?.detail}`;
+  }
+  return message;
 }
