@@ -3046,3 +3046,20 @@ export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   openApiField?: string;
   showDescriptionAsTooltip?: boolean;
 }
+
+export interface APIError {
+  status: number;
+  data: {
+    title: string;
+    detail?: string;
+    id?: string;
+    links?: string;
+    about?: string;
+    status?: number;
+    code?: string;
+    source?: string;
+    pointer?: string;
+    parameter?: string;
+    meta?: {[id: string]: any};
+  };
+}

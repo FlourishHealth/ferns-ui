@@ -8,29 +8,46 @@ import {AllColors, ToastProps} from "./Common";
 import {Icon} from "./Icon";
 import {IconButton} from "./IconButton";
 import {Text} from "./Text";
+import {isAPIError, printAPIError} from "./Utilities";
 
 const TOAST_DURATION_MS = 3 * 1000;
 
-export function useToast(): any {
+export function useToast(): {
+  warn: (text: string, options?: Omit<ToastProps["data"], "variant">) => string;
+  hide: (id: string) => void;
+  show: (text: string, options?: ToastProps["data"]) => string;
+  catch: (error: any, message?: string, options?: Omit<ToastProps["data"], "variant">) => void;
+  error: (text: string, options?: Omit<ToastProps["data"], "variant">) => string;
+} {
   const toast = useRNToast();
+  const show = (text: string, options?: ToastProps["data"]): string => {
+    return toast.show(text, {
+      data: options,
+      // a duration of 0 keeps the toast up infinitely until hidden
+      duration: options?.persistent ? 0 : TOAST_DURATION_MS,
+    });
+  };
   return {
-    show: (
-      text: string,
-      options?: {
-        variant?: "default" | "warning" | "error";
-        buttonText?: string;
-        buttonOnClick: () => void | Promise<void>;
-        persistent?: boolean;
-        onDismiss?: () => void | Promise<void>;
-      }
-    ): string => {
-      return toast.show(text, {
-        data: options,
-        // a duration of 0 keeps the toast up infinitely until hidden
-        duration: options?.persistent ? 0 : TOAST_DURATION_MS,
-      });
+    show,
+    warn: (text: string, options?: Omit<ToastProps["data"], "variant">): string => {
+      return show(text, {...options, variant: "warning"});
+    },
+    error: (text: string, options?: Omit<ToastProps["data"], "variant">): string => {
+      return show(text, {...options, variant: "error"});
     },
     hide: (id: string) => toast.hide(id),
+    catch: (error: any, message?: string, options?: Omit<ToastProps["data"], "variant">): void => {
+      let exceptionMsg;
+      if (isAPIError(error)) {
+        // Get the error without details.
+        exceptionMsg = `${message}: ${printAPIError(error)}`;
+        console.error(exceptionMsg);
+      } else {
+        exceptionMsg = error?.message ?? error?.error ?? String(error);
+        console.error(`${message}: ${exceptionMsg}`);
+      }
+      show(exceptionMsg, {...options, variant: "error"});
+    },
   };
 }
 
