@@ -30,9 +30,11 @@ export function useToast(): {
   return {
     show,
     warn: (text: string, options?: Omit<ToastProps["data"], "variant">): string => {
+      console.warn(text);
       return show(text, {...options, variant: "warning"});
     },
     error: (text: string, options?: Omit<ToastProps["data"], "variant">): string => {
+      console.error(text);
       return show(text, {...options, variant: "error"});
     },
     hide: (id: string) => toast.hide(id),

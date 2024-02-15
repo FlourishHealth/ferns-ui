@@ -2655,7 +2655,7 @@ export interface ButtonProps {
 
 export interface CustomSelectProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value?: string) => void;
   options: Array<{label: string; value: string}>;
   placeholder?: string;
   disabled?: boolean;

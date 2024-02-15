@@ -60,6 +60,7 @@ export * from "./Tooltip";
 export * from "./UnifiedAddressAutoComplete";
 export * from "./Unifier";
 export * from "./useStoredState";
+export * from "./Utilities";
 export * from "./WebAddressAutocomplete";
 export * from "./WithLabel";
 // export * from "./Layout";

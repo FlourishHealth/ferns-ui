@@ -13,12 +13,14 @@ export interface SelectListProps extends FieldWithLabelsProps {
   id?: string;
   name?: string;
   options: SelectListOptions;
-  onChange: (value: string) => void;
+  // TODO: Update types for SelectList so that value can be undefined only if allowClear is true.
+  onChange: (value?: string) => void;
   value?: string;
   disabled?: boolean;
   size?: "md" | "lg";
   placeholder?: string;
   style?: StyleProp<RNPickerSelectProps["style"]>;
+  allowClear?: boolean;
 }
 
 export const SelectList = ({
@@ -30,6 +32,7 @@ export const SelectList = ({
   style,
   placeholder,
   disabled,
+  allowClear,
 }: SelectListProps) => {
   const {theme} = useContext(ThemeContext);
 
@@ -50,7 +53,7 @@ export const SelectList = ({
           ) : null;
         }}
         disabled={disabled}
-        items={options}
+        items={allowClear ? [{label: placeholder ?? "---", value: ""}, ...options] : options}
         placeholder={placeholder ? {label: placeholder, value: ""} : {}}
         style={{
           viewContainer: {
@@ -83,7 +86,13 @@ export const SelectList = ({
           },
         }}
         value={value}
-        onValueChange={onChange}
+        onValueChange={(v) => {
+          if (allowClear && value === "") {
+            onChange(undefined);
+          } else {
+            onChange(v);
+          }
+        }}
       />
     </WithLabel>
   );
