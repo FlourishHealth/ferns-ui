@@ -10,7 +10,7 @@ const options: SelectListOptions = [
 ];
 
 const SelectLists = () => {
-  const [item, setItem] = useState(options[0].value);
+  const [item, setItem] = useState<string | undefined>(options[0].value);
 
   return (
     <StorybookContainer>
@@ -23,12 +23,22 @@ const SelectLists = () => {
           setItem(newItem);
         }}
       />
+      <SelectList
+        allowClear
+        id="none"
+        label="Allows clear"
+        options={options}
+        value={item}
+        onChange={(newItem) => {
+          setItem(newItem);
+        }}
+      />
     </StorybookContainer>
   );
 };
 
 const WithLabel = () => {
-  const [item, setItem] = useState(options[0].value);
+  const [item, setItem] = useState<string | undefined>(options[0].value);
 
   return (
     <StorybookContainer>
@@ -45,7 +55,7 @@ const WithLabel = () => {
 };
 
 const Disabled = () => {
-  const [item, setItem] = useState(options[0].value);
+  const [item, setItem] = useState<string | undefined>(options[0].value);
 
   return (
     <StorybookContainer>

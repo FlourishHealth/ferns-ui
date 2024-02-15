@@ -211,7 +211,7 @@ export const Field = ({
             testID={`${testID}-state`}
             value={state}
             onChange={(result) => {
-              handleAddressChange("state", result);
+              handleAddressChange("state", result!);
             }}
           />
           <TextField

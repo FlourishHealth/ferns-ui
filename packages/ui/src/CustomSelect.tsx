@@ -33,7 +33,7 @@ export const CustomSelect = ({
 
   // Custom select has 3 values - the overall field value, the value of the select menu,
   // and the value of the custom input
-  const handleCustomSelectListChange = (newValue: string) => {
+  const handleCustomSelectListChange = (newValue?: string) => {
     // If "custom" is selected from the dropdown, toggle the custom input open and clear the
     // previous value
     if (newValue === "custom") {
