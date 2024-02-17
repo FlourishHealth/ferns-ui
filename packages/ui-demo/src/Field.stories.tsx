@@ -1,9 +1,9 @@
 /* eslint-disable react/display-name */
-import dayjs from "dayjs";
 import {Box, Field, Heading, TapToEdit, Text} from "ferns-ui";
 import React, {useState} from "react";
 import {Image} from "react-native";
 
+import dayjs from "./dayjsExtended";
 import {StorybookContainer} from "./StorybookContainer";
 
 const TextField = () => {
@@ -239,15 +239,37 @@ const DateField = () => {
 
 const DateTimeField = () => {
   const [value, setValue] = useState(new Date());
+  const [timezone, setTimezone] = useState<string>("America/New_York");
   return (
     <StorybookContainer>
+      <Field
+        label="Timezone"
+        options={[
+          {label: "EST", value: "America/New_York"},
+          {label: "CST", value: "America/Chicago"},
+          {label: "MST", value: "America/Denver"},
+          {label: "PST", value: "America/Los_Angeles"},
+        ]}
+        type="select"
+        value={timezone}
+        onChange={setTimezone}
+      />
       <Field
         helperText="Here's some help text"
         label="Date Time Field"
         name="text"
+        transformValue={{
+          options: {timezone, transformFormat: "MM/DD/YYYY h:mm A z"},
+        }}
         type="datetime"
         value={value}
         onChange={setValue}
+      />
+      <Field
+        disabled
+        label="Time in local timezone"
+        type="text"
+        value={dayjs(value).format("MM/DD/YYYY h:mm A z")}
       />
     </StorybookContainer>
   );

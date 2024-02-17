@@ -86,6 +86,7 @@ export const TextField = ({
   onEnter,
   onSubmitEditing,
   testID,
+  transformValue,
 }: TextFieldProps): ReactElement => {
   const {theme} = useContext(ThemeContext);
 
@@ -204,14 +205,23 @@ export const TextField = ({
         dayjs.utc(value).second() === 0
       ) {
         const timezoneOffset = new Date().getTimezoneOffset();
-        displayValue = dayjs.utc(value).add(timezoneOffset, "minutes").format("MM/DD/YYYY");
+        displayValue = dayjs
+          .utc(value)
+          .add(timezoneOffset, "minutes")
+          .format(transformValue?.options?.transformFormat ?? "MM/DD/YYYY");
       } else {
-        displayValue = dayjs(value).format("MM/DD/YYYY");
+        displayValue = dayjs(value)
+          .tz(transformValue?.options?.timezone)
+          .format(transformValue?.options?.transformFormat ?? "MM/DD/YYYY");
       }
     } else if (type === "time") {
-      displayValue = dayjs(value).format("h:mm A");
+      displayValue = dayjs(value)
+        .tz(transformValue?.options?.timezone)
+        .format(transformValue?.options?.transformFormat ?? "h:mm A");
     } else if (type === "datetime") {
-      displayValue = dayjs(value).format("MM/DD/YYYY h:mm A");
+      displayValue = dayjs(value)
+        .tz(transformValue?.options?.timezone)
+        .format(transformValue?.options?.transformFormat ?? "MM/DD/YYYY h:mm A");
     } else if (type === "height") {
       displayValue = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
     } else if (type === "phoneNumber") {
@@ -352,6 +362,7 @@ export const TextField = ({
         <DateTimeActionSheet
           actionSheetRef={dateActionSheetRef}
           mode={type}
+          transformValue={transformValue}
           value={value}
           visible={showDate}
           onChange={(result) => {

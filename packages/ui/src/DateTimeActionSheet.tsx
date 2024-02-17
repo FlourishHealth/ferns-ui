@@ -156,11 +156,13 @@ const CalendarHeader = ({
 };
 
 // For mobile, renders all components in an action sheet. For web, renders all components in a
-// modal. For mobile: If mode is "time", renders a spinner picker for time picker on both platforms.
-// If mode is "date", renders our custom calendar on both platforms. If mode is "datetime",
-// renders a spinner picker for time picker and our custom calendar on both platforms. For web,
-// renders a simplistic text box for time picker and a calendar for date picker in a modal In the
-// future, web time picker should be a typeahead dropdown like Google calendar.
+// modal. For mobile:
+// If mode is "time", renders a spinner picker for time picker on both platforms.
+// If mode is "date", renders our custom calendar on both platforms.
+// If mode is "datetime",renders a spinner picker for time picker and our custom calendar on both
+// platforms.
+// For web, renders a simplistic text box for time picker and a calendar for date picker
+// in a modal In the future, web time picker should be a typeahead dropdown like Google calendar.
 export const DateTimeActionSheet = ({
   // actionSheetRef,
   mode,
@@ -168,48 +170,66 @@ export const DateTimeActionSheet = ({
   onChange,
   visible,
   onDismiss,
+  transformValue,
 }: DateTimeActionSheetProps) => {
   const {theme} = useContext(ThemeContext);
 
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for mode=time
   let m;
+  console.log({transformValue});
+  console.log({value});
   if (value) {
-    m = dayjs(value, ["YYYY", "YYYY-MM-DD", "HH:mm", "hh:mm A"]);
+    console.log("There is a value");
+    m = dayjs(value, [
+      "YYYY",
+      "YYYY-MM-DD",
+      "HH:mm",
+      "hh:mm A",
+      transformValue?.options?.transformFormat,
+    ]).tz(transformValue?.options?.timezone);
   } else {
-    m = dayjs();
+    console.log("no value");
+    m = dayjs().tz(transformValue?.options?.timezone);
   }
 
+  console.log({m});
   if (!m.isValid()) {
-    throw new Error(`Invalid date/time value ${value}`);
+    // throw new Error(`Invalid date/time value ${value}`);
   }
 
-  let hr = dayjs(m).hour() % 12;
+  let hr = m.hour() % 12;
   if (hr === 0) {
     hr = 12;
   }
 
   const [hour, setHour] = useState<number>(hr);
-  const [minute, setMinute] = useState<number>(dayjs(m).minute());
-  const [amPm, setAmPm] = useState<"am" | "pm">(dayjs(m).format("a") === "am" ? "am" : "pm");
-  const [date, setDate] = useState<string>(dayjs(m).toISOString());
+  const [minute, setMinute] = useState<number>(m.minute());
+  const [amPm, setAmPm] = useState<"am" | "pm">(m.format("a") === "am" ? "am" : "pm");
+  const [date, setDate] = useState<string>(m.toISOString());
 
   // If the value changes in the props, update the state for the date and time.
   useEffect(() => {
     let datetime;
     if (value) {
-      datetime = dayjs(value, ["YYYY", "YYYY-MM-DD", "HH:mm", "hh:mm A"]);
+      datetime = dayjs(value, [
+        "YYYY",
+        "YYYY-MM-DD",
+        "HH:mm",
+        "hh:mm A",
+        transformValue?.options?.transformFormat,
+      ]).tz(transformValue?.options?.timezone);
     } else {
-      datetime = dayjs();
+      datetime = dayjs().tz(transformValue?.options?.timezone);
     }
-    let h = dayjs(datetime).hour() % 12;
+    let h = datetime.hour() % 12;
     if (h === 0) {
       h = 12;
     }
     setHour(h);
-    setMinute(dayjs(datetime).minute());
-    setAmPm(dayjs(datetime).format("a") === "am" ? "am" : "pm");
-    setDate(dayjs(datetime).toISOString());
-  }, [value]);
+    setMinute(datetime.minute());
+    setAmPm(datetime.format("a") === "am" ? "am" : "pm");
+    setDate(datetime.toISOString());
+  }, [value, transformValue]);
 
   // TODO Support 24 hour time for time picker.
   const renderMobileTime = () => {
@@ -322,11 +342,19 @@ export const DateTimeActionSheet = ({
       onChange({value: date});
     } else if (mode === "time") {
       onChange({
-        value: dayjs().hour(hourChange).minute(Number(minute)).toISOString(),
+        value: dayjs()
+          .tz(transformValue?.options?.timezone)
+          .hour(hourChange)
+          .minute(Number(minute))
+          .toISOString(),
       });
     } else if (mode === "datetime") {
       onChange({
-        value: dayjs(date).hour(hourChange).minute(Number(minute)).toISOString(),
+        value: dayjs(date)
+          .tz(transformValue?.options?.timezone)
+          .hour(hourChange)
+          .minute(Number(minute))
+          .toISOString(),
       });
     }
     onDismiss();

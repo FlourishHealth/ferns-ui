@@ -37,6 +37,7 @@ export const Field = ({
   googleMapsApiKey,
   googlePlacesMobileStyles,
   testID,
+  transformValue,
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
@@ -146,12 +147,14 @@ export const Field = ({
         />
       );
     } else if (type && ["date", "time", "datetime"].includes(type)) {
+      console.log("mobile here");
       return (
         <TextField
           disabled={disabled}
           id={name}
           placeholder={placeholder}
           testID={testID}
+          transformValue={transformValue}
           type={type as "date" | "time" | "datetime"}
           value={value}
           onBlur={(result) => {

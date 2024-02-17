@@ -1946,6 +1946,8 @@ export interface TextFieldProps extends FieldWithLabelsProps {
   // Required for type=numberRange
   min?: number;
   max?: number;
+  // Options to translate values
+  transformValue?: TransformValueOptions;
 }
 
 export type TextAreaProps = TextFieldProps;
@@ -2126,6 +2128,13 @@ export interface AddressInterface {
   zipcode: string;
   countyName?: string;
   countyCode?: string;
+}
+
+export interface TransformValueOptions {
+  func?: (value: string) => string;
+  options?: {
+    [key: string]: any;
+  };
 }
 
 // TODO: Tighten up type to exclude string, which is almost never an acceptable type for React
@@ -2670,6 +2679,7 @@ export interface DateTimeActionSheetProps {
   actionSheetRef: React.RefObject<any>;
   visible: boolean;
   onDismiss: () => void;
+  transformValue?: TransformValueOptions;
 }
 
 export interface DecimalRangeActionSheetProps {
@@ -2726,6 +2736,7 @@ export interface FieldProps extends FieldWithLabelsProps {
   includeCounty?: boolean;
   googleMapsApiKey?: string;
   googlePlacesMobileStyles?: Styles;
+  transformValue?: TransformValueOptions;
 }
 
 export interface FormLineProps {
