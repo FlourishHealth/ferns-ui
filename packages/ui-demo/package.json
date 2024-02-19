@@ -45,7 +45,7 @@
     "@expo/webpack-config": "^19.0.0",
     "@shopify/flash-list": "1.4.3",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
-    "@typescript-eslint/parser": "^6.13.2",
+    "@typescript-eslint/parser": "^7.0.1",
     "eslint": "^8.55.0",
     "eslint-config-ferns": "^0.5.1",
     "eslint-config-prettier": "^9.1.0",
