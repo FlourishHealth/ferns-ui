@@ -11,6 +11,7 @@ const options: SelectListOptions = [
 
 const SelectLists = () => {
   const [item, setItem] = useState<string | undefined>(options[0].value);
+  const [itemNoUndefined, setItemNoUndefined] = useState<string>(options[0].value);
 
   return (
     <StorybookContainer>
@@ -18,9 +19,9 @@ const SelectLists = () => {
         id="none"
         options={options}
         placeholder="Here's some placeholder text."
-        value={item}
+        value={itemNoUndefined}
         onChange={(newItem) => {
-          setItem(newItem);
+          setItemNoUndefined(newItem);
         }}
       />
       <SelectList
@@ -43,6 +44,7 @@ const WithLabel = () => {
   return (
     <StorybookContainer>
       <SelectList
+        allowClear
         helperText="And some subtext"
         id="none"
         label="Enter a bunch of text"
@@ -60,6 +62,7 @@ const Disabled = () => {
   return (
     <StorybookContainer>
       <SelectList
+        allowClear
         disabled
         id="none"
         options={options}

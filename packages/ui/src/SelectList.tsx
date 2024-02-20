@@ -9,19 +9,29 @@ import {WithLabel} from "./WithLabel";
 
 // Use "" if you want to have an "unset" value.
 export type SelectListOptions = {label: string; value: string}[];
-export interface SelectListProps extends FieldWithLabelsProps {
-  id?: string;
-  name?: string;
-  options: SelectListOptions;
-  // TODO: Update types for SelectList so that value can be undefined only if allowClear is true.
-  onChange: (value?: string) => void;
-  value?: string;
-  disabled?: boolean;
-  size?: "md" | "lg";
-  placeholder?: string;
-  style?: StyleProp<RNPickerSelectProps["style"]>;
-  allowClear?: boolean;
-}
+
+export type SelectListProps = FieldWithLabelsProps &
+  (
+    | {
+        allowClear: true;
+        value?: string;
+        onChange: (value?: string) => void;
+      }
+    | {
+        allowClear?: false;
+        value: string;
+        onChange: (value: string) => void;
+      }
+  ) & {
+    id?: string;
+    name?: string;
+    options: SelectListOptions;
+    disabled?: boolean;
+    size?: "md" | "lg";
+    placeholder?: string;
+    style?: StyleProp<RNPickerSelectProps["style"]>;
+    allowClear?: boolean;
+  };
 
 export const SelectList = ({
   options,
