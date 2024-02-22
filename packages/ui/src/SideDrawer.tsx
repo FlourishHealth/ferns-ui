@@ -33,7 +33,8 @@ export const SideDrawer = ({
       drawerStyle={[
         DEFAULT_STYLES,
         drawerStyles,
-        {display: Platform.OS === "web" && !isOpen ? "none" : "flex"},
+        // set position to undefined for web to allow absolute positioning
+        Platform.OS === "web" ? {position: "absolute"} : {},
       ]}
       drawerType={drawerType}
       open={isOpen}
