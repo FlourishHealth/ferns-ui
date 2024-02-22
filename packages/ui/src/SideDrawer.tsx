@@ -33,7 +33,11 @@ export const SideDrawer = ({
       drawerStyle={[
         DEFAULT_STYLES,
         drawerStyles,
-        {display: Platform.OS === "web" && !isOpen ? "none" : "flex"},
+        {
+          display: Platform.OS === "web" && !isOpen ? "none" : "flex",
+          right: position === "right" ? 0 : undefined,
+          left: position === "left" ? 0 : undefined,
+        },
       ]}
       drawerType={drawerType}
       open={isOpen}
