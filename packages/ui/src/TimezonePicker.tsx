@@ -7,25 +7,27 @@ import {WithLabel} from "./WithLabel";
 
 // TODO: Support world wide timezones
 const options = [
-  {label: "EST", value: "America/New_York"},
-  {label: "CST", value: "America/Chicago"},
-  {label: "MST", value: "America/Denver"},
-  {label: "PST", value: "America/Los_Angeles"},
-  {label: "AK", value: "America/Anchorage"},
-  {label: "HI", value: "America/Honolulu"},
-  {label: "AZ", value: "America/Phoenix"},
+  {label: "Eastern", value: "America/New_York"},
+  {label: "Central", value: "America/Chicago"},
+  {label: "Mountain", value: "America/Denver"},
+  {label: "Pacific", value: "America/Los_Angeles"},
+  {label: "Alaska", value: "America/Anchorage"},
+  {label: "Hawaii", value: "Pacific/Honolulu"},
+  {label: "Arizona", value: "America/Phoenix"},
 ];
 
 export const TimezonePicker = ({
   timezone,
   onChange,
   showLabel,
+  width = 100,
 }: TimezonePickerProps): React.ReactElement => {
   if (showLabel) {
     return (
-      <Box maxWidth={100}>
+      <Box maxWidth={width}>
         <WithLabel label="Timezone">
           <SelectList
+            allowClear
             options={options}
             style={{minHeight: 40}}
             value={timezone}
@@ -36,7 +38,15 @@ export const TimezonePicker = ({
     );
   } else {
     return (
-      <SelectList options={options} style={{minHeight: 40}} value={timezone} onChange={onChange} />
+      <Box maxWidth={width}>
+        <SelectList
+          allowClear
+          options={options}
+          style={{minHeight: 40}}
+          value={timezone}
+          onChange={onChange}
+        />
+      </Box>
     );
   }
 };

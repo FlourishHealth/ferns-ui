@@ -188,6 +188,7 @@ export function printDateAndTime(
     showTimezone?: boolean;
   } = {}
 ): string {
+  console.log("printDateAndTime", date, timezone, showTimezone);
   let clonedDate;
   try {
     clonedDate = getDate(date, {timezone});

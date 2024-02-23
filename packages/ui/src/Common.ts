@@ -1915,6 +1915,7 @@ export interface TimezonePickerProps {
   timezone?: string;
   onChange: (tz: string | undefined) => void | Promise<void>;
   showLabel?: boolean; // defaults to true
+  width?: number | string; // defaults to 100
 }
 
 export interface TextFieldProps extends FieldWithLabelsProps {

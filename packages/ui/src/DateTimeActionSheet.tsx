@@ -177,9 +177,8 @@ export const DateTimeActionSheet = ({
   const {theme} = useContext(ThemeContext);
 
   const calendar = getCalendars()[0];
-  const [timezone, setTimezone] = useState<string | undefined>(
-    transformValue?.options?.timezone || calendar?.timeZone
-  );
+  const originalTimezone = transformValue?.options?.timezone || calendar?.timeZone;
+  const [timezone, setTimezone] = useState<string | undefined>(originalTimezone);
   if (!timezone) {
     console.error(
       "Could not automatically determine timezone and none was provided to DateTimeActionSheet."
@@ -199,6 +198,7 @@ export const DateTimeActionSheet = ({
 
   // If the value changes in the props, update the state for the date and time.
   useEffect(() => {
+    console.log("USE EFFECT");
     let datetime;
     if (value) {
       datetime = DateTime.fromISO(value).setZone(timezone).set({millisecond: 0, second: 0});
@@ -219,61 +219,71 @@ export const DateTimeActionSheet = ({
     setMinute(datetime.minute);
     setAmPm(datetime.toFormat("a") === "am" ? "am" : "pm");
     setDate(datetime.toISO());
-  }, [value, transformValue, timezone]);
+  }, [value, transformValue, transformValue?.options?.timezone]);
 
   // TODO Support 24 hour time for time picker.
   const renderMobileTime = () => {
     return (
-      <Box direction="row" width="100%">
-        <Box paddingY={2} width="35%">
-          <Picker
-            itemStyle={{
-              height: TIME_PICKER_HEIGHT,
-            }}
-            selectedValue={hour}
-            style={{
-              height: TIME_PICKER_HEIGHT,
-              backgroundColor: "#FFFFFF",
-            }}
-            onValueChange={(itemValue) => setHour(itemValue)}
-          >
-            {hours.map((n) => (
-              <Picker.Item key={String(n)} label={String(n)} value={String(n)} />
-            ))}
-          </Picker>
+      <Box>
+        <Box direction="row" width="100%">
+          <Box paddingY={2} width="35%">
+            <Picker
+              itemStyle={{
+                height: TIME_PICKER_HEIGHT,
+              }}
+              selectedValue={hour}
+              style={{
+                height: TIME_PICKER_HEIGHT,
+                backgroundColor: "#FFFFFF",
+              }}
+              onValueChange={(itemValue) => setHour(itemValue)}
+            >
+              {hours.map((n) => (
+                <Picker.Item key={String(n)} label={String(n)} value={String(n)} />
+              ))}
+            </Picker>
+          </Box>
+          <Box paddingY={2} width="35%">
+            <Picker
+              itemStyle={{
+                height: TIME_PICKER_HEIGHT,
+              }}
+              selectedValue={minute}
+              style={{
+                height: TIME_PICKER_HEIGHT,
+                backgroundColor: "#FFFFFF",
+              }}
+              onValueChange={(itemValue) => setMinute(itemValue)}
+            >
+              {minutes.map((n) => (
+                <Picker.Item key={String(n)} label={String(n)} value={String(n)} />
+              ))}
+            </Picker>
+          </Box>
+          <Box paddingY={2} width="30%">
+            <Picker
+              itemStyle={{
+                height: TIME_PICKER_HEIGHT,
+              }}
+              selectedValue={amPm}
+              style={{
+                height: TIME_PICKER_HEIGHT,
+                backgroundColor: "#FFFFFF",
+              }}
+              onValueChange={(itemValue) => setAmPm(itemValue)}
+            >
+              <Picker.Item key="am" label="am" value="am" />
+              <Picker.Item key="pm" label="pm" value="pm" />
+            </Picker>
+          </Box>
         </Box>
-        <Box paddingY={2} width="35%">
-          <Picker
-            itemStyle={{
-              height: TIME_PICKER_HEIGHT,
-            }}
-            selectedValue={minute}
-            style={{
-              height: TIME_PICKER_HEIGHT,
-              backgroundColor: "#FFFFFF",
-            }}
-            onValueChange={(itemValue) => setMinute(itemValue)}
-          >
-            {minutes.map((n) => (
-              <Picker.Item key={String(n)} label={String(n)} value={String(n)} />
-            ))}
-          </Picker>
-        </Box>
-        <Box paddingY={2} width="30%">
-          <Picker
-            itemStyle={{
-              height: TIME_PICKER_HEIGHT,
-            }}
-            selectedValue={amPm}
-            style={{
-              height: TIME_PICKER_HEIGHT,
-              backgroundColor: "#FFFFFF",
-            }}
-            onValueChange={(itemValue) => setAmPm(itemValue)}
-          >
-            <Picker.Item key="am" label="am" value="am" />
-            <Picker.Item key="pm" label="pm" value="pm" />
-          </Picker>
+        <Box paddingY={2}>
+          <TimezonePicker
+            showLabel={false}
+            timezone={timezone}
+            width="100%"
+            onChange={setTimezone}
+          />
         </Box>
       </Box>
     );
@@ -334,6 +344,14 @@ export const DateTimeActionSheet = ({
     console.log("sendOnChange", {date, hour, hourChange: militaryHour, minute, amPm, timezone});
 
     if (mode === "date") {
+      console.log(
+        "DATE",
+        DateTime.fromISO(date)
+          .setZone("UTC")
+          .set({hour: 0, minute: 0, second: 0, millisecond: 0})
+          .toISO()
+      );
+
       onChange({
         value: DateTime.fromISO(date)
           .setZone("UTC")
@@ -345,6 +363,7 @@ export const DateTimeActionSheet = ({
         value: DateTime.fromISO(date)
           .setZone(timezone)
           .set({hour: militaryHour, minute, second: 0, millisecond: 0})
+          .setZone(timezone)
           .setZone("UTC")
           .toISO()!,
       });
@@ -352,7 +371,11 @@ export const DateTimeActionSheet = ({
       onChange({
         value: DateTime.fromISO(date)
           .setZone(timezone)
+          // Take from the original zone
+          // Set the value on the screen
           .set({hour: militaryHour, minute, second: 0, millisecond: 0})
+          // Put that in the  new timezone on the screen
+          // We always send back in UTC
           .setZone("UTC")
           .toISO()!,
       });
@@ -381,7 +404,7 @@ export const DateTimeActionSheet = ({
         <Box marginBottom={4} width="100%">
           <Calendar
             customHeader={CalendarHeader}
-            initialDate={DateTime.fromISO(date).toFormat("YYYY-MM-DD")}
+            initialDate={DateTime.fromISO(date).toFormat("yyyy-MM-dd")}
             markedDates={markedDates}
             onDayPress={(day) => {
               setDate(day.dateString);
@@ -394,28 +417,20 @@ export const DateTimeActionSheet = ({
             }}
           />
         </Box>
-        <TimezonePicker timezone={timezone} onChange={setTimezone} />
+        {Boolean(mode === "date") && <TimezonePicker timezone={timezone} onChange={setTimezone} />}
       </Box>
     );
   };
 
   const renderContent = (): React.ReactElement => {
-    if (isMobileDevice()) {
-      if (mode === "date") {
-        return renderDateCalendar();
-      } else if (mode === "time") {
-        return renderMobileTime();
-      } else {
-        return renderDateTime();
-      }
+    if (mode === "date") {
+      return renderDateCalendar();
+    } else if (mode === "time" && isMobileDevice()) {
+      return renderMobileTime();
+    } else if (mode === "time" && !isMobileDevice()) {
+      return renderWebTime();
     } else {
-      if (mode === "date") {
-        return renderDateCalendar();
-      } else if (mode === "time") {
-        return renderWebTime();
-      } else {
-        return renderDateTime();
-      }
+      return renderDateTime();
     }
   };
 

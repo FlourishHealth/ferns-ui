@@ -37,7 +37,8 @@
     "useTabs": false
   },
   "dependencies": {
-    "react": "18.2.0"
+    "react": "18.2.0",
+    "ferns-ui": "*"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
