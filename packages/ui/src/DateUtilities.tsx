@@ -48,6 +48,8 @@ export function isWithinWeek(date: string, {timezone}: {timezone?: string} = {})
   return diff.days > -7 && diff.days < 7;
 }
 
+// Prints a human friendly date, e.g. "Tomorrow", "Yesterday", "Monday", "June 19", "December 25,
+// 2022".
 export function humanDate(date: string, {timezone}: {timezone?: string} = {}): string {
   let clonedDate;
   try {
@@ -73,6 +75,8 @@ export function humanDate(date: string, {timezone}: {timezone?: string} = {}): s
   }
 }
 
+// Prints a human friendly date and time, e.g. "Tomorrow 9:00 AM", "Yesterday 9:00 AM", "Monday
+// 9:00 AM", "June 19 9:00 AM", "December 25, 2022 9:00 AM".
 export function humanDateAndTime(
   date: string,
   {timezone, showTimezone}: {timezone?: string; showTimezone?: boolean} = {}
@@ -108,19 +112,24 @@ export function humanDateAndTime(
 
 // Print date in the format of M/D/YY, taking timezones into account.
 export const printDate = (
-  date: string,
+  date?: string,
   {
     timezone,
     showTimezone,
     ignoreTime,
+    defaultValue,
   }: {
     timezone?: string;
     showTimezone?: boolean;
     // Ignore the time in the date, treat as a date in timezone.
     // Will log a warning if the time is not set to midnight UTC.
     ignoreTime?: boolean;
+    defaultValue?: string;
   } = {}
 ): string => {
+  if (!date) {
+    return defaultValue ?? "Invalid Date";
+  }
   if (showTimezone) {
     console.warn("showTimezone is not supported for printDate");
   }
@@ -151,16 +160,22 @@ export const printDate = (
   return clonedDate.toLocaleString(DateTime.DATE_SHORT);
 };
 
+// Print time in the format of HH:mm A, taking timezones into account.
 export function printTime(
-  date: string,
+  date?: string,
   {
     timezone,
     showTimezone,
+    defaultValue,
   }: {
     timezone: string;
     showTimezone?: boolean;
-  }
+    defaultValue?: string;
+  } = {timezone: "America/New_York", defaultValue: "Invalid Date"}
 ): string {
+  if (!date) {
+    return defaultValue ?? "Invalid Date";
+  }
   let clonedDate;
   if (!timezone) {
     throw new Error("printTime: timezone is required");
@@ -171,7 +186,7 @@ export function printTime(
     throw new Error(`printTime: ${error.message}`);
   }
   if (showTimezone) {
-    return clonedDate.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET);
+    return clonedDate.toFormat("h:mm a ZZZZ");
   } else {
     return clonedDate.toLocaleString(DateTime.TIME_SIMPLE);
   }
@@ -179,15 +194,20 @@ export function printTime(
 
 // Print date in the format of M/D/YY HH:mm A, taking timezones into account.
 export function printDateAndTime(
-  date: string,
+  date?: string,
   {
     timezone,
     showTimezone,
+    defaultValue,
   }: {
     timezone?: string;
     showTimezone?: boolean;
+    defaultValue?: string;
   } = {}
 ): string {
+  if (!date) {
+    return defaultValue ?? "Invalid Datetime";
+  }
   let clonedDate;
   try {
     clonedDate = getDate(date, {timezone});
@@ -199,4 +219,24 @@ export function printDateAndTime(
     dateString += ` ${clonedDate.offsetNameShort}`;
   }
   return dateString;
+}
+
+// Prints a date range in the format of M/D/YY HH:mm A - M/D/YY HH:mm A EST, taking timezones into
+// account. If the dates are the same, it will print the date only once, e.g. M/D/YY HH:mm A - HH:mm
+// A EST.
+export function printDateRange(
+  start: string,
+  end: string,
+  {timezone, showTimezone = true}: {timezone: string; showTimezone?: boolean}
+): string {
+  const startDate = printDate(start, {timezone, showTimezone: false});
+  const endDate = printDate(end, {timezone, showTimezone: false});
+
+  const startTime = printTime(start, {timezone, showTimezone: false});
+  const endTime = printTime(end, {timezone, showTimezone});
+  if (startDate === endDate) {
+    return `${startDate} ${startTime} - ${endTime}`;
+  } else {
+    return `${startDate} ${startTime} - ${endDate} ${endTime}`;
+  }
 }

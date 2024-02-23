@@ -347,7 +347,7 @@ export const DateTimeActionSheet = ({
         value: DateTime.fromISO(date)
           .setZone("UTC")
           .set({hour: 0, minute: 0, second: 0, millisecond: 0})
-          .toISO()!,
+          .toISO(),
       });
     } else if (mode === "time") {
       onChange({
@@ -356,7 +356,7 @@ export const DateTimeActionSheet = ({
           .set({hour: militaryHour, minute, second: 0, millisecond: 0})
           .setZone(timezone)
           .setZone("UTC")
-          .toISO()!,
+          .toISO(),
       });
     } else if (mode === "datetime") {
       onChange({
@@ -368,7 +368,7 @@ export const DateTimeActionSheet = ({
           // Put that in the  new timezone on the screen
           // We always send back in UTC
           .setZone("UTC")
-          .toISO()!,
+          .toISO(),
       });
     }
     onDismiss();

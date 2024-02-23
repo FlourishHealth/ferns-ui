@@ -1,6 +1,13 @@
 // Write a jest test for the DateUtilities functions
 
-import {humanDate, humanDateAndTime, printDate, printDateAndTime, printTime} from "./DateUtilities";
+import {
+  humanDate,
+  humanDateAndTime,
+  printDate,
+  printDateAndTime,
+  printDateRange,
+  printTime,
+} from "./DateUtilities";
 
 describe("DateUtilities", function () {
   beforeEach(() => {
@@ -324,6 +331,36 @@ describe("DateUtilities", function () {
 
     it("should return the time in the default format", function () {
       expect(printTime("2022-12-24T12:00:00.000Z", {timezone: "America/Chicago"})).toBe("6:00 AM");
+    });
+  });
+
+  describe("printDateRange", function () {
+    it("should print just dates if day is different", function () {
+      // 2022-12-24T12:00:00.000Z to 2022-12-25T12:00:00.000Z
+      expect(
+        printDateRange("2022-12-24T12:00:00.000Z", "2022-12-25T12:00:00.000Z", {
+          timezone: "America/New_York",
+        })
+      ).toBe("12/24/2022 7:00 AM - 12/25/2022 7:00 AM EST");
+    });
+
+    it("should print dates and time if day is same with timezone", function () {
+      // 2022-12-24T12:00:00.000Z to 2022-12-24T18:00:00.000Z
+      expect(
+        printDateRange("2022-12-24T12:00:00.000Z", "2022-12-24T18:00:00.000Z", {
+          timezone: "America/New_York",
+        })
+      ).toBe("12/24/2022 7:00 AM - 1:00 PM EST");
+    });
+
+    it("should hide timezone", function () {
+      // 2022-12-24T12:00:00.000Z to 2022-12-24T18:00:00.000Z
+      expect(
+        printDateRange("2022-12-24T12:00:00.000Z", "2022-12-24T18:00:00.000Z", {
+          timezone: "America/New_York",
+          showTimezone: false,
+        })
+      ).toBe("12/24/2022 7:00 AM - 1:00 PM");
     });
   });
 });
