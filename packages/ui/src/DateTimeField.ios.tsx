@@ -14,7 +14,6 @@ export const DateTimeField = ({
   onChange,
   errorMessage,
   errorMessageColor,
-  dateFormat,
   pickerType = "inline",
   label,
 }: DateTimeFieldProps): ReactElement => {

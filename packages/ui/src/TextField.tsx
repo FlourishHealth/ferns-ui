@@ -234,8 +234,6 @@ export const TextField = ({
     }
   }
 
-  console.log("DISPLAY VALUE TEXT FIELD", displayValue, value, type);
-
   const Wrapper = isHandledByModal ? Pressable : View;
 
   return (

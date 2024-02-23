@@ -198,7 +198,6 @@ export const DateTimeActionSheet = ({
 
   // If the value changes in the props, update the state for the date and time.
   useEffect(() => {
-    console.log("USE EFFECT");
     let datetime;
     if (value) {
       datetime = DateTime.fromISO(value).setZone(timezone).set({millisecond: 0, second: 0});
@@ -219,6 +218,7 @@ export const DateTimeActionSheet = ({
     setMinute(datetime.minute);
     setAmPm(datetime.toFormat("a") === "am" ? "am" : "pm");
     setDate(datetime.toISO());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, transformValue, transformValue?.options?.timezone]);
 
   // TODO Support 24 hour time for time picker.
@@ -341,17 +341,8 @@ export const DateTimeActionSheet = ({
   // Note: do not call this if waiting on a state change.
   const sendOnChange = () => {
     const militaryHour = amPm === "pm" && hour !== 12 ? Number(hour) + 12 : Number(hour);
-    console.log("sendOnChange", {date, hour, hourChange: militaryHour, minute, amPm, timezone});
 
     if (mode === "date") {
-      console.log(
-        "DATE",
-        DateTime.fromISO(date)
-          .setZone("UTC")
-          .set({hour: 0, minute: 0, second: 0, millisecond: 0})
-          .toISO()
-      );
-
       onChange({
         value: DateTime.fromISO(date)
           .setZone("UTC")
