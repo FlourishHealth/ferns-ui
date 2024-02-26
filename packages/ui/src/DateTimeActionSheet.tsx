@@ -343,33 +343,39 @@ export const DateTimeActionSheet = ({
     const militaryHour = amPm === "pm" && hour !== 12 ? Number(hour) + 12 : Number(hour);
 
     if (mode === "date") {
-      onChange({
-        value: DateTime.fromISO(date)
-          .setZone("UTC")
-          .set({hour: 0, minute: 0, second: 0, millisecond: 0})
-          .toISO(),
-      });
+      const v = DateTime.fromISO(date)
+        .setZone("UTC")
+        .set({hour: 0, minute: 0, second: 0, millisecond: 0})
+        .toISO();
+      if (!v) {
+        throw new Error(`Invalid date: ${date}`);
+      }
+      onChange({value: v});
     } else if (mode === "time") {
-      onChange({
-        value: DateTime.fromISO(date)
-          .setZone(timezone)
-          .set({hour: militaryHour, minute, second: 0, millisecond: 0})
-          .setZone(timezone)
-          .setZone("UTC")
-          .toISO(),
-      });
+      const v = DateTime.fromISO(date)
+        .setZone(timezone)
+        .set({hour: militaryHour, minute, second: 0, millisecond: 0})
+        .setZone(timezone)
+        .setZone("UTC")
+        .toISO();
+      if (!v) {
+        throw new Error(`Invalid date: ${date}`);
+      }
+      onChange({value: v});
     } else if (mode === "datetime") {
-      onChange({
-        value: DateTime.fromISO(date)
-          .setZone(timezone)
-          // Take from the original zone
-          // Set the value on the screen
-          .set({hour: militaryHour, minute, second: 0, millisecond: 0})
-          // Put that in the  new timezone on the screen
-          // We always send back in UTC
-          .setZone("UTC")
-          .toISO(),
-      });
+      const v = DateTime.fromISO(date)
+        .setZone(timezone)
+        // Take from the original zone
+        // Set the value on the screen
+        .set({hour: militaryHour, minute, second: 0, millisecond: 0})
+        // Put that in the  new timezone on the screen
+        // We always send back in UTC
+        .setZone("UTC")
+        .toISO();
+      if (!v) {
+        throw new Error(`Invalid date: ${date}`);
+      }
+      onChange({value: v});
     }
     onDismiss();
   };

@@ -240,3 +240,26 @@ export function printDateRange(
     return `${startDate} ${startTime} - ${endDate} ${endTime}`;
   }
 }
+
+// Print since nicely. If less than 2 months, print days, otherwise print months. If over 1 year,
+// print years.
+export function printSince(date: string, {timezone}: {timezone?: string} = {}): string {
+  let clonedDate;
+  try {
+    clonedDate = getDate(date, {timezone});
+  } catch (error: any) {
+    throw new Error(`printSince: ${error.message}`);
+  }
+  const now = timezone ? DateTime.now().setZone(timezone) : DateTime.now();
+  const diff = now.diff(clonedDate, "months");
+  if (diff.months < 2) {
+    const days = Math.floor(now.diff(clonedDate, "days").days);
+    return `${days} ${days === 1 ? "day" : "days"} ago`;
+  } else if (diff.months < 12) {
+    const months = Math.floor(diff.months);
+    return `${months} ${months === 1 ? "month" : "months"} ago`;
+  } else {
+    const years = Math.floor(now.diff(clonedDate, "years").years);
+    return `${years} ${years === 1 ? "year" : "years"} ago`;
+  }
+}
