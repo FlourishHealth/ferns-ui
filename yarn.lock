@@ -6658,6 +6658,13 @@ eslint-module-utils@^2.8.0:
   dependencies:
     debug "^3.2.7"
 
+eslint-plugin-ban@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ban/-/eslint-plugin-ban-1.6.0.tgz#f4e8e9b754b0f2c405f9747ea9fcb4be63c37d05"
+  integrity sha512-gZptoV+SFHOHO57/5lmPvizMvSXrjFatP9qlVQf3meL/WHo9TxSoERygrMlESl19CPh95U86asTxohT8OprwDw==
+  dependencies:
+    requireindex "~1.2.0"
+
 eslint-plugin-comment-length@^1.7.3:
   version "1.7.3"
   resolved "https://registry.yarnpkg.com/eslint-plugin-comment-length/-/eslint-plugin-comment-length-1.7.3.tgz#ac02077153b2d32a643a00acf74ff0e35d3f0a98"
@@ -13048,6 +13055,11 @@ requireg@^0.2.2:
     nested-error-stacks "~2.0.1"
     rc "~1.2.7"
     resolve "~1.7.1"
+
+requireindex@~1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/requireindex/-/requireindex-1.2.0.tgz#3463cdb22ee151902635aa6c9535d4de9c2ef1ef"
+  integrity sha512-L9jEkOi3ASd9PYit2cwRfyppc9NoABujTP8/5gFcbERmo5jUoAKovIC3fsF17pkTnGsrByysqX+Kxd2OTNI1ww==
 
 requires-port@^1.0.0:
   version "1.0.0"
