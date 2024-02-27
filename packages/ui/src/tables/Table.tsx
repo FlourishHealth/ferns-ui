@@ -19,7 +19,7 @@ export const Table = ({
   setPage: propsSetPage,
   more,
   extraControls,
-}: TableProps): React.ReactElement {
+}: TableProps): React.ReactElement => {
   const arrayChildren = Children.toArray(children);
 
   // Check if any of the rows below have a drawerContents prop to see if we need to render space
