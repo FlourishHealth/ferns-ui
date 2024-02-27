@@ -50,7 +50,10 @@ export function isWithinWeek(date: string, {timezone}: {timezone?: string} = {})
 
 // Prints a human friendly date, e.g. "Tomorrow", "Yesterday", "Monday", "June 19", "December 25,
 // 2022".
-export function humanDate(date: string, {timezone}: {timezone?: string} = {}): string {
+export function humanDate(
+  date: string,
+  {timezone, dontShowTime}: {timezone?: string; dontShowTime?: boolean} = {}
+): string {
   let clonedDate;
   try {
     clonedDate = getDate(date, {timezone});
@@ -60,7 +63,11 @@ export function humanDate(date: string, {timezone}: {timezone?: string} = {}): s
   if (isTomorrow(date, {timezone})) {
     return "Tomorrow";
   } else if (isToday(date, {timezone})) {
-    return clonedDate.toFormat("h:mm a");
+    if (dontShowTime) {
+      return "Today";
+    } else {
+      return clonedDate.toFormat("h:mm a");
+    }
   } else if (isYesterday(date, {timezone})) {
     return "Yesterday";
   } else if (isWithinWeek(date, {timezone})) {

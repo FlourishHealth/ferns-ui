@@ -33,6 +33,10 @@ describe("DateUtilities", function () {
       expect(humanDate("2022-12-24T12:00:00.000Z")).toBe("7:00 AM");
     });
 
+    it("should return the date if the date is today and don't show date is true", function () {
+      expect(humanDate("2022-12-24T12:00:00.000Z", {dontShowTime: true})).toBe("Today");
+    });
+
     it("should return 'Yesterday' if the date is yesterday", function () {
       expect(humanDate("2022-12-23T12:00:00.000Z")).toBe("Yesterday");
     });
