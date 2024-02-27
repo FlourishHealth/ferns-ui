@@ -29,6 +29,7 @@ export const Field = ({
   options,
   placeholder,
   disabled,
+  required,
   errorMessage,
   errorMessageColor,
   helperText,
@@ -337,6 +338,12 @@ export const Field = ({
   };
 
   const children = renderField();
+
+  if (required && !value && !disabled && (type === "text" || type === "textarea")) {
+    errorMessage = `This field is required. ${errorMessage ?? ""}`;
+    errorMessageColor = errorMessageColor ?? "red";
+  }
+
   return (
     <Box marginBottom={5}>
       <FieldWithLabels

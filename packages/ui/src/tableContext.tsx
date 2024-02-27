@@ -13,6 +13,7 @@ interface TableContextType {
   stickyHeader?: boolean;
   borderStyle?: "sm" | "none";
   alternateRowBackground?: boolean;
+  page?: number;
 }
 
 interface Props extends TableContextType {
@@ -27,6 +28,7 @@ const TableContext: Context<TableContextType> = createContext<TableContextType>(
   stickyHeader: true,
   borderStyle: "sm",
   alternateRowBackground: true,
+  page: 1,
 });
 
 export const {Provider} = TableContext;
@@ -40,6 +42,7 @@ export const TableContextProvider = ({
   stickyHeader,
   borderStyle,
   alternateRowBackground,
+  page,
 }: Props): React.ReactElement<typeof Provider> => {
   return (
     <Provider
@@ -51,6 +54,7 @@ export const TableContextProvider = ({
         sortColumn,
         setSortColumn,
         stickyHeader,
+        page,
       }}
     >
       {children}

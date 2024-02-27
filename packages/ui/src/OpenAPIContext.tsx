@@ -9,13 +9,23 @@ interface OpenAPISpec {
 
 export type ModelFieldConfig = any;
 
-export type OpenApiPropertyType = "string" | "number" | "boolean" | "array" | "object";
+export type OpenApiPropertyType =
+  | "string"
+  | "date"
+  | "datetime"
+  | "boolean"
+  | "array"
+  | "object"
+  | "number"
+  | "any";
 export type OpenApiProperty = {
   type?: OpenApiPropertyType;
   format?: string;
   properties?: OpenApiProperty;
   items?: OpenApiProperty[];
   description?: string;
+  // TODO: is this actually there?
+  required?: string[];
 };
 
 export type ModelFields = {

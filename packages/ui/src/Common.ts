@@ -5,6 +5,7 @@ import {DimensionValue, FlexStyle} from "react-native/Libraries/StyleSheet/Style
 import {Styles} from "react-native-google-places-autocomplete";
 
 import {SelectListOptions} from "./SelectList";
+import {ColumnSortInterface} from "./tableContext";
 
 export interface BaseProfile {
   email: string;
@@ -2726,6 +2727,7 @@ export interface FieldProps extends FieldWithLabelsProps {
   includeCounty?: boolean;
   googleMapsApiKey?: string;
   googlePlacesMobileStyles?: Styles;
+  required?: boolean;
 }
 
 export interface FormLineProps {
@@ -2910,6 +2912,27 @@ export interface TableProps {
    * If true, alternate rows will have a light gray background. Defaults to true.
    */
   alternateRowBackground?: boolean;
+
+  /**
+   * Control sort outside of the Table
+   */
+  sort?: ColumnSortInterface;
+  /**
+   * Set the page outside of the Table
+   */
+  page?: number;
+  /**
+   * Set the page outside of the Table
+   */
+  setPage?: (page: number) => void;
+  /**
+   * If true, the table will render a next page button. Defaults to true.
+   */
+  more?: boolean;
+  /**
+   * Extra controls to render below the table next to pagination
+   */
+  extraControls?: React.ReactElement;
 }
 
 export interface TableHeaderProps {

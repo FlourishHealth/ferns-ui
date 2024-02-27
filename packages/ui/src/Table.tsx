@@ -1,7 +1,9 @@
 import React, {Children, ReactElement} from "react";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
+import {Box} from "./Box";
 import {TableProps} from "./Common";
+import {PaginationControl} from "./Pagination";
 import {ScrollView} from "./ScrollView";
 import {ColumnSortInterface, TableContextProvider} from "./tableContext";
 
@@ -12,10 +14,18 @@ export const Table = ({
   alternateRowBackground = true,
   maxHeight,
   stickyHeader = true,
-}: TableProps): React.ReactElement => {
+  sort,
+  page: propsPage,
+  setPage: propsSetPage,
+  more,
+  extraControls,
+}: TableProps): React.ReactElement {
   const arrayChildren = Children.toArray(children);
-  const [sortColumn, setSortColumn] = React.useState<ColumnSortInterface | undefined>(undefined);
 
+  // Check if any of the rows below have a drawerContents prop to see if we need to render space
+  // for the caret.
+  const [sortColumn, setSortColumn] = React.useState<ColumnSortInterface | undefined>(sort);
+  const [page, setPage] = React.useState<number>(propsPage ?? 1);
   // Check if any of the rows below have a drawerContents prop to see if we need to render space
   // for the caret.
   const hasDrawerContents = arrayChildren.some((child) => {
@@ -36,28 +46,46 @@ export const Table = ({
     width = "100%";
   }
 
+  const shouldPaginate = true;
+
   return (
     <TableContextProvider
       alternateRowBackground={alternateRowBackground}
       borderStyle={borderStyle}
       columns={columns}
       hasDrawerContents={hasDrawerContents}
+      page={page}
       setSortColumn={setSortColumn}
       sortColumn={sortColumn}
       stickyHeader={stickyHeader}
     >
-      <ScrollView horizontal style={{width, maxWidth: "100%"}}>
-        <ScrollView
-          stickyHeaderIndices={stickyHeader ? [0] : undefined}
-          style={{width, maxWidth: "100%", flex: 1, maxHeight}}
-        >
-          {Children.map(children, (child, index) =>
-            React.cloneElement(child as any, {
-              color: index % 2 === 1 && alternateRowBackground ? "lightGray" : "white",
-            })
-          )}
-        </ScrollView>
-      </ScrollView>
+      <>
+        <Box flex="grow" maxWidth="100%" width={width}>
+          <ScrollView horizontal style={{width, maxWidth: "100%"}}>
+            <ScrollView
+              stickyHeaderIndices={stickyHeader ? [0] : undefined}
+              style={{width, maxWidth: "100%", flex: 1, maxHeight}}
+            >
+              {Children.map(children, (child, index) =>
+                React.cloneElement(child as any, {
+                  color: index % 2 === 1 && alternateRowBackground ? "lightGray" : "white",
+                })
+              )}
+            </ScrollView>
+          </ScrollView>
+        </Box>
+        {Boolean(shouldPaginate) && (
+          <Box direction="row" height={60} paddingX={8}>
+            <PaginationControl
+              page={propsPage ?? page}
+              setPage={propsSetPage ?? setPage}
+              shouldDisableBackButton={page <= 1}
+              shouldDisableNextButton={!more}
+            />
+            {Boolean(extraControls) && extraControls}
+          </Box>
+        )}
+      </>
     </TableContextProvider>
   );
 };
