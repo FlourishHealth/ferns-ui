@@ -86,7 +86,7 @@ export function humanDate(
 // 9:00 AM", "June 19 9:00 AM", "December 25, 2022 9:00 AM".
 export function humanDateAndTime(
   date: string,
-  {timezone, showTimezone}: {timezone?: string; showTimezone?: boolean} = {}
+  {timezone, showTimezone = true}: {timezone?: string; showTimezone?: boolean} = {}
 ): string {
   let clonedDate;
   try {
@@ -149,12 +149,6 @@ export const printDate = (
   }
 
   if (ignoreTime) {
-    if (date?.endsWith("T00:00:00.000Z")) {
-      console.warn(
-        "printDate: ignoreTime is set to true, but the time is set to midnight UTC. " +
-          "This may cause unexpected behavior."
-      );
-    }
     if (!date) {
       throw new Error("printDate: Passed undefined");
     }
@@ -165,6 +159,32 @@ export const printDate = (
   }
 
   return clonedDate.toLocaleString(DateTime.DATE_SHORT);
+};
+
+// For printing dates from date times, ignoring the time. These should end in T00:00:00.000Z.
+// For example, the dates returned by Field type="date".
+export const printOnlyDate = (
+  date?: string,
+  {
+    defaultValue,
+  }: {
+    defaultValue?: string;
+  } = {}
+): string => {
+  if (!date) {
+    return defaultValue ?? "Invalid Date";
+  }
+
+  if (!date?.endsWith("T00:00:00.000Z")) {
+    console.warn(
+      "printOnlyDate, but the time is not set to midnight UTC. " +
+        "This may cause unexpected behavior."
+    );
+  }
+  // Use only the date component, ignore the time.
+  const justDate = DateTime.fromISO(date, {zone: "UTC"});
+  // We force it into UTC so we can get the correct date.
+  return justDate.toFormat("M/d/yyyy");
 };
 
 // Print time in the format of HH:mm A, taking timezones into account.

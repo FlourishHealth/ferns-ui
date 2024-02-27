@@ -18,6 +18,9 @@
       "react-app"
     ]
   },
+  "jest": {
+    "globalSetup": "./jest-setup.js"
+  },
   "browserslist": {
     "production": [
       ">0.2%",

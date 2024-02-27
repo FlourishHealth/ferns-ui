@@ -6,6 +6,7 @@ import {
   printDate,
   printDateAndTime,
   printDateRange,
+  printOnlyDate,
   printSince,
   printTime,
 } from "./DateUtilities";
@@ -256,6 +257,23 @@ describe("DateUtilities", function () {
       expect(printDate("2022-12-24T00:00:00.000Z", {ignoreTime: true})).toBe("12/24/2022");
       expect(printDate("2022-12-24T23:59:59.999Z", {ignoreTime: true})).toBe("12/24/2022");
       expect(printDate("2022-12-24T23:59:59.999Z", {ignoreTime: true})).toBe("12/24/2022");
+    });
+  });
+
+  describe("printOnlyDate", function () {
+    it("should print invalid if no date and no default", function () {
+      expect(printOnlyDate(undefined as any)).toBe("Invalid Date");
+    });
+
+    it("should print default if no date and default", function () {
+      expect(printOnlyDate(undefined as any, {defaultValue: "default"})).toBe("default");
+    });
+
+    it("should print the date in the default format", function () {
+      // This should be a warning but still work.
+      expect(printOnlyDate("2022-12-24T23:00:00.000Z")).toBe("12/24/2022");
+      // This should print 12/24 even though it's 12/23 in EST.
+      expect(printOnlyDate("2022-12-24T00:00:00.000Z")).toBe("12/24/2022");
     });
   });
 
