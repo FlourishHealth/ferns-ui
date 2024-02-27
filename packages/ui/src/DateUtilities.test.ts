@@ -374,6 +374,8 @@ describe("DateUtilities", function () {
       // print since in days
       expect(printSince("2022-12-23T11:00:00.000Z")).toBe("1 day ago");
       expect(printSince("2022-12-22T11:10:01.000Z")).toBe("2 days ago");
+      // print without ago
+      expect(printSince("2022-12-22T11:10:01.000Z", {showAgo: false})).toBe("2 days");
     });
 
     it("should print the months", function () {
@@ -381,6 +383,8 @@ describe("DateUtilities", function () {
       expect(printSince("2022-11-21T12:00:01.000Z")).toBe("32 days ago");
       // print months
       expect(printSince("2022-10-23T12:00:01.000Z")).toBe("2 months ago");
+      // print without ago
+      expect(printSince("2022-10-23T12:00:01.000Z", {showAgo: false})).toBe("2 months");
     });
 
     it("should print the years", function () {
@@ -388,6 +392,8 @@ describe("DateUtilities", function () {
       expect(printSince("2021-12-23T11:00:00.000Z")).toBe("1 year ago");
       // print multiple years
       expect(printSince("2019-12-23T11:00:00.000Z")).toBe("3 years ago");
+      // print without ago
+      expect(printSince("2019-12-23T11:00:00.000Z", {showAgo: false})).toBe("3 years");
     });
   });
 });
