@@ -90,6 +90,19 @@ export const ModelAdmin = ({
     if (fieldsOverride) {
       // Only list the fields that are in the override.
       fieldConfig = fieldConfig.filter((f) => Boolean(fieldsOverride.includes(f.fieldKey)));
+      // Now add in any fields that are in the override but not in the fieldConfig.
+      // Add some defaults So they render properly, then merge with the provided override.
+      fieldsOverride.forEach((fieldKey) => {
+        if (!fieldConfig.find((f) => f.fieldKey === fieldKey) && overrides?.[fieldKey]) {
+          fieldConfig.push(
+            merge(
+              {fieldKey, title: startCase(fieldKey), type: "string", width: 200},
+              overrides[fieldKey]
+            )
+          );
+        }
+      });
+      // Sort the fields based on the order in the override.
       fieldConfig.sort((a, b) => {
         const indexA = fieldsOverride.indexOf(a.fieldKey);
         const indexB = fieldsOverride.indexOf(b.fieldKey);
