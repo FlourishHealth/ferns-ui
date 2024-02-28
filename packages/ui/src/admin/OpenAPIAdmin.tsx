@@ -23,6 +23,7 @@ export const OpenAPIAdmin = ({
   navigate,
   model,
   modelOverrides,
+  modelFieldsOverride,
   instanceOverrides,
   id,
   page,
@@ -75,6 +76,7 @@ export const OpenAPIAdmin = ({
     return (
       <Box direction="column" flex="grow" width="100%">
         <ModelAdmin
+          fieldsOverride={modelFieldsOverride?.[model!]}
           model={model}
           navigate={navigate}
           overrides={modelOverrides?.[modelName]}

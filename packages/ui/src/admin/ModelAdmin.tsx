@@ -24,7 +24,7 @@ import {Text} from "../Text";
 const WIDTHS: {[id: string]: number} = {
   date: 140,
   boolean: 100,
-  text: 200,
+  text: 210, // 210 fits a mongo id with default ferns-ui font size and fonts
 };
 
 const DEFAULT_WIDTH = 200;
@@ -36,6 +36,7 @@ export const ModelAdmin = ({
   overrides,
   sort,
   page: initialPage,
+  fieldsOverride,
 }: ModelAdminProps): React.ReactElement | null => {
   const spec = useOpenAPISpec();
   const modelFields = spec.getModelFields(model);
@@ -79,11 +80,23 @@ export const ModelAdmin = ({
   );
 
   const fields: ModelAdminFieldConfig[] = useMemo(() => {
-    const fieldConfig = flatten(
+    let fieldConfig = flatten(
       Object.entries(modelFields?.properties ?? {}).map(([name, openApiProperty]) =>
         getFieldConfigForModelAdmin(name, openApiProperty)
       )
     );
+
+    // If we have field overrides, apply them here.
+    if (fieldsOverride) {
+      // Only list the fields that are in the override.
+      fieldConfig = fieldConfig.filter((f) => Boolean(fieldsOverride.includes(f.fieldKey)));
+      fieldConfig.sort((a, b) => {
+        const indexA = fieldsOverride.indexOf(a.fieldKey);
+        const indexB = fieldsOverride.indexOf(b.fieldKey);
+        return indexA - indexB;
+      });
+    }
+
     // Make sure _id is always first, created, updated and deleted are last, then sort the rest
     // alphabetically.
     const idFieldIndex = fieldConfig.findIndex((f: ModelAdminFieldConfig) => f.fieldKey === "_id");
@@ -115,7 +128,7 @@ export const ModelAdmin = ({
     }
 
     return [idField, ...fieldConfig, createdField, updatedField, deletedField].filter((f) => f);
-  }, [getFieldConfigForModelAdmin, modelFields?.properties]);
+  }, [fieldsOverride, getFieldConfigForModelAdmin, modelFields?.properties]);
 
   const getModelAdminConfigFromField = useCallback(
     (field: any): ModelAdminFieldConfig => {
@@ -195,7 +208,7 @@ export const ModelAdmin = ({
       <Box
         alignItems="center"
         alignSelf="end"
-        color="white"
+        color="lightGray"
         direction="row"
         height={60}
         marginLeft={8}
@@ -276,7 +289,7 @@ export const ModelAdmin = ({
           doc={doc}
           editing={editing}
           field={field}
-          text={String(value)}
+          text={value ? String(value) : ""}
           onChange={onChange}
         />
       );

@@ -3120,6 +3120,9 @@ export interface ModelAdminProps {
   sort?: string;
   model: string;
   overrides?: {[id: string]: Partial<ModelAdminFieldConfig>};
+  // The order of the fields to display in the table, and which fields to skip, as well as
+  // allowing additional fields to be added.
+  fieldsOverride?: string[];
 }
 
 export interface OpenAPISpec {
@@ -3143,8 +3146,10 @@ export interface OpenAPIAdminProps {
   id?: string;
   page?: number;
   sort?: string;
-  // Override in the table view
+  // Override the components in the table view
   modelOverrides?: {[modelName: string]: ModelFieldOverride};
+  // Override the fields and ordering in the table view
+  modelFieldsOverride: {[modelName: string]: string[]};
   // Override in the instance view
   instanceOverrides?: {[modelName: string]: InstanceFieldOverride};
 }

@@ -43,7 +43,7 @@ export const TextFieldCell = ({
   }
   return (
     <Box flex="grow" justifyContent="center">
-      <Text>{text}</Text>
+      <Text>{text ?? ""}</Text>
     </Box>
   );
 };

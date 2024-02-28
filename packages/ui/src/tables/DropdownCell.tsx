@@ -38,6 +38,6 @@ export const DropdownCell = ({
       />
     );
   } else {
-    return <TextCell text={text ?? value} />;
+    return <TextCell text={text ?? value ?? ""} />;
   }
 };
