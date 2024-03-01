@@ -1,10 +1,10 @@
 import React, {Children, ReactElement} from "react";
+import {ScrollView} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 import {Box} from "../Box";
 import {ColumnSortInterface, TableProps} from "../Common";
 import {PaginationControl} from "../Pagination";
-import {ScrollView} from "../ScrollView";
 import {TableContextProvider} from "./tableContext";
 
 export const Table = ({
@@ -66,16 +66,19 @@ export const Table = ({
               stickyHeaderIndices={stickyHeader ? [0] : undefined}
               style={{width, maxWidth: "100%", flex: 1, maxHeight}}
             >
-              {Children.map(children, (child, index) =>
-                React.cloneElement(child as any, {
-                  color: index % 2 === 1 && alternateRowBackground ? "lightGray" : "white",
-                })
+              {Children.map(
+                children,
+                (child, index) =>
+                  Boolean(child) &&
+                  React.cloneElement(child as any, {
+                    color: index % 2 === 1 && alternateRowBackground ? "lightGray" : "white",
+                  })
               )}
             </ScrollView>
           </ScrollView>
         </Box>
         {Boolean(shouldPaginate) && (
-          <Box direction="row" height={60} paddingX={8}>
+          <Box alignItems="center" borderTop="gray" direction="row" height={60} paddingX={8}>
             <PaginationControl
               page={propsPage ?? page}
               setPage={propsSetPage ?? setPage}

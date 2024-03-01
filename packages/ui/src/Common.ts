@@ -1880,16 +1880,31 @@ export interface PillProps {
   onClick: (enabled: boolean) => void;
 }
 
-export interface SegmentedControlProps {
+// Base interface without the onChange method
+interface BaseSegmentedControlProps<T extends boolean | undefined> {
   items: string[];
-  onChange?: ({activeIndex}: {activeIndex: number | number[]}) => void;
-  selectedItemIndex?: number;
-  selectedItemIndexes?: number[];
   responsive?: boolean;
-  size?: "md" | "lg"; // defaults to md
-  multiselect?: boolean;
+  size?: "md" | "lg";
+  multiselect?: T;
   selectLimit?: number;
 }
+
+export type SegmentedControlSingleSelectOnChange = ({activeIndex}: {activeIndex: number}) => void;
+// Interface extension for when multiselect is false or not provided
+export interface SingleSelectProps extends BaseSegmentedControlProps<false | undefined> {
+  onChange?: SegmentedControlSingleSelectOnChange;
+  selectedItemIndex?: number;
+}
+
+export type SegmentedControlMultiSelectOnChange = ({activeIndex}: {activeIndex: number[]}) => void;
+// Interface extension for when multiselect is true
+export interface MultiSelectProps extends BaseSegmentedControlProps<true> {
+  onChange?: SegmentedControlMultiSelectOnChange;
+  selectedItemIndexes?: number[];
+}
+
+// Union type to combine both single and multi-select scenarios
+export type SegmentedControlProps = SingleSelectProps | MultiSelectProps;
 
 // Shared props for fields with labels, subtext, and error messages.
 export interface FieldWithLabelsProps {
@@ -2964,6 +2979,15 @@ export interface TableHeaderCellProps {
   onSortChange?: (direction: "asc" | "desc" | undefined) => void;
 }
 
+export interface AdminTableHeaderCellProps extends TableHeaderCellProps {
+  filters: string[];
+  setFilters: (filter: string[]) => void;
+  model: string;
+  field: string;
+  search?: string;
+  setSearch?: (search: string) => void;
+}
+
 export interface TableRowProps {
   /**
    * Must be instances of TableCell or TableHeaderCell.
@@ -3172,6 +3196,7 @@ export type OpenApiProperty = {
   description?: string;
   // TODO: is this actually there?
   required?: string[];
+  enum?: string[];
 };
 
 export type ModelFields = {
@@ -3183,7 +3208,7 @@ export type ModelFields = {
 export interface OpenAPIContextType {
   spec: OpenAPISpec | null;
   getModelFields: (modelName: string) => ModelFields | null;
-  getModelField: (modelName: string, field: string) => OpenApiProperty;
+  getModelField: (modelName: string, field: string) => OpenApiProperty | null;
 }
 
 export interface OpenAPIProviderProps {
@@ -3195,6 +3220,10 @@ export interface ColumnSortInterface {
   column: number | undefined;
   direction: "asc" | "desc" | undefined;
 }
+
+export type TableFilters = Record<string, string[]>;
+
+export type TableSearch = {search: string; field: string};
 
 export interface TableContextType {
   columns: Array<number | string>;

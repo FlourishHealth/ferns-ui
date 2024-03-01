@@ -6,8 +6,15 @@ import React, {useCallback, useMemo, useState} from "react";
 
 import {Box} from "../Box";
 import {Button} from "../Button";
-import {ModelAdminFieldComponentProps, ModelAdminFieldConfig, ModelAdminProps} from "../Common";
+import {
+  ModelAdminFieldComponentProps,
+  ModelAdminFieldConfig,
+  ModelAdminProps,
+  TableFilters,
+  TableSearch,
+} from "../Common";
 import {useOpenAPISpec} from "../OpenAPIContext";
+import {Spinner} from "../Spinner";
 import {
   CheckboxCell,
   DateTimeCell,
@@ -15,11 +22,11 @@ import {
   LinkCell,
   Table,
   TableHeader,
-  TableHeaderCell,
   TableRow,
   TextFieldCell,
 } from "../tables";
 import {Text} from "../Text";
+import {AdminTableHeaderCell} from "./AdminTableHeaderCell";
 
 const WIDTHS: {[id: string]: number} = {
   date: 140,
@@ -28,6 +35,44 @@ const WIDTHS: {[id: string]: number} = {
 };
 
 const DEFAULT_WIDTH = 200;
+
+// const SearchModal = ({
+//   visible,
+//   onDismiss,
+//   doSearch,
+//   field,
+// }: {
+//   visible: boolean;
+//   onDismiss: () => void;
+//   doSearch: (field: string, search: string) => void;
+//   field: string;
+// }): React.ReactElement => {
+//   const [search, setSearch] = useState("");
+//   return (
+//     <Modal visible={visible} onDismiss={onDismiss}>
+//       <Box padding={4}>
+//         <Field
+//           label="Search"
+//           name="search"
+//           type="text"
+//           value={search}
+//           onChange={(value: string): void => {
+//             setSearch(value);
+//           }}
+//         />
+//         <Box marginTop={4}>
+//           <Button
+//             color="primary"
+//             text="Search"
+//             onClick={(): void => {
+//               doSearch(field, search);
+//             }}
+//           />
+//         </Box>
+//       </Box>
+//     </Modal>
+//   );
+// };
 
 export const ModelAdmin = ({
   useList,
@@ -40,6 +85,9 @@ export const ModelAdmin = ({
 }: ModelAdminProps): React.ReactElement | null => {
   const spec = useOpenAPISpec();
   const modelFields = spec.getModelFields(model);
+  console.log("FIELDS", modelFields);
+  const [filters, setFilters] = useState<TableFilters>({});
+  const [search, setSearch] = useState<TableSearch | undefined>(undefined);
 
   const getFieldConfigForModelAdmin = useCallback(
     (name: string, openApiProperty: any, parentKey?: string): ModelAdminFieldConfig[] => {
@@ -88,6 +136,7 @@ export const ModelAdmin = ({
 
     // If we have field overrides, apply them here.
     if (fieldsOverride) {
+      console.debug("Applying field overrides", fieldsOverride, modelFields?.properties);
       // Only list the fields that are in the override.
       fieldConfig = fieldConfig.filter((f) => Boolean(fieldsOverride.includes(f.fieldKey)));
       // Now add in any fields that are in the override but not in the fieldConfig.
@@ -141,7 +190,7 @@ export const ModelAdmin = ({
     }
 
     return [idField, ...fieldConfig, createdField, updatedField, deletedField].filter((f) => f);
-  }, [fieldsOverride, getFieldConfigForModelAdmin, modelFields?.properties]);
+  }, [fieldsOverride, getFieldConfigForModelAdmin, modelFields?.properties, overrides]);
 
   const getModelAdminConfigFromField = useCallback(
     (field: any): ModelAdminFieldConfig => {
@@ -206,26 +255,41 @@ export const ModelAdmin = ({
   );
 
   const [page, setPage] = useState(initialPage ?? 1);
+  // const [showSearchModal, setShowSearchModal] = useState(false);
+  // const [searchField, setSearchField] = useState("");
+
   const query: any = {page};
+  // Transform filters, booleans should go to true, false, or undefined, and enums should be
+  // go to $in: [] queries
+  Object.entries(filters).forEach(([field, filter]) => {
+    if (filter.length === 0) {
+      return;
+    }
+    const modelField = modelFields?.properties?.[field];
+    if (modelField?.type === "boolean") {
+      query[field] = filter[0] === "true" ? true : filter[0] === "false" ? false : undefined;
+    } else if (field.length > 1) {
+      query[field] = {$in: filter};
+    } else if (field.length === 1) {
+      query[field] = filter[0];
+    }
+  });
+  if (search) {
+    query[search.field] = {$regex: search.search, $options: "i"};
+  }
   if (sort) {
     query.sort = sort;
   }
-  const {data: listData} = useList(query);
+  console.log("QUERY", query, filters, sort, page, model, modelConfig, fields, overrides);
+  const {data: listData, isLoading} = useList(query);
 
-  if (!listData?.data?.length) {
-    return null;
-  }
+  // if (!listData?.data?.length) {
+  //   return null;
+  // }
 
   const renderExtraControls = (): React.ReactElement => {
     return (
-      <Box
-        alignItems="center"
-        alignSelf="end"
-        color="lightGray"
-        direction="row"
-        height={60}
-        marginLeft={8}
-      >
+      <Box marginLeft={6} width={160}>
         <Button
           color="primary"
           icon="plus"
@@ -319,8 +383,8 @@ export const ModelAdmin = ({
         <Table
           columns={modelConfig.map((c) => c.width ?? DEFAULT_WIDTH)}
           extraControls={renderExtraControls()}
-          more={Boolean(listData.more)}
-          page={listData.page}
+          more={Boolean(listData?.more)}
+          page={listData?.page ?? 1}
           setPage={(p: number) => {
             setPage(p);
             navigate({page: p, model, sort});
@@ -329,9 +393,19 @@ export const ModelAdmin = ({
         >
           <TableHeader>
             {modelConfig.map((column, index) => (
-              <TableHeaderCell
+              <AdminTableHeaderCell
                 key={column.title}
+                field={column.fieldKey}
+                filters={filters[column.fieldKey]}
                 index={index}
+                model={model}
+                search={search?.field === column.fieldKey ? search?.search : undefined}
+                setFilters={(newFilters: string[]) => {
+                  setFilters({...filters, [column.fieldKey]: newFilters});
+                }}
+                setSearch={(searchStr: string) => {
+                  setSearch({field: column.fieldKey, search: searchStr});
+                }}
                 sortable={Boolean(column.sort)}
                 onSortChange={(dir?: "asc" | "desc"): void => {
                   navigate({
@@ -346,10 +420,15 @@ export const ModelAdmin = ({
                     {column.title}
                   </Text>
                 </Box>
-              </TableHeaderCell>
+              </AdminTableHeaderCell>
             ))}
           </TableHeader>
-          {listData.data.map((doc: any) => {
+          {Boolean(isLoading) && (
+            <Box paddingY={12} width="100%">
+              <Spinner />
+            </Box>
+          )}
+          {listData?.data.map((doc: any) => {
             return (
               // eslint-disable-next-line react/prop-types
               <TableRow key={doc._id}>
