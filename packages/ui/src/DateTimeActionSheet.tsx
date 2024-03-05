@@ -277,16 +277,16 @@ export const DateTimeActionSheet = ({
             </Picker>
           </Box>
         </Box>
-        {Boolean(mode === "time" || mode === "datetime") &&
+        {Boolean(mode === "time" || mode === "datetime") && (
           <Box paddingY={2}>
             <TimezonePicker
               showLabel={false}
               timezone={timezone}
               width="100%"
               onChange={setTimezone}
-              />
+            />
           </Box>
-        }
+        )}
       </Box>
     );
   };
@@ -324,11 +324,11 @@ export const DateTimeActionSheet = ({
             }}
           />
         </Box>
-        {Boolean(mode === "time" || mode === "datetime") &&
+        {Boolean(mode === "time" || mode === "datetime") && (
           <Box>
             <TimezonePicker showLabel={false} timezone={timezone} onChange={setTimezone} />
           </Box>
-        }
+        )}
       </Box>
     );
   };

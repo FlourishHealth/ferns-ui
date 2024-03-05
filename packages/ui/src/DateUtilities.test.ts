@@ -18,8 +18,10 @@ describe("DateUtilities", function () {
   });
 
   describe("humanDate", function () {
-    it("should throw an error if date is undefined", function () {
-      expect(() => humanDate(undefined as any)).toThrow("humanDate: Passed undefined");
+    it("should return invalid date if date is undefined", function () {
+      expect(() => humanDate(undefined as any, {timezone: "America/New_York"})).toThrow(
+        "humanDate: Passed undefined"
+      );
     });
 
     it("should throw an error if date is invalid", function () {
@@ -86,8 +88,8 @@ describe("DateUtilities", function () {
   });
 
   describe("humanDateTime", function () {
-    it("should throw an error if date is undefined", function () {
-      expect(() => humanDateAndTime(undefined as any)).toThrow(
+    it("should return invalid date if date is undefined", function () {
+      expect(() => humanDateAndTime(undefined as any, {timezone: "America/New_York"})).toThrow(
         "humanDateAndTime: Passed undefined"
       );
     });
@@ -99,62 +101,62 @@ describe("DateUtilities", function () {
     });
 
     it("should return 'Tomorrow' if the date is tomorrow", function () {
-      expect(humanDateAndTime("2022-12-25T12:00:00.000Z")).toBe("Tomorrow 7:00 AM");
+      expect(humanDateAndTime("2022-12-25T12:00:00.000Z")).toBe("Tomorrow 7:00 AM EST");
     });
 
     it("should return the time if the date is today", function () {
-      expect(humanDateAndTime("2022-12-24T12:00:00.000Z")).toBe("7:00 AM");
+      expect(humanDateAndTime("2022-12-24T12:00:00.000Z")).toBe("7:00 AM EST");
     });
 
     it("should return 'Yesterday' if the date is yesterday", function () {
-      expect(humanDateAndTime("2022-12-23T12:00:00.000Z")).toBe("Yesterday 7:00 AM");
+      expect(humanDateAndTime("2022-12-23T12:00:00.000Z")).toBe("Yesterday 7:00 AM EST");
     });
 
     it("should return the day of the week if the date is within the last week", function () {
-      expect(humanDateAndTime("2022-12-18T12:00:00.000Z")).toBe("Sunday 7:00 AM");
+      expect(humanDateAndTime("2022-12-18T12:00:00.000Z")).toBe("Sunday 7:00 AM EST");
     });
 
     it("should return the month and day if the date is within the current year", function () {
-      expect(humanDateAndTime("2022-06-19T12:00:00.000Z")).toBe("Jun 19 8:00 AM");
+      expect(humanDateAndTime("2022-06-19T12:00:00.000Z")).toBe("Jun 19 8:00 AM EDT");
     });
 
     it("should return the month, day, and year if the date is not within the current year", function () {
-      expect(humanDateAndTime("2023-12-25T12:00:00.000Z")).toBe("Dec 25, 2023 7:00 AM");
+      expect(humanDateAndTime("2023-12-25T12:00:00.000Z")).toBe("Dec 25, 2023 7:00 AM EST");
     });
 
     it("should use the timezone properly around the day boundary", function () {
       // Today is 2022-12-24T05:00:00.000 to 2022-12-25T04:59:59.999
       expect(humanDateAndTime("2022-12-24T04:00:00.000Z", {timezone: "America/New_York"})).toBe(
-        "Yesterday 11:00 PM"
+        "Yesterday 11:00 PM EST"
       );
       expect(humanDateAndTime("2022-12-24T05:00:00.000Z", {timezone: "America/New_York"})).toBe(
-        "12:00 AM"
+        "12:00 AM EST"
       );
       expect(humanDateAndTime("2022-12-25T04:00:00.000Z", {timezone: "America/New_York"})).toBe(
-        "11:00 PM"
+        "11:00 PM EST"
       );
       expect(humanDateAndTime("2022-12-25T05:00:00.000Z", {timezone: "America/New_York"})).toBe(
-        "Tomorrow 12:00 AM"
+        "Tomorrow 12:00 AM EST"
       );
 
       // Switch to Chicago
       expect(humanDateAndTime("2022-12-24T04:00:00.000Z", {timezone: "America/Chicago"})).toBe(
-        "Yesterday 10:00 PM"
+        "Yesterday 10:00 PM CST"
       );
       // Still yesterday in Chicago
       expect(humanDateAndTime("2022-12-24T05:00:00.000Z", {timezone: "America/Chicago"})).toBe(
-        "Yesterday 11:00 PM"
+        "Yesterday 11:00 PM CST"
       );
       expect(humanDateAndTime("2022-12-24T06:00:00.000Z", {timezone: "America/Chicago"})).toBe(
-        "12:00 AM"
+        "12:00 AM CST"
       );
 
       // 5/6am UTC is 11/12pm in Chicago
       expect(humanDateAndTime("2022-12-25T05:00:00.000Z", {timezone: "America/Chicago"})).toBe(
-        "11:00 PM"
+        "11:00 PM CST"
       );
       expect(humanDateAndTime("2022-12-25T06:00:00.000Z", {timezone: "America/Chicago"})).toBe(
-        "Tomorrow 12:00 AM"
+        "Tomorrow 12:00 AM CST"
       );
     });
 
@@ -224,7 +226,7 @@ describe("DateUtilities", function () {
 
   describe("printDate", function () {
     it("should throw an error if date is undefined", function () {
-      expect(() => printDate(undefined as any)).toThrow("printDate: Passed undefined");
+      expect(printDate(undefined as any)).toBe("Invalid Date");
     });
 
     it("should throw an error if date is invalid", function () {
@@ -278,9 +280,9 @@ describe("DateUtilities", function () {
   });
 
   describe("printDateTime", function () {
-    it("should throw an error if date is undefined", function () {
-      expect(() => printDateAndTime(undefined as any)).toThrow(
-        "printDateAndTime: Passed undefined"
+    it("should return invalid date if date is undefined", function () {
+      expect(printDateAndTime(undefined as any, {timezone: "America/New_York"})).toBe(
+        "Invalid Datetime"
       );
     });
 
@@ -330,10 +332,8 @@ describe("DateUtilities", function () {
   });
 
   describe("printTime", function () {
-    it("should throw an error if date is undefined", function () {
-      expect(() => printTime(undefined as any, {timezone: "America/New_York"})).toThrow(
-        "printTime: Passed undefined"
-      );
+    it("should return invalid date if date is undefined", function () {
+      expect(printTime(undefined as any, {timezone: "America/New_York"})).toBe("Invalid Date");
     });
 
     it("should throw an error if date is invalid", function () {
