@@ -1,10 +1,10 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "[typescript]": {
     "editor.codeActionsOnSave": {
-      "editor.organizeImports": true
+      "editor.organizeImports": "explicit"
     }
   }
 }
