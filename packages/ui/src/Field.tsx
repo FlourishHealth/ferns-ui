@@ -37,6 +37,7 @@ export const Field = ({
   googleMapsApiKey,
   googlePlacesMobileStyles,
   testID,
+  transformValue,
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
@@ -146,12 +147,18 @@ export const Field = ({
         />
       );
     } else if (type && ["date", "time", "datetime"].includes(type)) {
+      // const calendar = getCalendars()[0];
+      // const localTimeZone = calendar?.timeZone ?? "America/New_York";
+      //
+
+      // console.log("FIELD FORMAT", formattedValue, value);
       return (
         <TextField
           disabled={disabled}
           id={name}
           placeholder={placeholder}
           testID={testID}
+          transformValue={transformValue}
           type={type as "date" | "time" | "datetime"}
           value={value}
           onBlur={(result) => {

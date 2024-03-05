@@ -1,12 +1,15 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "outDir": "dist/",
     "sourceMap": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDirs": ["unifier"],
     "baseUrl": "unifier",
     "allowJs": true,
     "skipLibCheck": true,
@@ -26,5 +29,7 @@
     "downlevelIteration": true,
     "ignoreDeprecations": "5.0"
   },
-  "include": ["src"],
+  "include": [
+    "src"
+  ]
 }

@@ -44,7 +44,7 @@ jobs:
       - name: yarn build
         run: yarn build
         working-directory: 'packages/ui'
-#      - name: yarn test
-#        run: yarn test
-#        env:
-#          CI: true
+      - name: yarn test
+        run: yarn test
+        env:
+          CI: true
