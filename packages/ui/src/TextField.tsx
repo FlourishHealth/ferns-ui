@@ -321,6 +321,8 @@ export const TextField = ({
                 } else if (type === "number") {
                   text = text.replace(/[^0-9]/g, "");
                   onChange({value: !isNaN(parseInt(text)) ? parseInt(text).toString() : ""});
+                } else if (type === "date" || type === "datetime" || type === "time") {
+                  // Do nothing, this is handled by the date time action sheet
                 } else {
                   onChange({value: text});
                 }

@@ -351,7 +351,7 @@ export const DateTimeActionSheet = ({
         .setZone("UTC")
         .set({hour: 0, minute: 0, second: 0, millisecond: 0})
         .toISO();
-      if (!v) {
+      if (!v || !DateTime.fromISO(v).isValid) {
         throw new Error(`Invalid date: ${date}`);
       }
       onChange({value: v});
@@ -362,7 +362,7 @@ export const DateTimeActionSheet = ({
         .setZone(timezone)
         .setZone("UTC")
         .toISO();
-      if (!v) {
+      if (!v || !DateTime.fromISO(v).isValid) {
         throw new Error(`Invalid date: ${date}`);
       }
       onChange({value: v});
@@ -376,7 +376,7 @@ export const DateTimeActionSheet = ({
         // We always send back in UTC
         .setZone("UTC")
         .toISO();
-      if (!v) {
+      if (!v || !DateTime.fromISO(v).isValid) {
         throw new Error(`Invalid date: ${date}`);
       }
       onChange({value: v});
@@ -394,8 +394,19 @@ export const DateTimeActionSheet = ({
   // Renders our custom calendar component on mobile or web.
   const renderDateCalendar = () => {
     const markedDates: {[id: string]: {selected: boolean; selectedColor: string}} = {};
+
+    // Check if the date is T00:00:00.000Z (it should be), otherwise treat it as a date in the
+    // current timezone.
+    const dt = DateTime.fromISO(date).setZone("UTC");
+    let dateString;
+    if (dt.hour === 0 && dt.minute === 0 && dt.second === 0) {
+      dateString = dt.toFormat("yyyy-MM-dd");
+    } else {
+      dateString = dt.setZone().toFormat("yyyy-MM-dd");
+    }
+
     if (date) {
-      markedDates[DateTime.fromISO(date).toFormat("YYYY-MM-DD")] = {
+      markedDates[dateString] = {
         selected: true,
         selectedColor: theme.primary,
       };
@@ -405,7 +416,7 @@ export const DateTimeActionSheet = ({
         <Box marginBottom={4} width="100%">
           <Calendar
             customHeader={CalendarHeader}
-            initialDate={DateTime.fromISO(date).toFormat("yyyy-MM-dd")}
+            initialDate={dateString}
             markedDates={markedDates}
             onDayPress={(day) => {
               setDate(day.dateString);
