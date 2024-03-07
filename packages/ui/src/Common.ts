@@ -2628,7 +2628,6 @@ export interface BodyProps {
 
 export interface ButtonProps {
   alignSelf?: FlexStyle["alignSelf"];
-  children?: React.ReactElement;
   text: string;
   // TODO make this work for all colors
   color?: ButtonColor | Color;

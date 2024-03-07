@@ -38,7 +38,6 @@ export const Button = ({
   disabled = false,
   type = "solid",
   loading: propsLoading,
-  children,
   text,
   inline = false,
   icon,
@@ -161,7 +160,6 @@ export const Button = ({
               />
             </Box>
           )}
-          {Boolean(children) && children}
           {Boolean(text) && (
             <Text
               align="center"
