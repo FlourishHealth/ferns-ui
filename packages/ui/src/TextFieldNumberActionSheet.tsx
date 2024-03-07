@@ -5,7 +5,6 @@ import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
 import {NumberPickerActionSheetProps, TextFieldPickerActionSheetProps} from "./Common";
-import dayjs from "./dayjsExtended";
 
 interface NumberPickerActionSheetState {}
 
@@ -39,7 +38,7 @@ export class NumberPickerActionSheet extends React.Component<
             is24Hour
             mode={this.props.mode}
             testID="dateTimePicker"
-            value={dayjs(this.props.value).toDate()}
+            value={this.props.value ? new Date(this.props.value) : new Date()}
             onChange={(event: any, date?: Date) => {
               if (!date) {
                 return;

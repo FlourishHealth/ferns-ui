@@ -1,18 +1,20 @@
 import {Picker} from "@react-native-picker/picker";
+import {getCalendars} from "expo-localization";
 import range from "lodash/range";
+import {DateTime} from "luxon";
 import React, {useContext, useEffect, useState} from "react";
 import {Platform, StyleProp, TextInput, TextStyle, View} from "react-native";
 import {Calendar} from "react-native-calendars";
 
 import {Box} from "./Box";
 import {DateTimeActionSheetProps} from "./Common";
-import dayjs from "./dayjsExtended";
 import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
 import {SelectList} from "./SelectList";
 import {ThemeContext} from "./Theme";
+import {TimezonePicker} from "./TimezonePicker";
 
 const TIME_PICKER_HEIGHT = 104;
 const INPUT_HEIGHT = 40;
@@ -107,7 +109,7 @@ const CalendarHeader = ({
   addMonth: (num: number) => void;
   month: Date[];
 }): React.ReactElement => {
-  const displayDate = dayjs(month[0]).format("MMM YYYY");
+  const displayDate = DateTime.fromJSDate(month[0]).toFormat("MMM yyyy");
   return (
     <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
       <IconButton
@@ -156,11 +158,13 @@ const CalendarHeader = ({
 };
 
 // For mobile, renders all components in an action sheet. For web, renders all components in a
-// modal. For mobile: If mode is "time", renders a spinner picker for time picker on both platforms.
-// If mode is "date", renders our custom calendar on both platforms. If mode is "datetime",
-// renders a spinner picker for time picker and our custom calendar on both platforms. For web,
-// renders a simplistic text box for time picker and a calendar for date picker in a modal In the
-// future, web time picker should be a typeahead dropdown like Google calendar.
+// modal. For mobile:
+// If mode is "time", renders a spinner picker for time picker on both platforms.
+// If mode is "date", renders our custom calendar on both platforms.
+// If mode is "datetime",renders a spinner picker for time picker and our custom calendar on both
+// platforms.
+// For web, renders a simplistic text box for time picker and a calendar for date picker
+// in a modal In the future, web time picker should be a typeahead dropdown like Google calendar.
 export const DateTimeActionSheet = ({
   // actionSheetRef,
   mode,
@@ -168,103 +172,121 @@ export const DateTimeActionSheet = ({
   onChange,
   visible,
   onDismiss,
+  transformValue,
 }: DateTimeActionSheetProps) => {
   const {theme} = useContext(ThemeContext);
 
+  const calendar = getCalendars()[0];
+  const originalTimezone = transformValue?.options?.timezone || calendar?.timeZone;
+  const [timezone, setTimezone] = useState<string | undefined>(originalTimezone);
+  if (!timezone) {
+    console.error(
+      "Could not automatically determine timezone and none was provided to DateTimeActionSheet."
+    );
+  }
+
+  if (typeof value !== "string" && typeof value !== "undefined") {
+    console.error(`Datetime only accepts string or undefined value, not ${typeof value}: ${value}`);
+  }
+
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for mode=time
-  let m;
-  if (value) {
-    m = dayjs(value, ["YYYY", "YYYY-MM-DD", "HH:mm", "hh:mm A"]);
-  } else {
-    m = dayjs();
-  }
 
-  if (!m.isValid()) {
-    throw new Error(`Invalid date/time value ${value}`);
-  }
-
-  let hr = dayjs(m).hour() % 12;
-  if (hr === 0) {
-    hr = 12;
-  }
-
-  const [hour, setHour] = useState<number>(hr);
-  const [minute, setMinute] = useState<number>(dayjs(m).minute());
-  const [amPm, setAmPm] = useState<"am" | "pm">(dayjs(m).format("a") === "am" ? "am" : "pm");
-  const [date, setDate] = useState<string>(dayjs(m).toISOString());
+  const [hour, setHour] = useState<number>(0);
+  const [minute, setMinute] = useState<number>(0);
+  const [amPm, setAmPm] = useState<"am" | "pm">("am");
+  const [date, setDate] = useState<string>("");
 
   // If the value changes in the props, update the state for the date and time.
   useEffect(() => {
     let datetime;
     if (value) {
-      datetime = dayjs(value, ["YYYY", "YYYY-MM-DD", "HH:mm", "hh:mm A"]);
+      datetime = DateTime.fromISO(value).setZone(timezone).set({millisecond: 0, second: 0});
     } else {
-      datetime = dayjs();
+      datetime = DateTime.now().setZone(timezone).set({millisecond: 0, second: 0});
     }
-    let h = dayjs(datetime).hour() % 12;
+    if (!datetime.isValid) {
+      throw new Error(
+        `Invalid date/time value ${value}, datetime ${datetime} timezone: ${timezone}`
+      );
+    }
+
+    let h = datetime.hour % 12;
     if (h === 0) {
       h = 12;
     }
     setHour(h);
-    setMinute(dayjs(datetime).minute());
-    setAmPm(dayjs(datetime).format("a") === "am" ? "am" : "pm");
-    setDate(dayjs(datetime).toISOString());
-  }, [value]);
+    setMinute(datetime.minute);
+    setAmPm(datetime.toFormat("a") === "am" ? "am" : "pm");
+    setDate(datetime.toISO());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, transformValue, transformValue?.options?.timezone]);
 
   // TODO Support 24 hour time for time picker.
   const renderMobileTime = () => {
     return (
-      <Box direction="row" width="100%">
-        <Box paddingY={2} width="35%">
-          <Picker
-            itemStyle={{
-              height: TIME_PICKER_HEIGHT,
-            }}
-            selectedValue={hour}
-            style={{
-              height: TIME_PICKER_HEIGHT,
-              backgroundColor: "#FFFFFF",
-            }}
-            onValueChange={(itemValue) => setHour(itemValue)}
-          >
-            {hours.map((n) => (
-              <Picker.Item key={String(n)} label={String(n)} value={String(n)} />
-            ))}
-          </Picker>
+      <Box>
+        <Box direction="row" width="100%">
+          <Box paddingY={2} width="35%">
+            <Picker
+              itemStyle={{
+                height: TIME_PICKER_HEIGHT,
+              }}
+              selectedValue={hour}
+              style={{
+                height: TIME_PICKER_HEIGHT,
+                backgroundColor: "#FFFFFF",
+              }}
+              onValueChange={(itemValue) => setHour(itemValue)}
+            >
+              {hours.map((n) => (
+                <Picker.Item key={String(n)} label={String(n)} value={String(n)} />
+              ))}
+            </Picker>
+          </Box>
+          <Box paddingY={2} width="35%">
+            <Picker
+              itemStyle={{
+                height: TIME_PICKER_HEIGHT,
+              }}
+              selectedValue={minute}
+              style={{
+                height: TIME_PICKER_HEIGHT,
+                backgroundColor: "#FFFFFF",
+              }}
+              onValueChange={(itemValue) => setMinute(itemValue)}
+            >
+              {minutes.map((n) => (
+                <Picker.Item key={String(n)} label={String(n)} value={String(n)} />
+              ))}
+            </Picker>
+          </Box>
+          <Box paddingY={2} width="30%">
+            <Picker
+              itemStyle={{
+                height: TIME_PICKER_HEIGHT,
+              }}
+              selectedValue={amPm}
+              style={{
+                height: TIME_PICKER_HEIGHT,
+                backgroundColor: "#FFFFFF",
+              }}
+              onValueChange={(itemValue) => setAmPm(itemValue)}
+            >
+              <Picker.Item key="am" label="am" value="am" />
+              <Picker.Item key="pm" label="pm" value="pm" />
+            </Picker>
+          </Box>
         </Box>
-        <Box paddingY={2} width="35%">
-          <Picker
-            itemStyle={{
-              height: TIME_PICKER_HEIGHT,
-            }}
-            selectedValue={minute}
-            style={{
-              height: TIME_PICKER_HEIGHT,
-              backgroundColor: "#FFFFFF",
-            }}
-            onValueChange={(itemValue) => setMinute(itemValue)}
-          >
-            {minutes.map((n) => (
-              <Picker.Item key={String(n)} label={String(n)} value={String(n)} />
-            ))}
-          </Picker>
-        </Box>
-        <Box paddingY={2} width="30%">
-          <Picker
-            itemStyle={{
-              height: TIME_PICKER_HEIGHT,
-            }}
-            selectedValue={amPm}
-            style={{
-              height: TIME_PICKER_HEIGHT,
-              backgroundColor: "#FFFFFF",
-            }}
-            onValueChange={(itemValue) => setAmPm(itemValue)}
-          >
-            <Picker.Item key="am" label="am" value="am" />
-            <Picker.Item key="pm" label="pm" value="pm" />
-          </Picker>
-        </Box>
+        {Boolean(mode === "time" || mode === "datetime") && (
+          <Box paddingY={2}>
+            <TimezonePicker
+              showLabel={false}
+              timezone={timezone}
+              width="100%"
+              onChange={setTimezone}
+            />
+          </Box>
+        )}
       </Box>
     );
   };
@@ -289,7 +311,7 @@ export const DateTimeActionSheet = ({
           <TimeInput type="minute" value={minute} onChange={(v) => setMinute(v)} />
         </Box>
 
-        <Box width={60}>
+        <Box marginRight={2} width={60}>
           <SelectList
             options={[
               {label: "am", value: "am"},
@@ -302,6 +324,11 @@ export const DateTimeActionSheet = ({
             }}
           />
         </Box>
+        {Boolean(mode === "time" || mode === "datetime") && (
+          <Box>
+            <TimezonePicker showLabel={false} timezone={timezone} onChange={setTimezone} />
+          </Box>
+        )}
       </Box>
     );
   };
@@ -317,17 +344,42 @@ export const DateTimeActionSheet = ({
 
   // Note: do not call this if waiting on a state change.
   const sendOnChange = () => {
-    const hourChange = amPm === "pm" && hour !== 12 ? Number(hour) + 12 : Number(hour);
+    const militaryHour = amPm === "pm" && hour !== 12 ? Number(hour) + 12 : Number(hour);
+
     if (mode === "date") {
-      onChange({value: date});
+      const v = DateTime.fromISO(date)
+        .setZone("UTC")
+        .set({hour: 0, minute: 0, second: 0, millisecond: 0})
+        .toISO();
+      if (!v || !DateTime.fromISO(v).isValid) {
+        throw new Error(`Invalid date: ${date}`);
+      }
+      onChange({value: v});
     } else if (mode === "time") {
-      onChange({
-        value: dayjs().hour(hourChange).minute(Number(minute)).toISOString(),
-      });
+      const v = DateTime.fromISO(date)
+        .setZone(timezone)
+        .set({hour: militaryHour, minute, second: 0, millisecond: 0})
+        .setZone(timezone)
+        .setZone("UTC")
+        .toISO();
+      if (!v || !DateTime.fromISO(v).isValid) {
+        throw new Error(`Invalid date: ${date}`);
+      }
+      onChange({value: v});
     } else if (mode === "datetime") {
-      onChange({
-        value: dayjs(date).hour(hourChange).minute(Number(minute)).toISOString(),
-      });
+      const v = DateTime.fromISO(date)
+        .setZone(timezone)
+        // Take from the original zone
+        // Set the value on the screen
+        .set({hour: militaryHour, minute, second: 0, millisecond: 0})
+        // Put that in the  new timezone on the screen
+        // We always send back in UTC
+        .setZone("UTC")
+        .toISO();
+      if (!v || !DateTime.fromISO(v).isValid) {
+        throw new Error(`Invalid date: ${date}`);
+      }
+      onChange({value: v});
     }
     onDismiss();
   };
@@ -342,47 +394,54 @@ export const DateTimeActionSheet = ({
   // Renders our custom calendar component on mobile or web.
   const renderDateCalendar = () => {
     const markedDates: {[id: string]: {selected: boolean; selectedColor: string}} = {};
+
+    // Check if the date is T00:00:00.000Z (it should be), otherwise treat it as a date in the
+    // current timezone.
+    const dt = DateTime.fromISO(date).setZone("UTC");
+    let dateString;
+    if (dt.hour === 0 && dt.minute === 0 && dt.second === 0) {
+      dateString = dt.toFormat("yyyy-MM-dd");
+    } else {
+      dateString = dt.setZone().toFormat("yyyy-MM-dd");
+    }
+
     if (date) {
-      markedDates[dayjs(date).format("YYYY-MM-DD")] = {
+      markedDates[dateString] = {
         selected: true,
         selectedColor: theme.primary,
       };
     }
     return (
-      <Calendar
-        customHeader={CalendarHeader}
-        initialDate={dayjs(date).format("YYYY-MM-DD")}
-        markedDates={markedDates}
-        onDayPress={(day) => {
-          setDate(day.dateString);
-          // If mode is just date, we can shortcut and close right away.
-          // time and datetime need to wait for the primary button.
-          if (mode === "date") {
-            onChange({value: day.dateString});
-            onDismiss();
-          }
-        }}
-      />
+      <Box width="100%">
+        <Box marginBottom={4} width="100%">
+          <Calendar
+            customHeader={CalendarHeader}
+            initialDate={dateString}
+            markedDates={markedDates}
+            onDayPress={(day) => {
+              setDate(day.dateString);
+              // If mode is just date, we can shortcut and close right away.
+              // time and datetime need to wait for the primary button.
+              if (mode === "date") {
+                onChange({value: day.dateString});
+                onDismiss();
+              }
+            }}
+          />
+        </Box>
+      </Box>
     );
   };
 
   const renderContent = (): React.ReactElement => {
-    if (isMobileDevice()) {
-      if (mode === "date") {
-        return renderDateCalendar();
-      } else if (mode === "time") {
-        return renderMobileTime();
-      } else {
-        return renderDateTime();
-      }
+    if (mode === "date") {
+      return renderDateCalendar();
+    } else if (mode === "time" && isMobileDevice()) {
+      return renderMobileTime();
+    } else if (mode === "time" && !isMobileDevice()) {
+      return renderWebTime();
     } else {
-      if (mode === "date") {
-        return renderDateCalendar();
-      } else if (mode === "time") {
-        return renderWebTime();
-      } else {
-        return renderDateTime();
-      }
+      return renderDateTime();
     }
   };
 

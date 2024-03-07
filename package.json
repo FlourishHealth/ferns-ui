@@ -13,7 +13,8 @@
     "lintfix": "yarn --cwd packages/ui-demo lintfix && yarn --cwd packages/ui lintfix",
     "build": "yarn --cwd packages/ui build",
     "preview": "yarn build && yarn --cwd packages/ui-demo build-web",
-    "clean": "rm -rf node_modules && rm -rf packages/ui/node_modules && rm -rf packages/ui-demo/node_modules && yarn"
+    "clean": "rm -rf node_modules && rm -rf packages/ui/node_modules && rm -rf packages/ui-demo/node_modules && yarn",
+    "test": "yarn --cwd packages/ui test"
   },
   "workspaces": {
     "packages": [

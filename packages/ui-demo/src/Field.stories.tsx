@@ -1,6 +1,8 @@
 /* eslint-disable react/display-name */
-import dayjs from "dayjs";
 import {Box, Field, Heading, TapToEdit, Text} from "ferns-ui";
+import {printDateAndTime} from "ferns-ui/dist/DateUtilities";
+import {TimezonePicker} from "ferns-ui/dist/TimezonePicker";
+import {DateTime} from "luxon";
 import React, {useState} from "react";
 import {Image} from "react-native";
 
@@ -221,49 +223,52 @@ const PhoneNumberField = () => {
   );
 };
 
-const DateField = () => {
-  const [value, setValue] = useState(new Date());
+const DateTimeField = () => {
+  const [dateValue, setDateValue] = useState<string>(DateTime.now().toISO());
+  const [timeValue, setTimeValue] = useState(
+    DateTime.now().set({hour: 12, minute: 0, second: 0}).toISO()
+  );
+  const [value, setValue] = useState<string>(DateTime.now().toISO());
+  const [timezone, setTimezone] = useState<string | undefined>("America/New_York");
   return (
     <StorybookContainer>
+      <TimezonePicker showLabel timezone={timezone} onChange={(tz) => setTimezone(tz)} />
+      <Field
+        helperText="Here's some help text"
+        label="Date Time Field"
+        name="text"
+        transformValue={{
+          options: {timezone},
+        }}
+        type="datetime"
+        value={value}
+        onChange={(v: string) => {
+          setValue(v);
+        }}
+      />
+      <Field
+        disabled
+        label="Time in local timezone"
+        type="text"
+        value={printDateAndTime(value, {showTimezone: true})}
+      />
+
       <Field
         helperText="Here's some help text"
         label="Date Field"
         name="text"
         type="date"
-        value={value}
-        onChange={setValue}
+        value={dateValue}
+        onChange={setDateValue}
       />
-    </StorybookContainer>
-  );
-};
 
-const DateTimeField = () => {
-  const [value, setValue] = useState(new Date());
-  return (
-    <StorybookContainer>
-      <Field
-        helperText="Here's some help text"
-        label="Date Time Field"
-        name="text"
-        type="datetime"
-        value={value}
-        onChange={setValue}
-      />
-    </StorybookContainer>
-  );
-};
-
-const TimeField = () => {
-  const [value, setValue] = useState(dayjs().hour(12).minute(0).toISOString());
-  return (
-    <StorybookContainer>
       <Field
         helperText="Here's some help text"
         label="Time Field"
         name="text"
         type="time"
-        value={value}
-        onChange={setValue}
+        value={timeValue}
+        onChange={setTimeValue}
       />
     </StorybookContainer>
   );
@@ -276,7 +281,7 @@ const MultiselectField = () => {
       <Box width={300}>
         <Field
           helperText="Here's some help text"
-          label="Date Field"
+          label="Multiselect Field"
           name="text"
           options={[
             {label: "Option1", value: "Option1"},
@@ -504,13 +509,7 @@ export const FieldStories = {
     "URL Field": function () {
       return <URLField />;
     },
-    "Date Field": function () {
-      return <DateField />;
-    },
-    "Time Field": function () {
-      return <TimeField />;
-    },
-    "Date Time Field": function () {
+    "Date And Time Fields": function () {
       return <DateTimeField />;
     },
     "Multiselect Field": function () {

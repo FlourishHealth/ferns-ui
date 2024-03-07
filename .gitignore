@@ -1,3 +1,5 @@
 node_modules/
 .idea/
 *.log
+packages/ui/.expo
+packages/ui-demo/.expo

@@ -37,6 +37,7 @@ export const Field = ({
   googleMapsApiKey,
   googlePlacesMobileStyles,
   testID,
+  transformValue,
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
@@ -152,6 +153,7 @@ export const Field = ({
           id={name}
           placeholder={placeholder}
           testID={testID}
+          transformValue={transformValue}
           type={type as "date" | "time" | "datetime"}
           value={value}
           onBlur={(result) => {
