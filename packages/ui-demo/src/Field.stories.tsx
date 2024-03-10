@@ -149,7 +149,7 @@ const PercentField = () => {
 };
 
 const SelectField = () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string | undefined>();
   return (
     <StorybookContainer>
       <Field

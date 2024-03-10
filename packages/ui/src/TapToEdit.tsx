@@ -6,7 +6,6 @@ import {Button} from "./Button";
 import {TapToEditProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
-// import {useOpenAPISpec} from "./OpenAPIContext";
 import {Text} from "./Text";
 import {Tooltip} from "./Tooltip";
 
@@ -59,6 +58,7 @@ export const TapToEdit = ({
   rowBoxProps,
   transform,
   fieldComponent,
+  type,
   withConfirmation = false,
   confirmationText = "Are you sure you want to save your changes?",
   confirmationHeading = "Confirm",
@@ -90,10 +90,11 @@ export const TapToEdit = ({
           <Field
             helperText={description}
             label={title}
+            options={type === "select" ? fieldProps.options : undefined}
             placeholder={placeholder}
+            type={type as any}
             value={value}
             onChange={setValue}
-            {...fieldProps}
           />
         )}
         {editing && !isEditing && (
@@ -138,13 +139,13 @@ export const TapToEdit = ({
       displayValue = transform(value);
     } else {
       // If no transform, try and display the value reasonably.
-      if (fieldProps?.type === "boolean") {
+      if (type === "boolean") {
         displayValue = value ? "Yes" : "No";
-      } else if (fieldProps?.type === "percent") {
+      } else if (type === "percent") {
         // Prevent floating point errors from showing up by using parseFloat and precision.
         // Pass through parseFloat again to trim off insignificant zeroes.
         displayValue = `${parseFloat(parseFloat(String(value * 100)).toPrecision(7))}%`;
-      } else if (fieldProps?.type === "currency") {
+      } else if (type === "currency") {
         // TODO: support currencies other than USD in Field and related components.
         const formatter = new Intl.NumberFormat("en-US", {
           style: "currency",
@@ -152,10 +153,10 @@ export const TapToEdit = ({
           minimumFractionDigits: 2, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
         });
         displayValue = formatter.format(value);
-      } else if (fieldProps?.type === "multiselect") {
+      } else if (type === "multiselect") {
         // ???
         displayValue = value.join(", ");
-      } else if (fieldProps?.type === "url") {
+      } else if (type === "url") {
         // Show only the domain, full links are likely too long.
         try {
           const url = new URL(value);
@@ -167,15 +168,15 @@ export const TapToEdit = ({
           }
           displayValue = value;
         }
-      } else if (fieldProps?.type === "address") {
+      } else if (type === "address") {
         displayValue = formatAddress(value);
       }
     }
 
     const openLink = async (): Promise<void> => {
-      if (fieldProps?.type === "url") {
+      if (type === "url") {
         await Linking.openURL(value);
-      } else if (fieldProps?.type === "address") {
+      } else if (type === "address") {
         await Linking.openURL(
           `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
             formatAddress(value, true)
@@ -183,7 +184,7 @@ export const TapToEdit = ({
         );
       }
     };
-    const isClickable = fieldProps?.type === "url" || fieldProps?.type === "address";
+    const isClickable = type === "url" || type === "address";
 
     const renderTitleDescription = (): React.ReactElement => {
       return (

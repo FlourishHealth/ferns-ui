@@ -2708,7 +2708,7 @@ export interface ErrorPageProps {
   resetError: () => void;
 }
 
-export interface FieldProps extends FieldWithLabelsProps {
+export interface BaseFieldProps extends FieldWithLabelsProps {
   name?: string;
   label?: string;
   height?: number;
@@ -2717,8 +2717,6 @@ export interface FieldProps extends FieldWithLabelsProps {
     | "boolean"
     | "currency"
     | "customSelect"
-    | "date"
-    | "datetime"
     | "email"
     | "multiselect"
     | "number"
@@ -2729,7 +2727,6 @@ export interface FieldProps extends FieldWithLabelsProps {
     | "signature"
     | "text"
     | "textarea"
-    | "time"
     | "url";
   rows?: number;
   value?: any;
@@ -2746,6 +2743,15 @@ export interface FieldProps extends FieldWithLabelsProps {
   googlePlacesMobileStyles?: Styles;
   transformValue?: TransformValueOptions;
 }
+
+// TODO: omit a lot of base's props for DateFieldProps
+export interface DateFieldProps extends Omit<BaseFieldProps, "type" | "value" | "onChange"> {
+  type: "date" | "datetime" | "time";
+  value?: string;
+  onChange: (value?: string) => void;
+}
+
+export type FieldProps = BaseFieldProps | DateFieldProps;
 
 export interface FormLineProps {
   name: string;
