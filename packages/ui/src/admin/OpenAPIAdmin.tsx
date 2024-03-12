@@ -6,12 +6,12 @@ import React from "react";
 
 import {Box} from "../Box";
 import {Button} from "../Button";
-import {OpenAPIAdminProps} from "../Common";
+import {OpenAPIAdminNavigate, OpenAPIAdminProps, OpenApiSpec} from "../Common";
 import {useOpenAPISpec} from "../OpenAPIContext";
 import {Text} from "../Text";
-import {OpenApiSpec} from "./AdminUtils";
 import {InstanceAdmin} from "./InstanceAdmin";
 import {ModelAdmin} from "./ModelAdmin";
+import {OpenAPIAdminProvider, useOpenAPIAdminData} from "./OpenAPIAdminContext";
 
 export const getModels = (openApiSpec: OpenApiSpec): string[] => {
   return Object.keys(openApiSpec.paths ?? {})
@@ -19,34 +19,57 @@ export const getModels = (openApiSpec: OpenApiSpec): string[] => {
     .map((path: string) => startCase(path.replace(/\//g, "")));
 };
 
-export const OpenAPIAdmin = ({
-  navigate,
+export const OpenAPIAdminInternal = ({
   model,
-  modelOverrides,
-  modelFieldsOverride,
-  instanceOverrides,
   id,
-  page,
-  sort,
-  sdk,
-}: OpenAPIAdminProps): React.ReactElement => {
+  navigate,
+}: {
+  model?: string;
+  id?: string;
+  navigate: OpenAPIAdminNavigate;
+}): React.ReactElement | null => {
   const openApiSpec = useOpenAPISpec();
+  const {getSdkHook} = useOpenAPIAdminData();
 
-  const getSdkHooks = (): any => {
-    const modelPath = startCase(model).replace(/\s/g, "");
-    return {
-      list: sdk.endpoints[`get${modelPath}`],
-      read: sdk.endpoints[`get${modelPath}ById`],
-      create: sdk.endpoints[`post${modelPath}`],
-      update: sdk.endpoints[`patch${modelPath}ById`],
-      remove: sdk.endpoints[`delete${modelPath}ById`],
-    };
-  };
+  if (model && id) {
+    const create = getSdkHook(model, "create");
+    const read = getSdkHook(model, "read");
+    const remove = getSdkHook(model, "remove");
+    const update = getSdkHook(model, "update");
 
-  const renderAllModels = (): React.ReactElement => {
-    const models = getModels(openApiSpec.spec);
+    if (!create && !read && !remove && !update) {
+      console.error("No hooks found for model", model);
+      return null;
+    }
+
     return (
-      <Box padding={6} width={300}>
+      <Box height="100%" width="100%">
+        <InstanceAdmin
+          id={id}
+          model={model}
+          navigate={navigate}
+          useCreate={create}
+          useRead={read}
+          useRemove={remove}
+          useUpdate={update}
+        />
+      </Box>
+    );
+  } else if (model) {
+    const list = getSdkHook(model, "list").useQuery;
+    if (!list) {
+      return <Text>Model not found or missing list SDK</Text>;
+    }
+    return (
+      <Box direction="column" flex="grow" height="100%" width="100%">
+        <ModelAdmin model={model} navigate={navigate} useList={list} />
+      </Box>
+    );
+  } else {
+    const models = getModels(openApiSpec.spec);
+    // TODO: check that the model has a list function, or we can't render it.
+    return (
+      <Box height="100%" padding={6} width={300}>
         {models.map((m: string) => (
           <Box key={m} marginBottom={2}>
             <Button
@@ -60,58 +83,44 @@ export const OpenAPIAdmin = ({
         ))}
       </Box>
     );
-  };
+  }
+};
 
-  const renderModel = (): React.ReactElement | null => {
-    if (!model) {
-      return null;
-    }
-
-    const hooks = getSdkHooks();
-    const modelName = startCase(model).replace(/\s/g, "");
-    // console.log("MODEL", model, modelName);
-    if (!hooks) {
-      return <Text>Model not found</Text>;
-    }
-    return (
-      <Box direction="column" flex="grow" width="100%">
-        <ModelAdmin
-          fieldsOverride={modelFieldsOverride?.[model!]}
-          model={model}
-          navigate={navigate}
-          overrides={modelOverrides?.[modelName]}
-          page={page}
-          sort={sort}
-          useList={hooks.list.useQuery}
-        />
-      </Box>
-    );
-  };
-
-  const renderModelInstance = (): React.ReactElement | null => {
-    const hooks = getSdkHooks();
-
-    if (!Object.keys(hooks).length) {
-      return null;
-    }
-
-    return (
-      <InstanceAdmin
-        id={id}
-        model={model!}
-        navigate={navigate}
-        overrides={instanceOverrides?.[model!] ?? {}}
-        useCreate={hooks.create}
-        useRead={hooks.read}
-        useRemove={hooks.remove}
-        useUpdate={hooks.update}
-      />
-    );
-  };
-
+export const OpenAPIAdmin = ({
+  sdk,
+  navigate,
+  model,
+  id,
+  page,
+  setPage,
+  sort,
+  filters,
+  setFilters,
+  setSearch,
+  setSort,
+  search,
+  modelOverrides,
+  modelFieldsOverride,
+  instanceOverrides,
+}: OpenAPIAdminProps): React.ReactElement | null => {
   return (
     <Box height="100%" width="100%">
-      {model ? (id ? renderModelInstance() : renderModel()) : renderAllModels()}
+      <OpenAPIAdminProvider
+        filters={filters}
+        instanceOverrides={instanceOverrides}
+        modelFieldsOverride={modelFieldsOverride}
+        modelOverrides={modelOverrides}
+        page={page}
+        sdk={sdk}
+        search={search}
+        setFilters={setFilters}
+        setPage={setPage}
+        setSearch={setSearch}
+        setSort={setSort}
+        sort={sort}
+      >
+        <OpenAPIAdminInternal id={id} model={model} navigate={navigate} />
+      </OpenAPIAdminProvider>
     </Box>
   );
 };

@@ -4,7 +4,7 @@ import {ListRenderItemInfo, StyleProp, ViewStyle} from "react-native";
 import {DimensionValue, FlexStyle} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
 
-import {InstanceFieldOverride, OpenAPIAdminNavigate} from "./admin";
+import {InstanceAdminFieldConfig, InstanceFieldOverride} from "./admin";
 
 export type SelectListOptions = {label: string; value: string}[];
 
@@ -2979,15 +2979,6 @@ export interface TableHeaderCellProps {
   onSortChange?: (direction: "asc" | "desc" | undefined) => void;
 }
 
-export interface AdminTableHeaderCellProps extends TableHeaderCellProps {
-  filters: string[];
-  setFilters: (filter: string[]) => void;
-  model: string;
-  field: string;
-  search?: string;
-  setSearch?: (search: string) => void;
-}
-
 export interface TableRowProps {
   /**
    * Must be instances of TableCell or TableHeaderCell.
@@ -3112,6 +3103,32 @@ export interface APIError {
   };
 }
 
+export interface ColumnSortInterface {
+  column: number | undefined;
+  direction: "asc" | "desc" | undefined;
+}
+
+export type TableFilters = Record<string, string[]>;
+
+export type TableSearch = {search: string; field: string};
+
+export interface TableContextType {
+  columns: Array<number | string>;
+  hasDrawerContents: boolean;
+  sortColumn?: ColumnSortInterface | undefined;
+  setSortColumn?: (sort: ColumnSortInterface | undefined) => void;
+  stickyHeader?: boolean;
+  borderStyle?: "sm" | "none";
+  alternateRowBackground?: boolean;
+  page?: number;
+}
+
+export interface TableContextProviderProps extends TableContextType {
+  children: React.ReactElement;
+}
+
+// Open API Types
+
 export type ModelAdminDisplay = (instance: any) => {title: string; subtitle?: string};
 export type ModelFieldOverride = {[id: string]: Partial<ModelAdminFieldConfig>};
 
@@ -3137,7 +3154,7 @@ export interface ModelAdminFieldConfig {
 }
 
 export interface ModelAdminProps {
-  navigate: (params: {model?: string; id?: string; page?: number; sort?: string}) => void;
+  navigate: OpenAPIAdminNavigate;
   // TODO move this in so we can use model admin without openapi admin.
   useList: any;
   page?: number;
@@ -3158,18 +3175,33 @@ export interface OpenAPISpec {
 // This needs better typing.
 export type ModelFieldConfig = any;
 
-export interface OpenAPIAdminProps {
-  navigate: OpenAPIAdminNavigate;
+export type OpenApiSpec = any;
 
-  // The OpenAPI SDK to use for interacting with the API.
-  sdk: any;
-
-  // Used for displaying either a model overview page (along with page and sort) or a specific
-  // model instance
+// OpenAPIAdmin is the overarching component that handles displaying a list of models, or a specific
+// model instance.
+export type OpenAPIAdminNavigate = (params: {
   model?: string;
   id?: string;
   page?: number;
-  sort?: string;
+  sort?: {field: string; direction: "asc" | "desc"};
+}) => void;
+
+export interface OpenAPIAdminProps {
+  navigate: OpenAPIAdminNavigate;
+  // The OpenAPI SDK to use for interacting with the API.
+  sdk: any;
+  // Used for displaying either a model overview page (along with page and sort) or a specific
+  // model instance.
+  model?: string;
+  id?: string;
+  page?: number;
+  setPage?: (page: number) => void;
+  filters: string[];
+  setFilters: (filter: string[]) => void;
+  search?: string;
+  setSearch?: (search: string) => void;
+  sort: {field: string; direction: "asc" | "desc"} | undefined;
+  setSort: (sort: {field: string; sort: "asc" | "desc" | undefined}) => void;
   // Override the components in the table view
   modelOverrides?: {[modelName: string]: ModelFieldOverride};
   // Override the fields and ordering in the table view
@@ -3199,6 +3231,16 @@ export type OpenApiProperty = {
   enum?: string[];
 };
 
+export interface AdminTableHeaderCellProps extends TableHeaderCellProps {
+  filters: string[];
+  onFiltersChange: (filter: string[]) => void;
+  model: string;
+  field: string;
+  search?: string;
+  onSearchChange?: (search: string) => void;
+  sort: {field: string; direction: "asc" | "desc"} | undefined;
+}
+
 export type ModelFields = {
   type: "object" | "array";
   required: string[];
@@ -3216,26 +3258,64 @@ export interface OpenAPIProviderProps {
   specUrl?: string;
 }
 
-export interface ColumnSortInterface {
-  column: number | undefined;
-  direction: "asc" | "desc" | undefined;
-}
-
-export type TableFilters = Record<string, string[]>;
-
-export type TableSearch = {search: string; field: string};
-
-export interface TableContextType {
-  columns: Array<number | string>;
-  hasDrawerContents: boolean;
-  sortColumn?: ColumnSortInterface | undefined;
-  setSortColumn?: (sort: ColumnSortInterface | undefined) => void;
-  stickyHeader?: boolean;
-  borderStyle?: "sm" | "none";
-  alternateRowBackground?: boolean;
-  page?: number;
-}
-
-export interface TableContextProviderProps extends TableContextType {
+export interface OpenAPIAdminProviderProps {
   children: React.ReactElement;
+  sdk?: any;
+  page?: number;
+  setPage?: (page: number) => void;
+  filters: string[];
+  setFilters: (filter: string[]) => void;
+  search?: string;
+  setSearch?: (search: string) => void;
+  sort: {field: string; direction: "asc" | "desc"} | undefined;
+  setSort: (sort: {field: string; sort: "asc" | "desc" | undefined}) => void;
+  // Override the components in the table view
+  modelOverrides?: {[modelName: string]: ModelFieldOverride};
+  // Override the fields and ordering in the table view
+  modelFieldsOverride: {[modelName: string]: string[]};
+  // Override in the instance view
+  instanceOverrides?: {[modelName: string]: InstanceFieldOverride};
+}
+
+export interface OpenAPIAdminContextType {
+  filters: string[];
+  setFilters: (filter: string[]) => void;
+  search?: string;
+  setSearch?: (search: string) => void;
+  sort: {field: string; direction: "asc" | "desc"} | undefined;
+  setSort: (sort: {field: string; sort: "asc" | "desc" | undefined}) => void;
+  page?: number;
+  setPage?: (page: number) => void;
+  getSdkHook: (modelName: string, type: "list" | "read" | "create" | "update" | "remove") => any;
+  getFieldConfigForModelAdmin: (
+    modelName: string,
+    openApiProperty: any,
+    parentKey?: string
+  ) => ModelAdminFieldConfig[];
+  getFieldConfigForInstanceAdmin: (
+    model: string,
+    fieldName: string,
+    config: any,
+    parentKey?: string
+  ) => InstanceAdminFieldConfig[];
+  getModelAdminFields: (modelName: string) => ModelAdminFieldConfig[];
+
+  // Override the components in the table view
+  modelOverrides?: {[modelName: string]: ModelFieldOverride};
+  // Override the fields and ordering in the table view
+  modelFieldsOverride: {[modelName: string]: string[]};
+  // Override in the instance view
+  instanceOverrides?: {[modelName: string]: InstanceFieldOverride};
+}
+
+export interface ModelInstanceAdminProps {
+  model: string;
+  id?: string;
+  // TODO move this in so we can use instance admin without openapi admin.
+  useRead?: any;
+  useCreate?: any;
+  useRemove?: any;
+  useUpdate?: any;
+  navigate: OpenAPIAdminNavigate;
+  overrides?: {[id: string]: Partial<InstanceAdminFieldConfig>};
 }

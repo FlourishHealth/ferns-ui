@@ -10,14 +10,14 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 
 import {Box} from "../Box";
 import {Button} from "../Button";
-import {FieldProps} from "../Common";
+import {FieldProps, ModelInstanceAdminProps} from "../Common";
 import {Field} from "../Field";
 import {Heading} from "../Heading";
 import {useOpenAPISpec} from "../OpenAPIContext";
 import {Text} from "../Text";
 import {useToast} from "../Toast";
 import {useCatchAndToast} from "../useCatchAndToast";
-import {OpenAPIAdminNavigate} from "./AdminUtils";
+import {useOpenAPIAdminData} from "./OpenAPIAdminContext";
 
 export type InstanceFieldOverride = {[id: string]: Partial<InstanceAdminFieldConfig>};
 
@@ -60,18 +60,70 @@ function findDifference(obj1: Record<string, any>, obj2: Record<string, any>): R
   return result;
 }
 
-interface ModelInstanceAdminProps {
-  model: string;
-  id?: string;
-  // TODO move this in so we can use instance admin without openapi admin.
-  useRead?: any;
-  useCreate?: any;
-  useRemove?: any;
-  useUpdate?: any;
-  navigate: OpenAPIAdminNavigate;
-  overrides?: {[id: string]: Partial<InstanceAdminFieldConfig>};
+interface InstanceAdminFieldProps {
+  field: InstanceAdminFieldConfig;
+  instanceData: any;
+  setInstanceData: (data: any) => void;
+  fieldOverrides?: Partial<InstanceAdminFieldConfig>;
 }
 
+const InstanceAdminField = ({
+  field,
+  instanceData,
+  setInstanceData,
+  fieldOverrides,
+}: InstanceAdminFieldProps): React.ReactElement | null => {
+  const {CustomComponent, fieldKey, ...fieldProps} = field;
+  const fieldName = fieldKey.split(".")[-1];
+  const value = get(instanceData, fieldKey);
+
+  const onChange = useCallback(
+    (result: any): void => {
+      const newData = {...instanceData};
+      set(newData, field.fieldKey, result);
+      setInstanceData(newData);
+    },
+    [field.fieldKey, instanceData, setInstanceData]
+  );
+
+  const componentProps: InstanceAdminFieldComponentProps = {
+    ...fieldProps,
+    ...fieldOverrides,
+    doc: instanceData,
+    value: value ?? "", // set to empty string to avoid uncontrolled component error
+    fieldKey: field.fieldKey,
+    onChange,
+  };
+
+  if (CustomComponent) {
+    return CustomComponent(componentProps);
+  }
+
+  if (fieldName === "_id") {
+    return <Text>ID: {value}</Text>;
+  }
+
+  if ((field as any).type === "array") {
+    // TODO: Create a generic version of UserList for displaying/updating arrays of sub-objects
+    // in InstanceAdmin.
+    return (
+      <Box paddingY={2}>
+        <Heading size="sm">{startCase(field.fieldKey)}</Heading>
+        {(value ?? []).map((v: any, i: number) => (
+          <Box key={i} marginBottom={2}>
+            <Text>
+              <Text weight="bold">{i}</Text>: {JSON.stringify(v)}
+            </Text>
+          </Box>
+        ))}
+      </Box>
+    );
+  }
+
+  return <Field {...componentProps} />;
+};
+
+// An individual field on a model instance form.
 export const InstanceAdmin = ({
   id,
   model,
@@ -80,11 +132,7 @@ export const InstanceAdmin = ({
   useRemove,
   useUpdate,
   navigate,
-  overrides,
 }: ModelInstanceAdminProps): React.ReactElement | null => {
-  const spec = useOpenAPISpec();
-  const modelFields = spec.getModelFields(model);
-
   const catchAndToast = useCatchAndToast();
   const toast = useToast();
   const doRead = useRead?.useQuery ?? ((): any => ({data: {}}));
@@ -93,6 +141,8 @@ export const InstanceAdmin = ({
   const [doRemove] = useRemove?.useMutation() ?? [(): any => ({data: {}})];
   const {data: instance} = doRead(id !== "new" ? id : skipToken);
   const [instanceData, setInstanceData] = useState<any>({});
+  const {getFieldConfigForInstanceAdmin, instanceOverrides} = useOpenAPIAdminData();
+  const spec = useOpenAPISpec();
 
   // Set instance data once it's been fetched.
   useEffect(() => {
@@ -101,126 +151,38 @@ export const InstanceAdmin = ({
     }
   }, [instance, instanceData]);
 
-  // Convert a model field from the OpenAPI spec into Ferns UI Field props.
-  const getFieldConfigForInstanceAdmin = useCallback(
-    (name: string, config: any, parentKey?: string): InstanceAdminFieldConfig[] => {
-      const fieldKey = parentKey ? `${parentKey}.${name}` : name;
+  const modelFields = spec.getModelFields(model);
+  const fields: InstanceAdminFieldConfig[] = useMemo(() => {
+    // TODO: something going very wrong here, i think with nested properties.
+    return flatten(
+      Object.entries(modelFields?.properties ?? {}).map(([fieldName, openApiProperty]) =>
+        getFieldConfigForInstanceAdmin(model, fieldName, openApiProperty)
+      )
+    );
+  }, [getFieldConfigForInstanceAdmin, model, modelFields?.properties]);
 
-      // If we have a parent key and the field is _id, return null. We don't want to display the
-      // sub _id field in the form.
-      if (parentKey && name === "_id") {
-        return [];
-      }
+  const onSave = useCallback(async (): Promise<void> => {
+    if (instance?._id) {
+      const modifiedData = findDifference(instanceData, instance);
 
-      let type: FieldProps["type"] = config.type;
-      if (config.enum) {
-        type = "select";
-      } else if (config.type === "string") {
-        type = "text";
-      } else if (config.format === "date-time") {
-        type = "datetime";
-      } else if (config.type === "object") {
-        return Object.keys(config.properties ?? {}).flatMap((subFieldKey: string) => {
-          return (
-            getFieldConfigForInstanceAdmin(subFieldKey, config.properties?.[subFieldKey], name)
-              // Filter out subschema _id here, it doesn't help us at all.
-              .filter((conf) => conf.fieldKey !== "_id")
-          );
-        });
-      }
-
-      let required = false;
-      if (
-        // Ignore these fields, they're automatically generated. We need to add readonly support to
-        // ferns-api.
-        !["_id", "created", "updated", "deleted"].includes(fieldKey) &&
-        modelFields?.required?.includes(fieldKey)
-      ) {
-        required = true;
-      }
-
-      let label = startCase(fieldKey);
-      if (parentKey) {
-        label = startCase(fieldKey.split(".").slice(-1)[0]);
-      }
-
-      const ret: InstanceAdminFieldConfig = {
-        fieldKey,
-        type,
-        required,
-        defaultValue: config.default,
-        // TODO: InstanceAdmin disabled doesn't seem to work with readOnly
-        disabled: config.readonly || fieldKey === "_id",
-        label,
-        helperText: config.description,
-        options: config.enum
-          ? config.enum.map((value: string) => ({value, label: value}))
-          : undefined,
-      };
-      return [ret];
-    },
-    [modelFields?.required]
-  );
-
-  const fields: InstanceAdminFieldConfig[] = useMemo(
-    () =>
-      flatten(
-        Object.entries(modelFields?.properties ?? {}).map(([name, openApiProperty]) =>
-          getFieldConfigForInstanceAdmin(name, openApiProperty)
-        )
-      ),
-    [getFieldConfigForInstanceAdmin, modelFields?.properties]
-  );
-
-  const renderField = (field: InstanceAdminFieldConfig): React.ReactElement | null => {
-    const {CustomComponent, fieldKey, ...fieldProps} = field;
-    const fieldName = fieldKey.split(".")[-1];
-    const value = get(instanceData, fieldKey);
-
-    const onChange = (result: any): void => {
-      const newData = {...instance};
-      set(newData, field.fieldKey, result);
-      setInstanceData(newData);
-    };
-
-    const fieldOverrides = overrides?.[field.fieldKey] ?? {};
-
-    const componentProps: InstanceAdminFieldComponentProps = {
-      ...fieldProps,
-      ...fieldOverrides,
-      doc: instanceData,
-      value: value ?? "", // set to empty string to avoid uncontrolled component error
-      fieldKey: field.fieldKey,
-      onChange,
-    };
-
-    if (CustomComponent) {
-      return CustomComponent(componentProps);
+      await doUpdate({
+        id: instance._id,
+        body: modifiedData,
+      })
+        .unwrap()
+        .then(() => toast.show("Update successful!"))
+        .catch((e: any) => catchAndToast("Error updating", e));
+    } else {
+      const {_id, ...rest} = instanceData;
+      await doCreate(rest)
+        .unwrap()
+        .then(() => {
+          toast.show("Create successful!");
+          navigate({id: undefined, model});
+        })
+        .catch((e: any) => catchAndToast("Error creating", e));
     }
-
-    if (fieldName === "_id") {
-      return <Text>ID: {value}</Text>;
-    }
-
-    if ((field as any).type === "array") {
-      // TODO: Create a generic version of UserList for displaying/updating arrays of sub-objects
-      // in InstanceAdmin.
-      return (
-        <Box paddingY={2}>
-          <Heading size="sm">{startCase(field.fieldKey)}</Heading>
-          {(value ?? []).map((v: any, i: number) => (
-            <Box key={i} marginBottom={2}>
-              <Text>
-                <Text weight="bold">{i}</Text>: {JSON.stringify(v)}
-              </Text>
-            </Box>
-          ))}
-        </Box>
-      );
-    }
-
-    return <Field {...componentProps} />;
-  };
+  }, [catchAndToast, doCreate, doUpdate, instance, instanceData, model, navigate, toast]);
 
   // TODO: Disable save button if there are no changes, or if there are missing required fields.
 
@@ -233,7 +195,12 @@ export const InstanceAdmin = ({
       )}
       <Box direction="column" maxHeight="100%" paddingX={4} paddingY={4} scroll width="100%">
         {fields.map((field, index) => {
-          const parentFields = field.fieldKey.split(".").slice(0, -1).join(".");
+          console.log("FIELD KEY", field, fields);
+          if (!field.fieldKey?.split) {
+            console.warn("Field key not found for field", field);
+            return null;
+          }
+          const parentFields = field.fieldKey?.split(".").slice(0, -1).join(".") ?? "";
           const previousParentFields = fields[index - 1]?.fieldKey
             .split(".")
             .slice(0, -1)
@@ -249,6 +216,8 @@ export const InstanceAdmin = ({
           ) : null;
 
           const subLevel = field.fieldKey.split(".").length - 1;
+          const fieldOverrides = instanceOverrides?.[field.fieldKey] ?? {};
+
           return (
             <React.Fragment key={(parentFields ?? "") + (field.label ?? "") + String(index)}>
               {heading}
@@ -256,7 +225,12 @@ export const InstanceAdmin = ({
                 key={(parentFields ?? "") + (field.label ?? "")}
                 marginLeft={Math.min(subLevel * 4, 12) as 0 | 4 | 8 | 12}
               >
-                {renderField(field)}
+                <InstanceAdminField
+                  field={field}
+                  fieldOverrides={fieldOverrides}
+                  instanceData={instanceData}
+                  setInstanceData={setInstanceData}
+                />
               </Box>
             </React.Fragment>
           );
@@ -265,33 +239,7 @@ export const InstanceAdmin = ({
 
       <Box alignItems="center" color="white" direction="row" height={60} paddingX={8} width="100%">
         <Box marginRight={4} width={200}>
-          <Button
-            color="primary"
-            inline
-            text="Save"
-            onClick={async (): Promise<void> => {
-              if (instance?._id) {
-                const modifiedData = findDifference(instanceData, instance);
-
-                await doUpdate({
-                  id: instance._id,
-                  body: modifiedData,
-                })
-                  .unwrap()
-                  .then(() => toast.show("Update successful!"))
-                  .catch((e: any) => catchAndToast("Error updating", e));
-              } else {
-                const {_id, ...rest} = instanceData;
-                await doCreate(rest)
-                  .unwrap()
-                  .then(() => {
-                    toast.show("Create successful!");
-                    navigate({id: undefined, model});
-                  })
-                  .catch((e: any) => catchAndToast("Error creating", e));
-              }
-            }}
-          />
+          <Button color="primary" inline text="Save" onClick={onSave} />
         </Box>
         {Boolean(instance) && (
           <>

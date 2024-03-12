@@ -24,10 +24,8 @@ export const OpenAPIProvider = ({children, specUrl}: OpenAPIProviderProps): Reac
       return null;
     }
 
-    const items =
-      rootConfig?.get?.responses?.["200"]?.content?.["application/json"]?.schema?.properties?.data
-        ?.items;
-    return items;
+    return rootConfig?.get?.responses?.["200"]?.content?.["application/json"]?.schema?.properties
+      ?.data?.items;
   };
 
   const getModelField = (modelName: string, fieldName: string): ModelFieldConfig => {
