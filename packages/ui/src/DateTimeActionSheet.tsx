@@ -398,15 +398,15 @@ export const DateTimeActionSheet = ({
     // Check if the date is T00:00:00.000Z (it should be), otherwise treat it as a date in the
     // current timezone.
     const dt = DateTime.fromISO(date).setZone("UTC");
-    let dateString;
+    let dateString: string;
     if (dt.hour === 0 && dt.minute === 0 && dt.second === 0) {
-      dateString = dt.toFormat("yyyy-MM-dd");
+      dateString = dt.toISO()!;
     } else {
-      dateString = dt.setZone().toFormat("yyyy-MM-dd");
+      dateString = dt.setZone().toISO()!;
     }
 
     if (date) {
-      markedDates[dateString] = {
+      markedDates[DateTime.fromISO(dateString).toFormat("yyyy-MM-dd")] = {
         selected: true,
         selectedColor: theme.primary,
       };
