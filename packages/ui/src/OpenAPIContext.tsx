@@ -41,6 +41,9 @@ export const OpenAPIProvider = ({children, specUrl}: OpenAPIProviderProps): Reac
   const [spec, setSpec] = useState<OpenAPISpec | null>(null);
 
   const getModelFields = (modelName: string): ModelFields | null => {
+    if (!spec) {
+      throw new Error("OpenAPI spec not loaded, pass openAPISpecUrl to FernsProvider");
+    }
     const modelPath = `/${camelCase(modelName.replace(/\s/g, ""))}/`;
     const rootConfig = spec?.paths?.[modelPath];
     if (!rootConfig) {
@@ -57,6 +60,9 @@ export const OpenAPIProvider = ({children, specUrl}: OpenAPIProviderProps): Reac
   };
 
   const getModelField = (modelName: string, fieldName: string): ModelFieldConfig => {
+    if (!spec) {
+      throw new Error("OpenAPI spec not loaded, pass openAPISpecUrl to FernsProvider");
+    }
     const fields = getModelFields(modelName);
     const dotFields = fieldName.split(".");
 
