@@ -1878,16 +1878,28 @@ export interface PillProps {
   onClick: (enabled: boolean) => void;
 }
 
-export interface SegmentedControlProps {
+type BaseSegmentedControlProps = {
   items: string[];
-  onChange?: ({activeIndex}: {activeIndex: number | number[]}) => void;
-  selectedItemIndex?: number;
-  selectedItemIndexes?: number[];
   responsive?: boolean;
-  size?: "md" | "lg"; // defaults to md
-  multiselect?: boolean;
+  size?: "md" | "lg";
   selectLimit?: number;
-}
+};
+
+export type SegmentedControlPropsSingleSelect = BaseSegmentedControlProps & {
+  multiselect?: false;
+  onChange: ({activeIndex}: {activeIndex: number}) => void;
+  selectedItemIndex?: number;
+};
+
+export type SegmentedControlPropsMultiSelect = BaseSegmentedControlProps & {
+  multiselect: true;
+  onChange: ({activeIndex}: {activeIndex: number[]}) => void;
+  selectedItemIndexes?: number[];
+};
+
+export type SegmentedControlProps =
+  | SegmentedControlPropsSingleSelect
+  | SegmentedControlPropsMultiSelect;
 
 // Shared props for fields with labels, subtext, and error messages.
 export interface FieldWithLabelsProps {
@@ -3080,4 +3092,50 @@ export interface APIError {
     parameter?: string;
     meta?: {[id: string]: any};
   };
+}
+
+export type OpenApiPropertyType =
+  | "string"
+  | "date"
+  | "datetime"
+  | "boolean"
+  | "array"
+  | "object"
+  | "number"
+  | "any";
+
+export type OpenApiProperty = {
+  type?: OpenApiPropertyType;
+  format?: string;
+  properties?: OpenApiProperty;
+  items?: OpenApiProperty[];
+  description?: string;
+  // TODO: is this actually there?
+  required?: string[];
+  enum?: string[];
+};
+
+export type ModelFields = {
+  type: "object" | "array";
+  required: string[];
+  properties: {[name: string]: OpenApiProperty};
+};
+
+export interface OpenAPISpec {
+  paths: {
+    [key: string]: any;
+  };
+}
+
+export type ModelFieldConfig = any;
+
+export interface OpenAPIProviderProps {
+  children: React.ReactElement;
+  specUrl?: string;
+}
+
+export interface OpenAPIContextType {
+  spec: OpenAPISpec | null;
+  getModelFields: (modelName: string) => ModelFields | null;
+  getModelField: (modelName: string, field: string) => OpenApiProperty | null;
 }
