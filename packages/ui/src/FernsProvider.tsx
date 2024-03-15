@@ -2,17 +2,10 @@ import React from "react";
 import {Host} from "react-native-portalize";
 import {ToastProvider} from "react-native-toast-notifications";
 
-import {OpenAPIProvider} from "./OpenAPIContext";
 import {ThemeProvider} from "./Theme";
 import {Toast} from "./Toast";
 
-export const FernsProvider = ({
-  children,
-  openAPISpecUrl,
-}: {
-  children: React.ReactNode;
-  openAPISpecUrl?: string;
-}): React.ReactElement => {
+export const FernsProvider = ({children}: {children: React.ReactNode}): React.ReactElement => {
   return (
     <ThemeProvider>
       <ToastProvider
@@ -24,9 +17,7 @@ export const FernsProvider = ({
         renderToast={(toastOptions) => <Toast {...(toastOptions as any)} />}
         swipeEnabled
       >
-        <OpenAPIProvider specUrl={openAPISpecUrl}>
-          <Host>{children}</Host>
-        </OpenAPIProvider>
+        <Host>{children}</Host>
       </ToastProvider>
     </ThemeProvider>
   );
