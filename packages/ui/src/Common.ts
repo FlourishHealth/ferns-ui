@@ -3019,6 +3019,25 @@ export interface TableRowProps {
   color?: BoxColor;
 }
 
+export type TableFilters = Record<string, string[]>;
+
+export type TableSearch = {search: string; field: string};
+
+export interface TableContextType {
+  columns: Array<number | string>;
+  hasDrawerContents: boolean;
+  sortColumn?: ColumnSortInterface | undefined;
+  setSortColumn?: (sort: ColumnSortInterface | undefined) => void;
+  stickyHeader?: boolean;
+  borderStyle?: "sm" | "none";
+  alternateRowBackground?: boolean;
+  page?: number;
+}
+
+export interface TableContextProviderProps extends TableContextType {
+  children: React.ReactElement;
+}
+
 export interface TextProps {
   align?: "left" | "right" | "center" | "justify"; // default "left"
   children?: React.ReactNode;

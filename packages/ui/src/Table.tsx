@@ -82,7 +82,7 @@ export const Table = ({
             <PaginationControl
               page={propsPage ?? page}
               setPage={propsSetPage ?? setPage}
-              shouldDisableBackButton={page <= 1}
+              shouldDisableBackButton={(propsPage ?? page) <= 1}
               shouldDisableNextButton={!more}
             />
             {Boolean(extraControls) && extraControls}
