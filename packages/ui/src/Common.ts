@@ -2914,6 +2914,11 @@ export interface SpinnerProps {
   color?: Color;
 }
 
+export type ColumnSortInterface = {
+  column: number;
+  direction: "asc" | "desc";
+};
+
 export interface TableProps {
   /**
    * Must be instances of TableHeader, TableRow, and/or TableFooter components.
@@ -2940,6 +2945,27 @@ export interface TableProps {
    * If true, alternate rows will have a light gray background. Defaults to true.
    */
   alternateRowBackground?: boolean;
+
+  /**
+   * Control sort outside of the Table
+   */
+  sort?: ColumnSortInterface;
+  /**
+   * Set the page outside of the Table
+   */
+  page?: number;
+  /**
+   * Set the page outside of the Table
+   */
+  setPage?: (page: number) => void;
+  /**
+   * If true, the table will render a next page button. Defaults to true.
+   */
+  more?: boolean;
+  /**
+   * Extra controls to render below the table next to pagination
+   */
+  extraControls?: React.ReactElement;
 }
 
 export interface TableHeaderProps {
