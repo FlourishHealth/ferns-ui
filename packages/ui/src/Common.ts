@@ -3139,3 +3139,24 @@ export interface OpenAPIContextType {
   getModelFields: (modelName: string) => ModelFields | null;
   getModelField: (modelName: string, field: string) => OpenApiProperty | null;
 }
+
+// The config for a single column in the table display of a model.
+export interface ModelAdminFieldConfig {
+  fieldKey: string; // Dot notation representation of the field.
+  title: string;
+  description?: string;
+  type: OpenApiPropertyType;
+  width?: number;
+  minWidth?: number;
+  options?: string[];
+  sort?: string;
+  CustomComponent?: (props: ModelAdminCustomComponentProps) => React.ReactElement | null;
+}
+
+// The props for a custom column component for ModelAdmin.
+export interface ModelAdminCustomComponentProps extends Omit<FieldProps, "name"> {
+  doc: any; // The rest of the document.
+  fieldKey: string; // Dot notation representation of the field.
+  // user: User;
+  editing: boolean; // Allow for inline editing of the field.
+}
