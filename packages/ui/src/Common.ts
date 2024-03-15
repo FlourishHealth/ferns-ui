@@ -1878,16 +1878,28 @@ export interface PillProps {
   onClick: (enabled: boolean) => void;
 }
 
-export interface SegmentedControlProps {
+type BaseSegmentedControlProps = {
   items: string[];
-  onChange?: ({activeIndex}: {activeIndex: number | number[]}) => void;
-  selectedItemIndex?: number;
-  selectedItemIndexes?: number[];
   responsive?: boolean;
-  size?: "md" | "lg"; // defaults to md
-  multiselect?: boolean;
+  size?: "md" | "lg";
   selectLimit?: number;
-}
+};
+
+export type SegmentedControlPropsSingleSelect = BaseSegmentedControlProps & {
+  multiselect?: false;
+  onChange: ({activeIndex}: {activeIndex: number}) => void;
+  selectedItemIndex?: number;
+};
+
+export type SegmentedControlPropsMultiSelect = BaseSegmentedControlProps & {
+  multiselect: true;
+  onChange: ({activeIndex}: {activeIndex: number[]}) => void;
+  selectedItemIndexes?: number[];
+};
+
+export type SegmentedControlProps =
+  | SegmentedControlPropsSingleSelect
+  | SegmentedControlPropsMultiSelect;
 
 // Shared props for fields with labels, subtext, and error messages.
 export interface FieldWithLabelsProps {
@@ -2902,6 +2914,11 @@ export interface SpinnerProps {
   color?: Color;
 }
 
+export type ColumnSortInterface = {
+  column: number;
+  direction: "asc" | "desc";
+};
+
 export interface TableProps {
   /**
    * Must be instances of TableHeader, TableRow, and/or TableFooter components.
@@ -2928,6 +2945,27 @@ export interface TableProps {
    * If true, alternate rows will have a light gray background. Defaults to true.
    */
   alternateRowBackground?: boolean;
+
+  /**
+   * Control sort outside of the Table
+   */
+  sort?: ColumnSortInterface;
+  /**
+   * Set the page outside of the Table
+   */
+  page?: number;
+  /**
+   * Set the page outside of the Table
+   */
+  setPage?: (page: number) => void;
+  /**
+   * If true, the table will render a next page button. Defaults to true.
+   */
+  more?: boolean;
+  /**
+   * Extra controls to render below the table next to pagination
+   */
+  extraControls?: React.ReactElement;
 }
 
 export interface TableHeaderProps {
@@ -2979,6 +3017,25 @@ export interface TableRowProps {
    * Background color of the row. Defaults to white.
    */
   color?: BoxColor;
+}
+
+export type TableFilters = Record<string, string[]>;
+
+export type TableSearch = {search: string; field: string};
+
+export interface TableContextType {
+  columns: Array<number | string>;
+  hasDrawerContents: boolean;
+  sortColumn?: ColumnSortInterface | undefined;
+  setSortColumn?: (sort: ColumnSortInterface | undefined) => void;
+  stickyHeader?: boolean;
+  borderStyle?: "sm" | "none";
+  alternateRowBackground?: boolean;
+  page?: number;
+}
+
+export interface TableContextProviderProps extends TableContextType {
+  children: React.ReactElement;
 }
 
 export interface TextProps {
@@ -3080,4 +3137,71 @@ export interface APIError {
     parameter?: string;
     meta?: {[id: string]: any};
   };
+}
+
+export type OpenApiPropertyType =
+  | "string"
+  | "date"
+  | "datetime"
+  | "boolean"
+  | "array"
+  | "object"
+  | "number"
+  | "any";
+
+export type OpenApiProperty = {
+  type?: OpenApiPropertyType;
+  format?: string;
+  properties?: OpenApiProperty;
+  items?: OpenApiProperty[];
+  description?: string;
+  // TODO: is this actually there?
+  required?: string[];
+  enum?: string[];
+};
+
+export type ModelFields = {
+  type: "object" | "array";
+  required: string[];
+  properties: {[name: string]: OpenApiProperty};
+};
+
+export interface OpenAPISpec {
+  paths: {
+    [key: string]: any;
+  };
+}
+
+export type ModelFieldConfig = any;
+
+export interface OpenAPIProviderProps {
+  children: React.ReactElement;
+  specUrl?: string;
+}
+
+export interface OpenAPIContextType {
+  spec: OpenAPISpec | null;
+  getModelFields: (modelName: string) => ModelFields | null;
+  getModelField: (modelName: string, field: string) => OpenApiProperty | null;
+}
+
+// The config for a single column in the table display of a model.
+export interface ModelAdminFieldConfig {
+  fieldKey: string; // Dot notation representation of the field.
+  title: string;
+  description?: string;
+  type: OpenApiPropertyType;
+  width?: number;
+  minWidth?: number;
+  options?: string[];
+  sort?: string;
+  CustomComponent?: (props: ModelAdminCustomComponentProps) => React.ReactElement | null;
+}
+
+// The props for a custom column component for ModelAdmin.
+export interface ModelAdminCustomComponentProps extends Omit<FieldProps, "name"> {
+  doc: any; // The rest of the document.
+  fieldKey: string; // Dot notation representation of the field.
+  // user: User;
+  editing: boolean; // Allow for inline editing of the field.
 }

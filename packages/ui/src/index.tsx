@@ -48,6 +48,7 @@ export * from "./Spinner";
 export * from "./SplitPage";
 export * from "./Switch";
 export * from "./Table";
+export * from "./tableContext";
 export * from "./TableHeader";
 export * from "./TableHeaderCell";
 export * from "./TableRow";

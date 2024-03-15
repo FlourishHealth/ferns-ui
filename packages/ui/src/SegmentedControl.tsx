@@ -1,17 +1,23 @@
 import React from "react";
 
 import {Box} from "./Box";
-import {SegmentedControlProps} from "./Common";
+import {
+  SegmentedControlProps,
+  SegmentedControlPropsMultiSelect,
+  SegmentedControlPropsSingleSelect,
+} from "./Common";
 import {Text} from "./Text";
 
 export const SegmentedControl = ({
   items,
   onChange = () => {},
-  selectedItemIndexes = undefined,
-  selectedItemIndex = undefined,
   multiselect = false,
   selectLimit = 1,
+  ...props
 }: SegmentedControlProps) => {
+  const selectedItemIndex = (props as SegmentedControlPropsSingleSelect).selectedItemIndex;
+  const selectedItemIndexes = (props as SegmentedControlPropsMultiSelect).selectedItemIndexes;
+
   const renderItem = (item: string | React.ReactNode) => {
     return (
       <Text align="center" weight="bold">
@@ -81,15 +87,19 @@ export const SegmentedControl = ({
                 return;
               }
               if (multiselect) {
+                const typedOnChange =
+                  onChange as unknown as SegmentedControlPropsMultiSelect["onChange"];
                 if (selectedItemIndexes?.includes(index)) {
-                  onChange({activeIndex: selectedItemIndexes.filter((i) => i !== index)});
+                  typedOnChange({activeIndex: selectedItemIndexes.filter((i) => i !== index)});
                 } else {
                   const currentIndexes = [...(selectedItemIndexes as number[])];
                   currentIndexes?.push(index);
-                  onChange({activeIndex: currentIndexes?.sort() as number[]});
+                  typedOnChange({activeIndex: currentIndexes?.sort() as number[]});
                 }
               } else {
-                onChange({activeIndex: index});
+                const typedOnChange =
+                  onChange as unknown as SegmentedControlPropsSingleSelect["onChange"];
+                typedOnChange({activeIndex: index});
               }
             }}
           >

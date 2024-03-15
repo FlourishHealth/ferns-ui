@@ -1,23 +1,6 @@
 import React, {Context, createContext, useContext} from "react";
 
-export interface ColumnSortInterface {
-  column: number | undefined;
-  direction: "asc" | "desc" | undefined;
-}
-
-interface TableContextType {
-  columns: Array<number | string>;
-  hasDrawerContents: boolean;
-  sortColumn?: ColumnSortInterface | undefined;
-  setSortColumn?: (sort: ColumnSortInterface | undefined) => void;
-  stickyHeader?: boolean;
-  borderStyle?: "sm" | "none";
-  alternateRowBackground?: boolean;
-}
-
-interface Props extends TableContextType {
-  children: React.ReactElement;
-}
+import {TableContextProviderProps, TableContextType} from "./Common";
 
 const TableContext: Context<TableContextType> = createContext<TableContextType>({
   columns: [],
@@ -27,6 +10,7 @@ const TableContext: Context<TableContextType> = createContext<TableContextType>(
   stickyHeader: true,
   borderStyle: "sm",
   alternateRowBackground: true,
+  page: 1,
 });
 
 export const {Provider} = TableContext;
@@ -40,7 +24,8 @@ export const TableContextProvider = ({
   stickyHeader,
   borderStyle,
   alternateRowBackground,
-}: Props): React.ReactElement<typeof Provider> => {
+  page,
+}: TableContextProviderProps): React.ReactElement<typeof Provider> => {
   return (
     <Provider
       value={{
@@ -51,6 +36,7 @@ export const TableContextProvider = ({
         sortColumn,
         setSortColumn,
         stickyHeader,
+        page,
       }}
     >
       {children}
