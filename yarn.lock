@@ -1640,10 +1640,10 @@
     mv "~2"
     safe-json-stringify "~1"
 
-"@expo/cli@0.17.0", "@expo/cli@0.17.5":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.17.0.tgz#8a78a0c6e1df4a5ebb45759192dd4af5ca8e15bd"
-  integrity sha512-LaOT6kz6/UIpnTdJ+bKzLEbXeSVipm45JxzrS5VUtw2FIHzcvkdBRAWzigLyMAJU8Bi6XTSXTRYNSSad0bff1g==
+"@expo/cli@0.17.5":
+  version "0.17.5"
+  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.17.5.tgz#b409d0ea330b3c1283b9d239bb747de9284d119e"
+  integrity sha512-9cMquL/5bBfV73CbZcWipk3KZSo8mBqdgvkoWCtEtnnlm/879ayxzMWjVIgT5yV4w+X7+N6KkBSUIIj4t9Xqew==
   dependencies:
     "@babel/runtime" "^7.20.0"
     "@expo/code-signing-certificates" "0.0.5"
@@ -1657,7 +1657,7 @@
     "@expo/osascript" "^2.0.31"
     "@expo/package-manager" "^1.1.1"
     "@expo/plist" "^0.1.0"
-    "@expo/prebuild-config" "6.7.3"
+    "@expo/prebuild-config" "6.7.4"
     "@expo/rudder-sdk-node" "1.1.1"
     "@expo/spawn-async" "1.5.0"
     "@expo/xcpretty" "^4.3.0"
@@ -1697,6 +1697,7 @@
     npm-package-arg "^7.0.0"
     open "^8.3.0"
     ora "3.4.0"
+    picomatch "^3.0.1"
     pretty-bytes "5.6.0"
     progress "2.0.3"
     prompts "^2.3.2"
@@ -1709,6 +1710,8 @@
     semver "^7.5.3"
     send "^0.18.0"
     slugify "^1.3.4"
+    source-map-support "~0.5.21"
+    stacktrace-parser "^0.1.10"
     structured-headers "^0.4.1"
     tar "^6.0.5"
     temp-dir "^2.0.0"
@@ -1927,10 +1930,10 @@
     base64-js "^1.2.3"
     xmlbuilder "^14.0.0"
 
-"@expo/prebuild-config@6.7.3":
-  version "6.7.3"
-  resolved "https://registry.yarnpkg.com/@expo/prebuild-config/-/prebuild-config-6.7.3.tgz#8444c1630bd92931c2d1a510791535b7282d8fa6"
-  integrity sha512-jZIHzlnvdg4Gnln06XR9tvirL3hSp/Jh48COhLKs51vb3THCWumUytZBS4DSMdvGwf8btnaB01Zg00xQhSDBsA==
+"@expo/prebuild-config@6.7.4":
+  version "6.7.4"
+  resolved "https://registry.yarnpkg.com/@expo/prebuild-config/-/prebuild-config-6.7.4.tgz#b3e4c8545d7a101bf1fc263c5b7290abc4635e69"
+  integrity sha512-x8EUdCa8DTMZ/dtEXjHAdlP+ljf6oSeSKNzhycXiHhpMSMG9jEhV28ocCwc6cKsjK5GziweEiHwvrj6+vsBlhA==
   dependencies:
     "@expo/config" "~8.5.0"
     "@expo/config-plugins" "~7.8.0"
@@ -9635,6 +9638,11 @@ picomatch@^2.0.4, picomatch@^2.2.1, picomatch@^2.2.3, picomatch@^2.3.1:
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.3.1.tgz#3ba3833733646d9d3e4995946c1365a67fb07a42"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
 
+picomatch@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-3.0.1.tgz#817033161def55ec9638567a2f3bbc876b3e7516"
+  integrity sha512-I3EurrIQMlRc9IaAZnqRR044Phh2DXY+55o7uJ0V+hYZAcQYSuFWsc9q5PvyDHUSCe1Qxn/iBz+78s86zWnGag==
+
 pify@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
@@ -11292,7 +11300,7 @@ source-map-support@0.5.13:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
 
-source-map-support@^0.5.16, source-map-support@~0.5.20:
+source-map-support@^0.5.16, source-map-support@~0.5.20, source-map-support@~0.5.21:
   version "0.5.21"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.21.tgz#04fe7c7f9e1ed2d662233c28cb2b35b9f63f6e4f"
   integrity sha512-uBHU3L3czsIyYXKX88fdrGovxdSCoTGDRZ6SYXtSRxLZUzHg5P/66Ht6uoUlHu9EZod+inXhKo3qQgwXUT/y1w==
@@ -12316,9 +12324,9 @@ webidl-conversions@^7.0.0:
   integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
 
 webpack-dev-middleware@^5.3.1:
-  version "5.3.3"
-  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-5.3.3.tgz#efae67c2793908e7311f1d9b06f2a08dcc97e51f"
-  integrity sha512-hj5CYrY0bZLB+eTO+x/j67Pkrquiy7kWepMHmUMoPsmcUaeEnQJqFzHJOyxgWlq746/wUuA64p9ta34Kyb01pA==
+  version "5.3.4"
+  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-5.3.4.tgz#eb7b39281cbce10e104eb2b8bf2b63fce49a3517"
+  integrity sha512-BVdTqhhs+0IfoeAf7EoH5WE+exCmqGerHfDM0IL096Px60Tq2Mn9MAbnaGUe6HiMa41KMCYF19gyzZmBcq/o4Q==
   dependencies:
     colorette "^2.0.10"
     memfs "^3.4.3"
