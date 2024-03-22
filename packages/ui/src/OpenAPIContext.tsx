@@ -1,41 +1,15 @@
 import camelCase from "lodash/camelCase";
 import React, {createContext, useContext, useEffect, useState} from "react";
 
-interface OpenAPISpec {
-  paths: {
-    [key: string]: any;
-  };
-}
-
-export type ModelFieldConfig = any;
-
-export type OpenApiPropertyType = "string" | "number" | "boolean" | "array" | "object";
-export type OpenApiProperty = {
-  type?: OpenApiPropertyType;
-  format?: string;
-  properties?: OpenApiProperty;
-  items?: OpenApiProperty[];
-  description?: string;
-};
-
-export type ModelFields = {
-  type: "object" | "array";
-  required: string[];
-  properties: {[name: string]: OpenApiProperty};
-};
-
-interface OpenAPIContextType {
-  spec: OpenAPISpec | null;
-  getModelFields: (modelName: string) => ModelFields | null;
-  getModelField: (modelName: string, field: string) => OpenApiProperty;
-}
+import {
+  ModelFieldConfig,
+  ModelFields,
+  OpenAPIContextType,
+  OpenAPIProviderProps,
+  OpenAPISpec,
+} from "./Common";
 
 const OpenAPIContext = createContext<OpenAPIContextType | null>(null);
-
-interface OpenAPIProviderProps {
-  children: React.ReactElement;
-  specUrl?: string;
-}
 
 export const OpenAPIProvider = ({children, specUrl}: OpenAPIProviderProps): React.ReactElement => {
   const [spec, setSpec] = useState<OpenAPISpec | null>(null);
@@ -50,10 +24,8 @@ export const OpenAPIProvider = ({children, specUrl}: OpenAPIProviderProps): Reac
       return null;
     }
 
-    const items =
-      rootConfig?.get?.responses?.["200"]?.content?.["application/json"]?.schema?.properties?.data
-        ?.items;
-    return items;
+    return rootConfig?.get?.responses?.["200"]?.content?.["application/json"]?.schema?.properties
+      ?.data?.items;
   };
 
   const getModelField = (modelName: string, fieldName: string): ModelFieldConfig => {
