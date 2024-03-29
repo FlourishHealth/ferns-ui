@@ -3120,6 +3120,8 @@ export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   openApiModel?: string;
   openApiField?: string;
   showDescriptionAsTooltip?: boolean;
+  // Default true. If false, description is shown below the value always.
+  onlyShowDescriptionWhileEditing?: boolean;
 }
 
 export interface APIError {

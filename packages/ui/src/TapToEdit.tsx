@@ -66,6 +66,7 @@ export const TapToEdit = ({
   // openApiModel,
   // openApiField,
   showDescriptionAsTooltip = false,
+  onlyShowDescriptionWhileEditing = true,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
@@ -189,7 +190,13 @@ export const TapToEdit = ({
       return (
         <Box flex="grow">
           <Text weight="bold">{title}:</Text>
-          {Boolean(description && !showDescriptionAsTooltip) && <Text>{description}</Text>}
+          {Boolean(
+            description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing
+          ) && (
+            <Text color="gray" size="sm">
+              {description}
+            </Text>
+          )}
         </Box>
       );
     };

@@ -8,7 +8,7 @@
     "ios": "NODE_OPTIONS=--openssl-legacy-provider expo start --ios",
     "web": "NODE_OPTIONS=--openssl-legacy-provider expo start --web",
     "build-preview": "NODE_OPTIONS=--openssl-legacy-provider yarn build-web",
-    "build-web": "NODE_OPTIONS=--openssl-legacy-provider npx expo export:web",
+    "build-web": "NODE_OPTIONS=--openssl-legacy-provider expo export:web",
     "eject": "npx expo eject",
     "lint": "eslint \"**/*.ts*\"",
     "lintfix": "eslint --fix \"**/*.ts*\""
@@ -37,7 +37,13 @@
     "useTabs": false
   },
   "dependencies": {
-    "react": "18.2.0"
+    "crypto-browserify": "^3.12.0",
+    "ferns-ui": "*",
+    "react": "18.2.0",
+    "stream-browserify": "^3.0.0"
+  },
+  "resolutions": {
+    "@expo/cli": "0.17.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.9",
@@ -62,8 +68,7 @@
     "eslint-plugin-unused-imports": "3.1.0",
     "expo": "^50.0.7",
     "expo-status-bar": "~1.11.1",
-    "expo-yarn-workspaces": "~2.3.2",
-    "postcss": "8.4.35",
+    "postcss": "8.4.38",
     "prettier": "^3.2.5",
     "react-keyed-flatten-children": "^3.0.0",
     "react-native-haptic-feedback": "^2.0.3",
