@@ -21,10 +21,13 @@ export class Page extends React.Component<PageProps, {}> {
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
               accessibilityLabel=""
+              confirmationHeading={this.props?.confirmationHeading}
+              confirmationText={this.props?.confirmationText}
               icon="chevron-left"
               iconColor="darkGray"
               prefix="fas"
               size="md"
+              withConfirmation={this.props?.withConfirmation ?? false}
               onClick={() => this.props.navigation.goBack()}
             />
           </Box>
@@ -33,10 +36,13 @@ export class Page extends React.Component<PageProps, {}> {
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
               accessibilityLabel=""
+              confirmationHeading={this.props?.confirmationHeading}
+              confirmationText={this.props?.confirmationText}
               icon="times"
               iconColor="darkGray"
               prefix="fas"
               size="md"
+              withConfirmation={this.props?.withConfirmation ?? false}
               onClick={() => this.props.navigation.goBack()}
             />
           </Box>

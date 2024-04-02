@@ -2873,6 +2873,9 @@ export interface PageProps {
   rightButtonOnClick?: () => void;
   children?: any;
   onError?: (error: Error, stack: any) => void;
+  withConfirmation?: boolean; // default false
+  confirmationText?: string;
+  confirmationHeading?: string;
 }
 
 export interface PogProps {
