@@ -46,7 +46,7 @@ export const Table = ({
     width = "100%";
   }
 
-  const shouldPaginate = true;
+  const shouldPaginate = more || page > 1;
 
   return (
     <TableContextProvider
