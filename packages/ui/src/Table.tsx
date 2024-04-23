@@ -1,4 +1,4 @@
-import React, {Children, ReactElement} from "react";
+import React, {Children, ReactElement, useEffect} from "react";
 import {ScrollView} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
@@ -45,6 +45,13 @@ export const Table = ({
   } else {
     width = "100%";
   }
+
+  // If propsPage changes in the parent, update the local page state.
+  useEffect(() => {
+    if (propsPage && propsPage !== page) {
+      setPage(propsPage);
+    }
+  }, [page, propsPage]);
 
   const shouldPaginate = more || page > 1;
 
