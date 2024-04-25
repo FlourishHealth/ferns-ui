@@ -10,6 +10,29 @@ import {Icon} from "./Icon";
 import {Text} from "./Text";
 import {Tooltip} from "./Tooltip";
 
+const TapToEditTitle = ({
+  title,
+  description,
+  showDescriptionAsTooltip,
+  onlyShowDescriptionWhileEditing,
+}: {
+  onlyShowDescriptionWhileEditing?: boolean;
+  showDescriptionAsTooltip?: boolean;
+  title: string;
+  description?: string;
+}): ReactElement => {
+  return (
+    <Box flex="grow" marginBottom={2}>
+      <Text weight="bold">{title}:</Text>
+      {Boolean(description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing) && (
+        <Text color="gray" size="sm">
+          {description}
+        </Text>
+      )}
+    </Box>
+  );
+};
+
 export function formatAddress(address: any, asString = false): string {
   let city = "";
   if (address?.city) {
@@ -63,20 +86,13 @@ export const TapToEdit = ({
   confirmationText = "Are you sure you want to save your changes?",
   confirmationHeading = "Confirm",
   description: propsDescription,
-  // openApiModel,
-  // openApiField,
   showDescriptionAsTooltip = false,
   onlyShowDescriptionWhileEditing = true,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
   const [initialValue] = useState(value);
-  // const {getModelField} = useOpenAPISpec();
-
   const description: string | undefined = propsDescription;
-  // if (!description && openApiModel && openApiField) {
-  //   description = getModelField(openApiModel, openApiField)?.description;
-  // }
 
   if (editable && !setValue) {
     throw new Error("setValue is required if editable is true");
@@ -186,24 +202,12 @@ export const TapToEdit = ({
     };
     const isClickable = fieldProps?.type === "url" || fieldProps?.type === "address";
 
-    const renderTitleDescription = (): React.ReactElement => {
-      return (
-        <Box flex="grow">
-          <Text weight="bold">{title}:</Text>
-          {Boolean(
-            description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing
-          ) && (
-            <Text color="gray" size="sm">
-              {description}
-            </Text>
-          )}
-        </Box>
-      );
-    };
-
+    // For textarea to display correctly, we place the title on its own line, then the text
+    // on the next line. This is because the textarea will take up the full width of the row.
     return (
       <Box
-        direction="row"
+        alignItems={fieldProps?.type === "textarea" ? "start" : "center"}
+        direction={fieldProps?.type === "textarea" ? "column" : "row"}
         justifyContent="between"
         paddingX={3}
         paddingY={2}
@@ -212,19 +216,29 @@ export const TapToEdit = ({
       >
         {showDescriptionAsTooltip ? (
           <Tooltip idealDirection="top" text={description}>
-            {renderTitleDescription()}
+            <TapToEditTitle
+              description={description}
+              onlyShowDescriptionWhileEditing={onlyShowDescriptionWhileEditing}
+              showDescriptionAsTooltip={showDescriptionAsTooltip}
+              title={title}
+            />
           </Tooltip>
         ) : (
-          renderTitleDescription()
+          <TapToEditTitle
+            description={description}
+            onlyShowDescriptionWhileEditing={onlyShowDescriptionWhileEditing}
+            showDescriptionAsTooltip={showDescriptionAsTooltip}
+            title={title}
+          />
         )}
-        <Box direction="row" justifyContent="start" marginLeft={2}>
-          <Box justifyContent="start" onClick={isClickable ? openLink : undefined}>
+        <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>
+          <Box flex="grow" justifyContent="start" onClick={isClickable ? openLink : undefined}>
             <Text align="right" underline={isClickable}>
               {displayValue}
             </Text>
           </Box>
           {editable && (
-            <Box marginLeft={2} onClick={(): void => setEditing(true)}>
+            <Box alignSelf="end" marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
               <Icon color="darkGray" name="edit" prefix="far" size="md" />
             </Box>
           )}
