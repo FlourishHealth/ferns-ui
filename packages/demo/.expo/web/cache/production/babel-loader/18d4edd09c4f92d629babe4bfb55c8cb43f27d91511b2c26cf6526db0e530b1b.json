@@ -1,0 +1,1 @@
+{"ast":null,"code":"export{default}from'./web/ClipboardModule';","map":{"version":3,"names":["default"],"sources":["/Users/josh/src/ui/node_modules/expo-clipboard/src/ExpoClipboard.web.ts"],"sourcesContent":["export { default } from './web/ClipboardModule';\n"],"mappings":"AAAA,OAASA,OAAO,KAAQ,uBAAuB"},"metadata":{},"sourceType":"module","externalDependencies":[]}

@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.js": "/static/js/main.cabf03ab.js",
+    "static/js/790.213b0e7f.js": "/static/js/790.213b0e7f.js",
+    "static/media/FontAwesome5_Solid.ttf": "/static/media/FontAwesome5_Solid.07c3313b24f7b1ca85ee.ttf",
+    "static/media/IMFellEnglishSC-Regular.ttf": "/static/media/IMFellEnglishSC-Regular.8e2b617ab67e81b80324.ttf",
+    "static/media/FontAwesome5_Brands.ttf": "/static/media/FontAwesome5_Brands.9e138496e8f1719c6ebf.ttf",
+    "static/media/Comfortaa-Light.ttf": "/static/media/Comfortaa-Light.8d7e182e392e617a868f.ttf",
+    "static/media/Comfortaa-Bold.ttf": "/static/media/Comfortaa-Bold.dab2a1458c987d812076.ttf",
+    "static/media/DancingScript-Regular.ttf": "/static/media/DancingScript-Regular.5c0ff646f514b85596dd.ttf",
+    "static/media/Cochin.ttf": "/static/media/Cochin.edb458e7391fc38e3fc8.ttf",
+    "static/media/FontAwesome5_Regular.ttf": "/static/media/FontAwesome5_Regular.1017bce89c72f95bcf8e.ttf",
+    "favicon.ico": "/favicon.ico",
+    "index.html": "/index.html",
+    "favicon-32.png": "/favicon-32.png",
+    "static/media/powered_by_google_on_white.png": "/static/media/powered_by_google_on_white.f241a554561961c8f6bb.png",
+    "favicon-16.png": "/favicon-16.png",
+    "manifest.json": "/manifest.json",
+    "serve.json": "/serve.json",
+    "main.cabf03ab.js.map": "/static/js/main.cabf03ab.js.map",
+    "790.213b0e7f.js.map": "/static/js/790.213b0e7f.js.map"
+  },
+  "entrypoints": [
+    "static/js/790.213b0e7f.js",
+    "static/js/main.cabf03ab.js"
+  ]
+}
