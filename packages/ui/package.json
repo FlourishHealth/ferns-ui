@@ -44,7 +44,8 @@
   },
   "eslintConfig": {
     "extends": [
-      "plugin:ferns/recommended"
+      "plugin:ferns/recommended",
+      "plugin:react-native-a11y/all"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -103,6 +104,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-native": "^4.1.0",
+    "eslint-plugin-react-native-a11y": "^3.3.0",
     "eslint-plugin-simple-import-sort": "^12.0.0",
     "eslint-plugin-unused-imports": "3.1.0",
     "jest": "^29.7.0",

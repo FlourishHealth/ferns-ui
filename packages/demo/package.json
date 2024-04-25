@@ -39,7 +39,10 @@
   "dependencies": {
     "crypto-browserify": "^3.12.0",
     "ferns-ui": "*",
+    "lodash": "^4.17.21",
+    "mdurl": "^2.0.0",
     "react": "18.2.0",
+    "react-native-markdown-view": "^1.1.4",
     "stream-browserify": "^3.0.0"
   },
   "resolutions": {
@@ -51,6 +54,7 @@
     "@expo/config-plugins": "~7.8.0",
     "@expo/webpack-config": "~19.0.1",
     "@shopify/flash-list": "1.6.3",
+    "@types/lodash": "^4.17.0",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "eslint": "^8.56.0",
@@ -77,6 +81,7 @@
     "react-native-swiper-flatlist": "^3.2.3",
     "react-native-web": "~0.19.10",
     "swiper": "^11.0.6",
+    "typedoc": "^0.25.12",
     "typescript": "^5.3.3"
   },
   "engine": {

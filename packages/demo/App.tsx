@@ -1,13 +1,53 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useFonts} from "expo-font";
 import {StatusBar} from "expo-status-bar";
-import {FernsProvider} from "ferns-ui";
+import {Box, FernsProvider, Heading, useStoredState} from "ferns-ui";
 import React, {ReactElement, useEffect, useState} from "react";
 import {Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {Host} from "react-native-portalize";
 import {SafeAreaProvider, useSafeAreaInsets} from "react-native-safe-area-context";
 
-import * as Stories from "./src/stories";
+import {ComponentPage} from "./ComponentPage";
+import {DemoConfig} from "./src/demoConfig";
+
+const HomePage = ({onPress}: {onPress: (componentName: string) => void}): React.ReactElement => {
+  return (
+    <ScrollView style={{padding: 20}}>
+      {DemoConfig.map((c) => {
+        if (!c.name || !c.demo) {
+          return null;
+        }
+        // TODO: replace with Card.
+        return (
+          <Pressable key={c.name} onPress={() => onPress(c.name)}>
+            <View
+              style={{
+                flex: 1,
+                maxWidth: 300,
+                padding: 16,
+                borderRadius: 4,
+                borderColor: "#ccc",
+                borderWidth: 1,
+                marginTop: 8,
+                marginBottom: 8,
+                height: 240,
+                maxHeight: 240,
+              }}
+            >
+              {c.demo()}
+              <Box marginBottom={1} marginTop={4}>
+                <Heading size="sm">{c.name}</Heading>
+              </Box>
+              <Box>
+                <Text>{c.description}</Text>
+              </Box>
+            </View>
+          </Pressable>
+        );
+      })}
+    </ScrollView>
+  );
+};
 
 type StoryFunc = (setScrollEnabled?: any) => ReactElement;
 
@@ -17,17 +57,18 @@ export interface Story {
   stories: {[name: string]: StoryFunc};
 }
 
-const stories: Story[] = Object.values(Stories);
+const stories: Story[] = [];
 const allStories: {[name: string]: StoryFunc} = {};
-for (const story of stories) {
-  for (const storyName of Object.keys(story.stories)) {
-    allStories[storyName] = story.stories[storyName];
-  }
-}
+// for (const story of stories) {
+//   for (const storyName of Object.keys(story.stories)) {
+//     allStories[storyName] = story.stories[storyName];
+//   }
+// }
+// const allStories = {};
 
 const App = () => {
   const insets = useSafeAreaInsets();
-  const [currentStory, setStory] = useState<string | null>(null);
+  const [currentStory, setStory] = useStoredState<string | null>("story", null);
   // this is just for the signature field, because we need to disable scroll while signing or else
   // it will scroll the page instead of signing in the box with the signature pad
   const [scrollEnabled, setScrollEnabled] = useState(true);
@@ -61,6 +102,8 @@ const App = () => {
     return null;
   }
 
+  const currentConfig = DemoConfig.find((config) => config.name === currentStory);
+  console.log("CURRENT CONFIG", currentConfig);
   return (
     <Host>
       <View
@@ -75,7 +118,6 @@ const App = () => {
       >
         <StatusBar style="auto" />
         <View style={styles.header}>
-          {!currentStory && <Text style={{fontWeight: "bold", fontSize: 20}}>Pick A Story:</Text>}
           {currentStory && (
             <Pressable
               onPress={async () => {
@@ -89,31 +131,39 @@ const App = () => {
           <Text style={{marginLeft: 20, fontWeight: "bold"}}>{currentStory}</Text>
         </View>
         <View style={styles.body}>
-          {currentStory && allStories[currentStory] && allStories[currentStory](setScrollEnabled)}
           {!currentStory && (
-            <ScrollView scrollEnabled={scrollEnabled}>
-              <View style={styles.storyList}>
-                {stories.map((s) => (
-                  <React.Fragment key={s.title}>
-                    <Text style={{fontWeight: "bold", fontSize: 20, marginBottom: 12}}>
-                      {s.title}
-                    </Text>
-                    {Object.keys(s.stories).map((title) => (
-                      <Pressable
-                        key={title}
-                        onPress={async () => {
-                          setStory(title);
-                          await AsyncStorage.setItem("story", title);
-                        }}
-                      >
-                        <Text style={{fontSize: 16, marginBottom: 8}}>{title}</Text>
-                      </Pressable>
-                    ))}
-                  </React.Fragment>
-                ))}
-              </View>
-            </ScrollView>
+            <HomePage
+              onPress={(story: string) => {
+                setStory(story);
+              }}
+            />
           )}
+          {currentStory && <ComponentPage config={currentConfig} />}
+          {/* {currentStory && allStories[currentStory] && allStories[currentStory](setScrollEnabled)} */}
+          {/* {!currentStory && ( */}
+          {/*   <ScrollView scrollEnabled={scrollEnabled}> */}
+          {/*     <View style={styles.storyList}> */}
+          {/*       {stories.map((s) => ( */}
+          {/*         <React.Fragment key={s.title}> */}
+          {/*           <Text style={{fontWeight: "bold", fontSize: 20, marginBottom: 12}}> */}
+          {/*             {s.title} */}
+          {/*           </Text> */}
+          {/*           {Object.keys(s.stories).map((title) => ( */}
+          {/*             <Pressable */}
+          {/*               key={title} */}
+          {/*               onPress={async () => { */}
+          {/*                 setStory(title); */}
+          {/*                 await AsyncStorage.setItem("story", title); */}
+          {/*               }} */}
+          {/*             > */}
+          {/*               <Text style={{fontSize: 16, marginBottom: 8}}>{title}</Text> */}
+          {/*             </Pressable> */}
+          {/*           ))} */}
+          {/*         </React.Fragment> */}
+          {/*       ))} */}
+          {/*     </View> */}
+          {/*   </ScrollView> */}
+          {/* )} */}
         </View>
       </View>
     </Host>
