@@ -233,7 +233,10 @@ export const TapToEdit = ({
         )}
         <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>
           <Box flex="grow" justifyContent="start" onClick={isClickable ? openLink : undefined}>
-            <Text align="right" underline={isClickable}>
+            <Text
+              align={fieldProps?.type === "textarea" ? "left" : "right"}
+              underline={isClickable}
+            >
               {displayValue}
             </Text>
           </Box>

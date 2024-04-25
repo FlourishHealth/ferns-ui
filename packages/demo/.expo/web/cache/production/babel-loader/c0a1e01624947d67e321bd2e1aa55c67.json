@@ -1,0 +1,1 @@
+{"ast":null,"code":"import FlatList from\"react-native-web/dist/exports/FlatList\";export{FlatList};","map":{"version":3,"sources":["../src/FlatList.tsx"],"names":[],"mappings":"6DACA,OAAQ,QAAQ","sourceRoot":"","sourcesContent":["import { FlatList } from \"react-native\";\nexport { FlatList };\n//# sourceMappingURL=FlatList.js.map"]},"metadata":{},"sourceType":"module"}
