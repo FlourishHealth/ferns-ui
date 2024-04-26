@@ -11,6 +11,7 @@ const config = getDefaultConfig(monorepoRoot);
 // in your app workspace, you can automate this list instead of hardcoding them.
 const monorepoPackages = {
   "ferns-ui": path.resolve(monorepoRoot, "packages/ui"),
+  demo: path.resolve(monorepoRoot, "apps/demo"),
 };
 
 // 1. Watch the local app folder, and only the shared packages (limiting the scope and speeding it

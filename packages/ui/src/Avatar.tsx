@@ -180,7 +180,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     );
   };
 
-  console.log("BYE");
+  console.log("HIi");
 
   const avatar = (
     <Box height={height} position="relative" width={width}>
