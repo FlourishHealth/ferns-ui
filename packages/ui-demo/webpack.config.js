@@ -8,7 +8,7 @@ module.exports = async function (env, argv) {
   config.resolve.alias["victory-native"] = "victory";
 
   config.resolve.fallback = {
-    crypto: require.resolve("crypto-browserify"),
+    crypto: require.resolve('expo-crypto'),
     stream: require.resolve("stream-browserify"),
   };
 
