@@ -37,7 +37,7 @@
     "useTabs": false
   },
   "dependencies": {
-    "expo-crypto": "~12.8.1",
+    "expo-crypto": "~13.0.2",
     "ferns-ui": "*",
     "react": "18.2.0",
     "stream-browserify": "^3.0.0"
