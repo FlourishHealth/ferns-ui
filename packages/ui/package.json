@@ -130,7 +130,7 @@
     "@react-native-community/blur": "^4.4.0",
     "@react-native-community/datetimepicker": "7.6.1",
     "@react-native-picker/picker": "2.6.1",
-    "expo-clipboard": "~5.0.1",
+    "expo-clipboard": "~6.0.3",
     "expo-font": "~11.10.3",
     "expo-haptics": "~12.8.1",
     "expo-image-manipulator": "~11.8.0",
