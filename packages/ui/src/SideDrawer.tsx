@@ -26,19 +26,10 @@ export const SideDrawer = ({
   const renderDrawerContent = (): ReactElement => {
     return <SafeAreaView>{renderContent()}</SafeAreaView>;
   };
-
   return (
     <Drawer
       drawerPosition={position}
-      drawerStyle={[
-        DEFAULT_STYLES,
-        drawerStyles,
-        {
-          display: Platform.OS === "web" && !isOpen ? "none" : "flex",
-          right: position === "right" ? 0 : undefined,
-          left: position === "left" ? 0 : undefined,
-        },
-      ]}
+      drawerStyle={[DEFAULT_STYLES, drawerStyles]}
       drawerType={drawerType}
       open={isOpen}
       renderDrawerContent={renderDrawerContent}

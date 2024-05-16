@@ -1,0 +1,1 @@
+{"ast":null,"code":"'use strict';export{createAnimatedComponent}from'./createAnimatedComponent';","map":{"version":3,"sources":["index.ts"],"names":["createAnimatedComponent"],"mappings":"AAAA,YAAY,CACZ,OAASA,uBAAuB,KAAQ,2BAA2B","sourcesContent":["'use strict';\nexport { createAnimatedComponent } from './createAnimatedComponent';\n"]},"metadata":{},"sourceType":"module"}

@@ -9,6 +9,15 @@ const TapStory = (): ReactElement => {
   const [percent, setPercent] = useState(1.957);
   const [select, setSelect] = useState("Option1");
   const [multiselect, setMultiselect] = useState(["Option2"]);
+  const [textArea, setTextArea] = useState(
+    "Dunder Mifflin ipsum dolor sit amet, beet farm consectetur adipiscing elit. That's what she said. Regional Manager Michael Scott, always I want people to be afraid of how much they love me. Bears, beets, Battlestar Galactica. Assistant to the Regional Manager Dwight Schrute identity theft is not a joke, Jim! Millions of families suffer every year!\n" +
+      "\n" +
+      "Fact. Bears eat beets. Bears, beets, Battlestar Galactica. Did I stutter? Sometimes I'll start a sentence and I don't even know where it's going. I just hope I find it along the way. I am Beyonce, always. I'm not superstitious, but I am a little stitious.\n" +
+      "\n" +
+      "You miss 100% of the shots you don't take - Wayne Gretzky - Michael Scott. Through concentration, I can raise and lower my cholesterol at will. Why are you the way that you are? I declare bankruptcy!\n" +
+      "\n" +
+      "How the turntables...\n"
+  );
   const [address, setAddress] = useState({
     address1: "555 N Street Ave",
     address2: "Apt 402",
@@ -44,6 +53,20 @@ const TapStory = (): ReactElement => {
         value={text}
         onSave={(value): void => {
           setText(value);
+        }}
+      />
+      <TapToEdit
+        key="text"
+        name="textarea"
+        openApiField="name"
+        openApiModel="users"
+        setValue={setTextArea}
+        showDescriptionAsTooltip
+        title="Text Area Tooltip"
+        type="textarea"
+        value={textArea}
+        onSave={(value): void => {
+          setTextArea(value);
         }}
       />
       <TapToEdit

@@ -392,7 +392,7 @@ describe("DateUtilities", function () {
         printDateRange("2022-12-24T12:00:00.000Z", "2022-12-24T18:00:00.000Z", {
           timezone: "America/New_York",
           showTimezone: false,
-          timeOnly: true,1
+          timeOnly: true,
         })
       ).toBe("7:00 AM - 1:00 PM");
     });

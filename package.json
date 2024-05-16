@@ -14,7 +14,8 @@
     "build": "yarn --cwd packages/ui build",
     "preview": "yarn build && yarn --cwd packages/ui-demo build-web",
     "clean": "rm -rf node_modules && rm -rf packages/ui/node_modules && rm -rf packages/ui-demo/node_modules && yarn",
-    "test": "yarn --cwd packages/ui test"
+    "test": "yarn --cwd packages/ui test",
+    "postinstall": "patch-package"
   },
   "workspaces": {
     "packages": [

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { createRoot } from 'react-dom/client';","map":{"version":3,"sources":["../../src/launch/createRoot.tsx"],"names":[],"mappings":"AAAA,SAAS,UAAU,QAAQ,kBAAkB","sourcesContent":["export { createRoot } from 'react-dom/client';\n"],"sourceRoot":""},"metadata":{},"sourceType":"module"}

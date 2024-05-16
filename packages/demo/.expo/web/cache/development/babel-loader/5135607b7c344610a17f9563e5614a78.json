@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default } from './uuid';","map":{"version":3,"sources":["../../src/uuid/index.ts"],"names":[],"mappings":"AAAA,SAAS,OAAO,QAAQ,QAAQ","sourcesContent":["export { default } from './uuid';\n"],"sourceRoot":""},"metadata":{},"sourceType":"module"}
