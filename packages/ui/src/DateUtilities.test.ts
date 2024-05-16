@@ -385,6 +385,17 @@ describe("DateUtilities", function () {
         })
       ).toBe("12/24/2022 7:00 AM - 1:00 PM");
     });
+
+    it("print only time", function () {
+      // 2022-12-24T12:00:00.000Z to 2022-12-24T18:00:00.000Z
+      expect(
+        printDateRange("2022-12-24T12:00:00.000Z", "2022-12-24T18:00:00.000Z", {
+          timezone: "America/New_York",
+          showTimezone: false,
+          timeOnly: true,1
+        })
+      ).toBe("7:00 AM - 1:00 PM");
+    });
   });
 
   describe("printSince", function () {

@@ -271,7 +271,7 @@ export function printDateRange(
         `printDateRange: printing only time but start and end dates are different: ${start} - ${end}`
       );
     }
-    return `${startDate} ${startTime} - ${endTime}`;
+    return `${startTime} - ${endTime}`;
   } else if (startDate === endDate) {
     return `${startDate} ${startTime} - ${endTime}`;
   } else {
