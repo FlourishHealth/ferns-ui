@@ -1,1 +1,0 @@
-{"ast":null,"code":"import'./Asset.fx';export*from'./Asset';export*from'./AssetHooks';","map":{"version":3,"sources":["../src/index.ts"],"names":[],"mappings":"AAAA,MAAO,YAAY,CAEnB,WAAc,SAAS,CACvB,WAAc,cAAc","sourcesContent":["import './Asset.fx';\n\nexport * from './Asset';\nexport * from './AssetHooks';\n"],"sourceRoot":""},"metadata":{},"sourceType":"module"}
