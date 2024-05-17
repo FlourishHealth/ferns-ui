@@ -1,8 +1,11 @@
 // Write a jest test for the DateUtilities functions
 
+import {DateTime} from "luxon";
+
 import {
   humanDate,
   humanDateAndTime,
+  offsetNameShort,
   printDate,
   printDateAndTime,
   printDateRange,
@@ -412,6 +415,83 @@ describe("DateUtilities", function () {
       expect(printSince("2019-12-23T11:00:00.000Z")).toBe("3 years ago");
       // print without ago
       expect(printSince("2019-12-23T11:00:00.000Z", {showAgo: false})).toBe("3 years");
+    });
+  });
+
+  describe("offsetNameShort", () => {
+    it("should return HST for Hawaii Standard Time", () => {
+      const date = DateTime.fromISO("2024-01-01T12:00:00", {zone: "Pacific/Honolulu"});
+      expect(offsetNameShort(date)).toBe("HST");
+    });
+
+    it("should return AKST for Alaska Standard Time", () => {
+      const date = DateTime.fromISO("2024-01-01T12:00:00", {zone: "America/Anchorage"});
+      expect(offsetNameShort(date)).toBe("AKST");
+    });
+
+    it("should return AKDT for Alaska Daylight Time", () => {
+      const date = DateTime.fromISO("2024-06-01T12:00:00", {zone: "America/Anchorage"});
+      expect(offsetNameShort(date)).toBe("AKDT");
+    });
+
+    it("should return PST for Pacific Standard Time", () => {
+      const date = DateTime.fromISO("2024-01-01T12:00:00", {zone: "America/Los_Angeles"});
+      expect(offsetNameShort(date)).toBe("PST");
+    });
+
+    it("should return PDT for Pacific Daylight Time", () => {
+      const date = DateTime.fromISO("2024-06-01T12:00:00", {zone: "America/Los_Angeles"});
+      expect(offsetNameShort(date)).toBe("PDT");
+    });
+
+    it("should return MST for Mountain Standard Time", () => {
+      const date = DateTime.fromISO("2024-01-01T12:00:00", {zone: "America/Denver"});
+      expect(offsetNameShort(date)).toBe("MST");
+    });
+
+    it("should return MDT for Mountain Daylight Time", () => {
+      const date = DateTime.fromISO("2024-06-01T12:00:00", {zone: "America/Denver"});
+      expect(offsetNameShort(date)).toBe("MDT");
+    });
+
+    it("should return MST for Arizona Standard Time", () => {
+      const date = DateTime.fromISO("2024-01-01T12:00:00", {zone: "America/Phoenix"});
+      expect(offsetNameShort(date)).toBe("MST");
+    });
+
+    it("should return MST for Arizona time even during daylight saving time", () => {
+      const date = DateTime.fromISO("2024-06-01T12:00:00", {zone: "America/Phoenix"});
+      expect(offsetNameShort(date)).toBe("MST");
+    });
+
+    it("should return CST for Central Standard Time", () => {
+      const date = DateTime.fromISO("2024-01-01T12:00:00", {zone: "America/Chicago"});
+      expect(offsetNameShort(date)).toBe("CST");
+    });
+
+    it("should return CDT for Central Daylight Time", () => {
+      const date = DateTime.fromISO("2024-06-01T12:00:00", {zone: "America/Chicago"});
+      expect(offsetNameShort(date)).toBe("CDT");
+    });
+
+    it("should return EST for Eastern Standard Time", () => {
+      const date = DateTime.fromISO("2024-01-01T12:00:00", {zone: "America/New_York"});
+      expect(offsetNameShort(date)).toBe("EST");
+    });
+
+    it("should return EDT for Eastern Daylight Time", () => {
+      const date = DateTime.fromISO("2024-06-01T12:00:00", {zone: "America/New_York"});
+      expect(offsetNameShort(date)).toBe("EDT");
+    });
+
+    it("should return full zone name for other zones", () => {
+      const date = DateTime.fromISO("2024-01-01T12:00:00", {zone: "Etc/GMT+2"});
+      expect(offsetNameShort(date)).toBe("Etc/GMT+2");
+    });
+
+    it("should return Unknown for an unrecognized timezone", () => {
+      const date = DateTime.fromISO("2024-01-01T12:00:00", {zone: "foo"});
+      expect(offsetNameShort(date)).toBe("Unknown");
     });
   });
 });

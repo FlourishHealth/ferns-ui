@@ -82,6 +82,39 @@ export function humanDate(
   }
 }
 
+// Mapping zone names to US timezone abbreviations
+const useZoneMap: {[key: string]: {standard: string; daylight?: string}} = {
+  "Pacific/Honolulu": {standard: "HST"}, // Hawaii Standard Time, no DST
+  "America/Anchorage": {standard: "AKST", daylight: "AKDT"}, // Alaska Time
+  "America/Los_Angeles": {standard: "PST", daylight: "PDT"}, // Pacific Time
+  "America/Denver": {standard: "MST", daylight: "MDT"}, // Mountain Time
+  "America/Phoenix": {standard: "MST"}, // Arizona Mountain Standard Time, no DST
+  "America/Chicago": {standard: "CST", daylight: "CDT"}, // Central Time
+  "America/New_York": {standard: "EST", daylight: "EDT"}, // Eastern Time
+};
+
+export function offsetNameShort(date: DateTime): string {
+  // Get the zone name
+  const zoneName = date.zoneName;
+
+  if (!zoneName) {
+    return "Unknown";
+  }
+
+  // Determine if it's daylight savings time
+  const isDaylightSavings = date.isInDST;
+
+  // Find the abbreviation from the offset map
+  const timezone = useZoneMap[zoneName];
+
+  if (!timezone) {
+    return zoneName ?? "Unknown";
+  }
+
+  // Return the appropriate abbreviation based on daylight savings time
+  return isDaylightSavings && timezone.daylight ? timezone.daylight : timezone.standard;
+}
+
 // Prints a human friendly date and time, e.g. "Tomorrow 9:00 AM", "Yesterday 9:00 AM", "Monday
 // 9:00 AM", "June 19 9:00 AM", "December 25, 2022 9:00 AM".
 export function humanDateAndTime(
@@ -97,7 +130,7 @@ export function humanDateAndTime(
   // This should maybe use printTime()
   let time = clonedDate.toFormat("h:mm a");
   if (showTimezone) {
-    time += ` ${clonedDate.offsetNameShort}`;
+    time += ` ${offsetNameShort(clonedDate)}`;
   }
   if (isTomorrow(date, {timezone})) {
     return `Tomorrow ${time}`;
@@ -243,7 +276,7 @@ export function printDateAndTime(
   }
   let dateString = clonedDate.toLocaleString(DateTime.DATETIME_SHORT);
   if (showTimezone) {
-    dateString += ` ${clonedDate.offsetNameShort}`;
+    dateString += ` ${offsetNameShort(clonedDate)}`;
   }
   return dateString;
 }
