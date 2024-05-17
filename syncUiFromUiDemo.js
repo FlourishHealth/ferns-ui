@@ -7,7 +7,7 @@
 const fs = require('fs');
 
 const sourcePackagePath = '../flourish/app/package.json';
-const targetPackagePath = 'packages/ui-dem/package.json';
+const targetPackagePath = 'packages/ui-demo/package.json';
 
 const sourcePackageJson = JSON.parse(fs.readFileSync(sourcePackagePath, 'utf8'));
 const targetPackageJson = JSON.parse(fs.readFileSync(targetPackagePath, 'utf8'));
