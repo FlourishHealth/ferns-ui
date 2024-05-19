@@ -1,6 +1,6 @@
 import React, {Context, createContext, useContext} from "react";
 
-import {TableContextProviderProps, TableContextType} from "./Common";
+import {TableContextProviderProps, TableContextType} from "../Common";
 
 const TableContext: Context<TableContextType> = createContext<TableContextType>({
   columns: [],

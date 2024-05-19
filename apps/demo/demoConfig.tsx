@@ -1,37 +1,46 @@
 import {
-  Avatar,
-  Badge,
-  Banner,
-  Box,
-  Button,
-  Card,
-  CheckBox,
-  Field,
-  FieldProps,
-  Heading,
-  Icon,
-  IconButton, Link, Modal, Pill, SegmentedControl, SelectList,
-  SideDrawer,
-  Spinner,
-  SplitPage,
-  Switch,
-  Table,
-  TapToEdit,
-  TextArea,
-  TextField,
-  Toast,
-  Tooltip
-} from "ferns-ui";
-import React from "react";
-
-import {
-  AvatarDemo,
-  AvatarInitials,
-  AvatarOutlines,
-  AvatarSizes,
-  BadgeDemo,
-  BadgeStories
+  AvatarConfiguration,
+  BadgeConfiguration,
+  BannerConfiguration,
+  BooleanFieldConfiguration,
+  BoxConfiguration,
+  ButtonConfiguration,
+  CardConfiguration,
+  CheckBoxConfiguration,
+  DateFieldConfiguration,
+  DateTimeFieldConfiguration,
+  DateTimeModalConfiguration,
+  MaskConfiguration,
+  ModalConfiguration,
+  MultiselectFieldConfiguration,
+  PaginationConfiguration,
+  PasswordFieldConfiguration,
+  PillConfiguration,
+  RadioConfiguration,
+  RadioFieldConfiguration,
+  SegmentedControlConfiguration,
+  SelectFieldConfiguration,
+  SideDrawerConfiguration,
+  SignatureFieldConfiguration,
+  SpinnerConfiguration,
+  SwitchConfiguration,
+  TableBadgeConfiguration,
+  TableBooleanConfiguration,
+  TableConfiguration,
+  TableDateConfiguration,
+  TableIconButtonConfiguration,
+  TableNumberConfiguration,
+  TableTextFieldConfiguration,
+  TableTitleConfiguration,
+  TapToEditConfiguration,
+  TextAreaConfiguration,
+  TextFieldConfiguration,
+  TimeFieldConfiguration,
+  ToastConfiguration,
+  TooltipConfiguration,
 } from "@stories";
+import {FieldProps} from "ferns-ui";
+import React from "react";
 
 export type DemoConfigStatus = "planned" | "inProgress" | "ready" | "notSupported";
 
@@ -42,14 +51,19 @@ interface DemoConfigurationBase {
   component: any; // TODO: make this typing better
   related: string[];
   description: string;
+  // Used for the index page if description is long.
+  shortDescription?: string;
+  a11yNotes: string[];
   category: string[];
   status: {
     documentation: DemoConfigStatus;
     figma: DemoConfigStatus;
+    figmaLink?: string;
     ios: DemoConfigStatus;
     android: DemoConfigStatus;
     web: DemoConfigStatus;
   };
+  additionalDocumentation?: {name: string; link: string}[];
   // Should match one of the interface names in common.json (children.[0].name)
   interfaceName: string;
   usage: {
@@ -100,1367 +114,90 @@ export interface DemoConfigurationProp {
 }
 
 export interface DemoConfiguration extends DemoConfigurationBase {
-  props: {children: DemoConfigurationProp[]};
+  props: any;
 }
 
+// const ChatBubbleConfiguration: DemoConfiguration = { name: "Chat bubble", component: ChatBubble,
+// related: ["Messages"], description: "A chat bubble component in UI design organizes and visually
+// represents messages in conversation threads, mimicking speech bubbles for intuitive
+// communication.", a11yNotes: [ "Chat bubbles are wonderfully accessible as-is.",
+// "Make sure to use colors that are accessible. The current design is accessible.", ], category:
+// ["Communication", "Feedback"], status: { documentation: "ready", figma: "ready", figmaLink: "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23454&mode=design&t=AKQ8wyFQBA4qC5eF-1",
+// ios: "ready", android: "ready", web: "ready", }, additionalDocumentation: [{name: "Github demo
+// link", link: "https://github.com/gestalt/gestalt"}], interfaceName: "ChatBubbleProps", usage: {
+// do: [ "Use the appropriate colors for each user group.",
+// "Provide dates with messages so that users will know when a message was received.", ], doNot:
+// ["Do not create custom bubble styles to use in one-off instances."], }, props: {}, demo:
+// (props) => <ChatBubbleDemo {...props} />, demoOptions: {}, stories: {}, testMatrix: {},
+// testMatrixDefaultProps: {}, };
+
+// const FilteredItemConfiguration: DemoConfiguration = { name: "Filtered item", component:
+// FilteredItem, related: ["Pills"], description: "A component that shows members, pods,
+// etc that have been filtered into a list. Users can interact with this component by dismissing it
+// (removing the filter) or occasionally, editing it.", a11yNotes: [], category: ["Filter",
+// "Utility"], status: { documentation: "ready", figma: "ready", figmaLink: "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23503&mode=design&t=iCiJI3xbrm6rrXPg-1",
+// ios: "ready", android: "ready", web: "ready", }, additionalDocumentation: [], interfaceName:
+// "FilteredItemProps", usage: { do: [ "Allow 8pt of space between each filtered item.",
+// "Use the same component between desktop and mobile.", "Truncate the text if it’s too long.", ],
+// doNot: [ "Don’t change the colors on the dismiss or edit icons.", "Filter for long strings (for
+// example, whole sentences).", "Wrap the text into two lines.", ], }, props: {}, demo:
+// (props) => <FilteredItemDemo {...props} />, demoOptions: {}, stories: {}, testMatrix: {},
+// testMatrixDefaultProps: {}, };
+
+// const MessageConfiguration: DemoConfiguration = { name: "Message", component: Message, related:
+// ["Avatar", "Chat bubble"], description: "This component allows the user to click into a specific
+// chat. There are separate variants for both devices and user groups.", a11yNotes: [], category:
+// ["Communication", "Feedback"], status: { documentation: "ready", figma: "ready", figmaLink: "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23418&mode=design&t=IZ8oGBzUmBzUtZMr-1",
+// ios: "ready", android: "ready", web: "ready", }, additionalDocumentation: [], interfaceName:
+// "MessageProps", usage: { do: [ "Use the patient variant for the member portal,
+// and the staff variant for the staff portal.", "Use the appropriate icons for the user groups in
+// the staff portal.", ], doNot: ["Do not create a new user group icon without checking with the
+// head of product first."], }, props: {}, demo: (props) => <MessageDemo {...props} />, demoOptions:
+// {}, stories: {}, testMatrix: {}, testMatrixDefaultProps: {}, };
+
 const Config: DemoConfigurationBase[] = [
-  {
-    name: "Avatar",
-    related: ["Profile Picture"],
-    description: "Avatars are used to represent a user visually.",
-    category: ["Some Category"],
-    component: Avatar,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: ["Use it"],
-      doNot: ["Not use it"],
-    },
-    interfaceName: "AvatarProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Initials: {
-        description:
-          "If there isn't a url provided or it doesn't load, Avatar defaults to the user's initials",
-        render: () => <AvatarInitials />,
-      },
-      Sizes: {render: () => <AvatarSizes />},
-      Outlines: {render: () => <AvatarOutlines />},
-    },
-    testMatrix: {
-      name: ["Tony Stark"],
-      outline: [true, false],
-      size: ["xs", "sm", "md", "lg", "xl"],
-      src: [undefined, "https://i.ibb.co/ZfCZrY8/keerthi.jpg"],
-    },
-  },
-
-  {
-    name: "Badge",
-    related: [],
-    description: "",
-    category: [""],
-    component: Badge,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: BadgeDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        title: {
-          type: "text",
-          defaultValue: "Some Text",
-        },
-        type: {
-          type: "select",
-          options: [
-            {label: "Info", value: "info"},
-            {label: "Error", value: "error"},
-            {label: "Warning", value: "warning"},
-            {label: "Success", value: "success"},
-            {label: "Neutral", value: "neutral"},
-            {label: "Custom", value: "custom"},
-          ],
-          defaultValue: "info",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Banner",
-    related: [],
-    description: "",
-    category: [""],
-    component: Banner,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Box",
-    related: [],
-    description: "",
-    category: [""],
-    component: Box,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Button",
-    related: [],
-    description: "",
-    category: [""],
-    component: Button,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Card",
-    related: [],
-    description: "",
-    category: [""],
-    component: Card,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "CheckBox",
-    related: [],
-    description: "",
-    category: [""],
-    component: CheckBox,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-
-  {
-    name: "Field",
-    related: [],
-    description: "",
-    category: [""],
-    component: Field,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-
-  {
-    name: "Heading",
-    related: [],
-    description: "",
-    category: [""],
-    component: Heading,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Icon",
-    related: [],
-    description: "",
-    category: [""],
-    component: Icon,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Icon Button",
-    related: [],
-    description: "",
-    category: [""],
-    component: IconButton,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Icon",
-    related: [],
-    description: "",
-    category: [""],
-    component: Icon,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Link",
-    related: [],
-    description: "",
-    category: [""],
-    component: Link,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-
-  {
-    name: "Modal",
-    related: [],
-    description: "",
-    category: [""],
-    component: Modal,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Pill",
-    related: [],
-    description: "",
-    category: [""],
-    component: Pill,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "SegmentedControl",
-    related: [],
-    description: "",
-    category: [""],
-    component: SegmentedControl,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "SelectList",
-    related: [],
-    description: "",
-    category: [""],
-    component: SelectList,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "SideDrawer",
-    related: [],
-    description: "",
-    category: [""],
-    component: SideDrawer,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Spinner",
-    related: [],
-    description: "",
-    category: [""],
-    component: Spinner,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "SplitPage",
-    related: [],
-    description: "",
-    category: [""],
-    component: SplitPage,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Switch",
-    related: [],
-    description: "",
-    category: [""],
-    component: Switch,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Table",
-    related: [],
-    description: "",
-    category: [""],
-    component: Table,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "TapToEdit",
-    related: [],
-    description: "",
-    category: [""],
-    component: TapToEdit,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "TextArea",
-    related: [],
-    description: "",
-    category: [""],
-    component: TextArea,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "TextField",
-    related: [],
-    description: "",
-    category: [""],
-    component: TextField,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Theme",
-    related: [],
-    description: "",
-    category: [""],
-    component: () => {},
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Toast",
-    related: [],
-    description: "",
-    category: [""],
-    component: Toast,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-  {
-    name: "Tooltip",
-    related: [],
-    description: "",
-    category: [""],
-    component: Tooltip,
-    status: {
-      documentation: "planned",
-      figma: "planned",
-      ios: "ready",
-      android: "ready",
-      web: "ready",
-    },
-    usage: {
-      do: [],
-      doNot: [],
-    },
-    interfaceName: "BadgeProps",
-    demo: AvatarDemo,
-    demoOptions: {
-      size: "md",
-      controls: {
-        backgroundColor: {
-          type: "select",
-          defaultValue: "primary",
-          options: [
-            {label: "Primary", value: "primary"},
-            {label: "Secondary", value: "secondary"},
-          ],
-        },
-        name: {
-          type: "text",
-          defaultValue: "Tony Stark",
-        },
-      },
-    },
-    stories: {
-      Badges: {
-        description:
-            "",
-        render: () => <BadgeStories />,
-      },
-
-    },
-    testMatrix: {
-    },
-  },
-
-
+  AvatarConfiguration,
+  BadgeConfiguration,
+  BannerConfiguration,
+  BooleanFieldConfiguration,
+  BoxConfiguration,
+  ButtonConfiguration,
+  CardConfiguration,
+  // ChatBubbleConfiguration,
+  CheckBoxConfiguration,
+  DateTimeModalConfiguration,
+  DateTimeFieldConfiguration,
+  DateFieldConfiguration,
+  // FilteredItemConfiguration,
+  MaskConfiguration,
+  // MessageConfiguration,
+  ModalConfiguration,
+  MultiselectFieldConfiguration,
+  PaginationConfiguration,
+  PasswordFieldConfiguration,
+  PillConfiguration,
+  RadioConfiguration,
+  RadioFieldConfiguration,
+  SegmentedControlConfiguration,
+  SelectFieldConfiguration,
+  SideDrawerConfiguration,
+  SignatureFieldConfiguration,
+  SpinnerConfiguration,
+  SwitchConfiguration,
+  TableConfiguration,
+  TableBadgeConfiguration,
+  TableBooleanConfiguration,
+  TableDateConfiguration,
+  TableIconButtonConfiguration,
+  TableNumberConfiguration,
+  TableTextFieldConfiguration,
+  TableTitleConfiguration,
+  TapToEditConfiguration,
+  TextAreaConfiguration,
+  TextFieldConfiguration,
+  TimeFieldConfiguration,
+  ToastConfiguration,
+  TooltipConfiguration,
 ];
 
 export const DemoConfig = Config.map((c) => ({

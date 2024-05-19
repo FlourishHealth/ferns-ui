@@ -5,7 +5,7 @@ const RootLayout = () => {
   return (
     <Stack>
       <Stack.Screen
-        name="(home)"
+        name="Ferns UI"
         options={{
           title: "Ferns UI Demo",
         }}
@@ -14,4 +14,5 @@ const RootLayout = () => {
   );
 };
 
+// eslint-disable-next-line import/no-default-export
 export default RootLayout;

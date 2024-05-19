@@ -7,7 +7,9 @@ import {Image, ImageResizeMode, Platform, Text, View} from "react-native";
 import {Box} from "./Box";
 import {AllColors, AvatarProps, IconName, UnsignedUpTo12} from "./Common";
 import {Icon} from "./Icon";
+import {isMobileDevice} from "./MediaQuery";
 import {ThemeContext} from "./Theme";
+import {Tooltip} from "./Tooltip";
 
 const sizes = {
   xs: 24,
@@ -25,7 +27,6 @@ const sizeIconPadding: {[id: string]: UnsignedUpTo12} = {
   xl: 2,
 };
 
-console.log("HI2");
 const statusIcons: {[id: string]: {icon: IconName; color: AllColors; label: string}} = {
   online: {icon: "circle", color: "green", label: "Online"},
   offline: {icon: "circle", color: "gray", label: "Offline"},
@@ -179,8 +180,6 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     );
   };
 
-  console.log("jkfjlkf");
-
   const avatar = (
     <Box height={height} position="relative" width={width}>
       <Box
@@ -239,18 +238,17 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     status = statusIcons[props.status]?.label;
   }
 
-  return <Box color="primary" height={100} width={100} />;
-  // if (status) {
-  //   // Need to wrap the tooltip so it doesn't expand to 100% width and render the tooltip off.
-  //   // Don't show the tooltips on mobile because they intercept the edit avatar clicks.
-  //   return (
-  //     <Box width={width}>
-  //       <Tooltip idealDirection="top" text={isMobileDevice() ? undefined : status}>
-  //         {avatar}
-  //       </Tooltip>
-  //     </Box>
-  //   );
-  // } else {
-  //   return avatar;
-  // }
+  if (status) {
+    // Need to wrap the tooltip so it doesn't expand to 100% width and render the tooltip off.
+    // Don't show the tooltips on mobile because they intercept the edit avatar clicks.
+    return (
+      <Box width={width}>
+        <Tooltip idealDirection="top" text={isMobileDevice() ? undefined : status}>
+          {avatar}
+        </Tooltip>
+      </Box>
+    );
+  } else {
+    return avatar;
+  }
 };

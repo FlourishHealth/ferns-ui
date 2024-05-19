@@ -1,5 +1,22 @@
-import {Box, OpenAPIProvider, TapToEdit} from "ferns-ui";
+import {DemoConfiguration} from "@config";
+import {Box, TapToEdit} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
+
+const TapDemo = (): ReactElement => {
+  return (
+    <TapToEdit
+      key="text"
+      name="text"
+      openApiField="name"
+      openApiModel="users"
+      setValue={() => {}}
+      title="Name"
+      type="text"
+      value="Luke Skywalker"
+      onSave={(): void => {}}
+    />
+  );
+};
 
 const TapStory = (): ReactElement => {
   const [bool, setBool] = useState(true);
@@ -189,25 +206,41 @@ const TapStory = (): ReactElement => {
   );
 };
 
-export const TapToEditStories = {
-  title: "TapToEdit",
-  component: TapToEdit,
-  stories: {
-    TapToEdit() {
-      return (
-        <Box color="white" width={300}>
-          <TapStory />
-        </Box>
-      );
-    },
-    TapToEditWithOpenAPI() {
-      return (
-        <Box color="white" width={300}>
-          <OpenAPIProvider specUrl="http://localhost:3000/openapi.json">
-            <TapStory />
-          </OpenAPIProvider>
-        </Box>
-      );
-    },
+export const TapToEditConfiguration: DemoConfiguration = {
+  name: "Tap to edit",
+  component: TapToEdit, // Replace with actual component reference
+  related: ["Tap to edit pattern", "Address tap-to-edit pattern"],
+  description:
+    "This element allows the user to see information and interact with an icon to edit it. See the pattern here.",
+  a11yNotes: [
+    "The user should be able to tab to the tap-to-edit icon and press enter/space to interact with it.",
+    "The user should be able to tap the label as well to interact with the element.",
+  ],
+  category: ["Data Entry", "Form"],
+  status: {
+    documentation: "ready",
+    figma: "ready",
+    figmaLink:
+      "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23478&mode=design&t=IZ8oGBzUmBzUtZMr-1",
+    ios: "ready",
+    android: "ready",
+    web: "ready",
   },
+  additionalDocumentation: [],
+  interfaceName: "TapToEditProps",
+  usage: {
+    do: [
+      "Display the information that will be edited.",
+      "If needed, update the font color to font-link.",
+    ],
+    doNot: ["Do not replace the icon."],
+  },
+  props: {},
+  demo: TapDemo,
+  demoOptions: {},
+  stories: {
+    "Tap to edit": {render: TapStory},
+  },
+  testMatrix: {},
+  testMatrixDefaultProps: {},
 };

@@ -1,7 +1,11 @@
+import {StorybookContainer} from "@components";
+import {DemoConfiguration} from "@config";
 import {CheckBox} from "ferns-ui";
 import React from "react";
 
-import {StorybookContainer} from "@components";
+const CheckboxDemo = () => {
+  return <CheckBox checked label="Checkbox With A Label" onChange={() => {}} />;
+};
 
 const Checkboxes = ({disabled}: {disabled: boolean}): React.ReactElement => {
   const [boolean, setBoolean] = React.useState(false);
@@ -15,14 +19,12 @@ const Checkboxes = ({disabled}: {disabled: boolean}): React.ReactElement => {
       <CheckBox
         checked={boolean}
         disabled={disabled}
-        id="check"
         onChange={(result) => setBoolean(result.value)}
       />
 
       <CheckBox
         checked={withLabel}
         disabled={disabled}
-        id="withLabel"
         label="With A Label"
         onChange={(result) => setWithLabel(result.value)}
       />
@@ -31,7 +33,6 @@ const Checkboxes = ({disabled}: {disabled: boolean}): React.ReactElement => {
         checked={primary}
         color="primary"
         disabled={disabled}
-        id="primary"
         label="Primary Color"
         labelColor="primary"
         onChange={(result) => setPrimary(result.value)}
@@ -40,7 +41,6 @@ const Checkboxes = ({disabled}: {disabled: boolean}): React.ReactElement => {
       <CheckBox
         checked={small}
         disabled={disabled}
-        id="small"
         label="Small"
         size="sm"
         onChange={(result) => setSmall(result.value)}
@@ -48,7 +48,6 @@ const Checkboxes = ({disabled}: {disabled: boolean}): React.ReactElement => {
 
       <CheckBox
         disabled={disabled}
-        id="small"
         indeterminate={indeterminate}
         label="Indeterminate"
         size="sm"
@@ -60,16 +59,48 @@ const Checkboxes = ({disabled}: {disabled: boolean}): React.ReactElement => {
   );
 };
 
-export const CheckBoxStories = {
-  title: "CheckBox",
+export const CheckBoxConfiguration: DemoConfiguration = {
+  name: "CheckBox",
   component: CheckBox,
-  stories: {
-    // eslint-disable-next-line react/display-name
-    "Plain Checkbox": function () {
-      return <Checkboxes disabled={false} />;
-    },
-    "Disabled Checkbox": function () {
-      return <Checkboxes disabled />;
-    },
+  related: ["Multiselect field", "Radio field"],
+  description:
+    "CheckBox is used for multiple choice selection. They are independent of each other in a list, and therefore, different from RadioButton, one selection does not affect other checkboxes in the same list.",
+  shortDescription: "CheckBox is used for multiple choice selection.",
+  a11yNotes: [
+    "Labels should be readable by screen readers.",
+    "Labels should be able to be clicked or tapped to check/uncheck the checkboxes.",
+    "Keyboards should be able to tab back and forth between the checkboxes.",
+    "The checkboxes should have a focus state.",
+  ],
+  category: ["Form", "Input"],
+  status: {
+    documentation: "ready",
+    figma: "ready",
+    figmaLink:
+      "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23370&mode=design&t=5bL5IFmWuWQlfRWv-1",
+    ios: "ready",
+    android: "ready",
+    web: "ready",
   },
+  additionalDocumentation: [{name: "NN/g article", link: "https://www.nngroup.com/articles/"}],
+  interfaceName: "CheckBoxProps",
+  usage: {
+    do: [
+      "Use a checkbox when selection doesn’t take immediate effect and requires form submission.",
+      "Keep text concise.",
+      "Use a tooltip if needed.",
+    ],
+    doNot: [
+      "Do NOT use checkboxes if the checkbox will have an immediate state change. Use switches instead.",
+    ],
+  },
+  props: {},
+  demo: CheckboxDemo,
+  demoOptions: {},
+  stories: {
+    Plain: {render: () => <Checkboxes disabled={false} />},
+    Disabled: {render: () => <Checkboxes disabled />},
+  },
+  testMatrix: {},
+  testMatrixDefaultProps: {},
 };

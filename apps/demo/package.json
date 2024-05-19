@@ -56,5 +56,28 @@
     "typedoc": "^0.25.12",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "private": true,
+  "eslintConfig": {
+    "extends": [
+      "plugin:ferns/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json",
+      "tsconfigRootDir": "./"
+    },
+    "rules": {
+      "@typescript-eslint/explicit-function-return-type": "off"
+    }
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "bracketSpacing": false,
+    "printWidth": 100,
+    "semi": true,
+    "singleQuote": false,
+    "trailingComma": "es5",
+    "useTabs": false
+  }
+
 }

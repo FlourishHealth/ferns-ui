@@ -2,9 +2,9 @@ import React, {Children, ReactElement} from "react";
 import {ScrollView} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
-import {Box} from "./Box";
-import {ColumnSortInterface, TableProps} from "./Common";
-import {PaginationControl} from "./Pagination";
+import {Box} from "../Box";
+import {ColumnSortInterface, TableProps} from "../Common";
+import {PaginationControl} from "../Pagination";
 import {TableContextProvider} from "./tableContext";
 
 export const Table = ({

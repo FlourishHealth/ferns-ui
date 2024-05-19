@@ -1,27 +1,30 @@
+import {DemoConfigStatus, DemoConfiguration, DemoConfigurationProp} from "@config";
 import {
   AllColors,
   Badge,
   Box,
-  Field, FontAwesome5IconName,
-  Heading, Icon,
+  Field,
+  FontAwesome5IconName,
+  Heading,
+  Icon,
   Table,
   TableHeader,
   TableHeaderCell,
   TableRow,
   Text,
 } from "ferns-ui";
-import {cloneDeep, startCase} from "lodash";
+import cloneDeep from "lodash/cloneDeep";
+import startCase from "lodash/startCase";
 import React, {useState} from "react";
 // @ts-ignore
 import {MarkdownView} from "react-native-markdown-view";
-
-import {DemoConfigStatus, DemoConfiguration, DemoConfigurationProp} from "@config";
 
 const ComponentProps = ({props}: {props: DemoConfigurationProp[]}) => {
   // TODO: setup these widths for mobile too.
 
   // sort props into all the ones that are required first, then the rest
   const sortProps = (p: DemoConfigurationProp[]): DemoConfigurationProp[] => {
+    if (!p) return [];
     return p.sort((a, b) => {
       // First, sort by optionality (non-optional first)
       if (a.flags.isOptional !== b.flags.isOptional) {
@@ -217,44 +220,57 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
   );
 };
 
-const ComponentStatusSection = ({status, label}: {status: DemoConfigStatus, label: string}): React.ReactElement => {
+const ComponentStatusSection = ({
+  status,
+  label,
+}: {
+  status: DemoConfigStatus;
+  label: string;
+}): React.ReactElement => {
   let iconName: FontAwesome5IconName;
-  let color: AllColors = "gray"
+  let color: AllColors = "gray";
   switch (status) {
     case "inProgress":
-      iconName = "circle"
-        break;
+      iconName = "circle";
+      break;
     case "ready":
-        iconName = "check-circle"
-        color="green"
-        break;
+      iconName = "check-circle";
+      color = "green";
+      break;
     case "notSupported":
-        iconName = "times-circle"
-        color="red"
-        break;
+      iconName = "times-circle";
+      color = "red";
+      break;
     case "planned":
-      iconName = "calendar"
-        break;
+      iconName = "calendar";
+      break;
   }
-  return <Box direction={"row"} alignItems="center" marginRight={4}><Box marginRight={1}><Text>{label}:</Text></Box><Icon name={iconName} size="md" color={color}/></Box>;
-}
+  return (
+    <Box alignItems="center" direction="row" marginRight={4}>
+      <Box marginRight={1}>
+        <Text>{label}:</Text>
+      </Box>
+      <Icon color={color} name={iconName} size="md" />
+    </Box>
+  );
+};
 
 const ComponentStatus = ({config}: {config: DemoConfiguration}): React.ReactElement | null => {
   return (
-      <Box marginTop={4} marginBottom={4}>
-          <Box marginBottom={2}>
+    <Box marginBottom={4} marginTop={4}>
+      <Box marginBottom={2}>
         <Heading size="sm">Status</Heading>
-          </Box>
-        <Box direction={"row"}>
-        <ComponentStatusSection status={config.status.documentation} label={"Documentation"} />
-        <ComponentStatusSection status={config.status.figma} label={"Figma"} />
-        <ComponentStatusSection status={config.status.web} label={"Web"} />
-        <ComponentStatusSection status={config.status.ios} label={"iOS"} />
-        <ComponentStatusSection status={config.status.android} label={"Android"} />
-        </Box>
       </Box>
-  )
-}
+      <Box direction="row">
+        <ComponentStatusSection label="Documentation" status={config.status.documentation} />
+        <ComponentStatusSection label="Figma" status={config.status.figma} />
+        <ComponentStatusSection label="Web" status={config.status.web} />
+        <ComponentStatusSection label="iOS" status={config.status.ios} />
+        <ComponentStatusSection label="Android" status={config.status.android} />
+      </Box>
+    </Box>
+  );
+};
 
 export const ComponentPage = ({config}: {config: DemoConfiguration}): React.ReactElement => {
   return (
@@ -264,7 +280,7 @@ export const ComponentPage = ({config}: {config: DemoConfiguration}): React.Reac
       </Box>
       <Box marginBottom={4}>
         <Box marginBottom={2}>
-        <Heading size="sm">Description</Heading>
+          <Heading size="sm">Description</Heading>
         </Box>
         <MarkdownView>{config.description}</MarkdownView>
       </Box>
@@ -274,14 +290,16 @@ export const ComponentPage = ({config}: {config: DemoConfiguration}): React.Reac
       {Boolean(config.related.length) && (
         <Box marginBottom={4}>
           <Box marginBottom={2}>
-          <Heading size="sm">Related:</Heading>
-
+            <Heading size="sm">Related</Heading>
           </Box>
-          <Text>{config.related}</Text>
+          <Text>{config.related.join(", ")}</Text>
         </Box>
       )}
+      <Box marginBottom={2}>
+        <Heading size="sm">Examples</Heading>
+      </Box>
       <ComponentStories config={config} />
-      <ComponentTestMatrix config={config} />
+      {/* <ComponentTestMatrix config={config} /> */}
     </Box>
   );
 };
