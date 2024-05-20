@@ -241,11 +241,18 @@ export function printDateAndTime(
   } catch (error: any) {
     throw new Error(`printDateAndTime: ${error.message}`);
   }
-  let dateString = clonedDate.toLocaleString(DateTime.DATETIME_SHORT);
   if (showTimezone) {
-    dateString += ` ${clonedDate.offsetNameShort}`;
+    return clonedDate.toLocaleString({
+      timeZoneName: "short",
+      hour: "numeric",
+      minute: "2-digit",
+      month: "numeric",
+      day: "numeric",
+      year: "numeric",
+    });
+  } else {
+    return clonedDate.toLocaleString(DateTime.DATETIME_SHORT);
   }
-  return dateString;
 }
 
 // Prints a date range in the format of M/D/YY HH:mm A - M/D/YY HH:mm A EST, taking timezones into
