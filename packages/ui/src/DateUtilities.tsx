@@ -95,9 +95,15 @@ export function humanDateAndTime(
     throw new Error(`humanDateAndTime: ${error.message}`);
   }
   // This should maybe use printTime()
-  let time = clonedDate.toFormat("h:mm a");
+  let time: string = "";
   if (showTimezone) {
-    time += ` ${clonedDate.offsetNameShort}`;
+    time = clonedDate.toLocaleString({
+      timeZoneName: "short",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+  } else {
+    time = clonedDate.toFormat("h:mm a");
   }
   if (isTomorrow(date, {timezone})) {
     return `Tomorrow ${time}`;
