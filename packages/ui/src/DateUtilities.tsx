@@ -242,7 +242,14 @@ export function printDateAndTime(
     throw new Error(`printDateAndTime: ${error.message}`);
   }
   if (showTimezone) {
-    return clonedDate.toLocaleString(DateTime.TIME_WITH_SHORT_OFFSET);
+    return clonedDate.toLocaleString({
+      timeZoneName: "short",
+      hour: "numeric",
+      minute: "2-digit",
+      month: "numeric",
+      day: "numeric",
+      year: "numeric",
+    });
   } else {
     return clonedDate.toLocaleString(DateTime.DATETIME_SHORT);
   }
