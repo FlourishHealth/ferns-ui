@@ -1,1 +1,0 @@
-{"ast":null,"code":"export { default } from \"./web/ClipboardModule\";","map":{"version":3,"sources":["../src/ExpoClipboard.web.ts"],"names":[],"mappings":"AAAA,SAAS,OAAO","sourcesContent":["export { default } from './web/ClipboardModule';\n"],"sourceRoot":""},"metadata":{},"sourceType":"module"}

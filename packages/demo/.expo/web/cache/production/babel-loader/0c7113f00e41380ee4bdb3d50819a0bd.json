@@ -1,1 +1,0 @@
-{"ast":null,"code":"'use strict';export*from'./SharedTransition';export*from'./ProgressTransitionManager';","map":{"version":3,"sources":["index.ts"],"names":[],"mappings":"AAAA,YAAY,CACZ,WAAc,oBAAoB,CAClC,WAAc,6BAA6B","sourcesContent":["'use strict';\nexport * from './SharedTransition';\nexport * from './ProgressTransitionManager';\n"]},"metadata":{},"sourceType":"module"}
