@@ -267,14 +267,25 @@ export function printDateAndTime(
 export function printDateRange(
   start: string,
   end: string,
-  {timezone, showTimezone = true}: {timezone: string; showTimezone?: boolean}
+  {
+    timezone,
+    showTimezone = true,
+    timeOnly,
+  }: {timezone: string; showTimezone?: boolean; timeOnly?: boolean}
 ): string {
   const startDate = printDate(start, {timezone, showTimezone: false});
   const endDate = printDate(end, {timezone, showTimezone: false});
 
   const startTime = printTime(start, {timezone, showTimezone: false});
   const endTime = printTime(end, {timezone, showTimezone});
-  if (startDate === endDate) {
+  if (timeOnly) {
+    if (startDate !== endDate) {
+      console.warn(
+        `printDateRange: printing only time but start and end dates are different: ${start} - ${end}`
+      );
+    }
+    return `${startTime} - ${endTime}`;
+  } else if (startDate === endDate) {
     return `${startDate} ${startTime} - ${endTime}`;
   } else {
     return `${startDate} ${startTime} - ${endDate} ${endTime}`;
