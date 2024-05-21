@@ -27,7 +27,7 @@ const TapStory = (): ReactElement => {
   });
   const [url, setURL] = useState("https://en.wikipedia.org/wiki/React_Native#Implementation");
   return (
-    <Box direction="column" display="flex" height="100%" width="100%">
+    <Box direction="column" display="flex" height="100%" scroll width="100%">
       <TapToEdit
         key="text"
         name="text"
@@ -42,7 +42,7 @@ const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
-        key="text"
+        key="texttooltip"
         name="text"
         openApiField="name"
         openApiModel="users"
@@ -56,7 +56,7 @@ const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
-        key="text"
+        key="textarea"
         name="textarea"
         openApiField="name"
         openApiModel="users"
@@ -196,14 +196,14 @@ export const TapToEditStories = {
   stories: {
     TapToEdit() {
       return (
-        <Box color="white" width={300}>
+        <Box color="white" height="100%" width={300}>
           <TapStory />
         </Box>
       );
     },
     TapToEditWithOpenAPI() {
       return (
-        <Box color="white" width={300}>
+        <Box color="white" height="100%" width={300}>
           <OpenAPIProvider specUrl="http://localhost:3000/openapi.json">
             <TapStory />
           </OpenAPIProvider>
