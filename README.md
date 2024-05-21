@@ -2,22 +2,50 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ffd05ee5-fbcf-417e-8455-45ea15447361/deploy-status)](https://app.netlify.com/sites/ferns-ui/deploys)
 
-This package gives you a consistent React Native and React Native Web UI, along with theming support. It's primarily
-designed to work with Expo.  It does this  by creating a higher level abstraction over both and providing components
-that work the same on all supported platforms. For example, instead of using
-`<div>` and `<View>`, you use `<Box>` which provides a flexbox-first layout system,
-translated to `<div>` and `<View>`.
+## Why Ferns UI?
+Ferns UI provides a consistent UI for React Native and React Native Web, with
+theming support, primarily designed for Expo. It abstracts both platforms, 
+offering components that work uniformly across all supported environments. 
+For example, instead of using <div> and <View>, you use <Box>, which 
+translates to a flexbox-first layout system.
 
-`ferns-ui` also provides an abstraction for many of the features of native and web,
-such as Camera, Permissions, etc. This way you can write apps that work similarly
-on all 3 platforms.
+Ideal for designers and developers who value clarity, Ferns UI offers a 
+framework for efficient and harmonious designs. Our vision extends beyond a 
+User Interface Library to a User Experience Library, including common UX 
+patterns like login flows, allowing you to focus on unique aspects of your app.
 
-`ferns-ui` is Typescript first.
+Join us in embracing a design philosophy that prioritizes clarity and 
+coherence. With Ferns UI, build stunning applications with seamless 
+user experiences.
 
-`ferns-ui` supports theming, allowing you to change the colors and fonts of the
-components.
+## Our Philosophy
+Ferns UI streamlines design by reducing unnecessary choices, allowing you to 
+create beautiful, functional interfaces without distraction. For example, 
+buttons come in a limited set of colors, with no options for custom colors,
+ensuring consistency.
 
-Check out the demo app for easily seeing how the UIs work in iOS/Android/Web in packages/ui-demo
+## Consistent Layouts
+Our layout system, built around the Box component and other layout elements, 
+ensures flexible yet uniform design structures.
+
+## Unique Interface Elements
+Ferns UI components follow strict guidelines for consistency. For instance, 
+you can't add a margin to Text. Instead, you wrap the Text in a Box and add 
+the margin to the Box, maintaining a clean and predictable design language.
+
+## Accessibility
+Accessibility is a core principle of Ferns UI. Our components are designed to 
+be fully accessible out of the box, following best practices to ensure that 
+all users, including those with disabilities, have a seamless experience. 
+
+## Developer Experience
+Ferns UI is designed with a TypeScript-first approach, prioritizing an 
+excellent developer experience. Our consistent API across all components 
+ensures ease of learning and use. This makes it simple to design screens 
+that work seamlessly across web and mobile, with built-in support for 
+differentiating based on screen size and format.
+
+Check out the demo app for easily seeing how the UIs work in iOS/Android/Web in apps/demo.
 
 You can see the [web demo here](https://ferns-ui.netlify.app)
 

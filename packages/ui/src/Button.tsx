@@ -1,6 +1,6 @@
 import debounce from "lodash/debounce";
 import React, {useContext, useState} from "react";
-import {ActivityIndicator, Pressable, View} from "react-native";
+import {ActivityIndicator, Pressable} from "react-native";
 
 import {Box} from "./Box";
 import {ButtonProps, Color, UnifiedTheme} from "./Common";
@@ -34,7 +34,6 @@ const HEIGHTS = {
 };
 
 export const Button = ({
-  alignSelf,
   disabled = false,
   type = "solid",
   loading: propsLoading,
@@ -110,8 +109,9 @@ export const Button = ({
 
   const renderButton = () => {
     return (
-      <View style={{alignSelf: inline === true ? undefined : alignSelf}}>
+      <>
         <Pressable
+          accessibilityRole="button"
           disabled={disabled || loading}
           style={{
             alignSelf: inline === true ? undefined : "stretch",
@@ -180,7 +180,7 @@ export const Button = ({
           )}
         </Pressable>
         {Boolean(withConfirmation) && renderConfirmation()}
-      </View>
+      </>
     );
   };
 

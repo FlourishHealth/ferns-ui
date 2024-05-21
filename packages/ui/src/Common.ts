@@ -1,7 +1,7 @@
 import {SaveFormat} from "expo-image-manipulator";
 import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
 import {ListRenderItemInfo, StyleProp, ViewStyle} from "react-native";
-import {DimensionValue, FlexStyle} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
+import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
 
 import {SelectListOptions} from "./SelectList";
@@ -2656,7 +2656,6 @@ export interface BodyProps {
 }
 
 export interface ButtonProps {
-  alignSelf?: FlexStyle["alignSelf"];
   text: string;
   // TODO make this work for all colors
   color?: ButtonColor | Color;
