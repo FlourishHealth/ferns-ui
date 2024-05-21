@@ -22,7 +22,7 @@ const TapToEditTitle = ({
   description?: string;
 }): ReactElement => {
   return (
-    <Box flex="grow" marginBottom={2}>
+    <Box flex="grow" justifyContent="center">
       <Text weight="bold">{title}:</Text>
       {Boolean(description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing) && (
         <Text color="gray" size="sm">
@@ -232,7 +232,11 @@ export const TapToEdit = ({
           />
         )}
         <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>
-          <Box flex="grow" justifyContent="start" onClick={isClickable ? openLink : undefined}>
+          <Box
+            justifyContent="start"
+            marginLeft={fieldProps?.type === "textarea" ? 4 : 0}
+            onClick={isClickable ? openLink : undefined}
+          >
             <Text
               align={fieldProps?.type === "textarea" ? "left" : "right"}
               underline={isClickable}
