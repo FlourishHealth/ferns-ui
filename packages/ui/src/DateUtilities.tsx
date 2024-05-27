@@ -95,9 +95,15 @@ export function humanDateAndTime(
     throw new Error(`humanDateAndTime: ${error.message}`);
   }
   // This should maybe use printTime()
-  let time = clonedDate.toFormat("h:mm a");
+  let time: string = "";
   if (showTimezone) {
-    time += ` ${clonedDate.offsetNameShort}`;
+    time = clonedDate.toLocaleString({
+      timeZoneName: "short",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+  } else {
+    time = clonedDate.toFormat("h:mm a");
   }
   if (isTomorrow(date, {timezone})) {
     return `Tomorrow ${time}`;
@@ -241,11 +247,18 @@ export function printDateAndTime(
   } catch (error: any) {
     throw new Error(`printDateAndTime: ${error.message}`);
   }
-  let dateString = clonedDate.toLocaleString(DateTime.DATETIME_SHORT);
   if (showTimezone) {
-    dateString += ` ${clonedDate.offsetNameShort}`;
+    return clonedDate.toLocaleString({
+      timeZoneName: "short",
+      hour: "numeric",
+      minute: "2-digit",
+      month: "numeric",
+      day: "numeric",
+      year: "numeric",
+    });
+  } else {
+    return clonedDate.toLocaleString(DateTime.DATETIME_SHORT);
   }
-  return dateString;
 }
 
 // Prints a date range in the format of M/D/YY HH:mm A - M/D/YY HH:mm A EST, taking timezones into
@@ -254,14 +267,25 @@ export function printDateAndTime(
 export function printDateRange(
   start: string,
   end: string,
-  {timezone, showTimezone = true}: {timezone: string; showTimezone?: boolean}
+  {
+    timezone,
+    showTimezone = true,
+    timeOnly,
+  }: {timezone: string; showTimezone?: boolean; timeOnly?: boolean}
 ): string {
   const startDate = printDate(start, {timezone, showTimezone: false});
   const endDate = printDate(end, {timezone, showTimezone: false});
 
   const startTime = printTime(start, {timezone, showTimezone: false});
   const endTime = printTime(end, {timezone, showTimezone});
-  if (startDate === endDate) {
+  if (timeOnly) {
+    if (startDate !== endDate) {
+      console.warn(
+        `printDateRange: printing only time but start and end dates are different: ${start} - ${end}`
+      );
+    }
+    return `${startTime} - ${endTime}`;
+  } else if (startDate === endDate) {
     return `${startDate} ${startTime} - ${endTime}`;
   } else {
     return `${startDate} ${startTime} - ${endDate} ${endTime}`;

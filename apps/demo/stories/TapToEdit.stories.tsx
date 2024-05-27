@@ -27,7 +27,7 @@ const TapStory = (): ReactElement => {
   const [select, setSelect] = useState("Option1");
   const [multiselect, setMultiselect] = useState(["Option2"]);
   const [textArea, setTextArea] = useState(
-    "Dunder Mifflin ipsum dolor sit amet, beet farm consectetur adipiscing elit. That's what she said. Regional Manager Michael Scott no God please no, always I want people to be afraid of how much they love me. Bears, beets, Battlestar Galactica. Assistant to the Regional Manager Dwight Schrute identity theft is not a joke, Jim! Millions of families suffer every year!\n" +
+    "Dunder Mifflin ipsum dolor sit amet, beet farm consectetur adipiscing elit. That's what she said. Regional Manager Michael Scott, always I want people to be afraid of how much they love me. Bears, beets, Battlestar Galactica. Assistant to the Regional Manager Dwight Schrute identity theft is not a joke, Jim! Millions of families suffer every year!\n" +
       "\n" +
       "Fact. Bears eat beets. Bears, beets, Battlestar Galactica. Did I stutter? Sometimes I'll start a sentence and I don't even know where it's going. I just hope I find it along the way. I am Beyonce, always. I'm not superstitious, but I am a little stitious.\n" +
       "\n" +
@@ -44,7 +44,7 @@ const TapStory = (): ReactElement => {
   });
   const [url, setURL] = useState("https://en.wikipedia.org/wiki/React_Native#Implementation");
   return (
-    <Box direction="column" display="flex" height="100%" width="100%">
+    <Box direction="column" display="flex" height="100%" scroll width="100%">
       <TapToEdit
         key="text"
         name="text"
@@ -83,6 +83,20 @@ const TapStory = (): ReactElement => {
         value={text}
         onSave={(value): void => {
           setText(value);
+        }}
+      />
+      <TapToEdit
+        key="textarea"
+        name="textarea"
+        openApiField="name"
+        openApiModel="users"
+        setValue={setTextArea}
+        showDescriptionAsTooltip
+        title="Text Area Tooltip"
+        type="textarea"
+        value={textArea}
+        onSave={(value): void => {
+          setTextArea(value);
         }}
       />
       <TapToEdit

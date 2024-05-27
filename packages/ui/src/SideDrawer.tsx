@@ -2,15 +2,15 @@ import React, {ReactElement} from "react";
 import {Platform, SafeAreaView, StyleProp, ViewStyle} from "react-native";
 import {Drawer} from "react-native-drawer-layout";
 
+import {Box} from "./Box";
 import {SideDrawerProps} from "./Common";
-import {isMobileDevice} from "./MediaQuery";
 
 const DEFAULT_STYLES: StyleProp<ViewStyle> = {
   width: Platform.OS === "web" ? "40%" : "95%",
+  height: "100%",
   backgroundColor: "lightgray",
   borderWidth: 1,
   borderColor: "gray",
-  overflow: isMobileDevice() ? undefined : "scroll",
 };
 
 export const SideDrawer = ({
@@ -26,26 +26,19 @@ export const SideDrawer = ({
   const renderDrawerContent = (): ReactElement => {
     return <SafeAreaView>{renderContent()}</SafeAreaView>;
   };
-
   return (
-    <Drawer
-      drawerPosition={position}
-      drawerStyle={[
-        DEFAULT_STYLES,
-        drawerStyles,
-        {
-          display: Platform.OS === "web" && !isOpen ? "none" : "flex",
-          right: position === "right" ? 0 : undefined,
-          left: position === "left" ? 0 : undefined,
-        },
-      ]}
-      drawerType={drawerType}
-      open={isOpen}
-      renderDrawerContent={renderDrawerContent}
-      onClose={onClose}
-      onOpen={onOpen}
-    >
-      {children}
-    </Drawer>
+    <Box height="100%" overflow="hidden" width="100%">
+      <Drawer
+        drawerPosition={position}
+        drawerStyle={[DEFAULT_STYLES, drawerStyles]}
+        drawerType={drawerType}
+        open={isOpen}
+        renderDrawerContent={renderDrawerContent}
+        onClose={onClose}
+        onOpen={onOpen}
+      >
+        {children}
+      </Drawer>
+    </Box>
   );
 };

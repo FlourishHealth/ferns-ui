@@ -6,24 +6,27 @@
 
 const fs = require('fs');
 
-const sourcePackagePath = 'packages/ui-demo/package.json';
-const targetPackagePath = 'packages/ui/package.json';
+const sourcePackagePath = '../flourish/app/package.json';
+const targetPackagePath = 'packages/ui-demo/package.json';
 
-// Read the source and target package.json files
-const sourcePackage = JSON.parse(fs.readFileSync(sourcePackagePath, 'utf8'));
-const targetPackage = JSON.parse(fs.readFileSync(targetPackagePath, 'utf8'));
+const sourcePackageJson = JSON.parse(fs.readFileSync(sourcePackagePath, 'utf8'));
+const targetPackageJson = JSON.parse(fs.readFileSync(targetPackagePath, 'utf8'));
 
-// Update the versions of dependencies in the target package.json
-// to match the versions in the source package.json
-['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies'].forEach(depType => {
-    if (targetPackage[depType] && sourcePackage[depType]) {
-        Object.keys(targetPackage[depType]).forEach(dep => {
-            if (sourcePackage[depType][dep]) {
-                targetPackage[depType][dep] = sourcePackage[depType][dep];
-            }
-        });
+// make a list of all the dependencies and their corresponding versions from the source
+const sourceDependencies = {
+  ...sourcePackageJson.dependencies,
+  ...sourcePackageJson.devDependencies,
+};
+
+['dependencies', 'devDependencies'].forEach((key) => {
+    if (!targetPackageJson[key]) {
+        return;
     }
+    Object.keys(targetPackageJson[key]).forEach((dependency) => {
+        if (sourceDependencies[dependency]) {
+            targetPackageJson[key][dependency] = sourceDependencies[dependency];
+        }
+    });
 });
 
-// Write the updated target package.json back to the file
-fs.writeFileSync(targetPackagePath, JSON.stringify(targetPackage, null, 2));
+fs.writeFileSync(targetPackagePath, JSON.stringify(targetPackageJson, null, 2));
