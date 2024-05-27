@@ -86,14 +86,10 @@ interface DemoConfigurationBase {
   stories: {
     [name: string]: {
       description?: string;
+      showInDemo?: boolean; // TODO filter in Demo site
       render: () => React.ReactElement | null;
     };
   };
-  // List all the props and values you want matrixed together. One component will be rendered per
-  // combination.
-  testMatrix?: {[prop: string]: any[]};
-  // Default props applied to every test matrix component. Useful for required props.
-  testMatrixDefaultProps?: {[prop: string]: any};
 }
 
 export interface DemoConfigurationProp {

@@ -1,7 +1,10 @@
 import {Stack} from "expo-router";
+import {useStoredState} from "ferns-ui";
 import React from "react";
 
 const RootLayout = () => {
+  const [devMode] = useStoredState<boolean>("devMode", false);
+  console.log(devMode);
   return (
     <Stack>
       <Stack.Screen

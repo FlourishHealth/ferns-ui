@@ -1,7 +1,7 @@
 {
   "name": "demo",
   "version": "1.0.0",
-  "main": "expo-router/entry",
+  "main": "index.js",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,38 +9,37 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "expo": "~50.0.14",
-    "expo-constants": "~15.4.6",
-    "expo-linking": "^6.2.2",
-    "expo-router": "~3.4.9",
-    "expo-status-bar": "~1.11.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-native": "0.73.6",
-    "react-native-safe-area-context": "4.8.2",
-    "react-native-screens": "~3.29.0",
-    "react-native-web": "~0.19.6",
     "crypto-browserify": "^3.12.0",
+    "expo": "~51.0.8",
+    "expo-constants": "~16.0.1",
+    "expo-crypto": "~13.0.2",
+    "expo-linking": "^6.2.2",
+    "expo-router": "~3.5.14",
+    "expo-status-bar": "~1.12.1",
     "ferns-ui": "*",
     "lodash": "^4.17.21",
     "mdurl": "^2.0.0",
-    "react-native-markdown-view": "^1.1.4",
-    "stream-browserify": "^3.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-keyed-flatten-children": "^3.0.0",
+    "react-native": "0.74.1",
     "react-native-haptic-feedback": "^2.0.3",
     "react-native-hyperlink": "^0.0.22",
+    "react-native-markdown-view": "^1.1.4",
+    "react-native-safe-area-context": "4.10.1",
+    "react-native-screens": "3.31.1",
     "react-native-swiper-flatlist": "^3.2.3",
-    "swiper": "^11.0.6",
-    "expo-crypto": "~13.0.2"
+    "react-native-web": "~0.19.6",
+    "stream-browserify": "^3.0.0",
+    "swiper": "^11.0.6"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.0",
-    "typedoc": "^0.25.12",
     "@babel/core": "^7.24.5",
     "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
     "@expo/config-plugins": "~8.0.0",
     "@expo/webpack-config": "^19.0.1",
     "@shopify/flash-list": "1.6.4",
+    "@types/lodash": "^4.17.0",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "eslint": "^8.57.0",
@@ -56,17 +55,9 @@
     "eslint-plugin-react-perf": "^3.3.2",
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "eslint-plugin-unused-imports": "3.2.0",
-    "expo": "~51.0.8",
-    "expo-status-bar": "~1.12.1",
     "postcss": "8.4.38",
     "prettier": "^3.2.5",
-    "react-keyed-flatten-children": "^3.0.0",
-    "react-native-haptic-feedback": "^2.0.3",
-    "react-native-hyperlink": "^0.0.22",
-    "react-native-safe-area-context": "4.10.1",
-    "react-native-swiper-flatlist": "^3.2.4",
-    "react-native-web": "~0.19.10",
-    "swiper": "^11.0.6",
+    "typedoc": "^0.25.12",
     "typescript": "~5.3.3"
   },
   "private": true,
@@ -98,5 +89,4 @@
   "engine": {
     "node": "18"
   }
-
 }

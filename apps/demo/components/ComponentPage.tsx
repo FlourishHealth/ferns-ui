@@ -19,6 +19,8 @@ import React, {useState} from "react";
 // @ts-ignore
 import {MarkdownView} from "react-native-markdown-view";
 
+import {ErrorBoundary} from "./ErrorBoundary";
+
 const ComponentProps = ({props}: {props: DemoConfigurationProp[]}) => {
   // TODO: setup these widths for mobile too.
 
@@ -96,7 +98,7 @@ const ComponentStories = ({config}: {config: DemoConfiguration}): React.ReactEle
               <MarkdownView>{config.stories[s]?.description}</MarkdownView>
             )}
             <Box border="darkGray" padding={4} rounding={4}>
-              {config.stories[s]?.render()}
+              <ErrorBoundary>{config.stories[s]?.render()}</ErrorBoundary>
             </Box>
           </Box>
         )
@@ -105,62 +107,56 @@ const ComponentStories = ({config}: {config: DemoConfiguration}): React.ReactEle
   );
 };
 
-const ComponentTestMatrix = ({config}: {config: DemoConfiguration}): React.ReactElement | null => {
-  // TODO: accordion this whole thing, default folded up, just for testing.
-  function generateCombinations(testMatrix: {[prop: string]: any[]}): any[] {
-    const keys = Object.keys(testMatrix);
-    const generate = (objIndex: number, prevCombination: any): any[] => {
-      if (objIndex === keys.length) {
-        return [prevCombination];
-      }
-
-      const key = keys[objIndex];
-      const values = testMatrix[key];
-      const allCombinations: any[] = [];
-
-      for (const value of values) {
-        const combination = {...prevCombination, [key]: value};
-        const combinationsFromHere = generate(objIndex + 1, combination);
-        allCombinations.push(...combinationsFromHere);
-      }
-
-      return allCombinations;
-    };
-
-    return generate(0, {});
-  }
-
-  if (!config.testMatrix || !Object.keys(config.testMatrix ?? {}).length) {
-    return null;
-  }
-
-  const combinations = generateCombinations(config.testMatrix);
-
-  // TODO: we should filter out any combinations that only have a single value (e.g. default
-  // values for required props)
-  const generateTitleForCombination = (combination: {[prop: string]: any}): string =>
-    Object.entries(combination)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join(" - ");
-
-  const Component = config.component;
-
-  return (
-    <Box>
-      <Box marginBottom={4}>
-        <Heading>Testing Matrix</Heading>
-      </Box>
-      {combinations.map((combo) => (
-        <Box key={generateTitleForCombination(combo)} marginBottom={2}>
-          <Box marginBottom={1}>
-            <Heading size="sm">{generateTitleForCombination(combo)}</Heading>
-          </Box>
-          <Component {...combo} />
-        </Box>
-      ))}
-    </Box>
-  );
-};
+// const ComponentTestMatrix = ({config}: {config: DemoConfiguration}): React.ReactElement | null => {
+//   // TODO: accordion this whole thing, default folded up, just for testing.
+//   function generateCombinations(testMatrix: {[prop: string]: any[]}): any[] {
+//     const keys = Object.keys(testMatrix);
+//     const generate = (objIndex: number, prevCombination: any): any[] => {
+//       if (objIndex === keys.length) {
+//         return [prevCombination];
+//       }
+//
+//       const key = keys[objIndex];
+//       const values = testMatrix[key];
+//       const allCombinations: any[] = [];
+//
+//       for (const value of values) {
+//         const combination = {...prevCombination, [key]: value};
+//         const combinationsFromHere = generate(objIndex + 1, combination);
+//         allCombinations.push(...combinationsFromHere);
+//       }
+//
+//       return allCombinations;
+//     };
+//
+//     return generate(0, {});
+//   }
+//
+//   const combinations: any[] = [];
+//
+//   const generateTitleForCombination = (combination: {[prop: string]: any}): string =>
+//     Object.entries(combination)
+//       .map(([key, value]) => `${key}: ${value}`)
+//       .join(" - ");
+//
+//   const Component = config.component;
+//
+//   return (
+//     <Box>
+//       <Box marginBottom={4}>
+//         <Heading>Testing Matrix</Heading>
+//       </Box>
+//       {combinations.map((combo) => (
+//         <Box key={generateTitleForCombination(combo)} marginBottom={2}>
+//           <Box marginBottom={1}>
+//             <Heading size="sm">{generateTitleForCombination(combo)}</Heading>
+//           </Box>
+//           <Component {...combo} />
+//         </Box>
+//       ))}
+//     </Box>
+//   );
+// };
 
 const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
   const convertControls = (controls: any): {[key: string]: any} => {
@@ -190,7 +186,7 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
         padding={4}
         rounding={4}
       >
-        {config.demo?.(propValues)}
+        <ErrorBoundary>{config.demo?.(propValues)}</ErrorBoundary>
       </Box>
       {Boolean(hasControls) && (
         <Box
@@ -246,7 +242,7 @@ const ComponentStatusSection = ({
       break;
   }
   return (
-    <Box alignItems="center" direction="row" marginRight={4}>
+    <Box alignItems="center" direction="row" marginBottom={2} marginRight={4}>
       <Box marginRight={1}>
         <Text>{label}:</Text>
       </Box>
@@ -261,7 +257,7 @@ const ComponentStatus = ({config}: {config: DemoConfiguration}): React.ReactElem
       <Box marginBottom={2}>
         <Heading size="sm">Status</Heading>
       </Box>
-      <Box direction="row">
+      <Box direction="column" mdDirection="row">
         <ComponentStatusSection label="Documentation" status={config.status.documentation} />
         <ComponentStatusSection label="Figma" status={config.status.figma} />
         <ComponentStatusSection label="Web" status={config.status.web} />
@@ -274,7 +270,7 @@ const ComponentStatus = ({config}: {config: DemoConfiguration}): React.ReactElem
 
 export const ComponentPage = ({config}: {config: DemoConfiguration}): React.ReactElement => {
   return (
-    <Box padding={4}>
+    <Box padding={4} scroll>
       <Box marginBottom={4}>
         <Heading size="lg">{config.name}</Heading>
       </Box>

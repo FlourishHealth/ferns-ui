@@ -17,19 +17,11 @@ const CardDemo = () => {
             rounding="circle"
             width={50}
           >
-            <h2>
-              <Text>JG</Text>
-            </h2>
+            <Text>JG</Text>
           </Box>
           <Box direction="column" paddingX={2}>
-            <div>
-              <b>
-                <Text>Josh Gachnang</Text>
-              </b>
-            </div>
-            <div>
-              <Text>joined 2 years ago</Text>
-            </div>
+            <Text>Josh Gachnang</Text>
+            <Text>joined 2 years ago</Text>
           </Box>
         </Box>
       </Card>
@@ -59,19 +51,12 @@ const Plain = () => {
             rounding="circle"
             width={50}
           >
-            <h2>
-              <Text>JG</Text>
-            </h2>
+            <Text>JG</Text>
           </Box>
           <Box direction="column" paddingX={2}>
-            <div>
-              <b>
-                <Text>Josh Gachnang</Text>
-              </b>
-            </div>
-            <div>
-              <Text>joined 2 years ago</Text>
-            </div>
+            <Text>Josh Gachnang</Text>
+
+            <Text>joined 2 years ago</Text>
           </Box>
         </Box>
       </Card>
