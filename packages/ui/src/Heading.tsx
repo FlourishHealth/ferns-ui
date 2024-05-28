@@ -1,19 +1,29 @@
 import React, {useContext} from "react";
-import {StyleProp, Text as NativeText, TextStyle} from "react-native";
+import {Platform, StyleProp, Text as NativeText, TextStyle} from "react-native";
 
 import {HeadingProps} from "./Common";
 import {ThemeContext} from "./Theme";
 
-const fontSizes = {
-  sm: 20,
-  md: 28,
-  lg: 36,
+const fontSizeAndWeightWeb = {
+  sm: {size: 16, weight: "semibold"},
+  md: {size: 18, weight: "bold"},
+  lg: {size: 24, weight: "bold"},
+  xl: {size: 32, weight: "bold"},
 };
+
+const fontSizeAndWeighMobile = {
+  sm: {size: 14, weight: "semibold"},
+  md: {size: 16, weight: "bold"},
+  lg: {size: 20, weight: "bold"},
+  xl: {size: 28, weight: "bold"},
+};
+
+const fontSizes = Platform.OS === "web" ? fontSizeAndWeightWeb : fontSizeAndWeighMobile;
 
 export const Heading = ({
   align,
   children,
-  color,
+  color = "primary",
   size,
   testID,
 }: HeadingProps): React.ReactElement => {
@@ -21,13 +31,14 @@ export const Heading = ({
 
   const style: StyleProp<TextStyle> = {};
 
-  style.fontFamily = theme.titleFont;
+  style.fontFamily = theme.font.title;
 
-  style.fontSize = fontSizes[size || "md"];
+  style.fontSize = fontSizes[size || "md"].size;
   if (align) {
     style.textAlign = align;
   }
-  style.color = theme[color ?? "darkGray"];
+  style.fontWeight = fontSizes[size || "md"].weight as "semibold" | "bold";
+  style.color = theme.text[color];
   // TODO: might be useful for wrapping/truncating
   // if (numberOfLines !== 1 && !inline) {
   //   style.flexWrap = "wrap";

@@ -3,7 +3,7 @@ import React, {useContext, useState} from "react";
 import {ActivityIndicator, Pressable} from "react-native";
 
 import {Box} from "./Box";
-import {ButtonProps, Color, UnifiedTheme} from "./Common";
+import {ButtonProps, Color, FernsTheme} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
@@ -59,7 +59,7 @@ export const Button = ({
     if (type === "ghost" || type === "outline") {
       return "transparent";
     } else {
-      return theme[backgroundColor as keyof UnifiedTheme];
+      return theme[backgroundColor as keyof FernsTheme];
     }
   };
 

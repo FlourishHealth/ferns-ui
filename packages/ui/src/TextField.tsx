@@ -240,7 +240,7 @@ export const TextField = ({
     <>
       <WithLabel
         label={errorMessage}
-        labelColor={errorMessageColor || "red"}
+        labelColor={errorMessageColor || "error"}
         labelPlacement="after"
         labelSize="sm"
       >
@@ -259,7 +259,7 @@ export const TextField = ({
               borderColor,
               borderWidth: focused ? 5 : 1,
               borderRadius: 16,
-              backgroundColor: disabled ? theme.gray : theme.white,
+              backgroundColor: disabled ? theme.surface.neutral : theme.surface.base,
               overflow: "hidden",
             }}
             onPress={() => {
@@ -278,6 +278,7 @@ export const TextField = ({
                   inputRef(ref);
                 }
               }}
+              accessibilityLabel="Text input field"
               autoCapitalize={type === "text" ? "sentences" : "none"}
               autoCorrect={shouldAutocorrect}
               autoFocus={autoFocus}
@@ -287,7 +288,7 @@ export const TextField = ({
               multiline={multiline}
               numberOfLines={rows || 4}
               placeholder={placeholder}
-              placeholderTextColor={theme.gray}
+              placeholderTextColor={theme.text.secondaryLight}
               returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
               secureTextEntry={type === "password"}
               style={defaultTextInputStyles}

@@ -14,175 +14,201 @@ export interface BaseProfile {
   };
 }
 
-// For using a theme.
-export interface UnifiedTheme {
-  // TODO: make these configurable.
-  blue: string;
-  darkGray: string;
-  eggplant: string;
-  gray: string;
-  green: string;
-  springGreen: string;
-  lightGray: string;
-  maroon: string;
-  midnight: string;
-  navy: string;
-  olive: string;
-  orange: string;
-  orchid: string;
-  pine: string;
-  purple: string;
-  red: string;
-  watermelon: string;
-  white: string;
-  black: string;
-
-  info: string;
-  error: string;
-  warning: string;
-  success: string;
-  neutral: string;
-
-  primaryLighter: string;
-  primaryLight: string;
-  primary: string;
-  primaryDark: string;
-  primaryDarker: string;
-
-  secondaryLighter: string;
-  secondaryLight: string;
-  secondary: string;
-  secondaryDark: string;
-  secondaryDarker: string;
-
-  accentLighter: string;
-  accentLight: string;
-  accent: string;
-  accentDark: string;
-  accentDarker: string;
-
-  tertiaryLighter: string;
-  tertiaryLight: string;
-  tertiary: string;
-  tertiaryDark: string;
-  tertiaryDarker: string;
-
-  // Support for light and dark mode.
-  background: string;
-  backgroundSecondary: string;
-  textPrimary: string;
-  textSecondary: string;
-  textDisabled: string;
-  divider: string;
-
-  neutral900: string;
-  neutral800: string;
-  neutral700: string;
-  neutral600: string;
-  neutral500: string;
-  neutral400: string;
-  neutral300: string;
-  neutral200: string;
+export interface ThemePrimitiveColors {
+  neutral000: string;
+  neutral050: string;
   neutral100: string;
-  neutral90: string;
-  neutral80: string;
-  neutral70: string;
-  neutral60: string;
-  neutral50: string;
-  neutral40: string;
-  neutral30: string;
-  neutral20: string;
-  neutral10: string;
+  neutral200: string;
+  neutral300: string;
+  neutral400: string;
+  neutral500: string;
+  neutral600: string;
+  neutral700: string;
+  neutral800: string;
+  neutral900: string;
 
-  primaryFont: string;
-  primaryBoldFont: string;
-  secondaryFont: string;
-  secondaryBoldFont: string;
-  buttonFont: string;
-  accentFont: string;
-  accentBoldFont: string;
-  titleFont: string;
+  primary000: string;
+  primary050: string;
+  primary100: string;
+  primary200: string;
+  primary300: string;
+  primary400: string;
+  primary500: string;
+  primary600: string;
+  primary700: string;
+  primary800: string;
+  primary900: string;
+
+  secondary000: string;
+  secondary050: string;
+  secondary100: string;
+  secondary200: string;
+  secondary300: string;
+  secondary400: string;
+  secondary500: string;
+  secondary600: string;
+  secondary700: string;
+  secondary800: string;
+  secondary900: string;
+
+  accent000: string;
+  accent050: string;
+  accent100: string;
+  accent200: string;
+  accent300: string;
+  accent400: string;
+  accent500: string;
+  accent600: string;
+  accent700: string;
+  accent800: string;
+  accent900: string;
+
+  error000: string;
+  error100: string;
+  error200: string;
+
+  warning000: string;
+  warning100: string;
+  warning200: string;
+
+  success000: string;
+  success100: string;
+  success200: string;
 }
 
-export type Font =
-  | "primary"
-  | "primaryBold"
-  | "secondary"
-  | "secondaryBold"
-  | "accent"
-  | "accentBold"
-  | "title"
-  | "button";
+export interface ThemePrimitiveRadius {
+  radiusSm: number;
+  radiusMd: number;
+  radiusLg: number;
+  radiusXl: number;
+  radius2xl: number;
+  radius3xl: number;
+}
 
-// type Sizes = "small" | "xsmall" | "sm" | "small" | "medium" | "lg" | "large";
+export interface ThemePrimitiveSpacing {
+  spacing0: number;
+  spacing1: number;
+  spacing2: number;
+  spacing3: number;
+  spacing4: number;
+  spacing5: number;
+  spacing6: number;
+  spacing7: number;
+  spacing8: number;
+  spacing9: number;
+  spacing10: number;
+  spacing11: number;
+  spacing12: number;
+}
+
+export type ThemePrimitives = ThemePrimitiveColors | ThemePrimitiveRadius | ThemePrimitiveSpacing;
+
+export interface TextTheme {
+  primary: keyof ThemePrimitiveColors;
+  inverted: keyof ThemePrimitiveColors;
+  secondaryLight: keyof ThemePrimitiveColors;
+  extraLight: keyof ThemePrimitiveColors;
+  secondaryDark: keyof ThemePrimitiveColors;
+  link: keyof ThemePrimitiveColors;
+  linkLight: keyof ThemePrimitiveColors;
+  accent: keyof ThemePrimitiveColors;
+  error: keyof ThemePrimitiveColors;
+  warning: keyof ThemePrimitiveColors;
+  success: keyof ThemePrimitiveColors;
+}
+
+export interface SurfaceTheme {
+  base: keyof ThemePrimitiveColors;
+  primary: keyof ThemePrimitiveColors;
+  secondaryLight: keyof ThemePrimitiveColors;
+  secondaryDark: keyof ThemePrimitiveColors;
+  secondaryExtraDark: keyof ThemePrimitiveColors;
+  neutral: keyof ThemePrimitiveColors;
+  neutralLight: keyof ThemePrimitiveColors;
+  neutralDark: keyof ThemePrimitiveColors;
+  disabled: keyof ThemePrimitiveColors;
+  error: keyof ThemePrimitiveColors;
+  errorLight: keyof ThemePrimitiveColors;
+  success: keyof ThemePrimitiveColors;
+  successLight: keyof ThemePrimitiveColors;
+  warning: keyof ThemePrimitiveColors;
+  warningLight: keyof ThemePrimitiveColors;
+}
+
+export interface BorderTheme {
+  default: keyof ThemePrimitiveColors;
+  dark: keyof ThemePrimitiveColors;
+  activeNeutral: keyof ThemePrimitiveColors;
+  activeAccent: keyof ThemePrimitiveColors;
+  hover: keyof ThemePrimitiveColors;
+  focus: keyof ThemePrimitiveColors;
+  error: keyof ThemePrimitiveColors;
+  success: keyof ThemePrimitiveColors;
+  warning: keyof ThemePrimitiveColors;
+}
+
+export interface StatusTheme {
+  active: keyof ThemePrimitiveColors;
+  doNotDisturb: keyof ThemePrimitiveColors;
+  away: keyof ThemePrimitiveColors;
+}
+
+export interface RadiusTheme {
+  minimal: keyof ThemePrimitiveRadius;
+  default: keyof ThemePrimitiveRadius;
+  full: keyof ThemePrimitiveRadius;
+  rounded: keyof ThemePrimitiveRadius;
+}
+
+export interface SpacingTheme {
+  none: keyof ThemePrimitiveSpacing;
+  xs: keyof ThemePrimitiveSpacing;
+  sm: keyof ThemePrimitiveSpacing;
+  md: keyof ThemePrimitiveSpacing;
+  lg: keyof ThemePrimitiveSpacing;
+  xl: keyof ThemePrimitiveSpacing;
+  "2xl": keyof ThemePrimitiveSpacing;
+  "3xl": keyof ThemePrimitiveSpacing;
+}
+
+export type TextColor = keyof TextTheme;
+export type SurfaceColor = keyof SurfaceTheme;
+export type BorderColor = keyof BorderTheme;
+export type StatusColor = keyof StatusTheme;
+// TODO: Remove ButtonColor. Buttons no longer have colors, only types (called style in Figma)
+export type ButtonColor =
+  | "blue"
+  | "gray"
+  | "red"
+  // | "transparent"
+  | "white"
+  | "primary"
+  | "secondary"
+  | "accent"
+  | "tertiary"
+  | string;
+
+export type IconColor = ButtonColor;
+export type AllColors = TextColor | SurfaceColor | BorderColor | StatusColor;
+
+export interface FontTheme {
+  primary: string;
+  title: string;
+}
+export type Font = keyof FontTheme;
+
+export interface FernsTheme {
+  text: TextTheme;
+  surface: SurfaceTheme;
+  border: BorderTheme;
+  status: StatusTheme;
+  radius: RadiusTheme;
+  spacing: SpacingTheme;
+  font: FontTheme;
+  primitives: ThemePrimitives;
+}
 
 export type Direction = "up" | "right" | "down" | "left";
-export type Color =
-  | "blue"
-  | "darkGray"
-  | "eggplant"
-  | "gray"
-  | "green"
-  | "springGreen"
-  | "lightGray"
-  | "maroon"
-  | "midnight"
-  | "navy"
-  | "olive"
-  | "orange"
-  | "orchid"
-  | "pine"
-  | "purple"
-  | "red"
-  | "watermelon"
-  | "white"
-  | "black";
-export type ThemeColor =
-  | "primaryLighter"
-  | "primaryLight"
-  | "primary"
-  | "primaryDark"
-  | "primaryDarker"
-  | "secondaryLighter"
-  | "secondaryLight"
-  | "secondary"
-  | "secondaryDark"
-  | "secondaryDarker"
-  | "tertiaryLighter"
-  | "tertiaryLight"
-  | "tertiary"
-  | "tertiaryDark"
-  | "tertiaryDarker"
-  | "accentLighter"
-  | "accentLight"
-  | "accent"
-  | "accentDark"
-  | "accentDarker"
-  | "background"
-  | "backgroundSecondary";
-export type NeutralColor =
-  | "neutral900"
-  | "neutral800"
-  | "neutral700"
-  | "neutral600"
-  | "neutral500"
-  | "neutral400"
-  | "neutral300"
-  | "neutral200"
-  | "neutral100"
-  | "neutral90"
-  | "neutral80"
-  | "neutral70"
-  | "neutral60"
-  | "neutral50"
-  | "neutral40"
-  | "neutral30"
-  | "neutral20"
-  | "neutral10";
-
-export type StatusIndicatorColor = "info" | "error" | "warning" | "success" | "neutral";
-
-export type AllColors = Color | ThemeColor | NeutralColor | StatusIndicatorColor;
 
 export interface OnChangeResult {
   event?: SyntheticEvent<any>;
@@ -1675,7 +1701,28 @@ export type SignedUpTo12 =
   | -1
   | UnsignedUpTo12;
 export type Margin = SignedUpTo12 | "auto";
-export const SPACING = 4;
+export const SPACING_MAP = {
+  0: 0,
+  1: 4,
+  2: 8,
+  3: 12,
+  4: 16,
+  5: 24,
+  6: 32,
+  7: 40,
+  8: 48,
+  9: 56,
+  10: 64,
+  11: 72,
+  12: 80,
+};
+
+export function getSpacing(spacing: SignedUpTo12) {
+  if (spacing < 0) {
+    return SPACING_MAP[Math.abs(spacing) as UnsignedUpTo12] * -1;
+  }
+  return SPACING_MAP[spacing as UnsignedUpTo12];
+}
 
 export type TextFieldType =
   | "date"
@@ -1700,42 +1747,13 @@ export const iconSizeToNumber = (size?: IconSize) => {
   return {
     xs: 8,
     sm: 12,
-    md: 14,
+    md: 16,
     lg: 20,
-    xl: 26,
+    xl: 24,
   }[size || "md"];
 };
 
-export type TextSize = "xs" | "sm" | "md" | "lg";
-export type TextColor =
-  | "blue"
-  | "darkGray"
-  | "eggplant"
-  | "gray"
-  | "green"
-  | "lightGray"
-  | "maroon"
-  | "midnight"
-  | "navy"
-  | "olive"
-  | "orange"
-  | "orchid"
-  | "pine"
-  | "purple"
-  | "red"
-  | "watermelon"
-  | "white"; // default "darkGray"
-
-export type ButtonColor =
-  | "blue"
-  | "gray"
-  | "red"
-  // | "transparent"
-  | "white"
-  | "primary"
-  | "secondary"
-  | "accent"
-  | "tertiary";
+export type TextSize = "sm" | "md" | "lg" | "xl";
 
 export type IconPrefix = "far" | "fas";
 
@@ -1823,7 +1841,7 @@ export interface BoxProps {
   lgPaddingY?: UnsignedUpTo12;
   position?: "static" | "absolute" | "relative" | "fixed";
   right?: boolean;
-  rounding?: "pill" | "circle" | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  rounding?: Rounding | "circle";
   top?: boolean;
   width?: number | string;
   wrap?: boolean;
@@ -1905,7 +1923,7 @@ export type SegmentedControlProps =
 export interface FieldWithLabelsProps {
   testID?: string;
   errorMessage?: string;
-  errorMessageColor?: AllColors; // Default: red.
+  errorMessageColor?: TextColor; // Default: error.
   label?: string;
   labelColor?: AllColors;
   helperText?: string;
@@ -1989,7 +2007,7 @@ export interface MaskProps {
   width?: number | string;
   maxHeight?: number | string;
   maxWidth?: number | string;
-  rounding?: "circle" | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+  rounding?: Rounding;
   willChangeTransform?: boolean;
   wash?: boolean;
 }
@@ -2008,15 +2026,42 @@ export interface LinkProps {
   target?: null | "blank";
 }
 
-export type Rounding = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | "circle" | "pill";
+export type Rounding =
+  | "minimal" // alias "sm"
+  | "default" // alias "md"
+  | "full" // alias "lg"
+  | "rounded" // alias "3xl"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "2xl"
+  | "3xl";
+
+const ROUNDING_MAP = {
+  minimal: 2,
+  default: 3,
+  full: 16,
+  rounded: 360,
+  sm: 2,
+  md: 4,
+  lg: 16,
+  xl: 32,
+  "2xl": 128,
+  "3xl": 360,
+};
+
+export function getRounding(rounding: Rounding) {
+  return ROUNDING_MAP[rounding];
+}
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface HeadingProps {
   align?: "left" | "right" | "center" | "justify"; // default "left"
   children?: React.ReactNode;
-  color?: AllColors;
+  color?: TextColor;
   overflow?: "normal" | "breakWord"; // default "breakWord"
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl"; // default "sm"
   truncate?: boolean; // default false
   testID?: string;
 }
@@ -2106,7 +2151,7 @@ export interface SplitPageProps {
   // boolean to initiate and handle state from the app that has imported ferns-ui
   showItemList?: boolean;
   loading?: boolean;
-  color?: Color;
+  color?: AllColors;
   keyboardOffset?: number;
   renderListViewItem: (itemInfo: ListRenderItemInfo<any>) => ReactElement | null;
   renderListViewHeader?: () => ReactElement | null;
@@ -2658,7 +2703,7 @@ export interface BodyProps {
 export interface ButtonProps {
   text: string;
   // TODO make this work for all colors
-  color?: ButtonColor | Color;
+  color?: ButtonColor;
   // default gray
   disabled?: boolean; // default false
   inline?: boolean; // default false
@@ -2668,7 +2713,7 @@ export interface ButtonProps {
   onClick: any;
   icon?: IconName;
   iconPrefix?: IconPrefix;
-  iconColor?: ButtonColor | Color;
+  iconColor?: ButtonColor;
   withConfirmation?: boolean;
   confirmationText?: string;
   confirmationHeading?: string;
@@ -2787,7 +2832,7 @@ export interface IconButtonProps {
   prefix?: IconPrefix;
   icon: IconName;
   accessibilityLabel: string;
-  iconColor: "darkGray" | ButtonColor | ThemeColor | Color;
+  iconColor: ButtonColor;
   onClick: () => void;
   size?: IconSize;
   bgColor?:
@@ -2887,7 +2932,7 @@ export interface PogProps {
 }
 
 export interface ProgressBarProps {
-  color: Color;
+  color: AllColors;
   completed: number;
 }
 
@@ -2910,7 +2955,8 @@ export interface SideDrawerProps {
 
 export interface SpinnerProps {
   size?: "sm" | "md";
-  color?: Color;
+  // TODO: fix Spinner.color
+  color?: any;
 }
 
 export type ColumnSortInterface = {
@@ -3040,7 +3086,7 @@ export interface TableContextProviderProps extends TableContextType {
 export interface TextProps {
   align?: "left" | "right" | "center" | "justify"; // default "left"
   children?: React.ReactNode;
-  color?: AllColors;
+  color?: TextColor;
   inline?: boolean; // default false
   italic?: boolean; // default false
   onPress?: () => void;
@@ -3051,7 +3097,7 @@ export interface TextProps {
   underline?: boolean;
   numberOfLines?: number;
   skipLinking?: boolean;
-  weight?: "bold" | "normal";
+  weight?: "bold" | "regular" | "medium" | "semiBold" | "light"; // default "regular"
   testID?: string;
 }
 
@@ -3078,7 +3124,8 @@ export interface TooltipProps {
   // If text is undefined, the children will be rendered without a tooltip.
   text?: string;
   idealDirection?: "top" | "bottom" | "left" | "right";
-  bgColor?: "white" | "lightGray" | "gray" | "darkGray";
+  // TODO: Fix Tooltip.bgColor.
+  bgColor?: any;
 }
 
 export interface LinkProps extends TextProps {
@@ -3090,7 +3137,7 @@ export interface WithLabelProps {
   show?: boolean;
   label?: string;
   labelInline?: boolean;
-  labelColor?: AllColors;
+  labelColor?: TextColor;
   labelJustifyContent?: JustifyContent;
   labelAlignItems?: AlignItems;
   labelPlacement?: "before" | "after";

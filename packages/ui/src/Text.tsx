@@ -1,16 +1,25 @@
 import React, {useContext} from "react";
-import {Text as NativeText, TextStyle} from "react-native";
+import {Platform, Text as NativeText, TextStyle} from "react-native";
 
 import {TextProps} from "./Common";
 import {Hyperlink} from "./Hyperlink";
 import {ThemeContext} from "./Theme";
 
-const fontSizes = {
-  xs: 10,
-  sm: 12,
-  md: 14,
-  lg: 16,
+const fontSizeAndWeightWeb = {
+  sm: {size: 12, weight: "regular"},
+  md: {size: 16, weight: "regular"},
+  lg: {size: 18, weight: "medium"},
+  xl: {size: 20, weight: "medium"},
 };
+
+const fontSizeAndWeighMobile = {
+  sm: {size: 10, weight: "regular"},
+  md: {size: 14, weight: "regular"},
+  lg: {size: 16, weight: "medium"},
+  xl: {size: 18, weight: "medium"},
+};
+
+const fontSizes = Platform.OS === "web" ? fontSizeAndWeightWeb : fontSizeAndWeighMobile;
 
 export const Text = ({
   align = "left",
@@ -27,7 +36,7 @@ export const Text = ({
   numberOfLines,
   skipLinking,
   testID,
-  weight = "normal",
+  weight = "regular",
 }: TextProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
@@ -63,12 +72,12 @@ export const Text = ({
       }
     }
     if (weight === "bold") {
-      style.fontWeight = "bold";
+      style.fontWeight = weight || fontSizes[size].weight;
     }
 
     style.fontFamily = theme[computedFont as keyof typeof theme];
 
-    style.fontSize = fontSizes[size || "md"];
+    style.fontSize = fontSizes[size].size;
     if (align) {
       style.textAlign = align;
     }
