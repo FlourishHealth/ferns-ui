@@ -11,7 +11,7 @@ export const DateTimeModalConfiguration: DemoConfiguration = {
   description:
     "This component provides date and time elements for the modal. It’s used in tandem with the date, time, and date & time fields.",
   a11yNotes: [],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -36,6 +36,4 @@ export const DateTimeModalConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

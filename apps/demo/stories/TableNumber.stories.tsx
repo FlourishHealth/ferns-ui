@@ -10,7 +10,7 @@ export const TableNumberConfiguration: DemoConfiguration = {
   description:
     "Use this component to display a number on the table that’s NOT a date or a currency.",
   a11yNotes: [],
-  category: ["Data Display", "Table"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -30,6 +30,4 @@ export const TableNumberConfiguration: DemoConfiguration = {
   demo: DefaultDemo,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

@@ -16,7 +16,7 @@ export const RadioFieldConfiguration: DemoConfiguration = {
     "Keyboards should be able to tab back and forth between the radio buttons.",
     "The radio buttons should have a focus state.",
   ],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -38,6 +38,4 @@ export const RadioFieldConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

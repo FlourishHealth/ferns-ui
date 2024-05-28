@@ -14,7 +14,7 @@ export const BooleanFieldConfiguration: DemoConfiguration = {
     "Switches should have labels that can be read by screen readers.",
     "Users should be able to click the labels to interact with the toggle.",
   ],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "inProgress",
@@ -42,8 +42,6 @@ export const BooleanFieldConfiguration: DemoConfiguration = {
   demo: () => <BooleanFieldDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };
 
 const BooleanFieldDemo = () => {

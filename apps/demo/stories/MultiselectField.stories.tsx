@@ -14,7 +14,7 @@ export const MultiselectFieldConfiguration: DemoConfiguration = {
     "Screen readers should know when a set of checkboxes is related.",
     "When a user clicks the checkbox label, they should be able to interact with the checkbox. Learn more about that here.",
   ],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -37,6 +37,4 @@ export const MultiselectFieldConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

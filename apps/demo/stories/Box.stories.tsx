@@ -112,7 +112,7 @@ export const BoxConfiguration: DemoConfiguration = {
     "Setting display='visuallyHidden' on Box allows for an element to be visually hidden but still be read by screen readers.",
     "The ‘visually-hidden’ CSS technique applies absolute positioning to the element. For a correct implementation, make sure the ‘visually-hidden’ element is correctly contained within a relative-positioned Box.",
   ],
-  category: ["Layout", "Primitive"],
+  category: "Foundation",
   status: {
     documentation: "ready",
     figma: "notSupported",
@@ -138,6 +138,4 @@ export const BoxConfiguration: DemoConfiguration = {
     FlexBox: {render: FlexBox},
     Colors: {render: BoxColors},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

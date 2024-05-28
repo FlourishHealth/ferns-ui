@@ -11,7 +11,7 @@ export const TableIconButtonConfiguration: DemoConfiguration = {
   description:
     "The table icon button is an interactive element that allows the user to edit record rows, open drawers, and close them.",
   a11yNotes: [],
-  category: ["Data Display", "Table"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -33,6 +33,4 @@ export const TableIconButtonConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

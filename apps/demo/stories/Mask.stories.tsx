@@ -96,7 +96,7 @@ export const MaskConfiguration: DemoConfiguration = {
   description:
     "Mask is used to display content in a specific shape. It’s currently not used on the platform, but we might use it eventually.",
   a11yNotes: [],
-  category: ["Layout", "Utility"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "notSupported",
@@ -119,6 +119,4 @@ export const MaskConfiguration: DemoConfiguration = {
     Washed: {render: Washed},
     Rounded: {render: Rounded},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

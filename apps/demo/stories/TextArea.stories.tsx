@@ -49,7 +49,7 @@ export const TextAreaConfiguration: DemoConfiguration = {
   related: ["Text field"],
   description: "Use the text area form field to allow the user to enter multiple lines of text.",
   a11yNotes: ["The user should be able to use tab to navigate between elements."],
-  category: ["Data Entry", "Form"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -81,6 +81,4 @@ export const TextAreaConfiguration: DemoConfiguration = {
     TextAreaDisabled: {render: TextAreaDisabled},
     TextAreaErrored: {render: TextAreaErrored},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

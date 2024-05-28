@@ -10,7 +10,7 @@ export const TableBooleanConfiguration: DemoConfiguration = {
   related: ["Table"],
   description: "Use the table boolean to create easily scannable binary information for a user.",
   a11yNotes: [],
-  category: ["Data Display", "Table"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -30,6 +30,4 @@ export const TableBooleanConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

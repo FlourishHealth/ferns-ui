@@ -72,7 +72,7 @@ export const CheckBoxConfiguration: DemoConfiguration = {
     "Keyboards should be able to tab back and forth between the checkboxes.",
     "The checkboxes should have a focus state.",
   ],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -101,6 +101,4 @@ export const CheckBoxConfiguration: DemoConfiguration = {
     Plain: {render: () => <Checkboxes disabled={false} />},
     Disabled: {render: () => <Checkboxes disabled />},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

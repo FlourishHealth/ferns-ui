@@ -233,7 +233,7 @@ export const ButtonConfiguration: DemoConfiguration = {
     "When Button text does not provide sufficient context about the Button’s behavior, supply a short, descriptive label for screen-readers using accessibilityLabel. Texts like 'Click here', 'Follow', or 'Shop' can be confusing when a screen reader reads them out of context. In those cases, we must pass an alternative text with deeper context to replace the Button text, like 'Follow Ryan' or 'Shop Wedding Invitations'.",
     "If Button is used as a control Button to show/hide a Popover-based , we recommend passing the following ARIA attributes to assist screen readers: accessibilityLabel, accessibilityControls, accessibilityHaspopup.",
   ],
-  category: ["Interaction", "Action"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -271,6 +271,4 @@ export const ButtonConfiguration: DemoConfiguration = {
     Multiline: {render: () => multilineButtons()},
     Sizes: {render: () => sizesButtons()},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

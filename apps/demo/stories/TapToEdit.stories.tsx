@@ -230,7 +230,7 @@ export const TapToEditConfiguration: DemoConfiguration = {
     "The user should be able to tab to the tap-to-edit icon and press enter/space to interact with it.",
     "The user should be able to tap the label as well to interact with the element.",
   ],
-  category: ["Data Entry", "Form"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -255,6 +255,4 @@ export const TapToEditConfiguration: DemoConfiguration = {
   stories: {
     "Tap to edit": {render: TapStory},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

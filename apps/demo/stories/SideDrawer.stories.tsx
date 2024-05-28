@@ -60,7 +60,7 @@ export const SideDrawerConfiguration: DemoConfiguration = {
   a11yNotes: [
     "If an element opens a side drawer, users should be able to click space/enter to do so.",
   ],
-  category: ["Layout", "Utility"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -86,6 +86,4 @@ export const SideDrawerConfiguration: DemoConfiguration = {
     Left: {render: () => <DrawerStory position="left" />},
     Right: {render: () => <DrawerStory position="right" />},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

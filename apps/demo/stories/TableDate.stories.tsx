@@ -11,7 +11,7 @@ export const TableDateConfiguration: DemoConfiguration = {
   description:
     "This field displays a date. There are two kinds, annotated and default. The annotated date shows an annotation - ex, '10 days ago'.",
   a11yNotes: [],
-  category: ["Data Display", "Table"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -36,6 +36,4 @@ export const TableDateConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

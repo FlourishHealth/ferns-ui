@@ -89,7 +89,7 @@ export const TextFieldConfiguration: DemoConfiguration = {
   related: ["Text area"],
   description: "Use the text field to allow a user to input a single line of text.",
   a11yNotes: ["The user should be able to use tab to navigate between elements."],
-  category: ["Data Entry", "Form"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -121,6 +121,4 @@ export const TextFieldConfiguration: DemoConfiguration = {
     Disabled: {render: Disabled},
     Errored: {render: Errored},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

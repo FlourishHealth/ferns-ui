@@ -76,7 +76,7 @@ export const CardConfiguration: DemoConfiguration = {
     "If using an image, be sure to provide an appropriate alt tag.",
     "If using a button, be sure to follow all of the relevant accessibility standards found here.",
   ],
-  category: ["Layout", "Information"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -101,6 +101,4 @@ export const CardConfiguration: DemoConfiguration = {
   stories: {
     Plain: {render: Plain},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

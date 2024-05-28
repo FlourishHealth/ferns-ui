@@ -10,7 +10,7 @@ export const TableBadgeConfiguration: DemoConfiguration = {
   related: ["Table"],
   description: "Use the table badges to create easily scannable tags for a record.",
   a11yNotes: [],
-  category: ["Data Display", "Table"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -30,6 +30,4 @@ export const TableBadgeConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

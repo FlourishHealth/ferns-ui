@@ -33,7 +33,7 @@ export const SpinnerConfiguration: DemoConfiguration = {
   description:
     "This is a microcomponent that’s used to indicate that the system is loading information. It can be used on a loading surface or on a button.",
   a11yNotes: [],
-  category: ["Feedback", "Loading"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -60,6 +60,4 @@ export const SpinnerConfiguration: DemoConfiguration = {
     Big: {render: Big},
     Dark: {render: Dark},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

@@ -11,7 +11,7 @@ export const PaginationConfiguration: DemoConfiguration = {
   description:
     "Break large sets of content into smaller, manageable pages. Used primarily in the staff portal to parse large tables.",
   a11yNotes: ["The tappable area of each pagination item should fit within a 44pt square."],
-  category: ["Navigation", "Utility"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -36,6 +36,4 @@ export const PaginationConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

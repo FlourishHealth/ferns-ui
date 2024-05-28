@@ -12,7 +12,7 @@ export const BannerConfiguration: DemoConfiguration = {
   a11yNotes: [
     "The banner code should indicate the intent of the banner in a way that screen readers can parse. For example, Gestalt uses the iconAccessibilityLabel to communicate “success,” “error,” or “warning”.",
   ],
-  category: ["Feedback", "Informational"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "inProgress",
@@ -208,8 +208,6 @@ export const BannerConfiguration: DemoConfiguration = {
       },
     },
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };
 
 const BannerDemo = (): React.ReactElement => {

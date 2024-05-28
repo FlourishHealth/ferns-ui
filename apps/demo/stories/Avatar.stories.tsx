@@ -14,7 +14,7 @@ export const AvatarConfiguration: DemoConfiguration = {
   name: "Avatar",
   related: ["Profile Picture", "Userpic"],
   description: "Used to represent a single user.",
-  category: ["Some Category"],
+  category: "Component",
   component: Avatar,
   status: {
     documentation: "planned",
@@ -68,12 +68,6 @@ export const AvatarConfiguration: DemoConfiguration = {
     },
     Sizes: {render: () => <AvatarSizes />},
     Outlines: {render: () => <AvatarOutlines />},
-  },
-  testMatrix: {
-    name: ["Tony Stark"],
-    outline: [true, false],
-    size: ["xs", "sm", "md", "lg", "xl"],
-    src: [undefined, "https://i.ibb.co/ZfCZrY8/keerthi.jpg"],
   },
 };
 

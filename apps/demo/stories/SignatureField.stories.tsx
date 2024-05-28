@@ -10,7 +10,7 @@ export const SignatureFieldConfiguration: DemoConfiguration = {
   related: [],
   description: "The signature field allows a signature input from the user.",
   a11yNotes: [],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -30,6 +30,4 @@ export const SignatureFieldConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

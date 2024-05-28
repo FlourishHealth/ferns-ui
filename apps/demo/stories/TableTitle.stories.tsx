@@ -11,7 +11,7 @@ export const TableTitleConfiguration: DemoConfiguration = {
   description:
     "This component populates the titles for each table column. They’re ordered by width.",
   a11yNotes: [],
-  category: ["Data Display", "Table"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -34,6 +34,4 @@ export const TableTitleConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

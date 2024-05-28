@@ -82,7 +82,7 @@ export const SegmentedControlConfiguration: DemoConfiguration = {
   shortDescription:
     "SegmentedControl may be used to group multiple selections. The controls display the current state and related state. ",
   a11yNotes: [],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -110,6 +110,4 @@ export const SegmentedControlConfiguration: DemoConfiguration = {
     MultiSelect: {render: MultiSelectControl},
     Persistent: {render: PersistentControl},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

@@ -13,7 +13,7 @@ export const PasswordFieldConfiguration: DemoConfiguration = {
     "In general, this field is already accessible.",
     "Some additional WCAG documentation can be found here.",
   ],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -33,6 +33,4 @@ export const PasswordFieldConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

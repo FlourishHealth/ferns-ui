@@ -10,7 +10,7 @@ export const TimeFieldConfiguration: DemoConfiguration = {
   description:
     "This form field allows the user to select a time. Used in conjunction with the date & time modal in this pattern.",
   a11yNotes: [],
-  category: ["Data Entry", "Form"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -33,6 +33,4 @@ export const TimeFieldConfiguration: DemoConfiguration = {
   demo: DefaultDemo,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

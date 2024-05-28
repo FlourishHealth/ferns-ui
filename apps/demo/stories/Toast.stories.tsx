@@ -133,7 +133,7 @@ export const ToastConfiguration: DemoConfiguration = {
   shortDescription:
     "Toasts are brief and small messages that overlay content, but do not block the user’s flow, as they are out of the way and ephemeral.",
   a11yNotes: ["Toasts should be on the screen for a minimum of 5 seconds."],
-  category: ["Feedback", "Notification"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -165,6 +165,4 @@ export const ToastConfiguration: DemoConfiguration = {
   stories: {
     Toasts: {render: Toasts},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

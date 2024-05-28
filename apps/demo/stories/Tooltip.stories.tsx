@@ -117,7 +117,7 @@ export const TooltipConfiguration: DemoConfiguration = {
   shortDescription:
     "Tooltip is a floating text label that succinctly describes the function of an interactive element, typically Icon Button. ",
   a11yNotes: ["The tooltip should not be repetitive with the label of the element it relates to."],
-  category: ["Feedback", "Help"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -143,6 +143,4 @@ export const TooltipConfiguration: DemoConfiguration = {
     Icons: {render: TooltipIcon},
     Overflow: {render: TooltipOverflow},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

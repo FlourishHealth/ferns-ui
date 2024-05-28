@@ -10,7 +10,7 @@ export const TableTextFieldConfiguration: DemoConfiguration = {
   related: ["Table"],
   description: "This component adds a single line of text to the table.",
   a11yNotes: [],
-  category: ["Data Display", "Table"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -35,6 +35,4 @@ export const TableTextFieldConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

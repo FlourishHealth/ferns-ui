@@ -80,7 +80,7 @@ export const ModalStories = {
 // left align when there’s more. Longform content is easier to skim when it’s left aligned.", ],
 // doNot: [ "Do not detach the instance in order to change the content. Instead,
 // use the instance swap property to change out the custom content block.", ], }, props: {}, demo:
-// (props) => <InnerModalContentDemo {...props} />, demoOptions: {}, stories: {}, testMatrix: {},
+// (props) => <InnerModalContentDemo {...props} />, demoOptions: {}, stories: {},
 // testMatrixDefaultProps: {}, };
 
 export const ModalConfiguration: DemoConfiguration = {
@@ -95,7 +95,7 @@ export const ModalConfiguration: DemoConfiguration = {
     "Modals should have labels so that they have a clear purpose when being read by a screen reader.",
     "accessibilityModalLabel allows us to update the spoken text for the heading prop and give it more context.",
   ],
-  category: ["Layout", "Interaction"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -126,6 +126,4 @@ export const ModalConfiguration: DemoConfiguration = {
   stories: {
     Modals: {render: Modals},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

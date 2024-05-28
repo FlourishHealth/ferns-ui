@@ -108,7 +108,7 @@ export const SelectFieldConfiguration: DemoConfiguration = {
   related: ["Checkbox", "Radio field"],
   description: "Displays a list of actions or options using the browser’s native select.",
   a11yNotes: ["The list should be labeled so that screen readers know that the list is related."],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -136,6 +136,4 @@ export const SelectFieldConfiguration: DemoConfiguration = {
     "Select List Label": {render: WithLabel},
     "Select List Disabled": {render: Disabled},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

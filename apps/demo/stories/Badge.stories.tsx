@@ -98,7 +98,7 @@ export const BadgeConfiguration: DemoConfiguration = {
   related: [],
   description:
     "Badge is a label that indicates status or importance. Badges should provide quick recognition.\n",
-  category: [""],
+  category: "Component",
   component: Badge,
   status: {
     documentation: "planned",
@@ -157,5 +157,4 @@ export const BadgeConfiguration: DemoConfiguration = {
       render: () => <BadgeStories />,
     },
   },
-  testMatrix: {},
 };

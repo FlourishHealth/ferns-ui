@@ -152,7 +152,7 @@ export const TableConfiguration: DemoConfiguration = {
     "Don’t include the word 'table' in that label, as it’s redundant.",
     "The tab key should place focus on interactive elements, including sortable headers.",
   ],
-  category: ["Layout", "Pattern"],
+  category: "Pattern",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -182,6 +182,4 @@ export const TableConfiguration: DemoConfiguration = {
     Standard: {render: StandardTable},
     SortableExpandable: {render: SortableExpandableTableStory},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

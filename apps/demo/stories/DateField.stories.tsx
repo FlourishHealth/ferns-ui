@@ -14,7 +14,7 @@ export const DateFieldConfiguration: DemoConfiguration = {
     "Users should be able to use the tab key to navigate between fields.",
     "Users should be able to use the enter/space keys to open up the date/time modal.",
   ],
-  category: ["Form", "Input"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -37,6 +37,4 @@ export const DateFieldConfiguration: DemoConfiguration = {
   demo: () => <DefaultDemo />,
   demoOptions: {},
   stories: {},
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };

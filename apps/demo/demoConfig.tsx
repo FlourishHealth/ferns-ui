@@ -54,7 +54,7 @@ interface DemoConfigurationBase {
   // Used for the index page if description is long.
   shortDescription?: string;
   a11yNotes: string[];
-  category: string[];
+  category: "Foundation" | "Component" | "Pattern";
   status: {
     documentation: DemoConfigStatus;
     figma: DemoConfigStatus;

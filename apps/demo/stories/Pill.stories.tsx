@@ -53,7 +53,7 @@ export const PillConfiguration: DemoConfiguration = {
     "A small, rounded UI element used to represent and display discrete units of information, often styled like a small, capsule-shaped button.",
 
   a11yNotes: [],
-  category: ["Layout", "Utility"],
+  category: "Component",
   status: {
     documentation: "ready",
     figma: "ready",
@@ -78,6 +78,4 @@ export const PillConfiguration: DemoConfiguration = {
   stories: {
     Pills: {render: PillDemo},
   },
-  testMatrix: {},
-  testMatrixDefaultProps: {},
 };
