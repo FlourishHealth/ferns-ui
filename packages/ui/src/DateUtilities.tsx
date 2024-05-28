@@ -219,7 +219,11 @@ export function printTime(
     throw new Error(`printTime: ${error.message}`);
   }
   if (showTimezone) {
-    return clonedDate.toFormat("h:mm a ZZZZ");
+    return clonedDate.toLocaleString({
+      timeZoneName: "short",
+      hour: "numeric",
+      minute: "2-digit",
+    });
   } else {
     return clonedDate.toLocaleString(DateTime.TIME_SIMPLE);
   }
