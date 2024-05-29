@@ -1,4 +1,4 @@
-import React, {ReactElement} from "react";
+import React, {ReactElement, useCallback} from "react";
 import {Platform, SafeAreaView, StyleProp, ViewStyle} from "react-native";
 import {Drawer} from "react-native-drawer-layout";
 
@@ -12,6 +12,14 @@ const DEFAULT_STYLES: StyleProp<ViewStyle> = {
   borderColor: "gray",
 };
 
+const addWebScroll = (isOpen: boolean): ViewStyle => {
+  if (Platform.OS === "web") {
+    return {display: isOpen ? "flex" : "none", overflow: "scroll"};
+  } else {
+    return {};
+  }
+};
+
 export const SideDrawer = ({
   position = "left",
   isOpen,
@@ -22,22 +30,14 @@ export const SideDrawer = ({
   children,
   drawerStyles = {},
 }: SideDrawerProps): ReactElement => {
-  const renderDrawerContent = (): ReactElement => {
+  const renderDrawerContent = useCallback((): ReactElement => {
     return <SafeAreaView>{renderContent()}</SafeAreaView>;
-  };
-
-  const addWebScroll = (): any => {
-    if (Platform.OS === "web") {
-      return {display: isOpen ? "flex" : "none", overflow: "scroll"};
-    } else {
-      return {};
-    }
-  };
+  }, [renderContent]);
 
   return (
     <Drawer
       drawerPosition={position}
-      drawerStyle={[DEFAULT_STYLES, drawerStyles, addWebScroll()]}
+      drawerStyle={[DEFAULT_STYLES, drawerStyles, addWebScroll(isOpen)]}
       drawerType={drawerType}
       open={isOpen}
       renderDrawerContent={renderDrawerContent}
