@@ -7,7 +7,7 @@ import {SideDrawerProps} from "./Common";
 const DEFAULT_STYLES: StyleProp<ViewStyle> = {
   width: Platform.OS === "web" ? "40%" : "95%",
   height: "100%",
-  backgroundColor: "green",
+  backgroundColor: "lightgray",
   borderWidth: 1,
   borderColor: "gray",
 };
