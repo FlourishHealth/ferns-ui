@@ -26,12 +26,15 @@ ensuring consistency.
 
 ## Consistent Layouts
 Our layout system, built around the Box component and other layout elements, 
-ensures flexible yet uniform design structures.
+ensures flexible yet uniform design structures. It's is flexbox-first across
+iOS, Android, and Web, making it easy to create responsive designs that work
+across all platforms.
 
-## Unique Interface Elements
-Ferns UI components follow strict guidelines for consistency. For instance, 
-you can't add a margin to Text. Instead, you wrap the Text in a Box and add 
-the margin to the Box, maintaining a clean and predictable design language.
+## Separated Interface Elements
+Ferns UI and interaction components follow strict guidelines for consistency. 
+For instance,  you can't add a margin to Text. Instead, you wrap the Text in a 
+Box and add the margin to the Box, maintaining a clean and predictable design
+language that separates layout elements from interface and interaction elements.
 
 ## Accessibility
 Accessibility is a core principle of Ferns UI. Our components are designed to 
