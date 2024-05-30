@@ -17,9 +17,5 @@
     "test": "yarn --cwd packages/ui test",
     "postinstall": "patch-package"
   },
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  }
+  "workspaces": ["packages/*"]
 }
