@@ -216,7 +216,7 @@ export const DateTimeActionSheet = ({
     }
     setHour(h);
     setMinute(datetime.minute);
-    setAmPm(datetime.toFormat("a") === "am" ? "am" : "pm");
+    setAmPm(datetime.toFormat("a") === "AM" ? "am" : "pm");
     setDate(datetime.toISO());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, transformValue, transformValue?.options?.timezone]);
