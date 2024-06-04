@@ -77,6 +77,7 @@ export const Text = ({
 
     style.fontFamily = theme[computedFont as keyof typeof theme];
 
+    console.log("AUTO?", size);
     style.fontSize = fontSizes[size].size;
     if (align) {
       style.textAlign = align;

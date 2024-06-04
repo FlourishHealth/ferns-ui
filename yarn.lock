@@ -1791,7 +1791,7 @@
     resolve-from "^5.0.0"
     sucrase "3.34.0"
 
-"@expo/metro-runtime@3.2.1":
+"@expo/metro-runtime@3.2.1", "@expo/metro-runtime@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@expo/metro-runtime/-/metro-runtime-3.2.1.tgz#bbab2ca9d0c8d256172eb4688123af6be67c7674"
   integrity sha512-L7xNo5SmK+rcuXDm/+VBBImpA7FZsVB+m/rNr3fNl5or+1+yrZe99ViF7LZ8DOoVqAqcb4aCAXvGrP2JNYo1/Q==
