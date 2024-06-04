@@ -3122,6 +3122,8 @@ export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   showDescriptionAsTooltip?: boolean;
   // Default true. If false, description is shown below the value always.
   onlyShowDescriptionWhileEditing?: boolean;
+  // For persisting or reseting editing state from outside the component
+  instanceId?: string;
 }
 
 export interface APIError {

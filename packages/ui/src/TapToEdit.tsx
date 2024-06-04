@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from "react";
+import React, {ReactElement, useEffect, useRef, useState} from "react";
 import {Linking} from "react-native";
 
 import {Box} from "./Box";
@@ -97,12 +97,21 @@ export const TapToEdit = ({
   description: propsDescription,
   showDescriptionAsTooltip = false,
   onlyShowDescriptionWhileEditing = true,
+  instanceId,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
   const [initialValue] = useState(value);
   const description: string | undefined = propsDescription;
+  const prevInstanceId = useRef<string | undefined>(instanceId);
 
+  // reset editing state when instanceId changes
+  useEffect(() => {
+    if (instanceId !== prevInstanceId.current && !isEditing) {
+      setEditing(false);
+      prevInstanceId.current = instanceId;
+    }
+  }, [instanceId, isEditing]);
   if (editable && !setValue) {
     throw new Error("setValue is required if editable is true");
   }
