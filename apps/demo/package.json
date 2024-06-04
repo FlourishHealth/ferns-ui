@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web"
+    "start": "NODE_OPTIONS=--openssl-legacy-provider expo start",
+    "android": "NODE_OPTIONS=--openssl-legacy-provider expo start --android",
+    "ios": "NODE_OPTIONS=--openssl-legacy-provider expo start --ios",
+    "web": "NODE_OPTIONS=--openssl-legacy-provider expo start --web",
+    "build-preview": "NODE_OPTIONS=--openssl-legacy-provider yarn build-web",
+    "build-web": "NODE_OPTIONS=--openssl-legacy-provider expo export:web"
   },
   "dependencies": {
     "crypto-browserify": "^3.12.0",
