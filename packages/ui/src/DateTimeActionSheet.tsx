@@ -209,7 +209,7 @@ export const DateTimeActionSheet = ({
     }
     setHour(h);
     setMinute(datetime.minute);
-    setAmPm(datetime.toFormat("a") === "am" ? "am" : "pm");
+    setAmPm(datetime.toFormat("a") === "AM" ? "am" : "pm");
     setDate(datetime.toISO());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, transformValue, transformValue?.options?.timezone]);
@@ -337,7 +337,17 @@ export const DateTimeActionSheet = ({
 
   // Note: do not call this if waiting on a state change.
   const sendOnChange = () => {
-    const militaryHour = amPm === "pm" && hour !== 12 ? Number(hour) + 12 : Number(hour);
+    // hour is already correct for all AM hours except 12(AM)
+    let militaryHour = hour;
+
+    // 12AM should be 0
+    if (amPm === "am" && hour === 12) {
+      militaryHour = 0;
+    }
+    // all PM hours except 12PM (already correct) should add 12
+    else if (amPm === "pm" && hour !== 12) {
+      militaryHour = Number(hour) + 12;
+    }
 
     if (mode === "date") {
       const v = DateTime.fromISO(date)

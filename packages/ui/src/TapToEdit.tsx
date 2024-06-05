@@ -1,4 +1,4 @@
-import React, {ReactElement, useState} from "react";
+import React, {ReactElement, useEffect, useState} from "react";
 import {Linking} from "react-native";
 
 import {Box} from "./Box";
@@ -21,7 +21,7 @@ const TapToEditTitle = ({
   title: string;
   description?: string;
 }): ReactElement => {
-  return (
+  const Title = (
     <Box flex="grow" justifyContent="center">
       <Text weight="bold">{title}:</Text>
       {Boolean(description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing) && (
@@ -31,6 +31,15 @@ const TapToEditTitle = ({
       )}
     </Box>
   );
+  if (showDescriptionAsTooltip) {
+    return (
+      <Tooltip idealDirection="top" text={description}>
+        {Title}
+      </Tooltip>
+    );
+  } else {
+    return Title;
+  }
 };
 
 export function formatAddress(address: any, asString = false): string {
@@ -91,8 +100,14 @@ export const TapToEdit = ({
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
-  const [initialValue] = useState(value);
+  const [initialValue, setInitialValue] = useState();
   const description: string | undefined = propsDescription;
+  // setInitialValue is called after initial render to handle the case where the value is updated
+  useEffect(() => {
+    setInitialValue(value);
+    // do not update if value changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (editable && !setValue) {
     throw new Error("setValue is required if editable is true");
@@ -126,6 +141,7 @@ export const TapToEdit = ({
                 if (!onSave) {
                   console.error("No onSave provided for editable TapToEdit");
                 } else {
+                  setInitialValue(value);
                   await onSave(value);
                 }
                 setEditing(false);
@@ -214,33 +230,31 @@ export const TapToEdit = ({
         width="100%"
         {...rowBoxProps}
       >
-        {showDescriptionAsTooltip ? (
-          <Tooltip idealDirection="top" text={description}>
-            <TapToEditTitle
-              description={description}
-              onlyShowDescriptionWhileEditing={onlyShowDescriptionWhileEditing}
-              showDescriptionAsTooltip={showDescriptionAsTooltip}
-              title={title}
-            />
-          </Tooltip>
-        ) : (
+        <Box direction="row" width="100%">
           <TapToEditTitle
             description={description}
             onlyShowDescriptionWhileEditing={onlyShowDescriptionWhileEditing}
             showDescriptionAsTooltip={showDescriptionAsTooltip}
             title={title}
           />
-        )}
-        <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>
-          <Box
-            justifyContent="start"
-            marginLeft={fieldProps?.type === "textarea" ? 4 : 0}
-            onClick={isClickable ? openLink : undefined}
-          >
-            <Text
-              align={fieldProps?.type === "textarea" ? "left" : "right"}
-              underline={isClickable}
-            >
+          <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>
+            <Box justifyContent="start" onClick={isClickable ? openLink : undefined}>
+              {Boolean(fieldProps?.type !== "textarea") && (
+                <Text align="right" underline={isClickable}>
+                  {displayValue}
+                </Text>
+              )}
+            </Box>
+            {editable && (
+              <Box marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
+                <Icon color="darkGray" name="edit" prefix="far" size="md" />
+              </Box>
+            )}
+          </Box>
+        </Box>
+        {fieldProps?.type === "textarea" && (
+          <Box marginTop={2} paddingY={2} width="100%">
+            <Text align="left" underline={isClickable}>
               {displayValue}
             </Text>
           </Box>
