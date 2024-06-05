@@ -120,7 +120,7 @@ const getTooltipPosition = ({
 
 export const Tooltip = (props: TooltipProps) => {
   const {theme} = useContext(ThemeContext);
-  const {text, children, bgColor, idealDirection} = props;
+  const {text, children, bgColor = theme.surface.base, idealDirection} = props;
   const hoverDelay = 500;
   const hoverEndDelay = 0;
   const [visible, setVisible] = React.useState(false);
@@ -223,11 +223,12 @@ export const Tooltip = (props: TooltipProps) => {
       {visible && (
         <Portal>
           <Pressable
+            accessibilityRole="button"
             style={{
               alignSelf: "flex-start",
               justifyContent: "center",
               paddingHorizontal: 16,
-              backgroundColor: theme[bgColor ?? "darkGray"],
+              backgroundColor: theme.surface[bgColor as keyof typeof theme.surface],
               borderRadius: 16,
               paddingVertical: 8,
               display: "flex",
@@ -242,7 +243,7 @@ export const Tooltip = (props: TooltipProps) => {
               setVisible(false);
             }}
           >
-            <Text color="white">{text}</Text>
+            <Text color="inverted">{text}</Text>
           </Pressable>
         </Portal>
       )}

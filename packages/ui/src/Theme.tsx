@@ -1,115 +1,165 @@
-import React, {createContext, useState} from "react";
+import merge from "lodash/merge";
+import React, {createContext, useMemo, useState} from "react";
 
-import {UnifiedTheme} from "./Common";
-import {changeColorLuminance} from "./Unifier";
+import {FernsTheme} from "./Common";
 
-const DEFAULT_FONT = "Cochin";
-const DEFAULT_BOLD_FONT = "Cochin";
+const defaultPrimitives = {
+  neutral000: "#FFFFFF",
+  neutral050: "#F2F2F2",
+  neutral100: "#E6E6E6",
+  neutral200: "#D9D9D9",
+  neutral300: "#CDCDCD",
+  neutral400: "#B3B3B3",
+  neutral500: "#9A9A9A",
+  neutral600: "#686868",
+  neutral700: "#4E4E4E",
+  neutral800: "#353535",
+  neutral900: "#1C1C1C",
 
-const darkGray = "#111111";
-const lightGray = "#efefef";
-const gray = "#8e8e8e";
-const white = "#fdfdfd";
-const primary = "#5c58bb";
-const secondary = "#8d58bb";
-const accent = "#58b3bb";
-const tertiary = "#b7956f";
+  primary000: "#EBFAFF",
+  primary050: "#BCE9F7",
+  primary100: "#90D8F0",
+  primary200: "#73CAE8",
+  primary300: "#40B8E0",
+  primary400: "#0E9DCD",
+  primary500: "#0086B3",
+  primary600: "#0A7092",
+  primary700: "#035D7E",
+  primary800: "#004B64",
+  primary900: "#013749",
 
-const defaultTheme: UnifiedTheme = {
-  // Primary colors
-  white,
-  lightGray,
-  gray,
-  darkGray,
-  // secondary colors
-  green: "#0fa573",
-  red: "#bd081c",
-  springGreen: "#008753",
-  pine: "#0a6955",
-  olive: "#364a4c",
-  blue: "#4a90e2",
-  navy: "#004b91",
-  midnight: "#133a5e",
-  purple: "#b469eb",
-  orchid: "#8046a5",
-  eggplant: "#5b2677",
-  maroon: "#6e0f3c",
-  watermelon: "#f13535",
-  orange: "#e3780c",
-  black: "#000000",
+  secondary000: "#F2F9FA",
+  secondary050: "#D7E5EA",
+  secondary100: "#B6CDD5",
+  secondary200: "#9EB7BF",
+  secondary300: "#87A1AA",
+  secondary400: "#608997",
+  secondary500: "#2B6072",
+  secondary600: "#1C4E5F",
+  secondary700: "#0F3D4D",
+  secondary800: "#092E3A",
+  secondary900: "#041E27",
 
-  info: "#4a90e2", // blue
-  error: "#bd081c", // red
-  warning: "#e3780c", // orange
-  success: "#008753", // springGreen
-  neutral: gray,
+  accent000: "#FFFDF7",
+  accent050: "#FCECC2",
+  accent100: "#F9E0A1",
+  accent200: "#F7D582",
+  accent300: "#F2CB62",
+  accent400: "#E5B132",
+  accent500: "#D69C0E",
+  accent600: "#B58201",
+  accent700: "#956A00",
+  accent800: "#543C00",
+  accent900: "#332400",
 
-  primaryLighter: changeColorLuminance(primary, "lighter"),
-  primaryLight: changeColorLuminance(primary, "light"),
-  primary,
-  primaryDark: changeColorLuminance(primary, "dark"),
-  primaryDarker: changeColorLuminance(primary, "darker"),
+  error000: "#FDD7D7",
+  error100: "#D33232",
+  error200: "#BD1111",
 
-  secondaryLighter: changeColorLuminance(secondary, "lighter"),
-  secondaryLight: changeColorLuminance(secondary, "light"),
-  secondary,
-  secondaryDark: changeColorLuminance(secondary, "dark"),
-  secondaryDarker: changeColorLuminance(secondary, "darker"),
+  warning000: "#FFE3C6",
+  warning100: "#F36719",
+  warning200: "#B14202",
 
-  accentLighter: changeColorLuminance(accent, "lighter"),
-  accentLight: changeColorLuminance(accent, "light"),
-  accent,
-  accentDark: changeColorLuminance(accent, "dark"),
-  accentDarker: changeColorLuminance(accent, "darker"),
+  success000: "#DCF2E2",
+  success100: "#3EA45C",
+  success200: "#1A7F36",
 
-  tertiaryLighter: changeColorLuminance(tertiary, "lighter"),
-  tertiaryLight: changeColorLuminance(tertiary, "light"),
-  tertiary,
-  tertiaryDark: changeColorLuminance(tertiary, "dark"),
-  tertiaryDarker: changeColorLuminance(tertiary, "darker"),
+  spacing0: 0,
+  spacing1: 4,
+  spacing2: 8,
+  spacing3: 12,
+  spacing4: 16,
+  spacing5: 24,
+  spacing6: 32,
+  spacing7: 40,
+  spacing8: 48,
+  spacing9: 56,
+  spacing10: 64,
+  spacing11: 72,
+  spacing12: 80,
 
-  background: white,
-  backgroundSecondary: lightGray,
-  textPrimary: darkGray,
-  textSecondary: lightGray,
-  textDisabled: gray,
-  divider: gray,
+  radiusSm: 1,
+  radiusMd: 3,
+  radiusLg: 16,
+  radiusXl: 32,
+  radius2xl: 128,
+  radius3xl: 360,
+};
 
-  // From the Atlassian templates
-  neutral900: "#091E42",
-  neutral800: "#172B4D",
-  neutral700: "#253858",
-  neutral600: "#344563",
-  neutral500: "#42526E",
-  neutral400: "#505F79",
-  neutral300: "#5E6C84",
-  neutral200: "#6B778C",
-  neutral100: "#7A869A",
-  neutral90: "#8993A4",
-  neutral80: "#97A0AF",
-  neutral70: "#A5ADBA",
-  neutral60: "#B3BAC5",
-  neutral50: "#C1C7D0",
-  neutral40: "#DFE1E6",
-  neutral30: "#EBECF0",
-  neutral20: "#F4F5F7",
-  neutral10: "#FAFBFC",
-
-  primaryFont: DEFAULT_FONT,
-  primaryBoldFont: DEFAULT_BOLD_FONT,
-
-  secondaryFont: DEFAULT_FONT,
-  secondaryBoldFont: DEFAULT_BOLD_FONT,
-
-  accentFont: DEFAULT_FONT,
-  accentBoldFont: DEFAULT_BOLD_FONT,
-
-  buttonFont: DEFAULT_FONT,
-  titleFont: DEFAULT_FONT,
+const defaultTheme: FernsTheme = {
+  text: {
+    primary: "neutral900",
+    inverted: "neutral000",
+    // TODO: ask jo about the naming here, secondaryDark is a blue, secondaryLight is a gray.
+    secondaryLight: "neutral600",
+    extraLight: "neutral500",
+    secondaryDark: "secondary800",
+    link: "primary600",
+    linkLight: "primary400",
+    accent: "accent700",
+    error: "error200",
+    warning: "warning200",
+    success: "success200",
+  },
+  surface: {
+    base: "neutral000",
+    primary: "primary400",
+    secondaryLight: "secondary100",
+    secondaryDark: "secondary500",
+    secondaryExtraDark: "secondary800",
+    neutral: "neutral600",
+    neutralLight: "neutral200",
+    neutralDark: "neutral800",
+    disabled: "neutral500",
+    error: "error200",
+    errorLight: "error000",
+    success: "success200",
+    successLight: "success000",
+    warning: "warning100",
+    warningLight: "warning000",
+  },
+  border: {
+    default: "neutral300",
+    dark: "neutral500",
+    activeNeutral: "neutral700",
+    activeAccent: "accent500",
+    hover: "neutral200",
+    focus: "primary200",
+    error: "error100",
+    success: "success100",
+    warning: "warning100",
+  },
+  status: {
+    active: "success100",
+    doNotDisturb: "error100",
+    away: "neutral500",
+  },
+  radius: {
+    minimal: "radiusSm",
+    default: "radiusMd",
+    full: "radiusLg",
+    rounded: "radius3xl",
+  },
+  spacing: {
+    none: "spacing0",
+    xs: "spacing1",
+    sm: "spacing2",
+    md: "spacing4",
+    lg: "spacing5",
+    xl: "spacing6",
+    "2xl": "spacing8",
+    "3xl": "spacing12",
+  },
+  font: {
+    primary: "Nunito",
+    title: "Titillium Web",
+  },
+  primitives: defaultPrimitives,
 };
 
 export const ThemeContext = createContext({
-  setTheme: (_theme: Partial<UnifiedTheme>) => {},
+  setTheme: (_theme: Partial<FernsTheme>) => {},
+  setPrimitives: (_primitives: Partial<typeof defaultPrimitives>) => {},
   theme: defaultTheme,
   resetTheme: () => {},
 });
@@ -118,69 +168,40 @@ interface ThemeProviderProps {
   children: any;
 }
 
-function setThemeWithLuminances(
-  oldTheme: UnifiedTheme,
-  newTheme: Partial<UnifiedTheme>
-): UnifiedTheme {
-  return {
-    ...oldTheme,
-    ...newTheme,
-    primaryLighter:
-      newTheme.primaryLighter ??
-      changeColorLuminance(newTheme.primary ?? oldTheme.primary, "lighter"),
-    primaryLight:
-      newTheme.primaryLight ?? changeColorLuminance(newTheme.primary ?? oldTheme.primary, "light"),
-    primary: newTheme.primary ?? oldTheme.primary,
-    primaryDark:
-      newTheme.primaryDark ?? changeColorLuminance(newTheme.primary ?? oldTheme.primary, "dark"),
-    primaryDarker:
-      newTheme.primaryDarker ??
-      changeColorLuminance(newTheme.primary ?? oldTheme.primary, "darker"),
-
-    secondaryLighter:
-      newTheme.secondaryLighter ??
-      changeColorLuminance(newTheme.secondary ?? oldTheme.secondary, "lighter"),
-    secondaryLight:
-      newTheme.secondaryLight ??
-      changeColorLuminance(newTheme.secondary ?? oldTheme.secondary, "light"),
-    secondary: newTheme.secondary ?? oldTheme.secondary,
-    secondaryDark:
-      newTheme.secondaryDark ??
-      changeColorLuminance(newTheme.secondary ?? oldTheme.secondary, "dark"),
-    secondaryDarker:
-      newTheme.secondaryDarker ??
-      changeColorLuminance(newTheme.secondary ?? oldTheme.secondary, "darker"),
-
-    accentLighter:
-      newTheme.accentLighter ?? changeColorLuminance(newTheme.accent ?? oldTheme.accent, "lighter"),
-    accentLight:
-      newTheme.accentLight ?? changeColorLuminance(newTheme.accent ?? oldTheme.accent, "light"),
-    accent: newTheme.accent ?? oldTheme.accent,
-    accentDark:
-      newTheme.accentDark ?? changeColorLuminance(newTheme.accent ?? oldTheme.accent, "dark"),
-    accentDarker:
-      newTheme.accentDarker ?? changeColorLuminance(newTheme.accent ?? oldTheme.accent, "darker"),
-
-    tertiaryLighter:
-      newTheme.tertiaryLighter ??
-      changeColorLuminance(newTheme.tertiary ?? oldTheme.tertiary, "lighter"),
-    tertiaryLight:
-      newTheme.tertiaryLight ??
-      changeColorLuminance(newTheme.tertiary ?? oldTheme.tertiary, "light"),
-    tertiary: newTheme.tertiary ?? oldTheme.tertiary,
-    tertiaryDark:
-      newTheme.tertiaryDark ?? changeColorLuminance(newTheme.tertiary ?? oldTheme.tertiary, "dark"),
-    tertiaryDarker:
-      newTheme.tertiaryDarker ??
-      changeColorLuminance(newTheme.tertiary ?? oldTheme.tertiary, "darker"),
-  };
-}
-
 export const ThemeProvider = ({children}: ThemeProviderProps) => {
-  const [providerTheme, setProviderTheme] = useState<UnifiedTheme>(defaultTheme);
+  const [providerTheme, setProviderTheme] = useState<FernsTheme>(defaultTheme);
+  const [providerPrimitives, setProviderPrimitives] =
+    useState<typeof defaultPrimitives>(defaultPrimitives);
 
-  const setTheme = (newTheme: Partial<UnifiedTheme>) => {
-    setProviderTheme(setThemeWithLuminances(providerTheme, newTheme));
+  const computedTheme = useMemo(() => {
+    // Map the providerTheme and transform the strings into the actual values from the primitives.
+    // Do this for each sub-object in the theme. E.g. theme.text, theme.surface, etc.
+    const theme = Object.keys(providerTheme).reduce((acc, key) => {
+      const value = providerTheme[key as keyof FernsTheme];
+      // for each key, map the value to the primitive value.
+      acc[key as keyof typeof acc] = Object.keys(value).reduce((accKey, valueKey) => {
+        const primitiveKey = value[valueKey as keyof typeof value];
+        if (!providerPrimitives[primitiveKey]) {
+          console.error(`Primitive ${primitiveKey} not found in theme.`);
+        }
+        accKey[valueKey] = providerPrimitives[primitiveKey];
+        return accKey;
+      }, {} as any);
+      return acc;
+    }, {} as FernsTheme);
+
+    return {
+      ...theme,
+      primitives: providerPrimitives,
+    };
+  }, [providerTheme, providerPrimitives]);
+
+  const setPrimitives = (newPrimitives: Partial<typeof defaultPrimitives>) => {
+    setProviderPrimitives(merge(defaultPrimitives, newPrimitives) as typeof defaultPrimitives);
+  };
+
+  const setTheme = (newTheme: Partial<FernsTheme>) => {
+    setProviderTheme(merge(defaultTheme, newTheme) as FernsTheme);
   };
 
   const resetTheme = () => {
@@ -188,7 +209,7 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
   };
 
   return (
-    <ThemeContext.Provider value={{theme: providerTheme, setTheme, resetTheme}}>
+    <ThemeContext.Provider value={{theme: computedTheme, setTheme, setPrimitives, resetTheme}}>
       {children}
     </ThemeContext.Provider>
   );

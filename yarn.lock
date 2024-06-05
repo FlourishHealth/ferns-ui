@@ -1295,6 +1295,16 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.0.tgz#a5417ae8427873f1dd08b70b3574b453e67b5f7f"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
+"@expo-google-fonts/nunito@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/nunito/-/nunito-0.2.3.tgz#d226372ab582bc285873a61382d619c17abd5c19"
+  integrity sha512-z+Bx3IuT0t3jguoMxiyWuC7pW3wDVNHgYko/G9V23QhR/yDSjEsT+Kx+VGDT/hu9TXSxw3CtpQ5MFHikqSVDYw==
+
+"@expo-google-fonts/titillium-web@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/titillium-web/-/titillium-web-0.2.3.tgz#54afcc5f0b04f54b4a5ce6c06355f80923cc9534"
+  integrity sha512-Lbh8MBcDP/mFh9uLjRrKgwqRgoDWJxPY/9a8Ez3+Qs9onJCVQ4aluVmrO1JUJdhkT8gS+faVDYSzg6M0NxpQ4g==
+
 "@expo/bunyan@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@expo/bunyan/-/bunyan-4.0.0.tgz#be0c1de943c7987a9fbd309ea0b1acd605890c7b"
@@ -1551,7 +1561,7 @@
     postcss "~8.4.32"
     resolve-from "^5.0.0"
 
-"@expo/metro-runtime@3.2.1":
+"@expo/metro-runtime@3.2.1", "@expo/metro-runtime@^3.2.1":
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/@expo/metro-runtime/-/metro-runtime-3.2.1.tgz#bbab2ca9d0c8d256172eb4688123af6be67c7674"
   integrity sha512-L7xNo5SmK+rcuXDm/+VBBImpA7FZsVB+m/rNr3fNl5or+1+yrZe99ViF7LZ8DOoVqAqcb4aCAXvGrP2JNYo1/Q==
@@ -2371,13 +2381,37 @@
   resolved "https://registry.yarnpkg.com/@react-native/debugger-frontend/-/debugger-frontend-0.74.83.tgz#48050afa4e086438073b95f041c0cc84fe3f20de"
   integrity sha512-RGQlVUegBRxAUF9c1ss1ssaHZh6CO+7awgtI9sDeU0PzDZY/40ImoPD5m0o0SI6nXoVzbPtcMGzU+VO590pRfA==
 
-"@react-native/dev-middleware@0.74.83", "@react-native/dev-middleware@~0.74.75":
+"@react-native/debugger-frontend@0.74.84":
+  version "0.74.84"
+  resolved "https://registry.yarnpkg.com/@react-native/debugger-frontend/-/debugger-frontend-0.74.84.tgz#0bde122a988916b6a50f05a7c3ab1c5db029b149"
+  integrity sha512-YUEA03UNFbiYzHpYxlcS2D9+3eNT5YLGkl5yRg3nOSN6KbCc/OttGnNZme+tuSOJwjMN/vcvtDKYkTqjJw8U0A==
+
+"@react-native/dev-middleware@0.74.83":
   version "0.74.83"
   resolved "https://registry.yarnpkg.com/@react-native/dev-middleware/-/dev-middleware-0.74.83.tgz#9d09cfdb763e8ef81c003b0f99ae4ed1a3539639"
   integrity sha512-UH8iriqnf7N4Hpi20D7M2FdvSANwTVStwFCSD7VMU9agJX88Yk0D1T6Meh2RMhUu4kY2bv8sTkNRm7LmxvZqgA==
   dependencies:
     "@isaacs/ttlcache" "^1.4.1"
     "@react-native/debugger-frontend" "0.74.83"
+    "@rnx-kit/chromium-edge-launcher" "^1.0.0"
+    chrome-launcher "^0.15.2"
+    connect "^3.6.5"
+    debug "^2.2.0"
+    node-fetch "^2.2.0"
+    nullthrows "^1.1.1"
+    open "^7.0.3"
+    selfsigned "^2.4.1"
+    serve-static "^1.13.1"
+    temp-dir "^2.0.0"
+    ws "^6.2.2"
+
+"@react-native/dev-middleware@~0.74.75":
+  version "0.74.84"
+  resolved "https://registry.yarnpkg.com/@react-native/dev-middleware/-/dev-middleware-0.74.84.tgz#19ccfece791742f83f4c0a22a8c14593a45562a2"
+  integrity sha512-veYw/WmyrAOQHUiIeULzn2duJQnXDPiKq2jZ/lcmDo6jsLirpp+Q73lx09TYgy/oVoPRuV0nfmU3x9B6EV/7qQ==
+  dependencies:
+    "@isaacs/ttlcache" "^1.4.1"
+    "@react-native/debugger-frontend" "0.74.84"
     "@rnx-kit/chromium-edge-launcher" "^1.0.0"
     chrome-launcher "^0.15.2"
     connect "^3.6.5"
@@ -7573,9 +7607,9 @@ iterator.prototype@^1.1.2:
     set-function-name "^2.0.1"
 
 jackspeak@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/jackspeak/-/jackspeak-3.1.2.tgz#eada67ea949c6b71de50f1b09c92a961897b90ab"
-  integrity sha512-kWmLKn2tRtfYMF/BakihVVRzBKOxz4gJMiL2Rj91WnAB5TPZumSH99R/Yf1qE1u4uRimvCSJfm6hnxohXeEXjQ==
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/jackspeak/-/jackspeak-3.2.5.tgz#70f337b27fa555c2cc85fe24bf4dd6ed4e17907c"
+  integrity sha512-a1hopwtr4NawFIrSmFgufzrN1Qy2BAfMJ0yScJBs/olJhTcctCy3YIDx4hTY2DOTJD1pUMTly80kmlYZxjZr5w==
   dependencies:
     "@isaacs/cliui" "^8.0.2"
   optionalDependencies:

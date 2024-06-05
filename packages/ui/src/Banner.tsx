@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {BannerProps, ButtonColor} from "./Common";
+import {BannerProps, TextColor} from "./Common";
 import {Icon} from "./Icon";
 import {IconButton} from "./IconButton";
 import {Text} from "./Text";
@@ -31,7 +31,6 @@ export const Banner = ({
   subtext,
   color = "secondaryDark",
   iconName,
-  textColor = "white",
   negativeXMargin = 0,
   width,
   shape,
@@ -41,6 +40,9 @@ export const Banner = ({
   // If the banner is not type dismiss, show it immediately.
   const {ACTION, DISMISS, CUSTOM_BUTTON} = BannerType;
   const [show, setShow] = useState(type !== DISMISS);
+
+  const textColor: TextColor = "inverted";
+
   // Load seen from async storage.
   useEffect(() => {
     if (type === DISMISS) {
@@ -77,7 +79,6 @@ export const Banner = ({
           <IconButton
             accessibilityLabel=""
             icon="arrow-right"
-            iconColor={textColor as ButtonColor}
             prefix="fas"
             onClick={(): void => onClick?.()}
           />
@@ -86,13 +87,7 @@ export const Banner = ({
     } else if (type === DISMISS) {
       return (
         <Box alignItems="center" display="block" justifyContent="center" width={40}>
-          <IconButton
-            accessibilityLabel=""
-            icon="times-circle"
-            iconColor={textColor as ButtonColor}
-            prefix="fas"
-            onClick={dismiss}
-          />
+          <IconButton accessibilityLabel="" icon="times-circle" prefix="fas" onClick={dismiss} />
         </Box>
       );
     } else {

@@ -62,15 +62,7 @@ export const Modal = ({
     if (!showClose) {
       return null;
     }
-    return (
-      <IconButton
-        accessibilityLabel="close"
-        bgColor="white"
-        icon="times"
-        iconColor="darkGray"
-        onClick={() => onDismiss()}
-      />
-    );
+    return <IconButton accessibilityLabel="close" icon="times" onClick={() => onDismiss()} />;
   };
 
   const renderModalHeader = (): React.ReactElement => {
@@ -125,7 +117,7 @@ export const Modal = ({
         <Box
           alignItems="center"
           alignSelf="center"
-          color="white"
+          color="base"
           dangerouslySetInlineStyle={{
             __style: {
               zIndex: 1,
@@ -146,7 +138,7 @@ export const Modal = ({
           minWidth={300}
           paddingX={8}
           paddingY={2}
-          rounding={6}
+          rounding="md"
           shadow
           width={sizePx}
         >
@@ -168,9 +160,7 @@ export const Modal = ({
             {Boolean(showClose) && (
               <IconButton
                 accessibilityLabel="close"
-                bgColor="white"
                 icon="times"
-                iconColor="darkGray"
                 size="lg"
                 onClick={() => onDismiss()}
               />

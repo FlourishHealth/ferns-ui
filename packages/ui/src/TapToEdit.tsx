@@ -25,7 +25,7 @@ const TapToEditTitle = ({
     <Box flex="grow" justifyContent="center">
       <Text weight="bold">{title}:</Text>
       {Boolean(description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing) && (
-        <Text color="gray" size="sm">
+        <Text color="secondaryLight" size="sm">
           {description}
         </Text>
       )}
@@ -246,7 +246,7 @@ export const TapToEdit = ({
           </Box>
           {editable && (
             <Box alignSelf="end" marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
-              <Icon color="darkGray" name="edit" prefix="far" size="md" />
+              <Icon color="primary" name="edit" prefix="far" size="md" />
             </Box>
           )}
         </Box>

@@ -19,7 +19,6 @@ export * from "./Modal.stories";
 export * from "./MultiselectField.stories";
 export * from "./Pagination.stories";
 export * from "./PasswordField.stories";
-export * from "./Pill.stories";
 export * from "./Radio.stories";
 export * from "./RadioField.stories";
 export * from "./SegmentedControl.stories";

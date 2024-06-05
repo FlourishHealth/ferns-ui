@@ -12,7 +12,7 @@ export function initIcons() {
 // etc.
 export const Icon = ({color, size, name, prefix, testID}: IconProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
-  const iconColor = theme[color || "primary"];
+  const iconColor = theme.text[color || "primary"];
   const iconSize = iconSizeToNumber(size);
   return (
     <FontAwesome5
