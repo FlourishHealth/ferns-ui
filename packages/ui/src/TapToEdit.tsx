@@ -247,23 +247,25 @@ export const TapToEdit = ({
             </Box>
             {editable && (
               <Box marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
-                <Icon color="darkGray" name="edit" prefix="far" size="md" />
+                <Icon name="edit" prefix="far" size="md" />
               </Box>
             )}
           </Box>
         </Box>
         {fieldProps?.type === "textarea" && (
-          <Box marginTop={2} paddingY={2} width="100%">
-            <Text align="left" underline={isClickable}>
-              {displayValue}
-            </Text>
-          </Box>
-          {editable && (
-            <Box alignSelf="end" marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
-              <Icon color="primary" name="edit" prefix="far" size="md" />
+          <>
+            <Box marginTop={2} paddingY={2} width="100%">
+              <Text align="left" underline={isClickable}>
+                {displayValue}
+              </Text>
             </Box>
-          )}
-        </Box>
+            {editable && (
+              <Box alignSelf="end" marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
+                <Icon color="primary" name="edit" prefix="far" size="md" />
+              </Box>
+            )}
+          </>
+        )}
       </Box>
     );
   }
