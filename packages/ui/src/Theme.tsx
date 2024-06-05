@@ -1,10 +1,7 @@
-import {merge} from "lodash";
-import React, {createContext, useState} from "react";
+import merge from "lodash/merge";
+import React, {createContext, useMemo, useState} from "react";
 
 import {FernsTheme} from "./Common";
-
-const DEFAULT_FONT = "Cochin";
-const DEFAULT_BOLD_FONT = "Cochin";
 
 const defaultPrimitives = {
   neutral000: "#FFFFFF",
@@ -93,6 +90,7 @@ const defaultTheme: FernsTheme = {
   text: {
     primary: "neutral900",
     inverted: "neutral000",
+    // TODO: ask jo about the naming here, secondaryDark is a blue, secondaryLight is a gray.
     secondaryLight: "neutral600",
     extraLight: "neutral500",
     secondaryDark: "secondary800",
@@ -161,6 +159,7 @@ const defaultTheme: FernsTheme = {
 
 export const ThemeContext = createContext({
   setTheme: (_theme: Partial<FernsTheme>) => {},
+  setPrimitives: (_primitives: Partial<typeof defaultPrimitives>) => {},
   theme: defaultTheme,
   resetTheme: () => {},
 });
@@ -171,6 +170,35 @@ interface ThemeProviderProps {
 
 export const ThemeProvider = ({children}: ThemeProviderProps) => {
   const [providerTheme, setProviderTheme] = useState<FernsTheme>(defaultTheme);
+  const [providerPrimitives, setProviderPrimitives] =
+    useState<typeof defaultPrimitives>(defaultPrimitives);
+
+  const computedTheme = useMemo(() => {
+    // Map the providerTheme and transform the strings into the actual values from the primitives.
+    // Do this for each sub-object in the theme. E.g. theme.text, theme.surface, etc.
+    const theme = Object.keys(providerTheme).reduce((acc, key) => {
+      const value = providerTheme[key as keyof FernsTheme];
+      // for each key, map the value to the primitive value.
+      acc[key as keyof typeof acc] = Object.keys(value).reduce((accKey, valueKey) => {
+        const primitiveKey = value[valueKey as keyof typeof value];
+        if (!providerPrimitives[primitiveKey]) {
+          console.error(`Primitive ${primitiveKey} not found in theme.`);
+        }
+        accKey[valueKey] = providerPrimitives[primitiveKey];
+        return accKey;
+      }, {} as any);
+      return acc;
+    }, {} as FernsTheme);
+
+    return {
+      ...theme,
+      primitives: providerPrimitives,
+    };
+  }, [providerTheme, providerPrimitives]);
+
+  const setPrimitives = (newPrimitives: Partial<typeof defaultPrimitives>) => {
+    setProviderPrimitives(merge(defaultPrimitives, newPrimitives) as typeof defaultPrimitives);
+  };
 
   const setTheme = (newTheme: Partial<FernsTheme>) => {
     setProviderTheme(merge(defaultTheme, newTheme) as FernsTheme);
@@ -181,7 +209,7 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
   };
 
   return (
-    <ThemeContext.Provider value={{theme: providerTheme, setTheme, resetTheme}}>
+    <ThemeContext.Provider value={{theme: computedTheme, setTheme, setPrimitives, resetTheme}}>
       {children}
     </ThemeContext.Provider>
   );

@@ -113,7 +113,7 @@ export const TextField = ({
     if (searching) {
       return (
         <Box marginRight={4}>
-          <ActivityIndicator color={theme.primary} size="small" />
+          <ActivityIndicator color={theme.primitives.neutral400} size="small" />
         </Box>
       );
     } else {
@@ -127,11 +127,15 @@ export const TextField = ({
 
   let borderColor;
   if (errorMessage) {
-    borderColor = theme.red;
+    borderColor = theme.border.error;
   } else if (focused) {
-    borderColor = theme.blue;
+    borderColor = theme.border.focus;
+  } else if (value?.trim() === "") {
+    // Unfilled
+    borderColor = theme.border.dark;
   } else {
-    borderColor = theme.gray;
+    // Filled in
+    borderColor = theme.border.activeNeutral;
   }
 
   const getHeight = useCallback(() => {
@@ -153,8 +157,8 @@ export const TextField = ({
       paddingLeft: 0,
       height: getHeight(),
       width: "100%",
-      color: theme.darkGray,
-      fontFamily: theme.primaryFont,
+      color: theme.text.primary,
+      fontFamily: theme.font.primary,
       ...style,
     };
 
@@ -163,7 +167,7 @@ export const TextField = ({
     }
 
     return defaultStyles;
-  }, [getHeight, style, theme.darkGray, theme.primaryFont]);
+  }, [getHeight, style, theme.text.primary, theme.font.primary]);
 
   const isHandledByModal = [
     "date",

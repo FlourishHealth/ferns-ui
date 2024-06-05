@@ -1,6 +1,6 @@
 import {StorybookContainer} from "@components";
 import {DemoConfiguration} from "@config";
-import {Box, Text, TextProps} from "ferns-ui";
+import {Box, Text, TextColor, TextProps} from "ferns-ui";
 import React from "react";
 
 const renderText = (text: string, props: Partial<TextProps>) => {
@@ -18,15 +18,24 @@ const Texts = (): React.ReactElement => {
         {renderText("default", {})}
         {renderText("small", {size: "sm"})}
         {renderText("large", {size: "lg"})}
-        {renderText("gray", {color: "gray"})}
-        {renderText("lightGray", {color: "lightGray"})}
-        {renderText("primary", {color: "primary"})}
-        {renderText("secondary", {color: "secondary"})}
-        {renderText("tertiary", {color: "tertiary"})}
-        {renderText("accent", {color: "accent"})}
-        {renderText("red", {color: "red"})}
+        {[
+          "primary",
+          "secondaryLight",
+          "extraLight",
+          "secondaryDark",
+          "link",
+          "linkLight",
+          "accent",
+          "error",
+          "warning",
+          "success",
+        ].map((color) => renderText(color, {color: color as TextColor}))}
+
         {renderText("bold", {weight: "bold"})}
         {renderText("italic", {italic: true})}
+        {renderText("bold italic", {italic: true, weight: "bold"})}
+        {renderText("bold italic accent", {italic: true, weight: "bold", color: "accent"})}
+
         {renderText("center", {align: "center"})}
       </Box>
     </StorybookContainer>

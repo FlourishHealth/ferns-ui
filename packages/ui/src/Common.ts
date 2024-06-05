@@ -101,9 +101,9 @@ export interface ThemePrimitiveSpacing {
   spacing12: number;
 }
 
-export type ThemePrimitives = ThemePrimitiveColors | ThemePrimitiveRadius | ThemePrimitiveSpacing;
+export type ThemePrimitives = ThemePrimitiveColors & ThemePrimitiveRadius & ThemePrimitiveSpacing;
 
-export interface TextTheme {
+export interface TextThemeConfig {
   primary: keyof ThemePrimitiveColors;
   inverted: keyof ThemePrimitiveColors;
   secondaryLight: keyof ThemePrimitiveColors;
@@ -117,7 +117,7 @@ export interface TextTheme {
   success: keyof ThemePrimitiveColors;
 }
 
-export interface SurfaceTheme {
+export interface SurfaceThemeConfig {
   base: keyof ThemePrimitiveColors;
   primary: keyof ThemePrimitiveColors;
   secondaryLight: keyof ThemePrimitiveColors;
@@ -135,7 +135,7 @@ export interface SurfaceTheme {
   warningLight: keyof ThemePrimitiveColors;
 }
 
-export interface BorderTheme {
+export interface BorderThemeConfig {
   default: keyof ThemePrimitiveColors;
   dark: keyof ThemePrimitiveColors;
   activeNeutral: keyof ThemePrimitiveColors;
@@ -147,20 +147,20 @@ export interface BorderTheme {
   warning: keyof ThemePrimitiveColors;
 }
 
-export interface StatusTheme {
+export interface StatusThemeConfig {
   active: keyof ThemePrimitiveColors;
   doNotDisturb: keyof ThemePrimitiveColors;
   away: keyof ThemePrimitiveColors;
 }
 
-export interface RadiusTheme {
+export interface RadiusThemeConfig {
   minimal: keyof ThemePrimitiveRadius;
   default: keyof ThemePrimitiveRadius;
   full: keyof ThemePrimitiveRadius;
   rounded: keyof ThemePrimitiveRadius;
 }
 
-export interface SpacingTheme {
+export interface SpacingThemeConfig {
   none: keyof ThemePrimitiveSpacing;
   xs: keyof ThemePrimitiveSpacing;
   sm: keyof ThemePrimitiveSpacing;
@@ -169,6 +169,74 @@ export interface SpacingTheme {
   xl: keyof ThemePrimitiveSpacing;
   "2xl": keyof ThemePrimitiveSpacing;
   "3xl": keyof ThemePrimitiveSpacing;
+}
+
+export interface TextTheme {
+  primary: string;
+  inverted: string;
+  secondaryLight: string;
+  extraLight: string;
+  secondaryDark: string;
+  link: string;
+  linkLight: string;
+  accent: string;
+  error: string;
+  warning: string;
+  success: string;
+}
+
+export interface SurfaceTheme {
+  base: string;
+  primary: string;
+  secondaryLight: string;
+  secondaryDark: string;
+  secondaryExtraDark: string;
+  neutral: string;
+  neutralLight: string;
+  neutralDark: string;
+  disabled: string;
+  error: string;
+  errorLight: string;
+  success: string;
+  successLight: string;
+  warning: string;
+  warningLight: string;
+}
+
+export interface BorderTheme {
+  default: string;
+  dark: string;
+  activeNeutral: string;
+  activeAccent: string;
+  hover: string;
+  focus: string;
+  error: string;
+  success: string;
+  warning: string;
+}
+
+export interface StatusTheme {
+  active: string;
+  doNotDisturb: string;
+  away: string;
+}
+
+export interface RadiusTheme {
+  minimal: string;
+  default: string;
+  full: string;
+  rounded: string;
+}
+
+export interface SpacingTheme {
+  none: string;
+  xs: string;
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+  "2xl": string;
+  "3xl": string;
 }
 
 export type TextColor = keyof TextTheme;
@@ -188,8 +256,8 @@ export type ButtonColor =
   | "tertiary"
   | string;
 
-export type IconColor = ButtonColor;
-export type AllColors = TextColor | SurfaceColor | BorderColor | StatusColor;
+// TODO: we may want/need to expand icon color options from just text colors.
+export type IconColor = TextColor;
 
 export interface FontTheme {
   primary: string;
@@ -1854,11 +1922,11 @@ export interface BoxProps {
   onHoverEnd?: () => void | Promise<void>;
   scroll?: boolean;
   shadow?: boolean;
-  border?: AllColors;
-  borderBottom?: AllColors;
-  borderTop?: AllColors;
-  borderLeft?: AllColors;
-  borderRight?: AllColors;
+  border?: BorderColor;
+  borderBottom?: BorderColor;
+  borderTop?: BorderColor;
+  borderLeft?: BorderColor;
+  borderRight?: BorderColor;
 
   avoidKeyboard?: boolean;
   keyboardOffset?: number;
@@ -1868,7 +1936,7 @@ export interface BoxProps {
   testID?: string;
 }
 
-export type BoxColor = AllColors | "transparent";
+export type BoxColor = SurfaceColor | "transparent";
 
 export interface ErrorBoundaryProps {
   onError?: (error: Error, stack: any) => void;
@@ -1878,7 +1946,7 @@ export interface ErrorBoundaryProps {
 export interface IconProps {
   prefix?: IconPrefix; // For support FA solid/regular/light/duotone, as well as other icon packs in the future.
   name: IconName;
-  color?: AllColors;
+  color?: IconColor;
   size?: IconSize;
   iconStyle?: any;
   containerStyle?: any;
@@ -1888,13 +1956,6 @@ export interface IconProps {
 export type TooltipDirection = "top" | "bottom" | "left" | "right";
 
 export type IndicatorDirection = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
-
-export interface PillProps {
-  text: string;
-  color: AllColors;
-  enabled?: boolean;
-  onClick: (enabled: boolean) => void;
-}
 
 type BaseSegmentedControlProps = {
   items: string[];
@@ -1925,9 +1986,9 @@ export interface FieldWithLabelsProps {
   errorMessage?: string;
   errorMessageColor?: TextColor; // Default: error.
   label?: string;
-  labelColor?: AllColors;
+  labelColor?: TextColor;
   helperText?: string;
-  helperTextColor?: AllColors;
+  helperTextColor?: TextColor;
   children?: ReactChildren;
 }
 
@@ -2021,9 +2082,10 @@ export interface IconRowProps {
 export interface LinkProps {
   href: string;
   inline?: boolean;
-  children?: ReactChild;
+  text: string;
   onClick?: () => void;
-  target?: null | "blank";
+  // TODO: support target on link
+  // target?: null | "blank";
 }
 
 export type Rounding =
@@ -2105,18 +2167,17 @@ export interface BackButtonInterface {
 export interface CheckBoxProps {
   onChange: ({value}: {value: boolean}) => void;
   checked?: boolean;
-  disabled?: boolean;
   hasError?: boolean;
   indeterminate?: boolean;
   name?: string;
   onClick?: any;
   size?: "sm" | "md";
-  color?: AllColors;
+  type?: "default" | "accent" | "neutral";
   radio?: boolean;
 
   label?: string;
   subLabel?: string;
-  labelColor?: AllColors;
+  labelColor?: TextColor;
   testID?: string;
 }
 
@@ -2151,7 +2212,7 @@ export interface SplitPageProps {
   // boolean to initiate and handle state from the app that has imported ferns-ui
   showItemList?: boolean;
   loading?: boolean;
-  color?: AllColors;
+  color?: SurfaceColor;
   keyboardOffset?: number;
   renderListViewItem: (itemInfo: ListRenderItemInfo<any>) => ReactElement | null;
   renderListViewHeader?: () => ReactElement | null;
@@ -2589,9 +2650,9 @@ export type AvatarStatus =
 
 export interface AvatarProps {
   // Color for the background of the circle when no src picture is present.
-  backgroundColor?: AllColors;
+  backgroundColor?: SurfaceColor;
   // Color for the initials when no src picture is present.
-  textColor?: AllColors;
+  textColor?: TextColor;
   /**
    * The name of the user. This is used for the placeholder treatment if an image is not available.
    */
@@ -2660,8 +2721,8 @@ export interface AvatarProps {
 
 export interface BadgeProps {
   // If `type` is set to "custom", a custom theme color should be provided.
-  color?: AllColors;
-  fontColor?: AllColors; // default "white"
+  color?: SurfaceColor;
+  fontColor?: TextColor; // default "white"
   fontWeight?: TextProps["weight"]; // default "bold"
   iconProps?: IconProps;
   // The text to display inside the badge.
@@ -2669,7 +2730,6 @@ export interface BadgeProps {
   // Position relative to the text. Top should only be used with headings.
   position?: "bottom" | "top" | "middle"; // default "middle"
   rounding?: Rounding;
-  size?: "xs" | "sm" | "md" | "lg"; // default "xs'
   // Some default badge types. Occasionally, a custom badge might be required for different color
   // schemes.
   type?: "info" | "error" | "warning" | "success" | "neutral" | "custom"; // default "info
@@ -2713,7 +2773,7 @@ export interface ButtonProps {
   onClick: any;
   icon?: IconName;
   iconPrefix?: IconPrefix;
-  iconColor?: ButtonColor;
+  iconColor?: IconColor;
   withConfirmation?: boolean;
   confirmationText?: string;
   confirmationHeading?: string;
@@ -2832,18 +2892,9 @@ export interface IconButtonProps {
   prefix?: IconPrefix;
   icon: IconName;
   accessibilityLabel: string;
-  iconColor: ButtonColor;
   onClick: () => void;
   size?: IconSize;
-  bgColor?:
-    | "transparent"
-    | "transparentDarkGray"
-    | "gray"
-    | "lightGray"
-    | "white"
-    | "primary" // used for active states
-    | "background"
-    | "backgroundSecondary"; // default transparent
+  type?: "primary" | "secondary" | "muted";
   disabled?: boolean;
   selected?: boolean;
   withConfirmation?: boolean;
@@ -2855,7 +2906,7 @@ export interface IconButtonProps {
   };
   indicator?: boolean;
   indicatorNumber?: number;
-  indicatorStyle?: {position: IndicatorDirection; color: AllColors};
+  indicatorStyle?: {position: IndicatorDirection; color: SurfaceColor};
   testID?: string;
 }
 
@@ -2909,7 +2960,7 @@ export interface PageProps {
   closeButton?: boolean;
   direction?: "row" | "column";
   padding?: UnsignedUpTo12;
-  color?: Color;
+  color?: SurfaceColor;
   maxWidth?: number | string;
   keyboardOffset?: number;
   footer?: any;
@@ -2919,20 +2970,8 @@ export interface PageProps {
   onError?: (error: Error, stack: any) => void;
 }
 
-export interface PogProps {
-  active?: boolean;
-  bgColor?: "transparent" | "transparentDarkGray" | "gray" | "lightGray" | "white" | "blue";
-  focused?: boolean;
-  hovered?: boolean;
-  selected?: boolean;
-  iconColor?: AllColors;
-  icon: IconName;
-  iconPrefix?: IconPrefix;
-  size?: IconSize;
-}
-
 export interface ProgressBarProps {
-  color: AllColors;
+  color: SurfaceColor;
   completed: number;
 }
 

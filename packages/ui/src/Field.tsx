@@ -95,7 +95,6 @@ export const Field = ({
                 <CheckBox
                   key={o.label + o.value}
                   checked={(value ?? []).includes(o.value)}
-                  disabled={disabled}
                   name={name}
                   size="sm"
                   testID={`${testID}-${o.value}`}

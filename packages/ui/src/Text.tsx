@@ -1,3 +1,12 @@
+import {
+  Nunito_400Regular,
+  Nunito_400Regular_Italic,
+  Nunito_500Medium,
+  Nunito_500Medium_Italic,
+  Nunito_700Bold,
+  Nunito_700Bold_Italic,
+  useFonts,
+} from "@expo-google-fonts/nunito";
 import React, {useContext} from "react";
 import {Platform, Text as NativeText, TextStyle} from "react-native";
 
@@ -40,67 +49,76 @@ export const Text = ({
 }: TextProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
-  function propsToStyle(): any {
-    const style: TextStyle = {};
-    if (overflow) {
-      console.warn(
-        "Text overflow is deprecated. Use `truncate` to cut off the text and add ellipse, otherwise breakWord is the default."
-      );
-    }
-    let computedFont = "primary";
-    if (font === "primary" || !font) {
-      if (weight === "bold") {
-        computedFont = "primaryBoldFont";
-      } else {
-        computedFont = "primaryFont";
-      }
-    } else if (font === "secondary") {
-      if (weight === "bold") {
-        computedFont = "secondaryBoldFont";
-      } else {
-        computedFont = "secondaryFont";
-      }
-    } else if (font === "button") {
-      computedFont = "buttonFont";
-    } else if (font === "title") {
-      computedFont = "titleFont";
-    } else if (font === "accent") {
-      if (weight === "bold") {
-        computedFont = "accentBoldFont";
-      } else {
-        computedFont = "accentFont";
-      }
-    }
-    if (weight === "bold") {
-      style.fontWeight = weight || fontSizes[size].weight;
-    }
-
-    style.fontFamily = theme[computedFont as keyof typeof theme];
-
-    console.log("AUTO?", size);
-    style.fontSize = fontSizes[size].size;
-    if (align) {
-      style.textAlign = align;
-    }
-    if (color) {
-      style.color = theme[color];
-    } else {
-      style.color = theme.darkGray;
-    }
-
-    if (italic) {
-      style.fontStyle = "italic";
-    }
-    if (underline) {
-      style.textDecorationLine = "underline";
-    }
-    // TODO: might be useful for wrapping/truncating
-    // if (numberOfLines !== 1 && !inline) {
-    //   style.flexWrap = "wrap";
-    // }
-
-    return style;
+  if (font) {
+    console.error("font prop is not supported yet");
   }
+
+  // TODO: make fonts part of theme.
+  const [fontsLoaded] = useFonts({
+    "text-bold": Nunito_700Bold,
+    "text-bold-italic": Nunito_700Bold_Italic,
+    "text-medium": Nunito_500Medium,
+    "text-medium-italic": Nunito_500Medium_Italic,
+    "text-regular": Nunito_400Regular,
+    "text-regular-italic": Nunito_400Regular_Italic,
+  });
+
+  // TODO: How should we handle unloaded fonts.
+  if (!fontsLoaded) {
+    // eslint-disable-next-line react-native/no-raw-text
+    return <NativeText>Loading fonts...</NativeText>;
+  }
+
+  const style: TextStyle = {};
+  if (overflow) {
+    console.warn(
+      "Text overflow is deprecated. Use `truncate` to cut off the text and add ellipse, otherwise breakWord is the default."
+    );
+  }
+
+  if (size === "sm" || size === "md") {
+    if (weight === "bold" && italic) {
+      style.fontFamily = "text-bold-italic";
+    } else if (italic) {
+      style.fontFamily = "text-regular-italic";
+    } else if (weight === "bold") {
+      style.fontFamily = "text-bold";
+    } else {
+      style.fontFamily = "text-regular";
+    }
+  } else {
+    if (weight === "bold" && italic) {
+      style.fontFamily = "text-bold-italic";
+    } else if (italic) {
+      style.fontFamily = "text-medium-italic";
+    } else if (weight === "bold") {
+      style.fontFamily = "text-bold";
+    } else {
+      style.fontFamily = "text-medium";
+    }
+  }
+
+  console.log("AUTO?", size);
+  style.fontSize = fontSizes[size].size;
+  if (align) {
+    style.textAlign = align;
+  }
+  if (color) {
+    style.color = theme.text[color];
+  } else {
+    style.color = theme.text.primary;
+  }
+
+  if (italic) {
+    style.fontStyle = "italic";
+  }
+  if (underline) {
+    style.textDecorationLine = "underline";
+  }
+  // TODO: might be useful for wrapping/truncating
+  // if (numberOfLines !== 1 && !inline) {
+  //   style.flexWrap = "wrap";
+  // }
 
   let lines = 0;
   if (numberOfLines && truncate && numberOfLines > 1) {
@@ -112,7 +130,7 @@ export const Text = ({
     lines = 1;
   }
   const inner = (
-    <NativeText numberOfLines={lines} style={propsToStyle()} testID={testID} onPress={onPress}>
+    <NativeText numberOfLines={lines} style={style} testID={testID} onPress={onPress}>
       {children}
     </NativeText>
   );

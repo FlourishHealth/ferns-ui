@@ -4,10 +4,14 @@ import {Linking} from "react-native";
 import {LinkProps} from "./Common";
 import {Text} from "./Text";
 
-export const Link = (props: LinkProps): React.ReactElement => {
+// TODO: Decide how we're going to handle Link, Hyperlink, and links in Text components.
+export const Link = ({text, href, onClick}: LinkProps): React.ReactElement => {
+  if (!href && !onClick) {
+    console.error("Link component requires either href or onClick prop");
+  }
   return (
-    <Text {...props} color={props.color || "blue"} onPress={() => Linking.openURL(props.href)}>
-      {props.children}
+    <Text color="link" onPress={() => (onClick ? onClick() : Linking.openURL(href))}>
+      {text}
     </Text>
   );
 };

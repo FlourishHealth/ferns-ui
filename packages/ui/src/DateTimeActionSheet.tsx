@@ -54,8 +54,8 @@ const TimeInput = ({
     paddingLeft: 0,
     height: INPUT_HEIGHT,
     width: "100%",
-    color: theme.darkGray,
-    fontFamily: theme.primaryFont,
+    color: theme.text.primary,
+    fontFamily: theme.font.primary,
   };
 
   return (
@@ -69,13 +69,14 @@ const TimeInput = ({
         // Add padding so the border doesn't mess up layouts
         paddingHorizontal: focused ? 10 : 14,
         paddingVertical: focused ? 0 : 4,
-        borderColor: error ? theme.red : theme.blue,
+        borderColor: error ? theme.border.error : theme.border.default,
         borderWidth: focused ? 5 : 1,
         borderRadius: 5,
-        backgroundColor: theme.white,
+        backgroundColor: theme.surface.base,
       }}
     >
       <TextInput
+        accessibilityLabel="Text input field"
         keyboardType="number-pad"
         returnKeyType="done"
         style={
@@ -114,9 +115,7 @@ const CalendarHeader = ({
     <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
       <IconButton
         accessibilityLabel="arrow"
-        bgColor="white"
         icon="angle-double-left"
-        iconColor="primary"
         size="md"
         onClick={() => {
           addMonth(-12);
@@ -124,9 +123,7 @@ const CalendarHeader = ({
       />
       <IconButton
         accessibilityLabel="arrow"
-        bgColor="white"
         icon="angle-left"
-        iconColor="primary"
         size="md"
         onClick={() => {
           addMonth(-1);
@@ -135,9 +132,7 @@ const CalendarHeader = ({
       <Heading size="sm">{displayDate}</Heading>
       <IconButton
         accessibilityLabel="arrow"
-        bgColor="white"
         icon="angle-right"
-        iconColor="primary"
         size="md"
         onClick={() => {
           addMonth(1);
@@ -145,9 +140,7 @@ const CalendarHeader = ({
       />
       <IconButton
         accessibilityLabel="arrow"
-        bgColor="white"
         icon="angle-double-right"
-        iconColor="primary"
         size="md"
         onClick={() => {
           addMonth(12);
@@ -408,7 +401,7 @@ export const DateTimeActionSheet = ({
     if (date) {
       markedDates[DateTime.fromISO(dateString).toFormat("yyyy-MM-dd")] = {
         selected: true,
-        selectedColor: theme.primary,
+        selectedColor: theme.text.primary,
       };
     }
     return (

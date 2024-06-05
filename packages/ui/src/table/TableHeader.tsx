@@ -13,7 +13,7 @@ export const TableHeader = ({
   color,
 }: TableHeaderProps): React.ReactElement => {
   return (
-    <Box color={color ?? "white"} display={display === "visuallyHidden" ? "none" : "flex"}>
+    <Box color={color ?? "base"} display={display === "visuallyHidden" ? "none" : "flex"}>
       <TableRow headerRow>{children}</TableRow>
     </Box>
   );

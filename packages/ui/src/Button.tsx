@@ -3,7 +3,7 @@ import React, {useContext, useState} from "react";
 import {ActivityIndicator, Pressable} from "react-native";
 
 import {Box} from "./Box";
-import {ButtonProps, Color, FernsTheme} from "./Common";
+import {ButtonProps, TextColor} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
@@ -13,7 +13,7 @@ import {Unifier} from "./Unifier";
 
 const buttonTextColor: {[buttonColor: string]: "white" | "darkGray"} = {
   blue: "white",
-  lightGray: "darkGray",
+  neutralLight: "darkGray",
   red: "white",
   transparent: "white",
   white: "darkGray",
@@ -55,31 +55,10 @@ export const Button = ({
   const [showConfirmation, setShowConfirmation] = useState(false);
   const {theme} = useContext(ThemeContext);
 
-  const getBackgroundColor = (backgroundColor: string): string => {
-    if (type === "ghost" || type === "outline") {
-      return "transparent";
-    } else {
-      return theme[backgroundColor as keyof FernsTheme];
-    }
-  };
-
-  const getTextColor = (textColor: Color): Color => {
-    if (type === "ghost" || type === "outline") {
-      return textColor;
-    } else if (textColor === undefined) {
-      return "darkGray";
-    } else {
-      return buttonTextColor[textColor] || "white";
-    }
-  };
-
-  const getBorderColor = (borderColor: string): string => {
-    if (type === "outline") {
-      return theme[getTextColor(borderColor as Color)];
-    } else {
-      return "transparent";
-    }
-  };
+  // TODO: get real button colors here.
+  const backgroundColor = theme.surface.primary;
+  const textColor: TextColor = "inverted";
+  const borderColor = theme.text.primary;
 
   if (color === "gray") {
     color = "lightGray";
@@ -116,14 +95,14 @@ export const Button = ({
           style={{
             alignSelf: inline === true ? undefined : "stretch",
             height: HEIGHTS[size || "md"],
-            backgroundColor: getBackgroundColor(color),
+            backgroundColor,
             // width: inline === true ? undefined : "100%",
             flexShrink: inline ? 1 : 0,
             // flexGrow: inline ? 0 : 1,
             alignItems: "center",
             justifyContent: "center",
             borderRadius: shape === "pill" ? 999 : 5,
-            borderColor: getBorderColor(color),
+            borderColor,
             borderWidth: type === "outline" ? 2 : 0,
             opacity: disabled ? 0.4 : 1,
             flexDirection: "row",
@@ -153,7 +132,7 @@ export const Button = ({
           {icon !== undefined && (
             <Box marginRight={2}>
               <Icon
-                color={getTextColor(color as Color)}
+                color={textColor}
                 name={icon}
                 prefix={iconPrefix || "far"}
                 size={size === "xs" ? "sm" : size}
@@ -163,8 +142,7 @@ export const Button = ({
           {Boolean(text) && (
             <Text
               align="center"
-              color={getTextColor(color as Color)}
-              font="button"
+              color={textColor}
               inline={inline}
               size={size === "xs" ? "sm" : size}
               skipLinking
@@ -175,7 +153,7 @@ export const Button = ({
           )}
           {Boolean(loading) && (
             <Box marginLeft={2}>
-              <ActivityIndicator color={getTextColor(color as Color)} size="small" />
+              <ActivityIndicator color={textColor} size="small" />
             </Box>
           )}
         </Pressable>

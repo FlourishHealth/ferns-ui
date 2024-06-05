@@ -13,7 +13,7 @@ export const TableRow = ({
   headerRow = false,
   expanded,
   drawerContents,
-  color = "white",
+  color = "base",
 }: TableRowProps): React.ReactElement => {
   const [isExpanded, setIsExpanded] = React.useState(expanded || false);
   const {columns, hasDrawerContents} = useTableContext();
@@ -40,9 +40,7 @@ export const TableRow = ({
           <Box width={30}>
             <IconButton
               accessibilityLabel="expand"
-              bgColor="white"
               icon={isExpanded ? "chevron-up" : "chevron-down"}
-              iconColor="darkGray"
               size="sm"
               onClick={() => {
                 setIsExpanded(!isExpanded);

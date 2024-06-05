@@ -5,7 +5,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {Image, ImageResizeMode, Platform, Text, View} from "react-native";
 
 import {Box} from "./Box";
-import {AllColors, AvatarProps, IconName, UnsignedUpTo12} from "./Common";
+import {AvatarProps, IconName, UnsignedUpTo12} from "./Common";
 import {Icon} from "./Icon";
 import {isMobileDevice} from "./MediaQuery";
 import {ThemeContext} from "./Theme";
@@ -27,7 +27,7 @@ const sizeIconPadding: {[id: string]: UnsignedUpTo12} = {
   xl: 2,
 };
 
-const statusIcons: {[id: string]: {icon: IconName; color: AllColors; label: string}} = {
+const statusIcons: {[id: string]: {icon: IconName; color: string; label: string}} = {
   online: {icon: "circle", color: "green", label: "Online"},
   offline: {icon: "circle", color: "gray", label: "Offline"},
   doNotDisturb: {icon: "minus-circle", color: "red", label: "Do Not Disturb"},
@@ -39,6 +39,8 @@ const statusIcons: {[id: string]: {icon: IconName; color: AllColors; label: stri
   commuting: {icon: "car", color: "orange", label: "Commuting"},
 };
 
+// TODO: Avatar probably makes more sense as a custom set of views rather than relying on
+// Box, etc. It's a pretty unique component with unique colors and borders.
 export const Avatar = (props: AvatarProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
@@ -48,7 +50,6 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
   const {
     name,
     initials,
-    outline,
     size = "md",
     imageFit = "contain",
     editAvatarImage,
@@ -135,7 +136,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
           onHoverEnd={() => setHovered(false)}
           onHoverStart={() => setHovered(true)}
         >
-          <Icon color="darkGray" name="edit" size={size} />
+          <Icon color="primary" name="edit" size={size} />
           <Text style={{fontWeight: "bold"}}>Upload Image</Text>
         </Box>
       );
@@ -150,7 +151,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
           zIndex={5}
           onClick={pickImage}
         >
-          <Icon color="darkGray" name="edit" size={size} />
+          <Icon color="primary" name="edit" size={size} />
         </Box>
       );
     }
@@ -175,7 +176,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     }
     return (
       <Box bottom paddingX={sizeIconPadding[size]} position="absolute" right zIndex={5}>
-        <Icon color={color} name={icon} size={size} />
+        <Icon color={color as any} name={icon} size={size} />
       </Box>
     );
   };
@@ -183,7 +184,6 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
   const avatar = (
     <Box height={height} position="relative" width={width}>
       <Box
-        border={outline ? "white" : undefined}
         height={height}
         overflow="hidden"
         position="relative"
@@ -218,10 +218,10 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: props.backgroundColor ? theme[props.backgroundColor] : theme.gray,
+              backgroundColor: theme.surface.neutral,
             }}
           >
-            <Text style={{fontSize, color: props.textColor ?? theme.darkGray}}>
+            <Text style={{fontSize, color: props.textColor ?? theme.text.primary}}>
               {computedInitials}
             </Text>
           </View>

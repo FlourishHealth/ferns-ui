@@ -22,7 +22,6 @@ export class Page extends React.Component<PageProps, {}> {
             <IconButton
               accessibilityLabel=""
               icon="chevron-left"
-              iconColor="darkGray"
               prefix="fas"
               size="md"
               onClick={() => this.props.navigation.goBack()}
@@ -34,7 +33,6 @@ export class Page extends React.Component<PageProps, {}> {
             <IconButton
               accessibilityLabel=""
               icon="times"
-              iconColor="darkGray"
               prefix="fas"
               size="md"
               onClick={() => this.props.navigation.goBack()}
@@ -66,7 +64,7 @@ export class Page extends React.Component<PageProps, {}> {
         <Box
           alignSelf="center"
           avoidKeyboard
-          color={this.props.color || "lightGray"}
+          color={this.props.color || "base"}
           direction={this.props.direction || "column"}
           display={this.props.display || "flex"}
           flex="grow"
@@ -90,7 +88,7 @@ export class Page extends React.Component<PageProps, {}> {
         {Boolean(this.props.footer) && (
           <Box
             alignSelf="center"
-            color={this.props.color || "lightGray"}
+            color={this.props.color || "neutralLight"}
             direction={this.props.direction || "column"}
             display={this.props.display || "flex"}
             flex="shrink"

@@ -85,7 +85,7 @@ export const Table = ({
           </ScrollView>
         </Box>
         {Boolean(shouldPaginate) && (
-          <Box alignItems="center" borderTop="gray" direction="row" height={60} paddingX={8}>
+          <Box alignItems="center" borderTop="default" direction="row" height={60} paddingX={8}>
             <PaginationControl
               page={propsPage ?? page}
               setPage={propsSetPage ?? setPage}

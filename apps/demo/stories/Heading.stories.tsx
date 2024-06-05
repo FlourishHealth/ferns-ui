@@ -1,7 +1,8 @@
 import {StorybookContainer} from "@components";
 import {DemoConfiguration} from "@config";
-import {Box, Heading, HeadingProps} from "ferns-ui";
+import {Box, Heading, HeadingProps, TextColor} from "ferns-ui";
 import React from "react";
+import {View} from "react-native";
 
 const renderText = (text: string, props: Partial<HeadingProps>) => {
   return (
@@ -16,15 +17,24 @@ const Headings = (): React.ReactElement => {
     <StorybookContainer>
       {renderText("Default Heading/sm - h4", {})}
       {renderText("xl - h1", {size: "xl"})}
-      {renderText("medium - h2", {size: "md"})}
-      {renderText("large - h3", {size: "lg"})}
-      {renderText("gray", {color: "gray"})}
-      {renderText("lightGray", {color: "lightGray"})}
-      {renderText("primary", {color: "primary"})}
-      {renderText("secondary", {color: "secondary"})}
-      {renderText("tertiary", {color: "tertiary"})}
-      {renderText("accent", {color: "accent"})}
-      {renderText("red", {color: "red"})}
+      {renderText("large - h2", {size: "lg"})}
+      {renderText("medium - h3", {size: "md"})}
+      {[
+        "primary",
+        "secondaryLight",
+        "extraLight",
+        "secondaryDark",
+        "link",
+        "linkLight",
+        "accent",
+        "error",
+        "warning",
+        "success",
+      ].map((color) => renderText(color, {color: color as TextColor}))}
+
+      <View style={{paddingTop: 8, paddingBottom: 8, backgroundColor: "black"}}>
+        {renderText("inverted", {color: "inverted"})}
+      </View>
       {renderText("center", {align: "center"})}
     </StorybookContainer>
   );

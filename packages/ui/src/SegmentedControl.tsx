@@ -5,6 +5,7 @@ import {
   SegmentedControlProps,
   SegmentedControlPropsMultiSelect,
   SegmentedControlPropsSingleSelect,
+  SurfaceColor,
 } from "./Common";
 import {Text} from "./Text";
 
@@ -46,21 +47,21 @@ export const SegmentedControl = ({
     return null;
   }
 
-  const isTabActive = (index: any) => {
+  const isTabActive = (index: any): SurfaceColor => {
     return selectedItemIndex === index || selectedItemIndexes?.includes(index)
-      ? "white"
-      : "lightGray";
+      ? "base"
+      : "neutralLight";
   };
 
   return (
     <Box
-      color="lightGray"
+      color="neutralLight"
       direction="row"
       display="flex"
       height={40}
       justifyContent="between"
       // padding={1}
-      rounding={3}
+      rounding="minimal"
       width="100%"
     >
       {items.map((item, index) => (
@@ -69,7 +70,7 @@ export const SegmentedControl = ({
           color={isTabActive(index)}
           height="100%"
           // paddingX={2}
-          rounding={3}
+          rounding="sm"
           width={`${100 / items.length}%`}
         >
           <Box
