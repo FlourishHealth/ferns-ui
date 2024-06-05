@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState} from "react";
+import React, {ReactElement, useEffect, useState} from "react";
 import {Linking} from "react-native";
 
 import {Box} from "./Box";
@@ -97,21 +97,18 @@ export const TapToEdit = ({
   description: propsDescription,
   showDescriptionAsTooltip = false,
   onlyShowDescriptionWhileEditing = true,
-  instanceId,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
-  const [initialValue] = useState(value);
+  const [initialValue, setInitialValue] = useState();
   const description: string | undefined = propsDescription;
-  const prevInstanceId = useRef<string | undefined>(instanceId);
-
-  // reset editing state when instanceId changes
+  // setInitialValue is called after initial render to handle the case where the value is updated
   useEffect(() => {
-    if (instanceId !== prevInstanceId.current && !isEditing) {
-      setEditing(false);
-      prevInstanceId.current = instanceId;
-    }
-  }, [instanceId, isEditing]);
+    setInitialValue(value);
+    // do not update if value changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (editable && !setValue) {
     throw new Error("setValue is required if editable is true");
   }
@@ -144,6 +141,7 @@ export const TapToEdit = ({
                 if (!onSave) {
                   console.error("No onSave provided for editable TapToEdit");
                 } else {
+                  setInitialValue(value);
                   await onSave(value);
                 }
                 setEditing(false);
