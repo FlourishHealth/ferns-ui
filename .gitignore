@@ -3,4 +3,5 @@ node_modules/
 *.log
 packages/ui/.expo
 packages/ui-demo/.expo
+apps/demo/node_modules
 apps/demo/.expo
