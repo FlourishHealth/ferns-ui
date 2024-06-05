@@ -3,9 +3,11 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ffd05ee5-fbcf-417e-8455-45ea15447361/deploy-status)](https://app.netlify.com/sites/ferns-ui/deploys)
 
 ## Why Ferns UI?
-Ferns UI provides a consistent UI for React Native and React Native Web, with
-theming support, primarily designed for Expo. It abstracts both platforms, 
-offering components that work uniformly across all supported environments. 
+Ferns UI provides a consistent UI for React Native and React Native Web, 
+support iOS, Android, and Web all in one simple repo. It has
+theming support and is primarily designed for Expo. It provides an abstraction
+layer over React Native components, making it easier to build responsive
+applications that work across all platforms.
 For example, instead of using <div> and <View>, you use <Box>, which 
 translates to a flexbox-first layout system.
 
@@ -16,13 +18,14 @@ patterns like login flows, allowing you to focus on unique aspects of your app.
 
 Join us in embracing a design philosophy that prioritizes clarity and 
 coherence. With Ferns UI, build stunning applications with seamless 
-user experiences.
+user experiences across all three platforms is a breeze.
 
 ## Our Philosophy
 Ferns UI streamlines design by reducing unnecessary choices, allowing you to 
 create beautiful, functional interfaces without distraction. For example, 
 buttons come in a limited set of colors, with no options for custom colors,
-ensuring consistency.
+ensuring consistency that you decide upfront, rather than with each new 
+feature.
 
 ## Consistent Layouts
 Our layout system, built around the Box component and other layout elements, 
@@ -31,15 +34,17 @@ iOS, Android, and Web, making it easy to create responsive designs that work
 across all platforms.
 
 ## Separated Interface Elements
-Ferns UI and interaction components follow strict guidelines for consistency. 
-For instance,  you can't add a margin to Text. Instead, you wrap the Text in a 
+Ferns UI and interaction components follow a set of guidelines for consistency. 
+For instance, you can't add a margin to Text. Instead, you wrap the Text in a 
 Box and add the margin to the Box, maintaining a clean and predictable design
 language that separates layout elements from interface and interaction elements.
 
 ## Accessibility
 Accessibility is a core principle of Ferns UI. Our components are designed to 
 be fully accessible out of the box, following best practices to ensure that 
-all users, including those with disabilities, have a seamless experience. 
+all users, including those with disabilities, have a seamless experience. Our
+lint rules and required accessibility props will help you build more accessible
+applications by default.
 
 ## Developer Experience
 Ferns UI is designed with a TypeScript-first approach, prioritizing an 
@@ -48,7 +53,8 @@ ensures ease of learning and use. This makes it simple to design screens
 that work seamlessly across web and mobile, with built-in support for 
 differentiating based on screen size and format.
 
-Check out the demo app for easily seeing how the UIs work in iOS/Android/Web in apps/demo.
+Check out the demo app for easily seeing how the UIs work in iOS/Android/Web 
+in apps/demo.
 
 You can see the [web demo here](https://ferns-ui.netlify.app)
 
