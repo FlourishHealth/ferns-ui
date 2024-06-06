@@ -37,6 +37,7 @@
     "useTabs": false
   },
   "dependencies": {
+    "@expo/metro-runtime": "~3.2.1",
     "expo-crypto": "~13.0.2",
     "ferns-ui": "*",
     "react": "18.2.0",
