@@ -239,10 +239,11 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
 
   let box;
 
+  // Adding the accessibilityRole of button throws a warning in React Native since we nest buttons within Box and RN does not support nested buttons
   if (props.onClick) {
     box = (
       <Pressable
-        accessibilityRole="button"
+        // accessibilityRole="button"
         style={propsToStyle()}
         testID={props.testID ? `${props.testID}-clickable` : undefined}
         onLayout={props.onLayout}
