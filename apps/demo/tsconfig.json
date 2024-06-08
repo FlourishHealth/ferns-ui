@@ -6,7 +6,8 @@
     "paths": {
       "@stories": ["stories"],
       "@components": ["components"],
-      "@config": ["demoConfig"]
+      "@config": ["demoConfig"],
+      "@story-config": ["story-config"],
     },
     "jsx": "react"
   }

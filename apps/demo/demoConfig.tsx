@@ -39,7 +39,7 @@ import {
   TimeFieldConfiguration,
   ToastConfiguration,
   TooltipConfiguration,
-} from "@stories";
+} from "@story-config";
 import {FieldProps} from "ferns-ui";
 import React from "react";
 
@@ -49,6 +49,8 @@ export type DemoConfigStatus = "planned" | "inProgress" | "ready" | "notSupporte
 // Common.ts.
 const PropsJSON = require("./ui-types-documentation.json");
 
+export type Categories = "Foundation" | "Component" | "Pattern" | "Data Entry" | "Form";
+
 interface DemoConfigurationBase {
   name: string;
   component: any; // TODO: make this typing better
@@ -57,7 +59,7 @@ interface DemoConfigurationBase {
   // Used for the index page if description is long.
   shortDescription?: string;
   a11yNotes: string[];
-  category: "Foundation" | "Component" | "Pattern";
+  category: Categories | Categories[];
   status: {
     documentation: DemoConfigStatus;
     figma: DemoConfigStatus;

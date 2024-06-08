@@ -98,7 +98,6 @@ export const Text = ({
     }
   }
 
-  console.log("AUTO?", size);
   style.fontSize = fontSizes[size].size;
   if (align) {
     style.textAlign = align;

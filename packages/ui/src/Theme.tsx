@@ -172,6 +172,7 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
   const [providerTheme, setProviderTheme] = useState<FernsTheme>(defaultTheme);
   const [providerPrimitives, setProviderPrimitives] =
     useState<typeof defaultPrimitives>(defaultPrimitives);
+    console.log({defaultPrimitives})
 
   const computedTheme = useMemo(() => {
     // Map the providerTheme and transform the strings into the actual values from the primitives.
@@ -181,7 +182,7 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
       // for each key, map the value to the primitive value.
       acc[key as keyof typeof acc] = Object.keys(value).reduce((accKey, valueKey) => {
         const primitiveKey = value[valueKey as keyof typeof value];
-        if (!providerPrimitives[primitiveKey]) {
+        if (providerPrimitives[primitiveKey] === undefined) {
           console.error(`Primitive ${primitiveKey} not found in theme.`);
         }
         accKey[valueKey] = providerPrimitives[primitiveKey];

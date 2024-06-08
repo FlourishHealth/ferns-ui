@@ -1,11 +1,10 @@
 import {ComponentPage} from "@components";
 import {DemoConfig} from "@config";
-import {StatusBar} from "expo-status-bar";
-import {FernsProvider, useStoredState} from "ferns-ui";
+import {useStoredState} from "ferns-ui";
 import React, {ReactElement} from "react";
-import {Pressable, StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {Host} from "react-native-portalize";
-import {SafeAreaProvider, useSafeAreaInsets} from "react-native-safe-area-context";
+import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 import {DevComponentPage} from "../../components/DevComponentPage";
 import {DevHomePage} from "../../components/DevHomePage";
@@ -15,7 +14,7 @@ const App = () => {
   const insets = useSafeAreaInsets();
   const [componentName, setComponentName] = useStoredState<string | null>("component", null);
   const [currentStory, setCurrentStory] = useStoredState<string | null>("story", null);
-  const [devMode, setDevMode] = useStoredState<boolean>("devMode", false);
+  const [devMode] = useStoredState<boolean>("devMode", false);
 
   // Update when we have new fonts picked, these look baaad.
   // const [loaded] = useFonts({
@@ -44,51 +43,6 @@ const App = () => {
           width: "100%",
         }}
       >
-        <StatusBar style="auto" />
-        <View style={styles.header}>
-          <View>
-            {(currentStory || currentConfig) && (
-              <Pressable
-                onPress={async () => {
-                  void setCurrentStory(null);
-                  void setComponentName(null);
-                }}
-              >
-                <Text style={{fontWeight: "bold"}}>&lt; Back</Text>
-              </Pressable>
-            )}
-          </View>
-          <View>
-            <Text style={{marginLeft: 20, fontWeight: "bold"}}>{currentConfig?.name}</Text>
-          </View>
-          <View
-            style={{
-              display: "flex",
-              paddingRight: 20,
-              flexDirection: "row",
-            }}
-          >
-            <View style={{marginRight: 24}}>
-              <Pressable
-                onPress={async () => {
-                  void setCurrentStory(null);
-                  void setComponentName(null);
-                }}
-              >
-                <Text style={{fontWeight: "bold"}}>Clear State</Text>
-              </Pressable>
-            </View>
-            <View style={{}}>
-              <Pressable
-                onPress={async () => {
-                  void setDevMode(!devMode);
-                }}
-              >
-                <Text style={{fontWeight: "bold"}}>{devMode ? "Demo Mode" : "Dev Mode"}</Text>
-              </Pressable>
-            </View>
-          </View>
-        </View>
         <View style={styles.body}>
           {!devMode && !currentConfig && (
             <HomePage
@@ -117,13 +71,7 @@ const App = () => {
 };
 
 const AppRoot = (): ReactElement => {
-  return (
-    <SafeAreaProvider>
-      <FernsProvider>
-        <App />
-      </FernsProvider>
-    </SafeAreaProvider>
-  );
+  return <App />;
 };
 
 const styles = StyleSheet.create({
@@ -134,17 +82,6 @@ const styles = StyleSheet.create({
     maxHeight: "100%",
     position: "absolute",
     overflow: "hidden",
-  },
-  header: {
-    justifyContent: "space-between",
-    backgroundColor: "#ccc",
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
-    height: 50,
-    maxHeight: 50,
-    alignItems: "center",
-    paddingLeft: 16,
   },
   body: {
     width: "100%",

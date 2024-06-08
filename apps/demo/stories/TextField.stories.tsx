@@ -1,9 +1,8 @@
 import {StorybookContainer} from "@components";
-import {DemoConfiguration} from "@config";
 import {Text, TextField} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
-const TextFieldStory = ({
+export const TextFieldStory = ({
   initialValue,
   type,
   label,
@@ -29,14 +28,14 @@ const TextFieldStory = ({
   );
 };
 
-const TextFields = (): React.ReactElement => {
+export const TextFields = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <TextField id="none" placeholder="Here's some placeholder text." onChange={() => {}} />
     </StorybookContainer>
   );
 };
-const WithLabel = (): React.ReactElement => {
+export const TextWithLabel = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <TextField
@@ -48,7 +47,7 @@ const WithLabel = (): React.ReactElement => {
     </StorybookContainer>
   );
 };
-const Date = (): React.ReactElement => {
+export const Date = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <TextFieldStory initialValue="2021-01-30T19:20:31.493Z" label="Pick a date" type="date" />
@@ -62,14 +61,14 @@ const Date = (): React.ReactElement => {
     </StorybookContainer>
   );
 };
-const Disabled = (): React.ReactElement => {
+export const DisabledTextField = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <TextField disabled id="none" placeholder="This is disabled" onChange={() => {}} />
     </StorybookContainer>
   );
 };
-const Errored = (): React.ReactElement => {
+export const Errored = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <TextField
@@ -81,44 +80,4 @@ const Errored = (): React.ReactElement => {
       />
     </StorybookContainer>
   );
-};
-
-export const TextFieldConfiguration: DemoConfiguration = {
-  name: "Text field",
-  component: TextField, // Replace with actual component reference
-  related: ["Text area"],
-  description: "Use the text field to allow a user to input a single line of text.",
-  a11yNotes: ["The user should be able to use tab to navigate between elements."],
-  category: "Component",
-  status: {
-    documentation: "ready",
-    figma: "ready",
-    figmaLink:
-      "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23515&mode=design&t=IZ8oGBzUmBzUtZMr-1",
-    ios: "ready",
-    android: "ready",
-    web: "ready",
-  },
-  additionalDocumentation: [],
-  interfaceName: "TextFieldProps",
-  usage: {
-    do: [
-      "Use this component for shorter strings. For example, a name.",
-      "If an error is returned, tell the user why.",
-      "If the field is disabled, tell the user why.",
-    ],
-    doNot: [
-      "Do not use this component if a larger string is allowed or expected. Instead, use Text area.",
-    ],
-  },
-  props: {},
-  demo: TextFields,
-  demoOptions: {},
-  stories: {
-    "Text Fields": {render: TextFields},
-    "With Label": {render: WithLabel},
-    Date: {render: Date},
-    Disabled: {render: Disabled},
-    Errored: {render: Errored},
-  },
 };
