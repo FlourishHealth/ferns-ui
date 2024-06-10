@@ -32,7 +32,7 @@ export class Page extends React.Component<PageProps, {}> {
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
               accessibilityLabel=""
-              icon="times"
+              icon="xmark"
               prefix="fas"
               size="md"
               onClick={() => this.props.navigation.goBack()}

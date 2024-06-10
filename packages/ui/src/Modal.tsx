@@ -62,7 +62,7 @@ export const Modal = ({
     if (!showClose) {
       return null;
     }
-    return <IconButton accessibilityLabel="close" icon="times" onClick={() => onDismiss()} />;
+    return <IconButton accessibilityLabel="close" icon="xmark" onClick={() => onDismiss()} />;
   };
 
   const renderModalHeader = (): React.ReactElement => {
@@ -160,7 +160,7 @@ export const Modal = ({
             {Boolean(showClose) && (
               <IconButton
                 accessibilityLabel="close"
-                icon="times"
+                icon="xmark"
                 size="lg"
                 onClick={() => onDismiss()}
               />

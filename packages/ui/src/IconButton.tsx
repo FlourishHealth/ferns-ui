@@ -97,7 +97,7 @@ export const IconButton = forwardRef(
         return (
           <View style={indicatorPosition as ViewStyle}>
             {/* TODO: indicator probably needs to be the direct icon, not Ferns UI Icon */}
-            <Icon name="circle" prefix={prefix || "fas"} size="sm" />
+            <Icon iconName="circle" size="sm" />
           </View>
         );
       } else {
@@ -158,7 +158,7 @@ export const IconButton = forwardRef(
               }
             }}
           >
-            <Icon color={iconColor} name={icon} prefix={prefix || "fas"} size={size} />
+            <Icon color={iconColor} iconName={icon} size={size} />
             {renderIndicator()}
           </Pressable>
 

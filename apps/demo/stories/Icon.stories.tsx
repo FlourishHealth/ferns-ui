@@ -1,59 +1,68 @@
-import {Box, Icon, Text} from "ferns-ui";
+import {StorybookContainer} from "@components";
+import {Box, Icon, IconProps, Text} from "ferns-ui";
 import React from "react";
 
-import {StorybookContainer} from "@components";
+export const IconDemo = (props: Partial<IconProps>) => (
+  <Box alignItems="center" direction="row" justifyContent="center" padding={6}>
+    <Icon iconName="triangle-exclamation" size="xl" {...props} />
+  </Box>
+);
 
-export const IconStories = {
-  title: "Icon",
-  component: Icon,
-  stories: {
-    "Solid Icons": function () {
-      return (
-        <StorybookContainer>
-          <Box direction="row" display="flex" height="100%" justifyContent="between" width="100%">
-            <Icon name="heart" />
-            <Icon name="plus" />
-            <Icon name="edit" />
-            <Icon name="heart" />
-          </Box>
-        </StorybookContainer>
-      );
-    },
-    "Icon Styles": function () {
-      return (
-        <StorybookContainer>
-          <Box padding={6}>
-            <Text>Regular</Text>
-            <Icon name="heart" prefix="far" size="xl" />
-          </Box>
-          <Box padding={6}>
-            <Text>Solid</Text>
-            <Icon name="heart" prefix="fas" size="xl" />
-          </Box>
-        </StorybookContainer>
-      );
-    },
-    "Icon Sizes": function () {
-      return (
-        <StorybookContainer>
-          <Box direction="row" display="flex" height="100%" justifyContent="between" width="100%">
-            <Icon name="heart" prefix="fas" size="xs" />
-            <Icon name="heart" prefix="far" size="xs" />
+export const SolidIcons = (
+  <StorybookContainer>
+    <Box
+      direction="row"
+      display="flex"
+      height="100%"
+      justifyContent="between"
+      maxWidth={300}
+      width="100%"
+    >
+      <Icon iconName="heart" />
+      <Icon iconName="plus" />
+      <Icon iconName="pencil" />
+      <Icon iconName="heart" />
+    </Box>
+  </StorybookContainer>
+);
 
-            <Icon name="heart" prefix="fas" size="sm" />
-            <Icon name="heart" prefix="far" size="sm" />
+export const IconStyles = (
+  <StorybookContainer>
+    <Box padding={6}>
+      <Text>Solid</Text>
+      <Icon iconName="heart" size="xl" type="solid" />
+    </Box>
+    <Box padding={6}>
+      <Text>Regular</Text>
+      <Icon iconName="heart" size="xl" type="regular" />
+    </Box>
+  </StorybookContainer>
+);
 
-            <Icon name="heart" prefix="fas" size="md" />
-            <Icon name="heart" prefix="far" size="md" />
+export const IconSizes = (
+  <StorybookContainer>
+    <Box
+      direction="row"
+      display="flex"
+      height="100%"
+      justifyContent="between"
+      maxWidth={300}
+      width="100%"
+    >
+      <Icon iconName="heart" size="xs" type="solid" />
+      <Icon iconName="heart" size="xs" type="regular" />
 
-            <Icon name="heart" prefix="fas" size="lg" />
-            <Icon name="heart" prefix="far" size="lg" />
+      <Icon iconName="heart" size="sm" type="solid" />
+      <Icon iconName="heart" size="sm" type="regular" />
 
-            <Icon name="heart" prefix="fas" size="xl" />
-            <Icon name="heart" prefix="far" size="xl" />
-          </Box>
-        </StorybookContainer>
-      );
-    },
-  },
-};
+      <Icon iconName="heart" size="md" type="solid" />
+      <Icon iconName="heart" size="md" type="regular" />
+
+      <Icon iconName="heart" size="lg" type="solid" />
+      <Icon iconName="heart" size="lg" type="regular" />
+
+      <Icon iconName="heart" size="xl" type="solid" />
+      <Icon iconName="heart" size="xl" type="regular" />
+    </Box>
+  </StorybookContainer>
+);

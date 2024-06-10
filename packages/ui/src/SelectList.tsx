@@ -59,7 +59,7 @@ export const SelectList = ({
         Icon={() => {
           // Icon only needed for iOS, web and android use default icons
           return Platform.OS === "ios" ? (
-            <Icon color="primary" name="angle-down" size="md" />
+            <Icon color="primary" iconName="angle-down" size="md" />
           ) : null;
         }}
         disabled={disabled}

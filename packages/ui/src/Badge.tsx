@@ -22,7 +22,7 @@ export const Badge = ({
   }
 
   function renderIcon(): React.ReactElement | null {
-    if (iconProps && iconProps.name) {
+    if (iconProps && iconProps.iconName) {
       return (
         <Box marginRight={title ? 1 : 0}>
           <Icon color={iconProps?.color ? iconProps.color : "inverted"} {...iconProps} size="sm" />

@@ -87,7 +87,7 @@ export const Banner = ({
     } else if (type === DISMISS) {
       return (
         <Box alignItems="center" display="block" justifyContent="center" width={40}>
-          <IconButton accessibilityLabel="" icon="times-circle" prefix="fas" onClick={dismiss} />
+          <IconButton accessibilityLabel="" icon="circle-xmark" prefix="fas" onClick={dismiss} />
         </Box>
       );
     } else {
@@ -125,7 +125,7 @@ export const Banner = ({
     >
       {iconName && (
         <Box justifyContent="center" width={32}>
-          <Icon color={textColor} name={iconName} size="lg" />
+          <Icon color={textColor} iconName={iconName} size="lg" />
         </Box>
       )}
       <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
