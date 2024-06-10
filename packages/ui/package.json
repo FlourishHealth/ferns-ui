@@ -12,7 +12,8 @@
     "deps": "node checkDeps.js",
     "test": "TZ=America/New_York jest --watchAll",
     "test:ci": "TZ=America/New_York jest --ci",
-    "postinstall": "cd ../.. && patch-package"
+    "postinstall": "cd ../.. && patch-package",
+    "types": "npx typedoc"
   },
   "babel": {
     "presets": [
