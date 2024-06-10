@@ -234,7 +234,7 @@ const ComponentStatusSection = ({
       color = "green";
       break;
     case "notSupported":
-      iconName = "times-circle";
+      iconName = "circle-xmark";
       color = "red";
       break;
     case "planned":

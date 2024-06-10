@@ -247,7 +247,7 @@ export const TapToEdit = ({
             </Box>
             {editable && (
               <Box marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
-                <Icon name="edit" prefix="far" size="md" />
+                <Icon name="pencil" size="md" />
               </Box>
             )}
           </Box>
@@ -261,7 +261,7 @@ export const TapToEdit = ({
             </Box>
             {editable && (
               <Box alignSelf="end" marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
-                <Icon color="primary" name="edit" prefix="far" size="md" />
+                <Icon color="primary" name="pencil" size="md" />
               </Box>
             )}
           </>

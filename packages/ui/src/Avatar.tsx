@@ -30,11 +30,11 @@ const sizeIconPadding: {[id: string]: UnsignedUpTo12} = {
 const statusIcons: {[id: string]: {icon: IconName; color: string; label: string}} = {
   online: {icon: "circle", color: "green", label: "Online"},
   offline: {icon: "circle", color: "gray", label: "Offline"},
-  doNotDisturb: {icon: "minus-circle", color: "red", label: "Do Not Disturb"},
+  doNotDisturb: {icon: "circle-minus", color: "red", label: "Do Not Disturb"},
   away: {icon: "moon", color: "orange", label: "Away"},
   meeting: {icon: "calendar", color: "orange", label: "In a Meeting"},
   vacation: {icon: "plane", color: "orange", label: "On Vacation"},
-  sick: {icon: "clinic-medical", color: "orange", label: "Sick"},
+  sick: {icon: "hospital-user", color: "orange", label: "Sick"},
   outOfOffice: {icon: "clock", color: "orange", label: "Out of Office"},
   commuting: {icon: "car", color: "orange", label: "Commuting"},
 };
@@ -136,7 +136,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
           onHoverEnd={() => setHovered(false)}
           onHoverStart={() => setHovered(true)}
         >
-          <Icon color="primary" name="edit" size={size} />
+          <Icon color="primary" name="pencil" size={size} />
           <Text style={{fontWeight: "bold"}}>Upload Image</Text>
         </Box>
       );
@@ -151,7 +151,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
           zIndex={5}
           onClick={pickImage}
         >
-          <Icon color="primary" name="edit" size={size} />
+          <Icon color="primary" name="pencil" size={size} />
         </Box>
       );
     }
@@ -168,7 +168,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       props.statusMobile &&
       ["online", "away", "offline", "doNotDisturb"].includes(props.status)
     ) {
-      icon = "mobile-alt";
+      icon = "mobile-screen-button";
     }
     if (!icon || !color) {
       console.warn(`Avatar: Invalid status ${props.status}`);

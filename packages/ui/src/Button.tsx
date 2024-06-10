@@ -40,7 +40,6 @@ export const Button = ({
   text,
   inline = false,
   icon,
-  iconPrefix,
   size = "md",
   onClick,
   color = "gray",
@@ -131,12 +130,7 @@ export const Button = ({
         >
           {icon !== undefined && (
             <Box marginRight={2}>
-              <Icon
-                color={textColor}
-                name={icon}
-                prefix={iconPrefix || "far"}
-                size={size === "xs" ? "sm" : size}
-              />
+              <Icon color={textColor} name={icon} size={size === "xs" ? "sm" : size} />
             </Box>
           )}
           {Boolean(text) && (
