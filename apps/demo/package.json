@@ -74,7 +74,9 @@
       "tsconfigRootDir": "./"
     },
     "rules": {
-      "@typescript-eslint/explicit-function-return-type": "off"
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "react/function-component-definition": "off",
+      "import/no-default-export": "off"
     }
   },
   "prettier": {

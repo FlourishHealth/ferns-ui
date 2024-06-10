@@ -1,20 +1,14 @@
-import {ComponentPage} from "@components";
+import {ComponentPage, HomePage} from "@components";
 import {DemoConfig} from "@config";
 import {useStoredState} from "ferns-ui";
-import React, {ReactElement} from "react";
+import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Host} from "react-native-portalize";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 
-import {DevComponentPage} from "../../components/DevComponentPage";
-import {DevHomePage} from "../../components/DevHomePage";
-import {HomePage} from "../../components/HomePage";
-
-const App = () => {
+export default function App() {
   const insets = useSafeAreaInsets();
   const [componentName, setComponentName] = useStoredState<string | null>("component", null);
-  const [currentStory, setCurrentStory] = useStoredState<string | null>("story", null);
-  const [devMode] = useStoredState<boolean>("devMode", false);
 
   // Update when we have new fonts picked, these look baaad.
   // const [loaded] = useFonts({
@@ -44,35 +38,20 @@ const App = () => {
         }}
       >
         <View style={styles.body}>
-          {!devMode && !currentConfig && (
+          {Boolean(currentConfig) ? (
+            <ComponentPage config={currentConfig!} />
+          ) : (
             <HomePage
               onPress={(component: string) => {
                 void setComponentName(component);
               }}
             />
           )}
-          {!devMode && currentConfig && <ComponentPage config={currentConfig} />}
-          {devMode && !currentConfig && (
-            <DevHomePage
-              demoConfig={DemoConfig}
-              onPress={(name: string, story: string) => {
-                void setComponentName(name);
-                void setCurrentStory(story);
-              }}
-            />
-          )}
-          {devMode && currentConfig && currentStory && (
-            <DevComponentPage config={currentConfig} currentStory={currentStory} />
-          )}
         </View>
       </View>
     </Host>
   );
-};
-
-const AppRoot = (): ReactElement => {
-  return <App />;
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -93,6 +72,3 @@ const styles = StyleSheet.create({
     maxHeight: "100%",
   },
 });
-
-// eslint-disable-next-line import/no-default-export
-export default AppRoot;
