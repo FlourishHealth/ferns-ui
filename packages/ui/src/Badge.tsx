@@ -11,7 +11,6 @@ export const Badge = ({
   type = "info",
   color,
   iconProps,
-  fontWeight = "bold",
 }: BadgeProps): React.ReactElement => {
   // TODO: Badge encompasses what we used to call pill, needs to be updated to include that.
   // It has text/icon/number variants, as well as light and bold color variants,
@@ -38,7 +37,7 @@ export const Badge = ({
       return null;
     }
     return (
-      <Text color="inverted" size="sm" weight={fontWeight}>
+      <Text bold color="inverted" size="sm">
         {title}
       </Text>
     );

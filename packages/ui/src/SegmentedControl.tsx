@@ -21,7 +21,7 @@ export const SegmentedControl = ({
 
   const renderItem = (item: string | React.ReactNode) => {
     return (
-      <Text align="center" weight="bold">
+      <Text align="center" bold>
         {item}
       </Text>
     );

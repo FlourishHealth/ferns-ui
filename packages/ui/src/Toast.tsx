@@ -87,7 +87,7 @@ export const Toast = ({message, data}: ToastProps): React.ReactElement => {
         </Box>
       )}
       <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
-        <Text color="inverted" size="lg" weight="bold">
+        <Text bold color="inverted" size="lg">
           {message}
         </Text>
       </Box>

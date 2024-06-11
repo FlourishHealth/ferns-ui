@@ -89,7 +89,7 @@ export const Field = ({
               width="100%"
             >
               <Box flex="shrink" marginRight={2}>
-                <Text weight="bold">{o.label}</Text>
+                <Text bold>{o.label}</Text>
               </Box>
               <Box>
                 <CheckBox

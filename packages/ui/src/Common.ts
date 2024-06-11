@@ -1275,7 +1275,8 @@ export interface BadgeProps {
   // If `type` is set to "custom", a custom theme color should be provided.
   color?: SurfaceColor;
   fontColor?: TextColor; // default "white"
-  fontWeight?: TextProps["weight"]; // default "bold"
+  // default "bold" // Josh - this is gonna conflict as y'all work on the badge
+  fontWeight?: TextProps["bold"];
   iconProps?: IconProps;
   // The text to display inside the badge.
   title?: string;
@@ -1676,18 +1677,14 @@ export interface TableContextProviderProps extends TableContextType {
 export interface TextProps {
   align?: "left" | "right" | "center" | "justify"; // default "left"
   children?: React.ReactNode;
+  bold?: boolean; // default false
   color?: TextColor;
-  inline?: boolean; // default false
   italic?: boolean; // default false
-  onPress?: () => void;
-  overflow?: "normal" | "breakWord"; // deprecated
   size?: TextSize; // default "md"
   truncate?: boolean; // default false
-  font?: Font;
   underline?: boolean;
   numberOfLines?: number;
   skipLinking?: boolean;
-  weight?: "bold" | "regular" | "medium" | "semiBold" | "light"; // default "regular"
   testID?: string;
 }
 

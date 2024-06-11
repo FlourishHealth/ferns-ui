@@ -23,7 +23,7 @@ const TapToEditTitle = ({
 }): ReactElement => {
   const Title = (
     <Box flex="grow" justifyContent="center">
-      <Text weight="bold">{title}:</Text>
+      <Text bold>{title}:</Text>
       {Boolean(description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing) && (
         <Text color="secondaryLight" size="sm">
           {description}

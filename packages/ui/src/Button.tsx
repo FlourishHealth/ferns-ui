@@ -136,11 +136,10 @@ export const Button = ({
           {Boolean(text) && (
             <Text
               align="center"
+              bold
               color={textColor}
-              inline={inline}
               size={size === "xs" ? "sm" : size}
               skipLinking
-              weight="bold"
             >
               {text}
             </Text>
