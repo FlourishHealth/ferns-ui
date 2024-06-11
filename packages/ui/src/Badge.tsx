@@ -1,66 +1,76 @@
-import React from "react";
+import React, {useContext, useMemo} from "react";
 
 import {Box} from "./Box";
-import {BadgeProps} from "./Common";
+import {BadgeProps, TextTheme, SurfaceTheme} from "./Common";
 import {Icon} from "./Icon";
 import {Text} from "./Text";
+import {ThemeContext} from "./Theme";
+
+
+import { View, StyleSheet } from "react-native";
+
+
 
 export const Badge = ({
-  title,
-  position = "middle",
-  type = "info",
-  color,
-  iconProps,
-  fontWeight = "bold",
+  text,
+  status = "info",
+  secondary = false,
+  variant = "text",
 }: BadgeProps): React.ReactElement => {
-  // TODO: Badge encompasses what we used to call pill, needs to be updated to include that.
-  // It has text/icon/number variants, as well as light and bold color variants,
-  // then actual color variants ("error", "success", etc)
+  const {theme} = useContext(ThemeContext);
 
-  if (color && type !== "custom") {
-    console.warn('Badge color only supported when `type` is set to "custom".');
-  }
+  
 
-  function renderIcon(): React.ReactElement | null {
-    if (iconProps && iconProps.name) {
-      return (
-        <Box marginRight={title ? 1 : 0}>
-          <Icon color={iconProps?.color ? iconProps.color : "inverted"} {...iconProps} size="sm" />
-        </Box>
-      );
-    } else {
-      return null;
+  const badgeColor: keyof TextTheme = useMemo(() =>  {
+    if(!secondary) {
+      return theme.text.inverted;
     }
-  }
-
-  function renderLabel(): React.ReactElement | null {
-    if (!title) {
-      return null;
+    if (status === "error") {
+      return theme.text.error;
+    } else if (status === "warning") {
+      return theme.text.warning;
+    } else if (status === "info") {
+      return theme.text.secondary;
+    } else if (status === "success") {
+      return theme.text.success;
+    } else if (status === "neutral") {
+      return theme.text.neutral;
     }
-    return (
-      <Text color="inverted" size="sm" weight={fontWeight}>
-        {title}
-      </Text>
-    );
-  }
+  });
+
+  const badgeBgColor: keyof SurfaceTheme = useMemo(() => {
+    if (status === "error") {
+      return secondary ? theme.surface.errorLight : theme.surface.error;
+    } else if (status === "warning") {
+      return secondary ? theme.surface.warningLight : theme.surface.warning;
+    } else if (status === "info"){
+      return secondary ? theme.surface.secondaryLight : theme.surface.secondaryDark;
+    } else if (status  === "success") {
+      return secondary ? theme.surface.successLight : theme.surface.success;
+    } else if (status === "neutral") {
+      return secondary ? theme.surface.neutralLight : theme.surface.neutralDark;
+    }
+  }, [status, secondary, theme.surface]);  
 
   return (
-    <Box
-      alignItems="baseline"
-      alignSelf={position === "middle" ? "center" : position === "bottom" ? "end" : "start"}
-      color="primary"
-      direction="row"
-      height="min-content"
-      justifyContent="center"
-      marginLeft={1}
-      marginTop={position === "top" ? -1 : 0}
-      paddingX={2}
-      paddingY={1}
-      rounding="md"
-      width="max-content"
-    >
-      {renderIcon()}
-      {renderLabel()}
-    </Box>
+    <View style={{
+      alignItems: "baseline",
+      flex: {
+        alignSelf: alignSelf,
+        flexDirection: "row",
+      }
+      height: "min-content",
+      justifyContent: "center",
+      marginLeft: 1,
+      paddingX: 2,
+      paddingY: 1,
+      rounding: "md",
+      width: "max-content",
+      }
+    }>
+      <Icon name="check" size="sm" color={badgeColor} />
+      <Text color={badgeColor} fontWeight="bold" />
+    </View>
   );
 };
+
