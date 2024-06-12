@@ -12,7 +12,7 @@ export const Badge = ({
   status = "info",
   secondary = false,
   variant = "text",
-  maxNumber = 100,
+  maxValue = 100,
 }: BadgeProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
@@ -58,10 +58,10 @@ export const Badge = ({
   if (variant !== "numberOnly") {
     badgeValue = value;
   } else {
-    if (!isNaN(Number(value)) && maxNumber) {
+    if (!isNaN(Number(value)) && maxValue) {
       const numberValue = Number(value);
-      if (numberValue > maxNumber) {
-        badgeValue = `${maxNumber}+`;
+      if (numberValue > maxValue) {
+        badgeValue = `${maxValue}+`;
       } else {
         badgeValue = numberValue;
       }

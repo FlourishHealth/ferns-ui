@@ -1281,7 +1281,8 @@ export interface BadgeProps {
   hasIcon?: boolean;
   variant?: "iconOnly" | "numberOnly" | "text"; // text is default
   // TODO: improve type discrimination
-  maxNumber?: number;
+  // used for numberOnly variant to display "${maxValue}+" when value is greater than max
+  maxValue?: number;
 }
 
 export interface BannerProps {
