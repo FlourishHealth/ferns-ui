@@ -67,6 +67,17 @@ export const BadgeConfiguration: DemoConfiguration = {
         ],
         defaultValue: "text",
       },
+      iconName: {
+        type: "select",
+        options: [
+          {label: "check", value: "check"},
+          {label: "triangle-exclamation", value: "triangle-exclamation"},
+          {label: "heart", value: "heart"},
+          {label: "poo-storm", value: "poo-storm"},
+          {label: "pencil", value: "pencil"},
+        ],
+        defaultValue: "check",
+      },
       secondary: {
         type: "boolean",
         defaultValue: false,
