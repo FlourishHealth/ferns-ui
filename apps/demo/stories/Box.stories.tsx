@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
-import {AllColors, Box, Text} from "ferns-ui";
+import {Box, Text} from "ferns-ui";
 import React from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 const colors: AllColors[] = [
   "primary",

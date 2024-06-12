@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {Box, Button, ButtonProps, Heading} from "ferns-ui";
 import React from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const ButtonDemo = () => {
   return (

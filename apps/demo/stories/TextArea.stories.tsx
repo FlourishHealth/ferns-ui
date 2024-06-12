@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {TextArea} from "ferns-ui";
 import React from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const TextAreas = (): React.ReactElement => {
   return (

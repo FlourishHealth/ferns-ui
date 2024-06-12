@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {Box, Button, FlatList, Heading, SideDrawer, Text} from "ferns-ui";
 import React, {useState} from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 interface DrawerStoryProps {
   position: "right" | "left";

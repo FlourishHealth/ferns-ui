@@ -1,7 +1,8 @@
-import {StorybookContainer} from "@components";
 import {Box, Heading, HeadingProps, TextColor} from "ferns-ui";
 import React from "react";
 import {View} from "react-native";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const renderHeadingText = (text: string, props: Partial<HeadingProps>) => {
   return (

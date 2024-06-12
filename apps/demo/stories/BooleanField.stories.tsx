@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {Field} from "ferns-ui";
 import React, {useState} from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const BooleanFieldDemo = () => {
   const [value, setValue] = useState(true);

@@ -1,7 +1,7 @@
 import {Link} from "ferns-ui";
 import React from "react";
 
-import {StorybookContainer} from "@components";
+import {StorybookContainer} from "./StorybookContainer";
 
 export const LinkStories = {
   title: "Link",

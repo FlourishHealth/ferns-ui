@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {Box, Icon, IconProps, Text} from "ferns-ui";
 import React from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const IconDemo = (props: Partial<IconProps>) => (
   <Box alignItems="center" direction="row" justifyContent="center" padding={6}>
@@ -18,10 +19,12 @@ export const SolidIcons = (
       maxWidth={300}
       width="100%"
     >
-      <Icon iconName="heart" />
-      <Icon iconName="plus" />
-      <Icon iconName="pencil" />
-      <Icon iconName="heart" />
+      <>
+        <Icon iconName="heart" />
+        <Icon iconName="plus" />
+        <Icon iconName="pencil" />
+        <Icon iconName="heart" />
+      </>
     </Box>
   </StorybookContainer>
 );

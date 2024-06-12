@@ -6,7 +6,7 @@
 // import React, {useState} from "react";
 // import {Image} from "react-native";
 
-// import {StorybookContainer} from "@components";
+// import {StorybookContainer} from "./StorybookContainer";
 
 // const TextField = () => {
 //   const [value, setValue] = useState("Pre-filled text");

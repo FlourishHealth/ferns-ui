@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {Text, TextField} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const TextFieldStory = ({
   initialValue,

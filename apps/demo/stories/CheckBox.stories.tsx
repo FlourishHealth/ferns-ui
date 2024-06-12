@@ -1,4 +1,4 @@
-import {StorybookContainer} from "@components";
+import {StorybookContainer} from "./StorybookContainer";
 import {CheckBox} from "ferns-ui";
 import React from "react";
 

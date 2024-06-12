@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {Box, Text, TextColor, TextProps} from "ferns-ui";
 import React from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const renderText = (text: string, props: Partial<TextProps>) => {
   return (

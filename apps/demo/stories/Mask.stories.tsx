@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {Box, Mask, Text} from "ferns-ui";
 import React from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const Rounded = (): React.ReactElement => {
   return (

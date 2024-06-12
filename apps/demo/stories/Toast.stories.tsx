@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {Box, Button, useToast} from "ferns-ui";
 import React from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const ToastDemo = () => {
   const toast = useToast();
