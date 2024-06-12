@@ -12,7 +12,7 @@ export const Badge = ({
   status = "info",
   secondary = false,
   variant = "text",
-  maxNumber,
+  maxNumber = 100,
 }: BadgeProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 

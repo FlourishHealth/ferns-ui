@@ -1272,7 +1272,7 @@ export interface AvatarProps {
 }
 
 export interface BadgeProps {
-  iconName?: IconProps;
+  iconName?: IconName;
   // The text to display inside the badge.
   value?: number | string;
   // Position relative to the text. Top should only be used with headings.
