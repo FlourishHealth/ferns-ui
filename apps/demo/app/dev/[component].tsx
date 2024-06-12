@@ -9,8 +9,6 @@ export default function DevComponentPage(): React.ReactElement {
 
   const config = DemoConfig.find((c) => c.name === component);
 
-  console.log({config});
-
   if (!story || !config) {
     router.replace("/dev");
   }

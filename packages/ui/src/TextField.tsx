@@ -130,9 +130,9 @@ export const TextField = ({
     borderColor = theme.border.error;
   } else if (focused) {
     borderColor = theme.border.focus;
-  } else if (value?.trim() === "") {
-    // Unfilled
-    borderColor = theme.border.dark;
+    // } else if (value?.trim() === "") {
+    //   // Unfilled
+    //   borderColor = theme.border.dark;
   } else {
     // Filled in
     borderColor = theme.border.activeNeutral;
@@ -282,6 +282,7 @@ export const TextField = ({
                   inputRef(ref);
                 }
               }}
+              accessibilityHint="Enter text here"
               accessibilityLabel="Text input field"
               autoCapitalize={type === "text" ? "sentences" : "none"}
               autoCorrect={shouldAutocorrect}
