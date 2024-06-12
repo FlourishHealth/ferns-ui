@@ -1526,6 +1526,18 @@ export interface ProgressBarProps {
   completed: number;
 }
 
+export interface RadioProps {
+  selected?: boolean;
+}
+
+export interface RadioFieldProps {
+  title: string;
+  variant?: "leftText" | "rightText"; // default "rightText"
+  value: string;
+  onChange: (value: string) => void;
+  options: string[];
+}
+
 export interface SideDrawerProps {
   // Position of the drawer relative to the child
   position?: "right" | "left";

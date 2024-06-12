@@ -1,7 +1,7 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
 import {Radio} from "ferns-ui";
 import React from "react";
+import {RadioDemo, Radios} from "stories/Radio.stories";
 
 export const RadioConfiguration: DemoConfiguration = {
   name: "Radio",
@@ -34,7 +34,18 @@ export const RadioConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <DefaultDemo />,
-  demoOptions: {},
-  stories: {},
+  demo: RadioDemo,
+  demoOptions: {
+    controls: {
+      selected: {
+        type: "boolean",
+        defaultValue: false,
+      },
+    },
+  },
+  stories: {
+    Radios: {
+      render: () => <Radios />,
+    },
+  },
 };
