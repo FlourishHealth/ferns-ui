@@ -1,10 +1,16 @@
-import {Box, SegmentedControl} from "ferns-ui";
+import {Box, SegmentedControl, SegmentedControlProps} from "ferns-ui";
 import React, {useState} from "react";
 
-export const SegmentedControlDemo = () => {
+export const SegmentedControlDemo = (props: Partial<SegmentedControlProps>) => {
+  const [index, setIndex] = useState(0);
   return (
     <Box display="flex" width="100%">
-      <SegmentedControl items={["One", "Two", "Three"]} selectedIndex={0} onChange={() => {}} />
+      <SegmentedControl
+        items={["One", "Two", "Three"]}
+        selectedIndex={index}
+        onChange={setIndex}
+        {...props}
+      />
     </Box>
   );
 };
@@ -14,7 +20,7 @@ export const DefaultControl = () => {
   return (
     <Box display="flex" width={300}>
       <SegmentedControl
-        items={["One", "Two", "Three"]}
+        items={["One", "Two", "Three Four Five Six Seven"]}
         selectedIndex={itemIndex}
         onChange={(activeIndex) => setItemIndex(activeIndex as number)}
       />

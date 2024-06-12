@@ -178,7 +178,7 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
     // Map the providerTheme and transform the strings into the actual values from the primitives.
     // Do this for each sub-object in the theme. E.g. theme.text, theme.surface, etc.
     const theme = Object.keys(providerTheme).reduce((acc, key) => {
-      if(key === 'primitives') return acc;
+      if (key === "primitives") return acc;
       const value = providerTheme[key as keyof FernsTheme];
       // for each key, map the value to the primitive value.
       acc[key as keyof typeof acc] = Object.keys(value).reduce((accKey, valueKey) => {
