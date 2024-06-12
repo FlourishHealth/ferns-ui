@@ -74,7 +74,6 @@ export const Badge = ({
     <View
       style={{
         justifyContent: "center",
-        // marginLeft: 1,
         alignItems: "center",
         paddingVertical: theme.spacing.xs as any,
         paddingHorizontal: theme.spacing.sm as any,
@@ -86,7 +85,7 @@ export const Badge = ({
       }}
     >
       {Boolean(variant !== "numberOnly") && (
-        <View style={{paddingHorizontal: theme.spacing.xs as any}}>
+        <View style={{marginRight: theme.spacing.sm as any}}>
           <Icon color={badgeColor} iconName={iconName} size="sm" />
         </View>
       )}
