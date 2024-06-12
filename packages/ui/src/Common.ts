@@ -1557,8 +1557,7 @@ export interface SideDrawerProps {
 
 export interface SpinnerProps {
   size?: "sm" | "md";
-  // TODO: fix Spinner.color
-  color?: any;
+  color?: "light" | "dark" | "accent" | "secondary";
 }
 
 export type ColumnSortInterface = {
