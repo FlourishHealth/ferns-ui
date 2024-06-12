@@ -186,7 +186,9 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
         if (providerPrimitives[primitiveKey] === undefined) {
           console.error(`Primitive ${primitiveKey} not found in theme.`);
         }
-        accKey[valueKey] = providerPrimitives[primitiveKey] as keyof typeof value;
+        accKey[valueKey] = providerPrimitives[
+          primitiveKey
+        ] as (typeof providerPrimitivs)[primitiveKey];
         return accKey;
       }, {} as any);
       return acc;
