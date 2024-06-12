@@ -87,7 +87,7 @@ export const Banner = ({
     } else if (type === DISMISS) {
       return (
         <Box alignItems="center" display="block" justifyContent="center" width={40}>
-          <IconButton accessibilityLabel="" icon="times-circle" prefix="fas" onClick={dismiss} />
+          <IconButton accessibilityLabel="" icon="circle-xmark" prefix="fas" onClick={dismiss} />
         </Box>
       );
     } else {

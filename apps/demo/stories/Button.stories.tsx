@@ -111,7 +111,7 @@ export const InlineButtons = () => {
       <Box direction="row" paddingX={8} paddingY={8} width="100%">
         <Button color="primary" inline text="Small" onClick={(): void => {}} />
         <Box marginLeft={2} marginRight={2}>
-          <Button color="primary" icon="edit" inline text="Edit" onClick={(): void => {}} />
+          <Button color="primary" icon="pencil" inline text="pencil" onClick={(): void => {}} />
         </Box>
         <Button
           color="primary"
@@ -131,7 +131,7 @@ export const InlineButtons = () => {
         <Box marginLeft={2}>
           <Button
             color="primary"
-            icon="edit"
+            icon="pencil"
             inline
             text="Outline"
             type="outline"
@@ -141,7 +141,7 @@ export const InlineButtons = () => {
         <Box marginLeft={2}>
           <Button
             color="primary"
-            icon="edit"
+            icon="pencil"
             inline
             text="Ghost"
             type="ghost"
@@ -151,7 +151,7 @@ export const InlineButtons = () => {
         <Box marginLeft={2} marginRight={2}>
           <Button
             color="primary"
-            icon="edit"
+            icon="pencil"
             inline
             text="Solid"
             type="solid"
