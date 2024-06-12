@@ -1,5 +1,5 @@
-export * from "./ComponentPage";
+export * from "./DemoHomePage";
 export * from "./DevComponentPage";
 export * from "./DevHomePage";
-export * from "./HomePage";
+export * from "./ErrorBoundary";
 export * from "./StorybookContainer";

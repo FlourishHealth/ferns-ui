@@ -1,6 +1,5 @@
-import {ComponentPage, HomePage} from "@components";
-import {DemoConfig} from "@config";
-import {useStoredState} from "ferns-ui";
+import {DemoHomePage} from "@components";
+import {router} from "expo-router";
 import React from "react";
 import {StyleSheet, View} from "react-native";
 import {Host} from "react-native-portalize";
@@ -8,7 +7,6 @@ import {useSafeAreaInsets} from "react-native-safe-area-context";
 
 export default function App() {
   const insets = useSafeAreaInsets();
-  const [componentName, setComponentName] = useStoredState<string | null>("component", null);
 
   // Update when we have new fonts picked, these look baaad.
   // const [loaded] = useFonts({
@@ -23,7 +21,6 @@ export default function App() {
   //   return null;
   // }
 
-  const currentConfig = DemoConfig.find((config) => config.name === componentName);
   return (
     <Host>
       <View
@@ -38,15 +35,11 @@ export default function App() {
         }}
       >
         <View style={styles.body}>
-          {Boolean(currentConfig) ? (
-            <ComponentPage config={currentConfig!} />
-          ) : (
-            <HomePage
-              onPress={(component: string) => {
-                void setComponentName(component);
-              }}
-            />
-          )}
+          <DemoHomePage
+            onPress={(component: string) => {
+              router.push(`demo/${component}`);
+            }}
+          />
         </View>
       </View>
     </Host>

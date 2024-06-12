@@ -1,6 +1,6 @@
 import {router, Stack} from "expo-router";
 import {StatusBar} from "expo-status-bar";
-import {useStoredState} from "ferns-ui";
+import {isMobileDevice, useStoredState} from "ferns-ui";
 import React from "react";
 import {Pressable, StyleSheet, Text, View} from "react-native";
 
@@ -12,6 +12,7 @@ export default function Layout() {
     <Stack
       screenOptions={{
         title: "Ferns UI Demo",
+        headerBackVisible: isMobileDevice(),
         headerRight: () => (
           <>
             <StatusBar style="auto" />
