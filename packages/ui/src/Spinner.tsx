@@ -9,19 +9,14 @@ export const Spinner = ({size = "md", color = "light"}: SpinnerProps): ReactElem
   const theme = useTheme();
 
   let computedColor = "";
-  switch (color) {
-    case "dark":
-      computedColor = theme.primitives.neutral000;
-      break;
-    case "light":
-      computedColor = theme.primitives.neutral400;
-      break;
-    case "accent":
-      computedColor = theme.primitives.accent700;
-      break;
-    case "secondary":
-      computedColor = theme.primitives.secondary600;
-      break;
+  if (color === "light") {
+    computedColor = theme.primitives.neutral400;
+  } else if (color === "dark") {
+    computedColor = theme.primitives.neutral000;
+  } else if (color === "accent") {
+    computedColor = theme.primitives.accent700;
+  } else if (color === "secondary") {
+    computedColor = theme.primitives.secondary600;
   }
 
   // The delay is for perceived performance. You don't want to show a spinner when you're doing a
