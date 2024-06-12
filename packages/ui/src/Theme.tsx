@@ -1,5 +1,5 @@
 import merge from "lodash/merge";
-import React, {createContext, useMemo, useState} from "react";
+import React, {createContext, useContext, useMemo, useState} from "react";
 
 import {FernsTheme} from "./Common";
 
@@ -216,3 +216,5 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
     </ThemeContext.Provider>
   );
 };
+
+export const useTheme = () => useContext(ThemeContext).theme;

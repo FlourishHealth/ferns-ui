@@ -20,7 +20,7 @@ export const AvatarInitials = () => {
       <Avatar name="Tony Ironman Stark" />
       <Text>Tony</Text>
       <Avatar name="Tony" />
-      <Text>Colored Tony Start</Text>
+      <Text> Tony Stark Colored</Text>
       <Avatar backgroundColor="primary" name="Tony Stark" textColor="inverted" />
     </Box>
   );
