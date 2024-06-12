@@ -87,7 +87,7 @@ export const Badge = ({
     >
       {Boolean(variant !== "numberOnly") && (
         <View style={{paddingHorizontal: theme.spacing.xs as any}}>
-          <Icon color={badgeColor} name={iconName} size="sm" />
+          <Icon color={badgeColor} iconName={iconName} size="sm" />
         </View>
       )}
       {Boolean(variant !== "iconOnly") && (
