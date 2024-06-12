@@ -27,6 +27,13 @@
  * SOFTWARE.
  * */
 
+/**
+ * Hyperlink is used to wrap text that should be clickable.
+ * It will automatically detect URLs and open them in the browser. For example,
+ * this is great for wrapping text in a chat app so any link in a chat message is clickable.
+ * This is different than <Link> which is meant for specifically linking to a URL.
+ */
+
 import * as mdurl from "mdurl";
 import React from "react";
 import {Linking, Platform, Text, View} from "react-native";
