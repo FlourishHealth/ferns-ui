@@ -23,7 +23,7 @@ export const SolidIcons = (
         <Icon iconName="heart" />
         <Icon iconName="plus" />
         <Icon iconName="pencil" />
-        <Icon iconName="heart" />
+        <Icon iconName="user-astronaut" />
       </>
     </Box>
   </StorybookContainer>
