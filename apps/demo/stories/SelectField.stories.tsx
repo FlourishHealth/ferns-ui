@@ -1,5 +1,4 @@
 import {StorybookContainer} from "@components";
-import {DemoConfiguration} from "@config";
 import {SelectList, SelectListOptions} from "ferns-ui";
 import React, {useState} from "react";
 
@@ -9,7 +8,7 @@ const options: SelectListOptions = [
   {label: "Third, A Really Long Option", value: "third"},
 ];
 
-const SelectListDemo = () => {
+export const SelectListDemo = () => {
   return (
     <SelectList
       id="none"
@@ -21,7 +20,7 @@ const SelectListDemo = () => {
   );
 };
 
-const SelectLists = () => {
+export const SelectLists = () => {
   const [item, setItem] = useState<string | undefined>(options[0].value);
   const [itemNoUndefined, setItemNoUndefined] = useState<string>(options[0].value);
 
@@ -50,7 +49,7 @@ const SelectLists = () => {
   );
 };
 
-const WithLabel = () => {
+export const WithLabel = () => {
   const [item, setItem] = useState<string | undefined>(options[0].value);
 
   return (
@@ -68,7 +67,7 @@ const WithLabel = () => {
   );
 };
 
-const Disabled = () => {
+export const Disabled = () => {
   const [item, setItem] = useState<string | undefined>(options[0].value);
 
   return (
@@ -99,41 +98,5 @@ export const SelectListStories = {
     "Select List Disabled": function () {
       return <Disabled />;
     },
-  },
-};
-
-export const SelectFieldConfiguration: DemoConfiguration = {
-  name: "Select field",
-  component: SelectList,
-  related: ["Checkbox", "Radio field"],
-  description: "Displays a list of actions or options using the browser’s native select.",
-  a11yNotes: ["The list should be labeled so that screen readers know that the list is related."],
-  category: "Component",
-  status: {
-    documentation: "ready",
-    figma: "ready",
-    figmaLink:
-      "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23563&mode=design&t=IZ8oGBzUmBzUtZMr-1",
-    ios: "ready",
-    android: "ready",
-    web: "ready",
-  },
-  additionalDocumentation: [],
-  interfaceName: "SelectFieldProps",
-  usage: {
-    do: ["Present users with a list of options.", "Allow users to choose one option."],
-    doNot: [
-      "When more than 10 options are needed, consider using another component instead.",
-      "If two or more choices are allowed, use the checkbox field.",
-      "If fewer than 4 choices are needed, consider using a Radio field instead.",
-    ],
-  },
-  props: {},
-  demo: SelectListDemo,
-  demoOptions: {},
-  stories: {
-    "Select Lists": {render: SelectLists},
-    "Select List Label": {render: WithLabel},
-    "Select List Disabled": {render: Disabled},
   },
 };

@@ -3,7 +3,7 @@ import {Box, Heading} from "ferns-ui";
 import React from "react";
 import {Pressable, ScrollView, Text, View} from "react-native";
 
-export const HomePage = ({
+export const DemoHomePage = ({
   onPress,
 }: {
   onPress: (componentName: string) => void;

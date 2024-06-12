@@ -59,7 +59,6 @@ export const Heading = ({
     style.textAlign = align;
   }
   style.color = theme.text[color];
-  console.log("COLOR", color, theme.text[color], theme.text);
   // TODO: might be useful for wrapping/truncating
   // if (numberOfLines !== 1 && !inline) {
   //   style.flexWrap = "wrap";

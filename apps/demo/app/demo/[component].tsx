@@ -1,4 +1,6 @@
-import {DemoConfigStatus, DemoConfiguration, DemoConfigurationProp} from "@config";
+import {ErrorBoundary} from "@components";
+import {DemoConfig, DemoConfigStatus, DemoConfiguration, DemoConfigurationProp} from "@config";
+import {router, useLocalSearchParams} from "expo-router";
 import {
   AllColors,
   Badge,
@@ -18,8 +20,6 @@ import startCase from "lodash/startCase";
 import React, {useState} from "react";
 // @ts-ignore
 import {MarkdownView} from "react-native-markdown-view";
-
-import {ErrorBoundary} from "./ErrorBoundary";
 
 const ComponentProps = ({props}: {props: DemoConfigurationProp[]}) => {
   // TODO: setup these widths for mobile too.
@@ -268,34 +268,42 @@ const ComponentStatus = ({config}: {config: DemoConfiguration}): React.ReactElem
   );
 };
 
-export const ComponentPage = ({config}: {config: DemoConfiguration}): React.ReactElement => {
+export default function ComponentPage(): React.ReactElement {
+  const {component} = useLocalSearchParams<{component: string}>();
+
+  const config = DemoConfig.find((c) => c.name === component);
+
+  if (!component || !config) {
+    router.replace("/demo");
+  }
+
   return (
     <Box padding={4} scroll>
       <Box marginBottom={4}>
-        <Heading size="lg">{config.name}</Heading>
+        <Heading size="lg">{config?.name}</Heading>
       </Box>
       <Box marginBottom={4}>
         <Box marginBottom={2}>
           <Heading size="sm">Description</Heading>
         </Box>
-        <MarkdownView>{config.description}</MarkdownView>
+        <MarkdownView>{config?.description}</MarkdownView>
       </Box>
-      <ComponentDemo config={config} />
-      <ComponentProps props={config.props?.children} />
-      <ComponentStatus config={config} />
-      {Boolean(config.related.length) && (
+      <ComponentDemo config={config!} />
+      <ComponentProps props={config?.props?.children} />
+      <ComponentStatus config={config!} />
+      {Boolean(config?.related.length) && (
         <Box marginBottom={4}>
           <Box marginBottom={2}>
             <Heading size="sm">Related</Heading>
           </Box>
-          <Text>{config.related.join(", ")}</Text>
+          <Text>{config?.related.join(", ")}</Text>
         </Box>
       )}
       <Box marginBottom={2}>
         <Heading size="sm">Examples</Heading>
       </Box>
-      <ComponentStories config={config} />
+      <ComponentStories config={config!} />
       {/* <ComponentTestMatrix config={config} /> */}
     </Box>
   );
-};
+}

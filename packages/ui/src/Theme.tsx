@@ -150,6 +150,7 @@ const defaultTheme: FernsTheme = {
     "2xl": "spacing8",
     "3xl": "spacing12",
   },
+  // These will continue to throw errors until we have a proper font system in place.
   font: {
     primary: "Nunito",
     title: "Titillium Web",
@@ -177,11 +178,12 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
     // Map the providerTheme and transform the strings into the actual values from the primitives.
     // Do this for each sub-object in the theme. E.g. theme.text, theme.surface, etc.
     const theme = Object.keys(providerTheme).reduce((acc, key) => {
+      if(key === 'primitives') return acc;
       const value = providerTheme[key as keyof FernsTheme];
       // for each key, map the value to the primitive value.
       acc[key as keyof typeof acc] = Object.keys(value).reduce((accKey, valueKey) => {
         const primitiveKey = value[valueKey as keyof typeof value];
-        if (!providerPrimitives[primitiveKey]) {
+        if (providerPrimitives[primitiveKey] === undefined) {
           console.error(`Primitive ${primitiveKey} not found in theme.`);
         }
         accKey[valueKey] = providerPrimitives[primitiveKey];

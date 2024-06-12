@@ -1,8 +1,7 @@
-import {DemoConfiguration} from "@config";
 import {Box, Heading, IconButton, InfoTooltipButton, Text, Tooltip} from "ferns-ui";
 import React from "react";
 
-const TooltipDemo = () => {
+export const TooltipDemo = () => {
   return (
     <Box paddingY={2}>
       <Heading size="sm">Small Tooltip</Heading>
@@ -11,7 +10,7 @@ const TooltipDemo = () => {
   );
 };
 
-const ChevronTooltip = ({
+export const ChevronTooltip = ({
   idealDirection,
   text = "Short Tooltip Text",
 }: {
@@ -36,7 +35,7 @@ const ChevronTooltip = ({
   />
 );
 
-const FiveTooltips = ({text}: {text?: string}): React.ReactElement => (
+export const FiveTooltips = ({text}: {text?: string}): React.ReactElement => (
   <Box direction="row">
     <ChevronTooltip idealDirection="none" text={text} />
     <ChevronTooltip idealDirection="top" text={text} />
@@ -57,7 +56,7 @@ const FiveTooltips = ({text}: {text?: string}): React.ReactElement => (
   </Box>
 );
 
-const TooltipIcon = () => {
+export const TooltipIcon = () => {
   return (
     <Box direction="column" display="flex" height="100%" padding={4} width="100%">
       <Box alignItems="center" height="100%" justifyContent="center" width="100%">
@@ -84,7 +83,7 @@ const TooltipIcon = () => {
   );
 };
 
-const TooltipOverflow = () => {
+export const TooltipOverflow = () => {
   const text =
     "Here's a much longer tooltip, to test overflows, especially on mobile, and multiple lines too!";
 
@@ -106,41 +105,4 @@ const TooltipOverflow = () => {
       </Box>
     </Box>
   );
-};
-
-export const TooltipConfiguration: DemoConfiguration = {
-  name: "Tooltip",
-  component: Tooltip, // Replace with actual component reference
-  related: [],
-  description:
-    "Tooltip is a floating text label that succinctly describes the function of an interactive element, typically Icon Button. It’s displayed continuously as long as the user hovers over or focuses on the element. Also known as 'Info tip'.",
-  shortDescription:
-    "Tooltip is a floating text label that succinctly describes the function of an interactive element, typically Icon Button. ",
-  a11yNotes: ["The tooltip should not be repetitive with the label of the element it relates to."],
-  category: "Component",
-  status: {
-    documentation: "ready",
-    figma: "ready",
-    figmaLink:
-      "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23442&mode=design&t=IZ8oGBzUmBzUtZMr-1",
-    ios: "ready",
-    android: "ready",
-    web: "ready",
-  },
-  additionalDocumentation: [{name: "NN/g article", link: "https://www.nngroup.com/articles/"}],
-  interfaceName: "TooltipProps",
-  usage: {
-    do: [
-      "Use a tooltip to provide helpful but non-essential context.",
-      "Enhance baseline understanding of an element or feature.",
-    ],
-    doNot: ["Do not use a tooltip to display critical information."],
-  },
-  props: {},
-  demo: TooltipDemo,
-  demoOptions: {},
-  stories: {
-    Icons: {render: TooltipIcon},
-    Overflow: {render: TooltipOverflow},
-  },
 };
