@@ -1,9 +1,8 @@
 import {StorybookContainer} from "@components";
-import {DemoConfiguration} from "@config";
 import {Box, Text, TextColor, TextProps} from "ferns-ui";
 import React from "react";
 
-const renderText = (text: string, props: Partial<TextProps>) => {
+export const renderText = (text: string, props: Partial<TextProps>) => {
   return (
     <Box paddingY={1} width="100%">
       <Text {...props}>{text}</Text>
@@ -11,7 +10,7 @@ const renderText = (text: string, props: Partial<TextProps>) => {
   );
 };
 
-const Texts = (): React.ReactElement => {
+export const Texts = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <Box direction="column" display="flex" height="100%" width="100%">
@@ -42,7 +41,7 @@ const Texts = (): React.ReactElement => {
   );
 };
 
-const Truncate = (): React.ReactElement => {
+export const Truncate = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <Box maxWidth={160}>
@@ -66,7 +65,7 @@ const Truncate = (): React.ReactElement => {
   );
 };
 
-const TextLinks = (): React.ReactElement => {
+export const TextLinks = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <Box direction="column" display="flex" height="100%" width="100%">
@@ -76,38 +75,4 @@ const TextLinks = (): React.ReactElement => {
       </Box>
     </StorybookContainer>
   );
-};
-
-export const TextConfiguration: DemoConfiguration = {
-  name: "Text",
-  component: Text, // Replace with actual component reference
-  related: ["Paragraph"],
-  description: "",
-  a11yNotes: [""],
-  category: ["Data Entry", "Form"],
-  status: {
-    documentation: "ready",
-    figma: "inProgress",
-    figmaLink: "",
-    ios: "ready",
-    android: "ready",
-    web: "ready",
-  },
-  additionalDocumentation: [],
-  interfaceName: "TextProps",
-  usage: {
-    do: [],
-    doNot: [],
-  },
-  props: {},
-  demo: (props: TextProps & {text: string}) => {
-    const {text, ...rest} = props;
-    return renderText(text, rest);
-  },
-  demoOptions: {},
-  stories: {
-    Texts: {render: Texts},
-    Truncate: {render: Truncate},
-    TextLinks: {render: TextLinks},
-  },
 };
