@@ -1669,18 +1669,14 @@ export interface TableContextProviderProps extends TableContextType {
 export interface TextProps {
   align?: "left" | "right" | "center" | "justify"; // default "left"
   children?: React.ReactNode;
+  bold?: boolean; // default false
   color?: TextColor;
-  inline?: boolean; // default false
   italic?: boolean; // default false
-  onPress?: () => void;
-  overflow?: "normal" | "breakWord"; // deprecated
   size?: TextSize; // default "md"
   truncate?: boolean; // default false
-  font?: Font;
   underline?: boolean;
   numberOfLines?: number;
   skipLinking?: boolean;
-  weight?: "bold" | "regular" | "medium" | "semiBold" | "light"; // default "regular"
   testID?: string;
 }
 

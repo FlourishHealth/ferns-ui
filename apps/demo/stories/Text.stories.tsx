@@ -1,11 +1,11 @@
-import {Box, Text, TextColor, TextProps} from "ferns-ui";
+import {Box, Link, Text, TextColor, TextProps} from "ferns-ui";
 import React from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
 
 export const renderText = (text: string, props: Partial<TextProps>) => {
   return (
-    <Box paddingY={1} width="100%">
+    <Box key={text} paddingY={1} width="100%">
       <Text {...props}>{text}</Text>
     </Box>
   );
@@ -31,12 +31,13 @@ export const Texts = (): React.ReactElement => {
           "success",
         ].map((color) => renderText(color, {color: color as TextColor}))}
 
-        {renderText("bold", {weight: "bold"})}
+        {renderText("bold", {bold: true})}
         {renderText("italic", {italic: true})}
-        {renderText("bold italic", {italic: true, weight: "bold"})}
-        {renderText("bold italic accent", {italic: true, weight: "bold", color: "accent"})}
+        {renderText("bold italic", {italic: true, bold: true})}
+        {renderText("bold italic accent", {italic: true, bold: true, color: "accent"})}
 
         {renderText("center", {align: "center"})}
+        <Link href="https://github.com/FlourishHealth/ferns-ui" text="Linked Text" />
       </Box>
     </StorybookContainer>
   );
@@ -47,14 +48,14 @@ export const Truncate = (): React.ReactElement => {
     <StorybookContainer>
       <Box maxWidth={160}>
         <Box marginBottom={2}>
-          <Text weight="bold">normal:</Text>
+          <Text bold>normal:</Text>
           <Text>
             This is a long and Supercalifragilisticexpialidocious sentence.
             次の単語グレートブリテンおよび北アイルランド連合王国で本当に大きな言葉&#39;
           </Text>
         </Box>
         <Box marginBottom={2}>
-          <Text weight="bold">truncate:</Text>
+          <Text bold>truncate:</Text>
           <Text truncate>
             This is a long and Supercalifragilisticexpialidocious sentence.
             次の単語グレートブリテンおよび北アイルランド連合王国で本当に大きな言葉

@@ -130,7 +130,7 @@ export const Banner = ({
       )}
       <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
         <Box paddingY={1}>
-          <Text align="center" color={textColor} weight="bold">
+          <Text align="center" bold color={textColor}>
             {text}
           </Text>
         </Box>

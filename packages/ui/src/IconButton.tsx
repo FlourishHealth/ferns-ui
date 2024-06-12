@@ -87,7 +87,7 @@ export const IconButton = forwardRef(
               minWidth={15}
               rounding="md"
             >
-              <Text color="inverted" size="sm" weight="bold">
+              <Text bold color="inverted" size="sm">
                 {indicatorNumber}
               </Text>
             </Box>
