@@ -11,6 +11,7 @@ export const Badge = ({
   status = "info",
   secondary = false,
   variant = "text",
+  number,
 }: BadgeProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
@@ -52,13 +53,20 @@ export const Badge = ({
         marginLeft: 1,
         paddingHorizontal: 2,
         paddingVertical: 1,
-        borderRadius: theme.radius.minimal,
-        // width: "max-content",
+        borderRadius: theme.radius.minimal as any,
+        // flex: {
+        //   flex: 1
+        // },
         backgroundColor: badgeBgColor,
       }}
     >
-      <Icon color={badgeColor} name="check" size="sm" />
-      <Text color={badgeColor} />
+      {Boolean(variant !== "numberOnly") && (
+        <Icon color={badgeColor} name="check" size="sm" />
+      )}
+      {Boolean(variant !== "iconOnly") && (
+        <Text color={badgeColor}>{variant === "numberOnly" ? text : number}</Text>
+        )
+        }
     </View>
   );
 };

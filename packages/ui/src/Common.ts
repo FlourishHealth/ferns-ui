@@ -2728,6 +2728,7 @@ export interface BadgeProps {
   secondary?: boolean;
   hasIcon?: boolean;
   variant?: "iconOnly" | "numberOnly" | "text"; // text is default
+  number?: number;
 }
 
 export interface BannerProps {

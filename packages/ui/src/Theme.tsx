@@ -188,7 +188,7 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
         }
         accKey[valueKey] = providerPrimitives[
           primitiveKey
-        ] as (typeof providerPrimitivs)[primitiveKey];
+        ];
         return accKey;
       }, {} as any);
       return acc;
