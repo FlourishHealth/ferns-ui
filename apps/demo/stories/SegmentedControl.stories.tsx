@@ -20,7 +20,7 @@ export const DefaultControl = () => {
   return (
     <Box display="flex" width={300}>
       <SegmentedControl
-        items={["One", "Two", "Three Four Five Six Seven"]}
+        items={["One", "Two", "Three"]}
         selectedIndex={itemIndex}
         onChange={(activeIndex) => setItemIndex(activeIndex as number)}
       />

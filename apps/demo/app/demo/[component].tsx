@@ -2,18 +2,18 @@ import {ErrorBoundary} from "@components";
 import {DemoConfig, DemoConfigStatus, DemoConfiguration, DemoConfigurationProp} from "@config";
 import {router, useLocalSearchParams} from "expo-router";
 import {
-  AllColors,
   Badge,
   Box,
   Field,
-  FontAwesome5IconName,
   Heading,
   Icon,
+  IconName,
   Table,
   TableHeader,
   TableHeaderCell,
   TableRow,
   Text,
+  TextColor,
 } from "ferns-ui";
 import cloneDeep from "lodash/cloneDeep";
 import startCase from "lodash/startCase";
@@ -62,7 +62,7 @@ const ComponentProps = ({props}: {props: DemoConfigurationProp[]}) => {
           <TableRow key={p.name}>
             <Box direction="row">
               <Text>{p.name}</Text>
-              {Boolean(p.flags?.isOptional !== true) && <Badge color="orange" title="Required" />}
+              {Boolean(p.flags?.isOptional !== true) && <Badge color="warning" title="Required" />}
             </Box>
             <Box direction="column" width={160} wrap>
               <Text italic overflow="breakWord">
@@ -90,14 +90,14 @@ const ComponentStories = ({config}: {config: DemoConfiguration}): React.ReactEle
     <Box>
       {Object.keys(config.stories ?? {}).map(
         (s, i): React.ReactElement => (
-          <Box key={i} marginBottom={8} rounding={4}>
+          <Box key={i} marginBottom={8} rounding="lg">
             <Box marginBottom={2}>
               <Heading size="sm">{s}</Heading>
             </Box>
             {Boolean(config.stories[s]?.description) && (
               <MarkdownView>{config.stories[s]?.description}</MarkdownView>
             )}
-            <Box border="darkGray" padding={4} rounding={4}>
+            <Box border="dark" padding={4} rounding="lg">
               <ErrorBoundary>{config.stories[s]?.render()}</ErrorBoundary>
             </Box>
           </Box>
@@ -176,7 +176,7 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
     <Box direction="column" marginBottom={2} mdDirection="row" width="100%">
       <Box
         alignItems="center"
-        border="darkGray"
+        border="dark"
         direction="column"
         flex="grow"
         justifyContent="center"
@@ -184,20 +184,20 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
         marginLeft={2}
         marginRight={2}
         padding={4}
-        rounding={4}
+        rounding="lg"
       >
         <ErrorBoundary>{config.demo?.(propValues)}</ErrorBoundary>
       </Box>
       {Boolean(hasControls) && (
         <Box
-          border="darkGray"
+          border="dark"
           direction="column"
           flex="grow"
           marginBottom={4}
           marginLeft={2}
           marginRight={2}
           padding={4}
-          rounding={4}
+          rounding="lg"
         >
           {Object.keys(propValues).map((prop) => (
             <Field
@@ -223,19 +223,19 @@ const ComponentStatusSection = ({
   status: DemoConfigStatus;
   label: string;
 }): React.ReactElement => {
-  let iconName: FontAwesome5IconName;
-  let color: AllColors = "gray";
+  let iconName: IconName = "circle";
+  let color: TextColor = "secondaryLight";
   switch (status) {
     case "inProgress":
       iconName = "circle";
       break;
     case "ready":
-      iconName = "check-circle";
-      color = "green";
+      iconName = "circle-check";
+      color = "success";
       break;
     case "notSupported":
       iconName = "circle-xmark";
-      color = "red";
+      color = "error";
       break;
     case "planned":
       iconName = "calendar";
@@ -246,7 +246,7 @@ const ComponentStatusSection = ({
       <Box marginRight={1}>
         <Text>{label}:</Text>
       </Box>
-      <Icon color={color} name={iconName} size="md" />
+      <Icon color={color} iconName={iconName} size="md" />
     </Box>
   );
 };
