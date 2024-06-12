@@ -8,6 +8,7 @@ import {ThemeContext} from "./Theme";
 
 export const Badge = ({
   value,
+  iconName = "check",
   status = "info",
   secondary = false,
   variant = "text",
@@ -52,22 +53,20 @@ export const Badge = ({
     badgeBorderRadius = theme.radius.rounded as any;
   }
 
-  let badgeValue = value;
-  // convert to
-  if (badgeValue && variant === "numberOnly" && maxNumber) {
-    if (typeof value !== "number") {
-      if (!isNaN(Number(value))) {
-        const numberValue = Number(value);
-        if (numberValue > maxNumber) {
-          badgeValue = `${maxNumber}+`;
-        } else {
-          badgeValue = numberValue;
-        }
+  let badgeValue;
+
+  if (variant !== "numberOnly") {
+    badgeValue = value;
+  } else {
+    if (!isNaN(Number(value)) && maxNumber) {
+      const numberValue = Number(value);
+      if (numberValue > maxNumber) {
+        badgeValue = `${maxNumber}+`;
+      } else {
+        badgeValue = numberValue;
       }
     } else {
-      if (badgeValue > maxNumber) {
-        badgeValue = `${maxNumber}+`;
-      }
+      console.warn("Warning: Badge value is not a number");
     }
   }
 
@@ -82,12 +81,13 @@ export const Badge = ({
         flexDirection: "row",
         borderRadius: badgeBorderRadius as any,
         backgroundColor: theme.surface[badgeBgColor],
-        width: "auto",
+        height: variant === "iconOnly" ? (theme.spacing.xl as any) : "auto",
+        width: variant === "iconOnly" ? (theme.spacing.xl as any) : "auto",
       }}
     >
       {Boolean(variant !== "numberOnly") && (
         <View style={{paddingHorizontal: theme.spacing.xs as any}}>
-          <Icon color={badgeColor} name="check" size="sm" />
+          <Icon color={badgeColor} name={iconName} size="sm" />
         </View>
       )}
       {Boolean(variant !== "iconOnly") && (
