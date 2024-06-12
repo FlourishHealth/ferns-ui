@@ -1,17 +1,11 @@
 import {DemoConfiguration} from "@config";
-import {
-  DefaultControl,
-  LargeControl,
-  MultiSelectControl,
-  PersistentControl,
-  SegmentedControlDemo,
-} from "@stories";
+import {DefaultControl, LargeControl, OverflowControl, SegmentedControlDemo} from "@stories";
 import {SegmentedControl} from "ferns-ui";
 
 export const SegmentedControlConfiguration: DemoConfiguration = {
   name: "Segmented control",
   component: SegmentedControl,
-  related: ["Render Content Fn", "Top navigation", "Bottom navigation"],
+  related: ["Tab Bar", "Switcher", "Toggle Group"],
   description:
     "SegmentedControl may be used to group multiple selections. The controls display the current state and related state. Create layout to convey a clear sense of information hierarchy. When a control is engaged, information below the control should also be updated. Also known as 'Toggle group'.",
   shortDescription:
@@ -42,7 +36,6 @@ export const SegmentedControlConfiguration: DemoConfiguration = {
   stories: {
     Default: {render: DefaultControl},
     Large: {render: LargeControl},
-    MultiSelect: {render: MultiSelectControl},
-    Persistent: {render: PersistentControl},
+    Overflow: {render: OverflowControl},
   },
 };
