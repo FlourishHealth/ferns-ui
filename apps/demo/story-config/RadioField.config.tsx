@@ -1,5 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
+import {RadioFieldDemo, RadioFieldsLeftText, RadioFieldsRightText} from "@stories";
 import {RadioField} from "ferns-ui";
 import React from "react";
 
@@ -34,7 +34,29 @@ export const RadioFieldConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <DefaultDemo />,
-  demoOptions: {},
-  stories: {},
+  demo: RadioFieldDemo,
+  demoOptions: {
+    controls: {
+      title: {
+        type: "text",
+        defaultValue: "Some Text",
+      },
+      variant: {
+        type: "select",
+        options: [
+          {label: "Left Text", value: "leftText"},
+          {label: "Right Text", value: "rightText"},
+        ],
+        defaultValue: "rightText",
+      },
+    },
+  },
+  stories: {
+    "Left Text": {
+      render: () => <RadioFieldsLeftText />,
+    },
+    "Right Text": {
+      render: () => <RadioFieldsRightText />,
+    },
+  },
 };
