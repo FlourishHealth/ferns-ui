@@ -1,11 +1,11 @@
 import {DemoConfiguration} from "@config";
-import {Big, Dark, Small} from "@stories";
+import {SpinnerDemo, SpinnerVariations} from "@stories";
 import {Spinner} from "ferns-ui";
 
 export const SpinnerConfiguration: DemoConfiguration = {
   name: "Spinner",
   component: Spinner,
-  related: ["Buttons"],
+  related: ["Activity Indicator", "Loading"],
   description:
     "This is a microcomponent that’s used to indicate that the system is loading information. It can be used on a loading surface or on a button.",
   a11yNotes: [],
@@ -29,11 +29,30 @@ export const SpinnerConfiguration: DemoConfiguration = {
     doNot: ["Do not arbitrarily change the colors or sizing."],
   },
   props: {},
-  demo: Big,
-  demoOptions: {},
+  demo: SpinnerDemo,
+  demoOptions: {
+    controls: {
+      size: {
+        type: "select",
+        options: [
+          {label: "Small", value: "sm"},
+          {label: "Medium", value: "md"},
+        ],
+        defaultValue: "md",
+      },
+      color: {
+        type: "select",
+        options: [
+          {label: "Secondary", value: "secondary"},
+          {label: "Accent", value: "accent"},
+          {label: "Light", value: "light"},
+          {label: "Dark", value: "dark"},
+        ],
+        defaultValue: "secondary",
+      },
+    },
+  },
   stories: {
-    Small: {render: Small},
-    Big: {render: Big},
-    Dark: {render: Dark},
+    SpinnerVariations: {render: SpinnerVariations},
   },
 };

@@ -1256,19 +1256,17 @@ export interface AvatarProps {
 }
 
 export interface BadgeProps {
-  // If `type` is set to "custom", a custom theme color should be provided.
-  color?: SurfaceColor;
-  fontColor?: TextColor; // default "white"
-  fontWeight?: TextProps["weight"]; // default "bold"
-  iconProps?: IconProps;
+  iconName?: IconName;
   // The text to display inside the badge.
-  title?: string;
+  value?: number | string;
   // Position relative to the text. Top should only be used with headings.
-  position?: "bottom" | "top" | "middle"; // default "middle"
-  rounding?: Rounding;
-  // Some default badge types. Occasionally, a custom badge might be required for different color
-  // schemes.
-  type?: "info" | "error" | "warning" | "success" | "neutral" | "custom"; // default "info
+  status?: "info" | "error" | "warning" | "success" | "neutral"; // default "info
+  secondary?: boolean;
+  hasIcon?: boolean;
+  variant?: "iconOnly" | "numberOnly" | "text"; // text is default
+  // TODO: improve type discrimination
+  // used for numberOnly variant to display "${maxValue}+" when value is greater than max
+  maxValue?: number;
 }
 
 export interface BannerProps {
@@ -1510,6 +1508,18 @@ export interface ProgressBarProps {
   completed: number;
 }
 
+export interface RadioProps {
+  selected?: boolean;
+}
+
+export interface RadioFieldProps {
+  title: string;
+  variant?: "leftText" | "rightText"; // default "rightText"
+  value: string;
+  onChange: (value: string) => void;
+  options: string[];
+}
+
 export interface SideDrawerProps {
   // Position of the drawer relative to the child
   position?: "right" | "left";
@@ -1529,8 +1539,7 @@ export interface SideDrawerProps {
 
 export interface SpinnerProps {
   size?: "sm" | "md";
-  // TODO: fix Spinner.color
-  color?: any;
+  color?: "light" | "dark" | "accent" | "secondary";
 }
 
 export type ColumnSortInterface = {

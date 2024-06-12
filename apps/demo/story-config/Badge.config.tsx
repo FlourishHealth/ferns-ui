@@ -25,12 +25,12 @@ export const BadgeConfiguration: DemoConfiguration = {
       "Use the colors to indicate urgency for scannability",
       "Keep the language simple; this should be microcopy",
       "Align the badge to the top of titles, or center align for base text",
-      "Choose a color style (bold or light) for each kind of badge and stick with it. For example, all “needs interpreter” badges should share the same style\n",
+      "Choose a color style (default or secondary) for each kind of badge and stick with it. For example, all “needs interpreter” badges should share the same style\n",
     ],
     doNot: [
       "Use badges over photos or other colored media",
       "Use multiple lines of text",
-      "Use different badge styles for the same kind of badge. For example, alternating between light and dark for “needs interpreter”\n",
+      "Use different badge styles for the same kind of badge. For example, alternating between default and primary for “needs interpreter”\n",
     ],
   },
   a11yNotes: [
@@ -43,11 +43,11 @@ export const BadgeConfiguration: DemoConfiguration = {
   demoOptions: {
     size: "md",
     controls: {
-      title: {
+      value: {
         type: "text",
         defaultValue: "Some Text",
       },
-      type: {
+      status: {
         type: "select",
         options: [
           {label: "Info", value: "info"},
@@ -55,9 +55,36 @@ export const BadgeConfiguration: DemoConfiguration = {
           {label: "Warning", value: "warning"},
           {label: "Success", value: "success"},
           {label: "Neutral", value: "neutral"},
-          {label: "Custom", value: "custom"},
         ],
         defaultValue: "info",
+      },
+      variant: {
+        type: "select",
+        options: [
+          {label: "Text", value: "text"},
+          {label: "Icon Only", value: "iconOnly"},
+          {label: "Number Only", value: "numberOnly"},
+        ],
+        defaultValue: "text",
+      },
+      iconName: {
+        type: "select",
+        options: [
+          {label: "check", value: "check"},
+          {label: "triangle-exclamation", value: "triangle-exclamation"},
+          {label: "heart", value: "heart"},
+          {label: "poo-storm", value: "poo-storm"},
+          {label: "pencil", value: "pencil"},
+        ],
+        defaultValue: "check",
+      },
+      secondary: {
+        type: "boolean",
+        defaultValue: false,
+      },
+      maxValue: {
+        type: "number",
+        defaultValue: "0",
       },
     },
   },
