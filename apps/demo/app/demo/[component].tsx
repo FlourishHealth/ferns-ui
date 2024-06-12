@@ -1,6 +1,6 @@
 import {ErrorBoundary} from "@components";
 import {DemoConfig, DemoConfigStatus, DemoConfiguration, DemoConfigurationProp} from "@config";
-import {useLocalSearchParams} from "expo-router";
+import {router, useLocalSearchParams} from "expo-router";
 import {
   AllColors,
   Badge,
@@ -273,6 +273,10 @@ export default function ComponentPage(): React.ReactElement {
 
   const config = DemoConfig.find((c) => c.name === component);
 
+  if (!component || !config) {
+    router.replace("/demo");
+  }
+
   return (
     <Box padding={4} scroll>
       <Box marginBottom={4}>
@@ -284,9 +288,9 @@ export default function ComponentPage(): React.ReactElement {
         </Box>
         <MarkdownView>{config?.description}</MarkdownView>
       </Box>
-      <ComponentDemo config={config} />
+      <ComponentDemo config={config!} />
       <ComponentProps props={config?.props?.children} />
-      <ComponentStatus config={config} />
+      <ComponentStatus config={config!} />
       {Boolean(config?.related.length) && (
         <Box marginBottom={4}>
           <Box marginBottom={2}>
@@ -298,7 +302,7 @@ export default function ComponentPage(): React.ReactElement {
       <Box marginBottom={2}>
         <Heading size="sm">Examples</Heading>
       </Box>
-      <ComponentStories config={config} />
+      <ComponentStories config={config!} />
       {/* <ComponentTestMatrix config={config} /> */}
     </Box>
   );
