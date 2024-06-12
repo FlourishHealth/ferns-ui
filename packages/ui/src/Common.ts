@@ -509,28 +509,12 @@ export type TooltipDirection = "top" | "bottom" | "left" | "right";
 
 export type IndicatorDirection = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
 
-type BaseSegmentedControlProps = {
+export interface SegmentedControlProps {
   items: string[];
-  responsive?: boolean;
-  size?: "md" | "lg";
-  selectLimit?: number;
-};
-
-export type SegmentedControlPropsSingleSelect = BaseSegmentedControlProps & {
-  multiselect?: false;
-  onChange: ({activeIndex}: {activeIndex: number}) => void;
-  selectedItemIndex?: number;
-};
-
-export type SegmentedControlPropsMultiSelect = BaseSegmentedControlProps & {
-  multiselect: true;
-  onChange: ({activeIndex}: {activeIndex: number[]}) => void;
-  selectedItemIndexes?: number[];
-};
-
-export type SegmentedControlProps =
-  | SegmentedControlPropsSingleSelect
-  | SegmentedControlPropsMultiSelect;
+  size?: "md" | "lg"; // default "md"
+  onChange: (activeIndex: number) => void;
+  selectedIndex?: number;
+}
 
 // Shared props for fields with labels, subtext, and error messages.
 export interface FieldWithLabelsProps {
@@ -1272,16 +1256,7 @@ export interface AvatarProps {
 }
 
 export interface BadgeProps {
-<<<<<<< HEAD
-  // If `type` is set to "custom", a custom theme color should be provided.
-  color?: SurfaceColor;
-  fontColor?: TextColor; // default "white"
-  // default "bold" // Josh - this is gonna conflict as y'all work on the badge
-  fontWeight?: TextProps["bold"];
-  iconProps?: IconProps;
-=======
   iconName?: IconName;
->>>>>>> f1c8783d41c67e3fcd9e8325ee4dc242b0df4e7d
   // The text to display inside the badge.
   value?: number | string;
   // Position relative to the text. Top should only be used with headings.
