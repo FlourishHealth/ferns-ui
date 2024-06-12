@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {SelectList, SelectListOptions} from "ferns-ui";
 import React, {useState} from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 const options: SelectListOptions = [
   {label: "First", value: "first"},

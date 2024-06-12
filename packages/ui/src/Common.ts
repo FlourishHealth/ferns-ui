@@ -489,7 +489,7 @@ export interface ErrorBoundaryProps {
 }
 
 export interface IconProps {
-  name: IconName;
+  iconName: IconName;
   type?:
     | "regular"
     | "brand"

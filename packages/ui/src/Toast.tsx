@@ -78,12 +78,12 @@ export const Toast = ({message, data}: ToastProps): React.ReactElement => {
     >
       {Boolean(variant === "error") && (
         <Box marginRight={4}>
-          <Icon color="inverted" name="circle-exclamation" size="lg" />
+          <Icon color="inverted" iconName="circle-exclamation" size="lg" />
         </Box>
       )}
       {Boolean(variant === "warning") && (
         <Box marginRight={4}>
-          <Icon color="inverted" name="triangle-exclamation" size="lg" />
+          <Icon color="inverted" iconName="triangle-exclamation" size="lg" />
         </Box>
       )}
       <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">

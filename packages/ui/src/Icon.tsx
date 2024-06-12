@@ -10,7 +10,7 @@ import {ThemeContext} from "./Theme";
 export const Icon = ({
   color = "primary",
   size = "md",
-  name,
+  iconName,
   type = "solid",
   testID,
 }: IconProps): React.ReactElement => {
@@ -23,7 +23,7 @@ export const Icon = ({
       color={iconColor}
       duotone={type === "duotone"}
       light={type === "light" || type === "sharpLight"}
-      name={name}
+      name={iconName}
       regular={type === "regular"}
       sharp={type === "sharp"}
       size={iconSize}

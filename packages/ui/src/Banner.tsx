@@ -125,7 +125,7 @@ export const Banner = ({
     >
       {iconName && (
         <Box justifyContent="center" width={32}>
-          <Icon color={textColor} name={iconName} size="lg" />
+          <Icon color={textColor} iconName={iconName} size="lg" />
         </Box>
       )}
       <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">

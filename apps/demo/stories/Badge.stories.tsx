@@ -1,6 +1,7 @@
-import {StorybookContainer} from "@components";
 import {Badge, BadgeProps, Box, Text} from "ferns-ui";
 import React from "react";
+
+import {StorybookContainer} from "./StorybookContainer";
 
 export const BadgeDemo = (props: Partial<BadgeProps>) => {
   return (

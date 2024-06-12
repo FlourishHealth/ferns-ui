@@ -119,7 +119,7 @@ export const TextField = ({
     } else {
       return (
         <Box marginRight={2}>
-          <Icon name="magnifying-glass" size="md" />
+          <Icon iconName="magnifying-glass" size="md" />
         </Box>
       );
     }

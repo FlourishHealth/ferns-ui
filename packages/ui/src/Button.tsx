@@ -130,7 +130,7 @@ export const Button = ({
         >
           {icon !== undefined && (
             <Box marginRight={2}>
-              <Icon color={textColor} name={icon} size={size === "xs" ? "sm" : size} />
+              <Icon color={textColor} iconName={icon} size={size === "xs" ? "sm" : size} />
             </Box>
           )}
           {Boolean(text) && (

@@ -1,7 +1,7 @@
 import {Box, Heading, IconButton, IconButtonProps} from "ferns-ui";
 import React from "react";
 
-import {StorybookContainer} from "@components";
+import {StorybookContainer} from "./StorybookContainer";
 
 interface DisplayProps extends IconButtonProps {
   title: string;

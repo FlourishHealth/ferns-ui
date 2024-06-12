@@ -136,7 +136,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
           onHoverEnd={() => setHovered(false)}
           onHoverStart={() => setHovered(true)}
         >
-          <Icon color="primary" name="pencil" size={size} />
+          <Icon color="primary" iconName="pencil" size={size} />
           <Text style={{fontWeight: "bold"}}>Upload Image</Text>
         </Box>
       );
@@ -151,7 +151,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
           zIndex={5}
           onClick={pickImage}
         >
-          <Icon color="primary" name="pencil" size={size} />
+          <Icon color="primary" iconName="pencil" size={size} />
         </Box>
       );
     }
@@ -176,7 +176,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     }
     return (
       <Box bottom paddingX={sizeIconPadding[size]} position="absolute" right zIndex={5}>
-        <Icon color={color as any} name={icon} size={size} />
+        <Icon color={color as any} iconName={icon} size={size} />
       </Box>
     );
   };
