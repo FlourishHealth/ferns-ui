@@ -75,7 +75,7 @@ export class Page extends React.Component<PageProps, {}> {
           width="100%"
         >
           {this.renderHeader()}
-          {this.props.loading === true && <Spinner color="darkGray" size="md" />}
+          {this.props.loading === true && <Spinner />}
           {/* <KeyboardAccessoryNavigation
           avoidKeyboard
           doneButton={true}

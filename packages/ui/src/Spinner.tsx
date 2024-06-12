@@ -2,9 +2,27 @@ import React, {ReactElement, useEffect, useState} from "react";
 import {ActivityIndicator} from "react-native";
 
 import {SpinnerProps} from "./Common";
+import {useTheme} from "./Theme";
 
-export const Spinner = ({size, color}: SpinnerProps): ReactElement | null => {
+export const Spinner = ({size = "md", color = "light"}: SpinnerProps): ReactElement | null => {
   const [show, setShow] = useState(false);
+  const theme = useTheme();
+
+  let computedColor = "";
+  switch (color) {
+    case "dark":
+      computedColor = theme.primitives.neutral000;
+      break;
+    case "light":
+      computedColor = theme.primitives.neutral400;
+      break;
+    case "accent":
+      computedColor = theme.primitives.accent700;
+      break;
+    case "secondary":
+      computedColor = theme.primitives.secondary600;
+      break;
+  }
 
   // The delay is for perceived performance. You don't want to show a spinner when you're doing a
   // quick action.
@@ -16,6 +34,7 @@ export const Spinner = ({size, color}: SpinnerProps): ReactElement | null => {
   if (!show) {
     return null;
   }
+
   const spinnerSize: "small" | "large" = size === "sm" ? "small" : "large";
-  return <ActivityIndicator color={color ?? "darkGray"} size={spinnerSize} />;
+  return <ActivityIndicator color={computedColor} size={spinnerSize} />;
 };

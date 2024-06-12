@@ -1,26 +1,31 @@
-import {Box, Spinner} from "ferns-ui";
+import {Box, Spinner, SpinnerProps} from "ferns-ui";
 import React from "react";
 
-export const Small = (): React.ReactElement => {
+import {StorybookContainer} from "./StorybookContainer";
+
+export const SpinnerDemo = (props: SpinnerProps): React.ReactElement => {
   return (
     <Box width="100%">
-      <Spinner size="sm" />
+      <Spinner {...props} />
     </Box>
   );
 };
 
-export const Big = (): React.ReactElement => {
+export const SpinnerVariations = (): React.ReactElement => {
   return (
-    <Box display="flex">
-      <Spinner size="md" />
-    </Box>
-  );
-};
-
-export const Dark = (): React.ReactElement => {
-  return (
-    <Box color="darkGray" paddingY={6}>
-      <Spinner color="white" />
-    </Box>
+    <StorybookContainer>
+      <Box direction="row" display="flex" justifyContent="between" marginBottom={2}>
+        <Spinner color="light" size="md" />
+        <Spinner color="dark" size="md" />
+        <Spinner color="secondary" size="md" />
+        <Spinner color="accent" size="md" />
+      </Box>
+      <Box direction="row" justifyContent="between">
+        <Spinner color="light" size="sm" />
+        <Spinner color="dark" size="sm" />
+        <Spinner color="secondary" size="sm" />
+        <Spinner color="accent" size="sm" />
+      </Box>
+    </StorybookContainer>
   );
 };
