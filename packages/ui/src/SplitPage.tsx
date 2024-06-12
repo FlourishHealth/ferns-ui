@@ -28,7 +28,6 @@ export const SplitPage = ({
   listViewWidth,
   bottomNavBarHeight,
   showItemList,
-  selectLimit,
 }: SplitPageProps) => {
   const {theme} = useContext(ThemeContext);
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
@@ -126,9 +125,9 @@ export const SplitPage = ({
           <Box marginBottom={4} paddingX={4} width="100%">
             <SegmentedControl
               items={tabs}
-              selectedIndex={activeTabs}
+              selectedIndex={activeTabs[0]}
               onChange={(index) => {
-                setActiveTabs([...(index.activeIndex as number[])]);
+                setActiveTabs([...([index] as number[])]);
               }}
             />
           </Box>
