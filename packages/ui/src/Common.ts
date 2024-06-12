@@ -2722,13 +2722,14 @@ export interface AvatarProps {
 export interface BadgeProps {
   iconName?: IconProps;
   // The text to display inside the badge.
-  text?: string;
+  value?: number | string;
   // Position relative to the text. Top should only be used with headings.
   status?: "info" | "error" | "warning" | "success" | "neutral"; // default "info
   secondary?: boolean;
   hasIcon?: boolean;
   variant?: "iconOnly" | "numberOnly" | "text"; // text is default
-  number?: number;
+  // TODO: improve type discrimination
+  maxNumber?: number;
 }
 
 export interface BannerProps {

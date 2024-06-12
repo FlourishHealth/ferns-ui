@@ -7,11 +7,11 @@ import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 
 export const Badge = ({
-  text,
+  value,
   status = "info",
   secondary = false,
   variant = "text",
-  number,
+  maxNumber,
 }: BadgeProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
 
@@ -45,28 +45,56 @@ export const Badge = ({
     badgeBgColor = secondary ? "neutralLight" : "neutralDark";
   }
 
+  let badgeBorderRadius = theme.radius.default as any;
+  if (variant === "iconOnly") {
+    badgeBorderRadius = theme.radius.full as any;
+  } else if (variant === "numberOnly") {
+    badgeBorderRadius = theme.radius.rounded as any;
+  }
+
+  let badgeValue = value;
+  // convert to
+  if (badgeValue && variant === "numberOnly" && maxNumber) {
+    if (typeof value !== "number") {
+      if (!isNaN(Number(value))) {
+        const numberValue = Number(value);
+        if (numberValue > maxNumber) {
+          badgeValue = `${maxNumber}+`;
+        } else {
+          badgeValue = numberValue;
+        }
+      }
+    } else {
+      if (badgeValue > maxNumber) {
+        badgeValue = `${maxNumber}+`;
+      }
+    }
+  }
+
   return (
     <View
       style={{
-        // height: "min-content",
         justifyContent: "center",
-        marginLeft: 1,
-        paddingHorizontal: 2,
-        paddingVertical: 1,
-        borderRadius: theme.radius.minimal as any,
-        // flex: {
-        //   flex: 1
-        // },
-        backgroundColor: badgeBgColor,
+        // marginLeft: 1,
+        alignItems: "center",
+        paddingVertical: theme.spacing.xs as any,
+        paddingHorizontal: theme.spacing.sm as any,
+        flexDirection: "row",
+        borderRadius: badgeBorderRadius as any,
+        backgroundColor: theme.surface[badgeBgColor],
+        width: "auto",
       }}
     >
       {Boolean(variant !== "numberOnly") && (
-        <Icon color={badgeColor} name="check" size="sm" />
+        <View style={{paddingHorizontal: theme.spacing.xs as any}}>
+          <Icon color={badgeColor} name="check" size="sm" />
+        </View>
       )}
       {Boolean(variant !== "iconOnly") && (
-        <Text color={badgeColor}>{variant === "numberOnly" ? text : number}</Text>
-        )
-        }
+        <Text align="center" color={badgeColor}>
+          {badgeValue}
+        </Text>
+      )}
     </View>
   );
 };

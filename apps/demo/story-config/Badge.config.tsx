@@ -43,11 +43,11 @@ export const BadgeConfiguration: DemoConfiguration = {
   demoOptions: {
     size: "md",
     controls: {
-      title: {
+      value: {
         type: "text",
         defaultValue: "Some Text",
       },
-      type: {
+      status: {
         type: "select",
         options: [
           {label: "Info", value: "info"},
@@ -55,9 +55,25 @@ export const BadgeConfiguration: DemoConfiguration = {
           {label: "Warning", value: "warning"},
           {label: "Success", value: "success"},
           {label: "Neutral", value: "neutral"},
-          {label: "Custom", value: "custom"},
         ],
         defaultValue: "info",
+      },
+      variant: {
+        type: "select",
+        options: [
+          {label: "Text", value: "text"},
+          {label: "Icon Only", value: "iconOnly"},
+          {label: "Number Only", value: "numberOnly"},
+        ],
+        defaultValue: "text",
+      },
+      secondary: {
+        type: "boolean",
+        defaultValue: false,
+      },
+      maxNumber: {
+        type: "number",
+        defaultValue: "0",
       },
     },
   },
