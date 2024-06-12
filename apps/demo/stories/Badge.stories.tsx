@@ -6,7 +6,7 @@ import {StorybookContainer} from "./StorybookContainer";
 export const BadgeDemo = (props: Partial<BadgeProps>) => {
   return (
     <Box direction="row" paddingY={2}>
-      <Badge status="error" variant="text" {...props} />
+      <Badge status="info" value="Default" variant="text" {...props} />
     </Box>
   );
 };
