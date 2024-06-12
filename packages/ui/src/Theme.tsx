@@ -216,3 +216,5 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
     </ThemeContext.Provider>
   );
 };
+
+export const useTheme = () => React.useContext(ThemeContext);

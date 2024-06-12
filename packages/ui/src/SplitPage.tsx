@@ -126,9 +126,7 @@ export const SplitPage = ({
           <Box marginBottom={4} paddingX={4} width="100%">
             <SegmentedControl
               items={tabs}
-              multiselect
-              selectLimit={selectLimit || tabs.length}
-              selectedItemIndexes={activeTabs}
+              selectedIndex={activeTabs}
               onChange={(index) => {
                 setActiveTabs([...(index.activeIndex as number[])]);
               }}
