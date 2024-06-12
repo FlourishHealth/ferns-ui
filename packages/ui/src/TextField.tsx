@@ -113,13 +113,13 @@ export const TextField = ({
     if (searching) {
       return (
         <Box marginRight={4}>
-          <ActivityIndicator color={theme.primary} size="small" />
+          <ActivityIndicator color={theme.primitives.neutral400} size="small" />
         </Box>
       );
     } else {
       return (
         <Box marginRight={2}>
-          <Icon name="search" prefix="far" size="md" />
+          <Icon iconName="magnifying-glass" size="md" />
         </Box>
       );
     }
@@ -127,11 +127,15 @@ export const TextField = ({
 
   let borderColor;
   if (errorMessage) {
-    borderColor = theme.red;
+    borderColor = theme.border.error;
   } else if (focused) {
-    borderColor = theme.blue;
+    borderColor = theme.border.focus;
+  } else if (value?.trim() === "") {
+    // Unfilled
+    borderColor = theme.border.dark;
   } else {
-    borderColor = theme.gray;
+    // Filled in
+    borderColor = theme.border.activeNeutral;
   }
 
   const getHeight = useCallback(() => {
@@ -153,8 +157,8 @@ export const TextField = ({
       paddingLeft: 0,
       height: getHeight(),
       width: "100%",
-      color: theme.darkGray,
-      fontFamily: theme.primaryFont,
+      color: theme.text.primary,
+      fontFamily: theme.font.primary,
       ...style,
     };
 
@@ -163,7 +167,7 @@ export const TextField = ({
     }
 
     return defaultStyles;
-  }, [getHeight, style, theme.darkGray, theme.primaryFont]);
+  }, [getHeight, style, theme.text.primary, theme.font.primary]);
 
   const isHandledByModal = [
     "date",
@@ -240,7 +244,7 @@ export const TextField = ({
     <>
       <WithLabel
         label={errorMessage}
-        labelColor={errorMessageColor || "red"}
+        labelColor={errorMessageColor || "error"}
         labelPlacement="after"
         labelSize="sm"
       >
@@ -259,7 +263,7 @@ export const TextField = ({
               borderColor,
               borderWidth: focused ? 5 : 1,
               borderRadius: 16,
-              backgroundColor: disabled ? theme.gray : theme.white,
+              backgroundColor: disabled ? theme.surface.neutral : theme.surface.base,
               overflow: "hidden",
             }}
             onPress={() => {
@@ -278,6 +282,7 @@ export const TextField = ({
                   inputRef(ref);
                 }
               }}
+              accessibilityLabel="Text input field"
               autoCapitalize={type === "text" ? "sentences" : "none"}
               autoCorrect={shouldAutocorrect}
               autoFocus={autoFocus}
@@ -287,7 +292,7 @@ export const TextField = ({
               multiline={multiline}
               numberOfLines={rows || 4}
               placeholder={placeholder}
-              placeholderTextColor={theme.gray}
+              placeholderTextColor={theme.text.secondaryLight}
               returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
               secureTextEntry={type === "password"}
               style={defaultTextInputStyles}

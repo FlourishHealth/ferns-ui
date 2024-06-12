@@ -10,22 +10,22 @@ export const Badge = ({
   position = "middle",
   type = "info",
   color,
-  size = "xs",
   iconProps,
-  fontColor = "white",
   fontWeight = "bold",
-  rounding = "pill",
 }: BadgeProps): React.ReactElement => {
+  // TODO: Badge encompasses what we used to call pill, needs to be updated to include that.
+  // It has text/icon/number variants, as well as light and bold color variants,
+  // then actual color variants ("error", "success", etc)
+
   if (color && type !== "custom") {
     console.warn('Badge color only supported when `type` is set to "custom".');
   }
-  const badgeColor = type === "custom" ? color! : type;
 
   function renderIcon(): React.ReactElement | null {
-    if (iconProps && iconProps.name) {
+    if (iconProps && iconProps.iconName) {
       return (
         <Box marginRight={title ? 1 : 0}>
-          <Icon color={iconProps?.color ? iconProps.color : fontColor} {...iconProps} size={size} />
+          <Icon color={iconProps?.color ? iconProps.color : "inverted"} {...iconProps} size="sm" />
         </Box>
       );
     } else {
@@ -38,7 +38,7 @@ export const Badge = ({
       return null;
     }
     return (
-      <Text color={fontColor} size={size} weight={fontWeight}>
+      <Text color="inverted" size="sm" weight={fontWeight}>
         {title}
       </Text>
     );
@@ -48,15 +48,15 @@ export const Badge = ({
     <Box
       alignItems="baseline"
       alignSelf={position === "middle" ? "center" : position === "bottom" ? "end" : "start"}
-      color={badgeColor}
+      color="primary"
       direction="row"
       height="min-content"
       justifyContent="center"
       marginLeft={1}
       marginTop={position === "top" ? -1 : 0}
-      paddingX={(typeof rounding === "number" && rounding >= 4) || rounding === "pill" ? 2 : 1}
+      paddingX={2}
       paddingY={1}
-      rounding={rounding}
+      rounding="md"
       width="max-content"
     >
       {renderIcon()}

@@ -48,9 +48,9 @@ export const SelectList = ({
 
   const withLabelProps = {label, labelColor};
 
-  let backgroundColor = style?.backgroundColor || theme.white;
+  let backgroundColor = style?.backgroundColor || theme.surface.base;
   if (disabled) {
-    backgroundColor = theme.lightGray;
+    backgroundColor = theme.surface.neutralLight;
   }
 
   return (
@@ -59,7 +59,7 @@ export const SelectList = ({
         Icon={() => {
           // Icon only needed for iOS, web and android use default icons
           return Platform.OS === "ios" ? (
-            <Icon color="darkGray" name="angle-down" size="md" />
+            <Icon color="primary" iconName="angle-down" size="md" />
           ) : null;
         }}
         disabled={disabled}
@@ -72,7 +72,7 @@ export const SelectList = ({
             alignItems: style?.alignItems || "center",
             minHeight: style?.minHeight || 50,
             width: style?.width || "100%",
-            borderColor: style?.borderColor || theme.gray,
+            borderColor: style?.borderColor || theme.border.default,
             borderWidth: style?.borderWidth || 1,
             borderRadius: style?.borderRadius || 5,
             backgroundColor,

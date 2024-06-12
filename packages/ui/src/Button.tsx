@@ -1,9 +1,9 @@
 import debounce from "lodash/debounce";
 import React, {useContext, useState} from "react";
-import {ActivityIndicator, Pressable, View} from "react-native";
+import {ActivityIndicator, Pressable} from "react-native";
 
 import {Box} from "./Box";
-import {ButtonProps, Color, UnifiedTheme} from "./Common";
+import {ButtonProps, TextColor} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
@@ -13,7 +13,7 @@ import {Unifier} from "./Unifier";
 
 const buttonTextColor: {[buttonColor: string]: "white" | "darkGray"} = {
   blue: "white",
-  lightGray: "darkGray",
+  neutralLight: "darkGray",
   red: "white",
   transparent: "white",
   white: "darkGray",
@@ -34,14 +34,12 @@ const HEIGHTS = {
 };
 
 export const Button = ({
-  alignSelf,
   disabled = false,
   type = "solid",
   loading: propsLoading,
   text,
   inline = false,
   icon,
-  iconPrefix,
   size = "md",
   onClick,
   color = "gray",
@@ -56,31 +54,10 @@ export const Button = ({
   const [showConfirmation, setShowConfirmation] = useState(false);
   const {theme} = useContext(ThemeContext);
 
-  const getBackgroundColor = (backgroundColor: string): string => {
-    if (type === "ghost" || type === "outline") {
-      return "transparent";
-    } else {
-      return theme[backgroundColor as keyof UnifiedTheme];
-    }
-  };
-
-  const getTextColor = (textColor: Color): Color => {
-    if (type === "ghost" || type === "outline") {
-      return textColor;
-    } else if (textColor === undefined) {
-      return "darkGray";
-    } else {
-      return buttonTextColor[textColor] || "white";
-    }
-  };
-
-  const getBorderColor = (borderColor: string): string => {
-    if (type === "outline") {
-      return theme[getTextColor(borderColor as Color)];
-    } else {
-      return "transparent";
-    }
-  };
+  // TODO: get real button colors here.
+  const backgroundColor = theme.surface.primary;
+  const textColor: TextColor = "inverted";
+  const borderColor = theme.text.primary;
 
   if (color === "gray") {
     color = "lightGray";
@@ -110,20 +87,21 @@ export const Button = ({
 
   const renderButton = () => {
     return (
-      <View style={{alignSelf: inline === true ? undefined : alignSelf}}>
+      <>
         <Pressable
+          accessibilityRole="button"
           disabled={disabled || loading}
           style={{
             alignSelf: inline === true ? undefined : "stretch",
             height: HEIGHTS[size || "md"],
-            backgroundColor: getBackgroundColor(color),
+            backgroundColor,
             // width: inline === true ? undefined : "100%",
             flexShrink: inline ? 1 : 0,
             // flexGrow: inline ? 0 : 1,
             alignItems: "center",
             justifyContent: "center",
             borderRadius: shape === "pill" ? 999 : 5,
-            borderColor: getBorderColor(color),
+            borderColor,
             borderWidth: type === "outline" ? 2 : 0,
             opacity: disabled ? 0.4 : 1,
             flexDirection: "row",
@@ -152,19 +130,13 @@ export const Button = ({
         >
           {icon !== undefined && (
             <Box marginRight={2}>
-              <Icon
-                color={getTextColor(color as Color)}
-                name={icon}
-                prefix={iconPrefix || "far"}
-                size={size === "xs" ? "sm" : size}
-              />
+              <Icon color={textColor} iconName={icon} size={size === "xs" ? "sm" : size} />
             </Box>
           )}
           {Boolean(text) && (
             <Text
               align="center"
-              color={getTextColor(color as Color)}
-              font="button"
+              color={textColor}
               inline={inline}
               size={size === "xs" ? "sm" : size}
               skipLinking
@@ -175,12 +147,12 @@ export const Button = ({
           )}
           {Boolean(loading) && (
             <Box marginLeft={2}>
-              <ActivityIndicator color={getTextColor(color as Color)} size="small" />
+              <ActivityIndicator color={textColor} size="small" />
             </Box>
           )}
         </Pressable>
         {Boolean(withConfirmation) && renderConfirmation()}
-      </View>
+      </>
     );
   };
 

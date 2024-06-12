@@ -1,32 +1,30 @@
-import React from "react";
+import React, {useContext} from "react";
+import {View} from "react-native";
 
 import {Box} from "./Box";
-import {BoxColor, CheckBoxProps} from "./Common";
-import {Icon} from "./Icon";
+import {CheckBoxProps} from "./Common";
 import {Text} from "./Text";
+import {ThemeContext} from "./Theme";
 
 export const CheckBox = ({
-  color,
+  type,
   checked,
   size,
   radio,
   label,
   labelColor,
   subLabel,
-  disabled,
   onChange,
   onClick,
   indeterminate,
   testID,
 }: CheckBoxProps): React.ReactElement => {
+  const {theme} = useContext(ThemeContext);
   if (checked && indeterminate) {
     console.error("CheckBox cannot be checked and indeterminate at the same time");
   }
 
   const doOnClick = () => {
-    if (disabled) {
-      return;
-    }
     if (!indeterminate) {
       onChange({value: !checked});
     }
@@ -34,45 +32,17 @@ export const CheckBox = ({
   };
 
   const renderCheckBox = () => {
-    let bgColor: BoxColor;
-    if (disabled) {
-      bgColor = "gray";
-    } else if (checked) {
-      bgColor = color || "darkGray";
-    } else {
-      bgColor = "white";
-    }
+    // TODO: checkbox shouldn't use box any more, it should be a custom view (to get around
+    // adding a bunch of colors to theme just for this component etc)
     return (
-      <Box
-        border={color || "darkGray"}
-        color={bgColor}
-        height={size === "sm" ? 16 : 24}
-        rounding={radio ? "circle" : size === "sm" ? 2 : 3}
-        testID={testID}
-        width={size === "sm" ? 16 : 24}
-        onClick={doOnClick}
-      >
-        <Box
-          alignItems="center"
-          direction="column"
-          display="flex"
-          height="100%"
-          justifyContent="center"
-          width="100%"
-        >
-          {checked && (
-            <Icon color="white" name="check" prefix="fas" size={size === "sm" ? "sm" : "md"} />
-          )}
-          {indeterminate && (
-            <Icon
-              color={color || "darkGray"}
-              name="circle"
-              prefix="fas"
-              size={size === "sm" ? "sm" : "md"}
-            />
-          )}
-        </Box>
-      </Box>
+      <View />
+      // <Box border={color || "primary"} color={bgColor} height={size === "sm" ? 16 : 24}
+      // rounding={radio ? "circle" : size === "sm" ? 2 : 3} testID={testID} width={size === "sm" ?
+      // 16 : 24} onClick={doOnClick} > <Box alignItems="center" direction="column" display="flex"
+      // height="100%" justifyContent="center" width="100%" > {checked && ( <Icon color="inverted"
+      // name="check" prefix="fas" size={size === "sm" ? "sm" : "md"} /> )} {indeterminate && (
+      // <Icon color={color || "primary"} name="circle" prefix="fas" size={size === "sm" ? "sm" :
+      // "md"} /> )} </Box> </Box>
     );
   };
 
@@ -102,7 +72,7 @@ export const CheckBox = ({
         onClick={doOnClick}
       >
         <Text
-          color={labelColor || "darkGray"}
+          color={labelColor || "primary"}
           numberOfLines={subLabel ? 1 : 2}
           size={size}
           weight="bold"
@@ -110,7 +80,7 @@ export const CheckBox = ({
           {label}
         </Text>
         {Boolean(subLabel) && (
-          <Text color={labelColor || "darkGray"} size="sm" weight="bold">
+          <Text color={labelColor || "primary"} size="sm" weight="bold">
             {subLabel!}
           </Text>
         )}

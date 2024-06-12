@@ -226,12 +226,7 @@ export const SplitPage = ({
       <Box flex="grow" padding={2}>
         {isMobileDevice && (
           <Box width="100%">
-            <IconButton
-              accessibilityLabel="close"
-              icon="times"
-              iconColor="darkGray"
-              onClick={() => onItemDeselect()}
-            />
+            <IconButton accessibilityLabel="close" icon="xmark" onClick={() => onItemDeselect()} />
           </Box>
         )}
         {renderContent && renderContent(selectedId)}
@@ -289,7 +284,7 @@ export const SplitPage = ({
   return (
     <Box
       avoidKeyboard
-      color={color || "lightGray"}
+      color={color || "neutralLight"}
       direction="row"
       display="flex"
       height="100%"
@@ -297,7 +292,7 @@ export const SplitPage = ({
       padding={2}
       width="100%"
     >
-      {loading === true && <Spinner color={theme.darkGray as any} size="md" />}
+      {loading === true && <Spinner color={theme.text.primary as any} size="md" />}
       {Boolean(isMobileDevice) ? renderMobileSplitPage() : renderSplitPage()}
     </Box>
   );
