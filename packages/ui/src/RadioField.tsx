@@ -20,6 +20,8 @@ export const RadioField = ({
       {options.map((option) => (
         <TouchableOpacity
           key={option}
+          accessibilityHint={`Select ${option} from list of options`}
+          accessibilityLabel={option}
           accessibilityRole="button"
           style={{
             flexDirection: "row",

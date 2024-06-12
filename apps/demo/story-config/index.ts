@@ -19,7 +19,6 @@ export * from "./Modal.config";
 export * from "./MultiselectField.config";
 export * from "./Pagination.config";
 export * from "./PasswordField.config";
-export * from "./Radio.config";
 export * from "./RadioField.config";
 export * from "./SegmentedControl.config";
 export * from "./SelectField.config";
