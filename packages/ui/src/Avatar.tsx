@@ -41,30 +41,45 @@ const statusIcons: {[id: string]: {icon: IconName; color: string; label: string}
 
 // TODO: Avatar probably makes more sense as a custom set of views rather than relying on
 // Box, etc. It's a pretty unique component with unique colors and borders.
-export const Avatar = (props: AvatarProps): React.ReactElement => {
+export const Avatar = ({
+  name,
+  showInitials,
+  hasBorder,
+  size,
+  src,
+  onChange,
+  status,
+  doNotDisturb,
+}: AvatarProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
-
   const [isImageLoaded, setIsImageLoaded] = useState(true);
   const [hovered, setHovered] = useState(false);
-  const [src, setSrc] = useState(props.src ?? undefined);
-  const {
-    name,
-    initials,
-    size = "md",
-    imageFit = "contain",
-    editAvatarImage,
-    onChange,
-    avatarImageWidth = sizes[size],
-    avatarImageHeight,
-    avatarImageFormat = SaveFormat.PNG,
-    shouldShowEditIconIfNoImage = false,
-  } = props;
-  const width = sizes[size];
-  const height = sizes[size];
-  const radius = sizes[size] / 2;
-  const fontSize = sizes[size] / 2;
+  const [imgSrc, setImgSrc] = useState(src ?? undefined);
+  // const {
+  //   name,
+  //   initials,
+  //   size = "md",
+  //   imageFit = "contain",
+  //   editAvatarImage,
+  //   onChange,
+  //   avatarImageWidth = sizes[size],
+  //   avatarImageHeight,
+  const avatarImageFormat = SaveFormat.PNG;
+  //   shouldShowEditIconIfNoImage = false,
+  // } = props;
+
+  const avatarSize = size ?? "md";
+
+  const avatarImageWidth = sizes[avatarSize];
+  const avatarImageHeight = avatarImageWidth;
+  const showEditIcon = status === "image picker";
+
+  const width = sizes[avatarSize];
+  const height = sizes[avatarSize];
+  const radius = sizes[avatarSize] / 2;
+  const fontSize = sizes[avatarSize] / 2;
   const computedInitials =
-    initials ??
+    showInitials ??
     (name.match(/(^\S\S?|\s\S)?/g) as any)
       .map((v: string) => v.trim())
       .join("")
@@ -74,10 +89,10 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
 
   // If the src changes, update the image.
   useEffect(() => {
-    setSrc(props.src);
-  }, [props]);
+    setImgSrc(imgSrc);
+  }, [imgSrc]);
 
-  if (editAvatarImage && !onChange) {
+  if (showEditIcon && !onChange) {
     console.warn("Avatars with the editAvatarImage flag on should also have an onChange property.");
   }
 
@@ -96,7 +111,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
 
     if (!result.canceled && result.assets) {
       const resizedImage = await resizeImage(result.assets[0].uri);
-      setSrc(resizedImage.uri);
+      setImgSrc(resizedImage.uri);
       if (onChange) {
         onChange({avatarImageFormat, ...resizedImage});
       }
@@ -113,9 +128,9 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
 
   function shouldShowEditIcon() {
     if (Platform.OS === "web") {
-      return (shouldShowEditIconIfNoImage && !src) || (editAvatarImage && hovered);
+      return (showEditIcon && !src) || (showEditIcon && hovered);
     } else {
-      return (shouldShowEditIconIfNoImage && !src) || editAvatarImage;
+      return (showEditIcon && !src) || showEditIcon;
     }
   }
 
@@ -144,14 +159,14 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
       return (
         <Box
           bottom
-          left={Boolean(props.status)}
-          paddingX={sizeIconPadding[size]}
+          left={Boolean(status)}
+          paddingX={sizeIconPadding[avatarSize]}
           position="absolute"
-          right={!Boolean(props.status)}
+          right={!Boolean(status)}
           zIndex={5}
           onClick={pickImage}
         >
-          <Icon color="primary" iconName="pencil" size={size} />
+          <Icon color="primary" iconName="pencil" size={avatarSize} />
         </Box>
       );
     }
@@ -196,6 +211,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
           // TODO: Make our Image component rounding work so that we can use it for Avatar.
           // Currently it creates an unrounded box around the Image.
           <Image
+            accessibilityIgnoresInvertColors
             resizeMode={imageFit as ImageResizeMode}
             source={{uri: src, cache: "force-cache"}}
             style={{
