@@ -587,16 +587,6 @@ export interface TextFieldProps extends FieldWithLabelsProps {
 
 export type TextAreaProps = TextFieldProps;
 
-export interface SwitchProps extends FieldWithLabelsProps {
-  id?: string;
-  onChange: (value: boolean) => void;
-  disabled?: boolean;
-  name?: string;
-  switched: boolean;
-  // Pattern Addition
-  label?: string;
-}
-
 export interface MaskProps {
   children?: ReactChildren;
   shape?: "circle" | "rounded" | "square";
@@ -698,6 +688,15 @@ export interface SearchButtonProps {
 
 export interface BackButtonInterface {
   onBack: () => void;
+}
+
+export interface BooleanFieldProps {
+  label: string;
+  variant?: "simple" | "title";
+  interaction?: boolean; // default true
+  disabledHelperText?: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
 }
 
 export interface CheckBoxProps {

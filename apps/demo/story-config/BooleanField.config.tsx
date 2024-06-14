@@ -39,7 +39,11 @@ export const BooleanFieldConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <BooleanFieldDemo />,
+  demo: BooleanFieldDemo,
   demoOptions: {},
-  stories: {},
+  stories: {
+    "Boolean Field": {
+      render: () => <BooleanFieldDemo />,
+    },
+  },
 };
