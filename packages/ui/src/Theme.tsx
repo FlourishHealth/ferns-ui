@@ -1,7 +1,7 @@
 import merge from "lodash/merge";
 import React, {createContext, useMemo, useState} from "react";
 
-import {FernsTheme} from "./Common";
+import {FernsTheme, ThemePrimitives} from "./Common";
 
 const defaultPrimitives = {
   neutral000: "#FFFFFF",
@@ -155,6 +155,64 @@ const defaultTheme: FernsTheme = {
     primary: "Nunito",
     title: "Titillium Web",
   },
+  button: {
+    primary: {
+      container: {
+        backgroundColor: "surface.primary" as any, // expect primary400 value "#0E9DCD"
+        borderRadius: "radius.rounded" as any, // expect radius3xl value 360
+        justifyContent: "center",
+        paddingHorizontal: 24,
+        paddingVertical: 8,
+      },
+      text: {
+        color: "text.inverted" as any, // expect neutral000 value "#FFFFFF"
+        fontSize: 16,
+        fontWeight: 700,
+      },
+    },
+    secondary: {
+      container: {
+        backgroundColor: "surface.secondaryDark" as any, // expect secondary500 value "#2B6072"
+        borderRadius: "radius.rounded" as any, // expect radius3xl value 360
+        justifyContent: "center",
+        paddingHorizontal: 24,
+        paddingVertical: 8,
+      },
+      text: {
+        color: "text.inverted" as any, // expect neutral000 value "#FFFFFF"
+        fontSize: 16,
+        fontWeight: 700,
+      },
+    },
+    muted: {
+      container: {
+        backgroundColor: "surface.secondaryLight" as any, // expect secondary100 value "#B6CDD5"
+        borderRadius: "radius.rounded" as any, // expect radius3xl value 360
+        justifyContent: "center",
+        paddingHorizontal: 24,
+        paddingVertical: 8,
+      },
+      text: {
+        color: "surface.secondaryDark" as any, // expect secondary500 value "#2B6072"
+        fontSize: 16,
+        fontWeight: 700,
+      },
+    },
+    disabled: {
+      container: {
+        backgroundColor: "surface.disabled" as any, // expect neutral500 value "#9A9A9A"
+        borderRadius: "radius.rounded" as any, // expect radius3xl value 360
+        justifyContent: "center",
+        paddingHorizontal: 24,
+        paddingVertical: 8,
+      },
+      text: {
+        color: "surface.inverted" as any, // expect neutral600 value "#686868"
+        fontSize: 16,
+        fontWeight: 700,
+      },
+    },
+  },
   primitives: defaultPrimitives,
 };
 
@@ -169,26 +227,48 @@ interface ThemeProviderProps {
   children: any;
 }
 
+const getValueFromPath = (obj: any, path: string) => {
+  return path.split(".").reduce((acc, key) => {
+    return acc ? acc[key] : undefined;
+  }, obj);
+};
+
+const mapThemeValues = (obj: any, primitives: ThemePrimitives, theme: FernsTheme): any => {
+  return Object.keys(obj).reduce((acc, key) => {
+    const value = obj[key];
+    if (typeof value === "object" && value !== null) {
+      acc[key] = mapThemeValues(value, primitives, theme);
+    } else if (typeof value === "string") {
+      const primitiveValue = primitives[value as keyof ThemePrimitives];
+      const themeValue = getValueFromPath(theme, value);
+      if (primitiveValue !== undefined) {
+        acc[key] = primitiveValue;
+      } else if (themeValue !== undefined) {
+        const themePrimitiveValue = primitives[themeValue as keyof ThemePrimitives];
+        acc[key] = themePrimitiveValue !== undefined ? themePrimitiveValue : themeValue;
+      } else {
+        acc[key] = value;
+      }
+    } else {
+      acc[key] = value;
+    }
+    return acc;
+  }, {} as any);
+};
+
 export const ThemeProvider = ({children}: ThemeProviderProps) => {
   const [providerTheme, setProviderTheme] = useState<FernsTheme>(defaultTheme);
   const [providerPrimitives, setProviderPrimitives] =
     useState<typeof defaultPrimitives>(defaultPrimitives);
 
   const computedTheme = useMemo(() => {
-    // Map the providerTheme and transform the strings into the actual values from the primitives.
-    // Do this for each sub-object in the theme. E.g. theme.text, theme.surface, etc.
     const theme = Object.keys(providerTheme).reduce((acc, key) => {
-      if(key === 'primitives') return acc;
-      const value = providerTheme[key as keyof FernsTheme];
-      // for each key, map the value to the primitive value.
-      acc[key as keyof typeof acc] = Object.keys(value).reduce((accKey, valueKey) => {
-        const primitiveKey = value[valueKey as keyof typeof value];
-        if (providerPrimitives[primitiveKey] === undefined) {
-          console.error(`Primitive ${primitiveKey} not found in theme.`);
-        }
-        accKey[valueKey] = providerPrimitives[primitiveKey];
-        return accKey;
-      }, {} as any);
+      if (key === "primitives") return acc;
+      acc[key as keyof FernsTheme] = mapThemeValues(
+        providerTheme[key as keyof FernsTheme],
+        providerPrimitives,
+        providerTheme
+      );
       return acc;
     }, {} as FernsTheme);
 

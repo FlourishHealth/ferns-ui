@@ -54,10 +54,99 @@ export const ModalConfiguration: DemoConfiguration = {
       "For an action that should NOT interrupt a user from their current work stream.",
     ],
   },
-  props: {},
+  props: {
+    onDismiss: {
+      type: "function",
+      description: "Function to call when the modal is dismissed",
+      required: true,
+    },
+    visible: {
+      type: "boolean",
+      description: "Controls the visibility of the modal",
+      required: true,
+    },
+    children: {
+      type: "React.ReactElement",
+      description: "Content to display inside the modal",
+      required: false,
+    },
+    title: {
+      type: "string",
+      description: "Title of the modal",
+      required: false,
+    },
+    size: {
+      type: "enum",
+      description: "Size of the modal (sm, md, lg)",
+      required: false,
+      options: ["sm", "md", "lg"],
+    },
+    subTitle: {
+      type: "string",
+      description: "Subtitle of the modal",
+      required: false,
+    },
+    primaryButtonText: {
+      type: "string",
+      description: "Text for the primary button",
+      required: false,
+    },
+    primaryButtonOnClick: {
+      type: "function",
+      description: "Function to call when the primary button is clicked",
+      required: false,
+    },
+    primaryButtonDisabled: {
+      type: "boolean",
+      description: "Disables the primary button",
+      required: false,
+    },
+    secondaryButtonText: {
+      type: "string",
+      description: "Text for the secondary button",
+      required: false,
+    },
+    secondaryButtonOnClick: {
+      type: "function",
+      description: "Function to call when the secondary button is clicked",
+      required: false,
+    },
+    text: {
+      type: "string",
+      description: "Text content of the modal",
+      required: false,
+    },
+  },
   demo: DefaultDemo,
-  demoOptions: {},
+  demoOptions: {
+    size: "md",
+    controls: {
+      title: {
+        type: "text",
+        defaultValue: "Modal Title",
+      },
+      subTitle: {
+        type: "text",
+        defaultValue: "Modal Subtitle",
+      },
+      primaryButtonText: {
+        type: "text",
+        defaultValue: "Primary Button",
+      },
+      secondaryButtonText: {
+        type: "text",
+        defaultValue: "Secondary Button",
+      },
+      text: {
+        type: "text",
+        defaultValue: "This is some content inside the modal.",
+      },
+    },
+  },
   stories: {
-    Modals: {render: Modals},
+    Modals: {
+      description: "Examples of different modal configurations",
+      render: () => <Modals />,
+    },
   },
 };

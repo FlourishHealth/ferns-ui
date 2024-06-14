@@ -270,6 +270,36 @@ export interface FontTheme {
 }
 export type Font = keyof FontTheme;
 
+export interface ButtonThemeConfig {
+  backgroundColor: SurfaceTheme;
+  color: TextTheme;
+  borderRadius: keyof ThemePrimitiveRadius;
+  fontSize: number;
+  fontWeight: number;
+  justifyContent: string;
+  paddingHorizontal: number;
+  paddingVertical: number;
+}
+
+export interface ButtonContainerThemeConfig {
+  backgroundColor: SurfaceTheme;
+  borderRadius: keyof ThemePrimitiveRadius;
+  justifyContent: string;
+  paddingHorizontal: number;
+  paddingVertical: number;
+}
+
+export interface ButtonTextThemeConfig {
+  color: TextTheme;
+  fontSize: number;
+  fontWeight: number;
+}
+
+export interface ButtonTheme {
+  container: ButtonContainerThemeConfig;
+  text: ButtonTextThemeConfig;
+}
+
 export interface FernsTheme {
   text: TextTheme;
   surface: SurfaceTheme;
@@ -278,6 +308,13 @@ export interface FernsTheme {
   radius: RadiusTheme;
   spacing: SpacingTheme;
   font: FontTheme;
+  button: {
+    primary: ButtonTheme;
+    secondary: ButtonTheme;
+    muted: ButtonTheme;
+    disabled: ButtonTheme;
+  };
+
   primitives: ThemePrimitives;
 }
 

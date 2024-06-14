@@ -1,54 +1,83 @@
-import React, {useEffect, useRef} from "react";
-import {Dimensions, Modal as RNModal} from "react-native";
+import React, {useContext, useEffect, useRef} from "react";
+import {
+  Dimensions,
+  DimensionValue,
+  Modal as RNModal,
+  Pressable,
+  Text as RNText,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import ActionSheet, {ActionSheetRef} from "react-native-actions-sheet";
 
-import {Box} from "./Box";
-import {Button} from "./Button";
-import {ModalProps} from "./Common";
-import {Heading} from "./Heading";
-import {IconButton} from "./IconButton";
+import {Icon} from "./Icon";
 import {isMobileDevice} from "./MediaQuery";
 import {Text} from "./Text";
+import {ThemeContext} from "./Theme";
 import {isNative} from "./Utilities";
+
+interface ModalProps {
+  onDismiss: () => void;
+  visible: boolean;
+  children?: React.ReactElement;
+  title?: string;
+  size?: "sm" | "md" | "lg";
+  subTitle?: string;
+  primaryButtonText?: string;
+  primaryButtonOnClick?: (value?: any) => void;
+  primaryButtonDisabled?: boolean;
+  secondaryButtonText?: string;
+  secondaryButtonOnClick?: (value?: any) => void;
+  text?: string;
+}
 
 export const Modal = ({
   onDismiss,
   visible,
-  align = "center",
   children,
-  footer,
-  heading,
+  title,
   size,
-  subHeading,
+  subTitle,
   primaryButtonText,
   primaryButtonOnClick,
   primaryButtonDisabled = false,
   secondaryButtonText,
   secondaryButtonOnClick,
-  showClose = false,
+  text,
 }: ModalProps): React.ReactElement => {
   const actionSheetRef = useRef<ActionSheetRef>(null);
+  const {theme} = useContext(ThemeContext);
 
-  if (subHeading && !heading) {
-    throw new Error("Cannot render Modal with subHeading and no heading");
+  if (subTitle && !title) {
+    throw new Error("Cannot render Modal with subTitle and no title");
   }
-  if (!footer && !primaryButtonText && !secondaryButtonText && !showClose) {
-    throw new Error(
-      "Cannot render Modal without footer, primaryButtonText, secondaryButtonText, or showClose"
-    );
+  if (!primaryButtonText && !secondaryButtonText) {
+    throw new Error("Cannot render Modal without footer, primaryButtonText or secondaryButtonText");
   }
 
-  let sizePx: string | number = 540;
+  const isMobile = isMobileDevice() && isNative();
+
+  let sizePx: DimensionValue = 540; // sm;
   if (size === "md") {
     sizePx = 720;
   } else if (size === "lg") {
     sizePx = 900;
   }
 
-  // Adjust size for small screens
   if (sizePx > Dimensions.get("window").width) {
     sizePx = "90%";
   }
+
+  const modalElevation = {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 24,
+    elevation: 24,
+  };
 
   // Modal uses a visible prop, but ActionSheet uses a setModalVisible method on a reference.
   // Open the action sheet ref when the visible prop changes.
@@ -58,159 +87,125 @@ export const Modal = ({
     }
   }, [visible, actionSheetRef]);
 
-  const renderClose = (): React.ReactElement | null => {
-    if (!showClose) {
-      return null;
-    }
-    return <IconButton accessibilityLabel="close" icon="xmark" onClick={() => onDismiss()} />;
-  };
-
-  const renderModalHeader = (): React.ReactElement => {
-    return (
-      <Box direction="row" padding={3} width="100%">
-        <Box width={40}>{renderClose()}</Box>
-        <Box direction="column" flex="grow">
-          <Heading align={align === "center" ? "center" : undefined} size="sm">
-            {heading}
-          </Heading>
-          {Boolean(subHeading) && (
-            <Box paddingY={2}>
-              <Text align={align === "center" ? "center" : undefined}>{subHeading}</Text>
-            </Box>
-          )}
-        </Box>
-        <Box width={40} />
-      </Box>
-    );
-  };
-
-  const renderModalFooter = (): React.ReactElement | null => {
-    if (footer) {
-      return footer;
-    }
-    return (
-      <Box direction="row" justifyContent="end" width="100%">
-        {Boolean(secondaryButtonText) && (
-          <Box marginRight={4} minWidth={120}>
-            <Button
-              color="gray"
-              text={secondaryButtonText ?? ""}
-              onClick={secondaryButtonOnClick}
-            />
-          </Box>
-        )}
-        <Box minWidth={120}>
-          <Button
-            color="primary"
-            disabled={primaryButtonDisabled}
-            text={primaryButtonText ?? ""}
-            onClick={primaryButtonOnClick}
-          />
-        </Box>
-      </Box>
-    );
-  };
-
-  const renderModal = (): React.ReactElement => {
-    return (
-      <RNModal animationType="slide" transparent visible={visible} onRequestClose={onDismiss}>
-        <Box
-          alignItems="center"
-          alignSelf="center"
-          color="base"
-          dangerouslySetInlineStyle={{
-            __style: {
-              zIndex: 1,
-              shadowColor: "#999",
-              shadowOffset: {
-                width: 4,
-                height: 6,
-              },
-              shadowRadius: 4,
-              shadowOpacity: 1.0,
-              elevation: 8,
-            },
+  const ModalContent = (
+    <View
+      style={{
+        padding: 32,
+        alignItems: "center",
+        alignSelf: "center",
+        zIndex: 1,
+        backgroundColor: theme.surface.base,
+        margin: "auto",
+        borderRadius: theme.radius.default as any,
+        width: sizePx,
+        // is isMobile no spread operator is needed
+        ...(isMobile ? {} : modalElevation),
+      }}
+    >
+      <View style={{alignSelf: "flex-end", position: "relative"}}>
+        <Pressable
+          accessibilityRole="button"
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            position: "absolute",
+            top: -8,
+            bottom: -8,
+            left: -8,
+            right: -8,
           }}
-          direction="column"
-          justifyContent="center"
-          marginTop={12}
-          maxWidth={sizePx}
-          minWidth={300}
-          paddingX={8}
-          paddingY={2}
-          rounding="md"
-          shadow
-          width={sizePx}
+          onPress={onDismiss}
         >
-          <Box marginBottom={6} width="100%">
-            {renderModalHeader()}
-            <Box paddingY={4}>{children}</Box>
-            <Box paddingY={4}>{renderModalFooter()}</Box>
-          </Box>
-        </Box>
-      </RNModal>
-    );
-  };
+          <Icon iconName="x" size="sm" />
+        </Pressable>
+      </View>
+      <View style={{alignSelf: "flex-start"}}>
+        <RNText
+          style={{
+            fontSize: 24,
+            color: theme.text.primary,
+            fontWeight: 700,
+            fontFamily: theme.font.title,
+          }}
+        >
+          {title}
+        </RNText>
+      </View>
+      <View style={{alignSelf: "flex-start"}}>
+        <RNText style={{marginTop: 8, fontSize: 18, fontWeight: 500, color: theme.text.primary}}>
+          {subTitle}
+        </RNText>
+      </View>
+      <View style={{marginVertical: text ? 12 : 0, alignSelf: "flex-start"}}>
+        <Text>{text}</Text>
+      </View>
+      <View style={{alignSelf: "flex-start"}}>{children}</View>
+      <View style={{marginTop: text ? 20 : 32, flexDirection: "row", alignSelf: "flex-end"}}>
+        {Boolean(secondaryButtonText) && (
+          <Pressable
+            accessibilityRole="button"
+            style={{marginRight: 20, ...theme.button.muted.container} as any}
+            onPress={secondaryButtonOnClick}
+          >
+            <RNText style={{fontSize: 16, fontWeight: 700, color: theme.text.primary}}>
+              {secondaryButtonText}
+            </RNText>
+          </Pressable>
+        )}
+        {Boolean(primaryButtonText) && (
+          <Pressable
+            accessibilityRole="button"
+            disabled={primaryButtonDisabled}
+            style={
+              primaryButtonDisabled
+                ? ({...theme.button.disabled.container} as any)
+                : ({...theme.button.primary.container} as any)
+            }
+            onPress={primaryButtonOnClick}
+          >
+            <RNText
+              style={
+                primaryButtonDisabled
+                  ? ({...theme.button.disabled.text} as any)
+                  : ({...theme.button.primary.text} as any)
+              }
+            >
+              {primaryButtonText}
+            </RNText>
+          </Pressable>
+        )}
+      </View>
+    </View>
+  );
 
-  const renderActionSheet = (): React.ReactElement => {
+  if (isMobile) {
     return (
       <ActionSheet ref={actionSheetRef} onClose={onDismiss}>
-        <Box direction="row" marginBottom={2} paddingX={2} paddingY={2} width="100%">
-          <Box marginRight={4} minWidth={50}>
-            {Boolean(showClose) && (
-              <IconButton
-                accessibilityLabel="close"
-                icon="xmark"
-                size="lg"
-                onClick={() => onDismiss()}
-              />
-            )}
-            {Boolean(secondaryButtonText) && (
-              <Button
-                color="darkGray"
-                inline
-                size="lg"
-                text={secondaryButtonText ?? ""}
-                type="ghost"
-                onClick={secondaryButtonOnClick}
-              />
-            )}
-          </Box>
-          <Box alignItems="center" direction="column" flex="grow" justifyContent="center">
-            <Heading align={align === "center" ? "center" : undefined} size="sm">
-              {heading}
-            </Heading>
-            {Boolean(subHeading) && (
-              <Box paddingY={2}>
-                <Text align={align === "center" ? "center" : undefined}>{subHeading}</Text>
-              </Box>
-            )}
-          </Box>
-
-          <Box alignSelf="start" height="100%" justifyContent="start" marginLeft={4} minWidth={50}>
-            {Boolean(primaryButtonText) && (
-              <Button
-                color="primary"
-                disabled={primaryButtonDisabled}
-                inline
-                size="md"
-                text={primaryButtonText!}
-                type="ghost"
-                onClick={primaryButtonOnClick}
-              />
-            )}
-          </Box>
-        </Box>
-        <Box marginBottom={12} paddingX={4}>
-          {children}
-        </Box>
+        <TouchableOpacity
+          accessibilityRole="button"
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            alignSelf: "center",
+            padding: 2,
+            backgroundColor: "#9A9A9A",
+            borderRadius: 5,
+            width: "30%",
+            height: 3,
+            marginTop: 10,
+          }}
+          onPress={onDismiss}
+        />
+        {ModalContent}
       </ActionSheet>
     );
-  };
-
-  if (isMobileDevice() && isNative()) {
-    return renderActionSheet();
   } else {
-    return renderModal();
+    return (
+      <RNModal animationType="slide" transparent visible={visible} onRequestClose={onDismiss}>
+        {ModalContent}
+      </RNModal>
+    );
   }
 };
