@@ -89,13 +89,12 @@ export const Field = ({
               width="100%"
             >
               <Box flex="shrink" marginRight={2}>
-                <Text weight="bold">{o.label}</Text>
+                <Text bold>{o.label}</Text>
               </Box>
               <Box>
                 <CheckBox
                   key={o.label + o.value}
                   checked={(value ?? []).includes(o.value)}
-                  disabled={disabled}
                   name={name}
                   size="sm"
                   testID={`${testID}-${o.value}`}

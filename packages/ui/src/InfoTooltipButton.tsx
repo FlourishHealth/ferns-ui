@@ -7,9 +7,7 @@ export const InfoTooltipButton = ({text, size}: InfoTooltipButtonProps): React.R
   return (
     <IconButton
       accessibilityLabel="info"
-      bgColor="transparent"
       icon="exclamation"
-      iconColor="blue"
       size={size}
       tooltip={{text}}
       onClick={() => {}}

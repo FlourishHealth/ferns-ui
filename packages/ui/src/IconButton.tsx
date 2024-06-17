@@ -1,12 +1,11 @@
-import React, {forwardRef, useContext, useState} from "react";
+import React, {forwardRef, useState} from "react";
 import {Platform, Pressable, View, ViewStyle} from "react-native";
 
 import {Box} from "./Box";
-import {IconButtonProps, iconSizeToNumber} from "./Common";
+import {IconButtonProps, IconColor, iconSizeToNumber, SurfaceColor} from "./Common";
 import {Icon} from "./Icon";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
-import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 
@@ -16,10 +15,9 @@ export const IconButton = forwardRef(
     {
       prefix,
       icon,
-      iconColor,
       onClick,
       size,
-      bgColor = "transparent",
+      type = "primary",
       withConfirmation = false,
       confirmationText = "Are you sure you want to continue?",
       confirmationHeading = "Confirm",
@@ -31,17 +29,23 @@ export const IconButton = forwardRef(
     }: IconButtonProps,
     ref
   ) => {
-    const {theme} = useContext(ThemeContext);
     const [showConfirmation, setShowConfirmation] = useState(false);
 
+    // TODO: support hover states for icon button.
+
     const opacity = 1;
-    let color: string;
-    if (bgColor === "transparentDarkGray") {
-      color = "rgba(0, 0, 0, 0.5)";
-    } else if (bgColor === "transparent" || !bgColor) {
-      color = "rgba(0, 0, 0, 0.0)";
+    let bgColor: SurfaceColor;
+    let iconColor: IconColor;
+    // TODO match up icon colors better
+    if (type === "muted") {
+      bgColor = "base";
+      iconColor = "primary";
+    } else if (type === "secondary") {
+      bgColor = "neutralLight";
+      iconColor = "secondaryDark";
     } else {
-      color = theme[bgColor];
+      bgColor = "primary";
+      iconColor = "inverted";
     }
 
     const IndicatorPosition = {
@@ -65,6 +69,7 @@ export const IconButton = forwardRef(
       ...IndicatorNumPosition[indicatorStyle.position],
     };
 
+    // TODO: remove indicator render function
     function renderIndicator(): React.ReactElement | null {
       if (indicator && indicatorNumber && indicatorNumber > 0) {
         return (
@@ -80,9 +85,9 @@ export const IconButton = forwardRef(
               justifyContent="center"
               minHeight={15}
               minWidth={15}
-              rounding="pill"
+              rounding="md"
             >
-              <Text color="white" size="sm" weight="bold">
+              <Text bold color="inverted" size="sm">
                 {indicatorNumber}
               </Text>
             </Box>
@@ -91,7 +96,8 @@ export const IconButton = forwardRef(
       } else if (indicator) {
         return (
           <View style={indicatorPosition as ViewStyle}>
-            <Icon color={indicatorStyle.color} name="circle" prefix={prefix || "fas"} size="sm" />
+            {/* TODO: indicator probably needs to be the direct icon, not Ferns UI Icon */}
+            <Icon iconName="circle" size="sm" />
           </View>
         );
       } else {
@@ -126,10 +132,11 @@ export const IconButton = forwardRef(
         <>
           <Pressable
             ref={ref as any}
+            accessibilityRole="button"
             hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
             style={{
               opacity,
-              backgroundColor: color,
+              backgroundColor: bgColor,
               borderRadius: 100,
               // paddingBottom: iconSizeToNumber(size) / 4,
               // paddingTop: iconSizeToNumber(size) / 4,
@@ -151,7 +158,7 @@ export const IconButton = forwardRef(
               }
             }}
           >
-            <Icon color={iconColor} name={icon} prefix={prefix || "fas"} size={size} />
+            <Icon color={iconColor} iconName={icon} size={size} />
             {renderIndicator()}
           </Pressable>
 

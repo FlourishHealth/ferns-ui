@@ -32,7 +32,7 @@ export const Signature: React.FC<Props> = ({onChange, onStart, onEnd}: Props) =>
 
   return (
     <Box>
-      <Box border="black" height={100}>
+      <Box border="dark" height={100}>
         <SignatureScreen
           ref={ref}
           trimWhitespace

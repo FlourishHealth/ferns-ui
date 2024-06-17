@@ -25,7 +25,7 @@ export const Signature = ({onChange}: SignatureProps): ReactElement | null => {
 
   return (
     <Box width={300}>
-      <Box border="black">
+      <Box border="dark">
         <SignatureCanvas ref={ref} backgroundColor="white" onEnd={onUpdatedSignature} />
       </Box>
       <Box direction="row">

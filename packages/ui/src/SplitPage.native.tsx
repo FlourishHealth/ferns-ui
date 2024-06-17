@@ -108,12 +108,7 @@ export const SplitPage = ({
     return (
       <Box flex="grow" padding={2}>
         <Box width="100%">
-          <IconButton
-            accessibilityLabel="close"
-            icon="times"
-            iconColor="darkGray"
-            onClick={() => onItemDeselect()}
-          />
+          <IconButton accessibilityLabel="close" icon="xmark" onClick={() => onItemDeselect()} />
         </Box>
         {renderContent && renderContent(selectedId)}
       </Box>
@@ -150,13 +145,13 @@ export const SplitPage = ({
   return (
     <Box
       avoidKeyboard
-      color={color || "lightGray"}
+      color={color || "neutralLight"}
       flex="grow"
       height="100%"
       keyboardOffset={keyboardOffset}
       width="100%"
     >
-      {loading === true && <Spinner color={theme.darkGray as any} size="md" />}
+      {loading === true && <Spinner color={theme.text.primary as any} size="md" />}
       {selectedId === undefined ? renderList() : renderMainContent}
     </Box>
   );

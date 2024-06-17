@@ -23,9 +23,9 @@ const TapToEditTitle = ({
 }): ReactElement => {
   const Title = (
     <Box flex="grow" justifyContent="center">
-      <Text weight="bold">{title}:</Text>
+      <Text bold>{title}:</Text>
       {Boolean(description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing) && (
-        <Text color="gray" size="sm">
+        <Text color="secondaryLight" size="sm">
           {description}
         </Text>
       )}
@@ -247,17 +247,24 @@ export const TapToEdit = ({
             </Box>
             {editable && (
               <Box marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
-                <Icon color="darkGray" name="edit" prefix="far" size="md" />
+                <Icon iconName="pencil" size="md" />
               </Box>
             )}
           </Box>
         </Box>
         {fieldProps?.type === "textarea" && (
-          <Box marginTop={2} paddingY={2} width="100%">
-            <Text align="left" underline={isClickable}>
-              {displayValue}
-            </Text>
-          </Box>
+          <>
+            <Box marginTop={2} paddingY={2} width="100%">
+              <Text align="left" underline={isClickable}>
+                {displayValue}
+              </Text>
+            </Box>
+            {editable && (
+              <Box alignSelf="end" marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
+                <Icon color="primary" iconName="pencil" size="md" />
+              </Box>
+            )}
+          </>
         )}
       </Box>
     );
