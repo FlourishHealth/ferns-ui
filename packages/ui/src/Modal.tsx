@@ -30,16 +30,16 @@ const getModalSize = (size: "sm" | "md" | "lg"): DimensionValue => {
 };
 
 const ModalContent: FC<{
-  children?: React.ReactNode;
-  title?: string;
-  subTitle?: string;
-  text?: string;
-  primaryButtonText?: string;
-  primaryButtonDisabled?: boolean;
-  secondaryButtonText?: string;
-  primaryButtonOnClick?: () => void;
-  secondaryButtonOnClick?: () => void;
-  onDismiss: () => void;
+  children?: ModalProps["children"];
+  title?: ModalProps["title"];
+  subTitle?: ModalProps["subTitle"];
+  text?: ModalProps["text"];
+  primaryButtonText?: ModalProps["primaryButtonText"];
+  primaryButtonDisabled?: ModalProps["primaryButtonDisabled"];
+  secondaryButtonText?: ModalProps["secondaryButtonText"];
+  primaryButtonOnClick?: ModalProps["primaryButtonOnClick"];
+  secondaryButtonOnClick?: ModalProps["secondaryButtonOnClick"];
+  onDismiss: ModalProps["onDismiss"];
   sizePx: DimensionValue;
   theme: any;
   isMobile: boolean;
@@ -150,7 +150,7 @@ const ModalContent: FC<{
             <Button
               text={secondaryButtonText as string}
               variant="muted"
-              onClick={secondaryButtonOnClick as () => void}
+              onClick={secondaryButtonOnClick as () => void | Promise<void>}
             />
           </View>
         )}
@@ -158,7 +158,7 @@ const ModalContent: FC<{
           <Button
             disabled={primaryButtonDisabled}
             text={primaryButtonText as string}
-            onClick={primaryButtonOnClick as () => void}
+            onClick={primaryButtonOnClick as () => void | Promise<void>}
           />
         )}
       </View>
