@@ -1,11 +1,10 @@
-/* eslint-disable unused-imports/no-unused-imports */
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
 import React, {FC, useContext, useState} from "react";
 import {ActivityIndicator, Pressable, Text, View} from "react-native";
 
 import {Box} from "./Box";
-import {ButtonProps, IconName, TextColor, TooltipDirection} from "./Common";
+import {ButtonProps} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
 // import { Text } from "./Text";
@@ -88,6 +87,10 @@ const ButtonComponent: FC<ButtonProps> = ({
 
   return (
     <Pressable
+      accessibilityHint={
+        withConfirmationModal ? "Opens a confirmation dialog" : "Press to perform action"
+      }
+      accessibilityLabel={text}
       accessibilityRole="button"
       disabled={disabled || loading}
       style={{

@@ -87,6 +87,8 @@ const ModalContent: FC<{
     >
       <View style={{alignSelf: "flex-end", position: "relative"}}>
         <Pressable
+          accessibilityHint="Closes the modal"
+          accessibilityLabel="Close modal"
           accessibilityRole="button"
           style={{
             flex: 1,
@@ -104,22 +106,39 @@ const ModalContent: FC<{
         </Pressable>
       </View>
       {title && (
-        <View style={{alignSelf: "flex-start"}}>
+        <View
+          accessibilityHint="Modal title"
+          accessibilityLabel={title}
+          accessibilityRole="header"
+          style={{alignSelf: "flex-start"}}
+        >
           <Heading size="lg">{title}</Heading>
         </View>
       )}
       {subTitle && (
-        <View style={{alignSelf: "flex-start", marginTop: subTitle ? 8 : 0}}>
+        <View
+          accessibilityHint="Modal Sub Heading Text"
+          accessibilityLabel={subTitle}
+          accessibilityRole="text"
+          style={{alignSelf: "flex-start", marginTop: subTitle ? 8 : 0}}
+        >
           <Text size="lg">{subTitle}</Text>
         </View>
       )}
       {text && (
-        <View style={{marginVertical: text ? 12 : 0, alignSelf: "flex-start"}}>
+        <View
+          accessibilityHint="Modal body text"
+          accessibilityLabel={text}
+          accessibilityRole="text"
+          style={{marginVertical: text ? 12 : 0, alignSelf: "flex-start"}}
+        >
           <Text>{text}</Text>
         </View>
       )}
       {children && (
-        <View style={{alignSelf: "flex-start", marginTop: text ? 0 : 12}}>{children}</View>
+        <View accessibilityRole="text" style={{alignSelf: "flex-start", marginTop: text ? 0 : 12}}>
+          {children}
+        </View>
       )}
       <View
         style={{
@@ -132,7 +151,7 @@ const ModalContent: FC<{
           <View style={{marginRight: primaryButtonText ? 20 : 0}}>
             <Button
               text={secondaryButtonText as string}
-              type="muted"
+              variant="muted"
               onClick={secondaryButtonOnClick as () => void}
             />
           </View>
@@ -196,6 +215,8 @@ export const Modal: FC<ModalProps> = ({
     return (
       <ActionSheet ref={actionSheetRef} onClose={onDismiss}>
         <TouchableOpacity
+          accessibilityHint="Closes the modal"
+          accessibilityLabel="Close modal"
           accessibilityRole="button"
           style={{
             flex: 1,
