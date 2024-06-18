@@ -1,32 +1,9 @@
 import React, {ReactElement, useContext, useRef} from "react";
-import {Animated, StyleSheet, TouchableWithoutFeedback, View} from "react-native";
+import {Animated, TouchableWithoutFeedback, View} from "react-native";
 
 import {BooleanFieldProps} from "./Common";
 import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
-import EndCallback = Animated.EndCallback;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "black",
-    width: 60,
-    height: 30,
-    borderRadius: 30,
-  },
-  animatedContainer: {
-    flex: 1,
-    width: 78,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  circle: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: "white",
-  },
-});
 
 export const BooleanField = ({
   label,
@@ -99,46 +76,38 @@ export const BooleanField = ({
         <TouchableWithoutFeedback accessibilityRole="button" onPress={handleSwitch}>
           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
             <Animated.View
-              style={[
-                styles.container,
-                {
-                  backgroundColor: interaction
-                    ? interpolatedColorAnimation
-                    : theme.surface.disabled,
-                  borderColor: interaction ? theme.surface.secondaryDark : theme.surface.disabled,
-                  borderWidth: 1,
-                  width: 60,
-                  height: 30,
-                  borderRadius: 30,
-                  marginHorizontal: variant === "title" ? undefined : 8,
-                  marginRight: variant === "title" ? 8 : undefined,
-                },
-              ]}
+              style={{
+                width: 60,
+                height: 30,
+                borderRadius: 30,
+                backgroundColor: interaction ? interpolatedColorAnimation : theme.surface.disabled,
+                borderColor: interaction ? theme.surface.secondaryDark : theme.surface.disabled,
+                borderWidth: 1,
+                marginHorizontal: variant === "title" ? undefined : 8,
+                marginRight: variant === "title" ? 8 : undefined,
+              }}
             >
               <Animated.View
-                style={[
-                  styles.animatedContainer,
-                  {
-                    left: transformSwitch,
-                    width: 60,
-                  },
-                ]}
+                style={{
+                  flex: 1,
+                  width: 60,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  left: transformSwitch,
+                }}
               >
                 <Animated.View
-                  style={[
-                    styles.circle,
-                    {
-                      borderWidth: 1,
-                      borderColor: interaction
-                        ? theme.surface.secondaryDark
-                        : theme.surface.disabled,
-                      backgroundColor: theme.surface.base,
-                      width: 30,
-                      height: 30,
-                      borderRadius: 15,
-                    },
-                    {alignItems: "center", justifyContent: "center"},
-                  ]}
+                  style={{
+                    borderWidth: 1,
+                    borderColor: interaction ? theme.surface.secondaryDark : theme.surface.disabled,
+                    backgroundColor: theme.surface.base,
+                    width: 30,
+                    height: 30,
+                    borderRadius: 15,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 />
               </Animated.View>
             </Animated.View>
