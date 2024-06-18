@@ -1360,7 +1360,7 @@ export interface ButtonProps {
   /**
    * The function to call when the button is clicked.
    */
-  onClick: () => void;
+  onClick: () => void | Promise<void>;
 }
 
 export interface CustomSelectProps {
@@ -1539,11 +1539,11 @@ export interface ModalProps {
   /**
    * The function to call when the primary button is clicked.
    */
-  primaryButtonOnClick?: (value?: any) => void;
+  primaryButtonOnClick?: (value?: any) => void | Promise<void>;
   /**
    * The function to call when the secondary button is clicked.
    */
-  secondaryButtonOnClick?: (value?: any) => void;
+  secondaryButtonOnClick?: (value?: any) => void | Promise<void>;
 }
 
 export interface NumberPickerActionSheetProps {

@@ -1,12 +1,5 @@
-import React, {FC, useContext, useEffect, useRef, useState} from "react";
-import {
-  Animated,
-  Dimensions,
-  DimensionValue,
-  Modal as RNModal,
-  Pressable,
-  View,
-} from "react-native";
+import React, {FC, useContext, useEffect, useRef} from "react";
+import {Dimensions, DimensionValue, Modal as RNModal, Pressable, View} from "react-native";
 import ActionSheet, {ActionSheetRef} from "react-native-actions-sheet";
 import {
   PanGestureHandler,
@@ -189,38 +182,10 @@ export const Modal: FC<ModalProps> = ({
 }: ModalProps) => {
   const actionSheetRef = useRef<ActionSheetRef>(null);
   const {theme} = useContext(ThemeContext);
-  const translateY = useRef(new Animated.Value(0)).current;
-  const [contentVisible, setContentVisible] = useState(visible);
-
-  const onGestureEvent = Animated.event(
-    [
-      {
-        nativeEvent: {
-          translationY: translateY,
-        },
-      },
-    ],
-    {useNativeDriver: true}
-  );
 
   const onHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
-    if (nativeEvent.state === State.END) {
-      if (nativeEvent.translationY > 100) {
-        Animated.timing(translateY, {
-          toValue: Dimensions.get("window").height,
-          duration: 300,
-          useNativeDriver: true,
-        }).start(() => {
-          setContentVisible(false);
-          onDismiss();
-          translateY.setValue(0); // Reset for next opening
-        });
-      } else {
-        Animated.spring(translateY, {
-          toValue: 0,
-          useNativeDriver: true,
-        }).start();
-      }
+    if (nativeEvent.state === State.END && nativeEvent.translationY > 100) {
+      onDismiss();
     }
   };
 
@@ -228,9 +193,6 @@ export const Modal: FC<ModalProps> = ({
   useEffect(() => {
     if (actionSheetRef.current) {
       actionSheetRef.current.setModalVisible(visible);
-    }
-    if (visible) {
-      setContentVisible(true);
     }
   }, [visible]);
 
@@ -255,15 +217,8 @@ export const Modal: FC<ModalProps> = ({
   if (isMobile) {
     return (
       <ActionSheet ref={actionSheetRef} onClose={onDismiss}>
-        <PanGestureHandler
-          onGestureEvent={onGestureEvent}
-          onHandlerStateChange={onHandlerStateChange}
-        >
-          <Animated.View
-            style={{
-              transform: [{translateY}],
-            }}
-          >
+        <PanGestureHandler onHandlerStateChange={onHandlerStateChange}>
+          <View>
             <View
               accessibilityHint="Pull down to close the modal"
               accessibilityLabel="Pull down bar"
@@ -280,8 +235,8 @@ export const Modal: FC<ModalProps> = ({
                 marginTop: 10,
               }}
             />
-            {contentVisible && <ModalContent {...modalContentProps}>{children}</ModalContent>}
-          </Animated.View>
+            <ModalContent {...modalContentProps}>{children}</ModalContent>
+          </View>
         </PanGestureHandler>
       </ActionSheet>
     );
