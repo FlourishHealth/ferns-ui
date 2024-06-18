@@ -3,18 +3,19 @@ import React, {useState} from "react";
 
 export const ModalDemo = (props: Partial<ModalProps>) => {
   const [showModal, setShowModal] = useState<boolean>(false);
+
   return (
     <Box paddingY={1}>
-      <Button text="Default Modal" onClick={() => setShowModal(!showModal)} />
+      <Button text="Default Modal" onClick={() => setShowModal(true)} />
       <Modal
         primaryButtonOnClick={() => setShowModal(false)}
         primaryButtonText="Accept"
-        secondaryButtonOnClick={() => {}}
+        secondaryButtonOnClick={() => setShowModal(false)}
         subTitle="Sub heading"
         text="This is the text of the modal."
         title="Demo modal"
         visible={showModal}
-        onDismiss={() => setShowModal(!showModal)}
+        onDismiss={() => setShowModal(false)}
         {...props}
       />
     </Box>
