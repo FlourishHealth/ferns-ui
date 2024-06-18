@@ -1,5 +1,6 @@
 import React from "react";
 
+import {BooleanField} from "./BooleanField";
 import {Box} from "./Box";
 import {CheckBox} from "./CheckBox";
 import {AddressInterface, FieldProps, ReactChildren, TextFieldType} from "./Common";
@@ -8,7 +9,6 @@ import {CustomSelect} from "./CustomSelect";
 import {FieldWithLabels} from "./FieldWithLabels";
 import {SelectList} from "./SelectList";
 import {Signature} from "./Signature";
-import {Switch} from "./Switch";
 import {Text} from "./Text";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
@@ -46,11 +46,6 @@ export const Field = ({
 
   const handleAutoCompleteChange = (newValue: AddressInterface) => {
     onChange({...value, ...newValue});
-  };
-
-  const handleSwitchChange = (switchValue: boolean) => {
-    onChange(switchValue);
-    onBlur && onBlur(switchValue);
   };
 
   const renderField = (): ReactChildren => {
@@ -134,14 +129,12 @@ export const Field = ({
       );
     } else if (type === "boolean") {
       return (
-        <Switch
-          disabled={disabled}
-          id={name}
-          name={name}
-          switched={Boolean(value)}
-          testID={testID}
+        <BooleanField
+          interaction={!disabled}
+          label={name ?? ""}
+          value={value}
           onChange={(result) => {
-            handleSwitchChange(result);
+            onChange(result);
           }}
         />
       );
