@@ -18,16 +18,21 @@ export const AllColorButtons = (props: Partial<ButtonProps>) => {
       <Box paddingY={1}>
         <Button
           text="Secondary"
-          type="secondary"
+          variant="secondary"
           onClick={() => console.info("clicked")}
           {...props}
         />
       </Box>
       <Box paddingY={1}>
-        <Button text="Outline" type="outline" onClick={() => console.info("clicked")} {...props} />
+        <Button
+          text="Outline"
+          variant="outline"
+          onClick={() => console.info("clicked")}
+          {...props}
+        />
       </Box>
       <Box paddingY={1}>
-        <Button text="Muted" type="muted" onClick={() => console.info("clicked")} {...props} />
+        <Button text="Muted" variant="muted" onClick={() => console.info("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>
         <Button disabled text="Disabled" onClick={() => console.info("clicked")} {...props} />
@@ -118,7 +123,7 @@ export const FullWidthButtons = (props: Partial<ButtonProps>) => {
         <Button
           fullWidth
           text="Secondary"
-          type="secondary"
+          variant="secondary"
           onClick={() => console.info("clicked")}
           {...props}
         />
@@ -126,7 +131,7 @@ export const FullWidthButtons = (props: Partial<ButtonProps>) => {
       <Box paddingY={1}>
         <Button
           text="Outline"
-          type="outline"
+          variant="outline"
           onClick={() => console.info("clicked")}
           {...props}
           fullWidth
@@ -136,7 +141,7 @@ export const FullWidthButtons = (props: Partial<ButtonProps>) => {
         <Button
           fullWidth
           text="Muted"
-          type="muted"
+          variant="muted"
           onClick={() => console.info("clicked")}
           {...props}
         />

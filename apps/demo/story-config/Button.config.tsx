@@ -49,7 +49,7 @@ export const ButtonConfiguration: DemoConfiguration = {
   demo: ButtonDemo,
   demoOptions: {
     controls: {
-      type: {
+      variant: {
         type: "select",
         defaultValue: "primary",
         options: [

@@ -49,7 +49,7 @@ const ButtonComponent: FC<ButtonProps> = ({
   modalText = "Are you sure you want to continue?",
   testID,
   text,
-  type = "primary",
+  variant = "primary",
   withConfirmationModal = false,
   onClick,
 }) => {
@@ -67,12 +67,12 @@ const ButtonComponent: FC<ButtonProps> = ({
     let borderWidth: number | undefined;
     let color = theme.text.inverted;
 
-    if (type === "secondary") {
+    if (variant === "secondary") {
       backgroundColor = theme.surface.secondaryDark;
-    } else if (type === "muted") {
+    } else if (variant === "muted") {
       backgroundColor = theme.surface.secondaryLight;
       color = theme.surface.neutralDark;
-    } else if (type === "outline") {
+    } else if (variant === "outline") {
       backgroundColor = theme.surface.base;
       borderColor = theme.text.secondaryDark;
       borderWidth = 2;
