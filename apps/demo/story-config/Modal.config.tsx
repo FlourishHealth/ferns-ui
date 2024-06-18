@@ -1,5 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo, Modals} from "@stories";
+import {ModalDemo, Modals} from "@stories";
 import {Modal} from "ferns-ui";
 
 // TODO: might want to combine these two. They're different figma components, but the same for dev.
@@ -55,7 +55,7 @@ export const ModalConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: DefaultDemo,
+  demo: ModalDemo,
   demoOptions: {},
   stories: {
     Modals: {render: Modals},

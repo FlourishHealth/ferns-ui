@@ -3,9 +3,8 @@ import {
   AllColorButtons,
   ButtonDemo,
   ConfirmationButton,
-  InlineButtons,
+  FullWidthButtons,
   MultilineButtons,
-  SizesButtons,
 } from "@stories";
 import {Button} from "ferns-ui";
 
@@ -48,15 +47,44 @@ export const ButtonConfiguration: DemoConfiguration = {
   },
   props: {},
   demo: ButtonDemo,
-  demoOptions: {},
+  demoOptions: {
+    controls: {
+      type: {
+        type: "select",
+        defaultValue: "primary",
+        options: [
+          {label: "Primary", value: "primary"},
+          {label: "Secondary", value: "secondary"},
+          {label: "Outline", value: "outline"},
+          {label: "Muted", value: "muted"},
+        ],
+      },
+      iconName: {
+        type: "select",
+        defaultValue: undefined,
+        options: [
+          {label: "None", value: ""},
+          {label: "Check", value: "check"},
+          {label: "Arrow", value: "arrow-down-short-wide"},
+          {label: "Plus", value: "plus"},
+          {label: "Minus", value: "minus"},
+        ],
+      },
+      iconPosition: {
+        type: "select",
+        defaultValue: "left",
+        options: [
+          {label: "Left", value: "left"},
+          {label: "Right", value: "right"},
+        ],
+      },
+    },
+  },
   stories: {
-    Colors: {render: () => AllColorButtons({})},
+    Buttons: {render: () => AllColorButtons({})},
     Loading: {render: () => AllColorButtons({loading: true})},
-    Ghost: {render: () => AllColorButtons({type: "ghost"})},
-    Outline: {render: () => AllColorButtons({type: "outline"})},
     Confirmation: {render: () => ConfirmationButton({})},
-    Inline: {render: () => InlineButtons()},
+    FullWidth: {render: () => FullWidthButtons({})},
     Multiline: {render: () => MultilineButtons()},
-    Sizes: {render: () => SizesButtons()},
   },
 };

@@ -1,5 +1,25 @@
-import {Box, Button, Modal, Text} from "ferns-ui";
+import {Box, Button, Modal, ModalProps, Text} from "ferns-ui";
 import React, {useState} from "react";
+
+export const ModalDemo = (props: Partial<ModalProps>) => {
+  const [showModal, setShowModal] = useState<boolean>(false);
+  return (
+    <Box paddingY={1}>
+      <Button text="Default Modal" onClick={() => setShowModal(!showModal)} />
+      <Modal
+        primaryButtonOnClick={() => setShowModal(false)}
+        primaryButtonText="Accept"
+        secondaryButtonOnClick={() => {}}
+        subTitle="Sub heading"
+        text="This is the text of the modal."
+        title="Demo modal"
+        visible={showModal}
+        onDismiss={() => setShowModal(!showModal)}
+        {...props}
+      />
+    </Box>
+  );
+};
 
 export const Modals = () => {
   const [modalToShow, setModalToShow] = useState<string>("");
@@ -12,51 +32,44 @@ export const Modals = () => {
   return (
     <>
       <Box>
-        <Button text="Default modal" onClick={() => setModalToShow("default")} />
-        <Button text="Start aligned modal" onClick={() => setModalToShow("start")} />
-        <Button text="Medium modal" onClick={() => setModalToShow("md")} />
-        <Button text="Large modal" onClick={() => setModalToShow("lg")} />
-        <Button text="Secondary modal" onClick={() => setModalToShow("secondary")} />
-        <Button text="Custom footer" onClick={() => setModalToShow("footer")} />
+        <Box paddingY={1}>
+          <Button text="Default/ Small Modal" onClick={() => setModalToShow("default")} />
+        </Box>
+        <Box paddingY={1}>
+          <Button text="Medium Modal" onClick={() => setModalToShow("md")} />
+        </Box>
+        <Box paddingY={1}>
+          <Button text="Large Modal" onClick={() => setModalToShow("lg")} />
+        </Box>
+        <Box paddingY={1}>
+          <Button text="Large Modal" onClick={() => setModalToShow("lg")} />
+        </Box>
+        <Box paddingY={1}>
+          <Button text="Secondary Button Modal" onClick={() => setModalToShow("secondary")} />
+        </Box>
       </Box>
       <Modal
-        align={modalToShow === "start" ? "start" : "center"}
-        heading={`${modalToShow} modal`}
         primaryButtonOnClick={() => setModalToShow("")}
         primaryButtonText="Accept"
         secondaryButtonOnClick={() => {}}
         secondaryButtonText={modalToShow === "secondary" ? "Secondary" : undefined}
-        showClose
         size={size as "sm" | "md" | "lg"}
-        subHeading="Sub heading"
+        subTitle="Sub heading"
+        text="This is the text of the modal."
+        title={`${modalToShow} modal`}
         visible={
           modalToShow === "default" ||
-          modalToShow === "start" ||
           modalToShow === "md" ||
           modalToShow === "lg" ||
           modalToShow === "secondary"
         }
         onDismiss={() => setModalToShow("")}
       >
-        <Text align={modalToShow === "start" ? undefined : "center"}>Some text for the modal</Text>
-      </Modal>
-      <Modal
-        footer={
-          <Box color="red" padding={2} width="100%">
-            <Button color="primary" text="Big Button" onClick={() => setModalToShow("")} />
-          </Box>
-        }
-        heading="Custom footer"
-        primaryButtonText="hi"
-        visible={modalToShow === "footer"}
-        onDismiss={() => setModalToShow("")}
-      >
-        <Text align="center">Some text for the modal</Text>
+        <Text>Children inside the modal.</Text>
       </Modal>
     </>
   );
 };
-
 export const ModalStories = {
   title: "Modal",
   component: Modal,
