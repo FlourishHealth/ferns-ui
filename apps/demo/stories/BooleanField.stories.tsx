@@ -63,3 +63,12 @@ export const BooleanFieldDisabledWithTitleDemo = (): React.ReactElement => {
     </StorybookContainer>
   );
 };
+
+export const BooleanFieldNoLabelDemo = (): React.ReactElement => {
+  const [value, setValue] = useState(true);
+  return (
+    <StorybookContainer>
+      <BooleanField value={value} variant="simple" onChange={setValue} />
+    </StorybookContainer>
+  );
+};

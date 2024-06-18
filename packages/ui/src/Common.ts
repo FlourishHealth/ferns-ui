@@ -691,8 +691,8 @@ export interface BackButtonInterface {
 }
 
 export interface BooleanFieldProps {
-  label: string;
-  variant?: "simple" | "title";
+  label?: string;
+  variant?: "simple" | "title"; // default "simple"
   interaction?: boolean; // default true
   disabledHelperText?: string;
   value: boolean;

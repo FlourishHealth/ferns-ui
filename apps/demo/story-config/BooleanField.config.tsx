@@ -3,6 +3,7 @@ import {
   BooleanFieldDemo,
   BooleanFieldDisabledDemo,
   BooleanFieldDisabledWithTitleDemo,
+  BooleanFieldNoLabelDemo,
   BooleanFieldWithTitleDemo,
 } from "@stories";
 import {BooleanField} from "ferns-ui";
@@ -58,6 +59,9 @@ export const BooleanFieldConfiguration: DemoConfiguration = {
     },
     "Disabled Boolean Field with Title": {
       render: () => <BooleanFieldDisabledWithTitleDemo />,
+    },
+    "Boolean Field without label": {
+      render: () => <BooleanFieldNoLabelDemo />,
     },
   },
 };

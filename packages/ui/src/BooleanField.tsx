@@ -70,9 +70,11 @@ export const BooleanField = ({
           justifyContent: variant === "title" ? "flex-start" : "center",
         }}
       >
-        <Text bold={variant === "title"} color="primary" size="lg">
-          {label}
-        </Text>
+        {label && (
+          <Text bold={variant === "title"} color="primary" size="lg">
+            {label}
+          </Text>
+        )}
         <TouchableWithoutFeedback accessibilityRole="button" onPress={handleSwitch}>
           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
             <Animated.View
