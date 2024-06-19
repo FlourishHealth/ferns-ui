@@ -47,7 +47,6 @@ export * from "./Signature";
 export * from "./SignatureField";
 export * from "./Spinner";
 export * from "./SplitPage";
-export * from "./Switch";
 export * from "./table/Table";
 export * from "./table/Table";
 export * from "./table/TableBadge";

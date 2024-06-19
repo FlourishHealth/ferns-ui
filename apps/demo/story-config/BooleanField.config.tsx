@@ -1,5 +1,11 @@
 import {DemoConfiguration} from "@config";
-import {BooleanFieldDemo} from "@stories";
+import {
+  BooleanFieldDemo,
+  BooleanFieldDisabledDemo,
+  BooleanFieldDisabledWithTitleDemo,
+  BooleanFieldNoLabelDemo,
+  BooleanFieldWithTitleDemo,
+} from "@stories";
 import {BooleanField} from "ferns-ui";
 import React from "react";
 
@@ -17,7 +23,7 @@ export const BooleanFieldConfiguration: DemoConfiguration = {
   category: "Component",
   status: {
     documentation: "ready",
-    figma: "inProgress",
+    figma: "ready",
     figmaLink:
       "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23539&mode=design&t=AKQ8wyFQBA4qC5eF-1",
     ios: "ready",
@@ -39,7 +45,23 @@ export const BooleanFieldConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <BooleanFieldDemo />,
+  demo: BooleanFieldDemo,
   demoOptions: {},
-  stories: {},
+  stories: {
+    "Boolean Field": {
+      render: () => <BooleanFieldDemo />,
+    },
+    "Boolean Field with Title": {
+      render: () => <BooleanFieldWithTitleDemo />,
+    },
+    "Disabled Boolean Field": {
+      render: () => <BooleanFieldDisabledDemo />,
+    },
+    "Disabled Boolean Field with Title": {
+      render: () => <BooleanFieldDisabledWithTitleDemo />,
+    },
+    "Boolean Field without label": {
+      render: () => <BooleanFieldNoLabelDemo />,
+    },
+  },
 };
