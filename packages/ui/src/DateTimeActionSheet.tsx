@@ -454,7 +454,6 @@ export const DateTimeActionSheet = ({
       primaryButtonText="Save"
       secondaryButtonOnClick={sendClear}
       secondaryButtonText="Clear"
-      showClose
       visible={visible}
       onDismiss={onDismiss}
     >

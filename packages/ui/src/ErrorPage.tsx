@@ -34,7 +34,7 @@ export class ErrorPage extends React.Component<ErrorPageProps, {}> {
         <Box paddingY={3}>
           <Text>{this.props.error.toString()}</Text>
         </Box>
-        <Button color="blue" text="Try again" onClick={this.props.resetError} />
+        <Button text="Try again" onClick={this.props.resetError} />
       </Box>
     );
   }
