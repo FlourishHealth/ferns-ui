@@ -25,11 +25,11 @@ export const Signature = ({onChange}: SignatureProps): ReactElement | null => {
 
   return (
     <Box width={300}>
-      <Box border="black">
+      <Box border="dark">
         <SignatureCanvas ref={ref} backgroundColor="white" onEnd={onUpdatedSignature} />
       </Box>
       <Box direction="row">
-        <Button color="gray" text="Clear" onClick={onClear} />
+        <Button text="Clear" variant="muted" onClick={onClear} />
       </Box>
     </Box>
   );
