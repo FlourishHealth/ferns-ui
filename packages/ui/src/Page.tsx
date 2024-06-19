@@ -47,9 +47,8 @@ export class Page extends React.Component<PageProps, {}> {
         {this.props.rightButton && (
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <Button
-              color="gray"
               text={this.props.rightButton}
-              type="ghost"
+              variant="muted"
               onClick={() => this.props.rightButtonOnClick && this.props.rightButtonOnClick()}
             />
           </Box>

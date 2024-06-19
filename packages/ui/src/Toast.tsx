@@ -93,7 +93,7 @@ export const Toast = ({message, data}: ToastProps): React.ReactElement => {
       </Box>
       {Boolean(buttonOnClick && buttonText) && (
         <Box alignItems="center" justifyContent="center" marginLeft={4}>
-          <Button color="lightGray" shape="pill" text={buttonText!} onClick={buttonOnClick} />
+          <Button text={buttonText!} onClick={buttonOnClick as () => void | Promise<void>} />
         </Box>
       )}
       {Boolean(onDismiss && persistent) && (

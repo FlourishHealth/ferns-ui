@@ -29,7 +29,7 @@ export const Signature = ({onChange}: SignatureProps): ReactElement | null => {
         <SignatureCanvas ref={ref} backgroundColor="white" onEnd={onUpdatedSignature} />
       </Box>
       <Box direction="row">
-        <Button color="gray" text="Clear" onClick={onClear} />
+        <Button text="Clear" variant="muted" onClick={onClear} />
       </Box>
     </Box>
   );

@@ -33,10 +33,7 @@ export class HeightActionSheet extends React.Component<
           <Box alignItems="end" display="flex" width="100%">
             <Box width="33%">
               <Button
-                color="blue"
-                size="lg"
                 text="Close"
-                type="ghost"
                 onClick={() => {
                   this.props.actionSheetRef?.current?.setModalVisible(false);
                 }}

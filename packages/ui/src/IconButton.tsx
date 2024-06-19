@@ -108,7 +108,6 @@ export const IconButton = forwardRef(
     const renderConfirmation = () => {
       return (
         <Modal
-          heading={confirmationHeading}
           primaryButtonOnClick={() => {
             onClick();
             setShowConfirmation(false);
@@ -117,6 +116,7 @@ export const IconButton = forwardRef(
           secondaryButtonOnClick={(): void => setShowConfirmation(false)}
           secondaryButtonText="Cancel"
           size="sm"
+          title={confirmationHeading}
           visible={showConfirmation}
           onDismiss={(): void => {
             setShowConfirmation(false);
