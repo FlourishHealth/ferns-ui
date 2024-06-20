@@ -77,10 +77,11 @@ export const Banner = ({
     if (type === ACTION) {
       return (
         <Box alignItems="center" display="block" justifyContent="center" width={40}>
+          {/* accessibility-hint handled in IconButton component */}
+          {/* eslint-disable-next-line react-native-a11y/has-accessibility-hint */}
           <IconButton
-            accessibilityLabel=""
-            icon="arrow-right"
-            prefix="fas"
+            accessibilityLabel="arrow-right"
+            iconName="arrow-right"
             onClick={(): void => onClick?.()}
           />
         </Box>
@@ -88,7 +89,9 @@ export const Banner = ({
     } else if (type === DISMISS) {
       return (
         <Box alignItems="center" display="block" justifyContent="center" width={40}>
-          <IconButton accessibilityLabel="" icon="circle-xmark" prefix="fas" onClick={dismiss} />
+          {/* accessibility-hint handled in IconButton component */}
+          {/* eslint-disable-next-line react-native-a11y/has-accessibility-hint */}
+          <IconButton accessibilityLabel="" iconName="circle-xmark" onClick={dismiss} />
         </Box>
       );
     } else {

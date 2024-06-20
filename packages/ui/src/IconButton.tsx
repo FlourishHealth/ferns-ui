@@ -3,7 +3,7 @@ import debounce from "lodash/debounce";
 import React, {FC, useContext, useState} from "react";
 import {ActivityIndicator, Pressable, View} from "react-native";
 
-import {IconName, TooltipPosition} from "./Common";
+import {IconButtonProps} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
@@ -11,21 +11,6 @@ import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 import {isNative} from "./Utilities";
-
-export interface IconButtonProps {
-  loading?: boolean;
-  iconName: IconName;
-  accessibilityLabel: string;
-  onClick: () => void;
-  variant?: "primary" | "secondary" | "muted";
-  selected?: boolean;
-  withConfirmation?: boolean;
-  confirmationText?: string;
-  confirmationHeading?: string;
-  tooltipText?: string;
-  tooltipIdealPosition?: TooltipPosition;
-  testID?: string;
-}
 
 const ConfirmationModal: FC<{
   visible: boolean;
@@ -53,15 +38,14 @@ const ConfirmationModal: FC<{
 
 const IconButtonComponent: FC<IconButtonProps> = ({
   accessibilityLabel,
-  iconName,
-  onClick,
-  variant = "primary",
-  loading: propsLoading = false,
-  withConfirmation = false,
-  confirmationText = "Are you sure you want to continue?",
   confirmationHeading = "Confirm",
-  tooltipText,
+  confirmationText = "Are you sure you want to continue?",
+  iconName,
+  loading: propsLoading = false,
   testID,
+  variant = "primary",
+  withConfirmation = false,
+  onClick,
 }) => {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -81,6 +65,9 @@ const IconButtonComponent: FC<IconButtonProps> = ({
     } else if (variant === "muted") {
       backgroundColor = theme.text.inverted;
       color = theme.surface.primary;
+    } else if (variant === "destructive") {
+      backgroundColor = theme.text.inverted;
+      color = theme.text.error;
     }
 
     return {backgroundColor, color};

@@ -115,16 +115,14 @@ const CalendarHeader = ({
     <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
       <IconButton
         accessibilityLabel="arrow"
-        icon="angles-left"
-        size="md"
+        iconName="angles-left"
         onClick={() => {
           addMonth(-12);
         }}
       />
       <IconButton
         accessibilityLabel="arrow"
-        icon="angle-left"
-        size="md"
+        iconName="angle-left"
         onClick={() => {
           addMonth(-1);
         }}
@@ -132,16 +130,14 @@ const CalendarHeader = ({
       <Heading size="sm">{displayDate}</Heading>
       <IconButton
         accessibilityLabel="arrow"
-        icon="angle-right"
-        size="md"
+        iconName="angle-right"
         onClick={() => {
           addMonth(1);
         }}
       />
       <IconButton
         accessibilityLabel="arrow"
-        icon="angles-right"
-        size="md"
+        iconName="angles-right"
         onClick={() => {
           addMonth(12);
         }}

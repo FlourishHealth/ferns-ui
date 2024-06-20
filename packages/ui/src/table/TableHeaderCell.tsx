@@ -52,8 +52,7 @@ export const TableHeaderCell = ({
           <Box paddingX={2}>
             <IconButton
               accessibilityLabel="sort"
-              icon={sort === "asc" ? "arrow-down" : "arrow-up"}
-              size="sm"
+              iconName={sort === "asc" ? "arrow-down" : "arrow-up"}
               onClick={() => {}}
             />
           </Box>
