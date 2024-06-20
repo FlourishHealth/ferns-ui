@@ -1,10 +1,16 @@
-import {Box, SegmentedControl, Text, useStoredState} from "ferns-ui";
+import {Box, SegmentedControl, SegmentedControlProps} from "ferns-ui";
 import React, {useState} from "react";
 
-export const SegmentedControlDemo = () => {
+export const SegmentedControlDemo = (props: Partial<SegmentedControlProps>) => {
+  const [index, setIndex] = useState(0);
   return (
     <Box display="flex" width="100%">
-      <SegmentedControl items={["One", "Two"]} selectedItemIndex={0} onChange={() => {}} />
+      <SegmentedControl
+        items={["One", "Two", "Three"]}
+        selectedIndex={index}
+        onChange={setIndex}
+        {...props}
+      />
     </Box>
   );
 };
@@ -14,9 +20,9 @@ export const DefaultControl = () => {
   return (
     <Box display="flex" width={300}>
       <SegmentedControl
-        items={["One", "Two", "Three Four Five Six Seven"]}
-        selectedItemIndex={itemIndex}
-        onChange={({activeIndex}) => setItemIndex(activeIndex as number)}
+        items={["One", "Two", "Three"]}
+        selectedIndex={itemIndex}
+        onChange={(activeIndex) => setItemIndex(activeIndex as number)}
       />
     </Box>
   );
@@ -28,45 +34,22 @@ export const LargeControl = () => {
     <Box display="flex" width="100%">
       <SegmentedControl
         items={["One", "Two", "Three"]}
-        selectedItemIndex={itemIndex}
+        selectedIndex={itemIndex}
         size="lg"
-        onChange={({activeIndex}) => setItemIndex(activeIndex as number)}
+        onChange={(activeIndex) => setItemIndex(activeIndex as number)}
       />
     </Box>
   );
 };
 
-export const MultiSelectControl = () => {
-  const [itemIndexes, setItemIndexes] = useState([0, 1]);
-
+export const OverflowControl = () => {
+  const [itemIndex, setItemIndex] = useState(0);
   return (
-    <Box display="flex" width="100%">
-      <SegmentedControl
-        items={["One", "Two", "Three"]}
-        multiselect
-        selectLimit={itemIndexes.length}
-        selectedItemIndexes={itemIndexes}
-        size="lg"
-        onChange={({activeIndex}) => setItemIndexes([...(activeIndex as number[])])}
-      />
-    </Box>
-  );
-};
-
-export const PersistentControl = () => {
-  const [itemIndex, setItemIndex] = useStoredState("segmented-persistent", 0);
-
-  return (
-    <Box display="flex" width="100%">
-      <Box padding={6}>
-        <Text weight="bold">
-          Refresh your page after changing the control to see the persistence.
-        </Text>
-      </Box>
+    <Box display="flex" width={300}>
       <SegmentedControl
         items={["One", "Two", "Three Four Five Six Seven"]}
-        selectedItemIndex={itemIndex!}
-        onChange={({activeIndex}) => setItemIndex(activeIndex as number)}
+        selectedIndex={itemIndex}
+        onChange={(activeIndex) => setItemIndex(activeIndex as number)}
       />
     </Box>
   );

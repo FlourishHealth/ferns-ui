@@ -509,28 +509,12 @@ export type TooltipDirection = "top" | "bottom" | "left" | "right";
 
 export type IndicatorDirection = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
 
-type BaseSegmentedControlProps = {
+export interface SegmentedControlProps {
   items: string[];
-  responsive?: boolean;
-  size?: "md" | "lg";
-  selectLimit?: number;
-};
-
-export type SegmentedControlPropsSingleSelect = BaseSegmentedControlProps & {
-  multiselect?: false;
-  onChange: ({activeIndex}: {activeIndex: number}) => void;
-  selectedItemIndex?: number;
-};
-
-export type SegmentedControlPropsMultiSelect = BaseSegmentedControlProps & {
-  multiselect: true;
-  onChange: ({activeIndex}: {activeIndex: number[]}) => void;
-  selectedItemIndexes?: number[];
-};
-
-export type SegmentedControlProps =
-  | SegmentedControlPropsSingleSelect
-  | SegmentedControlPropsMultiSelect;
+  size?: "md" | "lg"; // default "md"
+  onChange: (activeIndex: number) => void;
+  selectedIndex?: number;
+}
 
 // Shared props for fields with labels, subtext, and error messages.
 export interface FieldWithLabelsProps {
@@ -602,16 +586,6 @@ export interface TextFieldProps extends FieldWithLabelsProps {
 }
 
 export type TextAreaProps = TextFieldProps;
-
-export interface SwitchProps extends FieldWithLabelsProps {
-  id?: string;
-  onChange: (value: boolean) => void;
-  disabled?: boolean;
-  name?: string;
-  switched: boolean;
-  // Pattern Addition
-  label?: string;
-}
 
 export interface MaskProps {
   children?: ReactChildren;
@@ -714,6 +688,15 @@ export interface SearchButtonProps {
 
 export interface BackButtonInterface {
   onBack: () => void;
+}
+
+export interface BooleanFieldProps {
+  label?: string;
+  variant?: "simple" | "title"; // default "simple"
+  interaction?: boolean; // default true
+  disabledHelperText?: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
 }
 
 export interface CheckBoxProps {
@@ -1274,27 +1257,72 @@ export interface BodyProps {
 }
 
 export interface ButtonProps {
-  text: string;
-  // TODO make this work for all colors
-  color?: ButtonColor;
-  // default gray
-  disabled?: boolean; // default false
-  inline?: boolean; // default false
-  size?: "xs" | "sm" | "md" | "lg"; // default md
-  type?: "solid" | "ghost" | "outline"; // default solid
+  /**
+   * If true, the button will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * If true, the button will take the full width of its container.
+   * @default false
+   */
+  fullWidth?: boolean;
+  /**
+   * The name of the icon to display in the button.
+   */
+  iconName?: IconName;
+  /**
+   * The position of the icon within the button.
+   * @default "left"
+   */
+  iconPosition?: "left" | "right";
+  /**
+   * If true, a loading spinner will be shown in the button.
+   */
   loading?: boolean;
-  onClick: any;
-  icon?: IconName;
-  iconColor?: IconColor;
-  withConfirmation?: boolean;
-  confirmationText?: string;
-  confirmationHeading?: string;
-  shape?: "rounded" | "pill";
+  /**
+   * The title of the confirmation modal.
+   * @default "Confirm"
+   */
+  modalTitle?: string;
+  /**
+   * The subtitle of the confirmation modal.
+   */
+  modalSubTitle?: string;
+  /**
+   * The text content of the confirmation modal.
+   * @default "Are you sure you want to continue?"
+   */
+  modalText?: string;
+  /**
+   * The test ID for the button, used for testing purposes.
+   */
   testID?: string;
-  tooltip?: {
-    text: string;
-    idealDirection?: TooltipDirection;
-  };
+  /**
+   * The text content of the button.
+   */
+  text: string;
+  /**
+   * The position of the tooltip.
+   */
+  tooltipPosition?: TooltipDirection;
+  /**
+   * The text content of the tooltip.
+   */
+  tooltipText?: string;
+  /**
+   * The type of the button, which determines its style.
+   * @default "primary"
+   */
+  variant?: "primary" | "secondary" | "muted" | "outline";
+  /**
+   * If true, a confirmation modal will be shown before the onClick action.
+   */
+  withConfirmationModal?: boolean;
+  /**
+   * The function to call when the button is clicked.
+   */
+  onClick: () => void | Promise<void>;
 }
 
 export interface CustomSelectProps {
@@ -1428,29 +1456,56 @@ export interface InfoTooltipButtonProps {
 }
 
 export interface ModalProps {
-  onDismiss: () => void;
-  visible: boolean;
-  // Alignment of the header. Default is "center".
-  align?: "center" | "start";
-  // Element to render in the middle part of the modal.
+  /**
+   * The content of the modal.
+   */
   children?: React.ReactElement;
-  // Element to render in the bottom of the modal. This takes precedence over primaryButton and
-  // secondaryButton.
-  footer?: React.ReactElement;
-  heading?: string;
-  size?: "sm" | "md" | "lg";
-  subHeading?: string;
-  // Renders a primary colored button all the way to the right in the footer, if no footer prop is
-  // provided.
-  primaryButtonText?: string;
-  primaryButtonOnClick?: (value?: any) => void;
+  /**
+   * If true, the primary button will be disabled.
+   * @default false
+   */
   primaryButtonDisabled?: boolean;
-  // Renders a gray button to the left of the primary button in the footer, if no footer prop is
-  // provided. Requires primaryButtonText to be defined, but is not required itself.
+  /**
+   * The text content of the primary button.
+   */
+  primaryButtonText?: string;
+  /**
+   * The text content of the secondary button.
+   */
   secondaryButtonText?: string;
-  secondaryButtonOnClick?: (value?: any) => void;
-  // Whether to show a close button in the upper left of modals or action sheets.
-  showClose?: boolean;
+  /**
+   * The size of the modal.
+   * @default "sm"
+   */
+  size?: "sm" | "md" | "lg";
+  /**
+   * The subtitle of the modal.
+   */
+  subTitle?: string;
+  /**
+   * The text content of the modal.
+   */
+  text?: string;
+  /**
+   * The title of the modal.
+   */
+  title?: string;
+  /**
+   * If true, the modal will be visible.
+   */
+  visible: boolean;
+  /**
+   * The function to call when the modal is dismissed.
+   */
+  onDismiss: () => void;
+  /**
+   * The function to call when the primary button is clicked.
+   */
+  primaryButtonOnClick?: (value?: any) => void | Promise<void>;
+  /**
+   * The function to call when the secondary button is clicked.
+   */
+  secondaryButtonOnClick?: (value?: any) => void | Promise<void>;
 }
 
 export interface NumberPickerActionSheetProps {
@@ -1648,18 +1703,14 @@ export interface TableContextProviderProps extends TableContextType {
 export interface TextProps {
   align?: "left" | "right" | "center" | "justify"; // default "left"
   children?: React.ReactNode;
+  bold?: boolean; // default false
   color?: TextColor;
-  inline?: boolean; // default false
   italic?: boolean; // default false
-  onPress?: () => void;
-  overflow?: "normal" | "breakWord"; // deprecated
   size?: TextSize; // default "md"
   truncate?: boolean; // default false
-  font?: Font;
   underline?: boolean;
   numberOfLines?: number;
   skipLinking?: boolean;
-  weight?: "bold" | "regular" | "medium" | "semiBold" | "light"; // default "regular"
   testID?: string;
 }
 

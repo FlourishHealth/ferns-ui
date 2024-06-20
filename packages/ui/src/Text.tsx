@@ -32,26 +32,18 @@ const fontSizes = Platform.OS === "web" ? fontSizeAndWeightWeb : fontSizeAndWeig
 
 export const Text = ({
   align = "left",
+  bold,
   children,
   color,
-  inline = false,
   italic = false,
-  overflow,
   size = "md",
   truncate = false,
-  font,
-  onPress,
   underline,
   numberOfLines,
   skipLinking,
   testID,
-  weight = "regular",
 }: TextProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
-
-  if (font) {
-    console.error("font prop is not supported yet");
-  }
 
   // TODO: make fonts part of theme.
   const [fontsLoaded] = useFonts({
@@ -66,32 +58,27 @@ export const Text = ({
   // TODO: How should we handle unloaded fonts.
   if (!fontsLoaded) {
     // eslint-disable-next-line react-native/no-raw-text
-    return <NativeText>Loading fonts...</NativeText>;
+    return <NativeText />;
   }
 
   const style: TextStyle = {};
-  if (overflow) {
-    console.warn(
-      "Text overflow is deprecated. Use `truncate` to cut off the text and add ellipse, otherwise breakWord is the default."
-    );
-  }
 
   if (size === "sm" || size === "md") {
-    if (weight === "bold" && italic) {
+    if (bold && italic) {
       style.fontFamily = "text-bold-italic";
     } else if (italic) {
       style.fontFamily = "text-regular-italic";
-    } else if (weight === "bold") {
+    } else if (bold) {
       style.fontFamily = "text-bold";
     } else {
       style.fontFamily = "text-regular";
     }
   } else {
-    if (weight === "bold" && italic) {
+    if (bold && italic) {
       style.fontFamily = "text-bold-italic";
     } else if (italic) {
       style.fontFamily = "text-medium-italic";
-    } else if (weight === "bold") {
+    } else if (bold) {
       style.fontFamily = "text-bold";
     } else {
       style.fontFamily = "text-medium";
@@ -114,22 +101,17 @@ export const Text = ({
   if (underline) {
     style.textDecorationLine = "underline";
   }
-  // TODO: might be useful for wrapping/truncating
-  // if (numberOfLines !== 1 && !inline) {
-  //   style.flexWrap = "wrap";
-  // }
-
   let lines = 0;
   if (numberOfLines && truncate && numberOfLines > 1) {
     console.error(`Cannot truncate Text and have ${numberOfLines} lines`);
   }
   if (numberOfLines) {
     lines = numberOfLines;
-  } else if (inline || truncate) {
+  } else if (truncate) {
     lines = 1;
   }
   const inner = (
-    <NativeText numberOfLines={lines} style={style} testID={testID} onPress={onPress}>
+    <NativeText numberOfLines={lines} style={style} testID={testID}>
       {children}
     </NativeText>
   );

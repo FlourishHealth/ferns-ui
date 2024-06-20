@@ -71,16 +71,11 @@ export const CheckBox = ({
         marginLeft={4}
         onClick={doOnClick}
       >
-        <Text
-          color={labelColor || "primary"}
-          numberOfLines={subLabel ? 1 : 2}
-          size={size}
-          weight="bold"
-        >
+        <Text bold color={labelColor || "primary"} numberOfLines={subLabel ? 1 : 2} size={size}>
           {label}
         </Text>
         {Boolean(subLabel) && (
-          <Text color={labelColor || "primary"} size="sm" weight="bold">
+          <Text bold color={labelColor || "primary"} size="sm">
             {subLabel!}
           </Text>
         )}

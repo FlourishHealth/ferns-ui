@@ -87,13 +87,13 @@ export const Toast = ({message, data}: ToastProps): React.ReactElement => {
         </Box>
       )}
       <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
-        <Text color="inverted" size="lg" weight="bold">
+        <Text bold color="inverted" size="lg">
           {message}
         </Text>
       </Box>
       {Boolean(buttonOnClick && buttonText) && (
         <Box alignItems="center" justifyContent="center" marginLeft={4}>
-          <Button color="lightGray" shape="pill" text={buttonText!} onClick={buttonOnClick} />
+          <Button text={buttonText!} onClick={buttonOnClick as () => void | Promise<void>} />
         </Box>
       )}
       {Boolean(onDismiss && persistent) && (

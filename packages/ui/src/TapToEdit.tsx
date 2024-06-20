@@ -23,7 +23,7 @@ const TapToEditTitle = ({
 }): ReactElement => {
   const Title = (
     <Box flex="grow" justifyContent="center">
-      <Text weight="bold">{title}:</Text>
+      <Text bold>{title}:</Text>
       {Boolean(description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing) && (
         <Text color="secondaryLight" size="sm">
           {description}
@@ -131,12 +131,10 @@ export const TapToEdit = ({
         {editing && !isEditing && (
           <Box direction="row">
             <Button
-              color="blue"
-              confirmationHeading={confirmationHeading}
-              confirmationText={confirmationText}
-              inline
+              modalText={confirmationText}
+              modalTitle={confirmationHeading}
               text="Save"
-              withConfirmation={withConfirmation}
+              withConfirmationModal={withConfirmation}
               onClick={async (): Promise<void> => {
                 if (!onSave) {
                   console.error("No onSave provided for editable TapToEdit");
@@ -149,9 +147,8 @@ export const TapToEdit = ({
             />
             <Box marginLeft={2}>
               <Button
-                color="red"
-                inline
                 text="Cancel"
+                variant="muted"
                 onClick={(): void => {
                   if (setValue) {
                     setValue(initialValue);

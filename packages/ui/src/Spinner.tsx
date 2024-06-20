@@ -6,7 +6,7 @@ import {useTheme} from "./Theme";
 
 export const Spinner = ({size = "md", color = "light"}: SpinnerProps): ReactElement | null => {
   const [show, setShow] = useState(false);
-  const theme = useTheme();
+  const {theme} = useTheme();
 
   let computedColor = "";
   if (color === "light") {

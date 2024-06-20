@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 
 import {Box} from "./Box";
-import {Button} from "./Button";
 import {BannerProps, TextColor} from "./Common";
 import {Icon} from "./Icon";
 import {IconButton} from "./IconButton";
@@ -63,17 +62,19 @@ export const Banner = ({
   };
 
   const renderButton = (): React.ReactElement | null => {
-    if (type === CUSTOM_BUTTON) {
-      return (
-        <Button
-          {...customButtonProps}
-          color={customButtonProps?.color ?? "primary"}
-          size={customButtonProps?.size ?? "sm"}
-          text={customButtonProps?.text ?? ""}
-          onClick={onClick}
-        />
-      );
-    } else if (type === ACTION) {
+    // needs to be updated with new button props
+    // if (type === CUSTOM_BUTTON) {
+    //   return (
+    //     <Button
+    //       {...customButtonProps}
+    //       color={customButtonProps?.color ?? "primary"}
+    //       size={customButtonProps?.size ?? "sm"}
+    //       text={customButtonProps?.text ?? ""}
+    //       onClick={onClick}
+    //     />
+    //   );
+    // } else
+    if (type === ACTION) {
       return (
         <Box alignItems="center" display="block" justifyContent="center" width={40}>
           <IconButton
@@ -130,7 +131,7 @@ export const Banner = ({
       )}
       <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
         <Box paddingY={1}>
-          <Text align="center" color={textColor} weight="bold">
+          <Text align="center" bold color={textColor}>
             {text}
           </Text>
         </Box>
