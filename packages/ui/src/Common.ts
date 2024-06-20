@@ -1767,8 +1767,9 @@ export interface ToastProps {
   persistent?: boolean;
   // TODO enforce these should only show if size is "lg" with type discrinimation
   subtitle?: string;
-  buttonText?: string;
-  buttonOnClick?: () => void | Promise<void>;
+  // TODO Add buttons for Toast
+  // buttonText?: string;
+  // buttonOnClick?: () => void | Promise<void>;
 }
 
 export interface TooltipProps {

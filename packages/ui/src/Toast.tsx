@@ -1,8 +1,7 @@
 import React from "react";
-import {Pressable, View} from "react-native";
+import {Platform, Pressable, View} from "react-native";
 import {useToast as useRNToast} from "react-native-toast-notifications";
 
-import {Button} from "./Button";
 import {IconName, SurfaceColor, TextColor, ToastProps} from "./Common";
 import {Heading} from "./Heading";
 import {Icon} from "./Icon";
@@ -17,10 +16,9 @@ type UseToastVariantOptions = {
   secondary?: ToastProps["secondary"];
   size?: ToastProps["size"];
   onDismiss?: ToastProps["onDismiss"];
-  // TODO enforce these should only show if size is "lg" with type discrinimation
   subtitle?: ToastProps["subtitle"];
-  buttonText?: ToastProps["buttonText"];
-  buttonOnClick?: ToastProps["buttonOnClick"];
+  // buttonText?: ToastProps["buttonText"];
+  // buttonOnClick?: ToastProps["buttonOnClick"];
 };
 
 type UseToastOptions = {variant?: ToastProps["variant"]} & UseToastVariantOptions;
@@ -132,16 +130,17 @@ export const Toast = ({
         flexDirection: "row",
         justifyContent: "center",
         width: "100%",
-        paddingLeft: "10%",
-        paddingRight: "10%",
+        paddingLeft: Platform.OS === "web" ? "10%" : (theme.spacing.sm as any),
+        paddingRight: Platform.OS === "web" ? "10%" : (theme.spacing.sm as any),
         marginTop: theme.spacing.sm as any,
+        maxWidth: Platform.OS === "web" ? 900 : "100%",
+        flexGrow: 1,
       }}
     >
       <View
         style={{
           display: "flex",
           flexShrink: 1,
-          flexGrow: 0,
           flexDirection: "row",
           minWidth: 150,
           paddingTop: theme.spacing.xs as any,
@@ -153,6 +152,7 @@ export const Toast = ({
           backgroundColor: theme.surface[color],
           alignSelf: "flex-start",
           minHeight: size === "lg" ? 32 : undefined,
+          maxWidth: "100%", // Ensure the content does not overflow
         }}
       >
         <View
@@ -163,6 +163,9 @@ export const Toast = ({
             flexDirection: "row",
             alignItems: "center",
             gap: 12,
+            maxWidth: "100%",
+            flexShrink: 1, // Ensure the content can shrink properly
+            flexGrow: 1,
           }}
         >
           <View
@@ -182,20 +185,18 @@ export const Toast = ({
             <Icon color={textColor} iconName={iconName} size={size === "lg" ? "2xl" : "md"} />
           </View>
           <View
-            style={
-              size === "lg"
-                ? {
-                    display: "flex",
-                    paddingTop: 8,
-                    paddingBottom: 8,
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "flex-start",
-                    gap: 2,
-                    alignSelf: "stretch",
-                  }
-                : {}
-            }
+            style={{
+              display: "flex",
+              paddingTop: 8,
+              paddingBottom: 8,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              gap: 2,
+              alignSelf: "stretch",
+              flexWrap: "wrap",
+              flexShrink: 1, // Ensure the content can shrink properly
+            }}
           >
             {Boolean(size === "lg") ? (
               <Heading color={textColor} size="sm">
@@ -210,16 +211,6 @@ export const Toast = ({
               <Text color={textColor} size="sm">
                 {subtitle}
               </Text>
-            )}
-            {Boolean(buttonText && buttonOnClick) && (
-              <View style={{marginTop: 8, marginBottom: 8}}>
-                <Button
-                  iconName="arrow-right"
-                  text={buttonText!}
-                  variant="secondary"
-                  onClick={buttonOnClick!}
-                />
-              </View>
             )}
           </View>
         </View>
