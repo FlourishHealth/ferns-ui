@@ -33,7 +33,7 @@ const TapToEditTitle = ({
   );
   if (showDescriptionAsTooltip) {
     return (
-      <Tooltip idealDirection="top" text={description}>
+      <Tooltip idealPosition="top" text={description}>
         {Title}
       </Tooltip>
     );

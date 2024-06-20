@@ -170,7 +170,7 @@ export const Button: FC<ButtonProps> = (props) => {
 
   if (tooltipText && !isMobileDevice && !isNative) {
     return (
-      <Tooltip idealDirection={tooltipPosition} text={tooltipText}>
+      <Tooltip idealPosition={tooltipPosition} text={tooltipText}>
         <ButtonComponent {...props} />
       </Tooltip>
     );

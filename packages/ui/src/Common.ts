@@ -505,7 +505,7 @@ export interface IconProps {
   testID?: string;
 }
 
-export type TooltipDirection = "top" | "bottom" | "left" | "right";
+export type TooltipPosition = "top" | "bottom" | "left" | "right";
 
 export type IndicatorDirection = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
 
@@ -1342,7 +1342,7 @@ export interface ButtonProps {
   /**
    * The position of the tooltip.
    */
-  tooltipPosition?: TooltipDirection;
+  tooltipPosition?: TooltipPosition;
   /**
    * The text content of the tooltip.
    */
@@ -1466,25 +1466,70 @@ export interface HyperlinkProps {
 }
 
 export interface IconButtonProps {
-  prefix?: IconPrefix;
-  icon: IconName;
+  /**
+   * The accessibility label for the icon button.
+   */
   accessibilityLabel: string;
-  onClick: () => void;
-  size?: IconSize;
-  type?: "primary" | "secondary" | "muted";
-  disabled?: boolean;
-  selected?: boolean;
-  withConfirmation?: boolean;
-  confirmationText?: string;
+
+  /**
+   * The heading of the confirmation modal.
+   * @default "Confirm"
+   */
   confirmationHeading?: string;
-  tooltip?: {
-    text: string;
-    idealDirection?: TooltipDirection;
-  };
-  indicator?: boolean;
-  indicatorNumber?: number;
-  indicatorStyle?: {position: IndicatorDirection; color: SurfaceColor};
+
+  /**
+   * The text content of the confirmation modal.
+   * @default "Are you sure you want to continue?"
+   */
+  confirmationText?: string;
+
+  /**
+   * The name of the icon to display in the button.
+   */
+  iconName: IconName;
+
+  /**
+   * If true, a loading spinner will be shown in the button.
+   */
+  loading?: boolean;
+
+  /**
+   * If true, the button will appear selected.
+   * @default false
+   */
+  selected?: boolean;
+
+  /**
+   * The test ID for the button, used for testing purposes.
+   */
   testID?: string;
+
+  /**
+   * The ideal position of the tooltip.
+   */
+  tooltipIdealPosition?: TooltipPosition;
+
+  /**
+   * The text content of the tooltip.
+   */
+  tooltipText?: string;
+
+  /**
+   * The variant of the button, which determines its style.
+   * @default "primary"
+   */
+  variant?: "primary" | "secondary" | "muted" | "destructive";
+
+  /**
+   * If true, a confirmation modal will be shown before the onClick action.
+   * @default false
+   */
+  withConfirmation?: boolean;
+
+  /**
+   * The function to call when the button is clicked.
+   */
+  onClick: () => void | Promise<void>;
 }
 
 export interface InfoTooltipButtonProps {
@@ -1773,9 +1818,7 @@ export interface TooltipProps {
   children: React.ReactElement;
   // If text is undefined, the children will be rendered without a tooltip.
   text?: string;
-  idealDirection?: "top" | "bottom" | "left" | "right";
-  // TODO: Fix Tooltip.bgColor.
-  bgColor?: any;
+  idealPosition?: "top" | "bottom" | "left" | "right";
 }
 
 export interface LinkProps extends TextProps {
