@@ -39,17 +39,39 @@ export const AvatarConfiguration: DemoConfiguration = {
   demoOptions: {
     size: "md",
     controls: {
-      backgroundColor: {
-        type: "select",
-        defaultValue: "primary",
-        options: [
-          {label: "Primary", value: "primary"},
-          {label: "Secondary", value: "secondary"},
-        ],
-      },
       name: {
         type: "text",
         defaultValue: "Tony Stark",
+      },
+      hasBorder: {
+        type: "boolean",
+        defaultValue: true,
+      },
+      size: {
+        type: "select",
+        options: [
+          {label: "xs", value: "xs"},
+          {label: "sm", value: "sm"},
+          {label: "md", value: "md"},
+          {label: "lg", value: "lg"},
+          {label: "xl", value: "xl"},
+        ],
+        defaultValue: "md",
+      },
+      status: {
+        type: "select",
+        options: [
+          {label: "online", value: "online"},
+          {label: "offline", value: "offline"},
+          {label: "outOfOffice", value: "outOfOffice"},
+          {label: "activeMobile", value: "activeMobile"},
+          {label: "imagePicker", value: "imagePicker"},
+        ],
+        defaultValue: "online",
+      },
+      doNotDisturb: {
+        type: "boolean",
+        defaultValue: false,
       },
     },
   },

@@ -1,10 +1,27 @@
-import {Avatar, AvatarProps, AvatarStatus, Box, Heading, Text} from "ferns-ui";
+import {
+  Avatar,
+  AvatarImagePickerEvent,
+  AvatarProps,
+  AvatarStatus,
+  Box,
+  Heading,
+  Text,
+} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 export const AvatarDemo = (props: Partial<AvatarProps>) => {
+  const [src, setSrc] = useState<string | undefined>(props.src ?? undefined);
+
   return (
     <Box>
-      <Avatar backgroundColor="primary" name="Tony Stark" textColor="primary" {...props} />
+      <Avatar
+        name="Tony Stark"
+        src={src}
+        {...props}
+        onChange={(val: AvatarImagePickerEvent) => {
+          setSrc(val.uri);
+        }}
+      />
     </Box>
   );
 };
@@ -21,7 +38,7 @@ export const AvatarInitials = () => {
       <Text>Tony</Text>
       <Avatar name="Tony" />
       <Text> Tony Stark Colored</Text>
-      <Avatar backgroundColor="primary" name="Tony Stark" textColor="inverted" />
+      <Avatar name="Tony Stark" />
     </Box>
   );
 };
@@ -45,25 +62,25 @@ export const AvatarOutlines = () => {
   return (
     <Box color="neutral" direction="column" display="flex" height="100%" width="100%">
       <Text>XS</Text>
-      <Avatar name="Tony Stark" outline size="xs" />
+      <Avatar name="Tony Stark" size="xs" />
       <Text>SM</Text>
-      <Avatar name="Tony Stark" outline size="sm" />
+      <Avatar name="Tony Stark" size="sm" />
       <Text>MD</Text>
-      <Avatar name="Tony Stark" outline size="md" />
+      <Avatar name="Tony Stark" size="md" />
       <Text>LG</Text>
-      <Avatar name="Tony Stark" outline size="lg" />
+      <Avatar name="Tony Stark" size="lg" />
       <Text>XL</Text>
-      <Avatar name="Tony Stark" outline size="xl" />
+      <Avatar name="Tony Stark" size="xl" />
       <Text>XS</Text>
-      <Avatar name="Tony Stark" outline size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar name="Tony Stark" size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
       <Text>SM</Text>
-      <Avatar name="Tony Stark" outline size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar name="Tony Stark" size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
       <Text>MD</Text>
-      <Avatar name="Tony Stark" outline size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar name="Tony Stark" size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
       <Text>LG</Text>
-      <Avatar name="Tony Stark" outline size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar name="Tony Stark" size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
       <Text>XL</Text>
-      <Avatar name="Tony Stark" outline size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar name="Tony Stark" size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
     </Box>
   );
 };
@@ -95,9 +112,7 @@ export const AvatarStatusDemo = () => {
   const renderIcon = (
     text: string,
     size: "xs" | "sm" | "md" | "lg" | "xl",
-    status: AvatarStatus,
-    mobile = false,
-    statusText?: string
+    status: AvatarStatus
   ) => {
     return (
       <Box paddingY={1}>
@@ -107,8 +122,6 @@ export const AvatarStatusDemo = () => {
           size={size}
           src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
           status={status}
-          statusMobile={mobile}
-          statusText={statusText}
         />
       </Box>
     );
@@ -116,8 +129,8 @@ export const AvatarStatusDemo = () => {
   return (
     <Box color="neutral" direction="column" display="flex" height="100%" width="100%">
       {renderIcon("Online", "xs", "online")}
-      {renderIcon("Offline (with tooltip)", "sm", "offline", false, "Offline at 1:30pm")}
-      {renderIcon("Do Not Disturb", "md", "doNotDisturb")}
+      {/* {renderIcon("Offline (with tooltip)", "sm", "offline", false, "Offline at 1:30pm")} */}
+      {/* {renderIcon("Do Not Disturb", "md", "doNotDisturb")}
       {renderIcon("Away", "lg", "away")}
       {renderIcon("Meeting", "xl", "meeting")}
       {renderIcon("Vacation", "xl", "vacation")}
@@ -129,37 +142,37 @@ export const AvatarStatusDemo = () => {
         false,
         "Out Of Office Until 1/3/24"
       )}
-      {renderIcon("Commuting", "xl", "commuting")}
-      {renderIcon("Online Mobile", "xl", "online", true)}
-      {renderIcon("Offline Mobile", "xl", "offline", true)}
-      {renderIcon("Away Mobile", "xl", "away", true)}
-      {renderIcon("DND Mobile (tooltip)", "xl", "doNotDisturb", true, "Deep Work, Do Not Disturb")}
+      {renderIcon("Commuting", "xl", "commuting")} */}
+      {renderIcon("Online Mobile", "xl", "online")}
+      {renderIcon("Offline Mobile", "xl", "offline")}
+      {/* {renderIcon("Away Mobile", "xl", "away", true)} */}
+      {/* {renderIcon("DND Mobile (tooltip)", "xl", "doNotDisturb", true, "Deep Work, Do Not Disturb")} */}
     </Box>
   );
 };
 
 export const AvatarImage = (): ReactElement => {
-  const [xsImage, setXSImage] = useState({
+  const [xsImage, setXSImage] = useState<AvatarImagePickerEvent>({
     uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
     height: 0,
     width: 0,
   });
-  const [smImage, setSMImage] = useState({
+  const [smImage, setSMImage] = useState<AvatarImagePickerEvent>({
     uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
     height: 0,
     width: 0,
   });
-  const [mdImage, setMDImage] = useState({
+  const [mdImage, setMDImage] = useState<AvatarImagePickerEvent>({
     uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
     height: 0,
     width: 0,
   });
-  const [lgImage, setLGImage] = useState({
+  const [lgImage, setLGImage] = useState<AvatarImagePickerEvent>({
     uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
     height: 0,
     width: 0,
   });
-  const [xlImage, setXLImage] = useState({
+  const [xlImage, setXLImage] = useState<AvatarImagePickerEvent>({
     uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
     height: 0,
     width: 0,
@@ -171,10 +184,10 @@ export const AvatarImage = (): ReactElement => {
       <Text>Width: {xsImage.width}</Text>
       <Text>Height: {xsImage.height}</Text>
       <Avatar
-        editAvatarImage
         name="Tony Stark"
         size="xs"
         src={xsImage.uri}
+        status="imagePicker"
         onChange={(image) => setXSImage(image)}
       />
 
@@ -183,10 +196,10 @@ export const AvatarImage = (): ReactElement => {
       <Text>Height: {smImage.height}</Text>
 
       <Avatar
-        editAvatarImage
         name="Tony Stark"
         size="sm"
         src={smImage.uri}
+        status="imagePicker"
         onChange={(image) => setSMImage(image)}
       />
 
@@ -195,10 +208,10 @@ export const AvatarImage = (): ReactElement => {
       <Text>Height: {mdImage.height}</Text>
 
       <Avatar
-        editAvatarImage
         name="Tony Stark"
         size="md"
         src={mdImage.uri}
+        status="imagePicker"
         onChange={(image) => setMDImage(image)}
       />
 
@@ -207,10 +220,10 @@ export const AvatarImage = (): ReactElement => {
       <Text>Height: {lgImage.height}</Text>
 
       <Avatar
-        editAvatarImage
         name="Tony Stark"
         size="lg"
         src={lgImage.uri}
+        status="imagePicker"
         onChange={(image) => setLGImage(image)}
       />
 
@@ -219,13 +232,10 @@ export const AvatarImage = (): ReactElement => {
       <Text>Height: {xlImage.height}</Text>
 
       <Avatar
-        avatarImageWidth={500}
-        editAvatarImage
-        imageFit="cover"
         name="Tony Stark"
         size="xl"
         src={xlImage.uri}
-        status="doNotDisturb"
+        status="outOfOffice"
         onChange={(image) => setXLImage(image)}
       />
     </Box>

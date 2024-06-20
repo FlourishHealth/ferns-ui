@@ -352,9 +352,10 @@ export type TextFieldType =
   | "url"
   | "username";
 
-export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
+export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | number;
 
 export const iconSizeToNumber = (size?: IconSize) => {
+  if (typeof size === "number") return size;
   return {
     xs: 8,
     sm: 12,
@@ -1188,22 +1189,21 @@ export type ActionSheetProps = {
   onPositionChanged?: (hasReachedTop: boolean) => void;
 };
 
-export type AvatarStatus =
-  | "offline"
-  | "online"
-  | "out of office"
-  | "active mobile"
-  | "image picker";
+export type AvatarStatus = "offline" | "online" | "outOfOffice" | "activeMobile" | "imagePicker";
+
+export type AvatarImagePickerEvent = {
+  avatarImageFormat?: string;
+  base64?: string;
+  uri?: string;
+  height?: number;
+  width?: number;
+};
 
 export interface AvatarProps {
   /**
    * The name of the user. This is used for the placeholder treatment if an image is not available.
    */
   name: string;
-  /**
-   * Override the generated initials from `name`.
-   */
-  showInitials?: boolean;
   /**
    * Adds a white border around Avatar so it's visible when displayed on other images.
    */
@@ -1219,7 +1219,7 @@ export interface AvatarProps {
   /**
    * Function to handle the avatar image edit
    */
-  onChange?: (val: any) => void;
+  onChange?: (val: AvatarImagePickerEvent) => void;
   /**
    * The status of the user to display with the avatar.
    */
@@ -1228,6 +1228,10 @@ export interface AvatarProps {
    * If true, the status will have a "Z" to indicate the user has snoozed notifications.
    */
   doNotDisturb?: boolean;
+  /**
+   * Accessibility label for the avatar image.
+   */
+  accessibilityLabel?: string;
 }
 
 export interface BadgeProps {
