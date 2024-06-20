@@ -76,6 +76,8 @@ const ButtonComponent: FC<ButtonProps> = ({
       borderColor = theme.text.secondaryDark;
       borderWidth = 2;
       color = theme.text.secondaryDark;
+    } else if (variant === "destructive") {
+      backgroundColor = theme.surface.error;
     } else if (disabled) {
       backgroundColor = theme.surface.disabled;
     }

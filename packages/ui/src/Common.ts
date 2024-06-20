@@ -1351,7 +1351,7 @@ export interface ButtonProps {
    * The type of the button, which determines its style.
    * @default "primary"
    */
-  variant?: "primary" | "secondary" | "muted" | "outline";
+  variant?: "primary" | "secondary" | "muted" | "outline" | "destructive";
   /**
    * If true, a confirmation modal will be shown before the onClick action.
    */
