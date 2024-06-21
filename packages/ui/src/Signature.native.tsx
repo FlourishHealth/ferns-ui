@@ -1,8 +1,8 @@
-import React, {useRef} from "react";
+import React, {useContext, useRef} from "react";
+import {Text, View} from "react-native";
 import SignatureScreen, {SignatureViewRef} from "react-native-signature-canvas";
 
-import {Box} from "./Box";
-import {Button} from "./Button";
+import {ThemeContext} from "./Theme";
 
 interface Props {
   onChange: (signature: string) => void;
@@ -14,6 +14,7 @@ const style = `.m-signature-pad--footer {display: none; margin: 0px;}`;
 
 export const Signature: React.FC<Props> = ({onChange, onStart, onEnd}: Props) => {
   const ref = useRef<SignatureViewRef>(null);
+  const {theme} = useContext(ThemeContext);
 
   const handleClear = () => {
     ref.current?.clearSignature();
@@ -31,20 +32,26 @@ export const Signature: React.FC<Props> = ({onChange, onStart, onEnd}: Props) =>
   };
 
   return (
-    <Box>
-      <Box border="dark" height={100}>
+    <View style={{minWidth: 220}}>
+      <View style={{borderColor: theme.border.dark, borderWidth: 1, minHeight: 90}}>
         <SignatureScreen
           ref={ref}
+          backgroundColor={theme.surface.base}
           trimWhitespace
           webStyle={style}
           onBegin={onBegin}
           onEnd={handleEnd}
           onOK={(img) => onChange(img)}
         />
-      </Box>
-      <Box direction="row">
-        <Button text="Clear" onClick={handleClear} />
-      </Box>
-    </Box>
+      </View>
+      <View style={{flexDirection: "row"}}>
+        <Text
+          style={{color: theme.text.link, textDecorationLine: "underline"}}
+          onPress={handleClear}
+        >
+          Clear
+        </Text>
+      </View>
+    </View>
   );
 };

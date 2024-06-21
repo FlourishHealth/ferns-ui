@@ -1,7 +1,13 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
 import {SignatureField} from "ferns-ui";
 import React from "react";
+
+import {
+  SignatureFieldDemo,
+  SignatureFieldDemoCompleted,
+  SignatureFieldDemoDisabled,
+  SignatureFieldDemoWithError,
+} from "../stories/SignatureField.stories";
 
 export const SignatureFieldConfiguration: DemoConfiguration = {
   name: "Signature field",
@@ -26,7 +32,20 @@ export const SignatureFieldConfiguration: DemoConfiguration = {
     doNot: ["Do not disable the field or return an error without telling the user why."],
   },
   props: {},
-  demo: () => <DefaultDemo />,
+  demo: SignatureFieldDemo,
   demoOptions: {},
-  stories: {},
+  stories: {
+    "Basic Signature Field": {
+      render: () => <SignatureFieldDemo />,
+    },
+    "Completed Signature Field": {
+      render: () => <SignatureFieldDemoCompleted />,
+    },
+    "Signature Field Disabled": {
+      render: () => <SignatureFieldDemoDisabled />,
+    },
+    "Error Signature Field": {
+      render: () => <SignatureFieldDemoWithError />,
+    },
+  },
 };

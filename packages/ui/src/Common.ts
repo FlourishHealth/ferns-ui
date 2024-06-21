@@ -1631,6 +1631,17 @@ export interface RadioFieldProps {
   options: string[];
 }
 
+export interface SignatureFieldProps {
+  state?: "default" | "error" | "disabled"; // default "default"
+  value?: string;
+  onChange: (value: any) => void;
+  title?: string; // default "Signature"
+  onStart?: () => void;
+  onEnd?: () => void;
+  disabledText?: string;
+  errorText?: string;
+}
+
 export interface SideDrawerProps {
   // Position of the drawer relative to the child
   position?: "right" | "left";
