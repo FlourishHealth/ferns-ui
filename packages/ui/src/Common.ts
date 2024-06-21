@@ -1494,11 +1494,6 @@ export interface IconButtonProps {
   loading?: boolean;
 
   /**
-   * If true, the button will appear selected.
-   * @default false
-   */
-  selected?: boolean;
-
   /**
    * The test ID for the button, used for testing purposes.
    */

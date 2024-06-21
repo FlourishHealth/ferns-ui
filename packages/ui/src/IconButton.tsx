@@ -12,14 +12,23 @@ import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 import {isNative} from "./Utilities";
 
-const ConfirmationModal: FC<{
+type ConfirmationModalProps = {
   visible: boolean;
   title: string;
   subTitle?: string;
   text: string;
   onConfirm: () => void;
   onCancel: () => void;
-}> = ({visible, title, subTitle, text, onConfirm, onCancel}) => {
+};
+
+const ConfirmationModal: FC<ConfirmationModalProps> = ({
+  visible,
+  title,
+  subTitle,
+  text,
+  onConfirm,
+  onCancel,
+}) => {
   return (
     <Modal
       primaryButtonOnClick={onConfirm}
