@@ -151,8 +151,9 @@ const IconButtonComponent: FC<IconButtonProps> = ({
 
 export const IconButton: FC<IconButtonProps> = (props) => {
   const {tooltipText, tooltipIdealPosition} = props;
+  const isMobileOrNative = isMobileDevice() || isNative();
 
-  if (tooltipText && !isMobileDevice && !isNative) {
+  if (tooltipText && !isMobileOrNative) {
     return (
       <Tooltip idealPosition={tooltipIdealPosition} text={tooltipText}>
         <IconButtonComponent {...props} />

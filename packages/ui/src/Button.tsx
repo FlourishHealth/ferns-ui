@@ -169,8 +169,9 @@ const ButtonComponent: FC<ButtonProps> = ({
 
 export const Button: FC<ButtonProps> = (props) => {
   const {tooltipText, tooltipPosition} = props;
+  const isMobileOrNative = isMobileDevice() || isNative();
 
-  if (tooltipText && !isMobileDevice && !isNative) {
+  if (tooltipText && !isMobileOrNative) {
     return (
       <Tooltip idealPosition={tooltipPosition} text={tooltipText}>
         <ButtonComponent {...props} />
