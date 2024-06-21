@@ -76,6 +76,8 @@ const ButtonComponent: FC<ButtonProps> = ({
       borderColor = theme.text.secondaryDark;
       borderWidth = 2;
       color = theme.text.secondaryDark;
+    } else if (variant === "destructive") {
+      backgroundColor = theme.surface.error;
     } else if (disabled) {
       backgroundColor = theme.surface.disabled;
     }
@@ -167,10 +169,11 @@ const ButtonComponent: FC<ButtonProps> = ({
 
 export const Button: FC<ButtonProps> = (props) => {
   const {tooltipText, tooltipPosition} = props;
+  const isMobileOrNative = isMobileDevice() || isNative();
 
-  if (tooltipText && !isMobileDevice && !isNative) {
+  if (tooltipText && !isMobileOrNative) {
     return (
-      <Tooltip idealDirection={tooltipPosition} text={tooltipText}>
+      <Tooltip idealPosition={tooltipPosition} text={tooltipText}>
         <ButtonComponent {...props} />
       </Tooltip>
     );

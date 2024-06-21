@@ -11,43 +11,41 @@ export const TooltipDemo = () => {
 };
 
 export const ChevronTooltip = ({
-  idealDirection,
+  idealPosition,
   text = "Short Tooltip Text",
 }: {
-  idealDirection: "left" | "right" | "top" | "bottom" | "none";
+  idealPosition: "left" | "right" | "top" | "bottom" | "none";
   text?: string;
 }): React.ReactElement => (
   <IconButton
     accessibilityLabel="info"
-    bgColor="white"
-    icon={
-      idealDirection === "none"
+    iconName={
+      idealPosition === "none"
         ? "question"
-        : idealDirection === "bottom"
+        : idealPosition === "bottom"
           ? "chevron-down"
-          : idealDirection === "top"
+          : idealPosition === "top"
             ? "chevron-up"
-            : `chevron-${idealDirection}`
+            : `chevron-${idealPosition}`
     }
-    iconColor="blue"
-    tooltip={{text, idealDirection: idealDirection === "none" ? undefined : idealDirection}}
+    tooltipIdealPosition="bottom"
+    tooltipText={text}
     onClick={() => {}}
   />
 );
 
 export const FiveTooltips = ({text}: {text?: string}): React.ReactElement => (
   <Box direction="row">
-    <ChevronTooltip idealDirection="none" text={text} />
-    <ChevronTooltip idealDirection="top" text={text} />
-    <ChevronTooltip idealDirection="right" text={text} />
-    <ChevronTooltip idealDirection="bottom" text={text} />
-    <ChevronTooltip idealDirection="left" text={text} />
+    <ChevronTooltip idealPosition="none" text={text} />
+    <ChevronTooltip idealPosition="top" text={text} />
+    <ChevronTooltip idealPosition="right" text={text} />
+    <ChevronTooltip idealPosition="bottom" text={text} />
+    <ChevronTooltip idealPosition="left" text={text} />
     <IconButton
       accessibilityLabel="delete"
-      bgColor="gray"
-      icon="trash"
-      iconColor="red"
-      tooltip={{text: "Deletes some stuff", idealDirection: "bottom"}}
+      iconName="trash"
+      tooltipIdealPosition="bottom"
+      tooltipText="Delete some stuff"
       onClick={() => {
         console.info("Click delete");
       }}

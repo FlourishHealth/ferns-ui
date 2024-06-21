@@ -98,7 +98,11 @@ export const Toast = ({message, data}: ToastProps): React.ReactElement => {
       )}
       {Boolean(onDismiss && persistent) && (
         <Box alignItems="center" justifyContent="center" marginLeft={4}>
-          <IconButton accessibilityLabel="Dismiss notification" icon="xmark" onClick={onDismiss!} />
+          <IconButton
+            accessibilityLabel="Dismiss notification"
+            iconName="xmark"
+            onClick={onDismiss!}
+          />
         </Box>
       )}
     </Box>

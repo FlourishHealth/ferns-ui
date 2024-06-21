@@ -1,183 +1,165 @@
-import React, {forwardRef, useState} from "react";
-import {Platform, Pressable, View, ViewStyle} from "react-native";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import debounce from "lodash/debounce";
+import React, {FC, useContext, useState} from "react";
+import {ActivityIndicator, Pressable, View} from "react-native";
 
-import {Box} from "./Box";
-import {IconButtonProps, IconColor, iconSizeToNumber, SurfaceColor} from "./Common";
-import {Icon} from "./Icon";
+import {IconButtonProps} from "./Common";
+import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
+import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
+import {isNative} from "./Utilities";
 
-// eslint-disable-next-line react/display-name
-export const IconButton = forwardRef(
-  (
-    {
-      prefix,
-      icon,
-      onClick,
-      size,
-      type = "primary",
-      withConfirmation = false,
-      confirmationText = "Are you sure you want to continue?",
-      confirmationHeading = "Confirm",
-      tooltip,
-      indicator,
-      indicatorNumber,
-      indicatorStyle = {position: "bottomRight", color: "primary"},
-      testID,
-    }: IconButtonProps,
-    ref
-  ) => {
-    const [showConfirmation, setShowConfirmation] = useState(false);
+type ConfirmationModalProps = {
+  visible: boolean;
+  title: string;
+  subTitle?: string;
+  text: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+};
 
-    // TODO: support hover states for icon button.
+const ConfirmationModal: FC<ConfirmationModalProps> = ({
+  visible,
+  title,
+  subTitle,
+  text,
+  onConfirm,
+  onCancel,
+}) => {
+  return (
+    <Modal
+      primaryButtonOnClick={onConfirm}
+      primaryButtonText="Confirm"
+      secondaryButtonOnClick={onCancel}
+      secondaryButtonText="Cancel"
+      subTitle={subTitle}
+      title={title}
+      visible={visible}
+      onDismiss={onCancel}
+    >
+      <Text>{text}</Text>
+    </Modal>
+  );
+};
 
-    const opacity = 1;
-    let bgColor: SurfaceColor;
-    let iconColor: IconColor;
-    // TODO match up icon colors better
-    if (type === "muted") {
-      bgColor = "base";
-      iconColor = "primary";
-    } else if (type === "secondary") {
-      bgColor = "neutralLight";
-      iconColor = "secondaryDark";
-    } else {
-      bgColor = "primary";
-      iconColor = "inverted";
+const IconButtonComponent: FC<IconButtonProps> = ({
+  accessibilityLabel,
+  confirmationHeading = "Confirm",
+  confirmationText = "Are you sure you want to continue?",
+  iconName,
+  loading: propsLoading = false,
+  testID,
+  variant = "primary",
+  withConfirmation = false,
+  onClick,
+}) => {
+  const [loading, setLoading] = useState(propsLoading);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const {theme} = useContext(ThemeContext);
+
+  if (!theme) {
+    return null;
+  }
+
+  const getStyles = () => {
+    let backgroundColor = theme.surface.primary;
+    let color = theme.text.inverted;
+
+    if (variant === "secondary") {
+      backgroundColor = theme.surface.neutralLight;
+      color = theme.surface.secondaryDark;
+    } else if (variant === "muted") {
+      backgroundColor = theme.text.inverted;
+      color = theme.surface.primary;
+    } else if (variant === "destructive") {
+      backgroundColor = theme.text.inverted;
+      color = theme.text.error;
     }
 
-    const IndicatorPosition = {
-      bottomRight: {bottom: "20%", right: "20%"},
-      bottomLeft: {bottom: "20%", left: "20%"},
-      topRight: {top: "20%", right: "20%"},
-      topLeft: {top: "20%", left: "20%"},
-    };
+    return {backgroundColor, color};
+  };
 
-    const indicatorPosition = {position: "absolute", ...IndicatorPosition[indicatorStyle.position]};
+  const {backgroundColor, color} = getStyles();
 
-    const IndicatorNumPosition = {
-      bottomRight: {bottom: "18%", right: "12%"},
-      bottomLeft: {bottom: "10%", left: "10%"},
-      topRight: {top: "-5%", right: "-5%"},
-      topLeft: {top: "10%", left: "10%"},
-    };
-
-    const numberIndicatorProps = {
-      position: "absolute",
-      ...IndicatorNumPosition[indicatorStyle.position],
-    };
-
-    // TODO: remove indicator render function
-    function renderIndicator(): React.ReactElement | null {
-      if (indicator && indicatorNumber && indicatorNumber > 0) {
-        return (
-          <View style={numberIndicatorProps as ViewStyle}>
-            <Box
-              alignItems="center"
-              color={indicatorStyle.color}
-              dangerouslySetInlineStyle={{
-                __style: {
-                  padding: indicatorNumber && indicatorNumber > 9 ? 2 : 0,
-                },
-              }}
-              justifyContent="center"
-              minHeight={15}
-              minWidth={15}
-              rounding="md"
-            >
-              <Text bold color="inverted" size="sm">
-                {indicatorNumber}
-              </Text>
-            </Box>
-          </View>
-        );
-      } else if (indicator) {
-        return (
-          <View style={indicatorPosition as ViewStyle}>
-            {/* TODO: indicator probably needs to be the direct icon, not Ferns UI Icon */}
-            <Icon iconName="circle" size="sm" />
-          </View>
-        );
-      } else {
-        return null;
+  return (
+    <Pressable
+      accessibilityHint={
+        withConfirmation
+          ? `Opens a confirmation dialog to confirm ${accessibilityLabel}`
+          : `Press to perform ${accessibilityLabel} action`
       }
-    }
-
-    const renderConfirmation = () => {
-      return (
-        <Modal
-          primaryButtonOnClick={() => {
-            onClick();
-            setShowConfirmation(false);
-          }}
-          primaryButtonText="Confirm"
-          secondaryButtonOnClick={(): void => setShowConfirmation(false)}
-          secondaryButtonText="Cancel"
-          size="sm"
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      disabled={loading}
+      style={{
+        alignItems: "center",
+        backgroundColor,
+        borderRadius: theme.radius.rounded as any,
+        justifyContent: "center",
+        height: 32,
+        width: 32,
+      }}
+      testID={testID}
+      onPress={debounce(
+        async () => {
+          await Unifier.utils.haptic();
+          setLoading(true);
+          try {
+            if (withConfirmation && !showConfirmation) {
+              setShowConfirmation(true);
+            } else if (onClick) {
+              await onClick();
+            }
+          } catch (error) {
+            setLoading(false);
+            throw error;
+          }
+          setLoading(false);
+        },
+        500,
+        {leading: true}
+      )}
+    >
+      <View>
+        {Boolean(loading) ? (
+          <View>
+            <ActivityIndicator color={color as any} size="small" />
+          </View>
+        ) : (
+          <FontAwesome6 brand="solid" color={color as any} name={iconName} size={16} />
+        )}
+      </View>
+      {withConfirmation && (
+        <ConfirmationModal
+          subTitle={undefined}
+          text={confirmationText}
           title={confirmationHeading}
           visible={showConfirmation}
-          onDismiss={(): void => {
+          onCancel={() => setShowConfirmation(false)}
+          onConfirm={async () => {
+            await onClick();
             setShowConfirmation(false);
           }}
-        >
-          <Text>{confirmationText}</Text>
-        </Modal>
-      );
-    };
+        />
+      )}
+    </Pressable>
+  );
+};
 
-    function renderIconButton(): React.ReactElement {
-      return (
-        <>
-          <Pressable
-            ref={ref as any}
-            accessibilityRole="button"
-            hitSlop={{top: 10, left: 10, bottom: 10, right: 10}}
-            style={{
-              opacity,
-              backgroundColor: bgColor,
-              borderRadius: 100,
-              // paddingBottom: iconSizeToNumber(size) / 4,
-              // paddingTop: iconSizeToNumber(size) / 4,
-              // paddingLeft: iconSizeToNumber(size) / 2,
-              // paddingRight: iconSizeToNumber(size) / 2,
-              width: iconSizeToNumber(size) * 2.5,
-              height: iconSizeToNumber(size) * 2.5,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            testID={testID}
-            onPress={async () => {
-              await Unifier.utils.haptic();
-              if (withConfirmation && !showConfirmation) {
-                setShowConfirmation(true);
-              } else if (onClick) {
-                onClick();
-              }
-            }}
-          >
-            <Icon color={iconColor} iconName={icon} size={size} />
-            {renderIndicator()}
-          </Pressable>
+export const IconButton: FC<IconButtonProps> = (props) => {
+  const {tooltipText, tooltipIdealPosition} = props;
+  const isMobileOrNative = isMobileDevice() || isNative();
 
-          {Boolean(withConfirmation) && renderConfirmation()}
-        </>
-      );
-    }
-
-    // Only add for web. This doesn't make much sense for mobile,
-    // since the action would be performed for the button as well as the tooltip appearing. TODO:
-    // Add tooltip info button next to the icon button on mobile.
-    if (tooltip && Platform.OS === "web") {
-      return (
-        <Tooltip idealDirection={tooltip.idealDirection} text={tooltip.text}>
-          {renderIconButton()}
-        </Tooltip>
-      );
-    } else {
-      return renderIconButton();
-    }
+  if (tooltipText && !isMobileOrNative) {
+    return (
+      <Tooltip idealPosition={tooltipIdealPosition} text={tooltipText}>
+        <IconButtonComponent {...props} />
+      </Tooltip>
+    );
   }
-);
+
+  return <IconButtonComponent {...props} />;
+};

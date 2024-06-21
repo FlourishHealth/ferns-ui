@@ -32,6 +32,14 @@ export const AllColorButtons = (props: Partial<ButtonProps>) => {
         />
       </Box>
       <Box paddingY={1}>
+        <Button
+          text="Destructive"
+          variant="destructive"
+          onClick={() => console.info("clicked")}
+          {...props}
+        />
+      </Box>
+      <Box paddingY={1}>
         <Button text="Muted" variant="muted" onClick={() => console.info("clicked")} {...props} />
       </Box>
       <Box paddingY={1}>

@@ -12,7 +12,7 @@ export * from "./DateTimeModal.config";
 // export * from "./Field.config";
 export * from "./Heading.config";
 export * from "./Icon.config";
-// export * from "./IconButton.config";
+export * from "./IconButton.config";
 // export * from "./Link.config";
 export * from "./Mask.config";
 export * from "./Modal.config";
