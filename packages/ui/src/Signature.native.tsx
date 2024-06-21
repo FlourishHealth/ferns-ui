@@ -2,7 +2,6 @@ import React, {useContext, useRef} from "react";
 import {Text, View} from "react-native";
 import SignatureScreen, {SignatureViewRef} from "react-native-signature-canvas";
 
-import {Box} from "./Box";
 import {ThemeContext} from "./Theme";
 
 interface Props {
@@ -45,14 +44,14 @@ export const Signature: React.FC<Props> = ({onChange, onStart, onEnd}: Props) =>
           onOK={(img) => onChange(img)}
         />
       </View>
-      <Box direction="row">
+      <View style={{flexDirection: "row"}}>
         <Text
           style={{color: theme.text.link, textDecorationLine: "underline"}}
           onPress={handleClear}
         >
           Clear
         </Text>
-      </Box>
+      </View>
     </View>
   );
 };

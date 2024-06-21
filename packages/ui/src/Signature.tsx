@@ -26,7 +26,7 @@ export const Signature = ({onChange}: SignatureProps): ReactElement | null => {
   };
   return (
     <View>
-      <View style={{borderColor: theme.border.dark, borderWidth: 1, width: 300}}>
+      <View style={{borderColor: theme.border.dark, borderWidth: 1, width: "100%", maxWidth: 300}}>
         <SignatureCanvas
           ref={ref}
           backgroundColor={theme.surface.base}
