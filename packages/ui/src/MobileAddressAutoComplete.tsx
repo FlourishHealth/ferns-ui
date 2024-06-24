@@ -36,20 +36,20 @@ export const MobileAddressAutocomplete = ({
   }, []);
 
   const textInputContainerStyles = {
-    backgroundColor: theme.white,
-    borderColor: isFocused ? theme.blue : theme.gray,
+    backgroundColor: theme.surface.base,
+    borderColor: isFocused ? theme.border.hover : theme.border.default,
     borderWidth: isFocused ? 5 : 1,
-    borderRadius: 16,
+    borderRadius: theme.radius.default,
     paddingHorizontal: isFocused ? 10 : 14,
     paddingVertical: isFocused ? 0 : 4,
     ...(styles?.textInputContainer as object),
   };
 
   const textInputStyles = {
-    backgroundColor: theme.white,
-    borderRadius: 16,
-    color: theme.darkGray,
-    fontFamily: theme.primaryFont,
+    backgroundColor: theme.surface.base,
+    borderRadius: theme.radius.default,
+    color: theme.text.primary,
+    fontFamily: theme.font.primary,
     fontSize: (styles?.textInput as TextStyle)?.fontSize ?? 14,
     height: 40,
     marginBottom: 0,
@@ -73,7 +73,12 @@ export const MobileAddressAutocomplete = ({
   }
 
   return (
-    <TouchableOpacity activeOpacity={1} style={{flex: 1}} onPress={() => setIsFocused(false)}>
+    <TouchableOpacity
+      accessibilityRole="button"
+      activeOpacity={1}
+      style={{flex: 1}}
+      onPress={() => setIsFocused(false)}
+    >
       <View>
         <GooglePlacesAutocomplete
           ref={ref}
