@@ -1275,7 +1275,9 @@ export interface BannerProps {
   status?: "info" | "alert" | "warning"; // default "info"
   dismissible?: boolean; // default false
   hasIcon?: boolean; // default false
-  buttonProps?: {text?: string; onClick: () => void; hasIcon?: boolean};
+  buttonText?: string;
+  buttonIconName?: IconName;
+  buttonOnClick?: () => void;
 }
 
 export interface BodyProps {
