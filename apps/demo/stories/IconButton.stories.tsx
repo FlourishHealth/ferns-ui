@@ -6,8 +6,8 @@ import {StorybookContainer} from "./StorybookContainer";
 export const IconButtonDemo = (props: Partial<IconButtonProps>) => {
   return (
     <IconButton
-      accessibilityLabel="Button"
-      iconName="plus"
+      accessibilityLabel="Demo IconButton"
+      iconName="hippo"
       onClick={() => console.info("clicked")}
       {...props}
     />
@@ -24,6 +24,38 @@ export const ConfirmationIconButton = (props: Partial<IconButtonProps>) => {
           withConfirmation
           onClick={() => {
             console.log("Clicked!");
+          }}
+          {...props}
+        />
+      </Box>
+    </StorybookContainer>
+  );
+};
+
+export const ToolTipIconButton = (props: Partial<IconButtonProps>) => {
+  return (
+    <StorybookContainer>
+      <Box direction="row" padding={4}>
+        <Box marginRight={1}>
+          <IconButton
+            accessibilityLabel=""
+            iconName="trash"
+            tooltipIdealPosition="bottom"
+            tooltipText="Delete Demo"
+            onClick={() => {
+              console.info("Click delete");
+            }}
+            {...props}
+          />
+        </Box>
+        <IconButton
+          accessibilityLabel=""
+          iconName="floppy-disk"
+          tooltipIdealPosition="top"
+          tooltipIncludeArrow
+          tooltipText="Save With Arrow Demo"
+          onClick={() => {
+            console.info("Click delete");
           }}
           {...props}
         />
@@ -120,10 +152,4 @@ export const AllButtonIconVariants = (props: Partial<IconButtonProps>) => {
       </Box>
     </StorybookContainer>
   );
-};
-
-export const IconButtonStories = {
-  title: "IconButton",
-  component: IconButton,
-  stories: {},
 };

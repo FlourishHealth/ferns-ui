@@ -1342,7 +1342,12 @@ export interface ButtonProps {
   /**
    * The position of the tooltip.
    */
-  tooltipPosition?: TooltipPosition;
+  tooltipIdealPosition?: TooltipPosition;
+  /**
+   * Include an arrow in the tooltip. Pointing to the button.
+   * @default false
+   */
+  tooltipIncludeArrow?: boolean;
   /**
    * The text content of the tooltip.
    */
@@ -1503,7 +1508,11 @@ export interface IconButtonProps {
    * The ideal position of the tooltip.
    */
   tooltipIdealPosition?: TooltipPosition;
-
+  /**
+   * Include an arrow in the tooltip. Pointing to the button.
+   * @default false
+   */
+  tooltipIncludeArrow?: boolean;
   /**
    * The text content of the tooltip.
    */
@@ -1821,10 +1830,28 @@ export interface ToastProps {
 }
 
 export interface TooltipProps {
+  /**
+   * The content of the tooltip.
+   */
   children: React.ReactElement;
-  // If text is undefined, the children will be rendered without a tooltip.
-  text?: string;
+
+  /**
+   * If true, an arrow will be included in the tooltip.
+   * @default false
+   */
+  includeArrow?: boolean;
+
+  /**
+   * The ideal position of the tooltip.
+   * @default "top"
+   */
   idealPosition?: "top" | "bottom" | "left" | "right";
+
+  /**
+   * The text content of the tooltip. If text is undefined,
+   * the children will be rendered without a tooltip.
+   */
+  text?: string;
 }
 
 export interface LinkProps extends TextProps {
