@@ -6,11 +6,11 @@ import {WithLabel} from "./WithLabel";
 export const FieldWithLabels = ({
   children,
   errorMessage,
-  errorMessageColor = "red",
+  errorMessageColor = "error",
   helperText,
-  helperTextColor = "darkGray",
+  helperTextColor = "primary",
   label,
-  labelColor = "darkGray",
+  labelColor = "primary",
 }: FieldWithLabelsProps) => {
   return (
     <WithLabel

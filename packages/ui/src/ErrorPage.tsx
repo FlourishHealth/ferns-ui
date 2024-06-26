@@ -22,7 +22,7 @@ export class ErrorPage extends React.Component<ErrorPageProps, {}> {
         padding={6}
         width="100%"
       >
-        <Text align="center" color="red" size="lg" weight="bold">
+        <Text align="center" bold color="error" size="lg">
           Oops!
         </Text>
         <Box paddingY={3}>
@@ -34,7 +34,7 @@ export class ErrorPage extends React.Component<ErrorPageProps, {}> {
         <Box paddingY={3}>
           <Text>{this.props.error.toString()}</Text>
         </Box>
-        <Button color="blue" text="Try again" onClick={this.props.resetError} />
+        <Button text="Try again" onClick={this.props.resetError} />
       </Box>
     );
   }
