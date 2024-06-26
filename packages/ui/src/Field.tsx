@@ -116,11 +116,11 @@ export const Field = ({
     } else if (type === "textarea") {
       return (
         <TextArea
-          disabled={disabled}
           height={height ?? 100}
           id={name}
-          placeholder={Boolean(value) ? "" : placeholder}
+          placeholderText={Boolean(value) ? "" : placeholder}
           rows={rows}
+          state={disabled ? "disabled" : undefined}
           testID={testID}
           value={String(value)}
           onBlur={onBlur}
@@ -141,9 +141,9 @@ export const Field = ({
     } else if (type && ["date", "time", "datetime"].includes(type)) {
       return (
         <TextField
-          disabled={disabled}
           id={name}
-          placeholder={placeholder}
+          placeholderText={placeholder}
+          state={disabled ? "disabled" : undefined}
           testID={testID}
           transformValue={transformValue}
           type={type as "date" | "time" | "datetime"}
@@ -178,19 +178,19 @@ export const Field = ({
             testID={`${testID}-address1`}
           />
           <TextField
-            disabled={disabled}
             id="address2"
-            label="Apt, suite, etc"
+            state={disabled ? "disabled" : undefined}
             testID={`${testID}-address2`}
+            title="Apt, suite, etc"
             type="text"
             value={address2}
             onChange={(result) => handleAddressChange("address2", result.value)}
           />
           <TextField
-            disabled={disabled}
             id="city"
-            label="City"
+            state={disabled ? "disabled" : undefined}
             testID={`${testID}-city`}
+            title="City"
             type="text"
             value={city}
             onChange={(result) => handleAddressChange("city", result.value)}
@@ -209,10 +209,10 @@ export const Field = ({
             }}
           />
           <TextField
-            disabled={disabled}
             id="zipcode"
-            label="Zipcode"
+            state={disabled ? "disabled" : undefined}
             testID={`${testID}-zip`}
+            title="Zipcode"
             type="text"
             value={zipcode}
             onChange={(result) => handleAddressChange("zipcode", result.value)}
@@ -220,19 +220,19 @@ export const Field = ({
           {includeCounty && (
             <>
               <TextField
-                disabled={disabled}
                 id="countyName"
-                label="County Name"
+                state={disabled ? "disabled" : undefined}
                 testID={`${testID}-county`}
+                title="County Name"
                 type="text"
                 value={countyName}
                 onChange={(result) => handleAddressChange("countyName", result.value)}
               />
               <TextField
-                disabled={disabled}
                 id="countyCode"
-                label="County Code"
+                state={disabled ? "disabled" : undefined}
                 testID={`${testID}-county-code`}
+                title="County Code"
                 type="number"
                 value={countyCode}
                 onChange={(result) => handleAddressChange("countyCode", result.value)}
@@ -261,9 +261,9 @@ export const Field = ({
     } else if (type === "number") {
       return (
         <TextField
-          disabled={disabled}
           id={name}
-          placeholder={placeholder}
+          placeholderText={placeholder}
+          state={disabled ? "disabled" : undefined}
           testID={testID}
           type="number"
           value={value}
@@ -304,9 +304,9 @@ export const Field = ({
       return (
         <TextField
           autoComplete={autoComplete}
-          disabled={disabled}
           id={name}
-          placeholder={placeholder}
+          placeholderText={placeholder}
+          state={disabled ? "disabled" : undefined}
           testID={testID}
           type={
             tfType as
