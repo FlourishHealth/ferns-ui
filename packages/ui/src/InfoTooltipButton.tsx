@@ -3,15 +3,12 @@ import React from "react";
 import {InfoTooltipButtonProps} from "./Common";
 import {IconButton} from "./IconButton";
 
-export const InfoTooltipButton = ({text, size}: InfoTooltipButtonProps): React.ReactElement => {
+export const InfoTooltipButton = ({text}: InfoTooltipButtonProps): React.ReactElement => {
   return (
     <IconButton
       accessibilityLabel="info"
-      bgColor="transparent"
-      icon="exclamation"
-      iconColor="blue"
-      size={size}
-      tooltip={{text}}
+      iconName="exclamation"
+      tooltipText={text}
       onClick={() => {}}
     />
   );

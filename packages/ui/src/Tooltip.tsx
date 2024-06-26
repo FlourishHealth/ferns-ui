@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useContext} from "react";
+import {FC, useCallback, useContext, useEffect, useRef, useState} from "react";
 import {
   Dimensions,
   LayoutChangeEvent,
@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import {Portal} from "react-native-portalize";
 
-import {TooltipDirection, TooltipProps} from "./Common";
+import {TooltipPosition, TooltipProps} from "./Common";
 import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 
@@ -29,12 +29,10 @@ type Measurement = {
   children: ChildrenMeasurement;
   tooltip: LayoutRectangle;
   measured: boolean;
-  idealDirection?: TooltipDirection;
+  idealPosition?: TooltipPosition;
 };
 
-const overflowLeft = (x: number): boolean => {
-  return x < TOOLTIP_OVERFLOW_PADDING;
-};
+const overflowLeft = (x: number): boolean => x < TOOLTIP_OVERFLOW_PADDING;
 
 const overflowRight = (x: number): boolean => {
   const {width: layoutWidth} = Dimensions.get("window");
@@ -45,7 +43,7 @@ const getTooltipPosition = ({
   children,
   tooltip,
   measured,
-  idealDirection,
+  idealPosition,
 }: Measurement): {} | {left: number; top: number} => {
   if (!measured) {
     console.debug("No measurements for child yet, cannot show tooltip yet.");
@@ -78,36 +76,29 @@ const getTooltipPosition = ({
   // If it would overflow to the left, try to put it above, if not, put it to the right.
 
   // Happy path:
-  if (idealDirection === "left" && !overflowLeft(left)) {
+  if (idealPosition === "left" && !overflowLeft(left)) {
     return {left, top: verticalCenter};
-  } else if (idealDirection === "right" && !overflowRight(right + tooltipWidth)) {
+  } else if (idealPosition === "right" && !overflowRight(right + tooltipWidth)) {
     return {left: right, top: verticalCenter};
   } else if (
-    idealDirection === "bottom" &&
+    idealPosition === "bottom" &&
     !overflowBottom &&
     !overflowLeft(horizontalCenter - tooltipWidth) &&
     !overflowRight(horizontalCenter + tooltipWidth)
   ) {
     return {left: horizontalCenter - tooltipWidth / 2, top: bottom};
   } else {
-    // At this point, we're either trying to place it above or below, and force it into the
-    // viewport.
-
     let y = top;
-    if ((idealDirection === "bottom" && !overflowBottom) || overflowTop) {
+    if ((idealPosition === "bottom" && !overflowBottom) || overflowTop) {
       y = bottom;
     }
 
-    // If it fits in the viewport, center it above the child.
     if (
       !overflowLeft(horizontalCenter - tooltipWidth) &&
       !overflowRight(horizontalCenter + tooltipWidth)
     ) {
       return {left: horizontalCenter - tooltipWidth / 2, top: y};
-    }
-    // Failing that, if it fits on the left, put it there, otherwise to the right.
-    // We know it's smaller than the viewport.
-    else if (overflowLeft(horizontalCenter - tooltipWidth)) {
+    } else if (overflowLeft(horizontalCenter - tooltipWidth)) {
       return {left: TOOLTIP_OVERFLOW_PADDING, top: y};
     } else {
       return {
@@ -118,28 +109,25 @@ const getTooltipPosition = ({
   }
 };
 
-export const Tooltip = (props: TooltipProps) => {
+export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition}) => {
   const {theme} = useContext(ThemeContext);
-  const {text, children, bgColor, idealDirection} = props;
   const hoverDelay = 500;
   const hoverEndDelay = 0;
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
 
-  const [measurement, setMeasurement] = React.useState({
-    children: {},
-    tooltip: {},
+  const [measurement, setMeasurement] = useState<Measurement>({
+    children: {width: 0, height: 0, pageX: 0, pageY: 0},
+    tooltip: {x: 0, y: 0, width: 0, height: 0},
     measured: false,
   });
-  const showTooltipTimer = React.useRef<NodeJS.Timeout>();
-  const hideTooltipTimer = React.useRef<NodeJS.Timeout>();
-  const childrenWrapperRef = React.useRef() as React.MutableRefObject<View>;
-
-  const touched = React.useRef(false);
-
+  const showTooltipTimer = useRef<NodeJS.Timeout>();
+  const hideTooltipTimer = useRef<NodeJS.Timeout>();
+  const childrenWrapperRef = useRef<View>(null);
+  const touched = useRef(false);
   const isWeb = Platform.OS === "web";
 
   // If the tooltip is visible, and the user clicks outside of the tooltip, hide it.
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (showTooltipTimer.current) {
         clearTimeout(showTooltipTimer.current);
@@ -197,16 +185,18 @@ export const Tooltip = (props: TooltipProps) => {
 
     hideTooltipTimer.current = setTimeout(() => {
       setVisible(false);
-      setMeasurement({children: {}, tooltip: {}, measured: false});
+      setMeasurement({
+        children: {width: 0, height: 0, pageX: 0, pageY: 0},
+        tooltip: {x: 0, y: 0, width: 0, height: 0},
+        measured: false,
+      });
     }, hoverEndDelay);
   };
 
   const mobilePressProps = {
-    onPress: React.useCallback(() => {
-      if (touched.current) {
-        return null;
-      } else {
-        return children.props.onClick?.();
+    onPress: useCallback(() => {
+      if (!touched.current) {
+        children.props.onClick?.();
       }
     }, [children.props]),
   };
@@ -223,26 +213,29 @@ export const Tooltip = (props: TooltipProps) => {
       {visible && (
         <Portal>
           <Pressable
+            accessibilityHint="Tooltip information"
+            accessibilityLabel={text}
+            accessibilityRole="button"
             style={{
               alignSelf: "flex-start",
               justifyContent: "center",
-              paddingHorizontal: 16,
-              backgroundColor: theme[bgColor ?? "darkGray"],
-              borderRadius: 16,
-              paddingVertical: 8,
+              paddingHorizontal: 8,
+              backgroundColor: theme.surface.secondaryExtraDark,
+              borderRadius: theme.radius.default as any,
+              paddingVertical: 2,
               display: "flex",
               flexShrink: 1,
-              maxWidth: Math.max(Dimensions.get("window").width - 32, 300),
-              ...getTooltipPosition({...(measurement as Measurement), idealDirection}),
+              maxWidth: 320,
+              ...getTooltipPosition({...(measurement as Measurement), idealPosition}),
               ...(measurement.measured ? {opacity: 1} : {opacity: 0}),
             }}
             testID="tooltip-container"
             onLayout={handleOnLayout}
-            onPress={() => {
-              setVisible(false);
-            }}
+            onPress={() => setVisible(false)}
           >
-            <Text color="white">{text}</Text>
+            <Text color="inverted" size="sm">
+              {text}
+            </Text>
           </Pressable>
         </Portal>
       )}

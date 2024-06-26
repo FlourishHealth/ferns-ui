@@ -4,7 +4,7 @@ import {useToast as useRNToast} from "react-native-toast-notifications";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {AllColors, ToastProps} from "./Common";
+import {TextColor, ToastProps} from "./Common";
 import {Icon} from "./Icon";
 import {IconButton} from "./IconButton";
 import {Text} from "./Text";
@@ -57,7 +57,7 @@ export const Toast = ({message, data}: ToastProps): React.ReactElement => {
   // margin 8 on either side, times the standard 4px we multiply by.
   const width = Math.min(Dimensions.get("window").width - 16 * 4, 712);
   const {variant, buttonText, buttonOnClick, persistent, onDismiss} = data ?? {};
-  let color: AllColors = "darkGray";
+  let color: TextColor = "primary";
   if (variant === "warning" || variant === "error") {
     color = variant;
   }
@@ -74,34 +74,33 @@ export const Toast = ({message, data}: ToastProps): React.ReactElement => {
       padding={2}
       paddingX={4}
       paddingY={3}
-      rounding={4}
+      rounding="minimal"
     >
       {Boolean(variant === "error") && (
         <Box marginRight={4}>
-          <Icon color="white" name="exclamation-circle" size="lg" />
+          <Icon color="inverted" iconName="circle-exclamation" size="lg" />
         </Box>
       )}
       {Boolean(variant === "warning") && (
         <Box marginRight={4}>
-          <Icon color="white" name="exclamation-triangle" size="lg" />
+          <Icon color="inverted" iconName="triangle-exclamation" size="lg" />
         </Box>
       )}
       <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
-        <Text color="white" size="lg" weight="bold">
+        <Text bold color="inverted" size="lg">
           {message}
         </Text>
       </Box>
       {Boolean(buttonOnClick && buttonText) && (
         <Box alignItems="center" justifyContent="center" marginLeft={4}>
-          <Button color="lightGray" shape="pill" text={buttonText!} onClick={buttonOnClick} />
+          <Button text={buttonText!} onClick={buttonOnClick as () => void | Promise<void>} />
         </Box>
       )}
       {Boolean(onDismiss && persistent) && (
         <Box alignItems="center" justifyContent="center" marginLeft={4}>
           <IconButton
             accessibilityLabel="Dismiss notification"
-            icon="times"
-            iconColor="white"
+            iconName="xmark"
             onClick={onDismiss!}
           />
         </Box>

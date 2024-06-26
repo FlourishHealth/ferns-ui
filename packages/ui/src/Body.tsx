@@ -19,7 +19,7 @@ export const Body = ({
     return (
       <Box avoidKeyboard height="100%" scroll={scroll}>
         <Box height={height || "100%"} padding={padding !== undefined ? padding : 5}>
-          {loading === true && <ActivityIndicator color={theme.darkGray} size="large" />}
+          {loading === true && <ActivityIndicator color={theme.text.primary} size="large" />}
           {children}
         </Box>
       </Box>
