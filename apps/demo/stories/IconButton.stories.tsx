@@ -5,12 +5,14 @@ import {StorybookContainer} from "./StorybookContainer";
 
 export const IconButtonDemo = (props: Partial<IconButtonProps>) => {
   return (
-    <IconButton
-      accessibilityLabel="Demo IconButton"
-      iconName="hippo"
-      onClick={() => console.info("clicked")}
-      {...props}
-    />
+    <Box alignItems="center" height="100%" justifyContent="center" width="100%">
+      <IconButton
+        accessibilityLabel="Demo IconButton"
+        iconName="lightbulb"
+        onClick={() => console.info("clicked")}
+        {...props}
+      />
+    </Box>
   );
 };
 

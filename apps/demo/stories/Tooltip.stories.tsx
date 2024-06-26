@@ -3,12 +3,10 @@ import React from "react";
 
 export const TooltipDemo = (props: Partial<TooltipProps>) => {
   return (
-    <Box paddingY={2}>
-      <Box direction="row" marginTop={1}>
-        <Tooltip text="Demo Tooltip" {...props}>
-          <IconButton accessibilityLabel="" iconName="hippo" onClick={() => {}} />
-        </Tooltip>
-      </Box>
+    <Box alignItems="center" height="100%" justifyContent="center" width="100%">
+      <Tooltip idealPosition="top" text="Demo Tooltip" {...props}>
+        <IconButton accessibilityLabel="" iconName="hippo" onClick={() => {}} />
+      </Tooltip>
     </Box>
   );
 };

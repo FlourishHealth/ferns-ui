@@ -309,71 +309,73 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
   }
 
   return (
-    <View
-      style={{
-        alignSelf: "flex-start",
-      }}
-    >
-      {visible && (
-        <Portal>
-          <View
-            style={{
-              position: "absolute",
-              zIndex: 999,
-              ...getTooltipPosition({...(measurement as Measurement), idealPosition}),
-            }}
-            onLayout={handleOnLayout}
-          >
-            {includeArrow && isWeb && (
-              <View style={arrowContainerStyles as ViewStyle}>
-                <Arrow color={theme.surface.secondaryExtraDark} position={finalPosition} />
-              </View>
-            )}
+    <View>
+      <View
+        style={{
+          alignSelf: "flex-start",
+        }}
+      >
+        {visible && (
+          <Portal>
             <View
               style={{
-                backgroundColor: theme.surface.secondaryExtraDark,
-                borderRadius: theme.radius.default as any,
-                paddingVertical: 2,
-                paddingHorizontal: 8,
-                maxWidth: 320,
-                display: "flex",
-                flexShrink: 1,
-                opacity: measurement.measured ? 1 : 0,
+                position: "absolute",
+                zIndex: 999,
+                ...getTooltipPosition({...(measurement as Measurement), idealPosition}),
               }}
+              onLayout={handleOnLayout}
             >
-              <Pressable
-                accessibilityHint="Tooltip information"
-                accessibilityLabel={text}
-                accessibilityRole="button"
+              {includeArrow && isWeb && (
+                <View style={arrowContainerStyles as ViewStyle}>
+                  <Arrow color={theme.surface.secondaryExtraDark} position={finalPosition} />
+                </View>
+              )}
+              <View
                 style={{
                   backgroundColor: theme.surface.secondaryExtraDark,
                   borderRadius: theme.radius.default as any,
+                  paddingVertical: 2,
+                  paddingHorizontal: 8,
+                  maxWidth: 320,
+                  display: "flex",
+                  flexShrink: 1,
+                  opacity: measurement.measured ? 1 : 0,
                 }}
-                testID="tooltip-container"
-                onPress={() => setVisible(false)}
               >
-                <Text color="inverted" size="sm">
-                  {text}
-                </Text>
-              </Pressable>
+                <Pressable
+                  accessibilityHint="Tooltip information"
+                  accessibilityLabel={text}
+                  accessibilityRole="button"
+                  style={{
+                    backgroundColor: theme.surface.secondaryExtraDark,
+                    borderRadius: theme.radius.default as any,
+                  }}
+                  testID="tooltip-container"
+                  onPress={() => setVisible(false)}
+                >
+                  <Text color="inverted" size="sm">
+                    {text}
+                  </Text>
+                </Pressable>
+              </View>
             </View>
-          </View>
-        </Portal>
-      )}
-      <View
-        ref={childrenWrapperRef}
-        onPointerEnter={() => {
-          handleHoverIn();
-          children.props.onHoverIn?.();
-        }}
-        onPointerLeave={() => {
-          handleHoverOut();
-          children.props.onHoverOut?.();
-        }}
-        onTouchStart={handleTouchStart}
-        {...(!isWeb && mobilePressProps)}
-      >
-        {children}
+          </Portal>
+        )}
+        <View
+          ref={childrenWrapperRef}
+          onPointerEnter={() => {
+            handleHoverIn();
+            children.props.onHoverIn?.();
+          }}
+          onPointerLeave={() => {
+            handleHoverOut();
+            children.props.onHoverOut?.();
+          }}
+          onTouchStart={handleTouchStart}
+          {...(!isWeb && mobilePressProps)}
+        >
+          {children}
+        </View>
       </View>
     </View>
   );

@@ -3,7 +3,7 @@ import React from "react";
 
 export const ButtonDemo = (props: Partial<ButtonProps>) => {
   return (
-    <Box alignItems="center" justifyContent="center" width="100%">
+    <Box alignItems="center" height="100%" justifyContent="center" width="100%">
       <Button iconName="plus" text="Button" onClick={() => console.info("clicked")} {...props} />
     </Box>
   );
