@@ -1,4 +1,5 @@
 import {
+  AccordionConfiguration,
   AvatarConfiguration,
   BadgeConfiguration,
   BannerConfiguration,
@@ -158,6 +159,7 @@ export interface DemoConfiguration extends DemoConfigurationBase {
 // {}, stories: {}, testMatrix: {}, testMatrixDefaultProps: {}, };
 
 const Config: DemoConfigurationBase[] = [
+  AccordionConfiguration,
   AvatarConfiguration,
   BadgeConfiguration,
   BannerConfiguration,
