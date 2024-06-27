@@ -11,6 +11,50 @@ import {
 } from "./CommonIconTypes";
 import {SelectListOptions} from "./SelectList";
 
+export interface AccordionProps {
+  /**
+   * The content to be displayed inside the accordion.
+   */
+  children: React.ReactNode;
+
+  /**
+   * If true, an information modal will be included.
+   * @default false
+   */
+  includeInfoModal?: boolean;
+
+  /**
+   * The content of the information modal.
+   */
+  infoModalChildren?: ModalProps["children"];
+
+  /**
+   * The subtitle of the information modal.
+   */
+  infoModalSubTitle?: ModalProps["subTitle"];
+
+  /**
+   * The text content of the information modal.
+   */
+  infoModalText?: ModalProps["text"];
+
+  /**
+   * The title of the information modal.
+   */
+  infoModalTitle?: ModalProps["title"];
+
+  /**
+   * If true, the accordion will be collapsed.
+   * @default true
+   */
+  isCollapsed?: boolean;
+
+  /**
+   * The title of the accordion.
+   */
+  title: string;
+}
+
 export interface BaseProfile {
   email: string;
   id: string;
