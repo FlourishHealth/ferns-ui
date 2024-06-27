@@ -21,7 +21,6 @@ export const PaginationControl = ({
     <Box direction="row" paddingY={2}>
       <Box>
         <Button
-          color="blue"
           disabled={shouldDisableBackButton}
           text="Prev Page"
           onClick={(): void => setPage(Number(page) - 1)}
@@ -32,7 +31,6 @@ export const PaginationControl = ({
       </Box>
       <Box>
         <Button
-          color="blue"
           disabled={shouldDisableNextButton}
           text="Next Page"
           onClick={(): void => setPage(Number(page) + 1)}
