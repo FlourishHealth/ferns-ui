@@ -42,128 +42,132 @@ export const BannerConfiguration: DemoConfiguration = {
   },
   props: {},
   demo: (props) => <BannerDemo {...props} />, // Replace with actual demo component
-  demoOptions: {},
+  demoOptions: {
+    controls: {
+      text: {
+        type: "text",
+        defaultValue: "Banner text",
+      },
+      status: {
+        type: "select",
+        options: [
+          {label: "Info", value: "info"},
+          {label: "Alert", value: "alert"},
+          {label: "Warning", value: "warning"},
+        ],
+        defaultValue: "info",
+      },
+      hasIcon: {
+        type: "boolean",
+        defaultValue: true,
+      },
+      dismissible: {
+        type: "boolean",
+        defaultValue: false,
+      },
+      buttonIconName: {
+        type: "select",
+        options: [
+          {label: "none", value: ""},
+          {label: "check", value: "check"},
+          {label: "arrow-right", value: "arrow-right"},
+        ],
+        defaultValue: "",
+      },
+      buttonText: {
+        type: "text",
+        defaultValue: "Button text",
+      },
+    },
+  },
   stories: {
-    Dismiss: {
+    Dismissible: {
+      description: "",
+      render: () => {
+        return (
+          <Box direction="column" display="flex">
+            <Banner
+              dismissible
+              id="dismissibleBanner"
+              text="When you click this banner, it dismisses"
+            />
+          </Box>
+        );
+      },
+    },
+    Permanent: {
       description: "",
       render: () => {
         return (
           <Box direction="column" display="flex" height="100%" width="100%">
             <Box paddingY={2} width="100%">
               <Banner
-                color="primary"
-                id="banner1"
-                subtext="And in a real app, it would stay dismissed"
-                text="When you click this banner, it dismisses"
-                textColor="white"
-                type="dismiss"
-              />
-            </Box>
-            <Box paddingY={2} width="100%">
-              <Banner
-                color="secondary"
-                iconName="check"
-                id="banner2"
-                subtext="And in a real app, it would stay dismissed"
-                text="When you click this banner, it dismisses (with Icon)"
-                textColor="white"
-                type="dismiss"
+                id="permanentBanner"
+                text="This permanent banner is not clickable or dismissible"
               />
             </Box>
           </Box>
         );
       },
     },
-    PermanentBanner: {
+    Alert: {
+      render: () => {
+        return (
+          <Box direction="column" display="flex" height="100%" width="100%">
+            <Banner
+              id="alertBanner"
+              status="alert"
+              text="This banner has status alert and is used to convey important or error related information"
+            />
+          </Box>
+        );
+      },
+    },
+    Warning: {
       description: "",
       render: () => {
         return (
           <Box direction="column" display="flex" height="100%" width="100%">
-            <Box paddingY={2} width="100%">
-              <Banner
-                color="primary"
-                id="banner3"
-                text="This banner is not clickable or dismissable"
-                textColor="white"
-                type="permanent"
-              />
-            </Box>
-            <Box paddingY={2} width="100%">
-              <Banner
-                color="primary"
-                iconName="exclamation-triangle"
-                id="banner2"
-                text="This banner is not clickable or dismissable with Icon"
-                textColor="white"
-                type="permanent"
-              />
-            </Box>
+            <Banner
+              id="warningBanner"
+              status="warning"
+              text="This banner has a warning status and is used to convey important information"
+            />
           </Box>
         );
       },
     },
-    ShapeBanner: {
+    Info: {
       description: "",
-      render: () => {
+      render: (): React.ReactElement => {
         return (
           <Box direction="column" display="flex" height="100%" width="100%">
-            <Box paddingY={2} width="100%">
-              <Banner
-                color="primary"
-                id="banner1"
-                shape="pill"
-                subtext="Here's a pill."
-                text="Banners can have multiple shapes like Boxes"
-                textColor="white"
-              />
-            </Box>
-            <Box paddingY={2} width="100%">
-              <Banner
-                color="secondary"
-                id="banner2"
-                shape={3}
-                text="And a rounded banner"
-                textColor="white"
-              />
-            </Box>
+            <Banner
+              id="infoBanner"
+              status="info"
+              text="This banner has an info status is used to convey information"
+            />
           </Box>
         );
       },
     },
-    ActionButtonBanner: {
+    HasIcon: {
       description: "",
-      render: () => {
-        const clickFunction = () => {
-          console.debug("Clicked");
-        };
+      render: (): React.ReactElement => {
         return (
           <Box direction="column" display="flex" height="100%" width="100%">
-            <Box paddingY={2} width="100%">
-              <Banner
-                color="warning"
-                id="banner11"
-                text="Action Banner"
-                textColor="white"
-                type="action"
-                onClick={clickFunction}
-              />
-            </Box>
-            <Box paddingY={2} width="100%">
-              <Banner
-                color="secondary"
-                iconName="artstation"
-                id="banner2"
-                text="Action with Icon"
-                textColor="white"
-                type="action"
-                onClick={clickFunction}
-              />
-            </Box>
+            <Banner
+              dismissible
+              hasIcon
+              id="hasIconBanner"
+              status="info"
+              text="This banner has an icon"
+            />
           </Box>
         );
       },
     },
-    CustomButtonBanner: {
+    Button: {
       description: "",
       render: (): React.ReactElement => {
         const clickFunction = () => {
@@ -171,39 +175,36 @@ export const BannerConfiguration: DemoConfiguration = {
         };
         return (
           <Box direction="column" display="flex" height="100%" width="100%">
-            <Box paddingY={2} width="100%">
-              <Banner
-                color="warning"
-                customButtonProps={
-                  {
-                    text: "Click me",
-                    color: "primary",
-                  } as any
-                }
-                id="banner11"
-                text="Custom Button Banner"
-                textColor="white"
-                type="customButton"
-                onClick={clickFunction}
-              />
-            </Box>
-            <Box paddingY={2} width="100%">
-              <Banner
-                color="secondary"
-                customButtonProps={
-                  {
-                    text: "Click me",
-                    color: "primary",
-                  } as any
-                }
-                iconName="artstation"
-                id="banner2"
-                text="Custom Button with Icon"
-                textColor="white"
-                type="customButton"
-                onClick={clickFunction}
-              />
-            </Box>
+            <Banner
+              buttonIconName="arrow-right"
+              buttonOnClick={clickFunction}
+              buttonText="Button text"
+              dismissible
+              id="ButtonBanner"
+              status="info"
+              text="This banner has a button. Buttons on banners have text and optionally have an icon."
+            />
+          </Box>
+        );
+      },
+    },
+    HasIconAndButton: {
+      description: "",
+      render: (): React.ReactElement => {
+        const clickFunction = () => {
+          console.debug("Clicked");
+        };
+        return (
+          <Box direction="column" display="flex" height="100%" width="100%">
+            <Banner
+              buttonIconName="arrow-right"
+              buttonOnClick={clickFunction}
+              buttonText="Resolve"
+              hasIcon
+              id="hasIconAndButton"
+              status="info"
+              text="This banner has a button and an icon."
+            />
           </Box>
         );
       },

@@ -1314,18 +1314,14 @@ export interface BadgeProps {
 
 export interface BannerProps {
   id: string;
-  customButtonProps?: Partial<ButtonProps>;
-  color?: BoxColor;
-  dismissible?: boolean;
-  iconName?: IconName;
-  negativeXMargin?: number;
-  onClick?: () => void;
-  shape?: Rounding;
-  subtext?: string;
+  // the text to display in the banner
   text: string;
-  textColor?: TextColor;
-  type?: "dismiss" | "action" | "permanent" /* deprecated */ | "customButton";
-  width?: number | string;
+  status?: "info" | "alert" | "warning"; // default "info"
+  dismissible?: boolean; // default false
+  hasIcon?: boolean; // default false
+  buttonText?: string;
+  buttonIconName?: IconName;
+  buttonOnClick?: () => void;
 }
 
 export interface BodyProps {
