@@ -97,7 +97,7 @@ const ButtonComponent: FC<ButtonProps> = ({
       disabled={disabled || loading}
       style={{
         alignItems: "center",
-        alignSelf: fullWidth ? "stretch" : "flex-start",
+        alignSelf: fullWidth ? "stretch" : undefined,
         backgroundColor,
         borderColor,
         borderRadius: theme.radius.rounded as any,
@@ -168,12 +168,16 @@ const ButtonComponent: FC<ButtonProps> = ({
 };
 
 export const Button: FC<ButtonProps> = (props) => {
-  const {tooltipText, tooltipPosition} = props;
+  const {tooltipText, tooltipIdealPosition, tooltipIncludeArrow = false} = props;
   const isMobileOrNative = isMobileDevice() || isNative();
 
   if (tooltipText && !isMobileOrNative) {
     return (
-      <Tooltip idealPosition={tooltipPosition} text={tooltipText}>
+      <Tooltip
+        idealPosition={tooltipIdealPosition}
+        includeArrow={tooltipIncludeArrow}
+        text={tooltipText}
+      >
         <ButtonComponent {...props} />
       </Tooltip>
     );

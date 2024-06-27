@@ -11,6 +11,50 @@ import {
 } from "./CommonIconTypes";
 import {SelectListOptions} from "./SelectList";
 
+export interface AccordionProps {
+  /**
+   * The content to be displayed inside the accordion.
+   */
+  children: React.ReactNode;
+
+  /**
+   * If true, an information modal will be included.
+   * @default false
+   */
+  includeInfoModal?: boolean;
+
+  /**
+   * The content of the information modal.
+   */
+  infoModalChildren?: ModalProps["children"];
+
+  /**
+   * The subtitle of the information modal.
+   */
+  infoModalSubTitle?: ModalProps["subTitle"];
+
+  /**
+   * The text content of the information modal.
+   */
+  infoModalText?: ModalProps["text"];
+
+  /**
+   * The title of the information modal.
+   */
+  infoModalTitle?: ModalProps["title"];
+
+  /**
+   * If true, the accordion will be collapsed.
+   * @default true
+   */
+  isCollapsed?: boolean;
+
+  /**
+   * The title of the accordion.
+   */
+  title: string;
+}
+
 export interface BaseProfile {
   email: string;
   id: string;
@@ -1342,7 +1386,12 @@ export interface ButtonProps {
   /**
    * The position of the tooltip.
    */
-  tooltipPosition?: TooltipPosition;
+  tooltipIdealPosition?: TooltipPosition;
+  /**
+   * Include an arrow in the tooltip. Pointing to the button.
+   * @default false
+   */
+  tooltipIncludeArrow?: boolean;
   /**
    * The text content of the tooltip.
    */
@@ -1503,7 +1552,11 @@ export interface IconButtonProps {
    * The ideal position of the tooltip.
    */
   tooltipIdealPosition?: TooltipPosition;
-
+  /**
+   * Include an arrow in the tooltip. Pointing to the button.
+   * @default false
+   */
+  tooltipIncludeArrow?: boolean;
   /**
    * The text content of the tooltip.
    */
@@ -1821,10 +1874,28 @@ export interface ToastProps {
 }
 
 export interface TooltipProps {
+  /**
+   * The content of the tooltip.
+   */
   children: React.ReactElement;
-  // If text is undefined, the children will be rendered without a tooltip.
-  text?: string;
+
+  /**
+   * If true, an arrow will be included in the tooltip.
+   * @default false
+   */
+  includeArrow?: boolean;
+
+  /**
+   * The ideal position of the tooltip.
+   * @default "top"
+   */
   idealPosition?: "top" | "bottom" | "left" | "right";
+
+  /**
+   * The text content of the tooltip. If text is undefined,
+   * the children will be rendered without a tooltip.
+   */
+  text?: string;
 }
 
 export interface LinkProps extends TextProps {
@@ -1951,4 +2022,32 @@ export interface ModelAdminCustomComponentProps extends Omit<FieldProps, "name">
   fieldKey: string; // Dot notation representation of the field.
   // user: User;
   editing: boolean; // Allow for inline editing of the field.
+}
+
+export interface MultiselectFieldProps {
+  /**
+   * The available options for the multiselect field.
+   */
+  options: string[];
+
+  /**
+   * The title of the multiselect field.
+   */
+  title: string;
+
+  /**
+   * The selected values of the multiselect field.
+   */
+  value: string[];
+
+  /**
+   * The variant of the multiselect field, which determines the position of the text.
+   * @default "rightText"
+   */
+  variant?: "rightText" | "leftText";
+
+  /**
+   * The function to call when the selected values change.
+   */
+  onChange: (selected: string[]) => void;
 }

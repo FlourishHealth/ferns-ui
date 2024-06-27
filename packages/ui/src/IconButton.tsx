@@ -54,11 +54,16 @@ const IconButtonComponent: FC<IconButtonProps> = ({
   testID,
   variant = "primary",
   withConfirmation = false,
+  tooltipText,
   onClick,
 }) => {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const {theme} = useContext(ThemeContext);
+  let accessLabel = accessibilityLabel;
+  if (tooltipText && accessibilityLabel === "") {
+    accessLabel = tooltipText;
+  }
 
   if (!theme) {
     return null;
@@ -88,10 +93,10 @@ const IconButtonComponent: FC<IconButtonProps> = ({
     <Pressable
       accessibilityHint={
         withConfirmation
-          ? `Opens a confirmation dialog to confirm ${accessibilityLabel}`
-          : `Press to perform ${accessibilityLabel} action`
+          ? `Opens a confirmation dialog to confirm ${accessLabel}`
+          : `Press to perform ${accessLabel} action`
       }
-      accessibilityLabel={accessibilityLabel}
+      accessibilityLabel={accessLabel}
       accessibilityRole="button"
       disabled={loading}
       style={{
@@ -150,12 +155,16 @@ const IconButtonComponent: FC<IconButtonProps> = ({
 };
 
 export const IconButton: FC<IconButtonProps> = (props) => {
-  const {tooltipText, tooltipIdealPosition} = props;
+  const {tooltipText, tooltipIdealPosition, tooltipIncludeArrow = false} = props;
   const isMobileOrNative = isMobileDevice() || isNative();
 
   if (tooltipText && !isMobileOrNative) {
     return (
-      <Tooltip idealPosition={tooltipIdealPosition} text={tooltipText}>
+      <Tooltip
+        idealPosition={tooltipIdealPosition}
+        includeArrow={tooltipIncludeArrow}
+        text={tooltipText}
+      >
         <IconButtonComponent {...props} />
       </Tooltip>
     );
