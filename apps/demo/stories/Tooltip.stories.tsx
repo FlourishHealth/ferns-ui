@@ -1,9 +1,10 @@
-import {Box, Heading, IconButton, Text, Tooltip, TooltipProps} from "ferns-ui";
+import {Box, Heading, IconButton, isMobileDevice, Text, Tooltip, TooltipProps} from "ferns-ui";
 import React from "react";
 
+const isMobile = isMobileDevice();
 export const TooltipDemo = (props: Partial<TooltipProps>) => {
   return (
-    <Box alignItems="center" height="100%" justifyContent="center" width="100%">
+    <Box alignItems="center" justifyContent="center">
       <Tooltip idealPosition="top" text="Demo Tooltip" {...props}>
         <IconButton accessibilityLabel="" iconName="hippo" onClick={() => {}} />
       </Tooltip>
@@ -55,11 +56,16 @@ export const FiveTooltips = ({
 
 export const ToolTipPositions = () => {
   return (
-    <Box direction="column" display="flex" height="100%" padding={4} width="100%">
-      <Box alignItems="center" height="100%" justifyContent="center" width="100%">
+    <Box direction="column" display="flex" padding={4}>
+      <Box
+        alignItems="center"
+        height={!isMobile ? "100%" : undefined}
+        justifyContent="center"
+        width={!isMobile ? "100%" : undefined}
+      >
         <Box>
           <Box paddingY={2}>
-            <Heading size="sm">Different Positions</Heading>
+            <Heading size="sm">Different Positions - Web Demo</Heading>
             <FiveTooltips />
           </Box>
           <Box paddingY={2}>
@@ -78,11 +84,16 @@ export const ToolTipPositions = () => {
 
 export const IncludesArrow = () => {
   return (
-    <Box direction="column" display="flex" height="100%" padding={4} width="100%">
-      <Box alignItems="center" height="100%" justifyContent="center" width="100%">
+    <Box direction="column" display="flex" padding={4}>
+      <Box
+        alignItems="center"
+        height={!isMobile ? "100%" : undefined}
+        justifyContent="center"
+        width={!isMobile ? "100%" : undefined}
+      >
         <Box paddingY={2}>
           <Heading size="sm">
-            Includes an Arrow - to be used when tooltip areas are crowded together
+            Includes an Arrow - to be used when tooltip areas are crowded together - Web Demo
           </Heading>
           <FiveTooltips includeArrow />
         </Box>
@@ -93,62 +104,18 @@ export const IncludesArrow = () => {
 
 export const TooltipOverText = () => {
   return (
-    <Box direction="column" display="flex" height="100%" padding={4} width="100%">
-      <Box alignItems="center" height="100%" justifyContent="center" width="100%">
+    <Box direction="column" display="flex" padding={4}>
+      <Box
+        alignItems="center"
+        height={!isMobile ? "100%" : undefined}
+        justifyContent="center"
+        width={!isMobile ? "100%" : undefined}
+      >
         <Box direction="row" paddingY={2}>
           <Tooltip text="Text Tooltip">
-            <Text>This text has a tooltip.</Text>
+            <Text>This text has a tooltip. Works on Mobile</Text>
           </Tooltip>
         </Box>
-      </Box>
-    </Box>
-  );
-};
-
-export const TooltipIcon = () => {
-  return (
-    <Box direction="column" display="flex" height="100%" padding={4} width="100%">
-      <Box alignItems="center" height="100%" justifyContent="center" width="100%">
-        <Box paddingY={2}>
-          <Heading size="sm">Small Tooltip</Heading>
-          <FiveTooltips />
-        </Box>
-        <Box paddingY={2}>
-          <Heading size="sm">Large Tooltip</Heading>
-          <FiveTooltips
-            text={"Here's a much longer tooltip, to test overflows, and multiple lines too!"}
-          />
-        </Box>
-        <Box paddingY={2}>
-          <Heading size="sm">Tooltip on Text</Heading>
-          <Tooltip text="Text Tooltip">
-            <Text>This text has a tooltip.</Text>
-          </Tooltip>
-        </Box>
-      </Box>
-    </Box>
-  );
-};
-
-export const TooltipOverflow = () => {
-  const text =
-    "Here's a much longer tooltip, to test overflows, works nicely with multiple lines too!";
-
-  return (
-    <Box direction="column" display="flex" flex="grow" padding={4} width="100%">
-      <Box direction="row" height={40} justifyContent="between" padding={2} width="100%">
-        <FiveTooltips text={text} />
-        <FiveTooltips text={text} />
-      </Box>
-      <Box direction="column" height="85%" justifyContent="center" width="100%">
-        <Box direction="row" height={40} justifyContent="between" padding={2} width="100%">
-          <FiveTooltips text={text} />
-          <FiveTooltips text={text} />
-        </Box>
-      </Box>
-      <Box direction="row" height={40} justifyContent="between" padding={2} width="100%">
-        <FiveTooltips text={text} />
-        <FiveTooltips text={text} />
       </Box>
     </Box>
   );

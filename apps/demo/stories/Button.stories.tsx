@@ -3,7 +3,7 @@ import React from "react";
 
 export const ButtonDemo = (props: Partial<ButtonProps>) => {
   return (
-    <Box alignItems="center" height="100%" justifyContent="center" width="100%">
+    <Box alignItems="center" justifyContent="center">
       <Button iconName="plus" text="Button" onClick={() => console.info("clicked")} {...props} />
     </Box>
   );
@@ -11,7 +11,7 @@ export const ButtonDemo = (props: Partial<ButtonProps>) => {
 
 export const ButtonVariants = (props: Partial<ButtonProps>) => {
   return (
-    <Box direction="row">
+    <Box direction="row" wrap>
       <Box padding={1}>
         <Button text="Default/Primary" onClick={() => console.info("clicked")} {...props} />
       </Box>
@@ -51,7 +51,7 @@ export const ButtonVariants = (props: Partial<ButtonProps>) => {
 
 export const ButtonIconPosition = () => {
   return (
-    <Box direction="row">
+    <Box direction="row" wrap>
       <Box padding={1}>
         <Button iconName="check" text="Icon default" onClick={() => console.info("clicked")} />
       </Box>
@@ -69,7 +69,7 @@ export const ButtonIconPosition = () => {
 
 export const ButtonLoading = () => {
   return (
-    <Box direction="row">
+    <Box direction="row" wrap>
       <Box padding={1}>
         <Button
           text="Async Loading Button"
@@ -124,14 +124,14 @@ export const FullWidthButtons = (props: Partial<ButtonProps>) => {
 };
 
 export const MultilineButtons = () => (
-  <Box direction="row">
+  <Box direction="row" wrap>
     <Box maxWidth={400} padding={1}>
-      <Button text={"Here is some text\nAnd a second line which"} onClick={() => {}} />
+      <Button text={"Here is some text\nAnd a second line"} onClick={() => {}} />
     </Box>
     <Box maxWidth={400} padding={1}>
       <Button
         iconName="plus"
-        text={"Here is some text\nAnd a second line which"}
+        text={"Here is some text and \nA second line with an icon"}
         onClick={() => {}}
       />
     </Box>

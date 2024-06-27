@@ -363,6 +363,7 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
         )}
         <View
           ref={childrenWrapperRef}
+          hitSlop={{top: 10, bottom: 10, left: 15, right: 15}}
           onPointerEnter={() => {
             handleHoverIn();
             children.props.onHoverIn?.();
