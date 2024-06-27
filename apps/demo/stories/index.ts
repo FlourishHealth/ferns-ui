@@ -36,7 +36,7 @@ export * from "./Table.stories";
 // export * from "./TableIconButton.stories";
 // export * from "./TableNumber.stories";
 // export * from "./TableTextField.stories";
-// export * from "./TableTitle.stories";
+export * from "./TableTitle.stories";
 export * from "./TapToEdit.stories";
 export * from "./Text.stories";
 export * from "./TextArea.stories";

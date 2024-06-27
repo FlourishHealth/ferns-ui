@@ -2051,3 +2051,16 @@ export interface MultiselectFieldProps {
    */
   onChange: (selected: string[]) => void;
 }
+
+export interface TableTitleProps {
+  /**
+   * The size of the table title.
+   * Can be one of "sm", "md", "lg", or "xl".
+   */
+  size: "sm" | "md" | "lg" | "xl";
+
+  /**
+   * The text content of the table title.
+   */
+  title: string;
+}

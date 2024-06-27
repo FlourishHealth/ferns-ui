@@ -1,37 +1,49 @@
-// import {DemoConfiguration} from "@config";
-// import {TableTitle} from "ferns-ui";
-// import React from "react";
+import {Box, TableTitle, TableTitleProps} from "ferns-ui";
+import React from "react";
 
-// import {DefaultDemo} from "./DefaultDemo";
+export const TableTitleDemo = (props: Partial<TableTitleProps>) => {
+  return <TableTitle size="md" title="Table Title" {...props} />;
+};
 
-// export const TableTitleConfiguration: DemoConfiguration = {
-//   name: "Table title",
-//   component: TableTitle, // Replace with actual component reference
-//   related: ["Table"],
-//   description:
-//     "This component populates the titles for each table column. They’re ordered by width.",
-//   a11yNotes: [],
-//   category: "Component",
-//   status: {
-//     documentation: "ready",
-//     figma: "ready",
-//     figmaLink:
-//       "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A24117&mode=design&t=IZ8oGBzUmBzUtZMr-1",
-//     ios: "ready",
-//     android: "ready",
-//     web: "ready",
-//   },
-//   additionalDocumentation: [],
-//   interfaceName: "TableTitleProps",
-//   usage: {
-//     do: ["Use the appropriate width for each table column.", "Wrap up to 3 lines of text."],
-//     doNot: [
-//       "Do not truncate the text.",
-//       "Do not wrap 3+ lines. If more room is needed for the title, consider shortening it or adding in a tooltip.",
-//     ],
-//   },
-//   props: {},
-//   demo: () => <DefaultDemo />,
-//   demoOptions: {},
-//   stories: {},
-// };
+export const TableTitleSize = () => {
+  return (
+    <Box>
+      <Box padding={1}>
+        <TableTitle size="sm" title="sm" />
+      </Box>
+      <Box padding={1}>
+        <TableTitle
+          size="sm"
+          title="Small with many words pneumonoultramicroscopicsilicovolcanoconiosis"
+        />
+      </Box>
+      <Box padding={1}>
+        <TableTitle size="md" title="md" />
+      </Box>
+      <Box padding={1}>
+        <TableTitle
+          size="md"
+          title="Medium with many words pneumonoultramicroscopicsilicovolcanoconiosis"
+        />
+      </Box>
+      <Box padding={1}>
+        <TableTitle size="lg" title="lg" />
+      </Box>
+      <Box padding={1}>
+        <TableTitle
+          size="lg"
+          title="Large with many words pneumonoultramicroscopicsilicovolcanoconiosis"
+        />
+      </Box>
+      <Box padding={1}>
+        <TableTitle size="xl" title="xl" />
+      </Box>
+      <Box padding={1}>
+        <TableTitle
+          size="xl"
+          title="Extra Large with many words pneumonoultramicroscopicsilicovolcanoconiosis"
+        />
+      </Box>
+    </Box>
+  );
+};

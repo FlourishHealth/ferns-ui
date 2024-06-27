@@ -1,7 +1,6 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
+import {TableTitleDemo, TableTitleSize} from "@stories";
 import {TableTitle} from "ferns-ui";
-import React from "react";
 
 export const TableTitleConfiguration: DemoConfiguration = {
   name: "Table title",
@@ -30,7 +29,28 @@ export const TableTitleConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <DefaultDemo />,
-  demoOptions: {},
-  stories: {},
+  demo: TableTitleDemo,
+  demoOptions: {
+    controls: {
+      size: {
+        type: "select",
+        options: [
+          {label: "Small", value: "sm"},
+          {label: "Medium", value: "md"},
+          {label: "Large", value: "lg"},
+          {label: "Extra Large", value: "xl"},
+        ],
+        defaultValue: "md",
+      },
+      title: {
+        type: "text",
+        defaultValue: "Table Title",
+      },
+    },
+  },
+  stories: {
+    Sizes: {
+      render: TableTitleSize,
+    },
+  },
 };
