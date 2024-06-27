@@ -51,6 +51,7 @@ export const Accordion: FC<AccordionProps> = ({
             {includeInfoModal && infoModalTitle && (
               <Pressable
                 accessibilityRole="button"
+                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
                 style={{marginLeft: 8}}
                 onPress={() => setInfoModalVisibleState(true)}
               >
@@ -63,7 +64,11 @@ export const Accordion: FC<AccordionProps> = ({
             )}
           </View>
           <View>
-            <Pressable accessibilityRole="button" onPress={() => setCollapsed(!collapsed)}>
+            <Pressable
+              accessibilityRole="button"
+              hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+              onPress={() => setCollapsed(!collapsed)}
+            >
               <FontAwesome6
                 color={theme.text.link}
                 name={collapsed ? "chevron-down" : "chevron-up"}
