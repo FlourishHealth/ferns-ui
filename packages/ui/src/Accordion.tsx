@@ -48,7 +48,7 @@ export const Accordion: FC<AccordionProps> = ({
         <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
           <View style={{flexDirection: "row", alignItems: "center"}}>
             <Heading>{title}</Heading>
-            {includeInfoModal && (
+            {includeInfoModal && infoModalTitle && (
               <Pressable
                 accessibilityRole="button"
                 style={{marginLeft: 8}}
