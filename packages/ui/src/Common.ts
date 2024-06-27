@@ -1996,3 +1996,31 @@ export interface ModelAdminCustomComponentProps extends Omit<FieldProps, "name">
   // user: User;
   editing: boolean; // Allow for inline editing of the field.
 }
+
+export interface MultiselectFieldProps {
+  /**
+   * The available options for the multiselect field.
+   */
+  options: string[];
+
+  /**
+   * The title of the multiselect field.
+   */
+  title: string;
+
+  /**
+   * The selected values of the multiselect field.
+   */
+  value: string[];
+
+  /**
+   * The variant of the multiselect field, which determines the position of the text.
+   * @default "rightText"
+   */
+  variant?: "rightText" | "leftText";
+
+  /**
+   * The function to call when the selected values change.
+   */
+  onChange: (selected: string[]) => void;
+}

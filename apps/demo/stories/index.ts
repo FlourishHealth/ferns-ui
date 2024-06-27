@@ -18,7 +18,7 @@ export * from "./IconButton.stories";
 export * from "./Link.stories";
 export * from "./Mask.stories";
 export * from "./Modal.stories";
-// export * from "./MultiselectField.stories";
+export * from "./MultiselectField.stories";
 // export * from "./Pagination.stories";
 // export * from "./PasswordField.stories";
 // export * from "./Radio.stories";
