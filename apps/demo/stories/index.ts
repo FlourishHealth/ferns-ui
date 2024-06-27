@@ -1,3 +1,4 @@
+export * from "./Accordion.stories";
 export * from "./Avatar.stories";
 export * from "./Badge.stories";
 export * from "./Banner.stories";
