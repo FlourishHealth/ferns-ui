@@ -10,10 +10,13 @@ const width = {
   lg: 233,
   xl: 302,
 };
-export const TableTitle = ({title = "hello world", size}: TableTitleProps): React.ReactElement => {
+export const TableTitle = ({title, size}: TableTitleProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
   return (
     <View
+      accessibilityHint=""
+      accessibilityLabel={`Table title: ${title}`}
+      accessibilityRole="header"
       style={{
         paddingHorizontal: 16,
         paddingVertical: 12,

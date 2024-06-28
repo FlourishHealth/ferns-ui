@@ -2,7 +2,11 @@ import {Box, TableTitle, TableTitleProps} from "ferns-ui";
 import React from "react";
 
 export const TableTitleDemo = (props: Partial<TableTitleProps>) => {
-  return <TableTitle size="md" title="Table Title" {...props} />;
+  return (
+    <Box alignContent="center" justifyContent="center">
+      <TableTitle size="md" title="Table Title" {...props} />
+    </Box>
+  );
 };
 
 export const TableTitleSize = () => {
