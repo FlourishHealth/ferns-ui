@@ -9,7 +9,7 @@ import {
   View,
 } from "react-native";
 
-import {FernsTheme, getRounding, getSpacing, ThemeContext} from ".";
+import {FernsTheme, getRounding, getSpacing, SurfaceTheme, ThemeContext} from ".";
 import {AlignContent, AlignItems, AlignSelf, BoxProps, JustifyContent} from "./Common";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {Unifier} from "./Unifier";
@@ -79,7 +79,7 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     alignItems: (value: AlignItems) => ({alignItems: ALIGN_ITEMS[value]}),
     alignContent: (value: AlignContent) => ({alignContent: ALIGN_CONTENT[value]}),
     alignSelf: (value: AlignSelf) => ({alignSelf: ALIGN_SELF[value]}),
-    color: (value: keyof FernsTheme) => ({backgroundColor: theme[value]}),
+    color: (value: keyof SurfaceTheme) => ({backgroundColor: theme.surface[value]}),
     direction: (value: any) => ({flexDirection: value, display: "flex"}),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     smDirection: (value: any) =>
@@ -239,10 +239,12 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
 
   let box;
 
-  // Adding the accessibilityRole of button throws a warning in React Native since we nest buttons within Box and RN does not support nested buttons
+  // Adding the accessibilityRole of button throws a warning in React Native since we nest buttons
+  // within Box and RN does not support nested buttons
   if (props.onClick) {
     box = (
       <Pressable
+        accessibilityRole="button"
         // accessibilityRole="button"
         style={propsToStyle()}
         testID={props.testID ? `${props.testID}-clickable` : undefined}

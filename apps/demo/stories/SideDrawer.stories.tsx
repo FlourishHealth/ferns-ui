@@ -3,12 +3,12 @@ import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
 
-interface DrawerStoryProps {
-  position: "right" | "left";
-}
+export const DrawerDemo = () => {
+  return <Text align="center">No drawer demo, see Dev Mode.</Text>;
+};
 
-export const DrawerStory = ({position}: DrawerStoryProps) => {
-  const [open, setOpen] = useState(false);
+export const DrawerStory = () => {
+  const [open, setOpen] = useState<"right" | "left" | null>(null);
 
   const users = Array.from(Array(100).keys()).map((i) => ({
     name: `user${i}`,
@@ -17,34 +17,55 @@ export const DrawerStory = ({position}: DrawerStoryProps) => {
 
   return (
     <SideDrawer
-      isOpen={open}
-      position={position}
+      isOpen={open === "left"}
+      position="left"
       renderContent={() => (
-        <Box height="100%">
-          <Box>
-            <Heading>Drawer Heading</Heading>
-          </Box>
-          <FlatList
-            data={users}
-            renderItem={(item) => (
-              <Box>
-                <Text>{item.item.name}</Text>
-              </Box>
-            )}
-          />
+        <Box color="base" height="100%">
+          <Heading>Drawer Heading</Heading>
+          <FlatList data={users} renderItem={(item) => <Text>{item.item.name}</Text>} />
         </Box>
       )}
-      onClose={() => setOpen(false)}
-      onOpen={() => setOpen(true)}
+      onClose={() => open === "left" && setOpen(null)}
+      onOpen={() => {}}
     >
-      <StorybookContainer>
-        <Button
-          text="Open drawer"
-          onClick={() => {
-            setOpen((prevOpen) => !prevOpen);
-          }}
-        />
-      </StorybookContainer>
+      <SideDrawer
+        isOpen={open === "right"}
+        position="right"
+        renderContent={() => (
+          <Box color="base" height="100%">
+            <Box>
+              <Heading>Drawer Heading</Heading>
+            </Box>
+            <FlatList
+              data={users}
+              renderItem={(item) => (
+                <Box>
+                  <Text>{item.item.name}</Text>
+                </Box>
+              )}
+            />
+          </Box>
+        )}
+        onClose={() => open === "right" && setOpen(null)}
+        onOpen={() => setOpen("right")}
+      >
+        <StorybookContainer>
+          <Box marginBottom={1}>
+            <Button
+              text="Open left"
+              onClick={() => {
+                setOpen("left");
+              }}
+            />
+          </Box>
+          <Button
+            text="Open right"
+            onClick={() => {
+              setOpen("right");
+            }}
+          />
+        </StorybookContainer>
+      </SideDrawer>
     </SideDrawer>
   );
 };

@@ -1,5 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo, DrawerStory} from "@stories";
+import {DrawerDemo, DrawerStory} from "@stories";
 import {SideDrawer} from "ferns-ui";
 import React from "react";
 
@@ -29,13 +29,12 @@ export const SideDrawerConfiguration: DemoConfiguration = {
       "Use side drawer to display information from a table record row.",
       "Use side drawer to show non-critical information.",
     ],
-    doNot: ["Do not use side drawer to show information that’s critical to a task or flow."],
+    doNot: ["Do not use side drawer to show information that is critical to a task or flow."],
   },
   props: {},
-  demo: DefaultDemo,
+  demo: DrawerDemo,
   demoOptions: {},
   stories: {
-    Left: {render: () => <DrawerStory position="left" />},
-    Right: {render: () => <DrawerStory position="right" />},
+    Drawer: {render: () => <DrawerStory />},
   },
 };
