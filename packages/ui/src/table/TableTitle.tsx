@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {FC, useContext} from "react";
 import {Text, View} from "react-native";
 
 import {TableTitleProps} from "../Common";
@@ -10,7 +10,7 @@ const width = {
   lg: 233,
   xl: 302,
 };
-export const TableTitle = ({title, size}: TableTitleProps): React.ReactElement => {
+export const TableTitle: FC<TableTitleProps> = ({title, size}) => {
   const {theme} = useContext(ThemeContext);
   return (
     <View
