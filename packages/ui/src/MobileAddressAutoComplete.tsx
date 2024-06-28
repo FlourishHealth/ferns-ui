@@ -61,9 +61,9 @@ export const MobileAddressAutocomplete = ({
   if (!googleMapsApiKey) {
     return (
       <TextField
+        disabled={disabled}
         id="address1"
         name="Street Address"
-        state={disabled ? "disabled" : undefined}
         testID={testID}
         type="text"
         value={inputValue}

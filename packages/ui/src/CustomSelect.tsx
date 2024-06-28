@@ -66,9 +66,9 @@ export const CustomSelect = ({
       {Boolean(showCustomInput) && (
         <Box paddingY={2}>
           <TextField
+            disabled={disabled}
             id="customOptions"
             placeholderText={placeholder}
-            state={disabled ? "disabled" : undefined}
             type="text"
             value={value}
             onChange={(result) => onChange(result.value)}

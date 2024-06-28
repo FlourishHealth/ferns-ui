@@ -61,7 +61,7 @@ const textContentMap: {
 
 export const TextField = ({
   title,
-  state,
+  disabled,
   helperText,
   errorText,
   value,
@@ -102,18 +102,17 @@ export const TextField = ({
   const [showDate, setShowDate] = useState(false);
 
   const borderColor = useMemo(() => {
-    switch (state) {
-      case "error":
-        return theme.border.error;
-      case "disabled":
-        return theme.border.activeNeutral;
-      case "default":
-      default:
-        return focused ? theme.border.focus : theme.border.dark;
+    if (disabled) {
+      return theme.border.activeNeutral;
+    } else if (errorText) {
+      return theme.border.error;
+    } else {
+      return focused ? theme.border.focus : theme.border.dark;
     }
   }, [
+    disabled,
+    errorText,
     focused,
-    state,
     theme.border.activeNeutral,
     theme.border.dark,
     theme.border.error,
@@ -157,7 +156,7 @@ export const TextField = ({
     "height",
   ].includes(type);
 
-  const isEditable = !(state === "disabled") && !isHandledByModal;
+  const isEditable = !disabled && !isHandledByModal;
 
   const shouldAutocorrect = type === "text" && (!autoComplete || autoComplete === "on");
 
@@ -165,7 +164,7 @@ export const TextField = ({
   const textContentType = textContentMap[type || "text"];
 
   const onTap = useCallback((): void => {
-    if (state === "disabled") {
+    if (disabled) {
       return;
     }
     if (["date", "datetime", "time"].includes(type)) {
@@ -177,7 +176,7 @@ export const TextField = ({
     } else if (type === "height") {
       weightActionSheetRef?.current?.show();
     }
-  }, [decimalRangeActionSheetRef, numberRangeActionSheetRef, state, type, weightActionSheetRef]);
+  }, [decimalRangeActionSheetRef, disabled, numberRangeActionSheetRef, type, weightActionSheetRef]);
 
   let displayValue = value;
   if (value) {
@@ -243,7 +242,7 @@ export const TextField = ({
             {title}
           </Text>
         )}
-        {state === "error" && errorText && (
+        {Boolean(errorText) && errorText && (
           <View style={{flexDirection: "row", alignItems: "center", marginVertical: 2}}>
             <Icon color="error" iconName="triangle-exclamation" size="sm" />
             <View style={{marginLeft: 4}}>
@@ -255,7 +254,7 @@ export const TextField = ({
           style={{
             flexDirection: "row",
             alignItems: "center",
-            backgroundColor: state === "disabled" ? theme.surface.neutralLight : theme.surface.base,
+            backgroundColor: disabled ? theme.surface.neutralLight : theme.surface.base,
             borderColor,
             borderWidth: focused ? 3 : 1,
             paddingHorizontal: focused ? 10 : 12,
@@ -289,15 +288,13 @@ export const TextField = ({
             underlineColorAndroid="transparent"
             value={displayValue}
             onBlur={() => {
+              if (disabled) return;
               if (!isHandledByModal) {
                 setFocused(false);
               }
               if (onBlur) {
                 onBlur({value: value ?? ""});
               }
-              // if (type === "date") {
-              //   actionSheetRef?.current?.hide();
-              // }
             }}
             onChangeText={(text) => {
               if (!onChange) {

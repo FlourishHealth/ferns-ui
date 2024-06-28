@@ -44,7 +44,6 @@ export const TextFieldWithErrorMsgDemo = (): ReactElement => {
       errorText="Provide actionable information"
       helperText="Helpful information for filling out the form field."
       placeholderText="This is placeholder text."
-      state="error"
       title="Enter some text"
       value={value}
       onChange={(v) => setValue(v.value)}
@@ -56,9 +55,9 @@ export const TextFieldDisabledDemo = (): ReactElement => {
   const [value, setValue] = useState("");
   return (
     <TextField
+      disabled
       helperText="Tell the user why this is disabled."
       placeholderText="This is placeholder text."
-      state="disabled"
       title="Form field title"
       value={value}
       onChange={(v) => setValue(v.value)}

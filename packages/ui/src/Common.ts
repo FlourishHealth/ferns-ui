@@ -596,7 +596,7 @@ export interface TextStyleWithOutline extends TextStyle {
 
 export interface TextFieldProps {
   title?: string;
-  state?: "default" | "error" | "disabled"; // default "default"
+  disabled?: boolean; // default false
   helperText?: string;
   errorText?: string;
   testID?: string;

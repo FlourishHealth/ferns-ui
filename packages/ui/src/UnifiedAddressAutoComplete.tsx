@@ -51,8 +51,8 @@ export const UnifiedAddressAutoCompleteField = ({
   } else {
     return (
       <TextField
+        disabled={disabled}
         placeholderText="Enter an address"
-        state={disabled ? "disabled" : undefined}
         testID={testID}
         title="Street Address"
         type="text"
