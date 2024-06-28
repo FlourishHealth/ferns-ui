@@ -1,13 +1,19 @@
 import {ErrorBoundary} from "@components";
 import {DemoConfig} from "@config";
-import {router, useLocalSearchParams} from "expo-router";
-import React from "react";
+import {router, useLocalSearchParams, useNavigation} from "expo-router";
+import React, {useEffect} from "react";
 import {View} from "react-native";
 
 export default function DevComponentPage(): React.ReactElement {
   const {component, story} = useLocalSearchParams<{component: string; story?: string}>();
 
   const config = DemoConfig.find((c) => c.name === component);
+
+  const navigation = useNavigation();
+  // Set the title
+  useEffect(() => {
+    navigation.setOptions({title: story});
+  }, [navigation, story]);
 
   if (!story || !config) {
     router.replace("/dev");
