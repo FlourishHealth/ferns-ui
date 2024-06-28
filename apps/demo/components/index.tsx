@@ -1,3 +1,3 @@
 export * from "./DemoHomePage";
-export * from "./DevHomePage";
+export * from "./DevSideBar";
 export * from "./ErrorBoundary";
