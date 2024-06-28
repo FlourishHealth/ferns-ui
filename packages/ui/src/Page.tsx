@@ -21,9 +21,7 @@ export class Page extends React.Component<PageProps, {}> {
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
               accessibilityLabel=""
-              icon="chevron-left"
-              prefix="fas"
-              size="md"
+              iconName="chevron-left"
               onClick={() => this.props.navigation.goBack()}
             />
           </Box>
@@ -32,9 +30,7 @@ export class Page extends React.Component<PageProps, {}> {
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
               accessibilityLabel=""
-              icon="xmark"
-              prefix="fas"
-              size="md"
+              iconName="xmark"
               onClick={() => this.props.navigation.goBack()}
             />
           </Box>

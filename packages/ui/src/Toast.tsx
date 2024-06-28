@@ -89,8 +89,6 @@ export const Toast = ({
   onDismiss,
   // TODO enforce these should only show if size is "lg" with type discrinimation
   subtitle,
-  buttonText,
-  buttonOnClick,
 }: ToastProps): React.ReactElement => {
   const {theme} = useTheme();
   let color: SurfaceColor;
@@ -101,9 +99,9 @@ export const Toast = ({
     throw new Error("Secondary not supported yet");
   }
 
-  if ((buttonText && !buttonOnClick) || (!buttonText && buttonOnClick)) {
-    throw new Error("Toast button requires both buttonText and buttonOnClick");
-  }
+  // if ((buttonText && !buttonOnClick) || (!buttonText && buttonOnClick)) {
+  //   throw new Error("Toast button requires both buttonText and buttonOnClick");
+  // }
 
   if (variant === "warning") {
     color = "warning";

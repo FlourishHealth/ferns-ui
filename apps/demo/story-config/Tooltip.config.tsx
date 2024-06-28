@@ -1,5 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {TooltipDemo, TooltipIcon, TooltipOverflow} from "@stories";
+import {IncludesArrow, TooltipDemo, TooltipOverText, ToolTipPositions} from "@stories";
 import {Tooltip} from "ferns-ui";
 
 export const TooltipConfiguration: DemoConfiguration = {
@@ -10,7 +10,11 @@ export const TooltipConfiguration: DemoConfiguration = {
     "Tooltip is a floating text label that succinctly describes the function of an interactive element, typically Icon Button. It’s displayed continuously as long as the user hovers over or focuses on the element. Also known as 'Info tip'.",
   shortDescription:
     "Tooltip is a floating text label that succinctly describes the function of an interactive element, typically Icon Button. ",
-  a11yNotes: ["The tooltip should not be repetitive with the label of the element it relates to."],
+  a11yNotes: [
+    "The tooltip should not be repetitive with the label of the element it relates to.",
+    "When using Tooltip with IconButton, avoid repetitive labeling. The accessibilityLabel provided to IconButton should describe the intent of the button, not the icon itself. For instance, use “Settings” instead of “Cog icon”. Tooltip text should expand upon that intention.",
+    'If Tooltip text is the same as IconButton accessibilityLabel, then add accessibilityLabel="" to the Tooltip.',
+  ],
   category: "Component",
   status: {
     documentation: "ready",
@@ -32,9 +36,29 @@ export const TooltipConfiguration: DemoConfiguration = {
   },
   props: {},
   demo: TooltipDemo,
-  demoOptions: {},
+  demoOptions: {
+    controls: {
+      idealPosition: {
+        type: "select",
+        defaultValue: "top",
+        options: [
+          {label: "Bottom", value: "bottom"},
+          {label: "Top", value: "top"},
+          {label: "Right", value: "right"},
+          {label: "Left", value: "left"},
+        ],
+      },
+      includeArrow: {
+        type: "boolean",
+        defaultValue: false,
+      },
+    },
+  },
   stories: {
-    Icons: {render: TooltipIcon},
-    Overflow: {render: TooltipOverflow},
+    Positions: {
+      render: () => ToolTipPositions(),
+    },
+    IncludeArrows: {render: () => IncludesArrow()},
+    AroundText: {render: () => TooltipOverText()},
   },
 };

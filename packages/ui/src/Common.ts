@@ -11,6 +11,50 @@ import {
 } from "./CommonIconTypes";
 import {SelectListOptions} from "./SelectList";
 
+export interface AccordionProps {
+  /**
+   * The content to be displayed inside the accordion.
+   */
+  children: React.ReactNode;
+
+  /**
+   * If true, an information modal will be included.
+   * @default false
+   */
+  includeInfoModal?: boolean;
+
+  /**
+   * The content of the information modal.
+   */
+  infoModalChildren?: ModalProps["children"];
+
+  /**
+   * The subtitle of the information modal.
+   */
+  infoModalSubTitle?: ModalProps["subTitle"];
+
+  /**
+   * The text content of the information modal.
+   */
+  infoModalText?: ModalProps["text"];
+
+  /**
+   * The title of the information modal.
+   */
+  infoModalTitle?: ModalProps["title"];
+
+  /**
+   * If true, the accordion will be collapsed.
+   * @default true
+   */
+  isCollapsed?: boolean;
+
+  /**
+   * The title of the accordion.
+   */
+  title: string;
+}
+
 export interface BaseProfile {
   email: string;
   id: string;
@@ -505,7 +549,7 @@ export interface IconProps {
   testID?: string;
 }
 
-export type TooltipDirection = "top" | "bottom" | "left" | "right";
+export type TooltipPosition = "top" | "bottom" | "left" | "right";
 
 export type IndicatorDirection = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
 
@@ -1342,7 +1386,12 @@ export interface ButtonProps {
   /**
    * The position of the tooltip.
    */
-  tooltipPosition?: TooltipDirection;
+  tooltipIdealPosition?: TooltipPosition;
+  /**
+   * Include an arrow in the tooltip. Pointing to the button.
+   * @default false
+   */
+  tooltipIncludeArrow?: boolean;
   /**
    * The text content of the tooltip.
    */
@@ -1351,7 +1400,7 @@ export interface ButtonProps {
    * The type of the button, which determines its style.
    * @default "primary"
    */
-  variant?: "primary" | "secondary" | "muted" | "outline";
+  variant?: "primary" | "secondary" | "muted" | "outline" | "destructive";
   /**
    * If true, a confirmation modal will be shown before the onClick action.
    */
@@ -1466,25 +1515,69 @@ export interface HyperlinkProps {
 }
 
 export interface IconButtonProps {
-  prefix?: IconPrefix;
-  icon: IconName;
+  /**
+   * The accessibility label for the icon button.
+   */
   accessibilityLabel: string;
-  onClick: () => void;
-  size?: IconSize;
-  type?: "primary" | "secondary" | "muted";
-  disabled?: boolean;
-  selected?: boolean;
-  withConfirmation?: boolean;
-  confirmationText?: string;
+
+  /**
+   * The heading of the confirmation modal.
+   * @default "Confirm"
+   */
   confirmationHeading?: string;
-  tooltip?: {
-    text: string;
-    idealDirection?: TooltipDirection;
-  };
-  indicator?: boolean;
-  indicatorNumber?: number;
-  indicatorStyle?: {position: IndicatorDirection; color: SurfaceColor};
+
+  /**
+   * The text content of the confirmation modal.
+   * @default "Are you sure you want to continue?"
+   */
+  confirmationText?: string;
+
+  /**
+   * The name of the icon to display in the button.
+   */
+  iconName: IconName;
+
+  /**
+   * If true, a loading spinner will be shown in the button.
+   */
+  loading?: boolean;
+
+  /**
+  /**
+   * The test ID for the button, used for testing purposes.
+   */
   testID?: string;
+
+  /**
+   * The ideal position of the tooltip.
+   */
+  tooltipIdealPosition?: TooltipPosition;
+  /**
+   * Include an arrow in the tooltip. Pointing to the button.
+   * @default false
+   */
+  tooltipIncludeArrow?: boolean;
+  /**
+   * The text content of the tooltip.
+   */
+  tooltipText?: string;
+
+  /**
+   * The variant of the button, which determines its style.
+   * @default "primary"
+   */
+  variant?: "primary" | "secondary" | "muted" | "destructive";
+
+  /**
+   * If true, a confirmation modal will be shown before the onClick action.
+   * @default false
+   */
+  withConfirmation?: boolean;
+
+  /**
+   * The function to call when the button is clicked.
+   */
+  onClick: () => void | Promise<void>;
 }
 
 export interface InfoTooltipButtonProps {
@@ -1589,6 +1682,17 @@ export interface RadioFieldProps {
   value: string;
   onChange: (value: string) => void;
   options: string[];
+}
+
+export interface SignatureFieldProps {
+  state?: "default" | "error" | "disabled"; // default "default"
+  value?: string;
+  onChange: (value: any) => void;
+  title?: string; // default "Signature"
+  onStart?: () => void;
+  onEnd?: () => void;
+  disabledText?: string;
+  errorText?: string;
 }
 
 export interface SideDrawerProps {
@@ -1773,12 +1877,28 @@ export interface ToastProps {
 }
 
 export interface TooltipProps {
+  /**
+   * The content of the tooltip.
+   */
   children: React.ReactElement;
-  // If text is undefined, the children will be rendered without a tooltip.
+
+  /**
+   * If true, an arrow will be included in the tooltip.
+   * @default false
+   */
+  includeArrow?: boolean;
+
+  /**
+   * The ideal position of the tooltip.
+   * @default "top"
+   */
+  idealPosition?: "top" | "bottom" | "left" | "right";
+
+  /**
+   * The text content of the tooltip. If text is undefined,
+   * the children will be rendered without a tooltip.
+   */
   text?: string;
-  idealDirection?: "top" | "bottom" | "left" | "right";
-  // TODO: Fix Tooltip.bgColor.
-  bgColor?: any;
 }
 
 export interface LinkProps extends TextProps {
@@ -1905,4 +2025,32 @@ export interface ModelAdminCustomComponentProps extends Omit<FieldProps, "name">
   fieldKey: string; // Dot notation representation of the field.
   // user: User;
   editing: boolean; // Allow for inline editing of the field.
+}
+
+export interface MultiselectFieldProps {
+  /**
+   * The available options for the multiselect field.
+   */
+  options: string[];
+
+  /**
+   * The title of the multiselect field.
+   */
+  title: string;
+
+  /**
+   * The selected values of the multiselect field.
+   */
+  value: string[];
+
+  /**
+   * The variant of the multiselect field, which determines the position of the text.
+   * @default "rightText"
+   */
+  variant?: "rightText" | "leftText";
+
+  /**
+   * The function to call when the selected values change.
+   */
+  onChange: (selected: string[]) => void;
 }

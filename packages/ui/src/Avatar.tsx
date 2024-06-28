@@ -243,7 +243,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
     // Don't show the tooltips on mobile because they intercept the edit avatar clicks.
     return (
       <Box width={width}>
-        <Tooltip idealDirection="top" text={isMobileDevice() ? undefined : status}>
+        <Tooltip idealPosition="top" text={isMobileDevice() ? undefined : status}>
           {avatar}
         </Tooltip>
       </Box>

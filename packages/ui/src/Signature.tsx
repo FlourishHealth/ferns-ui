@@ -1,17 +1,19 @@
-import React, {ReactElement, useRef} from "react";
+import React, {ReactElement, useContext, useRef} from "react";
+import {Text, View} from "react-native";
 import SignatureCanvas from "react-signature-canvas";
 
-import {Box} from "./Box";
-import {Button} from "./Button";
+import {ThemeContext} from "./Theme";
 
 export interface SignatureProps {
   onChange: (signature: string) => void;
   onStart?: () => void;
   onEnd?: () => void;
+  value?: string; // note this
 }
 
 export const Signature = ({onChange}: SignatureProps): ReactElement | null => {
   const ref = useRef<SignatureCanvas>(null);
+  const {theme} = useContext(ThemeContext);
 
   const onClear = () => {
     ref.current?.clear();
@@ -22,15 +24,21 @@ export const Signature = ({onChange}: SignatureProps): ReactElement | null => {
       onChange(ref.current.toDataURL());
     }
   };
-
   return (
-    <Box width={300}>
-      <Box border="dark">
-        <SignatureCanvas ref={ref} backgroundColor="white" onEnd={onUpdatedSignature} />
-      </Box>
-      <Box direction="row">
-        <Button text="Clear" variant="muted" onClick={onClear} />
-      </Box>
-    </Box>
+    <View>
+      <View style={{borderColor: theme.border.dark, borderWidth: 1, width: "100%", maxWidth: 300}}>
+        <SignatureCanvas
+          ref={ref}
+          backgroundColor={theme.surface.base}
+          penColor={theme.text.secondaryDark}
+          onEnd={onUpdatedSignature}
+        />
+      </View>
+      <View>
+        <Text style={{color: theme.text.link, textDecorationLine: "underline"}} onPress={onClear}>
+          Clear
+        </Text>
+      </View>
+    </View>
   );
 };

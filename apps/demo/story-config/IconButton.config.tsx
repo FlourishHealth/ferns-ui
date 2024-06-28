@@ -1,274 +1,88 @@
-// import {Box, Heading, IconButton, IconButtonProps} from "ferns-ui";
-// import React from "react";
+import {DemoConfiguration} from "@config";
+import {
+  AllButtonIconVariants,
+  ConfirmationIconButton,
+  IconButtonDemo,
+  LoadingIconButton,
+  ToolTipIconButton,
+} from "@stories";
+import {IconButton} from "ferns-ui";
 
-// import {StorybookContainer} from "./StorybookContainer";
-
-// interface DisplayProps extends IconButtonProps {
-//   title: string;
-// }
-
-// const IconButtonDisplay = (props: DisplayProps): React.ReactElement => {
-//   const {title, ...rest} = props;
-//   return (
-//     <Box paddingY={2}>
-//       <Box paddingY={1}>
-//         <Heading size="sm">{title}</Heading>
-//       </Box>
-//       <Box direction="row" width="100%">
-//         <Box color="white" padding={4}>
-//           <IconButton {...rest} />
-//         </Box>
-//         <Box color="lightGray" padding={4}>
-//           <IconButton {...rest} />
-//         </Box>
-//         <Box color="darkGray" padding={4}>
-//           <IconButton {...rest} />
-//         </Box>
-//         <Box color="blue" padding={4}>
-//           <IconButton {...rest} />
-//         </Box>
-//       </Box>
-//     </Box>
-//   );
-// };
-
-// export const IconButtonStories = {
-//   title: "IconButton",
-//   component: IconButton,
-//   stories: {
-//     Colors() {
-//       return (
-//         <StorybookContainer>
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             prefix="fas"
-//             title="Primary, Transparent Background"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="secondary"
-//             prefix="fas"
-//             title="Secondary, Transparent Background"
-//             onClick={() => {}}
-//           />
-
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             prefix="fas"
-//             size="sm"
-//             title="Small Size"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             prefix="fas"
-//             size="md"
-//             title="Medium Size"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             prefix="fas"
-//             size="lg"
-//             title="Large Size"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             prefix="fas"
-//             size="xl"
-//             title="XL Size"
-//             onClick={() => {}}
-//           />
-
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             bgColor="lightGray"
-//             icon="plus"
-//             iconColor="primary"
-//             prefix="fas"
-//             title="Light Gray Background"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             bgColor="primary"
-//             icon="plus"
-//             iconColor="white"
-//             prefix="fas"
-//             title="Active State White Icon with Primary Background"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             bgColor="gray"
-//             icon="plus"
-//             iconColor="primary"
-//             prefix="fas"
-//             title="Gray Background"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             bgColor="transparentDarkGray"
-//             icon="plus"
-//             iconColor="primary"
-//             prefix="fas"
-//             title="Primary, Dark Gray Transparent"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             bgColor="transparentDarkGray"
-//             icon="plus"
-//             iconColor="white"
-//             prefix="fas"
-//             title="White, Dark Gray Transparent"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             prefix="fas"
-//             size="sm"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             indicatorStyle={{position: "topRight", color: "red"}}
-//             prefix="fas"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             indicatorStyle={{position: "bottomRight", color: "green"}}
-//             prefix="fas"
-//             size="lg"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             indicatorStyle={{position: "bottomLeft", color: "blue"}}
-//             prefix="fas"
-//             size="lg"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             indicatorStyle={{position: "topLeft", color: "purple"}}
-//             prefix="fas"
-//             size="lg"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             indicatorNumber={33}
-//             prefix="fas"
-//             size="sm"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             indicatorNumber={33}
-//             indicatorStyle={{position: "topRight", color: "red"}}
-//             prefix="fas"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             indicatorNumber={33}
-//             indicatorStyle={{position: "bottomRight", color: "green"}}
-//             prefix="fas"
-//             size="lg"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             indicatorNumber={33}
-//             indicatorStyle={{position: "bottomLeft", color: "blue"}}
-//             prefix="fas"
-//             size="lg"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-//           <IconButtonDisplay
-//             accessibilityLabel="label"
-//             icon="plus"
-//             iconColor="primary"
-//             indicator
-//             indicatorNumber={33}
-//             indicatorStyle={{position: "topLeft", color: "purple"}}
-//             prefix="fas"
-//             size="lg"
-//             title="Button with indicator"
-//             onClick={() => {}}
-//           />
-//         </StorybookContainer>
-//       );
-//     },
-//     Confirmation() {
-//       return (
-//         <Box padding={4}>
-//           <IconButton
-//             accessibilityLabel="Button with plus icon"
-//             bgColor="gray"
-//             icon="plus"
-//             iconColor="white"
-//             prefix="fas"
-//             withConfirmation
-//             onClick={() => {
-//               console.log("Clicked!");
-//             }}
-//           />
-//         </Box>
-//       );
-//     },
-//   },
-// };
+export const IconButtonConfiguration: DemoConfiguration = {
+  name: "IconButton",
+  component: IconButton,
+  related: ["Buttons", "Icons", "Actions"],
+  description: "Icon buttons allow users to take actions and make choices with a single tap.",
+  a11yNotes: [
+    "Ensure that each IconButton has an appropriate accessibilityLabel that describes the action it performs.",
+    "If the button has a confirmation dialog, indicate this with an appropriate accessibilityHint.",
+    "When using icons, provide clear and consistent iconography that users can easily understand.",
+  ],
+  category: "Component",
+  status: {
+    documentation: "ready",
+    figma: "ready",
+    figmaLink:
+      "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A23358&mode=design&t=AKQ8wyFQBA4qC5eF-1",
+    ios: "ready",
+    android: "ready",
+    web: "ready",
+  },
+  additionalDocumentation: [
+    {name: "Icon Guidelines", link: "https://www.nngroup.com/articles/icon-guidelines/"},
+  ],
+  interfaceName: "IconButtonProps",
+  usage: {
+    do: [
+      "Use to trigger an action or progression within a task or flow.",
+      "Use concise, descriptive icons that are easily recognizable.",
+      "Provide accessible labels that describe the button's action.",
+    ],
+    doNot: [
+      "Do not use without an accessible label.",
+      "Avoid using icons that are not easily recognizable or understood by users.",
+    ],
+  },
+  props: {},
+  demo: IconButtonDemo,
+  demoOptions: {
+    controls: {
+      variant: {
+        type: "select",
+        defaultValue: "primary",
+        options: [
+          {label: "Primary", value: "primary"},
+          {label: "Secondary", value: "secondary"},
+          {label: "Muted", value: "muted"},
+          {label: "Destructive", value: "destructive"},
+        ],
+      },
+      iconName: {
+        type: "select",
+        defaultValue: "plus",
+        options: [
+          {label: "Plus", value: "plus"},
+          {label: "Check", value: "check"},
+          {label: "Arrow", value: "arrow-down-short-wide"},
+          {label: "Minus", value: "minus"},
+          {label: "Close", value: "close"},
+          {label: "Info", value: "info"},
+          {label: "Trash", value: "trash"},
+          {label: "Edit", value: "edit"},
+          {label: "Download", value: "download"},
+          {label: "Archive", value: "box-archive"},
+        ],
+      },
+      withConfirmation: {
+        type: "boolean",
+        defaultValue: false,
+      },
+    },
+  },
+  stories: {
+    Variants: {render: () => AllButtonIconVariants({})},
+    Confirmation: {render: () => ConfirmationIconButton({})},
+    WithToolTip: {render: () => ToolTipIconButton({})},
+    Loading: {render: () => LoadingIconButton({})},
+  },
+};

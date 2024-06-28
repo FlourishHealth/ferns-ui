@@ -1,3 +1,4 @@
+export * from "./Accordion.config";
 export * from "./Avatar.config";
 export * from "./Badge.config";
 export * from "./Banner.config";
@@ -12,7 +13,7 @@ export * from "./DateTimeModal.config";
 // export * from "./Field.config";
 export * from "./Heading.config";
 export * from "./Icon.config";
-// export * from "./IconButton.config";
+export * from "./IconButton.config";
 // export * from "./Link.config";
 export * from "./Mask.config";
 export * from "./Modal.config";
