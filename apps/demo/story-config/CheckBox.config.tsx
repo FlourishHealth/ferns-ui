@@ -1,7 +1,6 @@
 import {DemoConfiguration} from "@config";
-import {CheckboxDemo, Checkboxes} from "@stories";
+import {CheckboxColors, CheckboxDemo, CheckboxSizes} from "@stories";
 import {CheckBox} from "ferns-ui";
-import React from "react";
 
 export const CheckBoxConfiguration: DemoConfiguration = {
   name: "CheckBox",
@@ -40,9 +39,31 @@ export const CheckBoxConfiguration: DemoConfiguration = {
   },
   props: {},
   demo: CheckboxDemo,
-  demoOptions: {},
+  demoOptions: {
+    controls: {
+      selected: {type: "boolean", defaultValue: true},
+      size: {
+        type: "select",
+        options: [
+          {label: "Small", value: "sm"},
+          {label: "Medium", value: "md"},
+          {label: "Large", value: "lg"},
+        ],
+        defaultValue: "md",
+      },
+      bgColor: {
+        type: "select",
+        options: [
+          {label: "Default", value: "default"},
+          {label: "Gold", value: "gold"},
+          {label: "Black", value: "black"},
+        ],
+        defaultValue: "default",
+      },
+    },
+  },
   stories: {
-    Plain: {render: () => <Checkboxes disabled={false} />},
-    Disabled: {render: () => <Checkboxes disabled />},
+    Sizes: {render: CheckboxSizes},
+    Colors: {render: CheckboxColors},
   },
 };

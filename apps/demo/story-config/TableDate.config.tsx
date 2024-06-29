@@ -1,11 +1,10 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
+import {TableDateAnnotation, TableDateDemo} from "@stories";
 import {TableDate} from "ferns-ui";
-import React from "react";
 
 export const TableDateConfiguration: DemoConfiguration = {
   name: "Table date",
-  component: TableDate, // Replace with actual component reference
+  component: TableDate,
   related: ["Table"],
   description:
     "This field displays a date. There are two kinds, annotated and default. The annotated date shows an annotation - ex, '10 days ago'.",
@@ -32,7 +31,22 @@ export const TableDateConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <DefaultDemo />,
-  demoOptions: {},
-  stories: {},
+  demo: TableDateDemo,
+  demoOptions: {
+    controls: {
+      annotated: {
+        type: "boolean",
+        defaultValue: false,
+      },
+      isEditing: {
+        type: "boolean",
+        defaultValue: false,
+      },
+    },
+  },
+  stories: {
+    Annotations: {
+      render: TableDateAnnotation,
+    },
+  },
 };

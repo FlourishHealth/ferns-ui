@@ -1,11 +1,10 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
+import {TableBooleanDemo, TableBooleanStates} from "@stories";
 import {TableBoolean} from "ferns-ui";
-import React from "react";
 
 export const TableBooleanConfiguration: DemoConfiguration = {
   name: "Table boolean",
-  component: TableBoolean, // Replace with actual component reference
+  component: TableBoolean,
   related: ["Table"],
   description: "Use the table boolean to create easily scannable binary information for a user.",
   a11yNotes: [],
@@ -26,7 +25,22 @@ export const TableBooleanConfiguration: DemoConfiguration = {
     doNot: ["Do not use this to represent data that’s not a true binary."],
   },
   props: {},
-  demo: () => <DefaultDemo />,
-  demoOptions: {},
-  stories: {},
+  demo: TableBooleanDemo,
+  demoOptions: {
+    controls: {
+      value: {
+        type: "boolean",
+        defaultValue: true,
+      },
+      isEditing: {
+        type: "boolean",
+        defaultValue: false,
+      },
+    },
+  },
+  stories: {
+    States: {
+      render: TableBooleanStates,
+    },
+  },
 };
