@@ -1,6 +1,6 @@
 import {ErrorBoundary} from "@components";
 import {DemoConfig, DemoConfigStatus, DemoConfiguration, DemoConfigurationProp} from "@config";
-import {router, useLocalSearchParams} from "expo-router";
+import {router, useLocalSearchParams, useNavigation} from "expo-router";
 import {
   Badge,
   Box,
@@ -17,7 +17,7 @@ import {
 } from "ferns-ui";
 import cloneDeep from "lodash/cloneDeep";
 import startCase from "lodash/startCase";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 // @ts-ignore
 import {MarkdownView} from "react-native-markdown-view";
 
@@ -276,6 +276,12 @@ export default function ComponentPage(): React.ReactElement {
   if (!component || !config) {
     router.replace("/demo");
   }
+
+  const navigation = useNavigation();
+  // Set the title
+  useEffect(() => {
+    navigation.setOptions({title: component});
+  }, [navigation, component]);
 
   return (
     <Box padding={4} scroll>
