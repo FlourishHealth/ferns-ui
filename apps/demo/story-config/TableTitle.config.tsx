@@ -1,5 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {TableTitleDemo, TableTitleSize} from "@stories";
+import {TableTitleDemo, TableTitleExample} from "@stories";
 import {TableTitle} from "ferns-ui";
 
 export const TableTitleConfiguration: DemoConfiguration = {
@@ -32,16 +32,6 @@ export const TableTitleConfiguration: DemoConfiguration = {
   demo: TableTitleDemo,
   demoOptions: {
     controls: {
-      size: {
-        type: "select",
-        options: [
-          {label: "Small", value: "sm"},
-          {label: "Medium", value: "md"},
-          {label: "Large", value: "lg"},
-          {label: "Extra Large", value: "xl"},
-        ],
-        defaultValue: "md",
-      },
       title: {
         type: "text",
         defaultValue: "Table Title",
@@ -49,8 +39,8 @@ export const TableTitleConfiguration: DemoConfiguration = {
     },
   },
   stories: {
-    Sizes: {
-      render: TableTitleSize,
+    Example: {
+      render: TableTitleExample,
     },
   },
 };

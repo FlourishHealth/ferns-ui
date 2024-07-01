@@ -1734,6 +1734,19 @@ export interface TableProps {
    * Width of columns in the table. This is used to calculate the width of each column.
    * Can be numbers for pixels or strings for percentages.
    */
+  // in figma/ jos documentation for the component, TableTitle,
+  // she included the width as prop size
+  /**
+   * The size of the table title.
+   * Can be one of "sm", "md", "lg", or "xl".
+   */
+  // size: "sm" | "md" | "lg" | "xl";
+  //   const width = {
+  //   sm: 82,
+  //   md: 161,
+  //   lg: 233,
+  //   xl: 302,
+  // };
   columns: Array<number | string>;
   /**
    * Specify a border width for Table: "sm" is 1px.
@@ -2056,12 +2069,6 @@ export interface MultiselectFieldProps {
 }
 
 export interface TableTitleProps {
-  /**
-   * The size of the table title.
-   * Can be one of "sm", "md", "lg", or "xl".
-   */
-  size: "sm" | "md" | "lg" | "xl";
-
   /**
    * The text content of the table title.
    */

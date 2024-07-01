@@ -4,13 +4,7 @@ import {Text, View} from "react-native";
 import {TableTitleProps} from "../Common";
 import {ThemeContext} from "../Theme";
 
-const width = {
-  sm: 82,
-  md: 161,
-  lg: 233,
-  xl: 302,
-};
-export const TableTitle: FC<TableTitleProps> = ({title, size}) => {
+export const TableTitle: FC<TableTitleProps> = ({title}) => {
   const {theme} = useContext(ThemeContext);
   return (
     <View
@@ -31,7 +25,6 @@ export const TableTitle: FC<TableTitleProps> = ({title, size}) => {
           flexWrap: "wrap",
           overflow: "hidden",
           color: theme.text.primary,
-          maxWidth: width[size],
         }}
       >
         {title}

@@ -3,51 +3,16 @@ import React from "react";
 
 export const TableTitleDemo = (props: Partial<TableTitleProps>) => {
   return (
-    <Box alignContent="center" justifyContent="center">
-      <TableTitle size="md" title="Table Title" {...props} />
+    <Box alignItems="center" justifyContent="center">
+      <TableTitle title="Table Title" {...props} />
     </Box>
   );
 };
 
-export const TableTitleSize = () => {
+export const TableTitleExample = () => {
   return (
-    <Box>
-      <Box padding={1}>
-        <TableTitle size="sm" title="sm" />
-      </Box>
-      <Box padding={1}>
-        <TableTitle
-          size="sm"
-          title="Small with many words pneumonoultramicroscopicsilicovolcanoconiosis"
-        />
-      </Box>
-      <Box padding={1}>
-        <TableTitle size="md" title="md" />
-      </Box>
-      <Box padding={1}>
-        <TableTitle
-          size="md"
-          title="Medium with many words pneumonoultramicroscopicsilicovolcanoconiosis"
-        />
-      </Box>
-      <Box padding={1}>
-        <TableTitle size="lg" title="lg" />
-      </Box>
-      <Box padding={1}>
-        <TableTitle
-          size="lg"
-          title="Large with many words pneumonoultramicroscopicsilicovolcanoconiosis"
-        />
-      </Box>
-      <Box padding={1}>
-        <TableTitle size="xl" title="xl" />
-      </Box>
-      <Box padding={1}>
-        <TableTitle
-          size="xl"
-          title="Extra Large with many words pneumonoultramicroscopicsilicovolcanoconiosis"
-        />
-      </Box>
+    <Box alignContent="center" justifyContent="center">
+      <TableTitle title="Standard Table Title" />
     </Box>
   );
 };
