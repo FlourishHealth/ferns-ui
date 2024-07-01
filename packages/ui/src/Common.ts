@@ -232,6 +232,7 @@ export interface TextTheme {
   error: string;
   warning: string;
   success: string;
+  gold: string;
 }
 
 export interface SurfaceTheme {
@@ -744,20 +745,22 @@ export interface BooleanFieldProps {
 }
 
 export interface CheckBoxProps {
-  onChange: ({value}: {value: boolean}) => void;
-  checked?: boolean;
-  hasError?: boolean;
-  indeterminate?: boolean;
-  name?: string;
-  onClick?: any;
-  size?: "sm" | "md";
-  type?: "default" | "accent" | "neutral";
-  radio?: boolean;
+  /**
+   * The background color of the checkbox.
+   * @default "default"
+   */
+  bgColor?: "default" | "gold" | "black";
 
-  label?: string;
-  subLabel?: string;
-  labelColor?: TextColor;
-  testID?: string;
+  /**
+   * If true, the checkbox is selected.
+   */
+  selected: boolean;
+
+  /**
+   * The size of the checkbox.
+   * @default "md"
+   */
+  size?: "sm" | "md" | "lg";
 }
 
 interface LayoutRectangle {
@@ -1731,6 +1734,19 @@ export interface TableProps {
    * Width of columns in the table. This is used to calculate the width of each column.
    * Can be numbers for pixels or strings for percentages.
    */
+  // in figma/ jos documentation for the component, TableTitle,
+  // she included the width as prop size
+  /**
+   * The size of the table title.
+   * Can be one of "sm", "md", "lg", or "xl".
+   */
+  // size: "sm" | "md" | "lg" | "xl";
+  //   const width = {
+  //   sm: 82,
+  //   md: 161,
+  //   lg: 233,
+  //   xl: 302,
+  // };
   columns: Array<number | string>;
   /**
    * Specify a border width for Table: "sm" is 1px.
@@ -2050,4 +2066,66 @@ export interface MultiselectFieldProps {
    * The function to call when the selected values change.
    */
   onChange: (selected: string[]) => void;
+}
+
+export interface TableTitleProps {
+  /**
+   * The text content of the table title.
+   */
+  title: string;
+}
+
+export interface TableBooleanProps {
+  /**
+   * If true, the component is in editing mode.
+   * @default false
+   */
+  isEditing?: boolean;
+
+  /**
+   * The function to call when the value is saved.
+   */
+  onSave: () => void | Promise<void>;
+
+  /**
+   * The boolean value to be displayed or edited.
+   */
+  value: boolean;
+}
+
+export interface TableDateProps {
+  /**
+   * If true, the date is annotated.
+   * @default false
+   */
+  annotated?: boolean;
+
+  /**
+   * If true, the component is in editing mode.
+   * @default false
+   */
+  isEditing?: boolean;
+
+  /**
+   * The function to call when the value is saved.
+   */
+  onSave?: () => void;
+
+  /**
+   * The date value to be displayed or edited. Can be a string or a Date object.
+   */
+  value: string | Date;
+}
+
+export interface TableIconButtonProps {
+  /**
+   * The name of the icon button to display in the table.
+   * Can be one of "edit", "saveAndClose", "insert", "drawerOpen", or "drawerClose".
+   */
+  tableIconButtonName: "edit" | "saveAndClose" | "insert" | "drawerOpen" | "drawerClose";
+
+  /**
+   * The function to call when the icon button is clicked.
+   */
+  onClick: () => void | Promise<void>;
 }

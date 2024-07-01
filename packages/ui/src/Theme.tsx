@@ -64,6 +64,8 @@ const defaultPrimitives = {
   success100: "#3EA45C",
   success200: "#1A7F36",
 
+  gold000: "#956A00",
+
   spacing0: 0,
   spacing1: 4,
   spacing2: 8,
@@ -100,6 +102,7 @@ const defaultTheme: FernsTheme = {
     error: "error200",
     warning: "warning200",
     success: "success200",
+    gold: "gold000",
   },
   surface: {
     base: "neutral000",

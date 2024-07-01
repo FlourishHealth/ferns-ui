@@ -1,7 +1,6 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
+import {TableTitleDemo, TableTitleExample} from "@stories";
 import {TableTitle} from "ferns-ui";
-import React from "react";
 
 export const TableTitleConfiguration: DemoConfiguration = {
   name: "Table title",
@@ -30,7 +29,18 @@ export const TableTitleConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <DefaultDemo />,
-  demoOptions: {},
-  stories: {},
+  demo: TableTitleDemo,
+  demoOptions: {
+    controls: {
+      title: {
+        type: "text",
+        defaultValue: "Table Title",
+      },
+    },
+  },
+  stories: {
+    Example: {
+      render: TableTitleExample,
+    },
+  },
 };

@@ -1,12 +1,11 @@
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import React, {FC, useContext, useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {TouchableOpacity, View} from "react-native";
 
+import {CheckBox} from "./CheckBox";
 import {MultiselectFieldProps} from "./Common";
 import {Heading} from "./Heading";
 import {isMobileDevice} from "./MediaQuery";
 import {Text} from "./Text";
-import {ThemeContext} from "./Theme";
 
 const Option: FC<{
   isDefault: boolean;
@@ -14,7 +13,6 @@ const Option: FC<{
   selected: boolean;
   onSelect: () => void;
 }> = ({option, isDefault, selected, onSelect}) => {
-  const {theme} = useContext(ThemeContext);
   return (
     <View
       style={{
@@ -43,33 +41,7 @@ const Option: FC<{
             paddingEnd: isDefault ? 0 : 8,
           }}
         >
-          {selected ? (
-            <View
-              style={{
-                height: 16,
-                width: 16,
-                borderWidth: 1,
-                borderColor: theme.text.link,
-                backgroundColor: theme.text.link,
-                borderRadius: 2,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <FontAwesome6 brand="solid" color={theme.surface.base} name="check" size={13} />
-            </View>
-          ) : (
-            <View
-              style={{
-                height: 16,
-                width: 16,
-                borderWidth: 1,
-                borderColor: theme.text.link,
-                backgroundColor: theme.surface.base,
-                borderRadius: 2,
-              }}
-            />
-          )}
+          <CheckBox selected={selected} />
         </View>
       </TouchableOpacity>
     </View>
