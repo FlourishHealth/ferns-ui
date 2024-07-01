@@ -63,7 +63,7 @@ export const MobileAddressAutocomplete = ({
       <TextField
         disabled={disabled}
         id="address1"
-        label="Street Address"
+        name="Street Address"
         testID={testID}
         type="text"
         value={inputValue}

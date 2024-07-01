@@ -73,8 +73,8 @@ export const WebAddressAutocomplete = ({
     <TextField
       disabled={disabled}
       inputRef={scriptLoaded ? (ref: any): void => (autocompleteInputRef.current = ref) : undefined}
-      label="Street Address"
-      placeholder="Enter an address"
+      name="Street Address"
+      placeholderText="Enter an address"
       type="text"
       value={inputValue}
       onChange={({value}): void => {

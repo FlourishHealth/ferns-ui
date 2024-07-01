@@ -1,6 +1,6 @@
 import {SaveFormat} from "expo-image-manipulator";
 import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
-import {ListRenderItemInfo, StyleProp, ViewStyle} from "react-native";
+import {ListRenderItemInfo, StyleProp, TextStyle, ViewStyle} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
 
@@ -565,7 +565,7 @@ export interface SegmentedControlProps {
 export interface FieldWithLabelsProps {
   testID?: string;
   errorMessage?: string;
-  errorMessageColor?: TextColor; // Default: error.
+  errorMessageColor?: TextColor;
   label?: string;
   labelColor?: TextColor;
   helperText?: string;
@@ -590,30 +590,31 @@ export interface TimezonePickerProps {
   width?: number | string; // defaults to 100
 }
 
-export interface TextFieldProps extends FieldWithLabelsProps {
+// extend TextStyle to include "outline" since it exists for web
+export interface TextStyleWithOutline extends TextStyle {
+  outline?: string;
+}
+
+export interface TextFieldProps {
+  title?: string;
+  disabled?: boolean; // default false
+  helperText?: string;
+  errorText?: string;
+  testID?: string;
   innerRef?: any;
   id?: string;
   onChange: OnChangeCallback;
   autoComplete?: "current-password" | "on" | "off" | "username";
-  disabled?: boolean;
 
   idealErrorDirection?: Direction;
   name?: string;
   onBlur?: OnChangeCallback;
   onFocus?: OnChangeCallback;
-  placeholder?: string;
+  placeholderText?: string;
   type?: TextFieldType;
   value?: string;
-  style?: any;
-  // If type === search, indicates whether to show the search icon or spinner
-  searching?: boolean;
-
   returnKeyType?: "done" | "go" | "next" | "search" | "send";
-
-  // TODO: still needed?
-  autoFocus?: boolean;
   grow?: boolean;
-  // react-native-autofocus
   inputRef?: any;
   onSubmitEditing?: any;
   onEnter?: any;
