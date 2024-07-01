@@ -1,6 +1,7 @@
 import {DemoConfig} from "@config";
+import {useNavigation} from "expo-router";
 import {Box, Heading} from "ferns-ui";
-import React from "react";
+import React, {useEffect} from "react";
 import {Pressable, ScrollView, Text, View} from "react-native";
 
 export const DemoHomePage = ({
@@ -8,6 +9,12 @@ export const DemoHomePage = ({
 }: {
   onPress: (componentName: string) => void;
 }): React.ReactElement => {
+  const navigation = useNavigation();
+  // Set the title
+  useEffect(() => {
+    navigation.setOptions({title: "Ferns UI Demo"});
+  }, [navigation]);
+
   return (
     <ScrollView
       contentContainerStyle={{
