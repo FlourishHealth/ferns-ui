@@ -2,14 +2,12 @@ import React from "react";
 
 import {BooleanField} from "./BooleanField";
 import {Box} from "./Box";
-import {CheckBox} from "./CheckBox";
 import {AddressInterface, FieldProps, ReactChildren, TextFieldType} from "./Common";
 import {USSTATESLIST} from "./Constants";
 import {CustomSelect} from "./CustomSelect";
 import {FieldWithLabels} from "./FieldWithLabels";
 import {SelectList} from "./SelectList";
 import {Signature} from "./Signature";
-import {Text} from "./Text";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 import {UnifiedAddressAutoCompleteField} from "./UnifiedAddressAutoComplete";
@@ -68,52 +66,55 @@ export const Field = ({
           }}
         />
       );
-    } else if (type === "multiselect") {
-      if (options === undefined) {
-        console.error("Field with type=multiselect require options");
-        return undefined;
-      }
-      return (
-        <Box width="100%">
-          {options.map((o) => (
-            <Box
-              key={o.label + o.value}
-              alignItems="center"
-              direction="row"
-              justifyContent="between"
-              width="100%"
-            >
-              <Box flex="shrink" marginRight={2}>
-                <Text bold>{o.label}</Text>
-              </Box>
-              <Box>
-                <CheckBox
-                  key={o.label + o.value}
-                  checked={(value ?? []).includes(o.value)}
-                  name={name}
-                  size="sm"
-                  testID={`${testID}-${o.value}`}
-                  onChange={(result) => {
-                    let newValue;
-                    if (result.value) {
-                      if (value.includes(o.value)) {
-                        console.warn(`Tried to add value that already exists: ${o.value}`);
-                        return;
-                      }
-                      newValue = [...value, o.value];
-                    } else {
-                      newValue = value.filter((v: string) => v !== o.value);
-                    }
-                    onChange(newValue);
-                    onBlur && onBlur(newValue);
-                  }}
-                />
-              </Box>
-            </Box>
-          ))}
-        </Box>
-      );
-    } else if (type === "textarea") {
+    }
+    // TODO: Either implement multiselect or remove it
+    //  else if (type === "multiselect") {
+    //   if (options === undefined) {
+    //     console.error("Field with type=multiselect require options");
+    //     return undefined;
+    //   }
+    //   return (
+    //     <Box width="100%">
+    //       {options.map((o) => (
+    //         <Box
+    //           key={o.label + o.value}
+    //           alignItems="center"
+    //           direction="row"
+    //           justifyContent="between"
+    //           width="100%"
+    //         >
+    //           <Box flex="shrink" marginRight={2}>
+    //             <Text bold>{o.label}</Text>
+    //           </Box>
+    //           <Box>
+    //             <CheckBox
+    //               key={o.label + o.value}
+    //               checked={(value ?? []).includes(o.value)}
+    //               name={name}
+    //               size="sm"
+    //               testID={`${testID}-${o.value}`}
+    //               onChange={(result) => {
+    //                 let newValue;
+    //                 if (result.value) {
+    //                   if (value.includes(o.value)) {
+    //                     console.warn(`Tried to add value that already exists: ${o.value}`);
+    //                     return;
+    //                   }
+    //                   newValue = [...value, o.value];
+    //                 } else {
+    //                   newValue = value.filter((v: string) => v !== o.value);
+    //                 }
+    //                 onChange(newValue);
+    //                 onBlur && onBlur(newValue);
+    //               }}
+    //             />
+    //           </Box>
+    //         </Box>
+    //       ))}
+    //     </Box>
+    //   );
+    // }
+    else if (type === "textarea") {
       return (
         <TextArea
           disabled={disabled}
