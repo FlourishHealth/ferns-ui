@@ -68,7 +68,7 @@
     "eslint-plugin-unused-imports": "3.2.0",
     "expo": "~51.0.8",
     "expo-status-bar": "~1.12.1",
-    "postcss": "8.4.38",
+    "postcss": "8.4.39",
     "prettier": "^3.2.5",
     "react-keyed-flatten-children": "^3.0.0",
     "react-native-haptic-feedback": "^2.0.3",
