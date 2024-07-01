@@ -77,6 +77,17 @@ export const Toasts = () => {
             }}
           />
         </Box>
+        <Box marginBottom={2}>
+          <Button
+            text="Persistent"
+            onClick={() => {
+              const id = toast.show(
+                "Thanks for doing the thing we asked. You have successfully done the thing. Congrats! You are wonderful!",
+                {persistent: true, onDismiss: () => toast.hide(id)}
+              );
+            }}
+          />
+        </Box>
       </Box>
     </StorybookContainer>
   );

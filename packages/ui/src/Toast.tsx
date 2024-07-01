@@ -17,8 +17,6 @@ type UseToastVariantOptions = {
   size?: ToastProps["size"];
   onDismiss?: ToastProps["onDismiss"];
   subtitle?: ToastProps["subtitle"];
-  // buttonText?: ToastProps["buttonText"];
-  // buttonOnClick?: ToastProps["buttonOnClick"];
 };
 
 type UseToastOptions = {variant?: ToastProps["variant"]} & UseToastVariantOptions;
@@ -80,13 +78,15 @@ export function useToast(): {
 }
 
 // TODO: Support secondary version of Toast.
-
+// TODO: Support dismissible version of Toast. Currently only persistent are dismissible.
+// This may require a different library from react-native-toast-notifications.
 export const Toast = ({
   title,
   variant = "info",
   secondary,
   size = "sm",
   onDismiss,
+  persistent,
   // TODO enforce these should only show if size is "lg" with type discrinimation
   subtitle,
 }: ToastProps): React.ReactElement => {
@@ -99,9 +99,9 @@ export const Toast = ({
     throw new Error("Secondary not supported yet");
   }
 
-  // if ((buttonText && !buttonOnClick) || (!buttonText && buttonOnClick)) {
-  //   throw new Error("Toast button requires both buttonText and buttonOnClick");
-  // }
+  if (persistent && !onDismiss) {
+    console.warn("Toast is persistent but no onDismiss callback provided");
+  }
 
   if (variant === "warning") {
     color = "warning";
@@ -212,20 +212,22 @@ export const Toast = ({
             )}
           </View>
         </View>
-        <Pressable
-          accessibilityRole="button"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            alignSelf: "center",
-            gap: 12,
-            marginLeft: 10,
-            padding: size === "lg" ? 8 : 0,
-          }}
-          onPress={onDismiss}
-        >
-          <Icon color={textColor} iconName="xmark" />
-        </Pressable>
+        {Boolean(persistent && onDismiss) && (
+          <Pressable
+            accessibilityRole="button"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              alignSelf: "center",
+              gap: 12,
+              marginLeft: 10,
+              padding: size === "lg" ? 8 : 0,
+            }}
+            onPress={onDismiss}
+          >
+            <Icon color={textColor} iconName="xmark" />
+          </Pressable>
+        )}
       </View>
     </View>
   );
