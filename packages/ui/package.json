@@ -118,7 +118,6 @@
     "prettier": "^3.2.5",
     "react": "18.2.0",
     "react-keyed-flatten-children": "^3.0.0",
-    "react-native-svg-transformer": "^1.4.0",
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",
     "tsc-watch": "^6.0.4",
