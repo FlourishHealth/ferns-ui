@@ -53,7 +53,7 @@ export const TableDate = forwardRef<TableDateHandles, TableDateProps>(
       >
         {isEditing ? (
           <TextField
-            errorMessage={errorMessage}
+            errorText={errorMessage}
             value={editDate}
             onChange={(res) => {
               if (!isValidDate(res.value)) {
