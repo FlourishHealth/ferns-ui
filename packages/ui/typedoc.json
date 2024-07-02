@@ -1,5 +1,0 @@
-{
-  "entryPoints": ["src/Common.ts"],
-  "tsconfig": "tsconfig.json",
-  "json": "../../apps/demo/ui-types-documentation.json"
-}
