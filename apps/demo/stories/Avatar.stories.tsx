@@ -17,6 +17,7 @@ export const AvatarDemo = (props: Partial<AvatarProps>) => {
       <Avatar
         name="Tony Stark"
         src={src}
+        status="online"
         {...props}
         onChange={(val: AvatarImagePickerEvent) => {
           setSrc(val.uri);
@@ -30,15 +31,15 @@ export const AvatarInitials = () => {
   return (
     <Box direction="column" display="flex" height="100%" width="100%">
       <Text>Tony Stark</Text>
-      <Avatar name="Tony Stark" />
+      <Avatar name="Tony Stark" status="online" />
       <Text>Tony Stark Jr</Text>
-      <Avatar name="Tony Stark Jr" />
+      <Avatar name="Tony Stark Jr" status="online" />
       <Text>Tony Ironman Stark</Text>
-      <Avatar name="Tony Ironman Stark" />
+      <Avatar name="Tony Ironman Stark" status="online" />
       <Text>Tony</Text>
-      <Avatar name="Tony" />
+      <Avatar name="Tony" status="online" />
       <Text> Tony Stark Colored</Text>
-      <Avatar name="Tony Stark" />
+      <Avatar name="Tony Stark" status="online" />
     </Box>
   );
 };
@@ -46,15 +47,15 @@ export const AvatarSizes = () => {
   return (
     <Box direction="column" display="flex" height="100%" width="100%">
       <Text>XS</Text>
-      <Avatar name="Tony Stark" size="xs" />
+      <Avatar name="Tony Stark" size="xs" status="online" />
       <Text>SM</Text>
-      <Avatar name="Tony Stark" size="sm" />
+      <Avatar name="Tony Stark" size="sm" status="online" />
       <Text>MD</Text>
-      <Avatar name="Tony Stark" size="md" />
+      <Avatar name="Tony Stark" size="md" status="online" />
       <Text>LG</Text>
-      <Avatar name="Tony Stark" size="lg" />
+      <Avatar name="Tony Stark" size="lg" status="online" />
       <Text>XL</Text>
-      <Avatar name="Tony Stark" size="xl" />
+      <Avatar name="Tony Stark" size="xl" status="online" />
     </Box>
   );
 };
@@ -62,25 +63,50 @@ export const AvatarOutlines = () => {
   return (
     <Box color="neutral" direction="column" display="flex" height="100%" width="100%">
       <Text>XS</Text>
-      <Avatar name="Tony Stark" size="xs" />
+      <Avatar name="Tony Stark" size="xs" status="online" />
       <Text>SM</Text>
-      <Avatar name="Tony Stark" size="sm" />
+      <Avatar name="Tony Stark" size="sm" status="online" />
       <Text>MD</Text>
-      <Avatar name="Tony Stark" size="md" />
+      <Avatar name="Tony Stark" size="md" status="online" />
       <Text>LG</Text>
-      <Avatar name="Tony Stark" size="lg" />
+      <Avatar name="Tony Stark" size="lg" status="online" />
       <Text>XL</Text>
-      <Avatar name="Tony Stark" size="xl" />
+      <Avatar name="Tony Stark" size="xl" status="online" />
       <Text>XS</Text>
-      <Avatar name="Tony Stark" size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="xs"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
       <Text>SM</Text>
-      <Avatar name="Tony Stark" size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="sm"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
       <Text>MD</Text>
-      <Avatar name="Tony Stark" size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="md"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
       <Text>LG</Text>
-      <Avatar name="Tony Stark" size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="lg"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
       <Text>XL</Text>
-      <Avatar name="Tony Stark" size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="xl"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
     </Box>
   );
 };
@@ -88,15 +114,40 @@ export const AvatarImages = () => {
   return (
     <Box color="neutral" direction="column" display="flex" height="100%" width="100%">
       <Text>XS</Text>
-      <Avatar name="Tony Stark" size="xs" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="xs"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
       <Text>SM</Text>
-      <Avatar name="Tony Stark" size="sm" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="sm"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
       <Text>MD</Text>
-      <Avatar name="Tony Stark" size="md" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="md"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
       <Text>LG</Text>
-      <Avatar name="Tony Stark" size="lg" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="lg"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
       <Text>XL</Text>
-      <Avatar name="Tony Stark" size="xl" src="https://i.ibb.co/ZfCZrY8/keerthi.jpg" />
+      <Avatar
+        name="Tony Stark"
+        size="xl"
+        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
+        status="online"
+      />
     </Box>
   );
 };
@@ -129,24 +180,8 @@ export const AvatarStatusDemo = () => {
   return (
     <Box color="neutral" direction="column" display="flex" height="100%" width="100%">
       {renderIcon("Online", "xs", "online")}
-      {/* {renderIcon("Offline (with tooltip)", "sm", "offline", false, "Offline at 1:30pm")} */}
-      {/* {renderIcon("Do Not Disturb", "md", "doNotDisturb")}
-      {renderIcon("Away", "lg", "away")}
-      {renderIcon("Meeting", "xl", "meeting")}
-      {renderIcon("Vacation", "xl", "vacation")}
-      {renderIcon("Sick", "xl", "sick")}
-      {renderIcon(
-        "Out Of Office (tooltip)",
-        "xl",
-        "outOfOffice",
-        false,
-        "Out Of Office Until 1/3/24"
-      )}
-      {renderIcon("Commuting", "xl", "commuting")} */}
       {renderIcon("Online Mobile", "xl", "online")}
       {renderIcon("Offline Mobile", "xl", "offline")}
-      {/* {renderIcon("Away Mobile", "xl", "away", true)} */}
-      {/* {renderIcon("DND Mobile (tooltip)", "xl", "doNotDisturb", true, "Deep Work, Do Not Disturb")} */}
     </Box>
   );
 };

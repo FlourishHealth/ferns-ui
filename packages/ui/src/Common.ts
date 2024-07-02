@@ -2,6 +2,7 @@ import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
 import {ListRenderItemInfo, StyleProp, ViewStyle} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
+import {SvgProps} from "react-native-svg";
 
 import {
   FontAwesome6BrandNames,
@@ -1182,6 +1183,10 @@ export type AvatarImagePickerEvent = {
   width?: number;
 };
 
+export interface CustomSvgProps extends SvgProps {
+  doNotDisturb?: boolean;
+}
+
 export interface AvatarProps {
   /**
    * The name of the user. This is used for the placeholder treatment if an image is not available.
@@ -1206,7 +1211,7 @@ export interface AvatarProps {
   /**
    * The status of the user to display with the avatar.
    */
-  status?: AvatarStatus;
+  status: AvatarStatus;
   /**
    * If true, the status will have a "Z" to indicate the user has snoozed notifications.
    */
