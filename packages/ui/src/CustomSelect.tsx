@@ -68,7 +68,7 @@ export const CustomSelect = ({
           <TextField
             disabled={disabled}
             id="customOptions"
-            placeholder={placeholder}
+            placeholderText={placeholder}
             type="text"
             value={value}
             onChange={(result) => onChange(result.value)}
