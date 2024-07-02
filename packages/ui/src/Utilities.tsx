@@ -301,7 +301,7 @@ export function formattedCountyCode(state: string, countyName: string): string {
     .toLowerCase()
     .replace(/[\s.'-]/g, "");
 
-  const countyData = COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES[stateKey]?.[countyKey];
+  const countyData = (COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES as any)[stateKey]?.[countyKey];
   if (!countyData) {
     return "";
   }

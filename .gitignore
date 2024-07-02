@@ -3,3 +3,7 @@ node_modules/
 *.log
 packages/ui/.expo
 packages/ui-demo/.expo
+apps/demo/node_modules
+apps/demo/.expo
+# Generate this locally and on the build only, it jumps around too much to be useful in git
+apps/demo/ui-types-documentation.json

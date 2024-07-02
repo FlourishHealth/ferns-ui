@@ -1,0 +1,15 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@stories": ["stories"],
+      "@components": ["components"],
+      "@config": ["demoConfig"],
+      "@story-config": ["story-config"],
+    },
+    "jsx": "react"
+  }
+}
+

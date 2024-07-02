@@ -1,27 +1,35 @@
-import {FontAwesome5} from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import React, {useContext} from "react";
 
 import {IconProps, iconSizeToNumber} from "./Common";
 import {ThemeContext} from "./Theme";
 
-export function initIcons() {
-  console.debug("Initializing icons");
-}
-
 // TODO: Update <Icon /> to be closer to Expo's Vector Icon, letting multiple icon packs be used,
 // etc.
-export const Icon = ({color, size, name, prefix, testID}: IconProps): React.ReactElement => {
+// TODO: Add documentation for adding FA6-Pro icons.
+export const Icon = ({
+  color = "primary",
+  size = "md",
+  iconName,
+  type = "solid",
+  testID,
+}: IconProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
-  const iconColor = theme[color || "primary"];
+  const iconColor = theme.text[color];
   const iconSize = iconSizeToNumber(size);
   return (
-    <FontAwesome5
+    <FontAwesome6
+      brand={type === "brand"}
       color={iconColor}
-      name={name}
-      regular={prefix === "far"}
+      duotone={type === "duotone"}
+      light={type === "light" || type === "sharpLight"}
+      name={iconName}
+      regular={type === "regular"}
+      sharp={type === "sharp"}
       size={iconSize}
-      solid={!prefix || prefix === "fas"}
+      solid={type === "solid" || type === "sharpSolid"}
       testID={testID}
+      thin={type === "thin"}
     />
   );
 };

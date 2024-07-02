@@ -27,7 +27,7 @@ export const WithLabel = ({
     >
       {Boolean(label && labelPlacement !== "after") && (
         <Box paddingY={1}>
-          <Text color={labelColor || "darkGray"} size={labelSize} weight="bold">
+          <Text bold color={labelColor || "primary"} size={labelSize}>
             {show !== false ? label : " "}
           </Text>
         </Box>
@@ -35,7 +35,7 @@ export const WithLabel = ({
       {children}
       {Boolean(label && labelPlacement === "after") && (
         <Box paddingY={1}>
-          <Text color={labelColor || "darkGray"} size={labelSize}>
+          <Text color={labelColor || "primary"} size={labelSize}>
             {show !== false ? label : " "}
           </Text>
         </Box>
