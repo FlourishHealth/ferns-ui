@@ -1,22 +1,14 @@
 import {getCalendars} from "expo-localization";
 import {AsYouType} from "libphonenumber-js";
 import React, {ReactElement, useCallback, useContext, useMemo, useState} from "react";
-import {
-  KeyboardTypeOptions,
-  Platform,
-  Pressable,
-  StyleProp,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import {KeyboardTypeOptions, Platform, Pressable, StyleProp, TextInput, View} from "react-native";
 
 import {TextFieldProps, TextStyleWithOutline} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
 import {printDate, printDateAndTime, printTime} from "./DateUtilities";
 import {DecimalRangeActionSheet} from "./DecimalRangeActionSheet";
+import {FieldError, FieldHelperText, FieldTitle} from "./FieldElements";
 import {HeightActionSheet} from "./HeightActionSheet";
-import {Icon} from "./Icon";
 import {NumberPickerActionSheet} from "./NumberPickerActionSheet";
 import {ThemeContext} from "./Theme";
 
@@ -230,26 +222,8 @@ export const TextField = ({
           onTap();
         }}
       >
-        {title && (
-          <Text
-            style={{
-              color: theme.text.primary,
-              fontSize: 16,
-              fontWeight: 600,
-              lineHeight: 22.4, // 140% of 16 per design
-            }}
-          >
-            {title}
-          </Text>
-        )}
-        {Boolean(errorText) && errorText && (
-          <View style={{flexDirection: "row", alignItems: "center", marginVertical: 2}}>
-            <Icon color="error" iconName="triangle-exclamation" size="sm" />
-            <View style={{marginLeft: 4}}>
-              <Text style={{color: theme.text.error, fontSize: 12}}>{errorText}</Text>
-            </View>
-          </View>
-        )}
+        {title && <FieldTitle text={title} />}
+        {Boolean(errorText) && errorText && <FieldError text={errorText} />}
         <Wrapper
           style={{
             flexDirection: "row",
@@ -338,13 +312,7 @@ export const TextField = ({
             }}
           />
         </Wrapper>
-        {helperText && (
-          <View style={{marginTop: 2}}>
-            <Text style={{fontSize: 12, color: theme.text.primary, lineHeight: 16}}>
-              {helperText}
-            </Text>
-          </View>
-        )}
+        {helperText && <FieldHelperText text={helperText} />}
       </Wrapper>
       {(type === "date" || type === "time" || type === "datetime") && (
         <DateTimeActionSheet
