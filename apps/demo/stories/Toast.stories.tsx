@@ -1,20 +1,10 @@
-import {Box, Button, useToast} from "ferns-ui";
+import {Box, Button, Toast, useToast} from "ferns-ui";
 import React from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
 
 export const ToastDemo = () => {
-  const toast = useToast();
-  return (
-    <StorybookContainer>
-      <Button
-        text="Show Toast"
-        onClick={() => {
-          toast.show("Toast message");
-        }}
-      />
-    </StorybookContainer>
-  );
+  return <Toast persistent title="There was an error" variant="error" />;
 };
 
 export const Toasts = () => {
@@ -22,103 +12,82 @@ export const Toasts = () => {
   return (
     <StorybookContainer>
       <Box justifyContent="between" width="100%">
-        <Button
-          text="Normal"
-          onClick={() => {
-            toast.show("Normal Toast");
-          }}
-        />
-        <Button
-          text="Warning"
-          onClick={() => {
-            toast.show("Warning Toast", {variant: "warning"});
-          }}
-        />
-        <Button
-          text="Error"
-          onClick={() => {
-            toast.show("Error Toast", {variant: "error"});
-          }}
-        />
+        <Box marginBottom={2}>
+          <Toast persistent title="There was an error" variant="error" />
+        </Box>
+        <Box marginBottom={2}>
+          <Toast
+            persistent
+            title="Default toast with a pretty long toast message. This is getting pretty long at this point. "
+          />
+        </Box>
+        <Box marginBottom={2}>
+          <Toast persistent title="Great success!" variant="success" />
+        </Box>
+        <Box marginBottom={2}>
+          <Toast
+            persistent
+            size="lg"
+            subtitle="Toast text content that's kind of long. La la la la la la la la la la."
+            title="Toast title"
+            variant="warning"
+          />
+        </Box>
       </Box>
       <Box justifyContent="between" marginTop={6} width="100%">
-        <Button
-          text="Normal Button"
-          onClick={() => {
-            toast.show("Normal Toast", {
-              buttonText: "Undo",
-              buttonOnClick: () => {
-                console.info("Undo");
-              },
-            });
-          }}
-        />
-        <Button
-          text="Warning Button"
-          onClick={() => {
-            toast.show("Warning Toast", {
-              variant: "warning",
-              buttonText: "Undo",
-              buttonOnClick: () => {
-                console.info("Undo");
-              },
-            });
-          }}
-        />
-        <Button
-          text="Error Button"
-          onClick={() => {
-            toast.show("Error Toast", {
-              variant: "error",
-              buttonText: "Undo",
-              buttonOnClick: () => {
-                console.info("Undo");
-              },
-            });
-          }}
-        />
-      </Box>
-      <Box justifyContent="between" marginTop={6} width="100%">
-        <Button
-          text="Long Button"
-          onClick={() => {
-            toast.show(
-              "Thanks for doing the thing we asked. You have successfully done the thing. Congrats! You are wonderful!",
-              {
-                buttonText: "Undo",
-                buttonOnClick: () => {
-                  console.info("Undo");
-                },
-              }
-            );
-          }}
-        />
-        <Button
-          text="Long Warning Button"
-          onClick={() => {
-            toast.show(
-              "Thanks for doing the thing we asked. You have done the thing but there was a warning. We will now tell you the warning. ",
-              {
-                variant: "warning",
-                buttonText: "Undo",
-                buttonOnClick: () => {
-                  console.info("Undo");
-                },
-              }
-            );
-          }}
-        />
-        <Button
-          text="Persistent"
-          onClick={() => {
-            const id = toast.show("Persistent Toast", {
-              persistent: true,
-              onDismiss: () => {
-                toast.hide(id);
-              },
-            });
-          }}
-        />
+        <Box marginBottom={2}>
+          <Button
+            text="Default Toast"
+            onClick={() => {
+              toast.show("Default Toast");
+            }}
+          />
+        </Box>
+        <Box marginBottom={2}>
+          <Button
+            text="Success Toast"
+            onClick={() => {
+              toast.show("Default Toast", {variant: "success"});
+            }}
+          />
+        </Box>
+        <Box marginBottom={2}>
+          <Button
+            text="Warning Toast"
+            onClick={() => {
+              toast.show("Warning Toast", {variant: "warning"});
+            }}
+          />
+        </Box>
+        <Box marginBottom={2}>
+          <Button
+            text="Error Toast"
+            onClick={() => {
+              toast.show("Error Toast", {variant: "error"});
+            }}
+          />
+        </Box>
+        <Box marginBottom={2}>
+          <Button
+            text="Long Toast"
+            onClick={() => {
+              toast.show(
+                "Thanks for doing the thing we asked. You have successfully done the thing. Congrats! You are wonderful!"
+              );
+            }}
+          />
+        </Box>
+        <Box marginBottom={2}>
+          <Button
+            text="Persistent"
+            onClick={() => {
+              const id = toast.show(
+                "Thanks for doing the thing we asked. You have successfully done the thing. Congrats! You are wonderful!",
+                {persistent: true, onDismiss: () => toast.hide(id)}
+              );
+            }}
+          />
+        </Box>
       </Box>
     </StorybookContainer>
   );

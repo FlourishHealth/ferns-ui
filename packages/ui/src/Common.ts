@@ -1880,14 +1880,17 @@ export interface TextFieldPickerActionSheetProps {
 }
 
 export interface ToastProps {
-  message: string;
-  data: {
-    variant?: "default" | "warning" | "error";
-    buttonText?: string;
-    buttonOnClick?: () => void | Promise<void>;
-    persistent?: boolean;
-    onDismiss?: () => void;
-  };
+  title: string;
+  variant?: "error" | "info" | "success" | "warning";
+  secondary?: boolean;
+  size?: "sm" | "lg";
+  onDismiss?: () => void;
+  persistent?: boolean;
+  // TODO enforce these should only show if size is "lg" with type discrinimation
+  subtitle?: string;
+  // TODO Add buttons for Toast
+  // buttonText?: string;
+  // buttonOnClick?: () => void | Promise<void>;
 }
 
 export interface TooltipProps {
