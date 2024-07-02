@@ -1,5 +1,6 @@
 import {DemoConfiguration} from "@config";
-import React from "react";
+import {useNavigation} from "expo-router";
+import React, {useEffect} from "react";
 import {Pressable, ScrollView, Text, View} from "react-native";
 
 interface DevHomePageProps {
@@ -8,6 +9,12 @@ interface DevHomePageProps {
 }
 
 export const DevHomePage = ({demoConfig, onPress}: DevHomePageProps): React.ReactElement => {
+  const navigation = useNavigation();
+  // Set the title
+  useEffect(() => {
+    navigation.setOptions({title: "Ferns UI Dev"});
+  }, [navigation]);
+
   return (
     <ScrollView>
       <View

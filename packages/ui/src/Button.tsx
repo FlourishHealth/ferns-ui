@@ -76,6 +76,8 @@ const ButtonComponent: FC<ButtonProps> = ({
       borderColor = theme.text.secondaryDark;
       borderWidth = 2;
       color = theme.text.secondaryDark;
+    } else if (variant === "destructive") {
+      backgroundColor = theme.surface.error;
     } else if (disabled) {
       backgroundColor = theme.surface.disabled;
     }
@@ -95,7 +97,7 @@ const ButtonComponent: FC<ButtonProps> = ({
       disabled={disabled || loading}
       style={{
         alignItems: "center",
-        alignSelf: fullWidth ? "stretch" : "flex-start",
+        alignSelf: fullWidth ? "stretch" : undefined,
         backgroundColor,
         borderColor,
         borderRadius: theme.radius.rounded as any,
@@ -166,11 +168,16 @@ const ButtonComponent: FC<ButtonProps> = ({
 };
 
 export const Button: FC<ButtonProps> = (props) => {
-  const {tooltipText, tooltipPosition} = props;
+  const {tooltipText, tooltipIdealPosition, tooltipIncludeArrow = false} = props;
+  const isMobileOrNative = isMobileDevice() || isNative();
 
-  if (tooltipText && !isMobileDevice && !isNative) {
+  if (tooltipText && !isMobileOrNative) {
     return (
-      <Tooltip idealDirection={tooltipPosition} text={tooltipText}>
+      <Tooltip
+        idealPosition={tooltipIdealPosition}
+        includeArrow={tooltipIncludeArrow}
+        text={tooltipText}
+      >
         <ButtonComponent {...props} />
       </Tooltip>
     );

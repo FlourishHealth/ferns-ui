@@ -223,7 +223,11 @@ export const SplitPage = ({
       <Box flex="grow" padding={2}>
         {isMobileDevice && (
           <Box width="100%">
-            <IconButton accessibilityLabel="close" icon="xmark" onClick={() => onItemDeselect()} />
+            <IconButton
+              accessibilityLabel="close"
+              iconName="xmark"
+              onClick={() => onItemDeselect()}
+            />
           </Box>
         )}
         {renderContent && renderContent(selectedId)}

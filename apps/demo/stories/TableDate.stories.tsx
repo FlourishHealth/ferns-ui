@@ -1,39 +1,35 @@
-// import {DemoConfiguration} from "@config";
-// import {TableDate} from "ferns-ui";
-// import React from "react";
+import {Box, Heading, TableDate, TableTitleProps} from "ferns-ui";
+import React from "react";
 
-// import {DefaultDemo} from "./DefaultDemo";
+export const TableDateDemo = (props: Partial<TableTitleProps>) => {
+  return (
+    <Box alignContent="center" justifyContent="center">
+      <TableDate value="2013-01-12" {...props} />
+    </Box>
+  );
+};
 
-// export const TableDateConfiguration: DemoConfiguration = {
-//   name: "Table date",
-//   component: TableDate, // Replace with actual component reference
-//   related: ["Table"],
-//   description:
-//     "This field displays a date. There are two kinds, annotated and default. The annotated date shows an annotation - ex, '10 days ago'.",
-//   a11yNotes: [],
-//   category: "Component",
-//   status: {
-//     documentation: "ready",
-//     figma: "ready",
-//     figmaLink:
-//       "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A24129&mode=design&t=IZ8oGBzUmBzUtZMr-1",
-//     ios: "ready",
-//     android: "ready",
-//     web: "ready",
-//   },
-//   additionalDocumentation: [],
-//   interfaceName: "TableDateProps",
-//   usage: {
-//     do: [
-//       "Use this field to display a date.",
-//       "Use the annotated version to display a date that has an immediacy relevancy (for example, a hospital visit that was 10 days ago).",
-//     ],
-//     doNot: [
-//       "Do not use the annotated version for recurring, immediately irrelevant dates. For example, birthdays.",
-//     ],
-//   },
-//   props: {},
-//   demo: () => <DefaultDemo />,
-//   demoOptions: {},
-//   stories: {},
-// };
+export const TableDateAnnotation = () => {
+  return (
+    <Box direction="row" wrap>
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading size="sm">Default</Heading>
+        </Box>
+        <TableDate value="2013-01-12" />
+      </Box>
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading size="sm">Annotated</Heading>
+        </Box>
+        <TableDate annotated value="2024-01-12" />
+      </Box>
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading size="sm">Is Editing</Heading>
+        </Box>
+        <TableDate isEditing value="2013-01-12" />
+      </Box>
+    </Box>
+  );
+};

@@ -2,14 +2,12 @@ import React from "react";
 
 import {BooleanField} from "./BooleanField";
 import {Box} from "./Box";
-import {CheckBox} from "./CheckBox";
 import {AddressInterface, FieldProps, ReactChildren, TextFieldType} from "./Common";
 import {USSTATESLIST} from "./Constants";
 import {CustomSelect} from "./CustomSelect";
 import {FieldWithLabels} from "./FieldWithLabels";
 import {SelectList} from "./SelectList";
 import {Signature} from "./Signature";
-import {Text} from "./Text";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 import {UnifiedAddressAutoCompleteField} from "./UnifiedAddressAutoComplete";
@@ -68,58 +66,61 @@ export const Field = ({
           }}
         />
       );
-    } else if (type === "multiselect") {
-      if (options === undefined) {
-        console.error("Field with type=multiselect require options");
-        return undefined;
-      }
-      return (
-        <Box width="100%">
-          {options.map((o) => (
-            <Box
-              key={o.label + o.value}
-              alignItems="center"
-              direction="row"
-              justifyContent="between"
-              width="100%"
-            >
-              <Box flex="shrink" marginRight={2}>
-                <Text bold>{o.label}</Text>
-              </Box>
-              <Box>
-                <CheckBox
-                  key={o.label + o.value}
-                  checked={(value ?? []).includes(o.value)}
-                  name={name}
-                  size="sm"
-                  testID={`${testID}-${o.value}`}
-                  onChange={(result) => {
-                    let newValue;
-                    if (result.value) {
-                      if (value.includes(o.value)) {
-                        console.warn(`Tried to add value that already exists: ${o.value}`);
-                        return;
-                      }
-                      newValue = [...value, o.value];
-                    } else {
-                      newValue = value.filter((v: string) => v !== o.value);
-                    }
-                    onChange(newValue);
-                    onBlur && onBlur(newValue);
-                  }}
-                />
-              </Box>
-            </Box>
-          ))}
-        </Box>
-      );
-    } else if (type === "textarea") {
+    }
+    // TODO: Either implement multiselect or remove it
+    //  else if (type === "multiselect") {
+    //   if (options === undefined) {
+    //     console.error("Field with type=multiselect require options");
+    //     return undefined;
+    //   }
+    //   return (
+    //     <Box width="100%">
+    //       {options.map((o) => (
+    //         <Box
+    //           key={o.label + o.value}
+    //           alignItems="center"
+    //           direction="row"
+    //           justifyContent="between"
+    //           width="100%"
+    //         >
+    //           <Box flex="shrink" marginRight={2}>
+    //             <Text bold>{o.label}</Text>
+    //           </Box>
+    //           <Box>
+    //             <CheckBox
+    //               key={o.label + o.value}
+    //               checked={(value ?? []).includes(o.value)}
+    //               name={name}
+    //               size="sm"
+    //               testID={`${testID}-${o.value}`}
+    //               onChange={(result) => {
+    //                 let newValue;
+    //                 if (result.value) {
+    //                   if (value.includes(o.value)) {
+    //                     console.warn(`Tried to add value that already exists: ${o.value}`);
+    //                     return;
+    //                   }
+    //                   newValue = [...value, o.value];
+    //                 } else {
+    //                   newValue = value.filter((v: string) => v !== o.value);
+    //                 }
+    //                 onChange(newValue);
+    //                 onBlur && onBlur(newValue);
+    //               }}
+    //             />
+    //           </Box>
+    //         </Box>
+    //       ))}
+    //     </Box>
+    //   );
+    // }
+    else if (type === "textarea") {
       return (
         <TextArea
           disabled={disabled}
           height={height ?? 100}
           id={name}
-          placeholder={Boolean(value) ? "" : placeholder}
+          placeholderText={Boolean(value) ? "" : placeholder}
           rows={rows}
           testID={testID}
           value={String(value)}
@@ -143,7 +144,7 @@ export const Field = ({
         <TextField
           disabled={disabled}
           id={name}
-          placeholder={placeholder}
+          placeholderText={placeholder}
           testID={testID}
           transformValue={transformValue}
           type={type as "date" | "time" | "datetime"}
@@ -180,8 +181,8 @@ export const Field = ({
           <TextField
             disabled={disabled}
             id="address2"
-            label="Apt, suite, etc"
             testID={`${testID}-address2`}
+            title="Apt, suite, etc"
             type="text"
             value={address2}
             onChange={(result) => handleAddressChange("address2", result.value)}
@@ -189,8 +190,8 @@ export const Field = ({
           <TextField
             disabled={disabled}
             id="city"
-            label="City"
             testID={`${testID}-city`}
+            title="City"
             type="text"
             value={city}
             onChange={(result) => handleAddressChange("city", result.value)}
@@ -211,8 +212,8 @@ export const Field = ({
           <TextField
             disabled={disabled}
             id="zipcode"
-            label="Zipcode"
             testID={`${testID}-zip`}
+            title="Zipcode"
             type="text"
             value={zipcode}
             onChange={(result) => handleAddressChange("zipcode", result.value)}
@@ -222,8 +223,8 @@ export const Field = ({
               <TextField
                 disabled={disabled}
                 id="countyName"
-                label="County Name"
                 testID={`${testID}-county`}
+                title="County Name"
                 type="text"
                 value={countyName}
                 onChange={(result) => handleAddressChange("countyName", result.value)}
@@ -231,8 +232,8 @@ export const Field = ({
               <TextField
                 disabled={disabled}
                 id="countyCode"
-                label="County Code"
                 testID={`${testID}-county-code`}
+                title="County Code"
                 type="number"
                 value={countyCode}
                 onChange={(result) => handleAddressChange("countyCode", result.value)}
@@ -263,7 +264,7 @@ export const Field = ({
         <TextField
           disabled={disabled}
           id={name}
-          placeholder={placeholder}
+          placeholderText={placeholder}
           testID={testID}
           type="number"
           value={value}
@@ -306,7 +307,7 @@ export const Field = ({
           autoComplete={autoComplete}
           disabled={disabled}
           id={name}
-          placeholder={placeholder}
+          placeholderText={placeholder}
           testID={testID}
           type={
             tfType as

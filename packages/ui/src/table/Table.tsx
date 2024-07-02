@@ -9,7 +9,7 @@ import {TableContextProvider} from "./tableContext";
 
 export const Table = ({
   children,
-  columns,
+  columns, // see notes in common about table columns width and decide if we need to change this to a more specific type 'size'
   borderStyle,
   alternateRowBackground = true,
   maxHeight,

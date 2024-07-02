@@ -1,44 +1,68 @@
 import React from "react";
-import {Dimensions} from "react-native";
+import {Platform, Pressable, View} from "react-native";
 import {useToast as useRNToast} from "react-native-toast-notifications";
 
-import {Box} from "./Box";
-import {Button} from "./Button";
-import {TextColor, ToastProps} from "./Common";
+import {IconName, SurfaceColor, TextColor, ToastProps} from "./Common";
+import {Heading} from "./Heading";
 import {Icon} from "./Icon";
-import {IconButton} from "./IconButton";
 import {Text} from "./Text";
+import {useTheme} from "./Theme";
 import {isAPIError, printAPIError} from "./Utilities";
 
 const TOAST_DURATION_MS = 3 * 1000;
 
+type UseToastVariantOptions = {
+  persistent?: ToastProps["persistent"];
+  secondary?: ToastProps["secondary"];
+  size?: ToastProps["size"];
+  onDismiss?: ToastProps["onDismiss"];
+  subtitle?: ToastProps["subtitle"];
+};
+
+type UseToastOptions = {variant?: ToastProps["variant"]} & UseToastVariantOptions;
+
 export function useToast(): {
-  warn: (text: string, options?: Omit<ToastProps["data"], "variant">) => string;
   hide: (id: string) => void;
-  show: (text: string, options?: ToastProps["data"]) => string;
-  catch: (error: any, message?: string, options?: Omit<ToastProps["data"], "variant">) => void;
-  error: (text: string, options?: Omit<ToastProps["data"], "variant">) => string;
+  success: (title: string, options?: UseToastVariantOptions) => string;
+  info: (title: string, options?: UseToastVariantOptions) => string;
+  warn: (title: string, options?: UseToastVariantOptions) => string;
+  error: (title: string, options?: UseToastVariantOptions) => string;
+  show: (title: string, options?: UseToastOptions) => string;
+  catch: (error: any, message?: string, options?: UseToastVariantOptions) => void;
 } {
   const toast = useRNToast();
-  const show = (text: string, options?: ToastProps["data"]): string => {
-    return toast.show(text, {
-      data: options,
+  const show = (title: string, options?: UseToastOptions): string => {
+    const toastData = {
+      variant: "info",
+      ...options,
+      title,
+    };
+    return toast.show(title, {
+      data: toastData,
       // a duration of 0 keeps the toast up infinitely until hidden
       duration: options?.persistent ? 0 : TOAST_DURATION_MS,
     });
   };
   return {
     show,
-    warn: (text: string, options?: Omit<ToastProps["data"], "variant">): string => {
-      console.warn(text);
-      return show(text, {...options, variant: "warning"});
+    warn: (title: string, options?: UseToastVariantOptions): string => {
+      console.warn(title);
+      return show(title, {...options, variant: "warning"});
     },
-    error: (text: string, options?: Omit<ToastProps["data"], "variant">): string => {
-      console.error(text);
-      return show(text, {...options, variant: "error"});
+    error: (title: string, options?: UseToastVariantOptions): string => {
+      console.error(title);
+      return show(title, {...options, variant: "error"});
+    },
+    success: (title: string, options?: UseToastVariantOptions): string => {
+      console.info(title);
+      return show(title, {...options, variant: "success"});
+    },
+    info: (title: string, options?: UseToastVariantOptions): string => {
+      console.info(title);
+      return show(title, {...options, variant: "info"});
     },
     hide: (id: string) => toast.hide(id),
-    catch: (error: any, message?: string, options?: Omit<ToastProps["data"], "variant">): void => {
+    catch: (error: any, message?: string, options?: UseToastVariantOptions): void => {
       let exceptionMsg;
       if (isAPIError(error)) {
         // Get the error without details.
@@ -53,54 +77,158 @@ export function useToast(): {
   };
 }
 
-export const Toast = ({message, data}: ToastProps): React.ReactElement => {
-  // margin 8 on either side, times the standard 4px we multiply by.
-  const width = Math.min(Dimensions.get("window").width - 16 * 4, 712);
-  const {variant, buttonText, buttonOnClick, persistent, onDismiss} = data ?? {};
-  let color: TextColor = "primary";
-  if (variant === "warning" || variant === "error") {
-    color = variant;
+// TODO: Support secondary version of Toast.
+// TODO: Support dismissible version of Toast. Currently only persistent are dismissible.
+// This may require a different library from react-native-toast-notifications.
+export const Toast = ({
+  title,
+  variant = "info",
+  secondary,
+  size = "sm",
+  onDismiss,
+  persistent,
+  // TODO enforce these should only show if size is "lg" with type discrinimation
+  subtitle,
+}: ToastProps): React.ReactElement => {
+  const {theme} = useTheme();
+  let color: SurfaceColor;
+  let textColor: TextColor;
+  let iconName: IconName;
+
+  if (secondary) {
+    throw new Error("Secondary not supported yet");
   }
+
+  if (persistent && !onDismiss) {
+    console.warn("Toast is persistent but no onDismiss callback provided");
+  }
+
+  if (variant === "warning") {
+    color = "warning";
+    textColor = "inverted";
+    iconName = "triangle-exclamation";
+  } else if (variant === "error") {
+    color = "error";
+    textColor = "inverted";
+    iconName = "circle-exclamation";
+  } else if (variant === "success") {
+    color = "success";
+    textColor = "inverted";
+    iconName = "circle-check";
+  } else {
+    color = "neutralDark";
+    textColor = "inverted";
+    iconName = "circle-info";
+  }
+
   return (
-    <Box
-      alignItems="center"
-      color={color}
-      direction="row"
-      flex="shrink"
-      marginBottom={4}
-      marginLeft={8}
-      marginRight={8}
-      maxWidth={width}
-      padding={2}
-      paddingX={4}
-      paddingY={3}
-      rounding="minimal"
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        width: "100%",
+        paddingLeft: Platform.OS === "web" ? "10%" : (theme.spacing.sm as any),
+        paddingRight: Platform.OS === "web" ? "10%" : (theme.spacing.sm as any),
+        marginTop: theme.spacing.sm as any,
+        maxWidth: Platform.OS === "web" ? 900 : "100%",
+        flexGrow: 1,
+      }}
     >
-      {Boolean(variant === "error") && (
-        <Box marginRight={4}>
-          <Icon color="inverted" iconName="circle-exclamation" size="lg" />
-        </Box>
-      )}
-      {Boolean(variant === "warning") && (
-        <Box marginRight={4}>
-          <Icon color="inverted" iconName="triangle-exclamation" size="lg" />
-        </Box>
-      )}
-      <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
-        <Text bold color="inverted" size="lg">
-          {message}
-        </Text>
-      </Box>
-      {Boolean(buttonOnClick && buttonText) && (
-        <Box alignItems="center" justifyContent="center" marginLeft={4}>
-          <Button text={buttonText!} onClick={buttonOnClick as () => void | Promise<void>} />
-        </Box>
-      )}
-      {Boolean(onDismiss && persistent) && (
-        <Box alignItems="center" justifyContent="center" marginLeft={4}>
-          <IconButton accessibilityLabel="Dismiss notification" icon="xmark" onClick={onDismiss!} />
-        </Box>
-      )}
-    </Box>
+      <View
+        style={{
+          display: "flex",
+          flexShrink: 1,
+          flexDirection: "row",
+          minWidth: 150,
+          paddingTop: theme.spacing.xs as any,
+          paddingBottom: theme.spacing.xs as any,
+          paddingRight: theme.spacing.sm as any,
+          alignItems: "center",
+          gap: 10,
+          borderRadius: theme.radius.default as any,
+          backgroundColor: theme.surface[color],
+          alignSelf: "flex-start",
+          minHeight: size === "lg" ? 32 : undefined,
+          maxWidth: "100%", // Ensure the content does not overflow
+        }}
+      >
+        <View
+          style={{
+            paddingLeft: 8,
+            paddingRight: 8,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 12,
+            maxWidth: "100%",
+            flexShrink: 1, // Ensure the content can shrink properly
+            flexGrow: 1,
+          }}
+        >
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              paddingTop: size === "lg" ? 8 : 0,
+              paddingBottom: size === "lg" ? 8 : 0,
+              paddingLeft: size === "lg" ? 4 : 0,
+              paddingRight: size === "lg" ? 4 : 0,
+              alignItems: size === "lg" ? "center" : undefined,
+              alignSelf: size === "lg" ? "stretch" : undefined,
+              borderTopLeftRadius: theme.radius.default as any,
+              borderBottomLeftRadius: theme.radius.default as any,
+            }}
+          >
+            <Icon color={textColor} iconName={iconName} size={size === "lg" ? "2xl" : "md"} />
+          </View>
+          <View
+            style={{
+              display: "flex",
+              paddingTop: 8,
+              paddingBottom: 8,
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "flex-start",
+              gap: 2,
+              alignSelf: "stretch",
+              flexWrap: "wrap",
+              flexShrink: 1, // Ensure the content can shrink properly
+            }}
+          >
+            {Boolean(size === "lg") ? (
+              <Heading color={textColor} size="sm">
+                {title}
+              </Heading>
+            ) : (
+              <Text bold color={textColor} size="md">
+                {title}
+              </Text>
+            )}
+            {Boolean(size === "lg" && subtitle) && (
+              <Text color={textColor} size="sm">
+                {subtitle}
+              </Text>
+            )}
+          </View>
+        </View>
+        {Boolean(persistent && onDismiss) && (
+          <Pressable
+            accessibilityRole="button"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              alignSelf: "center",
+              gap: 12,
+              marginLeft: 10,
+              padding: size === "lg" ? 8 : 0,
+            }}
+            onPress={onDismiss}
+          >
+            <Icon color={textColor} iconName="xmark" />
+          </Pressable>
+        )}
+      </View>
+    </View>
   );
 };

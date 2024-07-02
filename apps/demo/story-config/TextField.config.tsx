@@ -1,5 +1,11 @@
 import {DemoConfiguration} from "@config";
-import {Date, DisabledTextField, Errored, TextFields, TextWithLabel} from "@stories";
+import {
+  TextFieldDemo,
+  TextFieldDisabledDemo,
+  TextFieldWithErrorMsgDemo,
+  TextFieldWithHelperTextDemo,
+  TextFieldWithLabelDemo,
+} from "@stories";
 import {TextField} from "ferns-ui";
 
 export const TextFieldConfiguration: DemoConfiguration = {
@@ -31,13 +37,23 @@ export const TextFieldConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: TextFields,
+  demo: TextFieldWithHelperTextDemo,
   demoOptions: {},
   stories: {
-    "Text Fields": {render: TextFields},
-    "With Label": {render: TextWithLabel},
-    Date: {render: Date},
-    Disabled: {render: DisabledTextField},
-    Errored: {render: Errored},
+    "Basic Text Field": {
+      render: TextFieldDemo,
+    },
+    "Text Field with Label": {
+      render: TextFieldWithLabelDemo,
+    },
+    "Text Field with Helper Text": {
+      render: TextFieldWithHelperTextDemo,
+    },
+    "Text Field with Error Message": {
+      render: TextFieldWithErrorMsgDemo,
+    },
+    "Disabled Text Field": {
+      render: TextFieldDisabledDemo,
+    },
   },
 };

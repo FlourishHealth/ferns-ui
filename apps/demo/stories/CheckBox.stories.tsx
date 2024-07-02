@@ -1,59 +1,72 @@
-import {StorybookContainer} from "./StorybookContainer";
-import {CheckBox} from "ferns-ui";
+import {Box, CheckBox, CheckBoxProps, Heading} from "ferns-ui";
 import React from "react";
 
-export const CheckboxDemo = () => {
-  return <CheckBox checked label="Checkbox With A Label" onChange={() => {}} />;
+export const CheckboxDemo = (props: Partial<CheckBoxProps>) => {
+  return (
+    <Box alignItems="center" justifyContent="center">
+      <CheckBox selected {...props} />
+    </Box>
+  );
 };
 
-export const Checkboxes = ({disabled}: {disabled: boolean}): React.ReactElement => {
-  const [boolean, setBoolean] = React.useState(false);
-  const [withLabel, setWithLabel] = React.useState(false);
-  const [primary, setPrimary] = React.useState(false);
-  const [small, setSmall] = React.useState(false);
-  const [indeterminate, setIndeterminate] = React.useState(false);
-
+export const CheckboxSizes = () => {
   return (
-    <StorybookContainer>
-      <CheckBox
-        checked={boolean}
-        disabled={disabled}
-        onChange={(result) => setBoolean(result.value)}
-      />
+    <Box direction="row" wrap>
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading>Small</Heading>
+        </Box>
+        <Box alignItems="center">
+          <CheckBox selected size="sm" />
+        </Box>
+      </Box>
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading>Medium</Heading>
+        </Box>
+        <Box alignItems="center">
+          <CheckBox selected size="md" />
+        </Box>
+      </Box>
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading>Large</Heading>
+        </Box>
+        <Box alignItems="center">
+          <CheckBox selected size="lg" />
+        </Box>
+      </Box>
+    </Box>
+  );
+};
 
-      <CheckBox
-        checked={withLabel}
-        disabled={disabled}
-        label="With A Label"
-        onChange={(result) => setWithLabel(result.value)}
-      />
-
-      <CheckBox
-        checked={primary}
-        color="primary"
-        disabled={disabled}
-        label="Primary Color"
-        labelColor="primary"
-        onChange={(result) => setPrimary(result.value)}
-      />
-
-      <CheckBox
-        checked={small}
-        disabled={disabled}
-        label="Small"
-        size="sm"
-        onChange={(result) => setSmall(result.value)}
-      />
-
-      <CheckBox
-        disabled={disabled}
-        indeterminate={indeterminate}
-        label="Indeterminate"
-        size="sm"
-        onChange={(result) => {
-          setIndeterminate(result.value);
-        }}
-      />
-    </StorybookContainer>
+export const CheckboxColors = () => {
+  return (
+    <Box direction="row" wrap>
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading>Default</Heading>
+        </Box>
+        <Box alignItems="center">
+          <CheckBox bgColor="default" selected />
+        </Box>
+      </Box>
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading>Gold</Heading>
+        </Box>
+        <Box alignItems="center">
+          <CheckBox bgColor="gold" selected />
+        </Box>
+      </Box>
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading>Black</Heading>
+        </Box>
+        <Box alignItems="center">
+          <CheckBox bgColor="black" selected />
+        </Box>
+      </Box>
+    </Box>
   );
 };

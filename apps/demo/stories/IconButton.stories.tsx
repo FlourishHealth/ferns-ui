@@ -1,274 +1,147 @@
-import {Box, Heading, IconButton, IconButtonProps} from "ferns-ui";
+import {Box, IconButton, IconButtonProps, Text} from "ferns-ui";
 import React from "react";
 
-import {StorybookContainer} from "./StorybookContainer";
-
-interface DisplayProps extends IconButtonProps {
-  title: string;
-}
-
-const IconButtonDisplay = (props: DisplayProps): React.ReactElement => {
-  const {title, ...rest} = props;
+export const IconButtonDemo = (props: Partial<IconButtonProps>) => {
   return (
-    <Box paddingY={2}>
-      <Box paddingY={1}>
-        <Heading size="sm">{title}</Heading>
+    <Box alignItems="center" justifyContent="center">
+      <IconButton
+        accessibilityLabel="Demo IconButton"
+        iconName="lightbulb"
+        onClick={() => console.info("clicked")}
+        {...props}
+      />
+    </Box>
+  );
+};
+
+export const ConfirmationIconButton = (props: Partial<IconButtonProps>) => {
+  return (
+    <Box padding={4}>
+      <IconButton
+        accessibilityLabel="add item"
+        iconName="plus"
+        withConfirmation
+        onClick={() => {
+          console.info("Clicked!");
+        }}
+        {...props}
+      />
+    </Box>
+  );
+};
+
+export const ToolTipIconButton = (props: Partial<IconButtonProps>) => {
+  return (
+    <Box direction="row" padding={4} wrap>
+      <Box marginRight={1}>
+        <IconButton
+          accessibilityLabel=""
+          iconName="trash"
+          tooltipIdealPosition="bottom"
+          tooltipText="Delete Demo"
+          onClick={() => {
+            console.info("Click delete");
+          }}
+          {...props}
+        />
       </Box>
-      <Box direction="row" width="100%">
-        <Box color="white" padding={4}>
-          <IconButton {...rest} />
-        </Box>
-        <Box color="lightGray" padding={4}>
-          <IconButton {...rest} />
-        </Box>
-        <Box color="darkGray" padding={4}>
-          <IconButton {...rest} />
-        </Box>
-        <Box color="blue" padding={4}>
-          <IconButton {...rest} />
-        </Box>
+      <IconButton
+        accessibilityLabel=""
+        iconName="floppy-disk"
+        tooltipIdealPosition="top"
+        tooltipIncludeArrow
+        tooltipText="Save With Arrow Demo"
+        onClick={() => {
+          console.info("Click delete");
+        }}
+        {...props}
+      />
+    </Box>
+  );
+};
+
+export const LoadingIconButton = (props: Partial<IconButtonProps>) => {
+  return (
+    <Box direction="row" wrap>
+      <Box padding={4}>
+        <IconButton
+          accessibilityLabel="add item"
+          iconName="plus"
+          onClick={async () => {
+            return new Promise((resolve) => {
+              setTimeout(resolve, 2 * 1000);
+            });
+          }}
+          {...props}
+        />
+      </Box>
+      <Box padding={4}>
+        <IconButton
+          accessibilityLabel="add item"
+          iconName="plus"
+          loading
+          onClick={async () => {
+            return new Promise((resolve) => {
+              setTimeout(resolve, 2 * 1000);
+            });
+          }}
+          {...props}
+        />
       </Box>
     </Box>
   );
 };
 
-export const IconButtonStories = {
-  title: "IconButton",
-  component: IconButton,
-  stories: {
-    Colors() {
-      return (
-        <StorybookContainer>
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            prefix="fas"
-            title="Primary, Transparent Background"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="secondary"
-            prefix="fas"
-            title="Secondary, Transparent Background"
-            onClick={() => {}}
-          />
-
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            prefix="fas"
-            size="sm"
-            title="Small Size"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            prefix="fas"
-            size="md"
-            title="Medium Size"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            prefix="fas"
-            size="lg"
-            title="Large Size"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            prefix="fas"
-            size="xl"
-            title="XL Size"
-            onClick={() => {}}
-          />
-
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            bgColor="lightGray"
-            icon="plus"
-            iconColor="primary"
-            prefix="fas"
-            title="Light Gray Background"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            bgColor="primary"
-            icon="plus"
-            iconColor="white"
-            prefix="fas"
-            title="Active State White Icon with Primary Background"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            bgColor="gray"
-            icon="plus"
-            iconColor="primary"
-            prefix="fas"
-            title="Gray Background"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            bgColor="transparentDarkGray"
-            icon="plus"
-            iconColor="primary"
-            prefix="fas"
-            title="Primary, Dark Gray Transparent"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            bgColor="transparentDarkGray"
-            icon="plus"
-            iconColor="white"
-            prefix="fas"
-            title="White, Dark Gray Transparent"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            prefix="fas"
-            size="sm"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            indicatorStyle={{position: "topRight", color: "red"}}
-            prefix="fas"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            indicatorStyle={{position: "bottomRight", color: "green"}}
-            prefix="fas"
-            size="lg"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            indicatorStyle={{position: "bottomLeft", color: "blue"}}
-            prefix="fas"
-            size="lg"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            indicatorStyle={{position: "topLeft", color: "purple"}}
-            prefix="fas"
-            size="lg"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            indicatorNumber={33}
-            prefix="fas"
-            size="sm"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            indicatorNumber={33}
-            indicatorStyle={{position: "topRight", color: "red"}}
-            prefix="fas"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            indicatorNumber={33}
-            indicatorStyle={{position: "bottomRight", color: "green"}}
-            prefix="fas"
-            size="lg"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            indicatorNumber={33}
-            indicatorStyle={{position: "bottomLeft", color: "blue"}}
-            prefix="fas"
-            size="lg"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-          <IconButtonDisplay
-            accessibilityLabel="label"
-            icon="plus"
-            iconColor="primary"
-            indicator
-            indicatorNumber={33}
-            indicatorStyle={{position: "topLeft", color: "purple"}}
-            prefix="fas"
-            size="lg"
-            title="Button with indicator"
-            onClick={() => {}}
-          />
-        </StorybookContainer>
-      );
-    },
-    Confirmation() {
-      return (
-        <Box padding={4}>
+export const AllButtonIconVariants = (props: Partial<IconButtonProps>) => {
+  return (
+    <Box direction="row" wrap>
+      <Box alignItems="center" paddingX={2}>
+        <Text>Primary</Text>
+        <Box padding={1}>
           <IconButton
-            accessibilityLabel="Button with plus icon"
-            bgColor="gray"
-            icon="plus"
-            iconColor="white"
-            prefix="fas"
-            withConfirmation
-            onClick={() => {
-              console.log("Clicked!");
-            }}
+            accessibilityLabel="add item"
+            iconName="plus"
+            onClick={() => console.info("clicked")}
+            {...props}
           />
         </Box>
-      );
-    },
-  },
+      </Box>
+      <Box alignItems="center" paddingX={2}>
+        <Text>Secondary</Text>
+        <Box padding={1}>
+          <IconButton
+            accessibilityLabel="add item"
+            iconName="plus"
+            variant="secondary"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+      </Box>
+      <Box alignItems="center" paddingX={2}>
+        <Text>Muted</Text>
+        <Box padding={1}>
+          <IconButton
+            accessibilityLabel="add item"
+            iconName="plus"
+            variant="muted"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+      </Box>
+      <Box alignItems="center" paddingX={2}>
+        <Text>Destructive</Text>
+        <Box padding={1}>
+          <IconButton
+            accessibilityLabel="remove item"
+            iconName="trash"
+            variant="destructive"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+      </Box>
+    </Box>
+  );
 };

@@ -8,7 +8,8 @@
     "ios": "NODE_OPTIONS=--openssl-legacy-provider expo start --ios",
     "web": "NODE_OPTIONS=--openssl-legacy-provider expo start --web",
     "build-preview": "NODE_OPTIONS=--openssl-legacy-provider yarn build-web",
-    "build-web": "NODE_OPTIONS=--openssl-legacy-provider npx expo export"
+    "build-web": "NODE_OPTIONS=--openssl-legacy-provider npx expo export",
+    "lint": "eslint"
   },
   "dependencies": {
     "crypto-browserify": "^3.12.0",

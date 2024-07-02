@@ -40,8 +40,7 @@ export const TableRow = ({
           <Box width={30}>
             <IconButton
               accessibilityLabel="expand"
-              icon={isExpanded ? "chevron-up" : "chevron-down"}
-              size="sm"
+              iconName={isExpanded ? "chevron-up" : "chevron-down"}
               onClick={() => {
                 setIsExpanded(!isExpanded);
               }}

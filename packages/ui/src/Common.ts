@@ -1,5 +1,5 @@
 import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
-import {ListRenderItemInfo, StyleProp, ViewStyle} from "react-native";
+import {ListRenderItemInfo, StyleProp, TextStyle, ViewStyle} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
 import {SvgProps} from "react-native-svg";
@@ -10,6 +10,50 @@ import {
   FontAwesome6SolidNames,
 } from "./CommonIconTypes";
 import {SelectListOptions} from "./SelectList";
+
+export interface AccordionProps {
+  /**
+   * The content to be displayed inside the accordion.
+   */
+  children: React.ReactNode;
+
+  /**
+   * If true, an information modal will be included.
+   * @default false
+   */
+  includeInfoModal?: boolean;
+
+  /**
+   * The content of the information modal.
+   */
+  infoModalChildren?: ModalProps["children"];
+
+  /**
+   * The subtitle of the information modal.
+   */
+  infoModalSubTitle?: ModalProps["subTitle"];
+
+  /**
+   * The text content of the information modal.
+   */
+  infoModalText?: ModalProps["text"];
+
+  /**
+   * The title of the information modal.
+   */
+  infoModalTitle?: ModalProps["title"];
+
+  /**
+   * If true, the accordion will be collapsed.
+   * @default true
+   */
+  isCollapsed?: boolean;
+
+  /**
+   * The title of the accordion.
+   */
+  title: string;
+}
 
 export interface BaseProfile {
   email: string;
@@ -188,6 +232,7 @@ export interface TextTheme {
   error: string;
   warning: string;
   success: string;
+  gold: string;
 }
 
 export interface SurfaceTheme {
@@ -506,7 +551,7 @@ export interface IconProps {
   testID?: string;
 }
 
-export type TooltipDirection = "top" | "bottom" | "left" | "right";
+export type TooltipPosition = "top" | "bottom" | "left" | "right";
 
 export type IndicatorDirection = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
 
@@ -521,7 +566,7 @@ export interface SegmentedControlProps {
 export interface FieldWithLabelsProps {
   testID?: string;
   errorMessage?: string;
-  errorMessageColor?: TextColor; // Default: error.
+  errorMessageColor?: TextColor;
   label?: string;
   labelColor?: TextColor;
   helperText?: string;
@@ -546,30 +591,31 @@ export interface TimezonePickerProps {
   width?: number | string; // defaults to 100
 }
 
-export interface TextFieldProps extends FieldWithLabelsProps {
+// extend TextStyle to include "outline" since it exists for web
+export interface TextStyleWithOutline extends TextStyle {
+  outline?: string;
+}
+
+export interface TextFieldProps {
+  title?: string;
+  disabled?: boolean; // default false
+  helperText?: string;
+  errorText?: string;
+  testID?: string;
   innerRef?: any;
   id?: string;
   onChange: OnChangeCallback;
   autoComplete?: "current-password" | "on" | "off" | "username";
-  disabled?: boolean;
 
   idealErrorDirection?: Direction;
   name?: string;
   onBlur?: OnChangeCallback;
   onFocus?: OnChangeCallback;
-  placeholder?: string;
+  placeholderText?: string;
   type?: TextFieldType;
   value?: string;
-  style?: any;
-  // If type === search, indicates whether to show the search icon or spinner
-  searching?: boolean;
-
   returnKeyType?: "done" | "go" | "next" | "search" | "send";
-
-  // TODO: still needed?
-  autoFocus?: boolean;
   grow?: boolean;
-  // react-native-autofocus
   inputRef?: any;
   onSubmitEditing?: any;
   onEnter?: any;
@@ -701,20 +747,22 @@ export interface BooleanFieldProps {
 }
 
 export interface CheckBoxProps {
-  onChange: ({value}: {value: boolean}) => void;
-  checked?: boolean;
-  hasError?: boolean;
-  indeterminate?: boolean;
-  name?: string;
-  onClick?: any;
-  size?: "sm" | "md";
-  type?: "default" | "accent" | "neutral";
-  radio?: boolean;
+  /**
+   * The background color of the checkbox.
+   * @default "default"
+   */
+  bgColor?: "default" | "gold" | "black";
 
-  label?: string;
-  subLabel?: string;
-  labelColor?: TextColor;
-  testID?: string;
+  /**
+   * If true, the checkbox is selected.
+   */
+  selected: boolean;
+
+  /**
+   * The size of the checkbox.
+   * @default "md"
+   */
+  size?: "sm" | "md" | "lg";
 }
 
 interface LayoutRectangle {
@@ -1310,7 +1358,12 @@ export interface ButtonProps {
   /**
    * The position of the tooltip.
    */
-  tooltipPosition?: TooltipDirection;
+  tooltipIdealPosition?: TooltipPosition;
+  /**
+   * Include an arrow in the tooltip. Pointing to the button.
+   * @default false
+   */
+  tooltipIncludeArrow?: boolean;
   /**
    * The text content of the tooltip.
    */
@@ -1319,7 +1372,7 @@ export interface ButtonProps {
    * The type of the button, which determines its style.
    * @default "primary"
    */
-  variant?: "primary" | "secondary" | "muted" | "outline";
+  variant?: "primary" | "secondary" | "muted" | "outline" | "destructive";
   /**
    * If true, a confirmation modal will be shown before the onClick action.
    */
@@ -1434,25 +1487,69 @@ export interface HyperlinkProps {
 }
 
 export interface IconButtonProps {
-  prefix?: IconPrefix;
-  icon: IconName;
+  /**
+   * The accessibility label for the icon button.
+   */
   accessibilityLabel: string;
-  onClick: () => void;
-  size?: IconSize;
-  type?: "primary" | "secondary" | "muted";
-  disabled?: boolean;
-  selected?: boolean;
-  withConfirmation?: boolean;
-  confirmationText?: string;
+
+  /**
+   * The heading of the confirmation modal.
+   * @default "Confirm"
+   */
   confirmationHeading?: string;
-  tooltip?: {
-    text: string;
-    idealDirection?: TooltipDirection;
-  };
-  indicator?: boolean;
-  indicatorNumber?: number;
-  indicatorStyle?: {position: IndicatorDirection; color: SurfaceColor};
+
+  /**
+   * The text content of the confirmation modal.
+   * @default "Are you sure you want to continue?"
+   */
+  confirmationText?: string;
+
+  /**
+   * The name of the icon to display in the button.
+   */
+  iconName: IconName;
+
+  /**
+   * If true, a loading spinner will be shown in the button.
+   */
+  loading?: boolean;
+
+  /**
+  /**
+   * The test ID for the button, used for testing purposes.
+   */
   testID?: string;
+
+  /**
+   * The ideal position of the tooltip.
+   */
+  tooltipIdealPosition?: TooltipPosition;
+  /**
+   * Include an arrow in the tooltip. Pointing to the button.
+   * @default false
+   */
+  tooltipIncludeArrow?: boolean;
+  /**
+   * The text content of the tooltip.
+   */
+  tooltipText?: string;
+
+  /**
+   * The variant of the button, which determines its style.
+   * @default "primary"
+   */
+  variant?: "primary" | "secondary" | "muted" | "destructive";
+
+  /**
+   * If true, a confirmation modal will be shown before the onClick action.
+   * @default false
+   */
+  withConfirmation?: boolean;
+
+  /**
+   * The function to call when the button is clicked.
+   */
+  onClick: () => void | Promise<void>;
 }
 
 export interface InfoTooltipButtonProps {
@@ -1559,6 +1656,17 @@ export interface RadioFieldProps {
   options: string[];
 }
 
+export interface SignatureFieldProps {
+  state?: "default" | "error" | "disabled"; // default "default"
+  value?: string;
+  onChange: (value: any) => void;
+  title?: string; // default "Signature"
+  onStart?: () => void;
+  onEnd?: () => void;
+  disabledText?: string;
+  errorText?: string;
+}
+
 export interface SideDrawerProps {
   // Position of the drawer relative to the child
   position?: "right" | "left";
@@ -1595,6 +1703,19 @@ export interface TableProps {
    * Width of columns in the table. This is used to calculate the width of each column.
    * Can be numbers for pixels or strings for percentages.
    */
+  // in figma/ jos documentation for the component, TableTitle,
+  // she included the width as prop size
+  /**
+   * The size of the table title.
+   * Can be one of "sm", "md", "lg", or "xl".
+   */
+  // size: "sm" | "md" | "lg" | "xl";
+  //   const width = {
+  //   sm: 82,
+  //   md: 161,
+  //   lg: 233,
+  //   xl: 302,
+  // };
   columns: Array<number | string>;
   /**
    * Specify a border width for Table: "sm" is 1px.
@@ -1727,23 +1848,42 @@ export interface TextFieldPickerActionSheetProps {
 }
 
 export interface ToastProps {
-  message: string;
-  data: {
-    variant?: "default" | "warning" | "error";
-    buttonText?: string;
-    buttonOnClick?: () => void | Promise<void>;
-    persistent?: boolean;
-    onDismiss?: () => void;
-  };
+  title: string;
+  variant?: "error" | "info" | "success" | "warning";
+  secondary?: boolean;
+  size?: "sm" | "lg";
+  onDismiss?: () => void;
+  persistent?: boolean;
+  // TODO enforce these should only show if size is "lg" with type discrinimation
+  subtitle?: string;
+  // TODO Add buttons for Toast
+  // buttonText?: string;
+  // buttonOnClick?: () => void | Promise<void>;
 }
 
 export interface TooltipProps {
+  /**
+   * The content of the tooltip.
+   */
   children: React.ReactElement;
-  // If text is undefined, the children will be rendered without a tooltip.
+
+  /**
+   * If true, an arrow will be included in the tooltip.
+   * @default false
+   */
+  includeArrow?: boolean;
+
+  /**
+   * The ideal position of the tooltip.
+   * @default "top"
+   */
+  idealPosition?: "top" | "bottom" | "left" | "right";
+
+  /**
+   * The text content of the tooltip. If text is undefined,
+   * the children will be rendered without a tooltip.
+   */
   text?: string;
-  idealDirection?: "top" | "bottom" | "left" | "right";
-  // TODO: Fix Tooltip.bgColor.
-  bgColor?: any;
 }
 
 export interface LinkProps extends TextProps {
@@ -1870,4 +2010,94 @@ export interface ModelAdminCustomComponentProps extends Omit<FieldProps, "name">
   fieldKey: string; // Dot notation representation of the field.
   // user: User;
   editing: boolean; // Allow for inline editing of the field.
+}
+
+export interface MultiselectFieldProps {
+  /**
+   * The available options for the multiselect field.
+   */
+  options: string[];
+
+  /**
+   * The title of the multiselect field.
+   */
+  title: string;
+
+  /**
+   * The selected values of the multiselect field.
+   */
+  value: string[];
+
+  /**
+   * The variant of the multiselect field, which determines the position of the text.
+   * @default "rightText"
+   */
+  variant?: "rightText" | "leftText";
+
+  /**
+   * The function to call when the selected values change.
+   */
+  onChange: (selected: string[]) => void;
+}
+
+export interface TableTitleProps {
+  /**
+   * The text content of the table title.
+   */
+  title: string;
+}
+
+export interface TableBooleanProps {
+  /**
+   * If true, the component is in editing mode.
+   * @default false
+   */
+  isEditing?: boolean;
+
+  /**
+   * The function to call when the value is saved.
+   */
+  onSave: () => void | Promise<void>;
+
+  /**
+   * The boolean value to be displayed or edited.
+   */
+  value: boolean;
+}
+
+export interface TableDateProps {
+  /**
+   * If true, the date is annotated.
+   * @default false
+   */
+  annotated?: boolean;
+
+  /**
+   * If true, the component is in editing mode.
+   * @default false
+   */
+  isEditing?: boolean;
+
+  /**
+   * The function to call when the value is saved.
+   */
+  onSave?: () => void;
+
+  /**
+   * The date value to be displayed or edited. Can be a string or a Date object.
+   */
+  value: string | Date;
+}
+
+export interface TableIconButtonProps {
+  /**
+   * The name of the icon button to display in the table.
+   * Can be one of "edit", "saveAndClose", "insert", "drawerOpen", or "drawerClose".
+   */
+  tableIconButtonName: "edit" | "saveAndClose" | "insert" | "drawerOpen" | "drawerClose";
+
+  /**
+   * The function to call when the icon button is clicked.
+   */
+  onClick: () => void | Promise<void>;
 }

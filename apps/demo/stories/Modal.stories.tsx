@@ -43,9 +43,6 @@ export const Modals = () => {
           <Button text="Large Modal" onClick={() => setModalToShow("lg")} />
         </Box>
         <Box paddingY={1}>
-          <Button text="Large Modal" onClick={() => setModalToShow("lg")} />
-        </Box>
-        <Box paddingY={1}>
           <Button text="Secondary Button Modal" onClick={() => setModalToShow("secondary")} />
         </Box>
       </Box>

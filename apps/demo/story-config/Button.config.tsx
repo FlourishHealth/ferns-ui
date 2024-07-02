@@ -1,7 +1,9 @@
 import {DemoConfiguration} from "@config";
 import {
-  AllColorButtons,
   ButtonDemo,
+  ButtonIconPosition,
+  ButtonLoading,
+  ButtonVariants,
   ConfirmationButton,
   FullWidthButtons,
   MultilineButtons,
@@ -78,12 +80,21 @@ export const ButtonConfiguration: DemoConfiguration = {
           {label: "Right", value: "right"},
         ],
       },
+      fullWidth: {
+        type: "boolean",
+        defaultValue: false,
+      },
+      withConfirmationModal: {
+        type: "boolean",
+        defaultValue: false,
+      },
     },
   },
   stories: {
-    Buttons: {render: () => AllColorButtons({})},
-    Loading: {render: () => AllColorButtons({loading: true})},
-    Confirmation: {render: () => ConfirmationButton({})},
+    Variants: {render: () => ButtonVariants({})},
+    IconPosition: {render: () => ButtonIconPosition()},
+    Loading: {render: () => ButtonLoading()},
+    Confirmation: {render: () => ConfirmationButton()},
     FullWidth: {render: () => FullWidthButtons({})},
     Multiline: {render: () => MultilineButtons()},
   },

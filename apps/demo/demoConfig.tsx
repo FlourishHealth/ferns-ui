@@ -1,4 +1,5 @@
 import {
+  AccordionConfiguration,
   AvatarConfiguration,
   BadgeConfiguration,
   BannerConfiguration,
@@ -11,6 +12,7 @@ import {
   DateTimeFieldConfiguration,
   DateTimeModalConfiguration,
   HeadingConfiguration,
+  IconButtonConfiguration,
   IconConfiguration,
   MaskConfiguration,
   ModalConfiguration,
@@ -157,6 +159,7 @@ export interface DemoConfiguration extends DemoConfigurationBase {
 // {}, stories: {}, testMatrix: {}, testMatrixDefaultProps: {}, };
 
 const Config: DemoConfigurationBase[] = [
+  AccordionConfiguration,
   AvatarConfiguration,
   BadgeConfiguration,
   BannerConfiguration,
@@ -171,6 +174,7 @@ const Config: DemoConfigurationBase[] = [
   DateFieldConfiguration,
   HeadingConfiguration,
   IconConfiguration,
+  IconButtonConfiguration,
   // FilteredItemConfiguration,
   MaskConfiguration,
   // MessageConfiguration,
