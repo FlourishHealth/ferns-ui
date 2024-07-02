@@ -14,6 +14,7 @@ export * from "./Common";
 export * from "./Constants";
 export * from "./DateField";
 export * from "./DateTimeActionSheet";
+export * from "./DateTimeField";
 export * from "./DateUtilities";
 export * from "./DecimalRangeActionSheet";
 export * from "./ErrorBoundary";

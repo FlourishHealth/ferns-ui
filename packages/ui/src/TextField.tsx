@@ -1,16 +1,19 @@
 import {getCalendars} from "expo-localization";
-import {AsYouType} from "libphonenumber-js";
-import React, {ReactElement, useCallback, useContext, useMemo, useState} from "react";
-import {KeyboardTypeOptions, Platform, Pressable, StyleProp, TextInput, View} from "react-native";
+import React, {ReactElement, useCallback, useState} from "react";
+import {
+  DimensionValue,
+  KeyboardTypeOptions,
+  Platform,
+  Pressable,
+  StyleProp,
+  TextInput,
+  View,
+} from "react-native";
 
 import {TextFieldProps, TextStyleWithOutline} from "./Common";
-import {DateTimeActionSheet} from "./DateTimeActionSheet";
-import {printDate, printDateAndTime, printTime} from "./DateUtilities";
-import {DecimalRangeActionSheet} from "./DecimalRangeActionSheet";
 import {FieldError, FieldHelperText, FieldTitle} from "./FieldElements";
-import {HeightActionSheet} from "./HeightActionSheet";
-import {NumberPickerActionSheet} from "./NumberPickerActionSheet";
-import {ThemeContext} from "./Theme";
+import {Icon} from "./Icon";
+import {useTheme} from "./Theme";
 
 const keyboardMap: {[id: string]: string | undefined} = {
   date: "default",
@@ -61,8 +64,8 @@ export const TextField = ({
   placeholderText,
   blurOnSubmit = true,
   height: propsHeight,
-  min,
-  max,
+  iconName,
+  onIconClick,
   type = "text",
   autoComplete,
   inputRef,
@@ -73,12 +76,11 @@ export const TextField = ({
   onBlur,
   onEnter,
   onSubmitEditing,
+  onTap,
   testID,
-  transformValue,
 }: TextFieldProps): ReactElement => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
-  const dateActionSheetRef: React.RefObject<any> = React.createRef();
   const numberRangeActionSheetRef: React.RefObject<any> = React.createRef();
   const decimalRangeActionSheetRef: React.RefObject<any> = React.createRef();
   const weightActionSheetRef: React.RefObject<any> = React.createRef();
@@ -91,53 +93,35 @@ export const TextField = ({
 
   const [focused, setFocused] = useState(false);
   const [height, setHeight] = useState(propsHeight || 40);
-  const [showDate, setShowDate] = useState(false);
 
-  const borderColor = useMemo(() => {
-    if (disabled) {
-      return theme.border.activeNeutral;
-    } else if (errorText) {
-      return theme.border.error;
-    } else {
-      return focused ? theme.border.focus : theme.border.dark;
-    }
-  }, [
-    disabled,
-    errorText,
-    focused,
-    theme.border.activeNeutral,
-    theme.border.dark,
-    theme.border.error,
-    theme.border.focus,
-  ]);
+  let borderColor = focused ? theme.border.focus : theme.border.dark;
+  if (disabled) {
+    borderColor = theme.border.activeNeutral;
+  } else if (errorText) {
+    borderColor = theme.border.error;
+  }
 
-  const getHeight = useCallback(() => {
-    if (grow) {
-      return Math.max(40, height);
-    } else if (multiline) {
-      return height || "100%";
-    } else {
-      return 20;
-    }
-  }, [grow, height, multiline]);
+  let calculatedHeight: DimensionValue = 20;
+  if (grow) {
+    calculatedHeight = Math.max(40, height);
+  } else if (multiline) {
+    calculatedHeight = height || "100%";
+  }
 
-  const defaultTextInputStyles = useMemo(() => {
-    const defaultStyles: StyleProp<TextStyleWithOutline> = {
-      flex: 1,
-      width: "100%",
-      height: getHeight(),
-      color: theme.text.primary,
-      fontFamily: theme.font.primary,
-      fontSize: 16,
-      paddingVertical: 0,
-    };
+  const defaultTextInputStyles: StyleProp<TextStyleWithOutline> = {
+    flex: 1,
+    width: "100%",
+    height: calculatedHeight,
+    color: theme.text.primary,
+    fontFamily: theme.font.primary,
+    fontSize: 16,
+    paddingVertical: 0,
+    gap: 10,
+  };
 
-    if (Platform.OS === "web") {
-      defaultStyles.outline = "none";
-    }
-
-    return defaultStyles;
-  }, [getHeight, theme.text.primary, theme.font.primary]);
+  if (Platform.OS === "web") {
+    defaultTextInputStyles.outline = "none";
+  }
 
   const isHandledByModal = [
     "date",
@@ -150,59 +134,11 @@ export const TextField = ({
 
   const isEditable = !disabled && !isHandledByModal;
 
-  const shouldAutocorrect = type === "text" && (!autoComplete || autoComplete === "on");
+  const shouldAutocorrect =
+    ["text", "textarea"].includes(type) && (!autoComplete || autoComplete === "on");
 
   const keyboardType = keyboardMap[type];
   const textContentType = textContentMap[type || "text"];
-
-  const onTap = useCallback((): void => {
-    if (disabled) {
-      return;
-    }
-    if (["date", "datetime", "time"].includes(type)) {
-      setShowDate(true);
-    } else if (type === "numberRange") {
-      numberRangeActionSheetRef?.current?.show();
-    } else if (type === "decimalRange") {
-      decimalRangeActionSheetRef?.current?.show();
-    } else if (type === "height") {
-      weightActionSheetRef?.current?.show();
-    }
-  }, [decimalRangeActionSheetRef, disabled, numberRangeActionSheetRef, type, weightActionSheetRef]);
-
-  let displayValue = value;
-  if (value) {
-    const timezone = transformValue?.options?.timezone || localTimeZone;
-
-    if (type === "date") {
-      displayValue = printDate(value, {ignoreTime: true});
-    } else if (type === "time") {
-      displayValue = printTime(value, {timezone, showTimezone: true});
-    } else if (type === "datetime") {
-      displayValue = printDateAndTime(value, {timezone, showTimezone: true});
-    } else if (type === "height") {
-      displayValue = `${Math.floor(Number(value) / 12)} ft, ${Number(value) % 12} in`;
-    } else if (type === "phoneNumber") {
-      // By default, if a value is something like `"(123)"`
-      // then Backspace would only erase the rightmost brace
-      // becoming something like `"(123"`
-      // which would give the same `"123"` value
-      // which would then be formatted back to `"(123)"`
-      // and so a user wouldn't be able to erase the phone number.
-      // This is the workaround for that.
-      const formattedPhoneNumber = new AsYouType("US").input(value);
-      if (displayValue !== formattedPhoneNumber && value.length !== 4) {
-        displayValue = formattedPhoneNumber;
-      }
-    }
-  } else {
-    // Set some default values for modal-edited fields so we don't go from uncontrolled to
-    // controlled when setting the date.
-    if (["date", "datetime", "time"].includes(type)) {
-      displayValue = "";
-    }
-  }
-
   const Wrapper = isHandledByModal ? Pressable : View;
 
   return (
@@ -210,17 +146,10 @@ export const TextField = ({
       <Wrapper
         style={{
           flexDirection: "column",
-          // minHeight: getHeight(),
           width: "100%",
         }}
-        onPress={() => {
-          // This runs on web
-          onTap();
-        }}
-        onTouchStart={() => {
-          // This runs on mobile
-          onTap();
-        }}
+        onPress={onTap}
+        onTouchStart={onTap}
       >
         {title && <FieldTitle text={title} />}
         {Boolean(errorText) && errorText && <FieldError text={errorText} />}
@@ -254,43 +183,23 @@ export const TextField = ({
             numberOfLines={rows || 4}
             placeholder={placeholderText}
             placeholderTextColor={theme.text.secondaryLight}
-            returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
+            returnKeyType={returnKeyType}
             secureTextEntry={type === "password"}
             style={defaultTextInputStyles}
             testID={testID}
             textContentType={textContentType}
             underlineColorAndroid="transparent"
-            value={displayValue}
+            value={value}
             onBlur={() => {
               if (disabled) return;
               if (!isHandledByModal) {
                 setFocused(false);
               }
               if (onBlur) {
-                onBlur({value: value ?? ""});
+                onBlur(value ?? "");
               }
             }}
-            onChangeText={(text) => {
-              if (!onChange) {
-                return;
-              }
-              if (type === "phoneNumber") {
-                const formattedPhoneNumber = new AsYouType("US").input(text);
-                // another workaround for the same issue as above with backspacing phone numbers
-                if (formattedPhoneNumber === value) {
-                  onChange({value: text});
-                } else {
-                  onChange({value: formattedPhoneNumber});
-                }
-              } else if (type === "number") {
-                text = text.replace(/[^0-9]/g, "");
-                onChange({value: !isNaN(parseInt(text)) ? parseInt(text).toString() : ""});
-              } else if (type === "date" || type === "datetime" || type === "time") {
-                // Do nothing, this is handled by the date time action sheet
-              } else {
-                onChange({value: text});
-              }
-            }}
+            onChangeText={onChange}
             onContentSizeChange={(event) => {
               if (!grow) {
                 return;
@@ -311,25 +220,15 @@ export const TextField = ({
               }
             }}
           />
+          {Boolean(iconName) && (
+            <Pressable accessibilityRole="button" onPress={onIconClick}>
+              <Icon iconName={iconName!} size="md" />
+            </Pressable>
+          )}
         </Wrapper>
         {helperText && <FieldHelperText text={helperText} />}
       </Wrapper>
-      {(type === "date" || type === "time" || type === "datetime") && (
-        <DateTimeActionSheet
-          actionSheetRef={dateActionSheetRef}
-          mode={type}
-          transformValue={transformValue}
-          value={value}
-          visible={showDate}
-          onChange={(result) => {
-            onChange(result);
-            setShowDate(false);
-            setFocused(false);
-          }}
-          onDismiss={() => setShowDate(false)}
-        />
-      )}
-      {type === "numberRange" && value && (
+      {/* {type === "numberRange" && value && (
         <NumberPickerActionSheet
           actionSheetRef={numberRangeActionSheetRef}
           max={max || (min || 0) + 100}
@@ -346,8 +245,8 @@ export const TextField = ({
           value={value}
           onChange={(result) => onChange(result)}
         />
-      )}
-      {type === "height" && (
+      )} */}
+      {/* {type === "height" && (
         <HeightActionSheet
           actionSheetRef={weightActionSheetRef}
           value={value}
@@ -355,7 +254,7 @@ export const TextField = ({
             onChange(result);
           }}
         />
-      )}
+      )} */}
     </View>
   );
 };

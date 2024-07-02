@@ -1,5 +1,5 @@
 import {SaveFormat} from "expo-image-manipulator";
-import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
+import React, {ReactElement, ReactNode} from "react";
 import {ListRenderItemInfo, StyleProp, TextStyle, ViewStyle} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
@@ -328,11 +328,7 @@ export interface FernsTheme {
 
 export type Direction = "up" | "right" | "down" | "left";
 
-export interface OnChangeResult {
-  event?: SyntheticEvent<any>;
-  value: string;
-}
-export type OnChangeCallback = (result: OnChangeResult) => void;
+export type OnChangeCallback = (result: string) => void;
 
 // Update if we start supporting more icon packs from Expo Icons.
 export type IconName = FontAwesome6SolidNames | FontAwesome6BrandNames | FontAwesome6RegularNames;
@@ -573,16 +569,6 @@ export interface FieldWithLabelsProps {
   children?: ReactChildren;
 }
 
-export interface DateTimeFieldProps extends FieldWithLabelsProps {
-  label?: string;
-  mode: "date" | "time" | "datetime";
-  value: Date;
-  onChange: (date: Date) => void;
-  dateFormat?: string;
-  pickerType?: "default" | "compact" | "inline" | "spinner";
-  showTimezone?: boolean; // defaults to true
-}
-
 export interface TimezonePickerProps {
   timezone?: string;
   onChange: (tz: string | undefined) => void | Promise<void>;
@@ -595,43 +581,85 @@ export interface TextStyleWithOutline extends TextStyle {
   outline?: string;
 }
 
-export interface TextFieldProps {
-  title?: string;
-  disabled?: boolean; // default false
-  helperText?: string;
-  errorText?: string;
-  testID?: string;
-  innerRef?: any;
+interface BaseFieldProps {
   id?: string;
-  onChange: OnChangeCallback;
-  autoComplete?: "current-password" | "on" | "off" | "username";
-
-  idealErrorDirection?: Direction;
-  name?: string;
-  onBlur?: OnChangeCallback;
-  onFocus?: OnChangeCallback;
+  testID?: string;
+  title?: string;
+  label?: string;
   placeholderText?: string;
-  type?: TextFieldType;
+  iconName?: IconName;
+  onIconClick?: () => void;
+}
+
+export interface DateFieldProps extends BaseFieldProps {
+  value: string;
+  onChange: (date: string) => void;
+  disabled?: boolean;
+}
+
+export interface HelperTextProps {
+  helperText?: string;
+}
+
+export interface ErrorTextProps {
+  errorText?: string;
+}
+
+export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  type?: "email" | "height" | "password" | "phoneNumber" | "search" | "text" | "url" | "username";
+
+  disabled?: boolean; // default false
   value?: string;
-  returnKeyType?: "done" | "go" | "next" | "search" | "send";
-  grow?: boolean;
-  inputRef?: any;
-  onSubmitEditing?: any;
-  onEnter?: any;
-  // blurOnSubmit defaults to true
-  // if blurOnSubmit is false and multiline is true, return will create a new line
+
+  onBlur?: OnChangeCallback;
+  onChange: OnChangeCallback;
+  onEnter?: () => void;
+  onFocus?: () => void;
+  onSubmitEditing?: () => void;
+  onTap?: () => void;
   blurOnSubmit?: boolean;
+
+  autoComplete?: "current-password" | "on" | "off" | "username";
+  returnKeyType?: "done" | "go" | "next" | "search" | "send";
+
+  grow?: boolean;
   multiline?: boolean;
   rows?: number;
   height?: number;
-  // Required for type=numberRange
-  min?: number;
-  max?: number;
-  // Options to translate values
-  transformValue?: TransformValueOptions;
+
+  inputRef?: any;
 }
 
-export type TextAreaProps = TextFieldProps;
+export type TextAreaProps = Exclude<TextFieldProps, "multiline" | "type"> & {type: "textarea"};
+
+export type NumberFieldProps = {
+  type: "number" | "decimal";
+  min?: number;
+  max?: number;
+};
+
+export type NumberRangeFieldProps = {
+  type: "numberRange" | "decimalRange";
+  min: number;
+  max: number;
+};
+
+export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  type: "date" | "datetime" | "time";
+  value: string; // ISO string always
+  onChange: (date: string) => void;
+  dateFormat?: string;
+  pickerType?: "default" | "compact" | "inline" | "spinner";
+  showTimezone?: boolean; // defaults to true
+  timezone?: string;
+}
+
+export type CombinedTextFieldProps =
+  | NumberFieldProps
+  | NumberRangeFieldProps
+  | DateTimeFieldProps
+  | TextFieldProps
+  | TextAreaProps;
 
 export interface MaskProps {
   children?: ReactChildren;
@@ -1426,7 +1454,7 @@ export interface CustomSelectProps {
 }
 export interface DateTimeActionSheetProps {
   value?: string;
-  mode?: "date" | "time" | "datetime";
+  type?: "date" | "time" | "datetime";
   // Returns an ISO 8601 string. If mode is "time", the date portion is today.
   onChange: OnChangeCallback;
   actionSheetRef: React.RefObject<any>;
@@ -1523,6 +1551,11 @@ export interface IconButtonProps {
    * The accessibility label for the icon button.
    */
   accessibilityLabel: string;
+
+  /**
+   * The accessibility hint for the icon button.
+   */
+  accessibilityHint: string;
 
   /**
    * The heading of the confirmation modal.
