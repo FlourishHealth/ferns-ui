@@ -1,15 +1,17 @@
 import {DateTime} from "luxon";
-import React, {forwardRef, useImperativeHandle, useState} from "react";
-import {Text, View} from "react-native";
+import React, {forwardRef, useContext, useImperativeHandle, useState} from "react";
+import {Text, View, ViewStyle} from "react-native";
 
 import {TableDateProps} from "../Common";
 import {TextField} from "../TextField";
+import {ThemeContext} from "../Theme";
 export interface TableDateHandles {
   canSave: () => boolean;
 }
 
 export const TableDate = forwardRef<TableDateHandles, TableDateProps>(
   ({value, annotated = false, isEditing = false}, ref) => {
+    const {theme} = useContext(ThemeContext);
     const initialDate =
       typeof value === "string" ? DateTime.fromISO(value) : DateTime.fromJSDate(value);
     const [dateVal] = useState(initialDate);
@@ -47,9 +49,11 @@ export const TableDate = forwardRef<TableDateHandles, TableDateProps>(
 
     return (
       <View
-        style={{
-          maxWidth: 200,
-        }}
+        style={
+          {
+            maxWidth: annotated ? theme.table["mw-l"] : theme.table["mw-m"],
+          } as ViewStyle
+        }
       >
         {isEditing ? (
           <TextField
@@ -65,7 +69,7 @@ export const TableDate = forwardRef<TableDateHandles, TableDateProps>(
             }}
           />
         ) : (
-          <View style={{paddingHorizontal: 4, paddingVertical: 16}}>
+          <View style={{paddingHorizontal: 4, paddingVertical: theme.table.padV} as ViewStyle}>
             <Text style={{fontSize: 16}}>
               {annotated ? formatDate(dateVal) : dateVal.toFormat("MM/dd/yyyy")}
             </Text>

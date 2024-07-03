@@ -3,7 +3,7 @@ import React from "react";
 
 export const TableBadgeDemo = (props: Partial<TableBadgeProps>) => {
   return (
-    <Box alignContent="center" justifyContent="center">
+    <Box alignItems="center" justifyContent="center">
       <TableBadge value="Table Title" {...props} />
     </Box>
   );

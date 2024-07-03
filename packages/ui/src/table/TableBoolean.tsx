@@ -36,7 +36,13 @@ export const TableBoolean = forwardRef<TableBooleanHandles, TableBooleanProps>(
           accessibilityLabel={`Checkbox is currently ${valueString}`}
           accessibilityRole="checkbox"
           hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-          style={{alignItems: "center", justifyContent: "center", maxWidth: 124}}
+          style={
+            {
+              alignItems: "center",
+              justifyContent: "center",
+              maxWidth: theme.table["mw-m"],
+            } as ViewStyle
+          }
           onPress={handlePress}
         >
           <CheckBox selected={checked} size="lg" />
@@ -44,7 +50,15 @@ export const TableBoolean = forwardRef<TableBooleanHandles, TableBooleanProps>(
       );
     } else {
       return (
-        <View style={{alignItems: "center", justifyContent: "center", maxWidth: 124} as ViewStyle}>
+        <View
+          style={
+            {
+              alignItems: "center",
+              justifyContent: "center",
+              maxWidth: theme.table["mw-m"],
+            } as ViewStyle
+          }
+        >
           <View
             accessibilityHint={value ? "Checked icon" : "Unchecked icon"}
             accessibilityLabel={`The checkbox is ${valueString}`}
