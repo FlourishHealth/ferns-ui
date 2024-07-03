@@ -9,7 +9,6 @@ import {
   FontAwesome6RegularNames,
   FontAwesome6SolidNames,
 } from "./CommonIconTypes";
-import {SelectListOptions} from "./SelectList";
 
 export interface AccordionProps {
   /**
@@ -1482,7 +1481,7 @@ export interface FieldProps extends FieldWithLabelsProps {
   onBlur?: any;
   onStart?: any;
   onEnd?: any;
-  options?: SelectListOptions;
+  options?: FieldOptions;
   placeholder?: string;
   disabled?: boolean;
   useCheckbox?: boolean;
@@ -2132,4 +2131,64 @@ export interface TableIconButtonProps {
    * The function to call when the icon button is clicked.
    */
   onClick: () => void | Promise<void>;
+}
+
+export type FieldOptions = {
+  /**
+   * The label to display for the option.
+   */
+  label: string;
+
+  /**
+   * The key of the option. Useful for uniquely identifying the option.
+   */
+  key?: string;
+
+  /**
+   * The value of the option.
+   */
+  value: string;
+}[];
+export interface SelectFieldProps {
+  /**
+   * If true, the select field will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * The error text to display if there is an error.
+   */
+  errorText?: string;
+
+  /**
+   * The helper text to display below the select field.
+   */
+  helperText?: string;
+
+  /**
+   * The options available for selection in the select field.
+   * Each option should have a label and a value.
+   */
+  options: FieldOptions;
+
+  /**
+   * The placeholder text to display when no option is selected.
+   */
+  placeholder?: string;
+
+  /**
+   * The title of the select field.
+   */
+  title?: string;
+
+  /**
+   * The current value of the select field.
+   */
+  value: string | undefined;
+
+  /**
+   * The function to call when the selected value changes.
+   */
+  onChange: (value: string | undefined) => void;
 }
