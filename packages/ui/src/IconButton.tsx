@@ -46,6 +46,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
 };
 
 const IconButtonComponent: FC<IconButtonProps> = ({
+  accessibilityHint,
   accessibilityLabel,
   confirmationHeading = "Confirm",
   confirmationText = "Are you sure you want to continue?",
@@ -92,7 +93,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
   return (
     <Pressable
       accessibilityHint={
-        withConfirmation
+        accessibilityHint ?? withConfirmation
           ? `Opens a confirmation dialog to confirm ${accessLabel}`
           : `Press to perform ${accessLabel} action`
       }
