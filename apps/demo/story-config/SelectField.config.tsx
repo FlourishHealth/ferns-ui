@@ -1,10 +1,10 @@
 import {DemoConfiguration} from "@config";
-import {Disabled, SelectListDemo, SelectLists, WithLabel} from "@stories";
-import {SelectList} from "ferns-ui";
+import {SelectFieldDemo, SelectFieldExamples} from "@stories";
+import {SelectField} from "ferns-ui";
 
 export const SelectFieldConfiguration: DemoConfiguration = {
   name: "Select field",
-  component: SelectList,
+  component: SelectField,
   related: ["Checkbox", "Radio field"],
   description: "Displays a list of actions or options using the browser’s native select.",
   a11yNotes: ["The list should be labeled so that screen readers know that the list is related."],
@@ -29,11 +29,28 @@ export const SelectFieldConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: SelectListDemo,
-  demoOptions: {},
+  demo: SelectFieldDemo,
+  demoOptions: {
+    controls: {
+      withTitle: {
+        type: "boolean",
+        defaultValue: true,
+      },
+      withHelperText: {
+        type: "boolean",
+        defaultValue: false,
+      },
+      withErrorText: {
+        type: "boolean",
+        defaultValue: false,
+      },
+      disabled: {
+        type: "boolean",
+        defaultValue: false,
+      },
+    },
+  },
   stories: {
-    "Select Lists": {render: SelectLists},
-    "Select List Label": {render: WithLabel},
-    "Select List Disabled": {render: Disabled},
+    "Select Field Examples": {render: SelectFieldExamples},
   },
 };

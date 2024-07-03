@@ -3,10 +3,8 @@ import React from "react";
 import {BooleanField} from "./BooleanField";
 import {Box} from "./Box";
 import {AddressInterface, FieldProps, ReactChildren, TextFieldType} from "./Common";
-import {USSTATESLIST} from "./Constants";
 import {CustomSelect} from "./CustomSelect";
 import {FieldWithLabels} from "./FieldWithLabels";
-import {SelectList} from "./SelectList";
 import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
@@ -47,26 +45,26 @@ export const Field = ({
   };
 
   const renderField = (): ReactChildren => {
-    if (type === "select") {
-      if (!options) {
-        console.error("Field with type=select require options");
-        return undefined;
-      }
-      return (
-        <SelectList
-          disabled={disabled}
-          id={name}
-          options={options}
-          placeholder={placeholder}
-          testID={testID}
-          value={value}
-          onChange={(result) => {
-            onChange(result);
-            onBlur && onBlur(result);
-          }}
-        />
-      );
-    }
+    // if (type === "select") {
+    //   if (!options) {
+    //     console.error("Field with type=select require options");
+    //     return undefined;
+    //   }
+    //   return (
+    //     <SelectList
+    //       disabled={disabled}
+    //       id={name}
+    //       options={options}
+    //       placeholder={placeholder}
+    //       testID={testID}
+    //       value={value}
+    //       onChange={(result) => {
+    //         onChange(result);
+    //         onBlur && onBlur(result);
+    //       }}
+    //     />
+    //   );
+    // }
     // TODO: Either implement multiselect or remove it
     //  else if (type === "multiselect") {
     //   if (options === undefined) {
@@ -114,7 +112,8 @@ export const Field = ({
     //     </Box>
     //   );
     // }
-    else if (type === "textarea") {
+    // else
+    if (type === "textarea") {
       return (
         <TextArea
           disabled={disabled}
@@ -196,7 +195,7 @@ export const Field = ({
             value={city}
             onChange={(result) => handleAddressChange("city", result.value)}
           />
-          <SelectList
+          {/* <SelectList
             disabled={disabled}
             id="state"
             label="State"
@@ -208,7 +207,7 @@ export const Field = ({
             onChange={(result) => {
               handleAddressChange("state", result!);
             }}
-          />
+          /> */}
           <TextField
             disabled={disabled}
             id="zipcode"
