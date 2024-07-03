@@ -30,7 +30,7 @@ export * from "./SideDrawer.stories";
 export * from "./Spinner.stories";
 export * from "./SplitPage.stories";
 export * from "./Table.stories";
-// export * from "./TableBadge.stories";
+export * from "./TableBadge.stories";
 export * from "./TableBoolean.stories";
 export * from "./TableDate.stories";
 export * from "./TableIconButton.stories";

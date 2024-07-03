@@ -1,19 +1,72 @@
-/* eslint-disable unused-imports/no-unused-imports */
+import React, {forwardRef, useContext, useImperativeHandle, useState} from "react";
+import {View, ViewStyle} from "react-native";
 
-import React, {FC} from "react";
-import {Text, View} from "react-native";
+import {Badge} from "../Badge";
+import {BadgeProps, FieldOptions} from "../Common";
+import {SelectField} from "../SelectField";
+import {ThemeContext} from "../Theme";
 
-import {Box} from "../Box";
-
-export interface TableBadgeProps {
-  value: string;
-  isEditing?: boolean;
+export interface TableBadgeHandles {
+  handleSave: () => void | Promise<void>;
 }
 
-export const TableBadge: FC<TableBadgeProps> = ({value, isEditing}) => {
-  return (
-    <View>
-      <Text>TableBadge</Text>
-    </View>
-  );
-};
+// TODO: Support error state
+export interface TableBadgeProps {
+  badgeStatus?: BadgeProps["status"];
+  badgeIconName?: BadgeProps["iconName"];
+  isEditing?: boolean;
+  editingOptions?: FieldOptions;
+  value: string;
+  onSave?: (newStatus: string | undefined) => void | Promise<void>;
+}
+
+export const TableBadge = forwardRef<TableBadgeHandles, TableBadgeProps>(
+  (
+    {value, badgeStatus = "info", badgeIconName, isEditing = false, editingOptions, onSave},
+    ref
+  ) => {
+    const [selected, setSelected] = useState<string | undefined>(value);
+    const {theme} = useContext(ThemeContext);
+
+    useImperativeHandle(ref, () => ({
+      handleSave: () => {
+        if (onSave) {
+          onSave(selected);
+        }
+      },
+    }));
+
+    const handleChange = (newVal: string | undefined) => {
+      if (newVal === "") {
+        setSelected(undefined);
+      } else {
+        setSelected(newVal);
+      }
+    };
+
+    return (
+      <View
+        style={[
+          {
+            justifyContent: "center",
+            alignItems: "center",
+            width: theme.table["mw-m"],
+          } as ViewStyle,
+          !isEditing &&
+            ({
+              paddingHorizontal: theme.table.padH,
+              paddingVertical: theme.table.padV,
+            } as ViewStyle),
+        ]}
+      >
+        {isEditing && editingOptions ? (
+          <SelectField options={editingOptions} value={selected} onChange={handleChange} />
+        ) : (
+          <Badge iconName={badgeIconName} secondary status={badgeStatus} value={value} />
+        )}
+      </View>
+    );
+  }
+);
+
+TableBadge.displayName = "TableBadge";

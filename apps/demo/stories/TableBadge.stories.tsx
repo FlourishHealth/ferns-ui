@@ -1,25 +1,36 @@
-import {Box, TableBadge, TableBadgeProps} from "ferns-ui";
+import {Box, Heading, TableBadge, TableBadgeProps} from "ferns-ui";
 import React from "react";
 
 export const TableBadgeDemo = (props: Partial<TableBadgeProps>) => {
   return (
     <Box alignContent="center" justifyContent="center">
-      <TableBadge size="md" title="Table Title" {...props} />
+      <TableBadge value="Table Title" {...props} />
     </Box>
   );
 };
 
 export const TableBadgeStates = () => {
   return (
-    <Box>
-      <Box padding={1}>
-        <TableBadge size="sm" title="sm" />
+    <Box direction="row" wrap>
+      <Box padding={2}>
+        <Box alignItems="center" marginBottom={1}>
+          <Heading>Default</Heading>
+        </Box>
+        <TableBadge value="Table Title" />
       </Box>
-      <Box padding={1}>
-        <TableBadge size="sm" />
-      </Box>
-      <Box padding={1}>
-        <TableBadge size="md" title="md" />
+      <Box padding={2}>
+        <Box alignItems="center" marginBottom={1}>
+          <Heading>Editing</Heading>
+        </Box>
+        <TableBadge
+          editingOptions={[
+            {label: "Table Title", value: "Table Title"},
+            {label: "Second Option", value: "so"},
+            {label: "Third Option", value: "to"},
+          ]}
+          isEditing
+          value="Table Title"
+        />
       </Box>
     </Box>
   );
