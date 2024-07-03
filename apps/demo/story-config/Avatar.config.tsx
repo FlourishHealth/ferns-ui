@@ -1,7 +1,6 @@
 import {DemoConfiguration} from "@config";
 import {AvatarDemo, AvatarInitials, AvatarOutlines, AvatarSizes} from "@stories";
 import {Avatar} from "ferns-ui";
-import React from "react";
 
 export const AvatarConfiguration: DemoConfiguration = {
   name: "Avatar",
@@ -77,11 +76,9 @@ export const AvatarConfiguration: DemoConfiguration = {
   },
   stories: {
     Initials: {
-      description:
-        "If there isn't a url provided or it doesn't load, Avatar defaults to the user's initials",
-      render: () => <AvatarInitials />,
+      render: () => AvatarInitials(),
     },
-    Sizes: {render: () => <AvatarSizes />},
-    Outlines: {render: () => <AvatarOutlines />},
+    Sizes: {render: () => AvatarSizes()},
+    Outlines: {render: () => AvatarOutlines()},
   },
 };

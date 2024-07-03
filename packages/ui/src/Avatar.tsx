@@ -5,7 +5,6 @@ import {LinearGradient} from "expo-linear-gradient";
 import React, {useContext, useEffect, useMemo, useState} from "react";
 import {Image, Platform, Pressable, Text, View} from "react-native";
 
-import {Box} from "./Box";
 import {AvatarProps, CustomSvgProps} from "./Common";
 import {Icon} from "./Icon";
 import {MobileIcon, OfflineIcon, OnlineIcon, OutOfOfficeIcon} from "./icons";
@@ -17,8 +16,8 @@ const sizes = {
   xs: 28,
   sm: 38,
   md: 56,
-  lg: 64,
-  xl: 132,
+  lg: 72,
+  xl: 120,
 };
 
 const initialsFontSizes = {
@@ -38,11 +37,11 @@ const iconSizes = {
 };
 
 const iconSizeScale = {
-  xs: 0.4,
-  sm: 0.5,
-  md: 0.6,
-  lg: 0.75,
-  xl: 1,
+  xs: 0.5,
+  sm: 0.7,
+  md: 0.9,
+  lg: 1.1,
+  xl: 1.5,
 };
 
 const sizeIconPadding = {
@@ -143,53 +142,41 @@ export const Avatar = ({
   }, [showEditIcon, src, hovered]);
 
   const renderEditIcon = () => {
-    if (shouldShowEditIcon && Platform.OS === "web") {
-      return (
-        <Pressable
-          accessibilityRole="button"
-          style={{
-            alignItems: "center",
-            backgroundColor: "rgba(255,255,255,0.75)",
-            borderRadius: avatarRadius,
-            height: avatarImageDiameter,
-            justifyContent: "center",
-            position: "absolute",
-            width: avatarImageDiameter,
-            zIndex: 5,
-          }}
-          onPointerEnter={() => setHovered(true)}
-          onPointerLeave={() => setHovered(false)}
-          onPress={pickImage}
-        >
-          <Icon color="primary" iconName="pen-to-square" size={iconSizes[size]} type="regular" />
-          <Text
-            style={{
-              textAlign: "center",
-              fontWeight: "bold",
-              fontSize: 12,
-              marginTop: 10,
-            }}
-          >
-            Upload Image
-          </Text>
-        </Pressable>
-      );
-    } else if (shouldShowEditIcon && Platform.OS !== "web") {
-      return (
-        <Box
-          bottom
-          left={Boolean(status)}
-          paddingX={sizeIconPadding[size]}
-          position="absolute"
-          right={!Boolean(status)}
-          zIndex={5}
-          onClick={pickImage}
-        >
-          <Icon color="primary" iconName="pen-to-square" size={size} />
-        </Box>
-      );
+    if (size !== "xl") {
+      console.error(`Avatar: "imagePicker" status is only supported for size "xl"`);
+      return null;
     }
-    return null;
+
+    return (
+      <Pressable
+        accessibilityRole="button"
+        style={{
+          alignItems: "center",
+          backgroundColor: "rgba(255,255,255,0.75)",
+          borderRadius: avatarRadius,
+          height: avatarImageDiameter,
+          justifyContent: "center",
+          position: "absolute",
+          width: avatarImageDiameter,
+          zIndex: 5,
+        }}
+        onPointerEnter={() => setHovered(true)}
+        onPointerLeave={() => setHovered(false)}
+        onPress={pickImage}
+      >
+        <Icon color="primary" iconName="pen-to-square" size={iconSizes[size]} type="regular" />
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: 12,
+            marginTop: 10,
+          }}
+        >
+          Upload Image
+        </Text>
+      </Pressable>
+    );
   };
 
   const renderStatusIcon = () => {
@@ -212,7 +199,10 @@ export const Avatar = ({
           zIndex: 5,
         }}
       >
-        {icon({doNotDisturb, scale: iconSizeScale[size]})}
+        {icon({
+          doNotDisturb,
+          transform: [{scale: iconSizeScale[size]}],
+        })}
       </View>
     );
   };
@@ -273,7 +263,7 @@ export const Avatar = ({
         )}
       </Pressable>
       {/* Needs to come after the image so it renders on top. */}
-      {renderEditIcon()}
+      {shouldShowEditIcon && renderEditIcon()}
     </View>
   );
 
@@ -315,7 +305,7 @@ export const Avatar = ({
           paddingBottom: sizeIconPadding[size],
         }}
       >
-        <Tooltip idealDirection="top" text={isMobileDevice() ? undefined : status}>
+        <Tooltip idealPosition="top" text={isMobileDevice() ? undefined : status}>
           {avatar}
         </Tooltip>
         {renderStatusIcon()}

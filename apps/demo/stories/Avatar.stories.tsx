@@ -29,7 +29,7 @@ export const AvatarDemo = (props: Partial<AvatarProps>) => {
 
 export const AvatarInitials = () => {
   return (
-    <Box direction="column" display="flex" height="100%" width="100%">
+    <Box direction="column" display="flex">
       <Text>Tony Stark</Text>
       <Avatar name="Tony Stark" status="online" />
       <Text>Tony Stark Jr</Text>
@@ -45,7 +45,7 @@ export const AvatarInitials = () => {
 };
 export const AvatarSizes = () => {
   return (
-    <Box direction="column" display="flex" height="100%" width="100%">
+    <Box direction="column" display="flex">
       <Text>XS</Text>
       <Avatar name="Tony Stark" size="xs" status="online" />
       <Text>SM</Text>
@@ -61,7 +61,7 @@ export const AvatarSizes = () => {
 };
 export const AvatarOutlines = () => {
   return (
-    <Box color="neutral" direction="column" display="flex" height="100%" width="100%">
+    <Box color="neutral" direction="column" display="flex">
       <Text>XS</Text>
       <Avatar name="Tony Stark" size="xs" status="online" />
       <Text>SM</Text>
@@ -112,7 +112,7 @@ export const AvatarOutlines = () => {
 };
 export const AvatarImages = () => {
   return (
-    <Box color="neutral" direction="column" display="flex" height="100%" width="100%">
+    <Box color="neutral" direction="column" display="flex">
       <Text>XS</Text>
       <Avatar
         name="Tony Stark"
@@ -153,7 +153,7 @@ export const AvatarImages = () => {
 };
 export const AvatarImagePicker = () => {
   return (
-    <Box direction="column" display="flex" height="100%" width="100%">
+    <Box direction="column" display="flex">
       <AvatarImage />
     </Box>
   );
@@ -214,7 +214,7 @@ export const AvatarImage = (): ReactElement => {
   });
 
   return (
-    <Box height="100%" scroll>
+    <Box scroll>
       <Heading>Edit Image</Heading>
       <Text>Width: {xsImage.width}</Text>
       <Text>Height: {xsImage.height}</Text>
