@@ -1,3 +1,4 @@
+/* eslint-disable react-native-a11y/has-accessibility-hint */
 import {Picker} from "@react-native-picker/picker";
 import {getCalendars} from "expo-localization";
 import range from "lodash/range";
@@ -12,7 +13,6 @@ import {Heading} from "./Heading";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
-import {SelectList} from "./SelectList";
 import {ThemeContext} from "./Theme";
 import {TimezonePicker} from "./TimezonePicker";
 
@@ -114,14 +114,14 @@ const CalendarHeader = ({
   return (
     <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
       <IconButton
-        accessibilityLabel="arrow"
+        accessibilityLabel="Go back 1 year"
         iconName="angles-left"
         onClick={() => {
           addMonth(-12);
         }}
       />
       <IconButton
-        accessibilityLabel="arrow"
+        accessibilityLabel="Go back 1 month"
         iconName="angle-left"
         onClick={() => {
           addMonth(-1);
@@ -129,14 +129,14 @@ const CalendarHeader = ({
       />
       <Heading size="sm">{displayDate}</Heading>
       <IconButton
-        accessibilityLabel="arrow"
+        accessibilityLabel="Go forward 1 month"
         iconName="angle-right"
         onClick={() => {
           addMonth(1);
         }}
       />
       <IconButton
-        accessibilityLabel="arrow"
+        accessibilityLabel="Go forward 1 year"
         iconName="angles-right"
         onClick={() => {
           addMonth(12);
@@ -301,17 +301,17 @@ export const DateTimeActionSheet = ({
         </Box>
 
         <Box marginRight={2} width={60}>
-          <SelectList
+          {/* <SelectList
             options={[
               {label: "am", value: "am"},
               {label: "pm", value: "pm"},
             ]}
             style={{minHeight: INPUT_HEIGHT}}
             value={amPm}
-            onChange={(result) => {
+            onChange={(result: any) => {
               setAmPm(result as "am" | "pm");
             }}
-          />
+          /> */}
         </Box>
         {Boolean(mode === "time" || mode === "datetime") && (
           <Box>

@@ -1519,7 +1519,14 @@ export interface HyperlinkProps {
 
 export interface IconButtonProps {
   /**
-   * The accessibility label for the icon button.
+   * The accessibility hint describes the results of performing an action on a control or view.
+   * It should be a very brief description of the result of interacting with the button.
+   */
+  accessibilityHint?: string;
+
+  /**
+   * The accessibility label attribute identifies the user interface element.
+   * It should be a very brief description of the element, such as "Add", "Play", "Deleted", etc.
    */
   accessibilityLabel: string;
 
