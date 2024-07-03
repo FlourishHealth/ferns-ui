@@ -508,6 +508,7 @@ export function RNPickerSelect({
     );
   };
 
+  // TODO: Create custom React component for web in order to apply library style rules
   const renderWeb = () => {
     return (
       <View
