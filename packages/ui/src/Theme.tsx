@@ -86,6 +86,13 @@ const defaultPrimitives = {
   radiusXl: 32,
   radius2xl: 128,
   radius3xl: 360,
+
+  tableMaxWidthS: 60,
+  tableMaxWidthM: 124,
+  tableMaxWidthL: 200,
+  tableMaxWidthXL: 284,
+  tableHorizontalPadding: 12,
+  tableVerticalPadding: 16,
 };
 
 const defaultTheme: FernsTheme = {
@@ -152,6 +159,15 @@ const defaultTheme: FernsTheme = {
     xl: "spacing6",
     "2xl": "spacing8",
     "3xl": "spacing12",
+  },
+
+  table: {
+    "mw-s": "tableMaxWidthS",
+    "mw-m": "tableMaxWidthM",
+    "mw-l": "tableMaxWidthL",
+    "mw-xl": "tableMaxWidthXL",
+    padH: "tableHorizontalPadding",
+    padV: "tableVerticalPadding",
   },
   // These will continue to throw errors until we have a proper font system in place.
   font: {

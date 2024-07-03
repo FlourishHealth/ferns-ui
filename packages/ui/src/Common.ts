@@ -314,6 +314,17 @@ export interface FontTheme {
 }
 export type Font = keyof FontTheme;
 
+export interface TableTheme {
+  "mw-s": string;
+  "mw-m": string;
+  "mw-l": string;
+  "mw-xl": string;
+  padH: string;
+  padV: string;
+}
+
+export type TTable = keyof TableTheme;
+
 export interface FernsTheme {
   text: TextTheme;
   surface: SurfaceTheme;
@@ -323,6 +334,7 @@ export interface FernsTheme {
   spacing: SpacingTheme;
   font: FontTheme;
   primitives: ThemePrimitives;
+  table: TableTheme;
 }
 
 export type Direction = "up" | "right" | "down" | "left";
@@ -1308,8 +1320,7 @@ export interface BadgeProps {
   // Position relative to the text. Top should only be used with headings.
   status?: "info" | "error" | "warning" | "success" | "neutral"; // default "info
   secondary?: boolean;
-  hasIcon?: boolean;
-  variant?: "iconOnly" | "numberOnly" | "text"; // text is default
+  variant?: "iconOnly" | "numberOnly"; // no default
   // TODO: improve type discrimination
   // used for numberOnly variant to display "${maxValue}+" when value is greater than max
   maxValue?: number;
