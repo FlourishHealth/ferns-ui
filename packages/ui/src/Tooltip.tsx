@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useContext} from "react";
+import {FC, useCallback, useContext, useEffect, useRef, useState} from "react";
 import {
   Dimensions,
   LayoutChangeEvent,
@@ -7,14 +7,15 @@ import {
   Platform,
   Pressable,
   View,
+  ViewStyle,
 } from "react-native";
 import {Portal} from "react-native-portalize";
 
-import {TooltipDirection, TooltipProps} from "./Common";
+import {TooltipPosition, TooltipProps} from "./Common";
 import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 
-const TOOLTIP_OFFSET = 8;
+const TOOLTIP_OFFSET = 6;
 // How many pixels to leave between the tooltip and the edge of the screen
 const TOOLTIP_OVERFLOW_PADDING = 20;
 
@@ -25,28 +26,20 @@ type ChildrenMeasurement = {
   pageY: number;
 };
 
+// empty object is a fallback for when the tooltip is not measured yet
 type Measurement = {
-  children: ChildrenMeasurement;
-  tooltip: LayoutRectangle;
+  children: ChildrenMeasurement | {};
+  tooltip: LayoutRectangle | {};
   measured: boolean;
-  idealDirection?: TooltipDirection;
-};
-
-const overflowLeft = (x: number): boolean => {
-  return x < TOOLTIP_OVERFLOW_PADDING;
-};
-
-const overflowRight = (x: number): boolean => {
-  const {width: layoutWidth} = Dimensions.get("window");
-  return x + TOOLTIP_OVERFLOW_PADDING > layoutWidth;
+  idealPosition?: TooltipPosition;
 };
 
 const getTooltipPosition = ({
   children,
   tooltip,
   measured,
-  idealDirection,
-}: Measurement): {} | {left: number; top: number} => {
+  idealPosition,
+}: Measurement): {} | {left: number; top: number; finalPosition: TooltipPosition} => {
   if (!measured) {
     console.debug("No measurements for child yet, cannot show tooltip yet.");
     return {};
@@ -57,117 +50,212 @@ const getTooltipPosition = ({
     height: childrenHeight,
     pageX: childrenX,
     width: childrenWidth,
-  }: ChildrenMeasurement = children;
-  const {width: tooltipWidth, height: tooltipHeight} = tooltip;
+  }: ChildrenMeasurement = children as ChildrenMeasurement;
+  const {width: tooltipWidth, height: tooltipHeight} = tooltip as LayoutRectangle;
+
   const horizontalCenter = childrenX + childrenWidth / 2;
   const right = childrenX + childrenWidth + TOOLTIP_OFFSET;
   const left = childrenX - tooltipWidth - TOOLTIP_OFFSET;
-
   const top = childrenY - tooltipHeight - TOOLTIP_OFFSET;
   const bottom = childrenY + childrenHeight + TOOLTIP_OFFSET;
-  const verticalCenter = top + childrenHeight + TOOLTIP_OFFSET;
+  const verticalCenter = childrenY + childrenHeight / 2 - tooltipHeight / 2;
 
-  // Top is overflowed if it would go off either side or the top of the screen.
   const overflowTop = top < TOOLTIP_OVERFLOW_PADDING;
-
-  // Bottom is overflowed if it would go off either side or the bottom of the screen.
   const overflowBottom =
     bottom + tooltipHeight + TOOLTIP_OVERFLOW_PADDING > Dimensions.get("window").height;
+  const overflowLeft = left < TOOLTIP_OVERFLOW_PADDING;
+  const overflowRight =
+    right + tooltipWidth > Dimensions.get("window").width - TOOLTIP_OVERFLOW_PADDING;
+  let finalPosition: TooltipPosition = idealPosition || "top";
+  // Try to place the tooltip in the ideal position if possible
+  switch (idealPosition) {
+    case "left":
+      if (!overflowLeft) {
+        return {left, top: verticalCenter, finalPosition};
+      }
+      break;
+    case "right":
+      if (!overflowRight) {
+        return {left: right, top: verticalCenter, finalPosition};
+      }
+      break;
+    case "top":
+      if (!overflowTop) {
+        return {left: horizontalCenter - tooltipWidth / 2, top, finalPosition};
+      }
+      break;
+    case "bottom":
+      if (!overflowBottom) {
+        return {left: horizontalCenter - tooltipWidth / 2, top: bottom, finalPosition};
+      }
+      break;
+  }
 
-  // If it would overflow to the right, try to put it above, if not, put it on the left.
-  // If it would overflow to the left, try to put it above, if not, put it to the right.
-
-  // Happy path:
-  if (idealDirection === "left" && !overflowLeft(left)) {
-    return {left, top: verticalCenter};
-  } else if (idealDirection === "right" && !overflowRight(right + tooltipWidth)) {
-    return {left: right, top: verticalCenter};
-  } else if (
-    idealDirection === "bottom" &&
-    !overflowBottom &&
-    !overflowLeft(horizontalCenter - tooltipWidth) &&
-    !overflowRight(horizontalCenter + tooltipWidth)
-  ) {
-    return {left: horizontalCenter - tooltipWidth / 2, top: bottom};
+  // Fallback to an alternate position if the ideal position overflows
+  if (!overflowBottom) {
+    finalPosition = "bottom";
+    return {left: horizontalCenter - tooltipWidth / 2, top: bottom, finalPosition};
+  } else if (!overflowTop) {
+    finalPosition = "top";
+    return {left: horizontalCenter - tooltipWidth / 2, top, finalPosition};
+  } else if (!overflowLeft) {
+    finalPosition = "left";
+    return {left, top: verticalCenter, finalPosition};
   } else {
-    // At this point, we're either trying to place it above or below, and force it into the
-    // viewport.
-
-    let y = top;
-    if ((idealDirection === "bottom" && !overflowBottom) || overflowTop) {
-      y = bottom;
-    }
-
-    // If it fits in the viewport, center it above the child.
-    if (
-      !overflowLeft(horizontalCenter - tooltipWidth) &&
-      !overflowRight(horizontalCenter + tooltipWidth)
-    ) {
-      return {left: horizontalCenter - tooltipWidth / 2, top: y};
-    }
-    // Failing that, if it fits on the left, put it there, otherwise to the right.
-    // We know it's smaller than the viewport.
-    else if (overflowLeft(horizontalCenter - tooltipWidth)) {
-      return {left: TOOLTIP_OVERFLOW_PADDING, top: y};
-    } else {
-      return {
-        left: Dimensions.get("window").width - TOOLTIP_OVERFLOW_PADDING - tooltipWidth,
-        top: y,
-      };
-    }
+    finalPosition = "right";
+    return {
+      left: Dimensions.get("window").width - TOOLTIP_OVERFLOW_PADDING - tooltipWidth,
+      top: verticalCenter,
+      finalPosition,
+    };
   }
 };
 
-export const Tooltip = (props: TooltipProps) => {
-  const {theme} = useContext(ThemeContext);
-  const {text, children, bgColor, idealDirection} = props;
-  const hoverDelay = 500;
-  const hoverEndDelay = 0;
-  const [visible, setVisible] = React.useState(false);
+const Arrow: FC<{position: TooltipPosition; color: string}> = ({position, color}) => {
+  const getArrowStyle = (): ViewStyle => {
+    const arrowStyles = {
+      top: {
+        borderLeftWidth: 6,
+        borderRightWidth: 6,
+        borderTopWidth: 6,
+        marginBottom: 8,
+        borderLeftColor: "transparent",
+        borderRightColor: "transparent",
+        borderBottomColor: color,
+      },
+      bottom: {
+        borderLeftWidth: 6,
+        borderRightWidth: 6,
+        borderBottomWidth: 6,
+        marginTop: 8,
+        borderLeftColor: "transparent",
+        borderRightColor: "transparent",
+        borderTopColor: color,
+      },
+      left: {
+        borderTopWidth: 6,
+        borderBottomWidth: 6,
+        borderLeftWidth: 6,
+        marginRight: 8,
+        borderTopColor: "transparent",
+        borderBottomColor: "transparent",
+        borderLeftColor: color,
+      },
+      right: {
+        borderTopWidth: 6,
+        borderBottomWidth: 6,
+        borderRightWidth: 6,
+        marginLeft: 8,
+        borderTopColor: "transparent",
+        borderBottomColor: "transparent",
+        borderRightColor: color,
+      },
+    };
+    return {
+      width: 0,
+      height: 0,
+      alignSelf: "center",
+      borderStyle: "solid",
+      ...arrowStyles[position],
+    } as ViewStyle;
+  };
 
-  const [measurement, setMeasurement] = React.useState({
+  const arrowStyle = getArrowStyle();
+  return <View style={arrowStyle} />;
+};
+
+export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includeArrow}) => {
+  const {theme} = useContext(ThemeContext);
+  const hoverDelay = 800;
+  const hoverEndDelay = 0;
+  const [visible, setVisible] = useState(false);
+  const [finalPosition, setFinalPosition] = useState<TooltipPosition>("top");
+
+  const [measurement, setMeasurement] = useState<Measurement>({
     children: {},
     tooltip: {},
     measured: false,
   });
-  const showTooltipTimer = React.useRef<NodeJS.Timeout>();
-  const hideTooltipTimer = React.useRef<NodeJS.Timeout>();
-  const childrenWrapperRef = React.useRef() as React.MutableRefObject<View>;
 
-  const touched = React.useRef(false);
-
+  const showTooltipTimer = useRef<NodeJS.Timeout>();
+  const hideTooltipTimer = useRef<NodeJS.Timeout>();
+  const childrenWrapperRef = useRef<View>(null);
+  const touched = useRef(false);
   const isWeb = Platform.OS === "web";
 
   // If the tooltip is visible, and the user clicks outside of the tooltip, hide it.
-  React.useEffect(() => {
+  useEffect(() => {
     return () => {
       if (showTooltipTimer.current) {
         clearTimeout(showTooltipTimer.current);
       }
-
       if (hideTooltipTimer.current) {
         clearTimeout(hideTooltipTimer.current);
       }
     };
   }, []);
 
-  const handleOnLayout = ({nativeEvent: {layout}}: LayoutChangeEvent) => {
-    if (childrenWrapperRef?.current && !childrenWrapperRef?.current?.measure) {
-      console.error("Tooltip: childrenWrapperRef does not have a measure method.");
-      return;
-    } else if (!childrenWrapperRef?.current) {
-      console.error("Tooltip: childrenWrapperRef is null.");
+  const getArrowContainerStyle = (): ViewStyle => {
+    if (!includeArrow) {
+      return {};
     }
-    childrenWrapperRef?.current?.measure((_x, _y, width, height, pageX, pageY) => {
-      setMeasurement({
-        children: {pageX, pageY, height, width},
-        tooltip: {...layout},
-        measured: true,
-      });
-    });
+    const containerStyles = {
+      top: {
+        bottom: -12,
+        left: "50%",
+        transform: [{translateX: -6}],
+      },
+      bottom: {
+        top: -12,
+        left: "50%",
+        transform: [{translateX: -6}],
+      },
+      left: {
+        right: -12,
+        top: "50%",
+        transform: [{translateY: -6}],
+      },
+      right: {
+        left: -12,
+        top: "50%",
+        transform: [{translateY: -6}],
+      },
+    };
+    return {position: "absolute", ...containerStyles[finalPosition]} as ViewStyle;
   };
 
-  const handleTouchStart = () => {
+  const arrowContainerStyles = getArrowContainerStyle();
+
+  const handleOnLayout = useCallback(
+    ({nativeEvent: {layout}}: LayoutChangeEvent) => {
+      if (childrenWrapperRef?.current && !childrenWrapperRef?.current?.measure) {
+        console.error("Tooltip: childrenWrapperRef does not have a measure method.");
+        return;
+      } else if (!childrenWrapperRef?.current) {
+        console.error("Tooltip: childrenWrapperRef is null.");
+      }
+
+      childrenWrapperRef?.current?.measure((_x, _y, width, height, pageX, pageY) => {
+        setMeasurement({
+          children: {pageX, pageY, height, width},
+          tooltip: {...layout},
+          measured: true,
+        });
+        const position = getTooltipPosition({
+          children: {pageX, pageY, height, width},
+          tooltip: {...layout},
+          measured: true,
+          idealPosition,
+        });
+        if ("finalPosition" in position) {
+          setFinalPosition(position.finalPosition);
+        }
+      });
+    },
+    [setMeasurement, idealPosition]
+  );
+
+  const handleTouchStart = useCallback(() => {
     if (hideTooltipTimer.current) {
       clearTimeout(hideTooltipTimer.current);
     }
@@ -176,9 +264,9 @@ export const Tooltip = (props: TooltipProps) => {
       touched.current = true;
       setVisible(true);
     }, 100);
-  };
+  }, []);
 
-  const handleHoverIn = () => {
+  const handleHoverIn = useCallback(() => {
     if (hideTooltipTimer.current) {
       clearTimeout(hideTooltipTimer.current);
     }
@@ -187,9 +275,9 @@ export const Tooltip = (props: TooltipProps) => {
       touched.current = true;
       setVisible(true);
     }, hoverDelay);
-  };
+  }, [hoverDelay]);
 
-  const handleHoverOut = () => {
+  const handleHoverOut = useCallback(() => {
     touched.current = false;
     if (showTooltipTimer.current) {
       clearTimeout(showTooltipTimer.current);
@@ -197,16 +285,18 @@ export const Tooltip = (props: TooltipProps) => {
 
     hideTooltipTimer.current = setTimeout(() => {
       setVisible(false);
-      setMeasurement({children: {}, tooltip: {}, measured: false});
+      setMeasurement({
+        children: {},
+        tooltip: {},
+        measured: false,
+      });
     }, hoverEndDelay);
-  };
+  }, [hoverEndDelay]);
 
   const mobilePressProps = {
-    onPress: React.useCallback(() => {
-      if (touched.current) {
-        return null;
-      } else {
-        return children.props.onClick?.();
+    onPress: useCallback(() => {
+      if (!touched.current) {
+        children.props.onClick?.();
       }
     }, [children.props]),
   };
@@ -219,48 +309,75 @@ export const Tooltip = (props: TooltipProps) => {
   }
 
   return (
-    <>
-      {visible && (
-        <Portal>
-          <Pressable
-            style={{
-              alignSelf: "flex-start",
-              justifyContent: "center",
-              paddingHorizontal: 16,
-              backgroundColor: theme[bgColor ?? "darkGray"],
-              borderRadius: 16,
-              paddingVertical: 8,
-              display: "flex",
-              flexShrink: 1,
-              maxWidth: Math.max(Dimensions.get("window").width - 32, 300),
-              ...getTooltipPosition({...(measurement as Measurement), idealDirection}),
-              ...(measurement.measured ? {opacity: 1} : {opacity: 0}),
-            }}
-            testID="tooltip-container"
-            onLayout={handleOnLayout}
-            onPress={() => {
-              setVisible(false);
-            }}
-          >
-            <Text color="white">{text}</Text>
-          </Pressable>
-        </Portal>
-      )}
+    <View>
       <View
-        ref={childrenWrapperRef}
-        onPointerEnter={() => {
-          handleHoverIn();
-          children.props.onHoverIn?.();
+        style={{
+          alignSelf: "flex-start",
         }}
-        onPointerLeave={() => {
-          handleHoverOut();
-          children.props.onHoverOut?.();
-        }}
-        onTouchStart={handleTouchStart}
-        {...(!isWeb && mobilePressProps)}
       >
-        {children}
+        {visible && (
+          <Portal>
+            <View
+              style={{
+                position: "absolute",
+                zIndex: 999,
+                ...getTooltipPosition({...(measurement as Measurement), idealPosition}),
+              }}
+              onLayout={handleOnLayout}
+            >
+              {includeArrow && isWeb && (
+                <View style={arrowContainerStyles as ViewStyle}>
+                  <Arrow color={theme.surface.secondaryExtraDark} position={finalPosition} />
+                </View>
+              )}
+              <View
+                style={{
+                  backgroundColor: theme.surface.secondaryExtraDark,
+                  borderRadius: theme.radius.default as any,
+                  paddingVertical: 2,
+                  paddingHorizontal: 8,
+                  maxWidth: 320,
+                  display: "flex",
+                  flexShrink: 1,
+                  opacity: measurement.measured ? 1 : 0,
+                }}
+              >
+                <Pressable
+                  accessibilityHint="Tooltip information"
+                  accessibilityLabel={text}
+                  accessibilityRole="button"
+                  style={{
+                    backgroundColor: theme.surface.secondaryExtraDark,
+                    borderRadius: theme.radius.default as any,
+                  }}
+                  testID="tooltip-container"
+                  onPress={() => setVisible(false)}
+                >
+                  <Text color="inverted" size="sm">
+                    {text}
+                  </Text>
+                </Pressable>
+              </View>
+            </View>
+          </Portal>
+        )}
+        <View
+          ref={childrenWrapperRef}
+          hitSlop={{top: 10, bottom: 10, left: 15, right: 15}}
+          onPointerEnter={() => {
+            handleHoverIn();
+            children.props.onHoverIn?.();
+          }}
+          onPointerLeave={() => {
+            handleHoverOut();
+            children.props.onHoverOut?.();
+          }}
+          onTouchStart={handleTouchStart}
+          {...(!isWeb && mobilePressProps)}
+        >
+          {children}
+        </View>
       </View>
-    </>
+    </View>
   );
 };

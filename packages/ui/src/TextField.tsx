@@ -1,25 +1,16 @@
 import {getCalendars} from "expo-localization";
 import {AsYouType} from "libphonenumber-js";
 import React, {ReactElement, useCallback, useContext, useMemo, useState} from "react";
-import {
-  ActivityIndicator,
-  KeyboardTypeOptions,
-  Platform,
-  Pressable,
-  TextInput,
-  View,
-} from "react-native";
+import {KeyboardTypeOptions, Platform, Pressable, StyleProp, TextInput, View} from "react-native";
 
-import {Box} from "./Box";
-import {TextFieldProps} from "./Common";
+import {TextFieldProps, TextStyleWithOutline} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
 import {printDate, printDateAndTime, printTime} from "./DateUtilities";
 import {DecimalRangeActionSheet} from "./DecimalRangeActionSheet";
+import {FieldError, FieldHelperText, FieldTitle} from "./FieldElements";
 import {HeightActionSheet} from "./HeightActionSheet";
-import {Icon} from "./Icon";
 import {NumberPickerActionSheet} from "./NumberPickerActionSheet";
 import {ThemeContext} from "./Theme";
-import {WithLabel} from "./WithLabel";
 
 const keyboardMap: {[id: string]: string | undefined} = {
   date: "default",
@@ -61,29 +52,25 @@ const textContentMap: {
 };
 
 export const TextField = ({
-  blurOnSubmit = true,
+  title,
+  disabled,
+  helperText,
+  errorText,
   value,
-  height: propsHeight,
   onChange,
+  placeholderText,
+  blurOnSubmit = true,
+  height: propsHeight,
   min,
   max,
   type = "text",
-  searching,
   autoComplete,
-  autoFocus,
-  disabled,
-  errorMessage,
-  errorMessageColor,
   inputRef,
   multiline,
   rows,
-  placeholder,
   grow,
-  label,
-  labelColor,
   returnKeyType,
   onBlur,
-  style,
   onEnter,
   onSubmitEditing,
   testID,
@@ -106,33 +93,23 @@ export const TextField = ({
   const [height, setHeight] = useState(propsHeight || 40);
   const [showDate, setShowDate] = useState(false);
 
-  const renderIcon = () => {
-    if (type !== "search") {
-      return null;
-    }
-    if (searching) {
-      return (
-        <Box marginRight={4}>
-          <ActivityIndicator color={theme.primary} size="small" />
-        </Box>
-      );
+  const borderColor = useMemo(() => {
+    if (disabled) {
+      return theme.border.activeNeutral;
+    } else if (errorText) {
+      return theme.border.error;
     } else {
-      return (
-        <Box marginRight={2}>
-          <Icon name="search" prefix="far" size="md" />
-        </Box>
-      );
+      return focused ? theme.border.focus : theme.border.dark;
     }
-  };
-
-  let borderColor;
-  if (errorMessage) {
-    borderColor = theme.red;
-  } else if (focused) {
-    borderColor = theme.blue;
-  } else {
-    borderColor = theme.gray;
-  }
+  }, [
+    disabled,
+    errorText,
+    focused,
+    theme.border.activeNeutral,
+    theme.border.dark,
+    theme.border.error,
+    theme.border.focus,
+  ]);
 
   const getHeight = useCallback(() => {
     if (grow) {
@@ -140,30 +117,27 @@ export const TextField = ({
     } else if (multiline) {
       return height || "100%";
     } else {
-      return 40;
+      return 20;
     }
   }, [grow, height, multiline]);
 
   const defaultTextInputStyles = useMemo(() => {
-    const defaultStyles = {
+    const defaultStyles: StyleProp<TextStyleWithOutline> = {
       flex: 1,
-      paddingTop: 4,
-      paddingRight: 4,
-      paddingBottom: 4,
-      paddingLeft: 0,
-      height: getHeight(),
       width: "100%",
-      color: theme.darkGray,
-      fontFamily: theme.primaryFont,
-      ...style,
+      height: getHeight(),
+      color: theme.text.primary,
+      fontFamily: theme.font.primary,
+      fontSize: 16,
+      paddingVertical: 0,
     };
 
     if (Platform.OS === "web") {
-      defaultStyles.outline = 0;
+      defaultStyles.outline = "none";
     }
 
     return defaultStyles;
-  }, [getHeight, style, theme.darkGray, theme.primaryFont]);
+  }, [getHeight, theme.text.primary, theme.font.primary]);
 
   const isHandledByModal = [
     "date",
@@ -180,11 +154,6 @@ export const TextField = ({
 
   const keyboardType = keyboardMap[type];
   const textContentType = textContentMap[type || "text"];
-
-  const withLabelProps = {
-    label,
-    labelColor,
-  };
 
   const onTap = useCallback((): void => {
     if (disabled) {
@@ -237,119 +206,114 @@ export const TextField = ({
   const Wrapper = isHandledByModal ? Pressable : View;
 
   return (
-    <>
-      <WithLabel
-        label={errorMessage}
-        labelColor={errorMessageColor || "red"}
-        labelPlacement="after"
-        labelSize="sm"
+    <View>
+      <Wrapper
+        style={{
+          flexDirection: "column",
+          // minHeight: getHeight(),
+          width: "100%",
+        }}
+        onPress={() => {
+          // This runs on web
+          onTap();
+        }}
+        onTouchStart={() => {
+          // This runs on mobile
+          onTap();
+        }}
       >
-        <WithLabel {...withLabelProps}>
-          <Wrapper
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              // height: multiline || grow ? undefined : 40,
-              minHeight: getHeight(),
-              width: "100%",
-              // Add padding so the border doesn't mess up layouts
-              paddingHorizontal: focused ? 10 : 14,
-              paddingVertical: focused ? 0 : 4,
-              borderColor,
-              borderWidth: focused ? 5 : 1,
-              borderRadius: 16,
-              backgroundColor: disabled ? theme.gray : theme.white,
-              overflow: "hidden",
+        {title && <FieldTitle text={title} />}
+        {Boolean(errorText) && errorText && <FieldError text={errorText} />}
+        <Wrapper
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: disabled ? theme.surface.neutralLight : theme.surface.base,
+            borderColor,
+            borderWidth: focused ? 3 : 1,
+            paddingHorizontal: focused ? 10 : 12,
+            paddingVertical: focused ? 6 : 8,
+            borderRadius: 4,
+            overflow: "hidden",
+          }}
+        >
+          <TextInput
+            ref={(ref) => {
+              if (inputRef) {
+                inputRef(ref);
+              }
             }}
-            onPress={() => {
-              // This runs on web
-              onTap();
+            accessibilityHint="Enter text here"
+            accessibilityLabel="Text input field"
+            autoCapitalize={type === "text" ? "sentences" : "none"}
+            autoCorrect={shouldAutocorrect}
+            blurOnSubmit={blurOnSubmit}
+            editable={isEditable}
+            keyboardType={keyboardType as KeyboardTypeOptions}
+            multiline={multiline}
+            numberOfLines={rows || 4}
+            placeholder={placeholderText}
+            placeholderTextColor={theme.text.secondaryLight}
+            returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
+            secureTextEntry={type === "password"}
+            style={defaultTextInputStyles}
+            testID={testID}
+            textContentType={textContentType}
+            underlineColorAndroid="transparent"
+            value={displayValue}
+            onBlur={() => {
+              if (disabled) return;
+              if (!isHandledByModal) {
+                setFocused(false);
+              }
+              if (onBlur) {
+                onBlur({value: value ?? ""});
+              }
             }}
-            onTouchStart={() => {
-              // This runs on mobile
-              onTap();
-            }}
-          >
-            {renderIcon()}
-            <TextInput
-              ref={(ref) => {
-                if (inputRef) {
-                  inputRef(ref);
-                }
-              }}
-              autoCapitalize={type === "text" ? "sentences" : "none"}
-              autoCorrect={shouldAutocorrect}
-              autoFocus={autoFocus}
-              blurOnSubmit={blurOnSubmit}
-              editable={isEditable}
-              keyboardType={keyboardType as KeyboardTypeOptions}
-              multiline={multiline}
-              numberOfLines={rows || 4}
-              placeholder={placeholder}
-              placeholderTextColor={theme.gray}
-              returnKeyType={type === "number" || type === "decimal" ? "done" : returnKeyType}
-              secureTextEntry={type === "password"}
-              style={defaultTextInputStyles}
-              testID={testID}
-              textContentType={textContentType}
-              underlineColorAndroid="transparent"
-              value={displayValue}
-              onBlur={() => {
-                if (!isHandledByModal) {
-                  setFocused(false);
-                }
-                if (onBlur) {
-                  onBlur({value: value ?? ""});
-                }
-                // if (type === "date") {
-                //   actionSheetRef?.current?.hide();
-                // }
-              }}
-              onChangeText={(text) => {
-                if (!onChange) {
-                  return;
-                }
-                if (type === "phoneNumber") {
-                  const formattedPhoneNumber = new AsYouType("US").input(text);
-                  // another workaround for the same issue as above with backspacing phone numbers
-                  if (formattedPhoneNumber === value) {
-                    onChange({value: text});
-                  } else {
-                    onChange({value: formattedPhoneNumber});
-                  }
-                } else if (type === "number") {
-                  text = text.replace(/[^0-9]/g, "");
-                  onChange({value: !isNaN(parseInt(text)) ? parseInt(text).toString() : ""});
-                } else if (type === "date" || type === "datetime" || type === "time") {
-                  // Do nothing, this is handled by the date time action sheet
-                } else {
+            onChangeText={(text) => {
+              if (!onChange) {
+                return;
+              }
+              if (type === "phoneNumber") {
+                const formattedPhoneNumber = new AsYouType("US").input(text);
+                // another workaround for the same issue as above with backspacing phone numbers
+                if (formattedPhoneNumber === value) {
                   onChange({value: text});
+                } else {
+                  onChange({value: formattedPhoneNumber});
                 }
-              }}
-              onContentSizeChange={(event) => {
-                if (!grow) {
-                  return;
-                }
-                setHeight(event.nativeEvent.contentSize.height);
-              }}
-              onFocus={() => {
-                if (!isHandledByModal) {
-                  setFocused(true);
-                }
-              }}
-              onSubmitEditing={() => {
-                if (onEnter) {
-                  onEnter();
-                }
-                if (onSubmitEditing) {
-                  onSubmitEditing();
-                }
-              }}
-            />
-          </Wrapper>
-        </WithLabel>
-      </WithLabel>
+              } else if (type === "number") {
+                text = text.replace(/[^0-9]/g, "");
+                onChange({value: !isNaN(parseInt(text)) ? parseInt(text).toString() : ""});
+              } else if (type === "date" || type === "datetime" || type === "time") {
+                // Do nothing, this is handled by the date time action sheet
+              } else {
+                onChange({value: text});
+              }
+            }}
+            onContentSizeChange={(event) => {
+              if (!grow) {
+                return;
+              }
+              setHeight(event.nativeEvent.contentSize.height);
+            }}
+            onFocus={() => {
+              if (!isHandledByModal) {
+                setFocused(true);
+              }
+            }}
+            onSubmitEditing={() => {
+              if (onEnter) {
+                onEnter();
+              }
+              if (onSubmitEditing) {
+                onSubmitEditing();
+              }
+            }}
+          />
+        </Wrapper>
+        {helperText && <FieldHelperText text={helperText} />}
+      </Wrapper>
       {(type === "date" || type === "time" || type === "datetime") && (
         <DateTimeActionSheet
           actionSheetRef={dateActionSheetRef}
@@ -365,19 +329,6 @@ export const TextField = ({
           onDismiss={() => setShowDate(false)}
         />
       )}
-      {/* {type === "date" && showDate && ( */}
-      {/*  <Box maxWidth={300}> */}
-      {/*    /!* TODO: Calendar should disappear when you click away from it. *!/ */}
-      {/*    <Calendar */}
-      {/*      customHeader={CalendarHeader} */}
-      {/*      initialDate={value} */}
-      {/*      onDayPress={(day: any) => { */}
-      {/*        onChange({value: day.dateString}); */}
-      {/*        setShowDate(false); */}
-      {/*      }} */}
-      {/*    /> */}
-      {/*  </Box> */}
-      {/* )} */}
       {type === "numberRange" && value && (
         <NumberPickerActionSheet
           actionSheetRef={numberRangeActionSheetRef}
@@ -405,6 +356,6 @@ export const TextField = ({
           }}
         />
       )}
-    </>
+    </View>
   );
 };

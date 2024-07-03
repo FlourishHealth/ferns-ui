@@ -2,8 +2,7 @@ import React, {ReactElement, useEffect, useMemo, useState} from "react";
 
 import {Box} from "./Box";
 import {CustomSelectProps} from "./Common";
-import {SelectList} from "./SelectList";
-import {TextField} from "./TextField";
+import {Text} from "./Text";
 
 export const CustomSelect = ({
   value,
@@ -56,7 +55,10 @@ export const CustomSelect = ({
 
   return (
     <>
-      <SelectList
+      <Box>
+        <Text>Custom Select</Text>
+      </Box>
+      {/* <SelectList
         id="providedOptions"
         options={[...options, {label: "Custom", value: "custom"}]}
         placeholder={placeholder}
@@ -68,13 +70,13 @@ export const CustomSelect = ({
           <TextField
             disabled={disabled}
             id="customOptions"
-            placeholder={placeholder}
+            placeholderText={placeholder}
             type="text"
             value={value}
             onChange={(result) => onChange(result.value)}
           />
         </Box>
-      )}
+      )} */}
     </>
   );
 };
