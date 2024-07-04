@@ -398,10 +398,9 @@ export type TextFieldType =
   | "url"
   | "username";
 
-export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | number;
+export type IconSize = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 
 export const iconSizeToNumber = (size?: IconSize) => {
-  if (typeof size === "number") return size;
   return {
     xs: 8,
     sm: 12,
@@ -1259,7 +1258,7 @@ export interface AvatarProps {
   /**
    * The status of the user to display with the avatar.
    */
-  status: AvatarStatus;
+  status?: AvatarStatus;
   /**
    * If true, the status will have a "Z" to indicate the user has snoozed notifications.
    */

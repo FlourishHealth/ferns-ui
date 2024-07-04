@@ -110,54 +110,6 @@ export const AvatarOutlines = () => {
     </Box>
   );
 };
-export const AvatarImages = () => {
-  return (
-    <Box color="neutral" direction="column" display="flex">
-      <Text>XS</Text>
-      <Avatar
-        name="Tony Stark"
-        size="xs"
-        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-        status="online"
-      />
-      <Text>SM</Text>
-      <Avatar
-        name="Tony Stark"
-        size="sm"
-        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-        status="online"
-      />
-      <Text>MD</Text>
-      <Avatar
-        name="Tony Stark"
-        size="md"
-        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-        status="online"
-      />
-      <Text>LG</Text>
-      <Avatar
-        name="Tony Stark"
-        size="lg"
-        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-        status="online"
-      />
-      <Text>XL</Text>
-      <Avatar
-        name="Tony Stark"
-        size="xl"
-        src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
-        status="online"
-      />
-    </Box>
-  );
-};
-export const AvatarImagePicker = () => {
-  return (
-    <Box direction="column" display="flex">
-      <AvatarImage />
-    </Box>
-  );
-};
 
 export const AvatarStatusDemo = () => {
   const renderIcon = (
@@ -187,26 +139,6 @@ export const AvatarStatusDemo = () => {
 };
 
 export const AvatarImage = (): ReactElement => {
-  const [xsImage, setXSImage] = useState<AvatarImagePickerEvent>({
-    uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
-    height: 0,
-    width: 0,
-  });
-  const [smImage, setSMImage] = useState<AvatarImagePickerEvent>({
-    uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
-    height: 0,
-    width: 0,
-  });
-  const [mdImage, setMDImage] = useState<AvatarImagePickerEvent>({
-    uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
-    height: 0,
-    width: 0,
-  });
-  const [lgImage, setLGImage] = useState<AvatarImagePickerEvent>({
-    uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
-    height: 0,
-    width: 0,
-  });
   const [xlImage, setXLImage] = useState<AvatarImagePickerEvent>({
     uri: "https://i.ibb.co/ZfCZrY8/keerthi.jpg",
     height: 0,
@@ -215,54 +147,7 @@ export const AvatarImage = (): ReactElement => {
 
   return (
     <Box scroll>
-      <Heading>Edit Image</Heading>
-      <Text>Width: {xsImage.width}</Text>
-      <Text>Height: {xsImage.height}</Text>
-      <Avatar
-        name="Tony Stark"
-        size="xs"
-        src={xsImage.uri}
-        status="imagePicker"
-        onChange={(image) => setXSImage(image)}
-      />
-
-      <Heading>Edit Image</Heading>
-      <Text>Width: {smImage.width}</Text>
-      <Text>Height: {smImage.height}</Text>
-
-      <Avatar
-        name="Tony Stark"
-        size="sm"
-        src={smImage.uri}
-        status="imagePicker"
-        onChange={(image) => setSMImage(image)}
-      />
-
-      <Heading>Edit Image</Heading>
-      <Text>Width: {mdImage.width}</Text>
-      <Text>Height: {mdImage.height}</Text>
-
-      <Avatar
-        name="Tony Stark"
-        size="md"
-        src={mdImage.uri}
-        status="imagePicker"
-        onChange={(image) => setMDImage(image)}
-      />
-
-      <Heading>Edit Image</Heading>
-      <Text>Width: {lgImage.width}</Text>
-      <Text>Height: {lgImage.height}</Text>
-
-      <Avatar
-        name="Tony Stark"
-        size="lg"
-        src={lgImage.uri}
-        status="imagePicker"
-        onChange={(image) => setLGImage(image)}
-      />
-
-      <Heading>Edit Image</Heading>
+      <Heading>Image Picker is only available on XL Avatar</Heading>
       <Text>Width: {xlImage.width}</Text>
       <Text>Height: {xlImage.height}</Text>
 
@@ -270,7 +155,7 @@ export const AvatarImage = (): ReactElement => {
         name="Tony Stark"
         size="xl"
         src={xlImage.uri}
-        status="outOfOffice"
+        status="imagePicker"
         onChange={(image) => setXLImage(image)}
       />
     </Box>

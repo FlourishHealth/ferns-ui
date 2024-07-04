@@ -2,8 +2,8 @@
 import {ImageResult, manipulateAsync, SaveFormat} from "expo-image-manipulator";
 import {launchImageLibraryAsync, MediaTypeOptions} from "expo-image-picker";
 import {LinearGradient} from "expo-linear-gradient";
-import React, {useContext, useEffect, useMemo, useState} from "react";
-import {Image, Platform, Pressable, Text, View} from "react-native";
+import React, {FC, useContext, useEffect, useState} from "react";
+import {Image, Pressable, Text, View} from "react-native";
 
 import {AvatarProps, CustomSvgProps} from "./Common";
 import {Icon} from "./Icon";
@@ -28,14 +28,6 @@ const initialsFontSizes = {
   xl: 60,
 };
 
-const iconSizes = {
-  xs: 10,
-  sm: 12,
-  md: 16,
-  lg: 20,
-  xl: 30,
-};
-
 const iconSizeScale = {
   xs: 0.5,
   sm: 0.7,
@@ -52,20 +44,17 @@ const sizeIconPadding = {
   xl: 0,
 };
 
-// TODO: Avatar probably makes more sense as a custom set of views rather than relying on
-// Box, etc. It's a pretty unique component with unique colors and borders.
-export const Avatar = ({
+export const Avatar: FC<AvatarProps> = ({
   name,
   hasBorder = true,
   size = "md",
   src,
   onChange,
-  status = "online",
+  status,
   doNotDisturb = false,
-}: AvatarProps): React.ReactElement => {
+}) => {
   const {theme} = useContext(ThemeContext);
   const [isImageLoaded, setIsImageLoaded] = useState(true);
-  const [hovered, setHovered] = useState(false);
   const [imgSrc, setImgSrc] = useState(src ?? undefined);
   const avatarImageFormat = SaveFormat.PNG;
   const avatarImageDiameter = sizes[size];
@@ -134,13 +123,6 @@ export const Avatar = ({
     );
   };
 
-  const shouldShowEditIcon = useMemo(() => {
-    if (Platform.OS === "web") {
-      return (showEditIcon && !src) || (showEditIcon && hovered);
-    }
-    return showEditIcon;
-  }, [showEditIcon, src, hovered]);
-
   const renderEditIcon = () => {
     if (size !== "xl") {
       console.error(`Avatar: "imagePicker" status is only supported for size "xl"`);
@@ -160,11 +142,9 @@ export const Avatar = ({
           width: avatarImageDiameter,
           zIndex: 5,
         }}
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
         onPress={pickImage}
       >
-        <Icon color="primary" iconName="pen-to-square" size={iconSizes[size]} type="regular" />
+        <Icon color="primary" iconName="pen-to-square" size="2xl" type="regular" />
         <Text
           style={{
             textAlign: "center",
@@ -180,7 +160,7 @@ export const Avatar = ({
   };
 
   const renderStatusIcon = () => {
-    if (!status || status === "imagePicker") {
+    if (!status || showEditIcon) {
       return null;
     }
     const {icon} = statusIcons[status];
@@ -208,18 +188,20 @@ export const Avatar = ({
   };
 
   let avatar = (
-    <View style={{height: avatarImageDiameter, position: "relative", width: avatarImageDiameter}}>
+    <View
+      accessibilityHint={showEditIcon ? "Opens file explorer" : "Avatar image"}
+      accessibilityLabel={`${name}'s avatar`}
+      accessibilityRole="image"
+      style={{height: avatarImageDiameter, position: "relative", width: avatarImageDiameter}}
+    >
       <Pressable
         accessibilityRole="button"
         style={{
           overflow: "hidden",
           position: "relative",
           borderRadius: 1,
-          height: "auto",
-          width: "auto",
+          cursor: showEditIcon ? "pointer" : "auto",
         }}
-        onPointerEnter={() => setHovered(true)}
-        onPointerLeave={() => setHovered(false)}
       >
         {src && isImageLoaded ? (
           // TODO: Make our Image component rounding work so that we can use it for Avatar.
@@ -254,7 +236,7 @@ export const Avatar = ({
               style={{
                 fontWeight: 500,
                 fontSize: initialsFontSizes[size],
-                color: status === "imagePicker" ? theme.text.inverted : theme.text.primary,
+                color: showEditIcon ? theme.text.inverted : theme.text.primary,
               }}
             >
               {computedInitials}
@@ -263,7 +245,7 @@ export const Avatar = ({
         )}
       </Pressable>
       {/* Needs to come after the image so it renders on top. */}
-      {shouldShowEditIcon && renderEditIcon()}
+      {showEditIcon && renderEditIcon()}
     </View>
   );
 

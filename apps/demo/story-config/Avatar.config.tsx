@@ -1,5 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {AvatarDemo, AvatarInitials, AvatarOutlines, AvatarSizes} from "@stories";
+import {AvatarDemo, AvatarImage, AvatarInitials, AvatarOutlines, AvatarSizes} from "@stories";
 import {Avatar} from "ferns-ui";
 
 export const AvatarConfiguration: DemoConfiguration = {
@@ -60,6 +60,7 @@ export const AvatarConfiguration: DemoConfiguration = {
       status: {
         type: "select",
         options: [
+          {label: "", value: ""},
           {label: "online", value: "online"},
           {label: "offline", value: "offline"},
           {label: "outOfOffice", value: "outOfOffice"},
@@ -80,5 +81,6 @@ export const AvatarConfiguration: DemoConfiguration = {
     },
     Sizes: {render: () => AvatarSizes()},
     Outlines: {render: () => AvatarOutlines()},
+    ImagePicker: {render: () => AvatarImage()},
   },
 };
