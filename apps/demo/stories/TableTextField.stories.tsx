@@ -1,38 +1,31 @@
-// import {DemoConfiguration} from "@config";
-// import {TableTextField} from "ferns-ui";
-// import React from "react";
+import {Box, Heading, TableTextField, TableTextFieldProps} from "ferns-ui";
+import React from "react";
 
-// import {DefaultDemo} from "./DefaultDemo";
+export const TableTextFieldDemo = (props: Partial<TableTextFieldProps>) => {
+  return (
+    <Box alignItems="center" justifyContent="center">
+      <TableTextField value="Table Text" {...props} />
+    </Box>
+  );
+};
 
-// export const TableTextFieldConfiguration: DemoConfiguration = {
-//   name: "Table text field",
-//   component: TableTextField, // Replace with actual component reference
-//   related: ["Table"],
-//   description: "This component adds a single line of text to the table.",
-//   a11yNotes: [],
-//   category: "Component",
-//   status: {
-//     documentation: "ready",
-//     figma: "ready",
-//     figmaLink:
-//       "https://www.figma.com/file/ykXj5qjjtFjOYkAvTasu9r/Flourish-Health-Design-System?type=design&node-id=656%3A24141&mode=design&t=IZ8oGBzUmBzUtZMr-1",
-//     ios: "ready",
-//     android: "ready",
-//     web: "ready",
-//   },
-//   additionalDocumentation: [],
-//   interfaceName: "TableTextFieldProps",
-//   usage: {
-//     do: [
-//       "Use the single line variant for short strings. For example, a name.",
-//       "Use the multi-line variant for longer strings. For example, a few sentences.",
-//     ],
-//     doNot: [
-//       "Do not populate placeholder text if no text is entered. Instead, leave the field empty.",
-//     ],
-//   },
-//   props: {},
-//   demo: () => <DefaultDemo />,
-//   demoOptions: {},
-//   stories: {},
-// };
+export const TableTextFieldVariants = () => {
+  return (
+    <Box alignContent="center" justifyContent="center">
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading> Default</Heading>
+        </Box>
+        <TableTextField value="sm max width" />
+      </Box>
+
+      <Box padding={2}>
+        <Box marginBottom={1}>
+          <Heading> Variant multi</Heading>
+        </Box>
+        <TableTextField value="multi" variant="multi" />
+        <TableTextField value="Has a larger max width meant to stay in single line. Will hold a lot of lorem ipsum" />
+      </Box>
+    </Box>
+  );
+};

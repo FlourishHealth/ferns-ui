@@ -4,6 +4,7 @@ import {Box} from "../Box";
 import {TableRowProps} from "../Common";
 import {IconButton} from "../IconButton";
 import {useTableContext} from "./tableContext";
+import { TableIconButton } from "./TableIconButton";
 
 /**
  * Use TableRow to define a row in Table.

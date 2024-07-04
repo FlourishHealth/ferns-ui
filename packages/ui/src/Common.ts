@@ -2269,3 +2269,22 @@ export interface TableBadgeProps {
    */
   value: string;
 }
+
+export interface TableTextFieldProps {
+  /**
+   * Whether the text field is in editing mode.
+   */
+  isEditing?: boolean;
+  /**
+   * The text to display in the text field.
+   */
+  value: string;
+  /**
+   * The variant of the text field.
+   */
+  variant?: "multi";
+  /**
+   * Callback to save the text field value.
+   */
+  onSave?: () => void | Promise<void>;
+}

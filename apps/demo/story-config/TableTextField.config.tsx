@@ -1,7 +1,6 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
+import {TableTextFieldDemo, TableTextFieldVariants} from "@stories";
 import {TableTextField} from "ferns-ui";
-import React from "react";
 
 export const TableTextFieldConfiguration: DemoConfiguration = {
   name: "Table text field",
@@ -31,7 +30,11 @@ export const TableTextFieldConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <DefaultDemo />,
+  demo: TableTextFieldDemo,
   demoOptions: {},
-  stories: {},
+  stories: {
+    Variants: {
+      render: TableTextFieldVariants,
+    },
+  },
 };
