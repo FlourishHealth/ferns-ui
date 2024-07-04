@@ -236,7 +236,7 @@ export const Avatar: FC<AvatarProps> = ({
               style={{
                 fontWeight: 500,
                 fontSize: initialsFontSizes[size],
-                color: showEditIcon ? theme.text.inverted : theme.text.primary,
+                color: theme.text.inverted,
               }}
             >
               {computedInitials}
