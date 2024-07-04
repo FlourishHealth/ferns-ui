@@ -1314,16 +1314,41 @@ export interface AvatarProps {
 }
 
 export interface BadgeProps {
+  /**
+   * The name of the icon to display in the badge.
+   */
   iconName?: IconName;
-  // The text to display inside the badge.
-  value?: number | string;
-  // Position relative to the text. Top should only be used with headings.
-  status?: "info" | "error" | "warning" | "success" | "neutral"; // default "info
-  secondary?: boolean;
-  variant?: "iconOnly" | "numberOnly"; // no default
+
   // TODO: improve type discrimination
   // used for numberOnly variant to display "${maxValue}+" when value is greater than max
+
+  /**
+   * The maximum value to display. Used for "numberOnly" variant to display "${maxValue}+" when
+   * value is greater than max.
+   */
   maxValue?: number;
+
+  /**
+   * If true, the badge will have a secondary style.
+   * @default false
+   */
+  secondary?: boolean;
+
+  /**
+   * The status of the badge. Determines its color and appearance.
+   * @default "info"
+   */
+  status?: "info" | "error" | "warning" | "success" | "neutral";
+
+  /**
+   * The text or number to display inside the badge.
+   */
+  value?: number | string;
+
+  /**
+   * The variant of the badge. Determines if it displays an icon or number only.
+   */
+  variant?: "iconOnly" | "numberOnly";
 }
 
 export interface BannerProps {
@@ -2209,4 +2234,38 @@ export interface SelectFieldProps {
    * The function to call when the selected value changes.
    */
   onChange: (value: string | undefined) => void;
+}
+
+export interface TableBadgeProps {
+  /**
+   * The icon name of the badge.
+   */
+  badgeIconName?: BadgeProps["iconName"];
+
+  /**
+   * The status of the badge.
+   * @default "info"
+   */
+  badgeStatus?: BadgeProps["status"];
+
+  /**
+   * If true, the component is in editing mode.
+   * @default false
+   */
+  isEditing?: boolean;
+
+  /**
+   * The options available for editing the badge.
+   */
+  editingOptions?: FieldOptions;
+
+  /**
+   * The function to call when the badge status is saved.
+   */
+  onSave?: (newStatus: string | undefined) => void | Promise<void>;
+
+  /**
+   * The value of the badge.
+   */
+  value: string;
 }

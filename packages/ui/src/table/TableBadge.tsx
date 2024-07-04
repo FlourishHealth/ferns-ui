@@ -2,7 +2,7 @@ import React, {forwardRef, useContext, useImperativeHandle, useState} from "reac
 import {View, ViewStyle} from "react-native";
 
 import {Badge} from "../Badge";
-import {BadgeProps, FieldOptions} from "../Common";
+import {TableBadgeProps} from "../Common";
 import {SelectField} from "../SelectField";
 import {ThemeContext} from "../Theme";
 
@@ -10,16 +10,7 @@ export interface TableBadgeHandles {
   handleSave: () => void | Promise<void>;
 }
 
-// TODO: Support error state
-export interface TableBadgeProps {
-  badgeStatus?: BadgeProps["status"];
-  badgeIconName?: BadgeProps["iconName"];
-  isEditing?: boolean;
-  editingOptions?: FieldOptions;
-  value: string;
-  onSave?: (newStatus: string | undefined) => void | Promise<void>;
-}
-
+// TODO: Support error state in TableBadge
 export const TableBadge = forwardRef<TableBadgeHandles, TableBadgeProps>(
   (
     {value, badgeStatus = "info", badgeIconName, isEditing = false, editingOptions, onSave},
