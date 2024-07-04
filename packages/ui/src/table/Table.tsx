@@ -1,5 +1,5 @@
 import React, {Children, ReactElement, useEffect} from "react";
-import {ScrollView} from "react-native";
+import {ScrollView, StyleSheet, View} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 import {Box} from "../Box";
@@ -67,21 +67,32 @@ export const Table = ({
       stickyHeader={stickyHeader}
     >
       <>
-        <Box flex="grow" maxWidth="100%" width={width}>
+        <Box flex="grow" maxWidth="100%" style={styles.tableContainer} width={width}>
           <ScrollView horizontal style={{width, maxWidth: "100%"}}>
-            <ScrollView
-              stickyHeaderIndices={stickyHeader ? [0] : undefined}
-              style={{width, maxWidth: "100%", flex: 1, maxHeight}}
-            >
-              {Children.map(
-                children,
-                (child, index) =>
-                  Boolean(child) &&
-                  React.cloneElement(child as any, {
-                    color: index % 2 === 1 && alternateRowBackground ? "lightGray" : "white",
-                  })
+            <View style={{width, maxWidth: "100%", flex: 1, maxHeight}}>
+              {stickyHeader && (
+                <View style={styles.stickyHeader}>
+                  {Children.map(children, (child, index) =>
+                    index === 0
+                      ? React.cloneElement(child as any, {
+                          color: index % 2 === 1 && alternateRowBackground ? "lightGray" : "white",
+                        })
+                      : null
+                  )}
+                </View>
               )}
-            </ScrollView>
+              <ScrollView style={styles.scrollView}>
+                {Children.map(
+                  children,
+                  (child, index) =>
+                    index > 0 &&
+                    Boolean(child) &&
+                    React.cloneElement(child as any, {
+                      color: index % 2 === 1 && alternateRowBackground ? "lightGray" : "white",
+                    })
+                )}
+              </ScrollView>
+            </View>
           </ScrollView>
         </Box>
         {Boolean(shouldPaginate) && (
@@ -99,3 +110,18 @@ export const Table = ({
     </TableContextProvider>
   );
 };
+
+const styles = StyleSheet.create({
+  tableContainer: {
+    position: "relative",
+  },
+  stickyHeader: {
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 1,
+  },
+  scrollView: {
+    marginTop: 2,
+  },
+});

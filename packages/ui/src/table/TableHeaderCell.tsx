@@ -1,9 +1,11 @@
+// TableHeaderCell.tsx
 import React, {ReactElement} from "react";
 
 import {Box} from "../Box";
 import {TableHeaderCellProps} from "../Common";
 import {IconButton} from "../IconButton";
 import {useTableContext} from "./tableContext";
+import {TableTitle} from "./TableTitle";
 
 /**
  * Use TableHeaderCell to define a header cell in Table.
@@ -47,10 +49,11 @@ export const TableHeaderCell = ({
         width={width}
         onClick={onClick}
       >
-        {children}
+        <TableTitle title={children as unknown as string} />
         {Boolean(sort) && (
           <Box paddingX={2}>
             <IconButton
+              accessibilityHint="press to change sorting alphabetical order"
               accessibilityLabel="sort"
               iconName={sort === "asc" ? "arrow-down" : "arrow-up"}
               onClick={() => {}}
@@ -62,7 +65,7 @@ export const TableHeaderCell = ({
   } else {
     return (
       <Box flex="grow" justifyContent="center" marginBottom={2} marginTop={2} width={width}>
-        {children}
+        <TableTitle title={children as unknown as string} />
       </Box>
     );
   }

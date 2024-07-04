@@ -4,7 +4,6 @@ import {Box} from "../Box";
 import {TableRowProps} from "../Common";
 import {IconButton} from "../IconButton";
 import {useTableContext} from "./tableContext";
-import { TableIconButton } from "./TableIconButton";
 
 /**
  * Use TableRow to define a row in Table.
@@ -40,6 +39,7 @@ export const TableRow = ({
         {Boolean(drawerContents) && (
           <Box width={30}>
             <IconButton
+              accessibilityHint="press to expand"
               accessibilityLabel="expand"
               iconName={isExpanded ? "chevron-up" : "chevron-down"}
               onClick={() => {
