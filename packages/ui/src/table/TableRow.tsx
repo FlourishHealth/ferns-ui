@@ -1,9 +1,22 @@
 import React, {Children, useRef} from "react";
 
 import {Box} from "../Box";
-import {TableRowProps} from "../Common";
+import {TableElementTypes, TableRowProps} from "../Common";
 import {IconButton} from "../IconButton";
+import {TableBadge} from "./TableBadge";
+import {TableBoolean} from "./TableBoolean";
 import {useTableContext} from "./tableContext";
+import {TableDate} from "./TableDate";
+import {TableIconButton} from "./TableIconButton";
+import {TableTextField} from "./TableTextField";
+
+const elementMap: Record<TableElementTypes, React.ElementType> = {
+  badge: TableBadge,
+  boolean: TableBoolean,
+  date: TableDate,
+  textField: TableTextField,
+  iconButton: TableIconButton,
+};
 
 /**
  * Use TableRow to define a row in Table.
@@ -24,9 +37,10 @@ export const TableRow = ({
       console.warn(`No width defined for column ${index} in TableRow`);
       return null;
     }
+    const Element = elementMap[columns[index].type];
     return (
-      <Box paddingX={2} width={columns[index]}>
-        {child}
+      <Box paddingX={2} width={columns[index].width}>
+        <Element {...columns[index].props}>{child}</Element>
       </Box>
     );
   };

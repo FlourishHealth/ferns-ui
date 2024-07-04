@@ -132,3 +132,29 @@ export const SortableExpandableTableStory = (): React.ReactElement => {
     </Box>
   );
 };
+
+// example:
+// <Table
+//   columns={[
+//     { type: "badge", width: 100, props: { badgeStatus: "info", badgeIconName: "info" } },
+//     { type: "boolean", width: 100, props: {} },
+//     { type: "date", width: 150, props: {} },
+//     { type: "textField", width: 200, props: {} },
+//     { type: "iconButton", width: 50, props: { tableIconButtonName: "edit" } },
+//   ]}
+// >
+//   <TableRow>
+//     {"Badge Value"}
+//     {"true"}
+//     {"2023-07-01"}
+//     {"Text Value"}
+//     {null}
+//   </TableRow>
+//   <TableRow>
+//     {"Another Badge"}
+//     {"false"}
+//     {"2023-08-01"}
+//     {"Another Text"}
+//     {null}
+//   </TableRow>
+// </Table>

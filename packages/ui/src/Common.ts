@@ -1790,7 +1790,7 @@ export interface TableProps {
   //   lg: 233,
   //   xl: 302,
   // };
-  columns: Array<number | string>;
+  columns: TableColumn[];
   /**
    * Specify a border width for Table: "sm" is 1px.
    */
@@ -1885,7 +1885,10 @@ export type TableFilters = Record<string, string[]>;
 
 export type TableSearch = {search: string; field: string};
 
-export interface TableContextType {
+export interface TableContextType {}
+
+export interface TableContextProviderProps extends TableContextType {
+  children: React.ReactElement;
   columns: Array<number | string>;
   hasDrawerContents: boolean;
   sortColumn?: ColumnSortInterface | undefined;
@@ -1894,10 +1897,6 @@ export interface TableContextType {
   borderStyle?: "sm" | "none";
   alternateRowBackground?: boolean;
   page?: number;
-}
-
-export interface TableContextProviderProps extends TableContextType {
-  children: React.ReactElement;
 }
 
 export interface TextProps {
@@ -2287,4 +2286,10 @@ export interface TableTextFieldProps {
    * Callback to save the text field value.
    */
   onSave?: () => void | Promise<void>;
+}
+
+export interface TableColumn {
+  type: TableElementTypes;
+  width: number | string;
+  props?: any;
 }
