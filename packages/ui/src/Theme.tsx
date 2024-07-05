@@ -86,13 +86,6 @@ const defaultPrimitives = {
   radiusXl: 32,
   radius2xl: 128,
   radius3xl: 360,
-
-  tableMaxWidthS: 60,
-  tableMaxWidthM: 124,
-  tableMaxWidthL: 200,
-  tableMaxWidthXL: 284,
-  tableHorizontalPadding: 12,
-  tableVerticalPadding: 16,
 };
 
 const defaultTheme: FernsTheme = {

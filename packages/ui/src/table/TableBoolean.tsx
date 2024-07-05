@@ -20,7 +20,7 @@ export const TableBoolean = forwardRef<TableBooleanHandles, TableBooleanProps>(
     useImperativeHandle(ref, () => ({
       handleSave: () => {
         if (checked !== value) {
-          onSave();
+          onSave?.();
         }
       },
     }));
@@ -40,7 +40,6 @@ export const TableBoolean = forwardRef<TableBooleanHandles, TableBooleanProps>(
             {
               alignItems: "center",
               justifyContent: "center",
-              maxWidth: theme.table["mw-m"],
             } as ViewStyle
           }
           onPress={handlePress}
@@ -51,13 +50,11 @@ export const TableBoolean = forwardRef<TableBooleanHandles, TableBooleanProps>(
     } else {
       return (
         <View
-          style={
-            {
-              alignItems: "center",
-              justifyContent: "center",
-              maxWidth: theme.table["mw-m"],
-            } as ViewStyle
-          }
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}
         >
           <View
             accessibilityHint={value ? "Checked icon" : "Unchecked icon"}

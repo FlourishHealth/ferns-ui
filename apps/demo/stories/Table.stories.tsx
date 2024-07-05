@@ -1,4 +1,17 @@
-import {Box, Button, Table, TableHeader, TableHeaderCell, TableRow, Text} from "ferns-ui";
+import {
+  Box,
+  Button,
+  Table,
+  TableBadge,
+  TableBoolean,
+  TableHeader,
+  TableHeaderCell,
+  TableNumber,
+  TableRow,
+  TableText,
+  TableTitle,
+  Text,
+} from "ferns-ui";
 import sortBy from "lodash/sortBy";
 import React, {useState} from "react";
 
@@ -32,7 +45,7 @@ const SortableExpandableTable = () => {
   };
 
   return (
-    <Table columns={[160, 200, 120, 200]}>
+    <Table columns={[160, 200, 120, 200, 140, 140]}>
       <TableHeader>
         <TableHeaderCell
           index={0}
@@ -41,7 +54,7 @@ const SortableExpandableTable = () => {
             setSort(direction, 0);
           }}
         >
-          <Text>Column 1</Text>
+          <TableTitle title="Column 1" />
         </TableHeaderCell>
         <TableHeaderCell
           index={1}
@@ -50,7 +63,7 @@ const SortableExpandableTable = () => {
             setSort(direction, 1);
           }}
         >
-          <Text>Column 2</Text>
+          <TableTitle title="Column 2" />
         </TableHeaderCell>
         <TableHeaderCell
           index={2}
@@ -59,7 +72,7 @@ const SortableExpandableTable = () => {
             setSort(direction, 2);
           }}
         >
-          <Text>Column 3</Text>
+          <TableTitle title="Column 3" />
         </TableHeaderCell>
         <TableHeaderCell
           index={3}
@@ -68,15 +81,40 @@ const SortableExpandableTable = () => {
             setSort(direction, 3);
           }}
         >
-          <Text>Cost</Text>
+          <TableTitle title="Cost" />
+        </TableHeaderCell>
+        <TableHeaderCell
+          index={4}
+          sortable
+          onSortChange={(direction) => {
+            setSort(direction, 4);
+          }}
+        >
+          <TableTitle align="center" title="Badge" />
+        </TableHeaderCell>
+        <TableHeaderCell
+          index={5}
+          sortable
+          onSortChange={(direction) => {
+            setSort(direction, 5);
+          }}
+        >
+          <TableTitle align="center" title="Boolean" />
         </TableHeaderCell>
       </TableHeader>
       {rows.map((row, index) => (
         <TableRow key={row[0]} drawerContents={renderDrawerContents(index)}>
-          <Text>{row[0]}</Text>
-          <Text>{row[1]}</Text>
-          <Text>{row[2]}</Text>
-          <Text>{`$${(row[3] as number).toFixed(2)}`}</Text>
+          <TableText value={String(row[0])} />
+          <TableText value={String(row[1])} />
+          <TableText value={String(row[2])} />
+          <TableText value={`$${(row[3] as number).toFixed(2)}`} />
+          <TableBadge value="Some Status" />
+          <TableBoolean
+            value={index % 2 === 0}
+            onSave={function (): void | Promise<void> {
+              console.info("Saved!");
+            }}
+          />
         </TableRow>
       ))}
     </Table>
@@ -96,28 +134,28 @@ export const StandardTable = (): React.ReactElement => {
     2,
   ];
   return (
-    <Box color="white" height={190} scroll width={400}>
-      <Table columns={[80, 200, 200, 80]}>
+    <Box color="base" height={190} scroll width={400}>
+      <Table columns={[120, 200, 200, 120]}>
         <TableHeader>
           <TableHeaderCell index={0}>
-            <Text>Column 1</Text>
+            <TableTitle title="Column 1" />
           </TableHeaderCell>
           <TableHeaderCell index={1}>
-            <Text>Column 2</Text>
+            <TableTitle title="Column 2" />
           </TableHeaderCell>
           <TableHeaderCell index={2}>
-            <Text>Column 3</Text>
+            <TableTitle title="Column 3" />
           </TableHeaderCell>
-          <TableHeaderCell index={2}>
-            <Text>Cost</Text>
+          <TableHeaderCell index={3}>
+            <TableTitle title="Cost" />
           </TableHeaderCell>
         </TableHeader>
         {rows.map((row) => (
           <TableRow key={row}>
-            <Text key={`${row}1`}>{row}</Text>
-            <Text key={`${row}2`}>Data</Text>
-            <Text key={`${row}3`}>Other Data</Text>
-            <Text key={`${row}4`}>$2.00</Text>
+            <TableText key={`${row}1`} value={String(row)} />
+            <TableText key={`${row}2`} value="Data" />
+            <TableText key={`${row}3`} value="Other Data" />
+            <TableNumber key={`${row}4`} value="$2.00" />
           </TableRow>
         ))}
       </Table>
@@ -127,7 +165,7 @@ export const StandardTable = (): React.ReactElement => {
 
 export const SortableExpandableTableStory = (): React.ReactElement => {
   return (
-    <Box color="white" width="100%">
+    <Box color="base" width="100%">
       <SortableExpandableTable />
     </Box>
   );

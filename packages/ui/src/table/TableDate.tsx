@@ -1,6 +1,6 @@
 import {DateTime} from "luxon";
 import React, {forwardRef, useContext, useImperativeHandle, useState} from "react";
-import {Text, View, ViewStyle} from "react-native";
+import {Text} from "react-native";
 
 import {TableDateProps} from "../Common";
 import {TextField} from "../TextField";
@@ -47,35 +47,23 @@ export const TableDate = forwardRef<TableDateHandles, TableDateProps>(
       },
     }));
 
-    return (
-      <View
-        style={
-          {
-            maxWidth: annotated ? theme.table["mw-l"] : theme.table["mw-m"],
-          } as ViewStyle
-        }
-      >
-        {isEditing ? (
-          <TextField
-            errorText={errorMessage}
-            value={editDate}
-            onChange={(res) => {
-              if (!isValidDate(res.value)) {
-                setErrorMessage("Invalid date. Please use MM/DD/YYYY.");
-              } else {
-                setErrorMessage("");
-              }
-              setEditDate(res.value);
-            }}
-          />
-        ) : (
-          <View style={{paddingHorizontal: 4, paddingVertical: theme.table.padV} as ViewStyle}>
-            <Text style={{fontSize: 16}}>
-              {annotated ? formatDate(dateVal) : dateVal.toFormat("MM/dd/yyyy")}
-            </Text>
-          </View>
-        )}
-      </View>
+    return isEditing ? (
+      <TextField
+        errorText={errorMessage}
+        value={editDate}
+        onChange={(res) => {
+          if (!isValidDate(res.value)) {
+            setErrorMessage("Invalid date. Please use MM/DD/YYYY.");
+          } else {
+            setErrorMessage("");
+          }
+          setEditDate(res.value);
+        }}
+      />
+    ) : (
+      <Text style={{fontSize: 16}}>
+        {annotated ? formatDate(dateVal) : dateVal.toFormat("MM/dd/yyyy")}
+      </Text>
     );
   }
 );

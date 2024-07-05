@@ -1,18 +1,18 @@
 import React, {forwardRef, useContext, useImperativeHandle} from "react";
 import {Text} from "react-native";
 
-import {TableNumberProps} from "../Common";
+import {TableTextProps} from "../Common";
 import {ThemeContext} from "../Theme";
 
-export interface TableNumberHandles {
+export interface TableTextHandles {
   /**
    * Save the text field value.
    */
   handleSave: () => void | Promise<void>;
 }
 
-// TODO: Implement isEditing to TableNumber
-export const TableNumber = forwardRef<TableNumberHandles, TableNumberProps>(
+// TODO: Implement isEditing to TableText
+export const TableText = forwardRef<TableTextHandles, TableTextProps>(
   ({isEditing, value, onSave}, ref) => {
     const {theme} = useContext(ThemeContext);
 
@@ -34,7 +34,7 @@ export const TableNumber = forwardRef<TableNumberHandles, TableNumberProps>(
           color: theme.text.primary,
           fontFamily: theme.font.primary,
           fontSize: 14,
-          textAlign: "right",
+          textAlign: "left",
         }}
       >
         {value}
@@ -43,4 +43,4 @@ export const TableNumber = forwardRef<TableNumberHandles, TableNumberProps>(
   }
 );
 
-TableNumber.displayName = "TableNumber";
+TableText.displayName = "TableText";

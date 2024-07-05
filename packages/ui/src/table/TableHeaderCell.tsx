@@ -5,7 +5,6 @@ import {Box} from "../Box";
 import {TableHeaderCellProps} from "../Common";
 import {IconButton} from "../IconButton";
 import {useTableContext} from "./tableContext";
-import {TableTitle} from "./TableTitle";
 
 /**
  * Use TableHeaderCell to define a header cell in Table.
@@ -41,7 +40,6 @@ export const TableHeaderCell = ({
         alignItems="center"
         direction="row"
         flex="grow"
-        justifyContent="between"
         marginBottom={2}
         marginTop={2}
         maxWidth={width}
@@ -49,9 +47,9 @@ export const TableHeaderCell = ({
         width={width}
         onClick={onClick}
       >
-        <TableTitle title={children as unknown as string} />
+        {children}
         {Boolean(sort) && (
-          <Box paddingX={2}>
+          <Box alignSelf="end" paddingX={2}>
             <IconButton
               accessibilityHint="press to change sorting alphabetical order"
               accessibilityLabel="sort"
@@ -65,7 +63,7 @@ export const TableHeaderCell = ({
   } else {
     return (
       <Box flex="grow" justifyContent="center" marginBottom={2} marginTop={2} width={width}>
-        <TableTitle title={children as unknown as string} />
+        {children}
       </Box>
     );
   }

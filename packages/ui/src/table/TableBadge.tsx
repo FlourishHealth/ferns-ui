@@ -1,10 +1,9 @@
-import React, {forwardRef, useContext, useImperativeHandle, useState} from "react";
-import {View, ViewStyle} from "react-native";
+import React, {forwardRef, useImperativeHandle, useState} from "react";
+import {View} from "react-native";
 
 import {Badge} from "../Badge";
 import {TableBadgeProps} from "../Common";
 import {SelectField} from "../SelectField";
-import {ThemeContext} from "../Theme";
 
 export interface TableBadgeHandles {
   handleSave: () => void | Promise<void>;
@@ -17,7 +16,6 @@ export const TableBadge = forwardRef<TableBadgeHandles, TableBadgeProps>(
     ref
   ) => {
     const [selected, setSelected] = useState<string | undefined>(value);
-    const {theme} = useContext(ThemeContext);
 
     useImperativeHandle(ref, () => ({
       handleSave: () => {
@@ -37,18 +35,10 @@ export const TableBadge = forwardRef<TableBadgeHandles, TableBadgeProps>(
 
     return (
       <View
-        style={[
-          {
-            justifyContent: "center",
-            alignItems: "center",
-            width: theme.table["mw-m"],
-          } as ViewStyle,
-          !isEditing &&
-            ({
-              paddingHorizontal: theme.table.padH,
-              paddingVertical: theme.table.padV,
-            } as ViewStyle),
-        ]}
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         {isEditing && editingOptions ? (
           <SelectField options={editingOptions} value={selected} onChange={handleChange} />

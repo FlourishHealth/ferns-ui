@@ -1,12 +1,11 @@
 /* eslint-disable react-native-a11y/has-accessibility-hint */
 // accessibility hint handled in IconButton.tsx
 
-import React, {FC, useContext} from "react";
-import {View, ViewStyle} from "react-native";
+import React, {FC} from "react";
+import {View} from "react-native";
 
 import {IconButtonProps, IconName, TableIconButtonProps} from "../Common";
 import {IconButton} from "../IconButton";
-import {ThemeContext} from "../Theme";
 
 export const TableIconButton: FC<TableIconButtonProps> = ({tableIconButtonName, onClick}) => {
   const iconButtonMap: Record<
@@ -27,14 +26,9 @@ export const TableIconButton: FC<TableIconButtonProps> = ({tableIconButtonName, 
       accessibilityLabel: "Close Drawer for more Data",
     },
   };
-  const {theme} = useContext(ThemeContext);
 
   return (
-    <View
-      style={
-        {justifyContent: "center", alignItems: "center", maxWidth: theme.table["mw-s"]} as ViewStyle
-      }
-    >
+    <View style={{justifyContent: "center", alignItems: "center", width: "100%"}}>
       <IconButton
         accessibilityLabel={iconButtonMap[tableIconButtonName].accessibilityLabel}
         iconName={iconButtonMap[tableIconButtonName].iconName}

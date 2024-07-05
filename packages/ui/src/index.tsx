@@ -59,7 +59,7 @@ export * from "./table/TableHeaderCell";
 export * from "./table/TableIconButton";
 export * from "./table/TableNumber";
 export * from "./table/TableRow";
-export * from "./table/TableTextField";
+export * from "./table/TableText";
 export * from "./table/TableTitle";
 export * from "./TapToEdit";
 export * from "./Text";

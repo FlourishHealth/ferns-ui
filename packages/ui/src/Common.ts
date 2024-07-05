@@ -2119,6 +2119,12 @@ export interface TableTitleProps {
    * The text content of the table title.
    */
   title: string;
+
+  /**
+   * Most titles should be left aligned, but some may be centered, such as badges or booleans.
+   * @default "left"
+   */
+  align?: "left" | "center";
 }
 
 export interface TableBooleanProps {
@@ -2131,7 +2137,7 @@ export interface TableBooleanProps {
   /**
    * The function to call when the value is saved.
    */
-  onSave: () => void | Promise<void>;
+  onSave?: () => void | Promise<void>;
 
   /**
    * The boolean value to be displayed or edited.
@@ -2192,6 +2198,7 @@ export type FieldOptions = {
    */
   value: string;
 }[];
+
 export interface SelectFieldProps {
   /**
    * If true, the select field will be disabled.
@@ -2270,7 +2277,7 @@ export interface TableBadgeProps {
   value: string;
 }
 
-export interface TableTextFieldProps {
+export interface TableTextProps {
   /**
    * Whether the text field is in editing mode.
    */
@@ -2283,6 +2290,21 @@ export interface TableTextFieldProps {
    * The variant of the text field.
    */
   variant?: "multi";
+  /**
+   * Callback to save the text field value.
+   */
+  onSave?: () => void | Promise<void>;
+}
+
+export interface TableNumberProps {
+  /**
+   * Whether the text field is in editing mode.
+   */
+  isEditing?: boolean;
+  /**
+   * The number to display in the text field.
+   */
+  value: string;
   /**
    * Callback to save the text field value.
    */
