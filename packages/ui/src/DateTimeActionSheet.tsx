@@ -13,7 +13,7 @@ import {DateTimeActionSheetProps, IconName} from "./Common";
 import {Heading} from "./Heading";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
-import {SelectList} from "./SelectList";
+import {SelectField} from "./SelectField";
 import {useTheme} from "./Theme";
 import {TimezonePicker} from "./TimezonePicker";
 
@@ -275,12 +275,11 @@ const WebTime = ({
       </Box>
 
       <Box marginRight={2} width={60}>
-        <SelectList
+        <SelectField
           options={[
             {label: "am", value: "am"},
             {label: "pm", value: "pm"},
           ]}
-          style={{minHeight: INPUT_HEIGHT}}
           value={amPm}
           onChange={(result) => {
             setAmPm(result as "am" | "pm");
