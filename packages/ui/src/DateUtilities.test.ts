@@ -1,5 +1,3 @@
-// Write a jest test for the DateUtilities functions
-
 import {
   humanDate,
   humanDateAndTime,
@@ -350,10 +348,16 @@ describe("DateUtilities", function () {
 
     it("should return the time in the default format", function () {
       expect(printTime("2022-12-24T12:00:00.000Z", {timezone: "America/New_York"})).toBe("7:00 AM");
+      expect(printTime("2022-12-24T12:00:00.000-0400", {timezone: "America/New_York"})).toBe(
+        "11:00 AM"
+      );
     });
 
     it("should return the time in the default format", function () {
       expect(printTime("2022-12-24T12:00:00.000Z", {timezone: "America/Chicago"})).toBe("6:00 AM");
+      expect(printTime("2022-12-24T12:00:00.000-0400", {timezone: "America/Chicago"})).toBe(
+        "10:00 AM"
+      );
     });
   });
 

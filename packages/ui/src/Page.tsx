@@ -20,6 +20,7 @@ export class Page extends React.Component<PageProps, {}> {
         {this.props.backButton && (
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
+              accessibilityHint="Navigate back"
               accessibilityLabel=""
               iconName="chevron-left"
               onClick={() => this.props.navigation.goBack()}
@@ -29,6 +30,7 @@ export class Page extends React.Component<PageProps, {}> {
         {this.props.closeButton && (
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
+              accessibilityHint="Close page"
               accessibilityLabel=""
               iconName="xmark"
               onClick={() => this.props.navigation.goBack()}

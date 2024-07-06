@@ -109,6 +109,7 @@ export const SplitPage = ({
       <Box flex="grow" padding={2}>
         <Box width="100%">
           <IconButton
+            accessibilityHint="close split page"
             accessibilityLabel="close"
             iconName="xmark"
             onClick={() => onItemDeselect()}

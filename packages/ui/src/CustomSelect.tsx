@@ -71,7 +71,7 @@ export const CustomSelect = ({
             placeholderText={placeholder}
             type="text"
             value={value}
-            onChange={(result) => onChange(result.value)}
+            onChange={onChange}
           />
         </Box>
       )}

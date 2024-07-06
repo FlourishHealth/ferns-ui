@@ -33,5 +33,6 @@ const styles = StyleSheet.create({
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
+    marginRight: isMobileDevice() ? 0 : 16,
   },
 });

@@ -1,5 +1,5 @@
 import {getCalendars} from "expo-localization";
-import React, {ReactElement, useCallback, useState} from "react";
+import React, {ReactElement, useState} from "react";
 import {
   DimensionValue,
   KeyboardTypeOptions,
@@ -63,14 +63,13 @@ export const TextField = ({
   onChange,
   placeholderText,
   blurOnSubmit = true,
-  height: propsHeight,
   iconName,
   onIconClick,
   type = "text",
   autoComplete,
   inputRef,
   multiline,
-  rows,
+  rows = 1,
   grow,
   returnKeyType,
   onBlur,
@@ -81,10 +80,6 @@ export const TextField = ({
 }: TextFieldProps): ReactElement => {
   const {theme} = useTheme();
 
-  const numberRangeActionSheetRef: React.RefObject<any> = React.createRef();
-  const decimalRangeActionSheetRef: React.RefObject<any> = React.createRef();
-  const weightActionSheetRef: React.RefObject<any> = React.createRef();
-
   const calendar = getCalendars()[0];
   const localTimeZone = calendar?.timeZone;
   if (!localTimeZone) {
@@ -92,7 +87,7 @@ export const TextField = ({
   }
 
   const [focused, setFocused] = useState(false);
-  const [height, setHeight] = useState(propsHeight || 40);
+  const [height, setHeight] = useState(rows * 40);
 
   let borderColor = focused ? theme.border.focus : theme.border.dark;
   if (disabled) {
@@ -178,12 +173,12 @@ export const TextField = ({
             autoCorrect={shouldAutocorrect}
             blurOnSubmit={blurOnSubmit}
             editable={isEditable}
+            enterKeyHint={returnKeyType}
             keyboardType={keyboardType as KeyboardTypeOptions}
             multiline={multiline}
             numberOfLines={rows || 4}
             placeholder={placeholderText}
             placeholderTextColor={theme.text.secondaryLight}
-            returnKeyType={returnKeyType}
             secureTextEntry={type === "password"}
             style={defaultTextInputStyles}
             testID={testID}

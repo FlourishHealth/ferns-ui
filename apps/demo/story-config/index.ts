@@ -9,7 +9,6 @@ export * from "./Card.config";
 export * from "./CheckBox.config";
 export * from "./DateField.config";
 export * from "./DateTimeField.config";
-export * from "./DateTimeModal.config";
 // export * from "./Field.config";
 export * from "./Heading.config";
 export * from "./Icon.config";

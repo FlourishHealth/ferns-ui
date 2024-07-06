@@ -61,7 +61,6 @@ export const TextFieldDisabledDemo = (): ReactElement => {
       type="datetime"
       value={value}
       onChange={(v) => {
-        console.log("ON CHANGE", v);
         setValue(v);
       }}
     />

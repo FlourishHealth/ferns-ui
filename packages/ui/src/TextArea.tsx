@@ -3,6 +3,6 @@ import React from "react";
 import {TextAreaProps} from "./Common";
 import {TextField} from "./TextField";
 
-export const TextArea = ({height, ...rest}: TextAreaProps): React.ReactElement => {
-  return <TextField {...rest} height={height ?? 100} multiline />;
+export const TextArea = (props: TextAreaProps): React.ReactElement => {
+  return <TextField {...props} multiline />;
 };

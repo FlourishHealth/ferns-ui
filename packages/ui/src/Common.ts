@@ -591,12 +591,6 @@ interface BaseFieldProps {
   onIconClick?: () => void;
 }
 
-export interface DateFieldProps extends BaseFieldProps {
-  value: string;
-  onChange: (date: string) => void;
-  disabled?: boolean;
-}
-
 export interface HelperTextProps {
   helperText?: string;
 }
@@ -606,7 +600,16 @@ export interface ErrorTextProps {
 }
 
 export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
-  type?: "email" | "height" | "password" | "phoneNumber" | "search" | "text" | "url" | "username";
+  type?:
+    | "email"
+    | "height"
+    | "password"
+    | "phoneNumber"
+    | "search"
+    | "text"
+    | "textarea"
+    | "url"
+    | "username";
 
   disabled?: boolean; // default false
   value?: string;
@@ -625,7 +628,6 @@ export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTe
   grow?: boolean;
   multiline?: boolean;
   rows?: number;
-  height?: number;
 
   inputRef?: any;
 }
@@ -1460,7 +1462,7 @@ export interface DateTimeActionSheetProps {
   actionSheetRef: React.RefObject<any>;
   visible: boolean;
   onDismiss: () => void;
-  transformValue?: TransformValueOptions;
+  timezone?: string;
 }
 
 export interface DecimalRangeActionSheetProps {

@@ -78,8 +78,8 @@ const TimeInput = ({
       <TextInput
         accessibilityHint="Enter a number"
         accessibilityLabel="Text input field"
+        enterKeyHint="done"
         keyboardType="number-pad"
-        returnKeyType="done"
         style={
           {
             ...textInputStyle,
@@ -373,11 +373,18 @@ const DateCalendar = ({
 // If type is "datetime",renders a spinner picker for time picker and our custom calendar on both
 // platforms.
 // For web, renders a simplistic text box for time picker and a calendar for date picker
-// in a modal In the future, web time picker should be a typeahead dropdown like Google calendar.
-export const DateTimeActionSheet = (props: DateTimeActionSheetProps) => {
-  const {type = "datetime", value, onChange, visible, onDismiss, transformValue} = props;
+// in a modal.
+// In the future, web time picker should be a typeahead dropdown like Google calendar.
+export const DateTimeActionSheet = ({
+  type = "datetime",
+  value,
+  onChange,
+  visible,
+  onDismiss,
+  timezone: tz,
+}: DateTimeActionSheetProps) => {
   const calendar = getCalendars()[0];
-  const originalTimezone = transformValue?.options?.timezone || calendar?.timeZone;
+  const originalTimezone = (tz || calendar?.timeZone) ?? undefined;
   const [timezone, setTimezone] = useState<string | undefined>(originalTimezone);
   if (!timezone) {
     console.error(
@@ -386,7 +393,7 @@ export const DateTimeActionSheet = (props: DateTimeActionSheetProps) => {
   }
 
   if (typeof value !== "string" && typeof value !== "undefined") {
-    console.error(`Datetime only accepts string or undefined value, not ${typeof value}: ${value}`);
+    console.error(`Datetime only accepts string or undefined value, not ${typeof value}: $value`);
   }
 
   // Accept ISO 8601, HH:mm, or hh:mm A formats. We may want only HH:mm or hh:mm A for type=time
@@ -400,12 +407,12 @@ export const DateTimeActionSheet = (props: DateTimeActionSheetProps) => {
   useEffect(() => {
     let datetime;
     if (value) {
-      datetime = DateTime.fromISO(value).setZone(timezone).set({millisecond: 0, second: 0});
+      datetime = DateTime.fromISO(value).setZone(originalTimezone).set({millisecond: 0, second: 0});
     } else {
-      datetime = DateTime.now().setZone(timezone).set({millisecond: 0, second: 0});
+      datetime = DateTime.now().setZone(originalTimezone).set({millisecond: 0, second: 0});
     }
     if (!datetime.isValid) {
-      console.warn(`Invalid date/time value: ${value}`);
+      console.warn(`Invalid date/time value: $value`);
       return;
     }
 
@@ -417,53 +424,43 @@ export const DateTimeActionSheet = (props: DateTimeActionSheetProps) => {
     setMinute(datetime.minute);
     setAmPm(datetime.toFormat("a") === "AM" ? "am" : "pm");
     setDate(datetime.toISO());
+    // Reset timezone when the sent date changes.
+    setTimezone(originalTimezone);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, transformValue, transformValue?.options?.timezone]);
+  }, [value, originalTimezone]);
 
   // TODO Support 24 hour time for time picker.
   // Note: do not call this if waiting on a state change.
   const sendOnChange = () => {
-    // hour is already correct for all AM hours except 12(AM)
     let militaryHour = hour;
 
-    // 12AM should be 0
     if (amPm === "am" && hour === 12) {
       militaryHour = 0;
-    }
-    // all PM hours except 12PM (already correct) should add 12
-    else if (amPm === "pm" && hour !== 12) {
+    } else if (amPm === "pm" && hour !== 12) {
       militaryHour = Number(hour) + 12;
     }
 
+    const dateTime = DateTime.fromISO(date, {zone: timezone});
+
     if (type === "date") {
-      const v = DateTime.fromISO(date)
-        .setZone("UTC")
-        .set({hour: 0, minute: 0, second: 0, millisecond: 0})
-        .toISO();
+      const v = dateTime.set({hour: 0, minute: 0, second: 0, millisecond: 0}).toUTC().toISO();
       if (!v || !DateTime.fromISO(v).isValid) {
         throw new Error(`Invalid date: ${date}`);
       }
       onChange(v);
     } else if (type === "time") {
-      const v = DateTime.fromISO(date)
-        .setZone(timezone)
+      const v = dateTime
         .set({hour: militaryHour, minute, second: 0, millisecond: 0})
-        .setZone(timezone)
-        .setZone("UTC")
+        .toUTC()
         .toISO();
       if (!v || !DateTime.fromISO(v).isValid) {
         throw new Error(`Invalid date: ${date}`);
       }
       onChange(v);
     } else if (type === "datetime") {
-      const v = DateTime.fromISO(date)
-        .setZone(timezone)
-        // Take from the original zone
-        // Set the value on the screen
+      const v = dateTime
         .set({hour: militaryHour, minute, second: 0, millisecond: 0})
-        // Put that in the  new timezone on the screen
-        // We always send back in UTC
-        .setZone("UTC")
+        .toUTC()
         .toISO();
       if (!v || !DateTime.fromISO(v).isValid) {
         throw new Error(`Invalid date: ${date}`);
