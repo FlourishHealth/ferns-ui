@@ -1,4 +1,5 @@
 import {FontAwesome6} from "@expo/vector-icons";
+/* eslint-disable react-native-a11y/has-accessibility-hint */
 import {Picker} from "@react-native-picker/picker";
 import {getCalendars} from "expo-localization";
 import range from "lodash/range";

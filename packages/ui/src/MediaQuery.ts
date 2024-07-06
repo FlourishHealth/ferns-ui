@@ -1,7 +1,5 @@
 import {Dimensions} from "react-native";
 
-import {isNative} from "./Utilities";
-
 export function mediaQuery(): "xs" | "sm" | "md" | "lg" {
   const width = Dimensions.get("window").width;
   if (width < 576) {
@@ -44,6 +42,5 @@ export function mediaQuerySmallerThan(size: "xs" | "sm" | "md" | "lg"): boolean 
 }
 
 export function isMobileDevice(): boolean {
-  const IsNative = isNative();
-  return !mediaQueryLargerThan("sm") || IsNative;
+  return !mediaQueryLargerThan("sm");
 }
