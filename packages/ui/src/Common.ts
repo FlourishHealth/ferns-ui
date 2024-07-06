@@ -1561,11 +1561,6 @@ export interface IconButtonProps {
   accessibilityLabel: string;
 
   /**
-   * The accessibility hint for the icon button.
-   */
-  accessibilityHint: string;
-
-  /**
    * The heading of the confirmation modal.
    * @default "Confirm"
    */

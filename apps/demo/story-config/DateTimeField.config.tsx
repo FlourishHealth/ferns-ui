@@ -3,6 +3,7 @@ import {DateTimeField} from "ferns-ui";
 
 import {DateFieldStory, DateTimeFieldDemo, DateTimeFieldStory, TimeFieldStory} from "../stories";
 
+// TODO: Update with the notes from TimeField and DateField.
 export const DateTimeFieldConfiguration: DemoConfiguration = {
   name: "Date & time field",
   component: DateTimeField,
