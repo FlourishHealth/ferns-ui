@@ -40,7 +40,7 @@ export * from "./TapToEdit.config";
 export * from "./Text.config";
 export * from "./TextArea.config";
 export * from "./TextField.config";
-// export * from "./Theme.config";
+export * from "./Theme.config";
 export * from "./TimeField.config";
 export * from "./Toast.config";
 export * from "./Tooltip.config";
