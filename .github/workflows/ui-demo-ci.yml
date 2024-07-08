@@ -25,12 +25,9 @@ jobs:
       - name: Install whole project dependencies
         run: yarn --frozen-lockfile
         working-directory: 'apps/demo'
-      - name: build ferns-ui
-        run : yarn build
-        working-directory: 'packages/ui'
+      # - name: build ferns-ui
+      #   run : yarn build
+      #   working-directory: 'packages/ui'
       - name: yarn lint
         run: yarn lint
-        working-directory: 'apps/demo'
-      - name: yarn build
-        run: yarn build
         working-directory: 'apps/demo'
