@@ -2,8 +2,7 @@ import React from "react";
 
 import {Box} from "./Box";
 import {TimezonePickerProps} from "./Common";
-import {SelectList} from "./SelectList";
-import {WithLabel} from "./WithLabel";
+import {SelectField} from "./SelectField";
 
 // TODO: Support world wide timezones
 const options = [
@@ -25,27 +24,13 @@ export const TimezonePicker = ({
   if (showLabel) {
     return (
       <Box maxWidth={width}>
-        <WithLabel label="Timezone">
-          <SelectList
-            allowClear
-            options={options}
-            style={{minHeight: 40}}
-            value={timezone}
-            onChange={onChange}
-          />
-        </WithLabel>
+        <SelectField options={options} title="Timezone" value={timezone} onChange={onChange} />
       </Box>
     );
   } else {
     return (
       <Box maxWidth={width}>
-        <SelectList
-          allowClear
-          options={options}
-          style={{minHeight: 40}}
-          value={timezone}
-          onChange={onChange}
-        />
+        <SelectField options={options} value={timezone} onChange={onChange} />
       </Box>
     );
   }

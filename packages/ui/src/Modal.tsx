@@ -150,7 +150,7 @@ const ModalContent: FC<{
             <Button
               text={secondaryButtonText as string}
               variant="muted"
-              onClick={secondaryButtonOnClick as () => void | Promise<void>}
+              onClick={secondaryButtonOnClick!}
             />
           </View>
         )}
@@ -158,7 +158,7 @@ const ModalContent: FC<{
           <Button
             disabled={primaryButtonDisabled}
             text={primaryButtonText as string}
-            onClick={primaryButtonOnClick as () => void | Promise<void>}
+            onClick={primaryButtonOnClick!}
           />
         )}
       </View>

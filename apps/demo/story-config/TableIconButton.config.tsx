@@ -1,7 +1,6 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
+import {TableIconButtonDemo, TableIconButtonStates} from "@stories";
 import {TableIconButton} from "ferns-ui";
-import React from "react";
 
 export const TableIconButtonConfiguration: DemoConfiguration = {
   name: "Table icon button",
@@ -29,7 +28,25 @@ export const TableIconButtonConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <DefaultDemo />,
-  demoOptions: {},
-  stories: {},
+  demo: TableIconButtonDemo,
+  demoOptions: {
+    controls: {
+      tableIconButtonName: {
+        type: "select",
+        options: [
+          {label: "Edit", value: "edit"},
+          {label: "Save and Close", value: "saveAndClose"},
+          {label: "Insert", value: "insert"},
+          {label: "Drawer Open", value: "drawerOpen"},
+          {label: "Drawer Close", value: "drawerClose"},
+        ],
+        defaultValue: "edit",
+      },
+    },
+  },
+  stories: {
+    States: {
+      render: TableIconButtonStates,
+    },
+  },
 };

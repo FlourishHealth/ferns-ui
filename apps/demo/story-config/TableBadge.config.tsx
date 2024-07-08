@@ -1,7 +1,6 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
+import {TableBadgeDemo, TableBadgeStates} from "@stories";
 import {Table} from "ferns-ui";
-import React from "react";
 
 export const TableBadgeConfiguration: DemoConfiguration = {
   name: "Table badge",
@@ -26,7 +25,11 @@ export const TableBadgeConfiguration: DemoConfiguration = {
     doNot: ["Do not create new badge styles without consulting the head of product."],
   },
   props: {},
-  demo: () => <DefaultDemo />,
+  demo: TableBadgeDemo,
   demoOptions: {},
-  stories: {},
+  stories: {
+    States: {
+      render: TableBadgeStates,
+    },
+  },
 };

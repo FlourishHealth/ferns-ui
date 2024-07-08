@@ -1,3 +1,4 @@
+export * from "./Accordion";
 export * from "./ActionSheet";
 export * from "./Avatar";
 export * from "./Badge";
@@ -41,7 +42,7 @@ export * from "./Radio";
 export * from "./RadioField";
 export * from "./ScrollView";
 export * from "./SegmentedControl";
-export * from "./SelectList";
+export * from "./SelectField";
 export * from "./SideDrawer";
 export * from "./Signature";
 export * from "./SignatureField";

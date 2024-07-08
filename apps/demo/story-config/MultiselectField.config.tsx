@@ -1,7 +1,6 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
+import {MultiselectFieldDemo, MultiselectVariants} from "@stories";
 import {MultiselectField} from "ferns-ui";
-import React from "react";
 
 export const MultiselectFieldConfiguration: DemoConfiguration = {
   name: "Multiselect Field",
@@ -33,7 +32,22 @@ export const MultiselectFieldConfiguration: DemoConfiguration = {
     doNot: ["When the fields are unrelated."],
   },
   props: {},
-  demo: () => <DefaultDemo />,
-  demoOptions: {},
-  stories: {},
+  demo: MultiselectFieldDemo,
+  demoOptions: {
+    controls: {
+      variant: {
+        type: "select",
+        defaultValue: "leftText",
+        options: [
+          {label: "Left Text", value: "leftText"},
+          {label: "Right Text", value: "rightText"},
+        ],
+      },
+    },
+  },
+  stories: {
+    Variants: {
+      render: () => MultiselectVariants(),
+    },
+  },
 };
