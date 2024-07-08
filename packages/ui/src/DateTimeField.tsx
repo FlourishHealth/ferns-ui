@@ -49,10 +49,10 @@ export const DateTimeField = ({
           if (cleanedInput.length >= 2) {
             formatted = `${cleanedInput.slice(0, 2)}`;
             if (cleanedInput.length > 2) {
-              formatted += ` / ${cleanedInput.slice(2, 4)}`;
+              formatted += `/${cleanedInput.slice(2, 4)}`;
             }
             if (cleanedInput.length > 4) {
-              formatted += ` / ${cleanedInput.slice(4, 8)}`;
+              formatted += `/${cleanedInput.slice(4, 8)}`;
             }
             if (cleanedInput.length > 8) {
               formatted += ` ${cleanedInput.slice(8, 10)}:${cleanedInput.slice(10, 12)}`;
@@ -64,10 +64,10 @@ export const DateTimeField = ({
           if (cleanedInput.length >= 2) {
             formatted = `${cleanedInput.slice(0, 2)}`;
             if (cleanedInput.length > 2) {
-              formatted += ` / ${cleanedInput.slice(2, 4)}`;
+              formatted += `/${cleanedInput.slice(2, 4)}`;
             }
             if (cleanedInput.length > 4) {
-              formatted += ` / ${cleanedInput.slice(4, 8)}`;
+              formatted += `/${cleanedInput.slice(4, 8)}`;
             }
           }
           break;
@@ -139,18 +139,21 @@ export const DateTimeField = ({
     [formatValue, onChange]
   );
 
+  let placeholderText: string = "";
+  if (type === "time") {
+    placeholderText = "hh:mm a";
+  } else if (type === "datetime") {
+    placeholderText = "MM/dd/yyyy hh:mm a";
+  } else if (type === "date") {
+    placeholderText = "MM/dd/yyyy";
+  }
+
   return (
     <>
       <TextField
         errorText={error}
         iconName={type === "time" ? "clock" : "calendar"}
-        placeholderText={
-          type === "time"
-            ? "hh:mm a"
-            : type === "datetime"
-              ? "MM / dd / yyyy hh:mm a"
-              : "MM / dd / yyyy"
-        }
+        placeholderText={placeholderText}
         type="text"
         value={formattedDate}
         onChange={onTextFieldChange}
