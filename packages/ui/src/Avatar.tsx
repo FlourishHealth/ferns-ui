@@ -1,84 +1,96 @@
 /* eslint-disable no-console */
 import {ImageResult, manipulateAsync, SaveFormat} from "expo-image-manipulator";
 import {launchImageLibraryAsync, MediaTypeOptions} from "expo-image-picker";
-import React, {useContext, useEffect, useState} from "react";
-import {Image, ImageResizeMode, Platform, Text, View} from "react-native";
+import {LinearGradient} from "expo-linear-gradient";
+import React, {FC, useContext, useEffect, useState} from "react";
+import {Image, Pressable, Text, View} from "react-native";
 
-import {Box} from "./Box";
-import {AvatarProps, IconName, UnsignedUpTo12} from "./Common";
+import {AvatarProps, CustomSvgProps} from "./Common";
 import {Icon} from "./Icon";
+import {MobileIcon, OfflineIcon, OnlineIcon, OutOfOfficeIcon} from "./icons";
 import {isMobileDevice} from "./MediaQuery";
 import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
 
 const sizes = {
-  xs: 24,
-  sm: 32,
-  md: 48,
-  lg: 64,
+  xs: 28,
+  sm: 38,
+  md: 56,
+  lg: 72,
   xl: 120,
 };
 
-const sizeIconPadding: {[id: string]: UnsignedUpTo12} = {
-  xs: 0,
-  sm: 0,
-  md: 1,
-  lg: 1,
-  xl: 2,
+const initialsFontSizes = {
+  xs: 12,
+  sm: 16,
+  md: 24,
+  lg: 32,
+  xl: 60,
 };
 
-const statusIcons: {[id: string]: {icon: IconName; color: string; label: string}} = {
-  online: {icon: "circle", color: "green", label: "Online"},
-  offline: {icon: "circle", color: "gray", label: "Offline"},
-  doNotDisturb: {icon: "circle-minus", color: "red", label: "Do Not Disturb"},
-  away: {icon: "moon", color: "orange", label: "Away"},
-  meeting: {icon: "calendar", color: "orange", label: "In a Meeting"},
-  vacation: {icon: "plane", color: "orange", label: "On Vacation"},
-  sick: {icon: "hospital-user", color: "orange", label: "Sick"},
-  outOfOffice: {icon: "clock", color: "orange", label: "Out of Office"},
-  commuting: {icon: "car", color: "orange", label: "Commuting"},
+const iconSizeScale = {
+  xs: 0.5,
+  sm: 0.7,
+  md: 0.9,
+  lg: 1.1,
+  xl: 1.5,
 };
 
-// TODO: Avatar probably makes more sense as a custom set of views rather than relying on
-// Box, etc. It's a pretty unique component with unique colors and borders.
-export const Avatar = (props: AvatarProps): React.ReactElement => {
+const sizeIconPadding = {
+  xs: 12,
+  sm: 10,
+  md: 9,
+  lg: 7,
+  xl: 0,
+};
+
+export const Avatar: FC<AvatarProps> = ({
+  name,
+  hasBorder = true,
+  size = "md",
+  src,
+  onChange,
+  status,
+  doNotDisturb = false,
+}) => {
   const {theme} = useContext(ThemeContext);
-
   const [isImageLoaded, setIsImageLoaded] = useState(true);
-  const [hovered, setHovered] = useState(false);
-  const [src, setSrc] = useState(props.src ?? undefined);
-  const {
-    name,
-    initials,
-    size = "md",
-    imageFit = "contain",
-    editAvatarImage,
-    onChange,
-    avatarImageWidth = sizes[size],
-    avatarImageHeight,
-    avatarImageFormat = SaveFormat.PNG,
-    shouldShowEditIconIfNoImage = false,
-  } = props;
-  const width = sizes[size];
-  const height = sizes[size];
-  const radius = sizes[size] / 2;
-  const fontSize = sizes[size] / 2;
-  const computedInitials =
-    initials ??
-    (name.match(/(^\S\S?|\s\S)?/g) as any)
-      .map((v: string) => v.trim())
-      .join("")
-      .match(/(^\S|\S$)?/g)
-      .join("")
-      .toLocaleUpperCase();
+  const [imgSrc, setImgSrc] = useState(src ?? undefined);
+  const avatarImageFormat = SaveFormat.PNG;
+  const avatarImageDiameter = sizes[size];
+  const showEditIcon = status === "imagePicker";
+
+  const avatarRadius = avatarImageDiameter / 2;
+  const computedInitials = (name.match(/(^\S\S?|\s\S)?/g) as any)
+    .map((v: string) => v.trim())
+    .join("")
+    .match(/(^\S|\S$)?/g)
+    .join("")
+    .toLocaleUpperCase();
+
+  const statusIcons: {
+    [id: string]: {
+      icon: (props: CustomSvgProps) => React.ReactElement;
+      label: string;
+    };
+  } = {
+    online: {icon: OnlineIcon, label: "Online"},
+    offline: {icon: OfflineIcon, label: "Offline"},
+    outOfOffice: {icon: OutOfOfficeIcon, label: "Out of Office"},
+    activeMobile: {
+      icon: MobileIcon,
+
+      label: "Active on Mobile",
+    },
+  };
 
   // If the src changes, update the image.
   useEffect(() => {
-    setSrc(props.src);
-  }, [props]);
+    setImgSrc(imgSrc);
+  }, [imgSrc]);
 
-  if (editAvatarImage && !onChange) {
-    console.warn("Avatars with the editAvatarImage flag on should also have an onChange property.");
+  if (showEditIcon && !onChange) {
+    console.warn("Avatars with the status of 'imagePicker' should also have an onChange property.");
   }
 
   const handleImageError = () => {
@@ -96,7 +108,7 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
 
     if (!result.canceled && result.assets) {
       const resizedImage = await resizeImage(result.assets[0].uri);
-      setSrc(resizedImage.uri);
+      setImgSrc(resizedImage.uri);
       if (onChange) {
         onChange({avatarImageFormat, ...resizedImage});
       }
@@ -106,105 +118,102 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
   const resizeImage = async (imageUri: string): Promise<ImageResult> => {
     return manipulateAsync(
       imageUri,
-      [{resize: {width: avatarImageWidth, height: avatarImageHeight}}],
+      [{resize: {width: avatarImageDiameter, height: avatarImageDiameter}}],
       {format: avatarImageFormat}
     );
   };
 
-  function shouldShowEditIcon() {
-    if (Platform.OS === "web") {
-      return (shouldShowEditIconIfNoImage && !src) || (editAvatarImage && hovered);
-    } else {
-      return (shouldShowEditIconIfNoImage && !src) || editAvatarImage;
-    }
-  }
-
   const renderEditIcon = () => {
-    if (shouldShowEditIcon() && Platform.OS === "web") {
-      return (
-        <Box
-          alignItems="center"
-          dangerouslySetInlineStyle={{
-            __style: {backgroundColor: "rgba(255,255,255,0.8)", borderRadius: radius},
-          }}
-          height={height}
-          justifyContent="center"
-          position="absolute"
-          width={width}
-          zIndex={5}
-          onClick={pickImage}
-          onHoverEnd={() => setHovered(false)}
-          onHoverStart={() => setHovered(true)}
-        >
-          <Icon color="primary" iconName="pencil" size={size} />
-          <Text style={{fontWeight: "bold"}}>Upload Image</Text>
-        </Box>
-      );
-    } else if (shouldShowEditIcon() && Platform.OS !== "web") {
-      return (
-        <Box
-          bottom
-          left={Boolean(props.status)}
-          paddingX={sizeIconPadding[size]}
-          position="absolute"
-          right={!Boolean(props.status)}
-          zIndex={5}
-          onClick={pickImage}
-        >
-          <Icon color="primary" iconName="pencil" size={size} />
-        </Box>
-      );
+    if (size !== "xl") {
+      console.error(`Avatar: "imagePicker" status is only supported for size "xl"`);
+      return null;
     }
-    return null;
-  };
 
-  const renderStatusIcon = () => {
-    if (!props.status) {
-      return null;
-    }
-    // eslint-disable-next-line prefer-const
-    let {icon, color} = statusIcons[props.status];
-    if (
-      props.statusMobile &&
-      ["online", "away", "offline", "doNotDisturb"].includes(props.status)
-    ) {
-      icon = "mobile-screen-button";
-    }
-    if (!icon || !color) {
-      console.warn(`Avatar: Invalid status ${props.status}`);
-      return null;
-    }
     return (
-      <Box bottom paddingX={sizeIconPadding[size]} position="absolute" right zIndex={5}>
-        <Icon color={color as any} iconName={icon} size={size} />
-      </Box>
+      <Pressable
+        accessibilityRole="button"
+        style={{
+          alignItems: "center",
+          backgroundColor: "rgba(255,255,255,0.75)",
+          borderRadius: avatarRadius,
+          height: avatarImageDiameter,
+          justifyContent: "center",
+          position: "absolute",
+          width: avatarImageDiameter,
+          zIndex: 5,
+        }}
+        onPress={pickImage}
+      >
+        <Icon color="primary" iconName="pen-to-square" size="2xl" type="regular" />
+        <Text
+          style={{
+            textAlign: "center",
+            fontWeight: "bold",
+            fontSize: 12,
+            marginTop: 10,
+          }}
+        >
+          Upload Image
+        </Text>
+      </Pressable>
     );
   };
 
-  const avatar = (
-    <Box height={height} position="relative" width={width}>
-      <Box
-        height={height}
-        overflow="hidden"
-        position="relative"
-        rounding="circle"
-        width={width}
-        onHoverEnd={() => setHovered(false)}
-        onHoverStart={() => setHovered(true)}
+  const renderStatusIcon = () => {
+    if (!status || showEditIcon) {
+      return null;
+    }
+    const {icon} = statusIcons[status];
+
+    if (!icon) {
+      console.warn(`Avatar: Invalid status ${status}`);
+      return null;
+    }
+
+    return (
+      <View
+        style={{
+          bottom: 0,
+          position: "absolute",
+          right: 0,
+          zIndex: 5,
+        }}
+      >
+        {icon({
+          doNotDisturb,
+          transform: [{scale: iconSizeScale[size]}],
+        })}
+      </View>
+    );
+  };
+
+  let avatar = (
+    <View
+      accessibilityHint={showEditIcon ? "Opens file explorer" : "Avatar image"}
+      accessibilityLabel={`${name}'s avatar`}
+      accessibilityRole="image"
+      style={{height: avatarImageDiameter, position: "relative", width: avatarImageDiameter}}
+    >
+      <Pressable
+        accessibilityRole="button"
+        style={{
+          overflow: "hidden",
+          position: "relative",
+          borderRadius: 1,
+          cursor: showEditIcon ? "pointer" : "auto",
+        }}
       >
         {src && isImageLoaded ? (
           // TODO: Make our Image component rounding work so that we can use it for Avatar.
           // Currently it creates an unrounded box around the Image.
           <Image
-            resizeMode={imageFit as ImageResizeMode}
+            accessibilityIgnoresInvertColors
             source={{uri: src, cache: "force-cache"}}
             style={{
-              borderRadius: radius,
-              height,
-              width,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              borderRadius: avatarRadius,
+              borderWidth: hasBorder && status !== "imagePicker" ? avatarImageDiameter * 0.04 : 0,
+              borderColor: hasBorder ? "white" : "transparent",
+              height: avatarImageDiameter,
               overflow: "hidden",
             }}
             onError={handleImageError}
@@ -212,43 +221,79 @@ export const Avatar = (props: AvatarProps): React.ReactElement => {
         ) : (
           <View
             style={{
-              height,
-              width,
-              borderRadius: radius,
+              height: avatarImageDiameter,
+              width: avatarImageDiameter,
+              borderRadius: avatarRadius,
+              borderWidth: hasBorder && status !== "imagePicker" ? avatarImageDiameter * 0.04 : 0,
+              borderColor: hasBorder && status !== "imagePicker" ? "white" : "transparent",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              backgroundColor: theme.surface.neutral,
+              backgroundColor: theme.surface.secondaryDark,
             }}
           >
-            <Text style={{fontSize, color: props.textColor ?? theme.text.primary}}>
+            <Text
+              style={{
+                fontWeight: 500,
+                fontSize: initialsFontSizes[size],
+                color: theme.text.inverted,
+              }}
+            >
               {computedInitials}
             </Text>
           </View>
         )}
-      </Box>
+      </Pressable>
       {/* Needs to come after the image so it renders on top. */}
-      {renderEditIcon()}
-      {renderStatusIcon()}
-    </Box>
+      {showEditIcon && renderEditIcon()}
+    </View>
   );
 
-  let status = props.statusText;
-  if (!status && props.status) {
-    status = statusIcons[props.status]?.label;
+  if (hasBorder && status !== "imagePicker") {
+    const gradientDiameter = avatarImageDiameter * 1.1;
+    const gradientStartColor = "#FFC947";
+    const gradientEndColor = "#EA9095";
+    // Start the first color in the top left corner and end the second color in the bottom
+    // right corner.
+
+    avatar = (
+      <LinearGradient
+        colors={[gradientStartColor, gradientEndColor]}
+        end={{x: 1, y: 1}}
+        start={{x: 0, y: 0}}
+        style={{
+          height: gradientDiameter,
+          width: gradientDiameter,
+          borderRadius: gradientDiameter / 2,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {avatar}
+      </LinearGradient>
+    );
   }
 
   if (status) {
     // Need to wrap the tooltip so it doesn't expand to 100% width and render the tooltip off.
     // Don't show the tooltips on mobile because they intercept the edit avatar clicks.
-    return (
-      <Box width={width}>
+    const widthPlusPadding = avatarImageDiameter + sizeIconPadding[size];
+
+    avatar = (
+      <View
+        style={{
+          width: widthPlusPadding,
+          paddingRight: sizeIconPadding[size],
+          paddingBottom: sizeIconPadding[size],
+        }}
+      >
         <Tooltip idealPosition="top" text={isMobileDevice() ? undefined : status}>
           {avatar}
         </Tooltip>
-      </Box>
+        {renderStatusIcon()}
+      </View>
     );
-  } else {
-    return avatar;
   }
+
+  return avatar;
 };
