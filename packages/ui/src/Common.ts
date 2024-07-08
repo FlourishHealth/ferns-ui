@@ -593,7 +593,6 @@ interface BaseFieldProps {
   onEnter?: () => void;
   onFocus?: () => void;
   onSubmitEditing?: () => void;
-  onTap?: () => void;
   blurOnSubmit?: boolean;
   disabled?: boolean; // default false
   value?: string;

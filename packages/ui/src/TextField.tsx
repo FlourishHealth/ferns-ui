@@ -75,7 +75,6 @@ export const TextField = ({
   onBlur,
   onEnter,
   onSubmitEditing,
-  onTap,
   testID,
 }: TextFieldProps): ReactElement => {
   const {theme} = useTheme();
@@ -146,92 +145,87 @@ export const TextField = ({
   const textContentType = textContentMap[type || "text"];
 
   return (
-    <View>
+    <View
+      style={{
+        flexDirection: "column",
+        width: "100%",
+      }}
+    >
+      {title && <FieldTitle text={title} />}
+      {Boolean(errorText) && errorText && <FieldError text={errorText} />}
       <Pressable
         accessibilityRole="button"
         style={{
-          flexDirection: "column",
-          width: "100%",
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: disabled ? theme.surface.neutralLight : theme.surface.base,
+          borderColor,
+          borderWidth: focused ? 3 : 1,
+          paddingHorizontal: focused ? 10 : 12,
+          paddingVertical: focused ? 6 : 8,
+          borderRadius: 4,
+          overflow: "hidden",
         }}
-        onPress={onTap}
-        onTouchStart={onTap}
       >
-        {title && <FieldTitle text={title} />}
-        {Boolean(errorText) && errorText && <FieldError text={errorText} />}
-        <Pressable
-          accessibilityRole="button"
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            backgroundColor: disabled ? theme.surface.neutralLight : theme.surface.base,
-            borderColor,
-            borderWidth: focused ? 3 : 1,
-            paddingHorizontal: focused ? 10 : 12,
-            paddingVertical: focused ? 6 : 8,
-            borderRadius: 4,
-            overflow: "hidden",
+        <TextInput
+          ref={(ref) => {
+            if (inputRef) {
+              inputRef(ref);
+            }
           }}
-        >
-          <TextInput
-            ref={(ref) => {
-              if (inputRef) {
-                inputRef(ref);
-              }
-            }}
-            accessibilityHint="Enter text here"
-            accessibilityLabel="Text input field"
-            autoCapitalize={type === "text" ? "sentences" : "none"}
-            autoCorrect={shouldAutocorrect}
-            blurOnSubmit={blurOnSubmit}
-            editable={!disabled}
-            enterKeyHint={returnKeyType}
-            keyboardType={keyboardType as KeyboardTypeOptions}
-            multiline={multiline}
-            numberOfLines={rows || 4}
-            placeholder={placeholderText}
-            placeholderTextColor={theme.text.secondaryLight}
-            secureTextEntry={type === "password"}
-            style={defaultTextInputStyles}
-            testID={testID}
-            textContentType={textContentType}
-            underlineColorAndroid="transparent"
-            value={value}
-            onBlur={() => {
-              if (disabled) return;
+          accessibilityHint="Enter text here"
+          accessibilityLabel="Text input field"
+          autoCapitalize={type === "text" ? "sentences" : "none"}
+          autoCorrect={shouldAutocorrect}
+          blurOnSubmit={blurOnSubmit}
+          editable={!disabled}
+          enterKeyHint={returnKeyType}
+          keyboardType={keyboardType as KeyboardTypeOptions}
+          multiline={multiline}
+          numberOfLines={rows || 4}
+          placeholder={placeholderText}
+          placeholderTextColor={theme.text.secondaryLight}
+          secureTextEntry={type === "password"}
+          style={defaultTextInputStyles}
+          testID={testID}
+          textContentType={textContentType}
+          underlineColorAndroid="transparent"
+          value={value}
+          onBlur={() => {
+            if (disabled) return;
 
-              if (onBlur) {
-                onBlur(value ?? "");
-              }
-            }}
-            onChangeText={onChange}
-            onContentSizeChange={(event) => {
-              if (!grow) {
-                return;
-              }
-              setHeight(event.nativeEvent.contentSize.height);
-            }}
-            onFocus={() => {
-              if (!disabled) {
-                setFocused(true);
-              }
-            }}
-            onSubmitEditing={() => {
-              if (onEnter) {
-                onEnter();
-              }
-              if (onSubmitEditing) {
-                onSubmitEditing();
-              }
-            }}
-          />
-          {Boolean(iconName) && (
-            <Pressable accessibilityRole="button" onPress={onIconClick}>
-              <Icon iconName={iconName!} size="md" />
-            </Pressable>
-          )}
-        </Pressable>
-        {helperText && <FieldHelperText text={helperText} />}
+            if (onBlur) {
+              onBlur(value ?? "");
+            }
+          }}
+          onChangeText={onChange}
+          onContentSizeChange={(event) => {
+            if (!grow) {
+              return;
+            }
+            setHeight(event.nativeEvent.contentSize.height);
+          }}
+          onFocus={() => {
+            if (!disabled) {
+              setFocused(true);
+            }
+          }}
+          onSubmitEditing={() => {
+            if (onEnter) {
+              onEnter();
+            }
+            if (onSubmitEditing) {
+              onSubmitEditing();
+            }
+          }}
+        />
+        {Boolean(iconName) && (
+          <Pressable accessibilityRole="button" onPress={onIconClick}>
+            <Icon iconName={iconName!} size="md" />
+          </Pressable>
+        )}
       </Pressable>
+      {helperText && <FieldHelperText text={helperText} />}
       {/* {type === "numberRange" && value && (
         <NumberPickerActionSheet
           actionSheetRef={numberRangeActionSheetRef}
