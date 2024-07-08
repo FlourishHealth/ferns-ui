@@ -37,7 +37,7 @@ export const BoxConfiguration: DemoConfiguration = {
   demo: BoxDemo,
   demoOptions: {},
   stories: {
-      FlexBox: {render: FlexBox},
+    FlexBox: {render: FlexBox},
     Colors: {render: BoxColors},
   },
 };

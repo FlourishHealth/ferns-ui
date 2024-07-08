@@ -1,4 +1,4 @@
-import {DateTimeField, TextField} from "ferns-ui";
+import {TextField} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 export const TextFieldDemo = (): ReactElement => {
@@ -54,11 +54,11 @@ export const TextFieldWithErrorMsgDemo = (): ReactElement => {
 export const TextFieldDisabledDemo = (): ReactElement => {
   const [value, setValue] = useState("");
   return (
-    <DateTimeField
+    <TextField
+      disabled
       helperText="Tell the user why this is disabled."
       placeholderText="This is placeholder text."
       title="Form field title"
-      type="datetime"
       value={value}
       onChange={(v) => {
         setValue(v);
@@ -66,17 +66,3 @@ export const TextFieldDisabledDemo = (): ReactElement => {
     />
   );
 };
-
-// export const TextFieldDisabledDemo = (): ReactElement => {
-//   const [value, setValue] = useState("");
-//   return (
-//     <TextField
-//       disabled
-//       helperText="Tell the user why this is disabled."
-//       placeholderText="This is placeholder text."
-//       title="Form field title"
-//       value={value}
-//       onChange={(v) => setValue(v)}
-//     />
-//   );
-// };

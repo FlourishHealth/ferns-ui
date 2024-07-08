@@ -1,5 +1,5 @@
 import {getCalendars} from "expo-localization";
-import React, {ReactElement, useState} from "react";
+import React, {ReactElement, useMemo, useState} from "react";
 import {
   DimensionValue,
   KeyboardTypeOptions,
@@ -89,56 +89,66 @@ export const TextField = ({
   const [focused, setFocused] = useState(false);
   const [height, setHeight] = useState(rows * 40);
 
-  let borderColor = focused ? theme.border.focus : theme.border.dark;
-  if (disabled) {
-    borderColor = theme.border.activeNeutral;
-  } else if (errorText) {
-    borderColor = theme.border.error;
+  const borderColor = useMemo(() => {
+    if (disabled) {
+      return theme.border.activeNeutral;
+    } else if (errorText) {
+      return theme.border.error;
+    } else {
+      return focused ? theme.border.focus : theme.border.dark;
+    }
+  }, [
+    disabled,
+    errorText,
+    focused,
+    theme.border.activeNeutral,
+    theme.border.dark,
+    theme.border.error,
+    theme.border.focus,
+  ]);
+
+  const calculatedHeight: DimensionValue = useMemo(() => {
+    if (grow) {
+      return Math.max(40, height);
+    } else if (multiline) {
+      return height || "100%";
+    } else {
+      return 20;
+    }
+  }, [grow, height, multiline]);
+
+  const defaultTextInputStyles = useMemo(() => {
+    const style: StyleProp<TextStyleWithOutline> = {
+      flex: 1,
+      width: "100%",
+      height: calculatedHeight,
+      color: theme.text.primary,
+      fontFamily: theme.font.primary,
+      fontSize: 16,
+      paddingVertical: 0,
+      gap: 10,
+    };
+
+    if (Platform.OS === "web") {
+      style.outline = "none";
+    }
+    return style;
+  }, [calculatedHeight, theme.font.primary, theme.text.primary]);
+
+  if (["numberRange", "decimalRange", "height"].includes(type)) {
+    console.warn(`${type} is not yet supported`);
   }
-
-  let calculatedHeight: DimensionValue = 20;
-  if (grow) {
-    calculatedHeight = Math.max(40, height);
-  } else if (multiline) {
-    calculatedHeight = height || "100%";
-  }
-
-  const defaultTextInputStyles: StyleProp<TextStyleWithOutline> = {
-    flex: 1,
-    width: "100%",
-    height: calculatedHeight,
-    color: theme.text.primary,
-    fontFamily: theme.font.primary,
-    fontSize: 16,
-    paddingVertical: 0,
-    gap: 10,
-  };
-
-  if (Platform.OS === "web") {
-    defaultTextInputStyles.outline = "none";
-  }
-
-  const isHandledByModal = [
-    "date",
-    "datetime",
-    "time",
-    "numberRange",
-    "decimalRange",
-    "height",
-  ].includes(type);
-
-  const isEditable = !disabled && !isHandledByModal;
 
   const shouldAutocorrect =
     ["text", "textarea"].includes(type) && (!autoComplete || autoComplete === "on");
 
   const keyboardType = keyboardMap[type];
   const textContentType = textContentMap[type || "text"];
-  const Wrapper = isHandledByModal ? Pressable : View;
 
   return (
     <View>
-      <Wrapper
+      <Pressable
+        accessibilityRole="button"
         style={{
           flexDirection: "column",
           width: "100%",
@@ -148,7 +158,8 @@ export const TextField = ({
       >
         {title && <FieldTitle text={title} />}
         {Boolean(errorText) && errorText && <FieldError text={errorText} />}
-        <Wrapper
+        <Pressable
+          accessibilityRole="button"
           style={{
             flexDirection: "row",
             alignItems: "center",
@@ -172,7 +183,7 @@ export const TextField = ({
             autoCapitalize={type === "text" ? "sentences" : "none"}
             autoCorrect={shouldAutocorrect}
             blurOnSubmit={blurOnSubmit}
-            editable={isEditable}
+            editable={!disabled}
             enterKeyHint={returnKeyType}
             keyboardType={keyboardType as KeyboardTypeOptions}
             multiline={multiline}
@@ -187,9 +198,7 @@ export const TextField = ({
             value={value}
             onBlur={() => {
               if (disabled) return;
-              if (!isHandledByModal) {
-                setFocused(false);
-              }
+
               if (onBlur) {
                 onBlur(value ?? "");
               }
@@ -202,7 +211,7 @@ export const TextField = ({
               setHeight(event.nativeEvent.contentSize.height);
             }}
             onFocus={() => {
-              if (!isHandledByModal) {
+              if (!disabled) {
                 setFocused(true);
               }
             }}
@@ -220,9 +229,9 @@ export const TextField = ({
               <Icon iconName={iconName!} size="md" />
             </Pressable>
           )}
-        </Wrapper>
+        </Pressable>
         {helperText && <FieldHelperText text={helperText} />}
-      </Wrapper>
+      </Pressable>
       {/* {type === "numberRange" && value && (
         <NumberPickerActionSheet
           actionSheetRef={numberRangeActionSheetRef}

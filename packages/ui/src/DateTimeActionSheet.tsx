@@ -105,10 +105,26 @@ const TimeInput = ({
   );
 };
 
-const CalendarButton = ({iconName, onClick}: {iconName: IconName; onClick: () => void}) => {
+const CalendarButton = ({
+  iconName,
+  onClick,
+  accessibilityLabel,
+  accessibilityHint,
+}: {
+  accessibilityLabel: string;
+  accessibilityHint: string;
+  iconName: IconName;
+  onClick: () => void;
+}) => {
   const {theme} = useTheme();
   return (
-    <Pressable accessibilityRole="button" hitSlop={10} onPress={onClick}>
+    <Pressable
+      accessibilityHint={accessibilityHint}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      hitSlop={10}
+      onPress={onClick}
+    >
       <FontAwesome6 color={theme.surface.secondaryDark} name={iconName} size={16} />
     </Pressable>
   );
@@ -125,12 +141,16 @@ const CalendarHeader = ({
   return (
     <Box alignItems="center" direction="row" height={40} justifyContent="between" width="100%">
       <CalendarButton
+        accessibilityHint="Decrease the year"
+        accessibilityLabel="Previous year button"
         iconName="angles-left"
         onClick={() => {
           addMonth(-12);
         }}
       />
       <CalendarButton
+        accessibilityHint="Decrease the month"
+        accessibilityLabel="Previous month button"
         iconName="angle-left"
         onClick={() => {
           addMonth(-1);
@@ -138,12 +158,16 @@ const CalendarHeader = ({
       />
       <Heading size="lg">{displayDate}</Heading>
       <CalendarButton
+        accessibilityHint="Increase the month"
+        accessibilityLabel="Next month button"
         iconName="angle-right"
         onClick={() => {
           addMonth(1);
         }}
       />
       <CalendarButton
+        accessibilityHint="Increase the year"
+        accessibilityLabel="Next year button"
         iconName="angles-right"
         onClick={() => {
           addMonth(12);

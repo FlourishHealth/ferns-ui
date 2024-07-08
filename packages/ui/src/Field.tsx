@@ -6,6 +6,7 @@ import {AddressInterface, FieldProps, ReactChildren, TextFieldType} from "./Comm
 import {CustomSelect} from "./CustomSelect";
 import {DateTimeField} from "./DateTimeField";
 import {FieldWithLabels} from "./FieldWithLabels";
+import {NumberField} from "./NumberField";
 import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
@@ -120,7 +121,6 @@ export const Field = ({
           placeholderText={Boolean(value) ? "" : placeholder}
           rows={rows}
           testID={testID}
-          type="textarea"
           value={String(value)}
           onBlur={onBlur}
           onChange={(result) => onChange(result)}
@@ -145,9 +145,6 @@ export const Field = ({
           testID={testID}
           type={type as "date" | "time" | "datetime"}
           value={value}
-          // onBlur={(result) => {
-          //   onBlur && onBlur(result);
-          // }}
           onChange={(result) => onChange(result)}
         />
       );
@@ -226,13 +223,12 @@ export const Field = ({
                 value={countyName}
                 onChange={(result) => handleAddressChange("countyName", result)}
               />
-              <TextField
+              <NumberField
                 disabled={disabled}
                 id="countyCode"
                 testID={`${testID}-county-code`}
                 title="County Code"
-                // TODO: support number field for county-code
-                // type="number"
+                type="number"
                 value={countyCode}
                 onChange={(result) => handleAddressChange("countyCode", result)}
               />
@@ -258,23 +254,22 @@ export const Field = ({
         />
       );
     } else if (type === "number") {
-      throw new Error("Number type is not supported in Field component");
-      // return (
-      //   <TextField
-      //     disabled={disabled}
-      //     id={name}
-      //     placeholderText={placeholder}
-      //     testID={testID}
-      //     type="number"
-      //     value={value}
-      //     onBlur={(result) => {
-      //       onBlur && onBlur(result);
-      //     }}
-      //     onChange={(result) => {
-      //       onChange(result);
-      //     }}
-      //   />
-      // );
+      return (
+        <NumberField
+          disabled={disabled}
+          id={name}
+          placeholderText={placeholder}
+          testID={testID}
+          type="number"
+          value={value}
+          onBlur={(result) => {
+            onBlur && onBlur(result);
+          }}
+          onChange={(result) => {
+            onChange(result);
+          }}
+        />
+      );
     } else if (type === "signature") {
       return <Signature onChange={onChange} onEnd={onEnd} onStart={onStart} />;
     } else {

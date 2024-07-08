@@ -34,6 +34,7 @@ export * from "./MobileAddressAutoComplete";
 export * from "./Modal";
 export * from "./ModalSheet";
 export * from "./MultiselectField";
+export * from "./NumberField";
 export * from "./NumberPickerActionSheet";
 export * from "./OpenAPIContext";
 export * from "./Page";

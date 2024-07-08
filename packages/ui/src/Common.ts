@@ -382,7 +382,7 @@ export type TextFieldType =
   | "decimal"
   | "decimalRange"
   | "email"
-  | "height"
+  // | "height"
   | "password"
   | "phoneNumber"
   | "number"
@@ -588,6 +588,15 @@ interface BaseFieldProps {
   placeholderText?: string;
   iconName?: IconName;
   onIconClick?: () => void;
+  onBlur?: OnChangeCallback;
+  onChange: OnChangeCallback;
+  onEnter?: () => void;
+  onFocus?: () => void;
+  onSubmitEditing?: () => void;
+  onTap?: () => void;
+  blurOnSubmit?: boolean;
+  disabled?: boolean; // default false
+  value?: string;
 }
 
 export interface HelperTextProps {
@@ -599,27 +608,7 @@ export interface ErrorTextProps {
 }
 
 export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
-  type?:
-    | "email"
-    | "height"
-    | "password"
-    | "phoneNumber"
-    | "search"
-    | "text"
-    | "textarea"
-    | "url"
-    | "username";
-
-  disabled?: boolean; // default false
-  value?: string;
-
-  onBlur?: OnChangeCallback;
-  onChange: OnChangeCallback;
-  onEnter?: () => void;
-  onFocus?: () => void;
-  onSubmitEditing?: () => void;
-  onTap?: () => void;
-  blurOnSubmit?: boolean;
+  type?: "email" | "password" | "phoneNumber" | "search" | "text" | "url" | "username";
 
   autoComplete?: "current-password" | "on" | "off" | "username";
   returnKeyType?: "done" | "go" | "next" | "search" | "send";
@@ -631,19 +620,19 @@ export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTe
   inputRef?: any;
 }
 
-export type TextAreaProps = Exclude<TextFieldProps, "multiline" | "type"> & {type: "textarea"};
+export interface TextAreaProps extends Exclude<TextFieldProps, "multiline"> {}
 
-export type NumberFieldProps = {
+export interface NumberFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
   type: "number" | "decimal";
   min?: number;
   max?: number;
-};
+}
 
-export type NumberRangeFieldProps = {
+export interface NumberRangeFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
   type: "numberRange" | "decimalRange";
   min: number;
   max: number;
-};
+}
 
 export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
   type: "date" | "datetime" | "time";
@@ -654,13 +643,6 @@ export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, Err
   showTimezone?: boolean; // defaults to true
   timezone?: string;
 }
-
-export type CombinedTextFieldProps =
-  | NumberFieldProps
-  | NumberRangeFieldProps
-  | DateTimeFieldProps
-  | TextFieldProps
-  | TextAreaProps;
 
 export interface MaskProps {
   children?: ReactChildren;
