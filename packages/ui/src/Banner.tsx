@@ -5,54 +5,14 @@ import {ActivityIndicator, Pressable, Text, View} from "react-native";
 
 import {Box} from "./Box";
 import {BannerProps, SurfaceTheme} from "./Common";
+import {DismissButton} from "./DismissButton";
 import {Icon} from "./Icon";
 import {ThemeContext} from "./Theme";
 import {Unifier} from "./Unifier";
 
 // WIP - TODO:
 // CSS fix to match design specs, make sure it works with extra long banner texts, etc.
-// Add accessibility hints/labels where needed, check that its set up as intended
 // Clean up prop types, ensure consistent naming and typing
-// use theme for colors instead of hardcoded strings where possible
-
-type BannerDismissButtonProps = {
-  accessibilityLabel: string;
-  buttonIconName: string;
-  buttonOnClick: () => void;
-};
-
-const BannerDismissButton = ({
-  accessibilityLabel,
-  buttonIconName,
-  buttonOnClick,
-}: BannerDismissButtonProps): React.ReactElement | null => {
-  const {theme} = useContext(ThemeContext);
-
-  if (!theme) {
-    return null;
-  }
-
-  return (
-    <Pressable
-      // todo: update hint/label
-      accessibilityHint={`Press to perform ${accessibilityLabel} action`}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
-      style={{
-        alignItems: "center",
-        borderRadius: theme.radius.rounded as any,
-        justifyContent: "center",
-        height: 32,
-        width: 32,
-      }}
-      onPress={buttonOnClick}
-    >
-      <View>
-        <FontAwesome6 brand="solid" color="inverted" name={buttonIconName} size={16} />
-      </View>
-    </Pressable>
-  );
-};
 
 type BannerButtonProps = {
   buttonIconName?: string;
@@ -76,7 +36,7 @@ const BannerButton = ({
 
   return (
     <Pressable
-      accessibilityHint="Press to perform action"
+      accessibilityHint={`Press to perform action ${text}`}
       accessibilityLabel={text}
       accessibilityRole="button"
       style={{
@@ -115,7 +75,7 @@ const BannerButton = ({
                 marginLeft: 8,
               }}
             >
-              <FontAwesome6 brand="solid" color="inverted" name={buttonIconName} size={16} />
+              <FontAwesome6 brand="solid" name={buttonIconName} size={16} />
             </View>
           )}
           <Text style={{color: "inverted", fontWeight: "400", fontSize: 16}}>{text}</Text>
@@ -218,8 +178,13 @@ export const Banner = ({
         <BannerButton buttonOnClick={buttonOnClick ?? (() => {})} text={buttonText ?? ""} />
       )}
       {Boolean(dismissible) && (
-        // eslint-disable-next-line react-native-a11y/has-accessibility-hint
-        <BannerDismissButton accessibilityLabel="" buttonIconName="x" buttonOnClick={dismiss} />
+        <DismissButton
+          accessibilityHint="Press to dismiss banner"
+          accessibilityLabel="Dismiss"
+          buttonIconName="x"
+          color={theme.text.inverted}
+          onClick={dismiss}
+        />
       )}
     </View>
   );
