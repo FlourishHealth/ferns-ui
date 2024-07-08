@@ -96,7 +96,7 @@ export const StandardTable = (): React.ReactElement => {
     2,
   ];
   return (
-    <Box color="white" height={190} scroll width={400}>
+    <Box color="base" height={190} scroll width={400}>
       <Table columns={[80, 200, 200, 80]}>
         <TableHeader>
           <TableHeaderCell index={0}>
@@ -127,7 +127,7 @@ export const StandardTable = (): React.ReactElement => {
 
 export const SortableExpandableTableStory = (): React.ReactElement => {
   return (
-    <Box color="white" width="100%">
+    <Box color="base" width="100%">
       <SortableExpandableTable />
     </Box>
   );

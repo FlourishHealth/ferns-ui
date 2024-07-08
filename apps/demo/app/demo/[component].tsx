@@ -62,12 +62,12 @@ const ComponentProps = ({props}: {props: DemoConfigurationProp[]}) => {
           <TableRow key={p.name}>
             <Box direction="row">
               <Text>{p.name}</Text>
-              {Boolean(p.flags?.isOptional !== true) && <Badge color="warning" title="Required" />}
+              {Boolean(p.flags?.isOptional !== true) && (
+                <Badge status="warning" variant="iconOnly" />
+              )}
             </Box>
             <Box direction="column" width={160} wrap>
-              <Text italic overflow="breakWord">
-                {p.type.name}
-              </Text>
+              <Text italic>{p.type.name}</Text>
               {Boolean(p.comment?.summary?.[0]?.text) && (
                 <Box marginTop={2}>
                   <Text>{p.comment?.summary?.[0]?.text}</Text>

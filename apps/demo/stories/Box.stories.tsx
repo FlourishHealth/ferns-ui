@@ -1,51 +1,36 @@
-import {Box, Text} from "ferns-ui";
+import {Box, SurfaceColor, Text} from "ferns-ui";
 import React from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
 
-const colors: AllColors[] = [
+const colors: SurfaceColor[] = [
+  "base",
   "primary",
-  "secondary",
-  "tertiary",
-  "accent",
-  "blue",
-  "darkGray",
-  "eggplant",
-  "gray",
-  "green",
-  "lightGray",
-  "maroon",
-  "midnight",
-  "navy",
-  "olive",
-  "orange",
-  "orchid",
-  "pine",
-  "purple",
-  "red",
-  "watermelon",
-  "white",
-  "neutral900",
-  "neutral200",
-  "neutral70",
-  "neutral10",
-  "info",
-  "error",
-  "warning",
-  "success",
+  "secondaryLight",
+  "secondaryDark",
+  "secondaryExtraDark",
   "neutral",
+  "neutralLight",
+  "neutralDark",
+  "disabled",
+  "error",
+  "errorLight",
+  "warning",
+  "warningLight",
+  "success",
+  "successLight",
 ];
 
 export const BoxDemo = () => {
   return (
     <Box direction="row" justifyContent="between">
-      <Box color="blue" height={50} rounding={4} width={50}>
+      <Box color="primary" height={50} rounding="full" width={50}>
         <Text size="lg" />
       </Box>
-      <Box color="primary" height={50} width={50}>
+      <Box color="secondaryLight" height={50} width={50}>
         <Text size="lg" />
       </Box>
-      <Box border="primary" color="lightGray" height={50} rounding="circle" width={50}>
+      <Box border="activeAccent" color="neutralLight" height={50} rounding="rounded" width={50}>
         <Text size="lg" />
       </Box>
     </Box>
@@ -57,7 +42,7 @@ export const FlexBox = () => {
     <StorybookContainer>
       <Box
         alignItems="center"
-        color="blue"
+        color="primary"
         display="flex"
         height={50}
         justifyContent="center"
@@ -68,7 +53,7 @@ export const FlexBox = () => {
         <Text size="lg">JG</Text>
       </Box>
       <Box direction="column" paddingX={2}>
-        <Text weight="bold">Josh Gachnang</Text>
+        <Text bold>Josh Gachnang</Text>
         <Text>joined 2 years ago</Text>
       </Box>
     </StorybookContainer>
