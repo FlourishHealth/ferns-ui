@@ -10,7 +10,14 @@ import {
 } from "react-native";
 
 import {FernsTheme, getRounding, getSpacing, ThemeContext} from ".";
-import {AlignContent, AlignItems, AlignSelf, BoxProps, JustifyContent} from "./Common";
+import {
+  AlignContent,
+  AlignItems,
+  AlignSelf,
+  BoxProps,
+  JustifyContent,
+  SurfaceTheme,
+} from "./Common";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {Unifier} from "./Unifier";
 
@@ -79,7 +86,7 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     alignItems: (value: AlignItems) => ({alignItems: ALIGN_ITEMS[value]}),
     alignContent: (value: AlignContent) => ({alignContent: ALIGN_CONTENT[value]}),
     alignSelf: (value: AlignSelf) => ({alignSelf: ALIGN_SELF[value]}),
-    color: (value: keyof FernsTheme) => ({backgroundColor: theme[value]}),
+    color: (value: keyof SurfaceTheme) => ({backgroundColor: theme.surface[value]}),
     direction: (value: any) => ({flexDirection: value, display: "flex"}),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     smDirection: (value: any) =>

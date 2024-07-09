@@ -3,12 +3,12 @@ import React from "react";
 
 export const CardDemo = () => {
   return (
-    <Box color="lightGray" direction="column" display="flex" height="100%" width="100%">
+    <Box color="neutralLight" direction="column" display="flex" height="100%" width="100%">
       <Card>
         <Box alignItems="center" direction="row" display="flex">
           <Box
             alignItems="center"
-            color="blue"
+            color="primary"
             display="flex"
             height={50}
             justifyContent="center"
@@ -31,7 +31,7 @@ export const CardDemo = () => {
 export const Plain = () => {
   return (
     <Box
-      color="lightGray"
+      color="neutralLight"
       direction="column"
       display="flex"
       height="100%"
@@ -42,7 +42,7 @@ export const Plain = () => {
         <Box alignItems="center" direction="row" display="flex">
           <Box
             alignItems="center"
-            color="blue"
+            color="primary"
             display="flex"
             height={50}
             justifyContent="center"
