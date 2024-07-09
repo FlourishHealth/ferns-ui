@@ -1,18 +1,14 @@
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
 import React, {useContext, useEffect, useState} from "react";
-import {ActivityIndicator, Pressable, Text, View} from "react-native";
+import {ActivityIndicator, Pressable, Text as ReactNativeText, View} from "react-native";
 
 import {Box} from "./Box";
-import {BannerProps, SurfaceTheme} from "./Common";
+import {BannerProps, IconName, SurfaceTheme} from "./Common";
 import {DismissButton} from "./DismissButton";
 import {Icon} from "./Icon";
+import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 import {Unifier} from "./Unifier";
-
-// WIP - TODO:
-// CSS fix to match design specs, make sure it works with extra long banner texts, etc.
-// Clean up prop types, ensure consistent naming and typing
 
 type BannerButtonProps = {
   buttonIconName?: string;
@@ -75,10 +71,10 @@ const BannerButton = ({
                 marginLeft: 8,
               }}
             >
-              <FontAwesome6 brand="solid" name={buttonIconName} size={16} />
+              <Icon iconName={buttonIconName as IconName} type="solid" />
             </View>
           )}
-          <Text style={{color: "inverted", fontWeight: "400", fontSize: 16}}>{text}</Text>
+          <Text size="sm">{text}</Text>
         </View>
         {Boolean(loading) && (
           <Box marginLeft={2}>
@@ -152,7 +148,6 @@ export const Banner = ({
   return (
     <View
       style={{
-        justifyContent: "space-between",
         alignItems: "center",
         backgroundColor: theme.surface[bgColor],
         height: "auto",
@@ -164,25 +159,42 @@ export const Banner = ({
         padding: theme.spacing.xs as any,
       }}
     >
-      {Boolean(hasIcon) && <Icon color="inverted" iconName="triangle-exclamation" size="sm" />}
-
-      <Text style={{color: theme.surface.base, fontWeight: "700", fontSize: 16}}>{text}</Text>
-      {Boolean(buttonText && buttonIconName && buttonOnClick) && (
-        <BannerButton
-          buttonIconName={buttonIconName ?? ""}
-          buttonOnClick={buttonOnClick ?? (() => {})}
-          text={buttonText ?? ""}
-        />
-      )}
-      {Boolean(buttonText && !buttonIconName && buttonOnClick) && (
-        <BannerButton buttonOnClick={buttonOnClick ?? (() => {})} text={buttonText ?? ""} />
-      )}
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        {Boolean(hasIcon) && <Icon color="inverted" iconName="triangle-exclamation" />}
+        <ReactNativeText
+          style={{
+            color: theme.text.inverted,
+            fontWeight: "bold",
+            textAlign: "center",
+            flexShrink: 1,
+          }}
+        >
+          {text}
+        </ReactNativeText>
+        {Boolean(buttonText && buttonIconName && buttonOnClick) && (
+          <BannerButton
+            buttonIconName={buttonIconName ?? ""}
+            buttonOnClick={buttonOnClick ?? (() => {})}
+            text={buttonText ?? ""}
+          />
+        )}
+        {Boolean(buttonText && !buttonIconName && buttonOnClick) && (
+          <BannerButton buttonOnClick={buttonOnClick ?? (() => {})} text={buttonText ?? ""} />
+        )}
+      </View>
       {Boolean(dismissible) && (
         <DismissButton
           accessibilityHint="Press to dismiss banner"
           accessibilityLabel="Dismiss"
-          buttonIconName="x"
-          color={theme.text.inverted}
+          color="inverted"
           onClick={dismiss}
         />
       )}

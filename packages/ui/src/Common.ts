@@ -1410,6 +1410,29 @@ export interface DecimalRangeActionSheetState {
   decimal: string;
 }
 
+export interface DismissButtonProps {
+  /**
+   * The accessibility hint describes the results of performing an action on a control or view.
+   * It should be a very brief description of the result of interacting with the button.
+   */
+  accessibilityHint: string;
+
+  /**
+   * The accessibility label attribute identifies the user interface element.
+   * It should be a very brief description of the element, such as "Dismiss".
+   */
+  accessibilityLabel: string;
+  /**
+   * A function to call when the button is clicked,
+   * function should result in hiding the element rendering the dismiss button.
+   */
+  onClick: () => void;
+  /**
+   * Color of the icon on the dismiss button
+   * @default "primary"
+   */
+  color?: IconColor;
+}
 export interface ErrorPageProps {
   error: Error;
   resetError: () => void;
