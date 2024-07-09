@@ -18,8 +18,8 @@ export const DismissButton = ({
       style={{
         alignItems: "center",
         justifyContent: "center",
-        height: 32,
-        width: 32,
+        height: 24.5,
+        width: 24.5,
       }}
       onPress={onClick}
     >

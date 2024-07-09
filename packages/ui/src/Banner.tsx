@@ -1,12 +1,11 @@
 import debounce from "lodash/debounce";
 import React, {useContext, useEffect, useState} from "react";
-import {ActivityIndicator, Pressable, Text as ReactNativeText, View} from "react-native";
+import {ActivityIndicator, Pressable, Text as NativeText, View} from "react-native";
 
 import {Box} from "./Box";
 import {BannerProps, IconName, SurfaceTheme} from "./Common";
 import {DismissButton} from "./DismissButton";
 import {Icon} from "./Icon";
-import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 import {Unifier} from "./Unifier";
 
@@ -42,8 +41,8 @@ const BannerButton = ({
         borderRadius: theme.radius.rounded as any,
         flexDirection: "column",
         justifyContent: "center",
-        paddingHorizontal: 20,
-        paddingVertical: 8,
+        paddingHorizontal: 12,
+        paddingVertical: 4,
       }}
       onPress={debounce(
         async () => {
@@ -74,11 +73,11 @@ const BannerButton = ({
               <Icon iconName={buttonIconName as IconName} type="solid" />
             </View>
           )}
-          <Text size="sm">{text}</Text>
+          <NativeText style={{fontSize: 12}}>{text}</NativeText>
         </View>
         {Boolean(loading) && (
           <Box marginLeft={2}>
-            <ActivityIndicator color="inverted" size="small" />
+            <ActivityIndicator size="small" />
           </Box>
         )}
       </View>
@@ -161,33 +160,41 @@ export const Banner = ({
     >
       <View
         style={{
-          flex: 1,
           flexDirection: "row",
-          justifyContent: "center",
+          flex: 1,
           alignItems: "center",
-          flexWrap: "wrap",
+          justifyContent: "center",
         }}
       >
-        {Boolean(hasIcon) && <Icon color="inverted" iconName="triangle-exclamation" />}
-        <ReactNativeText
+        {Boolean(hasIcon) && (
+          <View style={{paddingRight: 12, paddingLeft: theme.spacing.xs as any}}>
+            <Icon color="inverted" iconName="triangle-exclamation" />
+          </View>
+        )}
+        <NativeText
           style={{
             color: theme.text.inverted,
             fontWeight: "bold",
             textAlign: "center",
             flexShrink: 1,
+            flexWrap: "wrap",
           }}
         >
           {text}
-        </ReactNativeText>
+        </NativeText>
         {Boolean(buttonText && buttonIconName && buttonOnClick) && (
-          <BannerButton
-            buttonIconName={buttonIconName ?? ""}
-            buttonOnClick={buttonOnClick ?? (() => {})}
-            text={buttonText ?? ""}
-          />
+          <View style={{paddingLeft: 16, paddingRight: theme.spacing.xs as any}}>
+            <BannerButton
+              buttonIconName={buttonIconName ?? ""}
+              buttonOnClick={buttonOnClick ?? (() => {})}
+              text={buttonText ?? ""}
+            />
+          </View>
         )}
         {Boolean(buttonText && !buttonIconName && buttonOnClick) && (
-          <BannerButton buttonOnClick={buttonOnClick ?? (() => {})} text={buttonText ?? ""} />
+          <View style={{paddingLeft: 16, paddingRight: theme.spacing.xs as any}}>
+            <BannerButton buttonOnClick={buttonOnClick ?? (() => {})} text={buttonText ?? ""} />
+          </View>
         )}
       </View>
       {Boolean(dismissible) && (
