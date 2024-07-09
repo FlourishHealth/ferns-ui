@@ -70,25 +70,19 @@ const IconButtonComponent: FC<IconButtonProps> = ({
     return null;
   }
 
-  const getStyles = () => {
-    let backgroundColor = theme.surface.primary;
-    let color = theme.text.inverted;
+  let backgroundColor = theme.surface.primary;
+  let color = theme.text.inverted;
 
-    if (variant === "secondary") {
-      backgroundColor = theme.surface.neutralLight;
-      color = theme.surface.secondaryDark;
-    } else if (variant === "muted") {
-      backgroundColor = theme.text.inverted;
-      color = theme.surface.primary;
-    } else if (variant === "destructive") {
-      backgroundColor = theme.text.inverted;
-      color = theme.text.error;
-    }
-
-    return {backgroundColor, color};
-  };
-
-  const {backgroundColor, color} = getStyles();
+  if (variant === "secondary") {
+    backgroundColor = theme.surface.neutralLight;
+    color = theme.surface.secondaryDark;
+  } else if (variant === "muted") {
+    backgroundColor = theme.text.inverted;
+    color = theme.surface.primary;
+  } else if (variant === "destructive") {
+    backgroundColor = theme.text.inverted;
+    color = theme.text.error;
+  }
 
   return (
     <Pressable

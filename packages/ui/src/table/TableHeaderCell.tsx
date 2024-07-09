@@ -1,9 +1,11 @@
 // TableHeaderCell.tsx
+import {FontAwesome6} from "@expo/vector-icons";
 import React, {ReactElement, useCallback} from "react";
+import {View} from "react-native";
 
 import {Box} from "../Box";
 import {AlignItems, TableHeaderCellProps} from "../Common";
-import {IconButton} from "../IconButton";
+import {useTheme} from "../Theme";
 import {useTableContext} from "./tableContext";
 import {TableTitle} from "./TableTitle";
 
@@ -18,6 +20,8 @@ export const TableHeaderCell = ({
   title,
   onSortChange,
 }: TableHeaderCellProps): ReactElement => {
+  const {theme} = useTheme();
+
   const {columns, setSortColumn, sortColumn} = useTableContext();
   const width = columns[index];
   if (!width) {
@@ -52,6 +56,8 @@ export const TableHeaderCell = ({
   }
   return (
     <Box
+      // accessibilityHint="press to change sorting alphabetical order"
+      // accessibilityLabel="sort"
       alignItems="center"
       direction="row"
       flex="grow"
@@ -62,14 +68,24 @@ export const TableHeaderCell = ({
       {Boolean(title) && <TableTitle align={align} title={title!} />}
       {Boolean(sort) && (
         <Box alignSelf="end" paddingX={2}>
-          <IconButton
-            accessibilityHint="press to change sorting alphabetical order"
-            accessibilityLabel="sort"
-            iconName={sort === "asc" ? "arrow-down" : "arrow-up"}
-            onClick={() => {
-              // Do nothing, the whole cell is clickable
+          {/* Make it look like an IconButton, but we can't nest buttons and the whole row is clickable. */}
+          <View
+            style={{
+              alignItems: "center",
+              backgroundColor: theme.surface.primary,
+              borderRadius: theme.radius.rounded as any,
+              justifyContent: "center",
+              height: 16,
+              width: 16,
             }}
-          />
+          >
+            <FontAwesome6
+              brand="solid"
+              color={theme.text.inverted}
+              name={sort === "asc" ? "arrow-down" : "arrow-up"}
+              size={10}
+            />
+          </View>
         </Box>
       )}
     </Box>

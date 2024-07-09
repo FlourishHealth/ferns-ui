@@ -42,10 +42,12 @@ export const TableRow = ({
       <Box direction="row" paddingY={1} width="100%">
         {Boolean(drawerContents) && (
           <TableCell index={-1}>
+            {/* TODO: The expand table button doesn't exactly line up with the designs */}
             <IconButton
               accessibilityHint="press to expand"
               accessibilityLabel="expand"
               iconName={isExpanded ? "chevron-up" : "chevron-down"}
+              variant="secondary"
               onClick={() => {
                 setIsExpanded(!isExpanded);
               }}
