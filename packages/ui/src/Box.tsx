@@ -252,7 +252,6 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     box = (
       <Pressable
         accessibilityRole="button"
-        // accessibilityRole="button"
         style={propsToStyle()}
         testID={props.testID ? `${props.testID}-clickable` : undefined}
         onLayout={props.onLayout}

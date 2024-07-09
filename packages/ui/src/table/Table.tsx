@@ -40,6 +40,7 @@ export const Table = ({
       return (acc as number) + (curr as number) + 8; // 8 for margin between columns;
     }, 0) as number;
     if (hasDrawerContents) {
+      // Size of IconButton + padding is 56
       width = (width as number) + 56;
     }
   } else {

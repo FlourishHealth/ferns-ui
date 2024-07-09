@@ -314,17 +314,6 @@ export interface FontTheme {
 }
 export type Font = keyof FontTheme;
 
-export interface TableTheme {
-  "mw-s": string;
-  "mw-m": string;
-  "mw-l": string;
-  "mw-xl": string;
-  padH: string;
-  padV: string;
-}
-
-export type TTable = keyof TableTheme;
-
 export interface FernsTheme {
   text: TextTheme;
   surface: SurfaceTheme;
@@ -334,7 +323,6 @@ export interface FernsTheme {
   spacing: SpacingTheme;
   font: FontTheme;
   primitives: ThemePrimitives;
-  table: TableTheme;
 }
 
 export type Direction = "up" | "right" | "down" | "left";

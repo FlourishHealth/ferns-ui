@@ -154,14 +154,6 @@ const defaultTheme: FernsTheme = {
     "3xl": "spacing12",
   },
 
-  table: {
-    "mw-s": "tableMaxWidthS",
-    "mw-m": "tableMaxWidthM",
-    "mw-l": "tableMaxWidthL",
-    "mw-xl": "tableMaxWidthXL",
-    padH: "tableHorizontalPadding",
-    padV: "tableVerticalPadding",
-  },
   // These will continue to throw errors until we have a proper font system in place.
   font: {
     primary: "Nunito",
