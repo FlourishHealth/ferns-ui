@@ -422,7 +422,12 @@ export interface LayerProps {
   children: ReactChildren;
 }
 
-export interface BoxProps {
+type AccessibilityProps = {
+  accessibilityLabel: string;
+  accessibilityHint: string;
+};
+
+export interface BoxPropsBase {
   alignContent?: AlignContent;
   alignItems?: AlignItems;
   alignSelf?: AlignSelf;
@@ -524,6 +529,10 @@ export interface BoxProps {
   onLayout?: (event: LayoutChangeEvent) => void;
   testID?: string;
 }
+
+// If onClick is provided, add accessibility props.
+export type BoxProps = BoxPropsBase &
+  (BoxPropsBase extends {onClick: () => void} ? AccessibilityProps : {});
 
 export type BoxColor = SurfaceColor | "transparent";
 

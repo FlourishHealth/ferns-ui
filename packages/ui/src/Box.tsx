@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, {useContext, useImperativeHandle} from "react";
 import {
+  AccessibilityProps,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -251,8 +252,9 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
   if (props.onClick) {
     box = (
       <Pressable
+        accessibilityHint={(props as AccessibilityProps).accessibilityHint}
+        accessibilityLabel={(props as AccessibilityProps).accessibilityLabel}
         accessibilityRole="button"
-        // accessibilityRole="button"
         style={propsToStyle()}
         testID={props.testID ? `${props.testID}-clickable` : undefined}
         onLayout={props.onLayout}
