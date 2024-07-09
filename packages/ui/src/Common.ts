@@ -1,8 +1,8 @@
-import {SaveFormat} from "expo-image-manipulator";
 import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
 import {ListRenderItemInfo, StyleProp, TextStyle, ViewStyle} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
+import {SvgProps} from "react-native-svg";
 
 import {
   FontAwesome6BrandNames,
@@ -1231,34 +1231,29 @@ export type ActionSheetProps = {
   onPositionChanged?: (hasReachedTop: boolean) => void;
 };
 
-export type AvatarStatus =
-  | "online"
-  | "offline"
-  | "doNotDisturb"
-  | "away"
-  | "meeting"
-  | "vacation"
-  | "sick"
-  | "outOfOffice"
-  | "commuting";
+export type AvatarStatus = "offline" | "online" | "outOfOffice" | "activeMobile" | "imagePicker";
+
+export type AvatarImagePickerEvent = {
+  avatarImageFormat?: string;
+  base64?: string;
+  uri?: string;
+  height?: number;
+  width?: number;
+};
+
+export interface CustomSvgProps extends SvgProps {
+  doNotDisturb?: boolean;
+}
 
 export interface AvatarProps {
-  // Color for the background of the circle when no src picture is present.
-  backgroundColor?: SurfaceColor;
-  // Color for the initials when no src picture is present.
-  textColor?: TextColor;
   /**
    * The name of the user. This is used for the placeholder treatment if an image is not available.
    */
   name: string;
   /**
-   * Override the generated initials from `name`.
-   */
-  initials?: string;
-  /**
    * Adds a white border around Avatar so it's visible when displayed on other images.
    */
-  outline?: boolean;
+  hasBorder?: boolean;
   /**
    * xs: 24px, sm: 32px, md: 48px, lg: 64px, xl: 120px.
    */
@@ -1268,49 +1263,21 @@ export interface AvatarProps {
    */
   src?: string;
   /**
-   * The fit for the image within the Avatar: "cover" | "contain" | "none".
-   * Default is undefined. See Image.tsx for more info
-   */
-  imageFit?: "cover" | "contain" | "none";
-  /**
-   * Allow user to edit the image of the avatar
-   */
-  editAvatarImage?: boolean;
-  /**
    * Function to handle the avatar image edit
    */
-  onChange?: (val: any) => void;
-  /**
-   * Resize image width. If only the width is provided, the image will preserve aspect ratio
-   */
-  avatarImageWidth?: number;
-  /**
-   * Resize image height. If avatarImageWidth is also provided, the image aspect ratio may be
-   * distorted.
-   */
-  avatarImageHeight?: number;
-  /**
-   * The image format that the image will be saved as after any edits by the expo-image-manipulator
-   */
-  avatarImageFormat?: SaveFormat;
+  onChange?: (val: AvatarImagePickerEvent) => void;
   /**
    * The status of the user to display with the avatar.
    */
   status?: AvatarStatus;
   /**
-   * If true, the status indicator will show a mobile icon instead of a dot, if status is one of
-   * "online", "away", "offline", or "doNotDisturb". Will show the normal status icon in other
-   * cases.
+   * If true, the status will have a "Z" to indicate the user has snoozed notifications.
    */
-  statusMobile?: boolean;
+  doNotDisturb?: boolean;
   /**
-   * Text to show when hovering over the avatar image. Only works on web.
+   * Accessibility label for the avatar image.
    */
-  statusText?: string;
-  /**
-   * If edit icon should be present when no image is present
-   */
-  shouldShowEditIconIfNoImage?: boolean;
+  accessibilityLabel?: string;
 }
 
 export interface BadgeProps {

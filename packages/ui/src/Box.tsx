@@ -16,7 +16,7 @@ import {
   AlignSelf,
   BoxProps,
   JustifyContent,
-  SurfaceColor,
+  SurfaceTheme,
 } from "./Common";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {Unifier} from "./Unifier";
@@ -86,7 +86,7 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     alignItems: (value: AlignItems) => ({alignItems: ALIGN_ITEMS[value]}),
     alignContent: (value: AlignContent) => ({alignContent: ALIGN_CONTENT[value]}),
     alignSelf: (value: AlignSelf) => ({alignSelf: ALIGN_SELF[value]}),
-    color: (value: SurfaceColor) => ({backgroundColor: theme.surface[value]}),
+    color: (value: keyof SurfaceTheme) => ({backgroundColor: theme.surface[value]}),
     direction: (value: any) => ({flexDirection: value, display: "flex"}),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     smDirection: (value: any) =>
