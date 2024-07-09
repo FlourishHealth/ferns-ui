@@ -13,7 +13,7 @@ export interface TableTextHandles {
 
 // TODO: Implement isEditing to TableText
 export const TableText = forwardRef<TableTextHandles, TableTextProps>(
-  ({isEditing, value, onSave}, ref) => {
+  ({isEditing, value, onSave, align}, ref) => {
     const {theme} = useContext(ThemeContext);
 
     if (isEditing) {
@@ -22,9 +22,7 @@ export const TableText = forwardRef<TableTextHandles, TableTextProps>(
 
     useImperativeHandle(ref, () => ({
       handleSave: () => {
-        if (onSave) {
-          onSave();
-        }
+        onSave?.();
       },
     }));
 
@@ -34,7 +32,7 @@ export const TableText = forwardRef<TableTextHandles, TableTextProps>(
           color: theme.text.primary,
           fontFamily: theme.font.primary,
           fontSize: 14,
-          textAlign: "left",
+          textAlign: align,
         }}
       >
         {value}

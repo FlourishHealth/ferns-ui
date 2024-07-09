@@ -10,21 +10,16 @@ export const TableTextDemo = (props: Partial<TableTextProps>) => {
 };
 
 export const TableTextVariants = () => {
+  const twoLines = `This text is broken up\ninto two lines`;
   return (
     <Box alignContent="center" justifyContent="center">
       <Box padding={2}>
         <Box marginBottom={1}>
-          <Heading> Default</Heading>
+          <Heading>Default</Heading>
         </Box>
-        <TableText value="sm max width" />
-      </Box>
-
-      <Box padding={2}>
-        <Box marginBottom={1}>
-          <Heading> Variant multi</Heading>
-        </Box>
-        <TableText value="multi" variant="multi" />
-        <TableText value="Has a larger max width meant to stay in single line. Will hold a lot of lorem ipsum" />
+        <TableText value="Smaller Text" />
+        <TableText value="Has a larger amount of text, meant to stay in single line. Will hold a lot of lorem ipsum" />
+        <TableText value={twoLines} />
       </Box>
     </Box>
   );

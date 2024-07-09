@@ -13,7 +13,7 @@ export interface TableNumberHandles {
 
 // TODO: Implement isEditing to TableNumber
 export const TableNumber = forwardRef<TableNumberHandles, TableNumberProps>(
-  ({isEditing, value, onSave}, ref) => {
+  ({isEditing, value, onSave, align = "right"}, ref) => {
     const {theme} = useContext(ThemeContext);
 
     if (isEditing) {
@@ -22,9 +22,7 @@ export const TableNumber = forwardRef<TableNumberHandles, TableNumberProps>(
 
     useImperativeHandle(ref, () => ({
       handleSave: () => {
-        if (onSave) {
-          onSave();
-        }
+        onSave?.();
       },
     }));
 
@@ -34,7 +32,7 @@ export const TableNumber = forwardRef<TableNumberHandles, TableNumberProps>(
           color: theme.text.primary,
           fontFamily: theme.font.primary,
           fontSize: 14,
-          textAlign: "right",
+          textAlign: align,
         }}
       >
         {value}

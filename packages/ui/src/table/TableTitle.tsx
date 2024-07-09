@@ -7,8 +7,9 @@ import {ThemeContext} from "../Theme";
 export const TableTitle: FC<TableTitleProps> = ({title, align = "left"}) => {
   const {theme} = useContext(ThemeContext);
   return (
+    // No hint needed for a title.
+    // eslint-disable-next-line react-native-a11y/has-accessibility-hint
     <Text
-      accessibilityHint=""
       accessibilityLabel={`Table title: ${title}`}
       accessibilityRole="header"
       ellipsizeMode="tail" // ensures that the text is clipped at the end of the line for all platforms
@@ -16,7 +17,8 @@ export const TableTitle: FC<TableTitleProps> = ({title, align = "left"}) => {
       style={{
         fontFamily: theme.font.primary,
         textTransform: "uppercase",
-        fontSize: 16,
+        fontSize: 10,
+        lineHeight: 16,
         fontWeight: "700",
         textAlign: align,
         flexWrap: "wrap",

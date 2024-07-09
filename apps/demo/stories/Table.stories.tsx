@@ -9,7 +9,6 @@ import {
   TableNumber,
   TableRow,
   TableText,
-  TableTitle,
   Text,
 } from "ferns-ui";
 import sortBy from "lodash/sortBy";
@@ -50,64 +49,61 @@ const SortableExpandableTable = () => {
         <TableHeaderCell
           index={0}
           sortable
+          title="Column 1"
           onSortChange={(direction) => {
             setSort(direction, 0);
           }}
-        >
-          <TableTitle title="Column 1" />
-        </TableHeaderCell>
+        />
         <TableHeaderCell
           index={1}
           sortable
+          title="Column 2"
           onSortChange={(direction) => {
             setSort(direction, 1);
           }}
-        >
-          <TableTitle title="Column 2" />
-        </TableHeaderCell>
+        />
         <TableHeaderCell
           index={2}
           sortable
+          title="Column 3"
           onSortChange={(direction) => {
             setSort(direction, 2);
           }}
-        >
-          <TableTitle title="Column 3" />
-        </TableHeaderCell>
+        />
         <TableHeaderCell
+          align="right"
           index={3}
           sortable
+          title="Cost"
           onSortChange={(direction) => {
             setSort(direction, 3);
           }}
-        >
-          <TableTitle title="Cost" />
-        </TableHeaderCell>
+        />
         <TableHeaderCell
+          align="center"
           index={4}
           sortable
+          title="Badge"
           onSortChange={(direction) => {
             setSort(direction, 4);
           }}
-        >
-          <TableTitle align="center" title="Badge" />
-        </TableHeaderCell>
+        />
         <TableHeaderCell
+          align="center"
           index={5}
           sortable
+          title="Boolean"
           onSortChange={(direction) => {
             setSort(direction, 5);
           }}
-        >
-          <TableTitle align="center" title="Boolean" />
-        </TableHeaderCell>
+        />
       </TableHeader>
       {rows.map((row, index) => (
         <TableRow key={row[0]} drawerContents={renderDrawerContents(index)}>
           <TableText value={String(row[0])} />
           <TableText value={String(row[1])} />
           <TableText value={String(row[2])} />
-          <TableText value={`$${(row[3] as number).toFixed(2)}`} />
+          <TableText align="right" value={`$${(row[3] as number).toFixed(2)}`} />
           <TableBadge value="Some Status" />
           <TableBoolean
             value={index % 2 === 0}
@@ -135,20 +131,12 @@ export const StandardTable = (): React.ReactElement => {
   ];
   return (
     <Box color="base" height={190} scroll width={400}>
-      <Table columns={[120, 200, 200, 120]}>
+      <Table columns={[120, 120, 120, 120]}>
         <TableHeader>
-          <TableHeaderCell index={0}>
-            <TableTitle title="Column 1" />
-          </TableHeaderCell>
-          <TableHeaderCell index={1}>
-            <TableTitle title="Column 2" />
-          </TableHeaderCell>
-          <TableHeaderCell index={2}>
-            <TableTitle title="Column 3" />
-          </TableHeaderCell>
-          <TableHeaderCell index={3}>
-            <TableTitle title="Cost" />
-          </TableHeaderCell>
+          <TableHeaderCell index={0} title="Column 1" />
+          <TableHeaderCell index={1} title="Column 2" />
+          <TableHeaderCell index={2} title="Column 3" />
+          <TableHeaderCell align="right" index={3} title="Cost" />
         </TableHeader>
         {rows.map((row) => (
           <TableRow key={row}>

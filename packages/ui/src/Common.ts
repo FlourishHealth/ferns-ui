@@ -1819,10 +1819,21 @@ export interface TableHeaderCellProps {
   /**
    * The content of the table header cell.
    */
-  children: ReactElement;
+  children?: ReactElement;
   index: number;
   sortable?: boolean;
   onSortChange?: (direction: "asc" | "desc" | undefined) => void;
+  /**
+   * The alignment of the text/components in the cell. Most cells should be left aligned,
+   * unless the column is for a badge, icon, or boolean, then center align.
+   * It should be right if the column is right aligned text or numbers.
+   */
+  align?: "left" | "center" | "right";
+  /**
+   * If title is provided, the text will be wrapped in a TableTitle, saving you from having to
+   * wrap the text yourself. Alignments will match between the cell and the title.
+   */
+  title?: string;
 }
 
 export interface TableRowProps {
@@ -2089,9 +2100,10 @@ export interface TableTitleProps {
 
   /**
    * Most titles should be left aligned, but some may be centered, such as badges or booleans.
+   * It should match the alignment of the column.
    * @default "left"
    */
-  align?: "left" | "center";
+  align?: "left" | "center" | "right";
 }
 
 export interface TableBooleanProps {
@@ -2254,13 +2266,14 @@ export interface TableTextProps {
    */
   value: string;
   /**
-   * The variant of the text field.
-   */
-  variant?: "multi";
-  /**
    * Callback to save the text field value.
    */
   onSave?: () => void | Promise<void>;
+  /**
+   * The alignment of the text field. Most text fields should be left aligned.
+   * @default "left"
+   */
+  align?: "left" | "center" | "right";
 }
 
 export interface TableNumberProps {
@@ -2276,4 +2289,9 @@ export interface TableNumberProps {
    * Callback to save the text field value.
    */
   onSave?: () => void | Promise<void>;
+  /**
+   * Numbers generally should be right aligned for ease of scanability.
+   * @default "right"
+   */
+  align?: "left" | "right";
 }
