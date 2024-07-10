@@ -12,13 +12,13 @@ import {Unifier} from "./Unifier";
 type BannerButtonProps = {
   buttonIconName?: string;
   buttonOnClick: () => void | Promise<void>;
-  text: string;
+  buttonText: string;
   loading?: boolean;
 };
 
 const BannerButton = ({
   loading: propsLoading,
-  text,
+  buttonText,
   buttonIconName,
   buttonOnClick,
 }: BannerButtonProps): React.ReactElement | null => {
@@ -31,8 +31,8 @@ const BannerButton = ({
 
   return (
     <Pressable
-      accessibilityHint={`Press to perform action ${text}`}
-      accessibilityLabel={text}
+      accessibilityHint={`Press to perform action ${buttonText}`}
+      accessibilityLabel={buttonText}
       accessibilityRole="button"
       style={{
         alignItems: "center",
@@ -73,7 +73,7 @@ const BannerButton = ({
               <Icon iconName={buttonIconName as IconName} type="solid" />
             </View>
           )}
-          <NativeText style={{fontSize: 12}}>{text}</NativeText>
+          <NativeText style={{fontSize: 12}}>{buttonText}</NativeText>
         </View>
         {Boolean(loading) && (
           <Box marginLeft={2}>
@@ -94,16 +94,11 @@ export const hideBanner = (id: string): Promise<void> => {
   return Unifier.storage.setItem(getKey(id), "true");
 };
 
-export const Banner = ({
-  id,
-  text,
-  status = "info",
-  dismissible = false,
-  hasIcon = false,
-  buttonText,
-  buttonIconName,
-  buttonOnClick,
-}: BannerProps): React.ReactElement | null => {
+export const Banner = (props: BannerProps): React.ReactElement | null => {
+  const {id, text, status = "info", dismissible = false, hasIcon = false, buttonOnClick} = props;
+
+  const {buttonText, buttonIconName} = props as BannerButtonProps;
+
   const {theme} = useContext(ThemeContext);
 
   let bgColor: keyof SurfaceTheme = "secondaryDark";
@@ -136,11 +131,6 @@ export const Banner = ({
   };
 
   if (!show) {
-    return null;
-  }
-
-  if ((buttonText || buttonIconName) && !buttonOnClick) {
-    console.error("Button onClick is required when button text or icon is provided");
     return null;
   }
 
@@ -185,15 +175,15 @@ export const Banner = ({
         {Boolean(buttonText && buttonIconName && buttonOnClick) && (
           <View style={{paddingLeft: 16, paddingRight: theme.spacing.xs as any}}>
             <BannerButton
-              buttonIconName={buttonIconName ?? ""}
+              buttonIconName={buttonIconName}
               buttonOnClick={buttonOnClick ?? (() => {})}
-              text={buttonText ?? ""}
+              buttonText={buttonText}
             />
           </View>
         )}
         {Boolean(buttonText && !buttonIconName && buttonOnClick) && (
           <View style={{paddingLeft: 16, paddingRight: theme.spacing.xs as any}}>
-            <BannerButton buttonOnClick={buttonOnClick ?? (() => {})} text={buttonText ?? ""} />
+            <BannerButton buttonOnClick={buttonOnClick ?? (() => {})} buttonText={buttonText} />
           </View>
         )}
       </View>

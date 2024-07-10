@@ -4,9 +4,12 @@ import React from "react";
 export const BannerDemo = (props: Partial<BannerProps>): React.ReactElement => {
   return (
     <Banner
-      buttonOnClick={() => console.warn("clicked!")}
+      buttonIconName="check"
+      buttonOnClick={() => console.warn("clicked")}
+      buttonText="Button Text"
       dismissible
-      id="banner1"
+      hasIcon
+      id="bannerDemo1"
       text="Banner Text"
       {...props}
     />

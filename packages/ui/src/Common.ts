@@ -1282,17 +1282,50 @@ export interface BadgeProps {
   maxValue?: number;
 }
 
-export interface BannerProps {
-  id: string;
-  // the text to display in the banner
-  text: string;
-  status?: "info" | "alert" | "warning"; // default "info"
-  dismissible?: boolean; // default false
-  hasIcon?: boolean; // default false
-  buttonText?: string;
+type BannerButtonProps = {
+  /**
+   * Text to display on optional banner button, will display button if provided
+   */
+  buttonText: string;
+  /**
+   * Icon to display on optional banner button
+   */
   buttonIconName?: IconName;
-  buttonOnClick?: () => void;
+};
+
+export interface BannerPropsBase {
+  /**
+   * Used to identify if banner has been dismissed by the user.
+   */
+  id: string;
+  /**
+   * The text to display in the main body of the banner.
+   */
+  text: string;
+  /**
+   * The status of the banner changes the color of the banner.
+   * @default "info"
+   */
+  status?: "info" | "alert" | "warning";
+  /**
+   * Allows the banner to be dismissed and removed by clicking X button on the right.
+   * @default false
+   */
+  dismissible?: boolean; // default false
+  /**
+   * Renders triangle with exclamation mark icon to the left of banner content.
+   * @default false
+   */
+  hasIcon?: boolean;
+  /**
+   * Function called when optional button on banner is clicked.
+   */
+  buttonOnClick?: () => void | Promise<void>;
 }
+
+export type BannerProps =
+  | (BannerPropsBase & {buttonOnClick?: undefined})
+  | (BannerPropsBase & {buttonOnClick: () => void | Promise<void>} & BannerButtonProps);
 
 export interface BodyProps {
   scroll?: boolean;

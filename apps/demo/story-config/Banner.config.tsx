@@ -46,7 +46,7 @@ export const BannerConfiguration: DemoConfiguration = {
     controls: {
       text: {
         type: "text",
-        defaultValue: "Banner text",
+        defaultValue: "Banner text content",
       },
       status: {
         type: "select",
@@ -72,7 +72,7 @@ export const BannerConfiguration: DemoConfiguration = {
           {label: "check", value: "check"},
           {label: "arrow-right", value: "arrow-right"},
         ],
-        defaultValue: "",
+        defaultValue: "check",
       },
       buttonText: {
         type: "text",
@@ -88,7 +88,7 @@ export const BannerConfiguration: DemoConfiguration = {
           <Box direction="column" display="flex">
             <Banner
               dismissible
-              id="dismissibleBanner"
+              id="dismissibleBannerDemo"
               text="When you click this banner, it dismisses"
             />
           </Box>
@@ -159,7 +159,7 @@ export const BannerConfiguration: DemoConfiguration = {
             <Banner
               dismissible
               hasIcon
-              id="hasIconBanner"
+              id="hasIconBannerDemo"
               status="info"
               text="This banner has an icon"
             />
@@ -180,7 +180,7 @@ export const BannerConfiguration: DemoConfiguration = {
               buttonOnClick={clickFunction}
               buttonText="Button text"
               dismissible
-              id="ButtonBanner"
+              id="ButtonBannerDemo"
               status="info"
               text="This banner has a button. Buttons on banners have text and optionally have an icon."
             />
