@@ -99,8 +99,8 @@ export const Toast = ({
     throw new Error("Secondary not supported yet");
   }
 
-  if (persistent && !onDismiss) {
-    console.warn("Toast is persistent but no onDismiss callback provided");
+  if (!persistent && !onDismiss) {
+    console.warn("Toast is not persistent but no onDismiss callback provided");
   }
 
   if (variant === "warning") {

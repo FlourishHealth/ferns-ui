@@ -7,8 +7,8 @@ import {Text} from "./Text";
 export const CustomSelect = ({
   value,
   onChange,
-  placeholder,
-  disabled,
+  // placeholder,
+  // disabled,
   options,
 }: CustomSelectProps): ReactElement | null => {
   const [customValue, setCustomValue] = useState(value);
@@ -32,6 +32,7 @@ export const CustomSelect = ({
 
   // Custom select has 3 values - the overall field value, the value of the select menu,
   // and the value of the custom input
+  // eslint-disable-next-line unused-imports/no-unused-vars
   const handleCustomSelectListChange = (newValue?: string) => {
     // If "custom" is selected from the dropdown, toggle the custom input open and clear the
     // previous value
@@ -73,7 +74,7 @@ export const CustomSelect = ({
             placeholderText={placeholder}
             type="text"
             value={value}
-            onChange={(result) => onChange(result.value)}
+            onChange={onChange}
           />
         </Box>
       )} */}

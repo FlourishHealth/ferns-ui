@@ -8,9 +8,7 @@ import {
   ButtonConfiguration,
   CardConfiguration,
   CheckBoxConfiguration,
-  DateFieldConfiguration,
   DateTimeFieldConfiguration,
-  DateTimeModalConfiguration,
   HeadingConfiguration,
   IconButtonConfiguration,
   IconConfiguration,
@@ -38,12 +36,13 @@ import {
   TextConfiguration,
   TextFieldConfiguration,
   ThemeConfiguration,
-  TimeFieldConfiguration,
   ToastConfiguration,
   TooltipConfiguration,
 } from "@story-config";
 import {FieldProps} from "ferns-ui";
 import React from "react";
+
+import {NumberFieldConfiguration} from "./story-config/NumberField.config";
 
 export type DemoConfigStatus = "planned" | "inProgress" | "ready" | "notSupported";
 
@@ -169,9 +168,7 @@ const Config: DemoConfigurationBase[] = [
   CardConfiguration,
   // ChatBubbleConfiguration,
   CheckBoxConfiguration,
-  DateTimeModalConfiguration,
   DateTimeFieldConfiguration,
-  DateFieldConfiguration,
   HeadingConfiguration,
   IconConfiguration,
   IconButtonConfiguration,
@@ -180,6 +177,7 @@ const Config: DemoConfigurationBase[] = [
   // MessageConfiguration,
   ModalConfiguration,
   MultiselectFieldConfiguration,
+  NumberFieldConfiguration,
   PaginationConfiguration,
   PasswordFieldConfiguration,
   RadioFieldConfiguration,
@@ -201,7 +199,6 @@ const Config: DemoConfigurationBase[] = [
   TextAreaConfiguration,
   TextFieldConfiguration,
   ThemeConfiguration,
-  TimeFieldConfiguration,
   ToastConfiguration,
   TooltipConfiguration,
 ];
