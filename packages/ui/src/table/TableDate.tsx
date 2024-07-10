@@ -56,12 +56,12 @@ export const TableDate = forwardRef<TableDateHandles, TableDateProps>(
             errorText={errorMessage}
             value={editDate}
             onChange={(res) => {
-              if (!isValidDate(res.value)) {
+              if (!isValidDate(res)) {
                 setErrorMessage("Invalid date. Please use MM/DD/YYYY.");
               } else {
                 setErrorMessage("");
               }
-              setEditDate(res.value);
+              setEditDate(res);
             }}
           />
         ) : (

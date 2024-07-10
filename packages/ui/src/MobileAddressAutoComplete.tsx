@@ -63,7 +63,6 @@ export const MobileAddressAutocomplete = ({
       <TextField
         disabled={disabled}
         id="address1"
-        name="Street Address"
         testID={testID}
         type="text"
         value={inputValue}
@@ -106,7 +105,7 @@ export const MobileAddressAutocomplete = ({
             onFocus: () => setIsFocused(true),
             onBlur: () => setIsFocused(false),
             onChange: (event) => {
-              handleAddressChange({value: event.nativeEvent.text});
+              handleAddressChange(event.nativeEvent.text);
             },
           }}
           onPress={(data, details = null) => {

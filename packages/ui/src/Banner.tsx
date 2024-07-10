@@ -25,7 +25,7 @@ const BannerType = {
 
 export const Banner = ({
   id,
-  customButtonProps,
+  // customButtonProps,
   text,
   subtext,
   color = "secondaryDark",
@@ -80,6 +80,7 @@ export const Banner = ({
           {/* accessibility-hint handled in IconButton component */}
           {/* eslint-disable-next-line react-native-a11y/has-accessibility-hint */}
           <IconButton
+            accessibilityHint="Follow banner action"
             accessibilityLabel="arrow-right"
             iconName="arrow-right"
             onClick={(): void => onClick?.()}
@@ -89,9 +90,12 @@ export const Banner = ({
     } else if (type === DISMISS) {
       return (
         <Box alignItems="center" display="block" justifyContent="center" width={40}>
-          {/* accessibility-hint handled in IconButton component */}
-          {/* eslint-disable-next-line react-native-a11y/has-accessibility-hint */}
-          <IconButton accessibilityLabel="" iconName="circle-xmark" onClick={dismiss} />
+          <IconButton
+            accessibilityHint="Banner is dismissed"
+            accessibilityLabel=""
+            iconName="circle-xmark"
+            onClick={dismiss}
+          />
         </Box>
       );
     } else {
