@@ -1,14 +1,14 @@
 import React from "react";
 
+import {AddressField} from "./AddressField";
 import {BooleanField} from "./BooleanField";
 import {Box} from "./Box";
-import {AddressInterface, FieldProps, ReactChildren, TextFieldType} from "./Common";
+import {FieldProps, ReactChildren, TextFieldType} from "./Common";
 import {CustomSelect} from "./CustomSelect";
 import {FieldWithLabels} from "./FieldWithLabels";
 import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
-import {UnifiedAddressAutoCompleteField} from "./UnifiedAddressAutoComplete";
 
 export const Field = ({
   name,
@@ -35,15 +35,6 @@ export const Field = ({
   testID,
   transformValue,
 }: FieldProps) => {
-  const handleAddressChange = (field: string, newValue: string) => {
-    onChange({...value, [field]: newValue});
-    onBlur && onBlur({...value, [field]: newValue});
-  };
-
-  const handleAutoCompleteChange = (newValue: AddressInterface) => {
-    onChange({...value, ...newValue});
-  };
-
   const renderField = (): ReactChildren => {
     // if (type === "select") {
     //   if (!options) {
@@ -155,91 +146,17 @@ export const Field = ({
         />
       );
     } else if (type === "address") {
-      const addressValue = value ? value : {};
-      const {
-        address1 = "",
-        address2 = "",
-        city = "",
-        state = "",
-        zipcode = "",
-        countyName = "",
-        countyCode = "",
-      }: AddressInterface = addressValue;
       return (
-        <>
-          <UnifiedAddressAutoCompleteField
-            disabled={disabled}
-            googleMapsApiKey={googleMapsApiKey}
-            googlePlacesMobileStyles={googlePlacesMobileStyles}
-            handleAddressChange={(result) => handleAddressChange("address1", result.value)}
-            handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
-            includeCounty={includeCounty}
-            inputValue={address1}
-            testID={`${testID}-address1`}
-          />
-          <TextField
-            disabled={disabled}
-            id="address2"
-            testID={`${testID}-address2`}
-            title="Apt, suite, etc"
-            type="text"
-            value={address2}
-            onChange={(result) => handleAddressChange("address2", result.value)}
-          />
-          <TextField
-            disabled={disabled}
-            id="city"
-            testID={`${testID}-city`}
-            title="City"
-            type="text"
-            value={city}
-            onChange={(result) => handleAddressChange("city", result.value)}
-          />
-          {/* <SelectList
-            disabled={disabled}
-            id="state"
-            label="State"
-            options={USSTATESLIST}
-            placeholder="Select state"
-            style={{borderRadius: 16}}
-            testID={`${testID}-state`}
-            value={state}
-            onChange={(result) => {
-              handleAddressChange("state", result!);
-            }}
-          /> */}
-          <TextField
-            disabled={disabled}
-            id="zipcode"
-            testID={`${testID}-zip`}
-            title="Zipcode"
-            type="text"
-            value={zipcode}
-            onChange={(result) => handleAddressChange("zipcode", result.value)}
-          />
-          {includeCounty && (
-            <>
-              <TextField
-                disabled={disabled}
-                id="countyName"
-                testID={`${testID}-county`}
-                title="County Name"
-                type="text"
-                value={countyName}
-                onChange={(result) => handleAddressChange("countyName", result.value)}
-              />
-              <TextField
-                disabled={disabled}
-                id="countyCode"
-                testID={`${testID}-county-code`}
-                title="County Code"
-                type="number"
-                value={countyCode}
-                onChange={(result) => handleAddressChange("countyCode", result.value)}
-              />
-            </>
-          )}
-        </>
+        <AddressField
+          disabled={disabled}
+          googleMapsApiKey={googleMapsApiKey}
+          googlePlacesMobileStyles={googlePlacesMobileStyles}
+          includeCounty={includeCounty}
+          testID={testID}
+          value={value}
+          onBlur={onBlur}
+          onChange={onChange}
+        />
       );
     } else if (type === "customSelect") {
       if (!options) {

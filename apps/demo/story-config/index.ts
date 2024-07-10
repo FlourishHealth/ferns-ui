@@ -1,4 +1,5 @@
 export * from "./Accordion.config";
+export * from "./AddressField.config";
 export * from "./Avatar.config";
 export * from "./Badge.config";
 export * from "./Banner.config";

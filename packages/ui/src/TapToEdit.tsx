@@ -3,7 +3,7 @@ import {Linking} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {TapToEditProps} from "./Common";
+import {AddressInterface, TapToEditProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
 // import {useOpenAPISpec} from "./OpenAPIContext";
@@ -42,7 +42,7 @@ const TapToEditTitle = ({
   }
 };
 
-export function formatAddress(address: any, asString = false): string {
+export function formatAddress(address: AddressInterface, asString = false): string {
   let city = "";
   if (address?.city) {
     city = address?.state || address.zipcode ? `${address.city}, ` : `${address.city}`;
@@ -62,7 +62,7 @@ export function formatAddress(address: any, asString = false): string {
   const addressLineOne = address?.address1 ?? "";
   const addressLineTwo = address?.address2 ?? "";
   const addressLineThree = `${city}${state}${zip}`;
-  const addressLineFour = `${countyName}${address?.countyCode ? ` [${countyCode}]` : ""}`;
+  const addressLineFour = `${countyName}${address?.countyCode ? ` (${countyCode})` : ""}`;
 
   if (!asString) {
     // Only add new lines if lines before and after are not empty to avoid awkward whitespace
