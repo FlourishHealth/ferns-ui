@@ -1,7 +1,7 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
 import React, {FC, useContext, useState} from "react";
-import {ActivityIndicator, Pressable, View} from "react-native";
+import {ActivityIndicator, Pressable, Text as NativeText, View} from "react-native";
 
 import {IconButtonProps} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
@@ -51,6 +51,8 @@ const IconButtonComponent: FC<IconButtonProps> = ({
   confirmationHeading = "Confirm",
   confirmationText = "Are you sure you want to continue?",
   iconName,
+  indicator,
+  indicatorText,
   loading: propsLoading = false,
   testID,
   variant = "primary",
@@ -70,25 +72,24 @@ const IconButtonComponent: FC<IconButtonProps> = ({
     return null;
   }
 
-  const getStyles = () => {
-    let backgroundColor = theme.surface.primary;
-    let color = theme.text.inverted;
+  let backgroundColor = theme.surface.primary;
+  let color = theme.text.inverted;
 
-    if (variant === "secondary") {
-      backgroundColor = theme.surface.neutralLight;
-      color = theme.surface.secondaryDark;
-    } else if (variant === "muted") {
-      backgroundColor = theme.text.inverted;
-      color = theme.surface.primary;
-    } else if (variant === "destructive") {
-      backgroundColor = theme.text.inverted;
-      color = theme.text.error;
-    }
+  if (variant === "secondary") {
+    backgroundColor = theme.surface.neutralLight;
+    color = theme.surface.secondaryDark;
+  } else if (variant === "muted") {
+    backgroundColor = theme.text.inverted;
+    color = theme.surface.primary;
+  } else if (variant === "navigation") {
+    backgroundColor = theme.text.inverted;
+    color = theme.text.primary;
+  } else if (variant === "destructive") {
+    backgroundColor = theme.text.inverted;
+    color = theme.text.error;
+  }
 
-    return {backgroundColor, color};
-  };
-
-  const {backgroundColor, color} = getStyles();
+  const indicatorColor = indicator ? theme.surface[indicator] : undefined;
 
   return (
     <Pressable
@@ -129,15 +130,42 @@ const IconButtonComponent: FC<IconButtonProps> = ({
         {leading: true}
       )}
     >
-      <View>
-        {Boolean(loading) ? (
-          <View>
-            <ActivityIndicator color={color as any} size="small" />
-          </View>
-        ) : (
-          <FontAwesome6 brand="solid" color={color as any} name={iconName} size={16} />
-        )}
-      </View>
+      {Boolean(loading) ? (
+        <ActivityIndicator color={color} size="small" />
+      ) : (
+        <FontAwesome6 brand="solid" color={color} name={iconName} size={16} />
+      )}
+      {Boolean(indicator) && (
+        <View
+          style={{
+            display: "flex",
+            height: 12,
+            width: 12,
+            borderRadius: 10,
+            padding: theme.spacing.xs as any,
+            backgroundColor: indicatorColor,
+            position: "absolute",
+            alignItems: "center",
+            justifyContent: "center",
+            bottom: 0,
+            right: 0,
+          }}
+        >
+          {Boolean(indicatorText) && (
+            <NativeText
+              style={{
+                color: theme.text.inverted,
+                textAlign: "center",
+                fontFamily: theme.font.primary,
+                fontSize: 10,
+                fontWeight: 700,
+              }}
+            >
+              {indicatorText}
+            </NativeText>
+          )}
+        </View>
+      )}
       {withConfirmation && (
         <ConfirmationModal
           subTitle={undefined}

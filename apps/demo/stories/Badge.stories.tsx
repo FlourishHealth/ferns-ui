@@ -14,7 +14,7 @@ export const BadgeDemo = (props: Partial<BadgeProps>) => {
 function badgeLine(text: string, badgeProps: any) {
   return (
     <Box direction="row" paddingY={2}>
-      <Box marginRight={5}>
+      <Box marginRight={2}>
         <Text>{text}</Text>
       </Box>
       <Badge {...badgeProps} />

@@ -75,18 +75,19 @@ export const Badge = ({
       style={{
         justifyContent: "center",
         alignItems: "center",
-        paddingVertical: theme.spacing.xs as any,
-        paddingHorizontal: theme.spacing.sm as any,
+        paddingVertical: variant === "iconOnly" ? 1 : (theme.spacing.xs as any),
+        paddingHorizontal:
+          variant === "iconOnly" ? (theme.spacing.xs as any) : (theme.spacing.sm as any),
         flexDirection: "row",
         borderRadius: badgeBorderRadius as any,
         backgroundColor: theme.surface[badgeBgColor],
-        height: variant === "iconOnly" ? (theme.spacing.xl as any) : "auto",
-        width: variant === "iconOnly" ? (theme.spacing.xl as any) : "auto",
+        height: variant === "iconOnly" ? 16 : "auto",
+        width: variant === "iconOnly" ? 16 : "auto",
       }}
     >
       {Boolean(variant !== "numberOnly") && (
-        <View style={{marginRight: theme.spacing.sm as any}}>
-          <Icon color={badgeColor} iconName={iconName} size="sm" />
+        <View style={{marginRight: variant === "iconOnly" ? 0 : (theme.spacing.sm as any)}}>
+          <Icon color={badgeColor} iconName={iconName} size="xs" />
         </View>
       )}
       {Boolean(variant !== "iconOnly") && (
