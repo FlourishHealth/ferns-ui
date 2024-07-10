@@ -7,6 +7,7 @@ import {CustomSelect} from "./CustomSelect";
 import {DateTimeField} from "./DateTimeField";
 import {FieldWithLabels} from "./FieldWithLabels";
 import {NumberField} from "./NumberField";
+import {SelectField} from "./SelectField";
 import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
@@ -45,26 +46,24 @@ export const Field = ({
   };
 
   const renderField = (): ReactChildren => {
-    // if (type === "select") {
-    //   if (!options) {
-    //     console.error("Field with type=select require options");
-    //     return undefined;
-    //   }
-    //   return (
-    //     <SelectList
-    //       disabled={disabled}
-    //       id={name}
-    //       options={options}
-    //       placeholder={placeholder}
-    //       testID={testID}
-    //       value={value}
-    //       onChange={(result) => {
-    //         onChange(result);
-    //         onBlur && onBlur(result);
-    //       }}
-    //     />
-    //   );
-    // }
+    if (type === "select") {
+      if (!options) {
+        console.error("Field with type=select require options");
+        return undefined;
+      }
+      return (
+        <SelectField
+          disabled={disabled}
+          options={options}
+          placeholder={placeholder}
+          value={value}
+          onChange={(result) => {
+            onChange(result);
+            onBlur && onBlur(result);
+          }}
+        />
+      );
+    }
     // TODO: Either implement multiselect or remove it
     //  else if (type === "multiselect") {
     //   if (options === undefined) {
