@@ -5,7 +5,9 @@ import {BooleanField} from "./BooleanField";
 import {Box} from "./Box";
 import {FieldProps, ReactChildren, TextFieldType} from "./Common";
 import {CustomSelect} from "./CustomSelect";
+import {DateTimeField} from "./DateTimeField";
 import {FieldWithLabels} from "./FieldWithLabels";
+import {NumberField} from "./NumberField";
 import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
@@ -14,7 +16,6 @@ export const Field = ({
   name,
   label,
   labelColor,
-  height,
   type,
   rows,
   value,
@@ -33,7 +34,6 @@ export const Field = ({
   googleMapsApiKey,
   googlePlacesMobileStyles,
   testID,
-  transformValue,
 }: FieldProps) => {
   const renderField = (): ReactChildren => {
     // if (type === "select") {
@@ -84,7 +84,7 @@ export const Field = ({
     //               testID={`${testID}-${o.value}`}
     //               onChange={(result) => {
     //                 let newValue;
-    //                 if (result.value) {
+    //                 if (result) {
     //                   if (value.includes(o.value)) {
     //                     console.warn(`Tried to add value that already exists: ${o.value}`);
     //                     return;
@@ -108,14 +108,13 @@ export const Field = ({
       return (
         <TextArea
           disabled={disabled}
-          height={height ?? 100}
           id={name}
           placeholderText={Boolean(value) ? "" : placeholder}
           rows={rows}
           testID={testID}
           value={String(value)}
           onBlur={onBlur}
-          onChange={(result) => onChange(result.value)}
+          onChange={(result) => onChange(result)}
         />
       );
     } else if (type === "boolean") {
@@ -131,18 +130,13 @@ export const Field = ({
       );
     } else if (type && ["date", "time", "datetime"].includes(type)) {
       return (
-        <TextField
-          disabled={disabled}
+        <DateTimeField
           id={name}
           placeholderText={placeholder}
           testID={testID}
-          transformValue={transformValue}
           type={type as "date" | "time" | "datetime"}
           value={value}
-          onBlur={(result) => {
-            onBlur && onBlur(result.value);
-          }}
-          onChange={(result) => onChange(result.value)}
+          onChange={(result) => onChange(result)}
         />
       );
     } else if (type === "address") {
@@ -177,7 +171,7 @@ export const Field = ({
       );
     } else if (type === "number") {
       return (
-        <TextField
+        <NumberField
           disabled={disabled}
           id={name}
           placeholderText={placeholder}
@@ -185,10 +179,10 @@ export const Field = ({
           type="number"
           value={value}
           onBlur={(result) => {
-            onBlur && onBlur(result.value);
+            onBlur && onBlur(result);
           }}
           onChange={(result) => {
-            onChange(result.value);
+            onChange(result);
           }}
         />
       );
@@ -225,23 +219,12 @@ export const Field = ({
           id={name}
           placeholderText={placeholder}
           testID={testID}
-          type={
-            tfType as
-              | "date"
-              | "datetime"
-              | "email"
-              | "number"
-              | "password"
-              | "phoneNumber"
-              | "text"
-              | "time"
-              | "url"
-          }
+          type={tfType as "email" | "password" | "phoneNumber" | "text" | "url"}
           value={tfValue}
           onBlur={(result) => {
-            onBlur && onBlur(result.value);
+            onBlur && onBlur(result);
           }}
-          onChange={(result) => onChange(result.value)}
+          onChange={(result) => onChange(result)}
         />
       );
     }

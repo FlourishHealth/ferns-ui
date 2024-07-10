@@ -10,7 +10,7 @@ export interface TableBadgeProps {
   isEditing?: boolean;
 }
 
-export const TableBadge: FC<TableBadgeProps> = ({value, isEditing}) => {
+export const TableBadge: FC<TableBadgeProps> = () => {
   return (
     <View>
       <Text>TableBadge</Text>

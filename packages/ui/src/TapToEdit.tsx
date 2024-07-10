@@ -193,7 +193,7 @@ export const TapToEdit = ({
         } catch (error) {
           // Don't print an error message for empty values.
           if (value) {
-            console.debug(`Invalid URL: ${value}`);
+            console.debug(`Invalid URL: $value`);
           }
           displayValue = value;
         }

@@ -57,8 +57,8 @@ export const UnifiedAddressAutoCompleteField = ({
         title="Street Address"
         type="text"
         value={inputValue}
-        onChange={({value}): void => {
-          handleAddressChange({value});
+        onChange={(value): void => {
+          handleAddressChange(value);
         }}
       />
     );

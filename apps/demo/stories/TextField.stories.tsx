@@ -7,7 +7,7 @@ export const TextFieldDemo = (): ReactElement => {
     <TextField
       placeholderText="This is placeholder text."
       value={value}
-      onChange={(v) => setValue(v.value)}
+      onChange={(v) => setValue(v)}
     />
   );
 };
@@ -19,7 +19,7 @@ export const TextFieldWithLabelDemo = (): ReactElement => {
       placeholderText="This is placeholder text."
       title="Form field title"
       value={value}
-      onChange={(v) => setValue(v.value)}
+      onChange={(v) => setValue(v)}
     />
   );
 };
@@ -32,7 +32,7 @@ export const TextFieldWithHelperTextDemo = (): ReactElement => {
       placeholderText="This is placeholder text."
       title="Form field title"
       value={value}
-      onChange={(v) => setValue(v.value)}
+      onChange={(v) => setValue(v)}
     />
   );
 };
@@ -46,7 +46,7 @@ export const TextFieldWithErrorMsgDemo = (): ReactElement => {
       placeholderText="This is placeholder text."
       title="Enter some text"
       value={value}
-      onChange={(v) => setValue(v.value)}
+      onChange={(v) => setValue(v)}
     />
   );
 };
@@ -60,7 +60,9 @@ export const TextFieldDisabledDemo = (): ReactElement => {
       placeholderText="This is placeholder text."
       title="Form field title"
       value={value}
-      onChange={(v) => setValue(v.value)}
+      onChange={(v) => {
+        setValue(v);
+      }}
     />
   );
 };

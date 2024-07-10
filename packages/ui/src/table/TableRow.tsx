@@ -39,6 +39,7 @@ export const TableRow = ({
         {Boolean(drawerContents) && (
           <Box width={30}>
             <IconButton
+              accessibilityHint=""
               accessibilityLabel="expand"
               iconName={isExpanded ? "chevron-up" : "chevron-down"}
               onClick={() => {

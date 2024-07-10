@@ -51,6 +51,7 @@ export const TableHeaderCell = ({
         {Boolean(sort) && (
           <Box paddingX={2}>
             <IconButton
+              accessibilityHint=""
               accessibilityLabel="sort"
               iconName={sort === "asc" ? "arrow-down" : "arrow-up"}
               onClick={() => {}}

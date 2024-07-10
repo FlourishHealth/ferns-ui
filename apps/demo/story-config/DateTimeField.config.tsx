@@ -1,8 +1,9 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
 import {DateTimeField} from "ferns-ui";
-import React from "react";
 
+import {DateFieldStory, DateTimeFieldDemo, DateTimeFieldStory, TimeFieldStory} from "../stories";
+
+// TODO: Update with the notes from TimeField and DateField.
 export const DateTimeFieldConfiguration: DemoConfiguration = {
   name: "Date & time field",
   component: DateTimeField,
@@ -33,7 +34,11 @@ export const DateTimeFieldConfiguration: DemoConfiguration = {
     doNot: ["Do not remove the descriptive text when there’s an error."],
   },
   props: {},
-  demo: () => <DefaultDemo />,
+  demo: DateTimeFieldDemo,
   demoOptions: {},
-  stories: {},
+  stories: {
+    DateTime: {render: DateTimeFieldStory},
+    Time: {render: TimeFieldStory},
+    Date: {render: DateFieldStory},
+  },
 };
