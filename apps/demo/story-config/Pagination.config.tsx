@@ -1,11 +1,12 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
-import {PaginationControl} from "ferns-ui/dist/Pagination";
+import {Pagination} from "ferns-ui";
 import React from "react";
+
+import {PaginationDemo, PaginationMoreStory, PaginationStory} from "../stories";
 
 export const PaginationConfiguration: DemoConfiguration = {
   name: "Pagination",
-  component: PaginationControl,
+  component: Pagination,
   related: ["Top navigation", "Bottom navigation"],
   description:
     "Break large sets of content into smaller, manageable pages. Used primarily in the staff portal to parse large tables.",
@@ -32,7 +33,10 @@ export const PaginationConfiguration: DemoConfiguration = {
     doNot: ["Use pagination if only one page is needed."],
   },
   props: {},
-  demo: () => <DefaultDemo />,
+  demo: () => <PaginationDemo />,
   demoOptions: {},
-  stories: {},
+  stories: {
+    PaginationSizes: {render: PaginationStory},
+    PaginationMore: {render: PaginationMoreStory},
+  },
 };

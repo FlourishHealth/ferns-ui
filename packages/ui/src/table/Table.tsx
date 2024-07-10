@@ -4,7 +4,7 @@ import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes"
 
 import {Box} from "../Box";
 import {ColumnSortInterface, TableProps} from "../Common";
-import {PaginationControl} from "../Pagination";
+import {Pagination} from "../Pagination";
 import {TableContextProvider} from "./tableContext";
 
 export const Table = ({
@@ -17,6 +17,7 @@ export const Table = ({
   sort,
   page: propsPage,
   setPage: propsSetPage,
+  totalPages,
   more,
   extraControls,
 }: TableProps): React.ReactElement => {
@@ -94,13 +95,12 @@ export const Table = ({
             </ScrollView>
           </ScrollView>
         </Box>
-        {Boolean(shouldPaginate) && (
+        {Boolean(shouldPaginate && totalPages !== undefined) && (
           <Box alignItems="center" borderTop="default" direction="row" height={60} paddingX={8}>
-            <PaginationControl
+            <Pagination
               page={propsPage ?? page}
               setPage={propsSetPage ?? setPage}
-              shouldDisableBackButton={(propsPage ?? page) <= 1}
-              shouldDisableNextButton={!more}
+              totalPages={totalPages!}
             />
             {Boolean(extraControls) && extraControls}
           </Box>

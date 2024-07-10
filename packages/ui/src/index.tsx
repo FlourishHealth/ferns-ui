@@ -39,6 +39,7 @@ export * from "./NumberField";
 export * from "./NumberPickerActionSheet";
 export * from "./OpenAPIContext";
 export * from "./Page";
+export * from "./Pagination";
 export * from "./PasswordField";
 export * from "./PhoneNumberField";
 export * from "./Radio";
