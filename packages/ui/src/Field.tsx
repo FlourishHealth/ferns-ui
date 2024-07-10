@@ -4,7 +4,9 @@ import {BooleanField} from "./BooleanField";
 import {Box} from "./Box";
 import {AddressInterface, FieldProps, ReactChildren, TextFieldType} from "./Common";
 import {CustomSelect} from "./CustomSelect";
+import {DateTimeField} from "./DateTimeField";
 import {FieldWithLabels} from "./FieldWithLabels";
+import {NumberField} from "./NumberField";
 import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
@@ -14,7 +16,6 @@ export const Field = ({
   name,
   label,
   labelColor,
-  height,
   type,
   rows,
   value,
@@ -33,7 +34,6 @@ export const Field = ({
   googleMapsApiKey,
   googlePlacesMobileStyles,
   testID,
-  transformValue,
 }: FieldProps) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
@@ -93,7 +93,7 @@ export const Field = ({
     //               testID={`${testID}-${o.value}`}
     //               onChange={(result) => {
     //                 let newValue;
-    //                 if (result.value) {
+    //                 if (result) {
     //                   if (value.includes(o.value)) {
     //                     console.warn(`Tried to add value that already exists: ${o.value}`);
     //                     return;
@@ -117,14 +117,13 @@ export const Field = ({
       return (
         <TextArea
           disabled={disabled}
-          height={height ?? 100}
           id={name}
           placeholderText={Boolean(value) ? "" : placeholder}
           rows={rows}
           testID={testID}
           value={String(value)}
           onBlur={onBlur}
-          onChange={(result) => onChange(result.value)}
+          onChange={(result) => onChange(result)}
         />
       );
     } else if (type === "boolean") {
@@ -140,18 +139,13 @@ export const Field = ({
       );
     } else if (type && ["date", "time", "datetime"].includes(type)) {
       return (
-        <TextField
-          disabled={disabled}
+        <DateTimeField
           id={name}
           placeholderText={placeholder}
           testID={testID}
-          transformValue={transformValue}
           type={type as "date" | "time" | "datetime"}
           value={value}
-          onBlur={(result) => {
-            onBlur && onBlur(result.value);
-          }}
-          onChange={(result) => onChange(result.value)}
+          onChange={(result) => onChange(result)}
         />
       );
     } else if (type === "address") {
@@ -160,6 +154,7 @@ export const Field = ({
         address1 = "",
         address2 = "",
         city = "",
+        // eslint-disable-next-line unused-imports/no-unused-vars
         state = "",
         zipcode = "",
         countyName = "",
@@ -171,7 +166,7 @@ export const Field = ({
             disabled={disabled}
             googleMapsApiKey={googleMapsApiKey}
             googlePlacesMobileStyles={googlePlacesMobileStyles}
-            handleAddressChange={(result) => handleAddressChange("address1", result.value)}
+            handleAddressChange={(result) => handleAddressChange("address1", result)}
             handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
             includeCounty={includeCounty}
             inputValue={address1}
@@ -184,7 +179,7 @@ export const Field = ({
             title="Apt, suite, etc"
             type="text"
             value={address2}
-            onChange={(result) => handleAddressChange("address2", result.value)}
+            onChange={(result) => handleAddressChange("address2", result)}
           />
           <TextField
             disabled={disabled}
@@ -193,7 +188,7 @@ export const Field = ({
             title="City"
             type="text"
             value={city}
-            onChange={(result) => handleAddressChange("city", result.value)}
+            onChange={(result) => handleAddressChange("city", result)}
           />
           {/* <SelectList
             disabled={disabled}
@@ -215,7 +210,7 @@ export const Field = ({
             title="Zipcode"
             type="text"
             value={zipcode}
-            onChange={(result) => handleAddressChange("zipcode", result.value)}
+            onChange={(result) => handleAddressChange("zipcode", result)}
           />
           {includeCounty && (
             <>
@@ -226,16 +221,16 @@ export const Field = ({
                 title="County Name"
                 type="text"
                 value={countyName}
-                onChange={(result) => handleAddressChange("countyName", result.value)}
+                onChange={(result) => handleAddressChange("countyName", result)}
               />
-              <TextField
+              <NumberField
                 disabled={disabled}
                 id="countyCode"
                 testID={`${testID}-county-code`}
                 title="County Code"
                 type="number"
                 value={countyCode}
-                onChange={(result) => handleAddressChange("countyCode", result.value)}
+                onChange={(result) => handleAddressChange("countyCode", result)}
               />
             </>
           )}
@@ -260,7 +255,7 @@ export const Field = ({
       );
     } else if (type === "number") {
       return (
-        <TextField
+        <NumberField
           disabled={disabled}
           id={name}
           placeholderText={placeholder}
@@ -268,10 +263,10 @@ export const Field = ({
           type="number"
           value={value}
           onBlur={(result) => {
-            onBlur && onBlur(result.value);
+            onBlur && onBlur(result);
           }}
           onChange={(result) => {
-            onChange(result.value);
+            onChange(result);
           }}
         />
       );
@@ -308,23 +303,12 @@ export const Field = ({
           id={name}
           placeholderText={placeholder}
           testID={testID}
-          type={
-            tfType as
-              | "date"
-              | "datetime"
-              | "email"
-              | "number"
-              | "password"
-              | "phoneNumber"
-              | "text"
-              | "time"
-              | "url"
-          }
+          type={tfType as "email" | "password" | "phoneNumber" | "text" | "url"}
           value={tfValue}
           onBlur={(result) => {
-            onBlur && onBlur(result.value);
+            onBlur && onBlur(result);
           }}
-          onChange={(result) => onChange(result.value)}
+          onChange={(result) => onChange(result)}
         />
       );
     }

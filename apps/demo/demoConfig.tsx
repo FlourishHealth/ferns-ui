@@ -8,13 +8,11 @@ import {
   ButtonConfiguration,
   CardConfiguration,
   CheckBoxConfiguration,
-  DateFieldConfiguration,
   DateTimeFieldConfiguration,
-  DateTimeModalConfiguration,
   HeadingConfiguration,
   IconButtonConfiguration,
   IconConfiguration,
-  MaskConfiguration,
+  LinkConfiguration,
   ModalConfiguration,
   MultiselectFieldConfiguration,
   PaginationConfiguration,
@@ -25,7 +23,6 @@ import {
   SideDrawerConfiguration,
   SignatureFieldConfiguration,
   SpinnerConfiguration,
-  SwitchConfiguration,
   TableBadgeConfiguration,
   TableBooleanConfiguration,
   TableConfiguration,
@@ -38,12 +35,14 @@ import {
   TextAreaConfiguration,
   TextConfiguration,
   TextFieldConfiguration,
-  TimeFieldConfiguration,
+  ThemeConfiguration,
   ToastConfiguration,
   TooltipConfiguration,
 } from "@story-config";
 import {FieldProps} from "ferns-ui";
 import React from "react";
+
+import {NumberFieldConfiguration} from "./story-config/NumberField.config";
 
 export type DemoConfigStatus = "planned" | "inProgress" | "ready" | "notSupported";
 
@@ -169,17 +168,16 @@ const Config: DemoConfigurationBase[] = [
   CardConfiguration,
   // ChatBubbleConfiguration,
   CheckBoxConfiguration,
-  DateTimeModalConfiguration,
   DateTimeFieldConfiguration,
-  DateFieldConfiguration,
   HeadingConfiguration,
   IconConfiguration,
   IconButtonConfiguration,
+  LinkConfiguration,
   // FilteredItemConfiguration,
-  MaskConfiguration,
   // MessageConfiguration,
   ModalConfiguration,
   MultiselectFieldConfiguration,
+  NumberFieldConfiguration,
   PaginationConfiguration,
   PasswordFieldConfiguration,
   RadioFieldConfiguration,
@@ -188,7 +186,6 @@ const Config: DemoConfigurationBase[] = [
   SideDrawerConfiguration,
   SignatureFieldConfiguration,
   SpinnerConfiguration,
-  SwitchConfiguration,
   TableConfiguration,
   TableBadgeConfiguration,
   TableBooleanConfiguration,
@@ -201,7 +198,7 @@ const Config: DemoConfigurationBase[] = [
   TextConfiguration,
   TextAreaConfiguration,
   TextFieldConfiguration,
-  TimeFieldConfiguration,
+  ThemeConfiguration,
   ToastConfiguration,
   TooltipConfiguration,
 ];

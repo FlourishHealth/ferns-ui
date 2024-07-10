@@ -161,9 +161,13 @@ const defaultTheme: FernsTheme = {
   primitives: defaultPrimitives,
 };
 
+type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};
+
 export const ThemeContext = createContext({
-  setTheme: (_theme: Partial<FernsTheme>) => {},
-  setPrimitives: (_primitives: Partial<typeof defaultPrimitives>) => {},
+  setTheme: (_theme: DeepPartial<FernsTheme>) => {},
+  setPrimitives: (_primitives: DeepPartial<typeof defaultPrimitives>) => {},
   theme: defaultTheme,
   resetTheme: () => {},
 });
@@ -202,15 +206,16 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
   }, [providerTheme, providerPrimitives]);
 
   const setPrimitives = (newPrimitives: Partial<typeof defaultPrimitives>) => {
-    setProviderPrimitives(merge(defaultPrimitives, newPrimitives) as typeof defaultPrimitives);
+    setProviderPrimitives((prev) => merge({}, prev, newPrimitives));
   };
 
-  const setTheme = (newTheme: Partial<FernsTheme>) => {
-    setProviderTheme(merge(defaultTheme, newTheme) as FernsTheme);
+  const setTheme = (newTheme: DeepPartial<FernsTheme>) => {
+    setProviderTheme(merge({}, defaultTheme, newTheme) as FernsTheme);
   };
 
   const resetTheme = () => {
     setProviderTheme(defaultTheme);
+    setProviderPrimitives(defaultPrimitives);
   };
 
   return (

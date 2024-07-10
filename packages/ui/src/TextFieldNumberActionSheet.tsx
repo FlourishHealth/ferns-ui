@@ -40,7 +40,7 @@ export class NumberPickerActionSheet extends React.Component<
               if (!date) {
                 return;
               }
-              this.props.onChange({event, value: date.toString()});
+              this.props.onChange(date.toString());
             }}
           />
         </Box>

@@ -48,13 +48,10 @@ export class DecimalRangeActionSheet extends React.Component<
                 }}
                 onValueChange={(whole) => {
                   this.setState({whole: String(whole)});
-                  this.props.onChange({
-                    value: String(Number(whole) + Number(this.state.decimal) * 0.1),
-                  });
+                  this.props.onChange(String(Number(whole) + Number(this.state.decimal) * 0.1));
                 }}
               >
                 {range(this.props.min, this.props.max + 1).map((n) => {
-                  // console.log("FIRST", String(n));
                   return <Picker.Item key={String(n)} label={String(n)} value={String(n)} />;
                 })}
               </Picker>
@@ -70,17 +67,8 @@ export class DecimalRangeActionSheet extends React.Component<
                   backgroundColor: "#FFFFFF",
                 }}
                 onValueChange={(decimal) => {
-                  // console.log(
-                  //   "DECIMAL",
-                  //   decimal,
-                  //   this.state.whole,
-                  //   Number(decimal.toString()) * 0.1,
-                  //   String(this.state.whole + Number(decimal) * 0.1)
-                  // );
                   this.setState({decimal: String(decimal)});
-                  this.props.onChange({
-                    value: String(Number(this.state.whole) + Number(decimal) * 0.1),
-                  });
+                  this.props.onChange(String(Number(this.state.whole) + Number(decimal) * 0.1));
                 }}
               >
                 {range(0, 10).map((n) => {

@@ -1,4 +1,4 @@
-import React, {ReactElement, ReactNode, SyntheticEvent} from "react";
+import React, {ReactElement, ReactNode} from "react";
 import {ListRenderItemInfo, StyleProp, TextStyle, ViewStyle} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 import {Styles} from "react-native-google-places-autocomplete";
@@ -327,11 +327,7 @@ export interface FernsTheme {
 
 export type Direction = "up" | "right" | "down" | "left";
 
-export interface OnChangeResult {
-  event?: SyntheticEvent<any>;
-  value: string;
-}
-export type OnChangeCallback = (result: OnChangeResult) => void;
+export type OnChangeCallback = (result: string) => void;
 
 // Update if we start supporting more icon packs from Expo Icons.
 export type IconName = FontAwesome6SolidNames | FontAwesome6BrandNames | FontAwesome6RegularNames;
@@ -386,7 +382,7 @@ export type TextFieldType =
   | "decimal"
   | "decimalRange"
   | "email"
-  | "height"
+  // | "height"
   | "password"
   | "phoneNumber"
   | "number"
@@ -422,7 +418,12 @@ export interface LayerProps {
   children: ReactChildren;
 }
 
-export interface BoxProps {
+type AccessibilityProps = {
+  accessibilityLabel: string;
+  accessibilityHint: string;
+};
+
+export interface BoxPropsBase {
   alignContent?: AlignContent;
   alignItems?: AlignItems;
   alignSelf?: AlignSelf;
@@ -525,6 +526,10 @@ export interface BoxProps {
   testID?: string;
 }
 
+// If onClick is provided, add accessibility props.
+export type BoxProps = BoxPropsBase &
+  (BoxPropsBase extends {onClick: () => void} ? AccessibilityProps : {});
+
 export type BoxColor = SurfaceColor | "transparent";
 
 export interface ErrorBoundaryProps {
@@ -572,16 +577,6 @@ export interface FieldWithLabelsProps {
   children?: ReactChildren;
 }
 
-export interface DateTimeFieldProps extends FieldWithLabelsProps {
-  label?: string;
-  mode: "date" | "time" | "datetime";
-  value: Date;
-  onChange: (date: Date) => void;
-  dateFormat?: string;
-  pickerType?: "default" | "compact" | "inline" | "spinner";
-  showTimezone?: boolean; // defaults to true
-}
-
 export interface TimezonePickerProps {
   timezone?: string;
   onChange: (tz: string | undefined) => void | Promise<void>;
@@ -594,43 +589,68 @@ export interface TextStyleWithOutline extends TextStyle {
   outline?: string;
 }
 
-export interface TextFieldProps {
-  title?: string;
-  disabled?: boolean; // default false
-  helperText?: string;
-  errorText?: string;
-  testID?: string;
-  innerRef?: any;
+interface BaseFieldProps {
   id?: string;
-  onChange: OnChangeCallback;
-  autoComplete?: "current-password" | "on" | "off" | "username";
-
-  idealErrorDirection?: Direction;
-  name?: string;
-  onBlur?: OnChangeCallback;
-  onFocus?: OnChangeCallback;
+  testID?: string;
+  title?: string;
+  label?: string;
   placeholderText?: string;
-  type?: TextFieldType;
-  value?: string;
-  returnKeyType?: "done" | "go" | "next" | "search" | "send";
-  grow?: boolean;
-  inputRef?: any;
-  onSubmitEditing?: any;
-  onEnter?: any;
-  // blurOnSubmit defaults to true
-  // if blurOnSubmit is false and multiline is true, return will create a new line
+  iconName?: IconName;
+  onIconClick?: () => void;
+  onBlur?: OnChangeCallback;
+  onChange: OnChangeCallback;
+  onEnter?: () => void;
+  onFocus?: () => void;
+  onSubmitEditing?: () => void;
   blurOnSubmit?: boolean;
-  multiline?: boolean;
-  rows?: number;
-  height?: number;
-  // Required for type=numberRange
-  min?: number;
-  max?: number;
-  // Options to translate values
-  transformValue?: TransformValueOptions;
+  disabled?: boolean; // default false
+  value?: string;
 }
 
-export type TextAreaProps = TextFieldProps;
+export interface HelperTextProps {
+  helperText?: string;
+}
+
+export interface ErrorTextProps {
+  errorText?: string;
+}
+
+export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  type?: "email" | "password" | "phoneNumber" | "search" | "text" | "url" | "username";
+
+  autoComplete?: "current-password" | "on" | "off" | "username";
+  returnKeyType?: "done" | "go" | "next" | "search" | "send";
+
+  grow?: boolean;
+  multiline?: boolean;
+  rows?: number;
+
+  inputRef?: any;
+}
+
+export interface TextAreaProps extends Exclude<TextFieldProps, "multiline"> {}
+
+export interface NumberFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  type: "number" | "decimal";
+  min?: number;
+  max?: number;
+}
+
+export interface NumberRangeFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  type: "numberRange" | "decimalRange";
+  min: number;
+  max: number;
+}
+
+export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  type: "date" | "datetime" | "time";
+  value: string; // ISO string always
+  onChange: (date: string) => void;
+  dateFormat?: string;
+  pickerType?: "default" | "compact" | "inline" | "spinner";
+  showTimezone?: boolean; // defaults to true
+  timezone?: string;
+}
 
 export interface MaskProps {
   children?: ReactChildren;
@@ -1421,13 +1441,13 @@ export interface CustomSelectProps {
 }
 export interface DateTimeActionSheetProps {
   value?: string;
-  mode?: "date" | "time" | "datetime";
+  type?: "date" | "time" | "datetime";
   // Returns an ISO 8601 string. If mode is "time", the date portion is today.
   onChange: OnChangeCallback;
   actionSheetRef: React.RefObject<any>;
   visible: boolean;
   onDismiss: () => void;
-  transformValue?: TransformValueOptions;
+  timezone?: string;
 }
 
 export interface DecimalRangeActionSheetProps {

@@ -134,7 +134,7 @@ const ModalContent: FC<{
         </View>
       )}
       {children && (
-        <View accessibilityRole="text" style={{alignSelf: "flex-start", marginTop: text ? 0 : 12}}>
+        <View accessibilityRole="text" style={{marginTop: text ? 0 : 12}}>
           {children}
         </View>
       )}
