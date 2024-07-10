@@ -56,8 +56,8 @@ export const TableHeaderCell = ({
   }
   return (
     <Box
-      // accessibilityHint="press to change sorting alphabetical order"
-      // accessibilityLabel="sort"
+      accessibilityHint="changes sort alphabetical order"
+      accessibilityLabel="sort"
       alignItems="center"
       direction="row"
       flex="grow"

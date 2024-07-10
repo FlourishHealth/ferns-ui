@@ -410,10 +410,6 @@ export type TextSize = "sm" | "md" | "lg" | "xl";
 
 export type IconPrefix = "far" | "fas";
 
-export interface BlurBoxProps extends BoxProps {
-  blurType?: "regular" | "dark" | "prominent";
-}
-
 export interface LayerProps {
   children: ReactChildren;
 }
@@ -527,9 +523,9 @@ export interface BoxPropsBase {
 }
 
 // If onClick is provided, add accessibility props.
-export type BoxProps = BoxPropsBase &
-  (BoxPropsBase extends {onClick: () => void} ? AccessibilityProps : {});
-
+export type BoxProps =
+  | (BoxPropsBase & {onClick?: undefined})
+  | (BoxPropsBase & {onClick: () => void} & AccessibilityProps);
 export type BoxColor = SurfaceColor | "transparent";
 
 export interface ErrorBoundaryProps {
