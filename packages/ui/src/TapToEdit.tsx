@@ -3,7 +3,7 @@ import {Linking} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {TapToEditProps} from "./Common";
+import {BoxProps, TapToEditProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
 // import {useOpenAPISpec} from "./OpenAPIContext";
@@ -225,7 +225,7 @@ export const TapToEdit = ({
         paddingX={3}
         paddingY={2}
         width="100%"
-        {...rowBoxProps}
+        {...(rowBoxProps as Exclude<BoxProps, "onClick">)}
       >
         <Box direction="row" width="100%">
           <TapToEditTitle
@@ -235,7 +235,12 @@ export const TapToEdit = ({
             title={title}
           />
           <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>
-            <Box justifyContent="start" onClick={isClickable ? openLink : undefined}>
+            <Box
+              accessibilityHint=""
+              accessibilityLabel="Link"
+              justifyContent="start"
+              onClick={isClickable ? openLink : undefined}
+            >
               {Boolean(fieldProps?.type !== "textarea") && (
                 <Text align="right" underline={isClickable}>
                   {displayValue}
@@ -243,7 +248,13 @@ export const TapToEdit = ({
               )}
             </Box>
             {editable && (
-              <Box marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
+              <Box
+                accessibilityHint=""
+                accessibilityLabel="Edit"
+                marginLeft={2}
+                width={16}
+                onClick={(): void => setEditing(true)}
+              >
                 <Icon iconName="pencil" size="md" />
               </Box>
             )}
@@ -257,7 +268,14 @@ export const TapToEdit = ({
               </Text>
             </Box>
             {editable && (
-              <Box alignSelf="end" marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
+              <Box
+                accessibilityHint=""
+                accessibilityLabel="Edit"
+                alignSelf="end"
+                marginLeft={2}
+                width={16}
+                onClick={(): void => setEditing(true)}
+              >
                 <Icon color="primary" iconName="pencil" size="md" />
               </Box>
             )}

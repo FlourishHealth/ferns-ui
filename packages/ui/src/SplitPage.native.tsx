@@ -63,6 +63,8 @@ export const SplitPage = ({
   const renderItem = (itemInfo: ListRenderItemInfo<any>) => {
     return (
       <Box
+        accessibilityHint=""
+        accessibilityLabel="Edit"
         onClick={async () => {
           await Unifier.utils.haptic();
           await onItemSelect(itemInfo);

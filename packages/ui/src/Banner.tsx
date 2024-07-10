@@ -115,6 +115,8 @@ export const Banner = ({
 
   return (
     <Box
+      accessibilityHint="Dismisses banner"
+      accessibilityLabel="Dismiss"
       color={color}
       dangerouslySetInlineStyle={{
         __style: {
