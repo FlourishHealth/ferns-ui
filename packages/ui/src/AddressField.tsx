@@ -43,7 +43,7 @@ export const AddressField = ({
           disabled={disabled}
           googleMapsApiKey={googleMapsApiKey}
           googlePlacesMobileStyles={googlePlacesMobileStyles}
-          handleAddressChange={(result) => handleAddressChange("address1", result.value)}
+          handleAddressChange={(result) => handleAddressChange("address1", result)}
           handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
           includeCounty={includeCounty}
           inputValue={address1}
@@ -58,7 +58,7 @@ export const AddressField = ({
           title="Apt, suite, etc"
           type="text"
           value={address2}
-          onChange={(result) => handleAddressChange("address2", result.value)}
+          onChange={(result) => handleAddressChange("address2", result)}
         />
       </View>
       <View style={{marginBottom: 16}}>
@@ -69,7 +69,7 @@ export const AddressField = ({
           title="City"
           type="text"
           value={city}
-          onChange={(result) => handleAddressChange("city", result.value)}
+          onChange={(result) => handleAddressChange("city", result)}
         />
       </View>
       <View style={{marginBottom: 16}}>
@@ -88,7 +88,7 @@ export const AddressField = ({
           title="Zipcode"
           type="text"
           value={zipcode}
-          onChange={(result) => handleAddressChange("zipcode", result.value)}
+          onChange={(result) => handleAddressChange("zipcode", result)}
         />
       </View>
       {includeCounty && (
@@ -101,7 +101,7 @@ export const AddressField = ({
               title="County Name"
               type="text"
               value={countyName}
-              onChange={(result) => handleAddressChange("countyName", result.value)}
+              onChange={(result) => handleAddressChange("countyName", result)}
             />
           </View>
           <View style={{marginBottom: 16}}>
@@ -110,9 +110,9 @@ export const AddressField = ({
               id="countyCode"
               testID={`${testID}-county-code`}
               title="County Code"
-              type="number"
+              type="text"
               value={countyCode}
-              onChange={(result) => handleAddressChange("countyCode", result.value)}
+              onChange={(result) => handleAddressChange("countyCode", result)}
             />
           </View>
         </>
