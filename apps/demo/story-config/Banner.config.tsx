@@ -41,7 +41,7 @@ export const BannerConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: (props) => <BannerDemo {...props} />, // Replace with actual demo component
+  demo: BannerDemo,
   demoOptions: {
     controls: {
       text: {

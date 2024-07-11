@@ -200,15 +200,16 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
           rounding="lg"
         >
           {Object.keys(propValues).map((prop) => (
-            <Field
-              key={prop}
-              label={config.demoOptions?.controls?.[prop]?.label ?? startCase(prop)}
-              {...config.demoOptions?.controls?.[prop]}
-              value={propValues[prop]}
-              onChange={(value: any) => {
-                setPropValues({...cloneDeep(propValues), [prop]: value});
-              }}
-            />
+            <Box key={prop} paddingY={2}>
+              <Field
+                label={config.demoOptions?.controls?.[prop]?.label ?? startCase(prop)}
+                {...config.demoOptions?.controls?.[prop]}
+                value={propValues[prop]}
+                onChange={(value: any) => {
+                  setPropValues({...cloneDeep(propValues), [prop]: value});
+                }}
+              />
+            </Box>
           ))}
         </Box>
       )}
