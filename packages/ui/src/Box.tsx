@@ -58,21 +58,21 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
 
   useImperativeHandle(ref, () => ({
     scrollToEnd: () => {
-      if (scrollRef && scrollRef.current) {
+      if (scrollRef?.current) {
         // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout
         // to avoid this, but it works well enough.
         setTimeout(() => {
-          scrollRef && scrollRef.current && (scrollRef.current as any).scrollToEnd();
+          scrollRef?.current?.scrollToEnd();
         }, 50);
       }
     },
 
     scrollTo: (y: number) => {
-      if (scrollRef && scrollRef.current) {
+      if (scrollRef?.current) {
         // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout
         // to avoid this, but it works well enough.
         setTimeout(() => {
-          scrollRef && scrollRef.current && (scrollRef.current as any).scrollTo({y});
+          scrollRef?.current?.scrollTo({y});
         }, 50);
       }
     },
@@ -215,8 +215,8 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
 
   const propsToStyle = (): any => {
     let style: any = {};
-    for (const prop of Object.keys(props)) {
-      const value = (props as any)[prop];
+    for (const prop of Object.keys(props) as Array<keyof typeof props>) {
+      const value = props[prop];
       if (BOX_STYLE_MAP[prop]) {
         Object.assign(style, BOX_STYLE_MAP[prop](value, props));
       } else if (prop !== "children" && prop !== "onClick") {
