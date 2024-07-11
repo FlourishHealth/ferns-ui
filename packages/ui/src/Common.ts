@@ -272,21 +272,21 @@ export interface StatusTheme {
 }
 
 export interface RadiusTheme {
-  minimal: string;
-  default: string;
-  full: string;
-  rounded: string;
+  minimal: number;
+  default: number;
+  full: number;
+  rounded: number;
 }
 
 export interface SpacingTheme {
-  none: string;
-  xs: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-  "2xl": string;
-  "3xl": string;
+  none: number;
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
+  "2xl": number;
+  "3xl": number;
 }
 
 export type TextColor = keyof TextTheme;
@@ -315,6 +315,7 @@ export interface FontTheme {
 }
 export type Font = keyof FontTheme;
 
+// The computed theme object that is passed to the ThemeProvider.
 export interface FernsTheme {
   text: TextTheme;
   surface: SurfaceTheme;
@@ -322,6 +323,18 @@ export interface FernsTheme {
   status: StatusTheme;
   radius: RadiusTheme;
   spacing: SpacingTheme;
+  font: FontTheme;
+  primitives: ThemePrimitives;
+}
+
+// A config for generating the theme object from primitives.
+export interface FernsThemeConfig {
+  text: TextThemeConfig;
+  surface: SurfaceThemeConfig;
+  border: BorderThemeConfig;
+  status: StatusThemeConfig;
+  radius: RadiusThemeConfig;
+  spacing: SpacingThemeConfig;
   font: FontTheme;
   primitives: ThemePrimitives;
 }

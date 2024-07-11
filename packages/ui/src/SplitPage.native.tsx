@@ -156,7 +156,7 @@ export const SplitPage = ({
       keyboardOffset={keyboardOffset}
       width="100%"
     >
-      {loading === true && <Spinner color={theme.text.primary as any} size="md" />}
+      {loading === true && <Spinner color="light" size="md" />}
       {selectedId === undefined ? renderList() : renderMainContent}
     </Box>
   );
