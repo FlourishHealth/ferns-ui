@@ -9,10 +9,9 @@ export const CustomSelectFieldDemo = (
   return (
     <CustomSelectField
       options={[
-        {label: "She/her/hers", value: "she/her/hers"},
-        {label: "He/him/his", value: "he/him/his"},
-        {label: "They/them/theirs", value: "they/them/theirs"},
-        {label: "Prefer not to say", value: "declined"},
+        {label: "One option", value: "option1"},
+        {label: "Another option", value: "option2"},
+        {label: "A third option", value: "option3"},
       ]}
       value={value}
       onChange={setValue}

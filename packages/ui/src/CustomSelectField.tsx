@@ -69,6 +69,7 @@ export const CustomSelectField = ({
       }}
     >
       <SelectField
+        disabled={disabled}
         errorText={errorText}
         options={[...options, {label: "Custom", value: "custom"}]}
         placeholder={placeholder}

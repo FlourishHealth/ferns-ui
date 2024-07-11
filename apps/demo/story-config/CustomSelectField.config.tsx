@@ -1,9 +1,10 @@
 import {DemoConfiguration} from "@config";
 import {CustomSelectFieldDemo} from "@stories";
-import {CustomSelectField} from "ferns-ui";
+import {Box, CustomSelectField} from "ferns-ui";
+import React from "react";
 
 export const CustomSelectFieldConfiguration: DemoConfiguration = {
-  name: "Custom Select field",
+  name: "Custom Select Field",
   component: CustomSelectField,
   related: ["SelectField", "Field", "Tap-to-edit"],
   description:
@@ -34,6 +35,102 @@ export const CustomSelectFieldConfiguration: DemoConfiguration = {
   },
   props: {},
   demo: CustomSelectFieldDemo,
-  demoOptions: {},
-  stories: {},
+  demoOptions: {
+    controls: {
+      title: {
+        type: "text",
+        defaultValue: "Custom Select Field Title",
+      },
+      helperText: {
+        type: "text",
+        defaultValue: "Helper text goes here",
+      },
+      errorText: {
+        type: "text",
+        defaultValue: "",
+      },
+      disabled: {
+        type: "boolean",
+        defaultValue: false,
+      },
+    },
+  },
+  stories: {
+    WithTitle: {
+      description: "",
+      render: () => {
+        return (
+          <Box direction="column" display="flex">
+            <CustomSelectField
+              options={[
+                {label: "One option", value: "option1"},
+                {label: "Another option", value: "option2"},
+                {label: "A third option", value: "option3"},
+              ]}
+              title="Custom Select Field Title"
+              value={undefined}
+              onChange={() => {}}
+            />
+          </Box>
+        );
+      },
+    },
+    HelperText: {
+      description: "",
+      render: () => {
+        return (
+          <Box direction="column" display="flex">
+            <CustomSelectField
+              helperText="Some info here about the field"
+              options={[
+                {label: "One option", value: "option1"},
+                {label: "Another option", value: "option2"},
+                {label: "A third option", value: "option3"},
+              ]}
+              value={undefined}
+              onChange={() => {}}
+            />
+          </Box>
+        );
+      },
+    },
+    ErrorText: {
+      description: "",
+      render: () => {
+        return (
+          <Box direction="column" display="flex">
+            <CustomSelectField
+              errorText="Something went wrong!"
+              options={[
+                {label: "One option", value: "option1"},
+                {label: "Another option", value: "option2"},
+                {label: "A third option", value: "option3"},
+              ]}
+              value={undefined}
+              onChange={() => {}}
+            />
+          </Box>
+        );
+      },
+    },
+    Disabled: {
+      description: "",
+      render: () => {
+        return (
+          <Box direction="column" display="flex">
+            <CustomSelectField
+              disabled
+              options={[
+                {label: "One option", value: "option1"},
+                {label: "Another option", value: "option2"},
+                {label: "A third option", value: "option3"},
+              ]}
+              value={undefined}
+              onChange={() => {}}
+            />
+          </Box>
+        );
+      },
+    },
+  },
 };

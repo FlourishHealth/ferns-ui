@@ -202,6 +202,7 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
           {Object.keys(propValues).map((prop) => (
             <Box key={prop} paddingY={2}>
               <Field
+                // TODO: change label -> title once field props are updated
                 label={config.demoOptions?.controls?.[prop]?.label ?? startCase(prop)}
                 {...config.demoOptions?.controls?.[prop]}
                 value={propValues[prop]}
