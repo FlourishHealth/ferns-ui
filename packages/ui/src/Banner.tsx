@@ -143,9 +143,9 @@ export const Banner = (props: BannerProps): React.ReactElement | null => {
         width: "100%",
         margin: "auto",
         flexDirection: "row",
-        borderRadius: theme.radius.default as any,
-        minHeight: theme.spacing.xl as any,
-        padding: theme.spacing.xs as any,
+        borderRadius: theme.radius.default,
+        minHeight: theme.spacing.xl,
+        padding: theme.spacing.xs,
       }}
     >
       <View
@@ -157,7 +157,7 @@ export const Banner = (props: BannerProps): React.ReactElement | null => {
         }}
       >
         {Boolean(hasIcon) && (
-          <View style={{paddingRight: 12, paddingLeft: theme.spacing.xs as any}}>
+          <View style={{paddingRight: 12, paddingLeft: 10}}>
             <Icon color="inverted" iconName="triangle-exclamation" />
           </View>
         )}
@@ -173,7 +173,7 @@ export const Banner = (props: BannerProps): React.ReactElement | null => {
           {text}
         </NativeText>
         {Boolean(buttonText && buttonIconName && buttonOnClick) && (
-          <View style={{paddingLeft: 16, paddingRight: theme.spacing.xs as any}}>
+          <View style={{paddingLeft: 16, paddingRight: 10}}>
             <BannerButton
               buttonIconName={buttonIconName}
               buttonOnClick={buttonOnClick ?? (() => {})}
@@ -182,7 +182,7 @@ export const Banner = (props: BannerProps): React.ReactElement | null => {
           </View>
         )}
         {Boolean(buttonText && !buttonIconName && buttonOnClick) && (
-          <View style={{paddingLeft: 16, paddingRight: theme.spacing.xs as any}}>
+          <View style={{paddingLeft: 16, paddingRight: 10}}>
             <BannerButton buttonOnClick={buttonOnClick ?? (() => {})} buttonText={buttonText} />
           </View>
         )}
