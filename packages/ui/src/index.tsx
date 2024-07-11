@@ -16,6 +16,7 @@ export * from "./DateTimeActionSheet";
 export * from "./DateTimeField";
 export * from "./DateUtilities";
 export * from "./DecimalRangeActionSheet";
+export * from "./DismissButton";
 export * from "./EmailField";
 export * from "./ErrorBoundary";
 export * from "./ErrorPage";

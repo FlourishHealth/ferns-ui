@@ -1314,21 +1314,50 @@ export interface BadgeProps {
   maxValue?: number;
 }
 
-export interface BannerProps {
+type BannerButtonProps = {
+  /**
+   * Text to display on optional banner button, will display button if provided
+   */
+  buttonText: string;
+  /**
+   * Icon to display on optional banner button
+   */
+  buttonIconName?: IconName;
+};
+
+export interface BannerPropsBase {
+  /**
+   * Used to identify if banner has been dismissed by the user.
+   */
   id: string;
-  customButtonProps?: Partial<ButtonProps>;
-  color?: BoxColor;
-  dismissible?: boolean;
-  iconName?: IconName;
-  negativeXMargin?: number;
-  onClick?: () => void;
-  shape?: Rounding;
-  subtext?: string;
+  /**
+   * The text to display in the main body of the banner.
+   */
   text: string;
-  textColor?: TextColor;
-  type?: "dismiss" | "action" | "permanent" /* deprecated */ | "customButton";
-  width?: number | string;
+  /**
+   * The status of the banner changes the color of the banner.
+   * @default "info"
+   */
+  status?: "info" | "alert" | "warning";
+  /**
+   * Allows the banner to be dismissed and removed by clicking X button on the right.
+   * @default false
+   */
+  dismissible?: boolean; // default false
+  /**
+   * Renders triangle with exclamation mark icon to the left of banner content.
+   * @default false
+   */
+  hasIcon?: boolean;
+  /**
+   * Function called when optional button on banner is clicked.
+   */
+  buttonOnClick?: () => void | Promise<void>;
 }
+
+export type BannerProps =
+  | (BannerPropsBase & {buttonOnClick?: undefined})
+  | (BannerPropsBase & {buttonOnClick: () => void | Promise<void>} & BannerButtonProps);
 
 export interface BodyProps {
   scroll?: boolean;
@@ -1446,6 +1475,29 @@ export interface DecimalRangeActionSheetState {
   decimal: string;
 }
 
+export interface DismissButtonProps {
+  /**
+   * The accessibility hint describes the results of performing an action on a control or view.
+   * It should be a very brief description of the result of interacting with the button.
+   */
+  accessibilityHint: string;
+
+  /**
+   * The accessibility label attribute identifies the user interface element.
+   * It should be a very brief description of the element, such as "Dismiss".
+   */
+  accessibilityLabel: string;
+  /**
+   * A function to call when the button is clicked,
+   * function should result in hiding the element rendering the dismiss button.
+   */
+  onClick: () => void;
+  /**
+   * Color of the icon on the dismiss button
+   * @default "primary"
+   */
+  color?: IconColor;
+}
 export interface ErrorPageProps {
   error: Error;
   resetError: () => void;
