@@ -54,11 +54,11 @@ export const Badge = ({
     badgeBgColor = secondary ? "neutralLight" : "neutralDark";
   }
 
-  let badgeBorderRadius = theme.radius.default as any;
+  let badgeBorderRadius = theme.radius.default;
   if (isIconOnly) {
-    badgeBorderRadius = theme.radius.full as any;
+    badgeBorderRadius = theme.radius.full;
   } else if (variant === "numberOnly") {
-    badgeBorderRadius = theme.radius.rounded as any;
+    badgeBorderRadius = theme.radius.rounded;
   }
 
   let badgeValue = value;
