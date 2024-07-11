@@ -153,8 +153,7 @@ export const TextField = ({
     >
       {title && <FieldTitle text={title} />}
       {Boolean(errorText) && errorText && <FieldError text={errorText} />}
-      <Pressable
-        accessibilityRole="button"
+      <View
         style={{
           flexDirection: "row",
           alignItems: "center",
@@ -224,7 +223,7 @@ export const TextField = ({
             <Icon iconName={iconName!} size="md" />
           </Pressable>
         )}
-      </Pressable>
+      </View>
       {helperText && <FieldHelperText text={helperText} />}
       {/* {type === "numberRange" && value && (
         <NumberPickerActionSheet
