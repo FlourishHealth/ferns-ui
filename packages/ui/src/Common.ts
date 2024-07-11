@@ -1,3 +1,4 @@
+import {CountryCode} from "libphonenumber-js";
 import React, {ReactElement, ReactNode} from "react";
 import {ListRenderItemInfo, StyleProp, TextStyle, ViewStyle} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
@@ -579,7 +580,10 @@ export interface SegmentedControlProps {
 }
 
 // Shared props for fields with labels, subtext, and error messages.
-export interface FieldWithLabelsProps {
+// TODO: combine all the field props based on type
+export interface FieldProps {
+  show?: boolean;
+  labelSize?: TextSize;
   testID?: string;
   errorMessage?: string;
   errorMessageColor?: TextColor;
@@ -629,7 +633,7 @@ export interface ErrorTextProps {
 }
 
 export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
-  type?: "email" | "password" | "phoneNumber" | "search" | "text" | "url" | "username";
+  type?: "email" | "password" | "phoneNumber" | "search" | "text" | "url";
 
   autoComplete?: "current-password" | "on" | "off" | "username";
   returnKeyType?: "done" | "go" | "next" | "search" | "send";
@@ -665,23 +669,18 @@ export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, Err
   timezone?: string;
 }
 
-export interface MaskProps {
-  children?: ReactChildren;
-  shape?: "circle" | "rounded" | "square";
-  height?: number | string;
-  width?: number | string;
-  maxHeight?: number | string;
-  maxWidth?: number | string;
-  rounding?: Rounding;
-  willChangeTransform?: boolean;
-  wash?: boolean;
+export interface EmailFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface PhoneNumberFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  /**
+   * Defaults to "US"
+   */
+  defaultCountryCode?: CountryCode;
 }
 
-export interface IconRowProps {
-  icon: string;
-  label: string;
-  value: string;
-}
+export interface URLFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface SearchFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
 
 export interface LinkProps {
   href: string;
@@ -1452,7 +1451,7 @@ export interface ErrorPageProps {
   resetError: () => void;
 }
 
-export interface FieldProps extends FieldWithLabelsProps {
+export interface FieldProps {
   name?: string;
   label?: string;
   height?: number;
@@ -1926,18 +1925,6 @@ export interface TooltipProps {
 
 export interface LinkProps extends TextProps {
   href: string;
-}
-
-export interface WithLabelProps {
-  children?: ReactChildren;
-  show?: boolean;
-  label?: string;
-  labelInline?: boolean;
-  labelColor?: TextColor;
-  labelJustifyContent?: JustifyContent;
-  labelAlignItems?: AlignItems;
-  labelPlacement?: "before" | "after";
-  labelSize?: TextSize;
 }
 
 export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {

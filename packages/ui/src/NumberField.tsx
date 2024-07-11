@@ -1,20 +1,21 @@
-import React, {useCallback, useState} from "react";
+import React, {FC, useCallback, useState} from "react";
 
 import {NumberFieldProps} from "./Common";
 import {TextField} from "./TextField";
 
-export const NumberField = ({
+export const NumberField: FC<NumberFieldProps> = ({
   errorText,
   value: valueProp,
   max,
   min,
   type,
   ...rest
-}: NumberFieldProps): React.ReactElement => {
+}: NumberFieldProps) => {
   const [value, setValue] = useState(valueProp ?? "");
 
   const getError = useCallback(
-    (v?: string) => {
+    (newV?: string) => {
+      const v = String(newV);
       if (!v) {
         return;
       }

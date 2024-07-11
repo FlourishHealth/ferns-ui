@@ -199,7 +199,6 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
       }, {} as any);
       return acc;
     }, {} as FernsTheme);
-
     return {
       ...theme,
       primitives: providerPrimitives,
