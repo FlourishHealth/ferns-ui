@@ -14,7 +14,7 @@ import {
 import sortBy from "lodash/sortBy";
 import React, {useState} from "react";
 
-const SortableExpandableTable = () => {
+export const SortableExpandableTableStory = (): React.ReactElement => {
   const [rows, setRows] = useState([
     ["Data 1 has some data in it", "Data 2 has some longer data in it", 5, 1000.4],
     ["Row 2 short", "Row 2 long", 10, 2000.0],
@@ -44,76 +44,78 @@ const SortableExpandableTable = () => {
   };
 
   return (
-    <Table columns={[160, 200, 120, 200, 140, 140]}>
-      <TableHeader>
-        <TableHeaderCell
-          index={0}
-          sortable
-          title="Column 1"
-          onSortChange={(direction) => {
-            setSort(direction, 0);
-          }}
-        />
-        <TableHeaderCell
-          index={1}
-          sortable
-          title="Column 2"
-          onSortChange={(direction) => {
-            setSort(direction, 1);
-          }}
-        />
-        <TableHeaderCell
-          index={2}
-          sortable
-          title="Column 3"
-          onSortChange={(direction) => {
-            setSort(direction, 2);
-          }}
-        />
-        <TableHeaderCell
-          align="right"
-          index={3}
-          sortable
-          title="Cost"
-          onSortChange={(direction) => {
-            setSort(direction, 3);
-          }}
-        />
-        <TableHeaderCell
-          align="center"
-          index={4}
-          sortable
-          title="Badge"
-          onSortChange={(direction) => {
-            setSort(direction, 4);
-          }}
-        />
-        <TableHeaderCell
-          align="center"
-          index={5}
-          sortable
-          title="Boolean"
-          onSortChange={(direction) => {
-            setSort(direction, 5);
-          }}
-        />
-      </TableHeader>
-      {rows.map((row, index) => (
-        <TableRow key={row[0]} drawerContents={renderDrawerContents(index)}>
-          <TableText value={String(row[0])} />
-          <TableText value={String(row[1])} />
-          <TableText value={String(row[2])} />
-          <TableText align="right" value={`$${(row[3] as number).toFixed(2)}`} />
-          <TableBadge value="Some Status" />
-          <TableBoolean
-            value={index % 2 === 0}
-            onSave={function (): void | Promise<void> {
-              console.info("Saved!");
+    <Box color="base" direction="column" maxHeight={250} maxWidth={400} scroll>
+      <Table columns={[160, 200, 120, 200, 140, 140]}>
+        <TableHeader>
+          <TableHeaderCell
+            index={0}
+            sortable
+            title="Column 1"
+            onSortChange={(direction) => {
+              setSort(direction, 0);
             }}
           />
-        </TableRow>
-      ))}
-    </Table>
+          <TableHeaderCell
+            index={1}
+            sortable
+            title="Column 2"
+            onSortChange={(direction) => {
+              setSort(direction, 1);
+            }}
+          />
+          <TableHeaderCell
+            index={2}
+            sortable
+            title="Column 3"
+            onSortChange={(direction) => {
+              setSort(direction, 2);
+            }}
+          />
+          <TableHeaderCell
+            align="right"
+            index={3}
+            sortable
+            title="Cost"
+            onSortChange={(direction) => {
+              setSort(direction, 3);
+            }}
+          />
+          <TableHeaderCell
+            align="center"
+            index={4}
+            sortable
+            title="Badge"
+            onSortChange={(direction) => {
+              setSort(direction, 4);
+            }}
+          />
+          <TableHeaderCell
+            align="center"
+            index={5}
+            sortable
+            title="Boolean"
+            onSortChange={(direction) => {
+              setSort(direction, 5);
+            }}
+          />
+        </TableHeader>
+        {rows.map((row, index) => (
+          <TableRow key={row[0]} drawerContents={renderDrawerContents(index)}>
+            <TableText value={String(row[0])} />
+            <TableText value={String(row[1])} />
+            <TableText value={String(row[2])} />
+            <TableText align="right" value={`$${(row[3] as number).toFixed(2)}`} />
+            <TableBadge value="Some Status" />
+            <TableBoolean
+              value={index % 2 === 0}
+              onSave={function (): void | Promise<void> {
+                console.info("Saved!");
+              }}
+            />
+          </TableRow>
+        ))}
+      </Table>
+    </Box>
   );
 };
 
@@ -130,7 +132,7 @@ export const StandardTable = (): React.ReactElement => {
     2,
   ];
   return (
-    <Box color="base" direction="column" height="100%" maxHeight={250} maxWidth={400} scroll>
+    <Box color="base" direction="column" maxHeight={250} maxWidth={400} scroll>
       <Table columns={[120, 120, 120, 120]}>
         <TableHeader>
           <TableHeaderCell index={0} title="Column 1" />
@@ -147,14 +149,6 @@ export const StandardTable = (): React.ReactElement => {
           </TableRow>
         ))}
       </Table>
-    </Box>
-  );
-};
-
-export const SortableExpandableTableStory = (): React.ReactElement => {
-  return (
-    <Box color="base" direction="column" height="100%" maxHeight={250} maxWidth={400} scroll>
-      <SortableExpandableTable />
     </Box>
   );
 };
