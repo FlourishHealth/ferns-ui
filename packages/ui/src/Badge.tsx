@@ -18,6 +18,7 @@ export const Badge = ({
 
   let badgeColor: keyof TextTheme = "inverted";
 
+  // TODO: Move to theme
   const secondaryBorderColors = {
     error: "#F39E9E",
     warning: "#FCC58F",

@@ -8,14 +8,7 @@ import {useTableContext} from "./tableContext";
 const TableCell = ({children, index}: {children: React.ReactNode; index: number}) => {
   const {columns} = useTableContext();
   return (
-    <Box
-      height="100%"
-      justifyContent="center"
-      marginRight={2}
-      paddingX={3}
-      paddingY={4}
-      width={columns[index]}
-    >
+    <Box justifyContent="center" marginRight={2} paddingX={3} paddingY={4} width={columns[index]}>
       {children}
     </Box>
   );

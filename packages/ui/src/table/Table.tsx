@@ -79,8 +79,9 @@ export const Table = ({
           <ScrollView horizontal style={{width, maxWidth: "100%"}}>
             {/* TODO: Replace table scrollview with flat list */}
             <ScrollView
+              // nestedScrollEnabled
               stickyHeaderIndices={stickyHeader ? [0] : undefined}
-              style={{width, marginTop: 2, maxWidth: "100%", flex: 1, maxHeight}}
+              style={{width, maxWidth: "100%", flex: 1, maxHeight}}
             >
               {Children.map(
                 children,

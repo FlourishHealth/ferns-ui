@@ -1,7 +1,7 @@
 import React, {FC, useCallback, useContext, useState} from "react";
 import {TouchableOpacity, View, ViewStyle} from "react-native";
 
-import {CheckBox} from "..";
+import {CheckBox} from "../CheckBox";
 import {TableBooleanProps} from "../Common";
 import {Icon} from "../Icon";
 import {ThemeContext} from "../Theme";
