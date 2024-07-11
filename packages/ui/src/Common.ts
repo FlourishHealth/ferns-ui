@@ -1,3 +1,4 @@
+import {CountryCode} from "libphonenumber-js";
 import React, {ReactElement, ReactNode} from "react";
 import {ListRenderItemInfo, StyleProp, TextStyle, ViewStyle} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
@@ -271,21 +272,21 @@ export interface StatusTheme {
 }
 
 export interface RadiusTheme {
-  minimal: string;
-  default: string;
-  full: string;
-  rounded: string;
+  minimal: number;
+  default: number;
+  full: number;
+  rounded: number;
 }
 
 export interface SpacingTheme {
-  none: string;
-  xs: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-  "2xl": string;
-  "3xl": string;
+  none: number;
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
+  "2xl": number;
+  "3xl": number;
 }
 
 export type TextColor = keyof TextTheme;
@@ -314,6 +315,7 @@ export interface FontTheme {
 }
 export type Font = keyof FontTheme;
 
+// The computed theme object that is passed to the ThemeProvider.
 export interface FernsTheme {
   text: TextTheme;
   surface: SurfaceTheme;
@@ -321,6 +323,18 @@ export interface FernsTheme {
   status: StatusTheme;
   radius: RadiusTheme;
   spacing: SpacingTheme;
+  font: FontTheme;
+  primitives: ThemePrimitives;
+}
+
+// A config for generating the theme object from primitives.
+export interface FernsThemeConfig {
+  text: TextThemeConfig;
+  surface: SurfaceThemeConfig;
+  border: BorderThemeConfig;
+  status: StatusThemeConfig;
+  radius: RadiusThemeConfig;
+  spacing: SpacingThemeConfig;
   font: FontTheme;
   primitives: ThemePrimitives;
 }
@@ -566,7 +580,10 @@ export interface SegmentedControlProps {
 }
 
 // Shared props for fields with labels, subtext, and error messages.
-export interface FieldWithLabelsProps {
+// TODO: combine all the field props based on type
+export interface FieldProps {
+  show?: boolean;
+  labelSize?: TextSize;
   testID?: string;
   errorMessage?: string;
   errorMessageColor?: TextColor;
@@ -616,7 +633,7 @@ export interface ErrorTextProps {
 }
 
 export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
-  type?: "email" | "password" | "phoneNumber" | "search" | "text" | "url" | "username";
+  type?: "email" | "password" | "phoneNumber" | "search" | "text" | "url";
 
   autoComplete?: "current-password" | "on" | "off" | "username";
   returnKeyType?: "done" | "go" | "next" | "search" | "send";
@@ -652,23 +669,18 @@ export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, Err
   timezone?: string;
 }
 
-export interface MaskProps {
-  children?: ReactChildren;
-  shape?: "circle" | "rounded" | "square";
-  height?: number | string;
-  width?: number | string;
-  maxHeight?: number | string;
-  maxWidth?: number | string;
-  rounding?: Rounding;
-  willChangeTransform?: boolean;
-  wash?: boolean;
+export interface EmailFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface PhoneNumberFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  /**
+   * Defaults to "US"
+   */
+  defaultCountryCode?: CountryCode;
 }
 
-export interface IconRowProps {
-  icon: string;
-  label: string;
-  value: string;
-}
+export interface URLFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface SearchFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
 
 export interface LinkProps {
   href: string;
@@ -1491,7 +1503,7 @@ export interface ErrorPageProps {
   resetError: () => void;
 }
 
-export interface FieldProps extends FieldWithLabelsProps {
+export interface FieldProps {
   name?: string;
   label?: string;
   height?: number;
@@ -1965,18 +1977,6 @@ export interface TooltipProps {
 
 export interface LinkProps extends TextProps {
   href: string;
-}
-
-export interface WithLabelProps {
-  children?: ReactChildren;
-  show?: boolean;
-  label?: string;
-  labelInline?: boolean;
-  labelColor?: TextColor;
-  labelJustifyContent?: JustifyContent;
-  labelAlignItems?: AlignItems;
-  labelPlacement?: "before" | "after";
-  labelSize?: TextSize;
 }
 
 export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {

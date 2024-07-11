@@ -333,7 +333,7 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
               <View
                 style={{
                   backgroundColor: theme.surface.secondaryExtraDark,
-                  borderRadius: theme.radius.default as any,
+                  borderRadius: theme.radius.default,
                   paddingVertical: 2,
                   paddingHorizontal: 8,
                   maxWidth: 320,
@@ -348,7 +348,7 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
                   accessibilityRole="button"
                   style={{
                     backgroundColor: theme.surface.secondaryExtraDark,
-                    borderRadius: theme.radius.default as any,
+                    borderRadius: theme.radius.default,
                   }}
                   testID="tooltip-container"
                   onPress={() => setVisible(false)}

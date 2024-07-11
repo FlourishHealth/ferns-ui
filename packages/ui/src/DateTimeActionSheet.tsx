@@ -85,7 +85,7 @@ const TimeInput = ({
           {
             ...textInputStyle,
             outline: Platform.select({web: "none"}),
-          } as any
+          } as StyleProp<TextStyle>
         }
         textContentType="none"
         underlineColorAndroid="transparent"

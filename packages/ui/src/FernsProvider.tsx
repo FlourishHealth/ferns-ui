@@ -21,7 +21,7 @@ export const FernsProvider = ({
         duration={50000}
         offset={50}
         placement="bottom"
-        renderToast={(toastOptions) => <Toast {...(toastOptions?.data as any)} />}
+        renderToast={(toastOptions) => <Toast {...toastOptions?.data} />}
         swipeEnabled
       >
         <OpenAPIProvider specUrl={openAPISpecUrl}>
