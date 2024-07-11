@@ -1,7 +1,6 @@
 import React, {ReactElement, useEffect, useMemo, useState} from "react";
 import {View} from "react-native";
 
-import {Box} from "./Box";
 import {CustomSelectFieldProps} from "./Common";
 import {FieldHelperText} from "./FieldElements";
 import {SelectField} from "./SelectField";
@@ -64,7 +63,11 @@ export const CustomSelectField = ({
   };
 
   return (
-    <View>
+    <View
+      style={{
+        width: "100%",
+      }}
+    >
       <SelectField
         errorText={errorText}
         options={[...options, {label: "Custom", value: "custom"}]}
@@ -74,7 +77,11 @@ export const CustomSelectField = ({
         onChange={handleCustomSelectListChange}
       />
       {Boolean(showCustomInput) && (
-        <Box paddingY={2}>
+        <View
+          style={{
+            paddingVertical: 16,
+          }}
+        >
           <TextField
             disabled={disabled}
             id="customOptions"
@@ -83,7 +90,7 @@ export const CustomSelectField = ({
             value={value}
             onChange={onChange}
           />
-        </Box>
+        </View>
       )}
       {helperText && <FieldHelperText text={helperText} />}
     </View>
