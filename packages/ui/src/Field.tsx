@@ -97,6 +97,7 @@ export const Field = ({type, ...rest}: FieldProps) => {
   } else if (type && ["date", "time", "datetime"].includes(type)) {
     return <DateTimeField {...(rest as DateTimeFieldProps)} />;
   } else if (type === "address") {
+    return null;
     // const addressValue = value ? value : {};
     // const {
     //   address1 = "",
@@ -185,6 +186,7 @@ export const Field = ({type, ...rest}: FieldProps) => {
     //   </>
     // );
   } else if (type === "customSelect") {
+    return null;
     // if (!options) {
     //   console.error("Field with type=customSelect require options");
     //   return null;
