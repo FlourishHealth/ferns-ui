@@ -25,6 +25,7 @@ import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 
+// TODO: put onblur back in any fields that need it
 export const Field = ({type, ...rest}: FieldProps) => {
   if (type === "select") {
     if (!rest?.options) {
