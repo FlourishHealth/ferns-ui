@@ -7,6 +7,7 @@ export * from "./Box.config";
 export * from "./Button.config";
 export * from "./Card.config";
 export * from "./CheckBox.config";
+export * from "./CustomSelectField.config";
 export * from "./DateTimeField.config";
 // export * from "./Field.config";
 export * from "./Heading.config";

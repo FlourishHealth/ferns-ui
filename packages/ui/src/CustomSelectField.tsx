@@ -1,32 +1,41 @@
 import React, {ReactElement, useEffect, useMemo, useState} from "react";
+import {View} from "react-native";
 
 import {Box} from "./Box";
-import {CustomSelectProps} from "./Common";
-import {Text} from "./Text";
+import {CustomSelectFieldProps} from "./Common";
+import {FieldHelperText} from "./FieldElements";
+import {SelectField} from "./SelectField";
+import {TextField} from "./TextField";
 
-export const CustomSelect = ({
+export const CustomSelectField = ({
   value,
   onChange,
-  // placeholder,
-  // disabled,
+  placeholder,
+  disabled,
   options,
-}: CustomSelectProps): ReactElement | null => {
-  const [customValue, setCustomValue] = useState(value);
+  title,
+  errorText,
+  helperText,
+}: CustomSelectFieldProps): ReactElement | null => {
+  const [currentValue, setCurrentValue] = useState(value);
   const [showCustomInput, setShowCustomInput] = useState(false);
 
-  // Boolean that checks if customValue is a value from the
+  // Boolean that checks if currentValue is a value from the
   // options prop or if it is a true custom value
   const isValueCustom: boolean = useMemo((): boolean => {
+    if (!currentValue) {
+      return false;
+    }
     // We add an empty value to protect against an empty string custom value or if the placeholder
     // value is selected
-    return ![...options, {value: ""}].map((i) => i.value).includes(customValue);
-  }, [options, customValue]);
+    return ![...options, {value: ""}].map((i) => i.value).includes(currentValue);
+  }, [options, currentValue]);
 
   // If the value is set to custom, show the custom input
   useEffect(() => {
     setShowCustomInput(isValueCustom);
     if (!showCustomInput) {
-      setCustomValue(value);
+      setCurrentValue(value);
     }
   }, [showCustomInput, value, isValueCustom]);
 
@@ -38,7 +47,7 @@ export const CustomSelect = ({
     // previous value
     if (newValue === "custom") {
       setShowCustomInput(true);
-      setCustomValue(isValueCustom ? "custom" : newValue);
+      setCurrentValue(isValueCustom ? "custom" : newValue);
       onChange("");
     }
 
@@ -55,15 +64,13 @@ export const CustomSelect = ({
   };
 
   return (
-    <>
-      <Box>
-        <Text>Custom Select</Text>
-      </Box>
-      {/* <SelectList
-        id="providedOptions"
+    <View>
+      <SelectField
+        errorText={errorText}
         options={[...options, {label: "Custom", value: "custom"}]}
         placeholder={placeholder}
-        value={isValueCustom ? "custom" : customValue}
+        title={title}
+        value={isValueCustom ? "custom" : currentValue}
         onChange={handleCustomSelectListChange}
       />
       {Boolean(showCustomInput) && (
@@ -71,13 +78,14 @@ export const CustomSelect = ({
           <TextField
             disabled={disabled}
             id="customOptions"
-            placeholderText={placeholder}
+            placeholderText="None selected"
             type="text"
             value={value}
             onChange={onChange}
           />
         </Box>
-      )} */}
-    </>
+      )}
+      {helperText && <FieldHelperText text={helperText} />}
+    </View>
   );
 };

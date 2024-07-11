@@ -3,7 +3,7 @@ import React from "react";
 import {BooleanField} from "./BooleanField";
 import {Box} from "./Box";
 import {AddressInterface, FieldProps, ReactChildren, TextFieldType} from "./Common";
-import {CustomSelect} from "./CustomSelect";
+import {CustomSelectField} from "./CustomSelectField";
 import {DateTimeField} from "./DateTimeField";
 import {FieldWithLabels} from "./FieldWithLabels";
 import {NumberField} from "./NumberField";
@@ -241,7 +241,7 @@ export const Field = ({
         return null;
       }
       return (
-        <CustomSelect
+        <CustomSelectField
           disabled={disabled}
           options={options}
           placeholder={placeholder}
