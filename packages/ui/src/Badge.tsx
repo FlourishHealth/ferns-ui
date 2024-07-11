@@ -46,11 +46,11 @@ export const Badge = ({
     badgeBgColor = secondary ? "neutralLight" : "neutralDark";
   }
 
-  let badgeBorderRadius = theme.radius.default as any;
+  let badgeBorderRadius = theme.radius.default;
   if (variant === "iconOnly") {
-    badgeBorderRadius = theme.radius.full as any;
+    badgeBorderRadius = theme.radius.full;
   } else if (variant === "numberOnly") {
-    badgeBorderRadius = theme.radius.rounded as any;
+    badgeBorderRadius = theme.radius.rounded;
   }
 
   let badgeValue;
@@ -75,17 +75,17 @@ export const Badge = ({
       style={{
         justifyContent: "center",
         alignItems: "center",
-        paddingVertical: theme.spacing.xs as any,
-        paddingHorizontal: theme.spacing.sm as any,
+        paddingVertical: theme.spacing.xs,
+        paddingHorizontal: theme.spacing.sm,
         flexDirection: "row",
-        borderRadius: badgeBorderRadius as any,
+        borderRadius: badgeBorderRadius,
         backgroundColor: theme.surface[badgeBgColor],
-        height: variant === "iconOnly" ? (theme.spacing.xl as any) : "auto",
-        width: variant === "iconOnly" ? (theme.spacing.xl as any) : "auto",
+        height: variant === "iconOnly" ? theme.spacing.xl : "auto",
+        width: variant === "iconOnly" ? theme.spacing.xl : "auto",
       }}
     >
       {Boolean(variant !== "numberOnly") && (
-        <View style={{marginRight: theme.spacing.sm as any}}>
+        <View style={{marginRight: theme.spacing.sm}}>
           <Icon color={badgeColor} iconName={iconName} size="sm" />
         </View>
       )}

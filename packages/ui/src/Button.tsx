@@ -100,7 +100,7 @@ const ButtonComponent: FC<ButtonProps> = ({
         alignSelf: fullWidth ? "stretch" : undefined,
         backgroundColor,
         borderColor,
-        borderRadius: theme.radius.rounded as any,
+        borderRadius: theme.radius.rounded,
         borderWidth,
         flexDirection: "column",
         justifyContent: "center",
@@ -139,14 +139,14 @@ const ButtonComponent: FC<ButtonProps> = ({
                 marginLeft: iconPosition === "right" ? 8 : 0,
               }}
             >
-              <FontAwesome6 brand="solid" color={color as any} name={iconName} size={16} />
+              <FontAwesome6 brand="solid" color={color} name={iconName} size={16} />
             </View>
           )}
           <Text style={{color, fontWeight: "700", fontSize: 16}}>{text}</Text>
         </View>
         {Boolean(loading) && (
           <Box marginLeft={2}>
-            <ActivityIndicator color={color as any} size="small" />
+            <ActivityIndicator color={color} size="small" />
           </Box>
         )}
       </View>

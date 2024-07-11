@@ -8,7 +8,7 @@ import {Image} from "react-native";
 
 import {StorybookContainer} from "./StorybookContainer";
 
-const TextField = () => {
+export const TextFieldStory = () => {
   const [value, setValue] = useState("Pre-filled text");
   return (
     <StorybookContainer>
@@ -24,7 +24,7 @@ const TextField = () => {
   );
 };
 
-const BooleanField = () => {
+export const BooleanFieldStory = () => {
   const [value, setValue] = useState(true);
   return (
     <StorybookContainer>
@@ -40,7 +40,7 @@ const BooleanField = () => {
   );
 };
 
-const FieldWithError = () => {
+export const FieldWithErrorStory = () => {
   const [value, setValue] = useState("");
   return (
     <StorybookContainer>
@@ -57,7 +57,7 @@ const FieldWithError = () => {
   );
 };
 
-const EmailTextField = () => {
+export const EmailTextFieldStory = () => {
   const [value, setValue] = useState("test@email.com");
   return (
     <StorybookContainer>
@@ -73,7 +73,7 @@ const EmailTextField = () => {
   );
 };
 
-const TextAreaField = () => {
+export const TextAreaFieldStory = () => {
   const [value, setValue] = useState("this is my placeholder");
   return (
     <StorybookContainer>
@@ -100,8 +100,8 @@ const TextAreaField = () => {
   );
 };
 
-const NumberField = () => {
-  const [value, setValue] = useState(123);
+export const NumberFieldStory = () => {
+  const [value, setValue] = useState("123");
   return (
     <StorybookContainer>
       <Field
@@ -116,7 +116,7 @@ const NumberField = () => {
   );
 };
 
-const CurrencyField = () => {
+export const CurrencyFieldStory = () => {
   const [value, setValue] = useState(1234.56);
   return (
     <StorybookContainer>
@@ -132,7 +132,7 @@ const CurrencyField = () => {
   );
 };
 
-const PercentField = () => {
+export const PercentFieldStory = () => {
   const [value, setValue] = useState(0.12);
   return (
     <StorybookContainer>
@@ -148,7 +148,7 @@ const PercentField = () => {
   );
 };
 
-const SelectField = () => {
+export const SelectFieldStory = () => {
   const [value, setValue] = useState();
   return (
     <StorybookContainer>
@@ -174,7 +174,7 @@ const SelectField = () => {
   );
 };
 
-const PasswordField = () => {
+export const PasswordFieldStory = () => {
   const [value, setValue] = useState("mypassword");
   return (
     <StorybookContainer>
@@ -190,7 +190,7 @@ const PasswordField = () => {
   );
 };
 
-const URLField = () => {
+export const URLFieldStory = () => {
   const [value, setValue] = useState("https://www.flourish.health");
   return (
     <StorybookContainer>
@@ -206,7 +206,7 @@ const URLField = () => {
   );
 };
 
-const PhoneNumberField = () => {
+export const PhoneNumberFieldStory = () => {
   const [value, setValue] = useState("+15558675309");
   return (
     <StorybookContainer>
@@ -223,7 +223,7 @@ const PhoneNumberField = () => {
   );
 };
 
-const DateTimeField = () => {
+export const DateAndTimeFieldStory = () => {
   const [dateValue, setDateValue] = useState<string>(DateTime.now().toISO());
   const [timeValue, setTimeValue] = useState(
     DateTime.now().set({hour: 12, minute: 0, second: 0}).toISO()
@@ -274,7 +274,7 @@ const DateTimeField = () => {
   );
 };
 
-const MultiselectField = () => {
+export const MultiselectFieldStory = () => {
   const [checkboxValue, setCheckboxValue] = useState(["Option3"]);
   return (
     <StorybookContainer>
@@ -297,7 +297,7 @@ const MultiselectField = () => {
   );
 };
 
-const AddressField = () => {
+export const AddressFieldStory = () => {
   const [value, setValue] = useState({
     address1: "123 Main St",
     address2: "Apt 1",
@@ -402,7 +402,7 @@ const AddressField = () => {
   );
 };
 
-const CustomSelectField = () => {
+export const CustomSelectFieldStory = () => {
   const [value1, setValue1] = useState("they/them/theirs");
   const [value2, setValue2] = useState("they/them/theirs");
   return (
@@ -446,7 +446,7 @@ interface SignatureFieldProps {
   setScrollEnabled: (scrollEnabled: boolean) => void;
 }
 
-const SignatureField = ({setScrollEnabled}: SignatureFieldProps) => {
+export const SignatureFieldStory = ({setScrollEnabled}: SignatureFieldProps) => {
   const [signature, setValue] = useState("");
   return (
     <StorybookContainer>
@@ -470,62 +470,4 @@ const SignatureField = ({setScrollEnabled}: SignatureFieldProps) => {
       />
     </StorybookContainer>
   );
-};
-
-export const FieldStories = {
-  title: "Field",
-  component: Field,
-  stories: {
-    "Text Field": function () {
-      return <TextField />;
-    },
-    "Boolean Field": function () {
-      return <BooleanField />;
-    },
-    "Email Text Field": function () {
-      return <EmailTextField />;
-    },
-    "Text Area Field": function () {
-      return <TextAreaField />;
-    },
-    "Number Field": function () {
-      return <NumberField />;
-    },
-    "Currency Field": function () {
-      return <CurrencyField />;
-    },
-    "Percent Field": function () {
-      return <PercentField />;
-    },
-    "Select Field": function () {
-      return <SelectField />;
-    },
-    "Password Field": function () {
-      return <PasswordField />;
-    },
-    "Phone Number Field": function () {
-      return <PhoneNumberField />;
-    },
-    "URL Field": function () {
-      return <URLField />;
-    },
-    "Date And Time Fields": function () {
-      return <DateTimeField />;
-    },
-    "Multiselect Field": function () {
-      return <MultiselectField />;
-    },
-    "Address Field": function () {
-      return <AddressField />;
-    },
-    "Custom Select Field": function () {
-      return <CustomSelectField />;
-    },
-    "Field With Error Message": function () {
-      return <FieldWithError />;
-    },
-    "Signature Field": function (setScrollEnabled: any) {
-      return <SignatureField setScrollEnabled={setScrollEnabled} />;
-    },
-  },
 };
