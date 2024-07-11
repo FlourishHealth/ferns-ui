@@ -1,8 +1,18 @@
 import React from "react";
 
 import {BooleanField} from "./BooleanField";
-import {AddressInterface, FieldProps, TextFieldType} from "./Common";
-import {CustomSelect} from "./CustomSelect";
+import {
+  BooleanFieldProps,
+  DateTimeFieldProps,
+  EmailFieldProps,
+  FieldProps,
+  NumberFieldProps,
+  PhoneNumberFieldProps,
+  SignatureFieldProps,
+  TextAreaProps,
+  TextFieldProps,
+  TextFieldType,
+} from "./Common";
 import {DateTimeField} from "./DateTimeField";
 import {EmailField} from "./EmailField";
 import {NumberField} from "./NumberField";
@@ -10,35 +20,8 @@ import {PhoneNumberField} from "./PhoneNumberField";
 import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
-import {UnifiedAddressAutoCompleteField} from "./UnifiedAddressAutoComplete";
 
-export const Field = ({
-  name,
-  type,
-  rows,
-  value,
-  onChange,
-  onBlur,
-  onStart,
-  onEnd,
-  options,
-  placeholder,
-  disabled,
-  includeCounty = false,
-  googleMapsApiKey,
-  googlePlacesMobileStyles,
-  testID,
-  ...rest
-}: FieldProps) => {
-  const handleAddressChange = (field: string, newValue: string) => {
-    onChange({...value, [field]: newValue});
-    onBlur && onBlur({...value, [field]: newValue});
-  };
-
-  const handleAutoCompleteChange = (newValue: AddressInterface) => {
-    onChange({...value, ...newValue});
-  };
-
+export const Field = ({type, ...rest}: FieldProps) => {
   // if (type === "select") {
   //   if (!options) {
   //     console.error("Field with type=select require options");
@@ -108,179 +91,131 @@ export const Field = ({
   // }
   // else
   if (type === "textarea") {
-    return (
-      <TextArea
-        {...rest}
-        disabled={disabled}
-        id={name}
-        placeholderText={Boolean(value) ? "" : placeholder}
-        rows={rows}
-        testID={testID}
-        value={String(value)}
-        onBlur={onBlur}
-        onChange={(result) => onChange(result)}
-      />
-    );
+    return <TextArea {...(rest as TextAreaProps)} />;
   } else if (type === "boolean") {
-    return (
-      <BooleanField
-        {...rest}
-        interaction={!disabled}
-        label={name ?? ""}
-        value={value}
-        onChange={(result) => {
-          onChange(result);
-        }}
-      />
-    );
+    return <BooleanField {...(rest as BooleanFieldProps)} />;
   } else if (type && ["date", "time", "datetime"].includes(type)) {
-    return (
-      <DateTimeField
-        {...rest}
-        id={name}
-        placeholderText={placeholder}
-        testID={testID}
-        type={type as "date" | "time" | "datetime"}
-        value={value}
-        onChange={(result) => onChange(result)}
-      />
-    );
+    return <DateTimeField {...(rest as DateTimeFieldProps)} />;
   } else if (type === "address") {
-    const addressValue = value ? value : {};
-    const {
-      address1 = "",
-      address2 = "",
-      city = "",
-      // eslint-disable-next-line unused-imports/no-unused-vars
-      state = "",
-      zipcode = "",
-      countyName = "",
-      countyCode = "",
-    }: AddressInterface = addressValue;
-    return (
-      <>
-        <UnifiedAddressAutoCompleteField
-          disabled={disabled}
-          googleMapsApiKey={googleMapsApiKey}
-          googlePlacesMobileStyles={googlePlacesMobileStyles}
-          handleAddressChange={(result) => handleAddressChange("address1", result)}
-          handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
-          includeCounty={includeCounty}
-          inputValue={address1}
-          testID={`${testID}-address1`}
-        />
-        <TextField
-          disabled={disabled}
-          id="address2"
-          testID={`${testID}-address2`}
-          title="Apt, suite, etc"
-          type="text"
-          value={address2}
-          onChange={(result) => handleAddressChange("address2", result)}
-        />
-        <TextField
-          disabled={disabled}
-          id="city"
-          testID={`${testID}-city`}
-          title="City"
-          type="text"
-          value={city}
-          onChange={(result) => handleAddressChange("city", result)}
-        />
-        {/* <SelectList
-            disabled={disabled}
-            id="state"
-            label="State"
-            options={USSTATESLIST}
-            placeholder="Select state"
-            style={{borderRadius: 16}}
-            testID={`${testID}-state`}
-            value={state}
-            onChange={(result) => {
-              handleAddressChange("state", result!);
-            }}
-          /> */}
-        <TextField
-          disabled={disabled}
-          id="zipcode"
-          testID={`${testID}-zip`}
-          title="Zipcode"
-          type="text"
-          value={zipcode}
-          onChange={(result) => handleAddressChange("zipcode", result)}
-        />
-        {includeCounty && (
-          <>
-            <TextField
-              disabled={disabled}
-              id="countyName"
-              testID={`${testID}-county`}
-              title="County Name"
-              type="text"
-              value={countyName}
-              onChange={(result) => handleAddressChange("countyName", result)}
-            />
-            <NumberField
-              disabled={disabled}
-              id="countyCode"
-              testID={`${testID}-county-code`}
-              title="County Code"
-              type="number"
-              value={countyCode}
-              onChange={(result) => handleAddressChange("countyCode", result)}
-            />
-          </>
-        )}
-      </>
-    );
+    // const addressValue = value ? value : {};
+    // const {
+    //   address1 = "",
+    //   address2 = "",
+    //   city = "",
+    //   // eslint-disable-next-line unused-imports/no-unused-vars
+    //   state = "",
+    //   zipcode = "",
+    //   countyName = "",
+    //   countyCode = "",
+    // }: AddressInterface = addressValue;
+    // return (
+    //   <>
+    //     <UnifiedAddressAutoCompleteField
+    //       disabled={disabled}
+    //       googleMapsApiKey={googleMapsApiKey}
+    //       googlePlacesMobileStyles={googlePlacesMobileStyles}
+    //       handleAddressChange={(result) => handleAddressChange("address1", result)}
+    //       handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
+    //       includeCounty={includeCounty}
+    //       inputValue={address1}
+    //       testID={`${testID}-address1`}
+    //     />
+    //     <TextField
+    //       disabled={disabled}
+    //       id="address2"
+    //       testID={`${testID}-address2`}
+    //       title="Apt, suite, etc"
+    //       type="text"
+    //       value={address2}
+    //       onChange={(result) => handleAddressChange("address2", result)}
+    //     />
+    //     <TextField
+    //       disabled={disabled}
+    //       id="city"
+    //       testID={`${testID}-city`}
+    //       title="City"
+    //       type="text"
+    //       value={city}
+    //       onChange={(result) => handleAddressChange("city", result)}
+    //     />
+    //     {/* <SelectList
+    //         disabled={disabled}
+    //         id="state"
+    //         label="State"
+    //         options={USSTATESLIST}
+    //         placeholder="Select state"
+    //         style={{borderRadius: 16}}
+    //         testID={`${testID}-state`}
+    //         value={state}
+    //         onChange={(result) => {
+    //           handleAddressChange("state", result!);
+    //         }}
+    //       /> */}
+    //     <TextField
+    //       disabled={disabled}
+    //       id="zipcode"
+    //       testID={`${testID}-zip`}
+    //       title="Zipcode"
+    //       type="text"
+    //       value={zipcode}
+    //       onChange={(result) => handleAddressChange("zipcode", result)}
+    //     />
+    //     {includeCounty && (
+    //       <>
+    //         <TextField
+    //           disabled={disabled}
+    //           id="countyName"
+    //           testID={`${testID}-county`}
+    //           title="County Name"
+    //           type="text"
+    //           value={countyName}
+    //           onChange={(result) => handleAddressChange("countyName", result)}
+    //         />
+    //         <NumberField
+    //           disabled={disabled}
+    //           id="countyCode"
+    //           testID={`${testID}-county-code`}
+    //           title="County Code"
+    //           type="number"
+    //           value={countyCode}
+    //           onChange={(result) => handleAddressChange("countyCode", result)}
+    //         />
+    //       </>
+    //     )}
+    //   </>
+    // );
   } else if (type === "customSelect") {
-    if (!options) {
-      console.error("Field with type=customSelect require options");
-      return null;
-    }
-    return (
-      <CustomSelect
-        {...rest}
-        disabled={disabled}
-        options={options}
-        placeholder={placeholder}
-        value={value}
-        onChange={(val) => {
-          onChange(val);
-          onBlur && onBlur(val);
-        }}
-      />
-    );
+    // if (!options) {
+    //   console.error("Field with type=customSelect require options");
+    //   return null;
+    // }
+    // return (
+    //   <CustomSelect
+    //     {...rest}
+    //     disabled={disabled}
+    //     options={options}
+    //     placeholder={placeholder}
+    //     value={value}
+    //     onChange={(val) => {
+    //       onChange(val);
+    //       onBlur && onBlur(val);
+    //     }}
+    //   />
+    // );
   } else if (type === "number") {
-    return (
-      <NumberField
-        {...rest}
-        disabled={disabled}
-        id={name}
-        placeholderText={placeholder}
-        testID={testID}
-        type="number"
-        value={value}
-        onBlur={(result) => {
-          onBlur && onBlur(result);
-        }}
-        onChange={(result) => {
-          onChange(result);
-        }}
-      />
-    );
+    return <NumberField {...(rest as NumberFieldProps)} />;
   } else if (type === "signature") {
-    return <Signature {...rest} onChange={onChange} onEnd={onEnd} onStart={onStart} />;
+    return <Signature {...(rest as SignatureFieldProps)} />;
   } else if (type === "email") {
-    return <EmailField {...rest} value={value} onChange={onChange} />;
+    return <EmailField {...(rest as EmailFieldProps)} />;
   } else if (type === "phoneNumber") {
-    return <PhoneNumberField {...rest} value={value} onChange={onChange} />;
+    return <PhoneNumberField {...(rest as PhoneNumberFieldProps)} />;
   } else {
     let tfType: TextFieldType = "text";
-    const tfValue: string = value;
     if (type && ["password", "url"].includes(type)) {
       tfType = type as TextFieldType;
     } else if (type === "percent" || type === "currency") {
+      // TODO: Implement percent and currency fields
       tfType = "text";
     }
     let autoComplete: "on" | "current-password" | "username" = "on";
@@ -292,18 +227,9 @@ export const Field = ({
 
     return (
       <TextField
-        {...rest}
         autoComplete={autoComplete}
-        disabled={disabled}
-        id={name}
-        placeholderText={placeholder}
-        testID={testID}
         type={tfType as "email" | "password" | "phoneNumber" | "text" | "url"}
-        value={tfValue}
-        onBlur={(result) => {
-          onBlur?.(result);
-        }}
-        onChange={(result) => onChange(result)}
+        {...(rest as TextFieldProps)}
       />
     );
   }

@@ -9,7 +9,7 @@ export * from "./Card.config";
 export * from "./CheckBox.config";
 export * from "./DateTimeField.config";
 export * from "./EmailField.config";
-// export * from "./Field.config";
+export * from "./Field.config";
 export * from "./Heading.config";
 export * from "./Icon.config";
 export * from "./IconButton.config";

@@ -1,5 +1,5 @@
 import {getCalendars} from "expo-localization";
-import React, {ReactElement, useMemo, useState} from "react";
+import React, {FC, useMemo, useState} from "react";
 import {
   DimensionValue,
   KeyboardTypeOptions,
@@ -54,7 +54,7 @@ const textContentMap: {
   username: "username",
 };
 
-export const TextField = ({
+export const TextField: FC<TextFieldProps> = ({
   title,
   disabled,
   helperText,
@@ -76,7 +76,7 @@ export const TextField = ({
   onEnter,
   onSubmitEditing,
   testID,
-}: TextFieldProps): ReactElement => {
+}) => {
   const {theme} = useTheme();
 
   const calendar = getCalendars()[0];

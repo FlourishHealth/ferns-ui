@@ -190,15 +190,19 @@ export const ThemeProvider = ({children}: ThemeProviderProps) => {
       // for each key, map the value to the primitive value.
       acc[key as keyof typeof acc] = Object.keys(value).reduce((accKey, valueKey) => {
         const primitiveKey = value[valueKey as keyof typeof value];
-        if (providerPrimitives[primitiveKey] === undefined) {
-          console.error(`Primitive ${primitiveKey} not found in theme.`);
+        // Fonts are handled differently, they are not in the primitives object.
+        if (key === "font") {
+          accKey[valueKey] = primitiveKey;
+        } else {
+          if (providerPrimitives[primitiveKey] === undefined) {
+            console.error(`Primitive ${primitiveKey} not found in theme.`);
+          }
+          accKey[valueKey] = providerPrimitives[primitiveKey];
         }
-        accKey[valueKey] = providerPrimitives[primitiveKey];
         return accKey;
       }, {} as any);
       return acc;
     }, {} as FernsTheme);
-
     return {
       ...theme,
       primitives: providerPrimitives,

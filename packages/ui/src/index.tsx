@@ -76,7 +76,6 @@ export * from "./Unifier";
 export * from "./useStoredState";
 export * from "./Utilities";
 export * from "./WebAddressAutocomplete";
-export * from "./WithLabel";
 // export * from "./Layout";
 // export * from "./Drawer";
 // export * from "./Chart";
