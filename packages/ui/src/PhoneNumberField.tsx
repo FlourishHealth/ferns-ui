@@ -63,7 +63,18 @@ export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
   const handleChange = useCallback(
     (inputValue: string) => {
       const formattedValue = formatPhoneNumber(inputValue);
-      setLocalValue(formattedValue);
+      // By default, if a value is something like `"(123)"`
+      // then Backspace would only erase the rightmost brace
+      // becoming something like `"(123"`
+      // which would give the same `"123"` value
+      // which would then be formatted back to `"(123)"`
+      // and so a user wouldn't be able to erase the phone number.
+      // This is the workaround for that.
+      if (inputValue !== formattedValue && inputValue.length !== 4) {
+        setLocalValue(formattedValue);
+      } else {
+        setLocalValue(inputValue);
+      }
       const validationError = validatePhoneNumber(formattedValue);
       if (error && !validationError) {
         setError(undefined);
