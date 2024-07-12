@@ -5,94 +5,45 @@ import {BooleanField} from "./BooleanField";
 import {
   AddressFieldProps,
   BooleanFieldProps,
+  CustomSelectFieldProps,
   DateTimeFieldProps,
   EmailFieldProps,
   FieldProps,
+  MultiselectFieldProps,
   NumberFieldProps,
   PhoneNumberFieldProps,
+  SelectFieldProps,
   SignatureFieldProps,
   TextAreaProps,
   TextFieldProps,
   TextFieldType,
 } from "./Common";
+import {CustomSelectField} from "./CustomSelectField";
 import {DateTimeField} from "./DateTimeField";
 import {EmailField} from "./EmailField";
+import {MultiselectField} from "./MultiselectField";
 import {NumberField} from "./NumberField";
 import {PhoneNumberField} from "./PhoneNumberField";
+import {SelectField} from "./SelectField";
 import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 
+// TODO: put onblur back in any fields that need it
 export const Field: FC<FieldProps> = ({type, ...rest}) => {
-  // if (type === "select") {
-  //   if (!options) {
-  //     console.error("Field with type=select require options");
-  //     return undefined;
-  //   }
-  //   return (
-  //     <SelectList
-  //       disabled={disabled}
-  //       id={name}
-  //       options={options}
-  //       placeholder={placeholder}
-  //       testID={testID}
-  //       value={value}
-  //       onChange={(result) => {
-  //         onChange(result);
-  //         onBlur && onBlur(result);
-  //       }}
-  //     />
-  //   );
-  // }
-  // TODO: Either implement multiselect or remove it
-  //  else if (type === "multiselect") {
-  //   if (options === undefined) {
-  //     console.error("Field with type=multiselect require options");
-  //     return undefined;
-  //   }
-  //   return (
-  //     <Box width="100%">
-  //       {options.map((o) => (
-  //         <Box
-  //           key={o.label + o.value}
-  //           alignItems="center"
-  //           direction="row"
-  //           justifyContent="between"
-  //           width="100%"
-  //         >
-  //           <Box flex="shrink" marginRight={2}>
-  //             <Text bold>{o.label}</Text>
-  //           </Box>
-  //           <Box>
-  //             <CheckBox
-  //               key={o.label + o.value}
-  //               checked={(value ?? []).includes(o.value)}
-  //               name={name}
-  //               size="sm"
-  //               testID={`${testID}-${o.value}`}
-  //               onChange={(result) => {
-  //                 let newValue;
-  //                 if (result) {
-  //                   if (value.includes(o.value)) {
-  //                     console.warn(`Tried to add value that already exists: ${o.value}`);
-  //                     return;
-  //                   }
-  //                   newValue = [...value, o.value];
-  //                 } else {
-  //                   newValue = value.filter((v: string) => v !== o.value);
-  //                 }
-  //                 onChange(newValue);
-  //                 onBlur && onBlur(newValue);
-  //               }}
-  //             />
-  //           </Box>
-  //         </Box>
-  //       ))}
-  //     </Box>
-  //   );
-  // }
-  // else
-  if (type === "textarea") {
+  if (type === "select") {
+    return (
+      <SelectField
+        {...(rest as SelectFieldProps)}
+        // onChange={(result) => {
+        //   rest.onChange?.(result);
+        //   rest.onBlur?.(result);
+        // }}
+      />
+    );
+  } else if (type === "multiselect") {
+    return <MultiselectField {...(rest as MultiselectFieldProps)} />;
+  } else if (type === "textarea") {
     return <TextArea {...(rest as TextAreaProps)} />;
   } else if (type === "boolean") {
     return <BooleanField {...(rest as BooleanFieldProps)} />;
@@ -101,24 +52,15 @@ export const Field: FC<FieldProps> = ({type, ...rest}) => {
   } else if (type === "address") {
     return <AddressField {...(rest as AddressFieldProps)} />;
   } else if (type === "customSelect") {
-    return null;
-    // if (!options) {
-    //   console.error("Field with type=customSelect require options");
-    //   return null;
-    // }
-    // return (
-    //   <CustomSelect
-    //     {...rest}
-    //     disabled={disabled}
-    //     options={options}
-    //     placeholder={placeholder}
-    //     value={value}
-    //     onChange={(val) => {
-    //       onChange(val);
-    //       onBlur && onBlur(val);
-    //     }}
-    //   />
-    // );
+    return (
+      <CustomSelectField
+        {...(rest as CustomSelectFieldProps)}
+        // onChange={(result) => {
+        //   rest.onChange(result);
+        //   rest.onBlur && rest.onBlur(result);
+        // }}
+      />
+    );
   } else if (type === "number") {
     return <NumberField {...(rest as NumberFieldProps)} />;
   } else if (type === "signature") {

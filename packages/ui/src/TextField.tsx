@@ -174,6 +174,7 @@ export const TextField: FC<TextFieldProps> = ({
           }}
           accessibilityHint="Enter text here"
           accessibilityLabel="Text input field"
+          accessibilityState={{disabled}}
           autoCapitalize={type === "text" ? "sentences" : "none"}
           autoCorrect={shouldAutocorrect}
           blurOnSubmit={blurOnSubmit}

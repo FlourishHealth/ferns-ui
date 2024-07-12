@@ -8,6 +8,7 @@ export * from "./Box.stories";
 export * from "./Button.stories";
 export * from "./Card.stories";
 export * from "./CheckBox.stories";
+export * from "./CustomSelectField.stories";
 export * from "./DateTimeField.stories";
 export * from "./DefaultDemo";
 export * from "./EmailField.stories";

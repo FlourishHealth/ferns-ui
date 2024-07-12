@@ -1463,15 +1463,50 @@ export interface ButtonProps {
   onClick: () => void | Promise<void>;
 }
 
-export interface CustomSelectProps {
-  value: string;
-  onChange: (value?: string) => void;
-  options: Array<{label: string; value: string}>;
+export interface CustomSelectFieldProps {
+  /**
+   * The current value of the select field.
+   */
+  value: string | undefined;
+
+  /**
+   * The function to call when the selected value changes.
+   */
+  onChange: (value: string | undefined) => void;
+
+  /**
+   * The options available for selection in the select field.
+   * Each option should have a label and a value.
+   */
+  options: FieldOptions;
+
+  /**
+   * The placeholder text to display when no option is selected.
+   */
+
   placeholder?: string;
+  /**
+   * If true, the select field will be disabled.
+   * @default false
+   */
   disabled?: boolean;
-  label?: string;
-  labelColor?: string;
+
+  /**
+   * The error text to display if there is an error.
+   */
+  errorText?: string;
+
+  /**
+   * The helper text to display below the select field.
+   */
+  helperText?: string;
+
+  /**
+   * The title of the select field.
+   */
+  title?: string;
 }
+
 export interface DateTimeActionSheetProps {
   value?: string;
   type?: "date" | "time" | "datetime";
@@ -1532,7 +1567,7 @@ export type FieldProps =
   | (MultiselectFieldProps & {type: "multiselect"})
   | (TextAreaProps & {type: "textarea"})
   | (SelectFieldProps & {type: "select"})
-  | (CustomSelectProps & {type: "customSelect"})
+  | (CustomSelectFieldProps & {type: "customSelect"})
   | (EmailFieldProps & {type: "email"})
   | (PhoneNumberFieldProps & {type: "phoneNumber"})
   | (BooleanFieldProps & {type: "boolean"})
