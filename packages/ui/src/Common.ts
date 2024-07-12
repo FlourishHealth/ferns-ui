@@ -424,10 +424,6 @@ export type TextSize = "sm" | "md" | "lg" | "xl";
 
 export type IconPrefix = "far" | "fas";
 
-export interface BlurBoxProps extends BoxProps {
-  blurType?: "regular" | "dark" | "prominent";
-}
-
 export interface LayerProps {
   children: ReactChildren;
 }
@@ -541,9 +537,9 @@ export interface BoxPropsBase {
 }
 
 // If onClick is provided, add accessibility props.
-export type BoxProps = BoxPropsBase &
-  (BoxPropsBase extends {onClick: () => void} ? AccessibilityProps : {});
-
+export type BoxProps =
+  | (BoxPropsBase & {onClick?: undefined})
+  | (BoxPropsBase & {onClick: () => void} & AccessibilityProps);
 export type BoxColor = SurfaceColor | "transparent";
 
 export interface ErrorBoundaryProps {
@@ -1301,17 +1297,41 @@ export interface AvatarProps {
 }
 
 export interface BadgeProps {
+  /**
+   * The name of the icon to display in the badge.
+   */
   iconName?: IconName;
-  // The text to display inside the badge.
-  value?: number | string;
-  // Position relative to the text. Top should only be used with headings.
-  status?: "info" | "error" | "warning" | "success" | "neutral"; // default "info
-  secondary?: boolean;
-  hasIcon?: boolean;
-  variant?: "iconOnly" | "numberOnly" | "text"; // text is default
+
   // TODO: improve type discrimination
   // used for numberOnly variant to display "${maxValue}+" when value is greater than max
+
+  /**
+   * The maximum value to display. Used for "numberOnly" variant to display "${maxValue}+" when
+   * value is greater than max.
+   */
   maxValue?: number;
+
+  /**
+   * If true, the badge will have a secondary style.
+   * @default false
+   */
+  secondary?: boolean;
+
+  /**
+   * The status of the badge. Determines its color and appearance.
+   * @default "info"
+   */
+  status?: "info" | "error" | "warning" | "success" | "neutral";
+
+  /**
+   * The text or number to display inside the badge.
+   */
+  value?: number | string;
+
+  /**
+   * The variant of the badge. Determines if it displays an icon or number only.
+   */
+  variant?: "iconOnly" | "numberOnly";
 }
 
 type BannerButtonProps = {
@@ -1867,10 +1887,21 @@ export interface TableHeaderCellProps {
   /**
    * The content of the table header cell.
    */
-  children: ReactElement;
+  children?: ReactElement;
   index: number;
   sortable?: boolean;
   onSortChange?: (direction: "asc" | "desc" | undefined) => void;
+  /**
+   * The alignment of the text/components in the cell. Most cells should be left aligned,
+   * unless the column is for a badge, icon, or boolean, then center align.
+   * It should be right if the column is right aligned text or numbers.
+   */
+  align?: "left" | "center" | "right";
+  /**
+   * If title is provided, the text will be wrapped in a TableTitle, saving you from having to
+   * wrap the text yourself. Alignments will match between the cell and the title.
+   */
+  title?: string;
 }
 
 export interface TableRowProps {
@@ -2122,6 +2153,13 @@ export interface TableTitleProps {
    * The text content of the table title.
    */
   title: string;
+
+  /**
+   * Most titles should be left aligned, but some may be centered, such as badges or booleans.
+   * It should match the alignment of the column.
+   * @default "left"
+   */
+  align?: "left" | "center" | "right";
 }
 
 export interface TableBooleanProps {
@@ -2134,7 +2172,7 @@ export interface TableBooleanProps {
   /**
    * The function to call when the value is saved.
    */
-  onSave: () => void | Promise<void>;
+  onSave?: () => void | Promise<void>;
 
   /**
    * The boolean value to be displayed or edited.
@@ -2195,6 +2233,7 @@ export type FieldOptions = {
    */
   value: string;
 }[];
+
 export interface SelectFieldProps {
   /**
    * If true, the select field will be disabled.
@@ -2237,4 +2276,78 @@ export interface SelectFieldProps {
    * The function to call when the selected value changes.
    */
   onChange: (value: string | undefined) => void;
+}
+
+export interface TableBadgeProps {
+  /**
+   * The icon name of the badge.
+   */
+  badgeIconName?: BadgeProps["iconName"];
+
+  /**
+   * The status of the badge.
+   * @default "info"
+   */
+  badgeStatus?: BadgeProps["status"];
+
+  /**
+   * If true, the component is in editing mode.
+   * @default false
+   */
+  isEditing?: boolean;
+
+  /**
+   * The options available for editing the badge.
+   */
+  editingOptions?: FieldOptions;
+
+  /**
+   * The function to call when the badge status is saved.
+   */
+  onSave?: (newStatus: string | undefined) => void | Promise<void>;
+
+  /**
+   * The value of the badge.
+   */
+  value: string;
+}
+
+export interface TableTextProps {
+  /**
+   * Whether the text field is in editing mode.
+   */
+  isEditing?: boolean;
+  /**
+   * The text to display in the text field.
+   */
+  value: string;
+  /**
+   * Callback to save the text field value.
+   */
+  onSave?: () => void | Promise<void>;
+  /**
+   * The alignment of the text field. Most text fields should be left aligned.
+   * @default "left"
+   */
+  align?: "left" | "center" | "right";
+}
+
+export interface TableNumberProps {
+  /**
+   * Whether the text field is in editing mode.
+   */
+  isEditing?: boolean;
+  /**
+   * The number to display in the text field.
+   */
+  value: string;
+  /**
+   * Callback to save the text field value.
+   */
+  onSave?: () => void | Promise<void>;
+  /**
+   * Numbers generally should be right aligned for ease of scanability.
+   * @default "right"
+   */
+  align?: "left" | "right";
 }

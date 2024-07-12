@@ -5,6 +5,15 @@ import {TableRowProps} from "../Common";
 import {IconButton} from "../IconButton";
 import {useTableContext} from "./tableContext";
 
+const TableCell = ({children, index}: {children: React.ReactNode; index: number}) => {
+  const {columns} = useTableContext();
+  return (
+    <Box justifyContent="center" marginRight={2} paddingX={3} paddingY={4} width={columns[index]}>
+      {children}
+    </Box>
+  );
+};
+
 /**
  * Use TableRow to define a row in Table.
  */
@@ -16,20 +25,8 @@ export const TableRow = ({
   color = "base",
 }: TableRowProps): React.ReactElement => {
   const [isExpanded, setIsExpanded] = React.useState(expanded || false);
-  const {columns, hasDrawerContents} = useTableContext();
+  const {hasDrawerContents} = useTableContext();
   const rowRef = useRef<typeof Box>(null);
-
-  const renderCellWithColumnIndex = (child: React.ReactNode, index: number) => {
-    if (!columns[index]) {
-      console.warn(`No width defined for column ${index} in TableRow`);
-      return null;
-    }
-    return (
-      <Box paddingX={2} width={columns[index]}>
-        {child}
-      </Box>
-    );
-  };
 
   const border = {__style: {borderBottom: `${headerRow ? 2 : 1}px solid #e0e0e0`}};
 
@@ -37,20 +34,28 @@ export const TableRow = ({
     <Box ref={rowRef} color={color} dangerouslySetInlineStyle={border} width="100%">
       <Box direction="row" paddingY={1} width="100%">
         {Boolean(drawerContents) && (
-          <Box width={30}>
+          <TableCell index={-1}>
+            {/* TODO: The expand table button doesn't exactly line up with the designs */}
             <IconButton
-              accessibilityHint=""
+              accessibilityHint="press to expand"
               accessibilityLabel="expand"
               iconName={isExpanded ? "chevron-up" : "chevron-down"}
+              variant="secondary"
               onClick={() => {
                 setIsExpanded(!isExpanded);
               }}
             />
-          </Box>
+          </TableCell>
         )}
         {/* Still render a blank space so the columns line up. */}
-        {Boolean(hasDrawerContents && !drawerContents) && <Box width={30} />}
-        {Children.map(children, renderCellWithColumnIndex)}
+        {Boolean(hasDrawerContents && !drawerContents) && (
+          <TableCell index={-1}>
+            <Box width={32} />
+          </TableCell>
+        )}
+        {Children.map(children, (child, index) => (
+          <TableCell index={index}>{child}</TableCell>
+        ))}
       </Box>
       {Boolean(isExpanded) && (
         <Box paddingX={2} width="100%">

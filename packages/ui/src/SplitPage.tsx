@@ -71,6 +71,8 @@ export const SplitPage = ({
   const renderItem = (itemInfo: ListRenderItemInfo<any>) => {
     return (
       <Box
+        accessibilityHint=""
+        accessibilityLabel="Select"
         onClick={async () => {
           await onItemSelect(itemInfo);
         }}

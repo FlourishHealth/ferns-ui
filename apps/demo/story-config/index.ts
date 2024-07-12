@@ -31,7 +31,7 @@ export * from "./TableBoolean.config";
 export * from "./TableDate.config";
 export * from "./TableIconButton.config";
 export * from "./TableNumber.config";
-export * from "./TableTextField.config";
+export * from "./TableText.config";
 export * from "./TableTitle.config";
 export * from "./TapToEdit.config";
 export * from "./Text.config";

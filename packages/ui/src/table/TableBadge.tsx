@@ -1,19 +1,46 @@
-/* eslint-disable unused-imports/no-unused-imports */
+import React, {FC, useState} from "react";
+import {View} from "react-native";
 
-import React, {FC} from "react";
-import {Text, View} from "react-native";
+import {Badge} from "../Badge";
+import {TableBadgeProps} from "../Common";
+import {SelectField} from "../SelectField";
 
-import {Box} from "../Box";
-
-export interface TableBadgeProps {
-  value: string;
-  isEditing?: boolean;
+export interface TableBadgeHandles {
+  handleSave: () => void | Promise<void>;
 }
 
-export const TableBadge: FC<TableBadgeProps> = () => {
+// TODO: Support error state in TableBadge
+export const TableBadge: FC<TableBadgeProps> = ({
+  value,
+  badgeStatus = "info",
+  badgeIconName,
+  isEditing = false,
+  editingOptions,
+}) => {
+  const [selected, setSelected] = useState<string | undefined>(value);
+
+  const handleChange = (newVal: string | undefined) => {
+    if (newVal === "") {
+      setSelected(undefined);
+    } else {
+      setSelected(newVal);
+    }
+  };
+
   return (
-    <View>
-      <Text>TableBadge</Text>
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {isEditing && editingOptions ? (
+        <SelectField options={editingOptions} value={selected} onChange={handleChange} />
+      ) : (
+        <Badge iconName={badgeIconName} secondary status={badgeStatus} value={value} />
+      )}
     </View>
   );
 };
+
+TableBadge.displayName = "TableBadge";

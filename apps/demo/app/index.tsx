@@ -2,5 +2,5 @@ import {Redirect} from "expo-router";
 import React from "react";
 
 export default function Route() {
-  return <Redirect href="/demo" />;
+  return <Redirect href="/dev" />;
 }
