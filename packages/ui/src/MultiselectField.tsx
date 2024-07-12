@@ -7,12 +7,15 @@ import {Heading} from "./Heading";
 import {isMobileDevice} from "./MediaQuery";
 import {Text} from "./Text";
 
-const Option: FC<{
+interface OptionProps {
   isDefault: boolean;
-  option: string;
+  value: string;
+  title?: string;
   selected: boolean;
   onSelect: () => void;
-}> = ({option, isDefault, selected, onSelect}) => {
+}
+
+const Option: FC<OptionProps> = ({value, title, isDefault, selected, onSelect}) => {
   return (
     <View
       style={{
@@ -22,12 +25,12 @@ const Option: FC<{
       }}
     >
       <View style={{flex: 1, flexWrap: "wrap"}}>
-        <Text>{option}</Text>
+        <Text>{title ?? value}</Text>
       </View>
       <TouchableOpacity
-        key={option}
-        accessibilityHint={`Select ${option} from list of options`}
-        accessibilityLabel={option}
+        key={value}
+        accessibilityHint={`Select ${title ?? value} from list of options`}
+        accessibilityLabel={title ?? value}
         accessibilityRole="checkbox"
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         style={{
@@ -82,11 +85,12 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
       </Heading>
       {options.map((option) => (
         <Option
-          key={option}
+          key={option.key ?? option.value}
           isDefault={isDefault}
-          option={option}
-          selected={selectedItems.includes(option)}
-          onSelect={() => toggleItem(option)}
+          selected={selectedItems.includes(option.value)}
+          title={option.label}
+          value={option.value}
+          onSelect={() => toggleItem(option.value)}
         />
       ))}
     </View>

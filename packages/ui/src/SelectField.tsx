@@ -16,7 +16,7 @@ export const SelectField: FC<SelectFieldProps> = ({
   value,
   onChange,
 }) => {
-  const clearOption = {label: value ? "---" : placeholder, value: ""};
+  const clearOption = {label: placeholder ?? "---", value: ""};
 
   return (
     <View>
@@ -24,8 +24,8 @@ export const SelectField: FC<SelectFieldProps> = ({
       {Boolean(errorText) && <FieldError text={errorText!} />}
       <RNPickerSelect
         disabled={disabled}
-        items={!requireValue ? [clearOption, ...options] : options}
-        placeholder={!requireValue ? {label: placeholder, value: ""} : {}}
+        items={options}
+        placeholder={!requireValue ? clearOption : {}}
         value={value ?? ""}
         onValueChange={(v) => {
           if (v === "" && !requireValue) {

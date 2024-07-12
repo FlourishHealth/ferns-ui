@@ -1476,7 +1476,7 @@ export interface CustomSelectFieldProps {
    * The options available for selection in the select field.
    * Each option should have a label and a value.
    */
-  options: FieldOptions;
+  options: FieldOption[];
 
   /**
    * The placeholder text to display when no option is selected.
@@ -1577,14 +1577,6 @@ export type FieldProps =
 // | (PercentFieldProps & {type: "percent"});
 
 // | URLFieldProps
-
-export interface FormLineProps {
-  name: string;
-  value: any;
-  onSave: (value: any) => void;
-  kind: "boolean" | "string" | "textarea" | "select" | "multiboolean";
-  options?: string[];
-}
 
 export interface HeightActionSheetProps {
   value?: string;
@@ -1789,7 +1781,7 @@ export interface RadioFieldProps {
   variant?: "leftText" | "rightText"; // default "rightText"
   value: string;
   onChange: (value: string) => void;
-  options: string[];
+  options: FieldOption[];
 }
 
 export interface SignatureFieldProps {
@@ -2224,7 +2216,7 @@ export interface MultiselectFieldProps {
   /**
    * The available options for the multiselect field.
    */
-  options: string[];
+  options: FieldOption[];
 
   /**
    * The title of the multiselect field.
@@ -2317,7 +2309,7 @@ export interface TableIconButtonProps {
   onClick: () => void | Promise<void>;
 }
 
-export type FieldOptions = {
+export type FieldOption = {
   /**
    * The label to display for the option.
    */
@@ -2332,9 +2324,7 @@ export type FieldOptions = {
    * The value of the option.
    */
   value: string;
-}[];
-
-export type FieldOption = {label: string; value: string};
+};
 
 // Split up SelectField so if value is passed as a string,
 export interface SelectFieldPropsBase {
@@ -2429,7 +2419,7 @@ export interface TableBadgeProps {
   /**
    * The options available for editing the badge.
    */
-  editingOptions?: FieldOptions;
+  editingOptions?: FieldOption[];
 
   /**
    * The function to call when the badge status is saved.
