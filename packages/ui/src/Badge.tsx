@@ -1,22 +1,31 @@
 import React, {useContext} from "react";
-import {View} from "react-native";
+import {Text, View} from "react-native";
 
 import {BadgeProps, SurfaceTheme, TextTheme} from "./Common";
 import {Icon} from "./Icon";
-import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 
 export const Badge = ({
   value,
-  iconName = "check",
+  iconName,
   status = "info",
   secondary = false,
-  variant = "text",
+  variant,
   maxValue = 100,
 }: BadgeProps): React.ReactElement => {
   const {theme} = useContext(ThemeContext);
+  const isIconOnly = variant === "iconOnly";
 
   let badgeColor: keyof TextTheme = "inverted";
+
+  // TODO: Move to theme
+  const secondaryBorderColors = {
+    error: "#F39E9E",
+    warning: "#FCC58F",
+    info: "#8FC1D2",
+    success: "#7FD898",
+    neutral: "#AAAAAA",
+  };
 
   if (secondary) {
     if (status === "error") {
@@ -46,18 +55,16 @@ export const Badge = ({
     badgeBgColor = secondary ? "neutralLight" : "neutralDark";
   }
 
-  let badgeBorderRadius = theme.radius.default as any;
-  if (variant === "iconOnly") {
-    badgeBorderRadius = theme.radius.full as any;
+  let badgeBorderRadius = theme.radius.default;
+  if (isIconOnly) {
+    badgeBorderRadius = theme.radius.full;
   } else if (variant === "numberOnly") {
-    badgeBorderRadius = theme.radius.rounded as any;
+    badgeBorderRadius = theme.radius.rounded;
   }
 
-  let badgeValue;
+  let badgeValue = value;
 
-  if (variant !== "numberOnly") {
-    badgeValue = value;
-  } else {
+  if (variant === "numberOnly") {
     if (!isNaN(Number(value)) && maxValue) {
       const numberValue = Number(value);
       if (numberValue > maxValue) {
@@ -73,27 +80,42 @@ export const Badge = ({
   return (
     <View
       style={{
-        justifyContent: "center",
-        alignItems: "center",
-        paddingVertical: theme.spacing.xs as any,
-        paddingHorizontal: theme.spacing.sm as any,
-        flexDirection: "row",
-        borderRadius: badgeBorderRadius as any,
-        backgroundColor: theme.surface[badgeBgColor],
-        height: variant === "iconOnly" ? (theme.spacing.xl as any) : "auto",
-        width: variant === "iconOnly" ? (theme.spacing.xl as any) : "auto",
+        alignItems: "flex-start",
       }}
     >
-      {Boolean(variant !== "numberOnly") && (
-        <View style={{marginRight: theme.spacing.sm as any}}>
-          <Icon color={badgeColor} iconName={iconName} size="sm" />
-        </View>
-      )}
-      {Boolean(variant !== "iconOnly") && (
-        <Text align="center" color={badgeColor}>
-          {badgeValue}
-        </Text>
-      )}
+      <View
+        style={[
+          {
+            justifyContent: "center",
+            alignItems: "center",
+            paddingVertical: 1,
+            paddingHorizontal: theme.spacing.xs as any,
+            flexDirection: "row",
+            borderRadius: badgeBorderRadius as any,
+            backgroundColor: theme.surface[badgeBgColor],
+          },
+          isIconOnly && {height: 16, width: 16},
+          secondary && {borderWidth: 1, borderColor: secondaryBorderColors[status]},
+        ]}
+      >
+        {Boolean(variant !== "numberOnly" && iconName) && (
+          <View style={{marginRight: isIconOnly ? undefined : (theme.spacing.xs as any)}}>
+            <Icon color={badgeColor} iconName={iconName!} size="xs" />
+          </View>
+        )}
+        {Boolean(variant !== "iconOnly") && (
+          <Text
+            style={{
+              color: theme.text[badgeColor],
+              fontSize: 10,
+              fontWeight: "700",
+              fontFamily: theme.font.primary,
+            }}
+          >
+            {badgeValue}
+          </Text>
+        )}
+      </View>
     </View>
   );
 };

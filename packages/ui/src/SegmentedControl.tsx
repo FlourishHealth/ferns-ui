@@ -23,7 +23,7 @@ export const SegmentedControl = ({
         alignItems: "center",
         gap: 4,
         height,
-        borderRadius: theme.primitives.radius3xl as any,
+        borderRadius: theme.primitives.radius3xl,
         borderColor: theme.primitives.neutral300,
         borderWidth: 3,
         backgroundColor: theme.primitives.neutral300,
@@ -35,10 +35,10 @@ export const SegmentedControl = ({
           accessibilityRole="button"
           style={{
             display: "flex",
-            paddingTop: theme.spacing.sm as any,
-            paddingBottom: theme.spacing.sm as any,
-            paddingLeft: theme.spacing.md as any,
-            paddingRight: theme.spacing.md as any,
+            paddingTop: theme.spacing.sm,
+            paddingBottom: theme.spacing.sm,
+            paddingLeft: theme.spacing.md,
+            paddingRight: theme.spacing.md,
             justifyContent: "center",
             alignItems: "center",
             height: "100%",
@@ -46,7 +46,7 @@ export const SegmentedControl = ({
             gap: 12,
             flexGrow: 1,
             flexShrink: 0,
-            borderRadius: theme.primitives.radius3xl as any,
+            borderRadius: theme.primitives.radius3xl,
             backgroundColor: index === selectedIndex ? theme.surface.base : undefined,
             overflow: "hidden",
           }}

@@ -1,6 +1,7 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
 import {TableNumber} from "ferns-ui";
+
+import {TableNumberDemo} from "../stories/TableNumber.stories";
 
 export const TableNumberConfiguration: DemoConfiguration = {
   name: "Table number",
@@ -26,7 +27,9 @@ export const TableNumberConfiguration: DemoConfiguration = {
     doNot: ["Do not use this component for dates or currency."],
   },
   props: {},
-  demo: DefaultDemo,
+  demo: TableNumberDemo,
   demoOptions: {},
-  stories: {},
+  stories: {
+    TableNumber: {render: TableNumberDemo},
+  },
 };

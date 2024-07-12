@@ -1,7 +1,6 @@
-import merge from "lodash/merge";
 import React, {createContext, useMemo, useState} from "react";
 
-import {FernsTheme} from "./Common";
+import {FernsTheme, FernsThemeConfig, ThemePrimitives} from "./Common";
 
 const defaultPrimitives = {
   neutral000: "#FFFFFF",
@@ -88,7 +87,7 @@ const defaultPrimitives = {
   radius3xl: 360,
 };
 
-const defaultTheme: FernsTheme = {
+const defaultTheme: FernsThemeConfig = {
   text: {
     primary: "neutral900",
     inverted: "neutral000",
@@ -102,7 +101,6 @@ const defaultTheme: FernsTheme = {
     error: "error200",
     warning: "warning200",
     success: "success200",
-    gold: "gold000",
   },
   surface: {
     base: "neutral000",
@@ -153,6 +151,7 @@ const defaultTheme: FernsTheme = {
     "2xl": "spacing8",
     "3xl": "spacing12",
   },
+
   // These will continue to throw errors until we have a proper font system in place.
   font: {
     primary: "Nunito",
@@ -166,9 +165,9 @@ type DeepPartial<T> = {
 };
 
 export const ThemeContext = createContext({
-  setTheme: (_theme: DeepPartial<FernsTheme>) => {},
+  setTheme: (_theme: DeepPartial<FernsThemeConfig>) => {},
   setPrimitives: (_primitives: DeepPartial<typeof defaultPrimitives>) => {},
-  theme: defaultTheme,
+  theme: {} as FernsTheme,
   resetTheme: () => {},
 });
 
@@ -177,40 +176,59 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider = ({children}: ThemeProviderProps) => {
-  const [providerTheme, setProviderTheme] = useState<FernsTheme>(defaultTheme);
-  const [providerPrimitives, setProviderPrimitives] =
-    useState<typeof defaultPrimitives>(defaultPrimitives);
+  const [providerTheme, setProviderTheme] = useState<DeepPartial<FernsThemeConfig>>(defaultTheme);
+  const [providerPrimitives, setProviderPrimitives] = useState<ThemePrimitives>(defaultPrimitives);
 
   const computedTheme = useMemo(() => {
     // Map the providerTheme and transform the strings into the actual values from the primitives.
     // Do this for each sub-object in the theme. E.g. theme.text, theme.surface, etc.
     const theme = Object.keys(providerTheme).reduce((acc, key) => {
       if (key === "primitives") return acc;
-      const value = providerTheme[key as keyof FernsTheme];
+      const value = providerTheme[key as keyof FernsThemeConfig] ?? {};
       // for each key, map the value to the primitive value.
-      acc[key as keyof typeof acc] = Object.keys(value).reduce((accKey, valueKey) => {
-        const primitiveKey = value[valueKey as keyof typeof value];
-        if (providerPrimitives[primitiveKey] === undefined) {
-          console.error(`Primitive ${primitiveKey} not found in theme.`);
+      acc[key as keyof FernsTheme] = Object.keys(value).reduce((accKey, valueKey) => {
+        const primitiveKey = value[valueKey as keyof typeof value] as keyof ThemePrimitives;
+        if (key === "font") {
+          accKey[valueKey] = primitiveKey;
+        } else {
+          if (providerPrimitives[primitiveKey] === undefined) {
+            console.error(`Primitive ${primitiveKey} not found in theme.`);
+          }
+          accKey[valueKey as keyof typeof accKey] = providerPrimitives[primitiveKey];
         }
-        accKey[valueKey] = providerPrimitives[primitiveKey];
         return accKey;
       }, {} as any);
       return acc;
     }, {} as FernsTheme);
-
     return {
       ...theme,
       primitives: providerPrimitives,
     };
   }, [providerTheme, providerPrimitives]);
 
-  const setPrimitives = (newPrimitives: Partial<typeof defaultPrimitives>) => {
-    setProviderPrimitives((prev) => merge({}, prev, newPrimitives));
+  const setPrimitives = (newPrimitives: Partial<ThemePrimitives>) => {
+    setProviderPrimitives((prev) => ({...prev, ...newPrimitives}));
   };
 
-  const setTheme = (newTheme: DeepPartial<FernsTheme>) => {
-    setProviderTheme(merge({}, defaultTheme, newTheme) as FernsTheme);
+  const setTheme = (newTheme: DeepPartial<FernsThemeConfig>) => {
+    setProviderTheme((prev) => {
+      const mergedTheme = {...prev};
+
+      for (const key in newTheme) {
+        if (newTheme.hasOwnProperty(key)) {
+          const newSubTheme = newTheme[key as keyof FernsThemeConfig];
+          const prevSubTheme = prev[key as keyof FernsThemeConfig];
+
+          if (newSubTheme && typeof newSubTheme === "object") {
+            (mergedTheme as any)[key as keyof FernsThemeConfig] = {...prevSubTheme, ...newSubTheme};
+          } else {
+            mergedTheme[key as keyof FernsThemeConfig] = newSubTheme as any;
+          }
+        }
+      }
+
+      return mergedTheme;
+    });
   };
 
   const resetTheme = () => {

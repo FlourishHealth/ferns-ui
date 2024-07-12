@@ -70,25 +70,19 @@ const IconButtonComponent: FC<IconButtonProps> = ({
     return null;
   }
 
-  const getStyles = () => {
-    let backgroundColor = theme.surface.primary;
-    let color = theme.text.inverted;
+  let backgroundColor = theme.surface.primary;
+  let color = theme.text.inverted;
 
-    if (variant === "secondary") {
-      backgroundColor = theme.surface.neutralLight;
-      color = theme.surface.secondaryDark;
-    } else if (variant === "muted") {
-      backgroundColor = theme.text.inverted;
-      color = theme.surface.primary;
-    } else if (variant === "destructive") {
-      backgroundColor = theme.text.inverted;
-      color = theme.text.error;
-    }
-
-    return {backgroundColor, color};
-  };
-
-  const {backgroundColor, color} = getStyles();
+  if (variant === "secondary") {
+    backgroundColor = theme.surface.neutralLight;
+    color = theme.surface.secondaryDark;
+  } else if (variant === "muted") {
+    backgroundColor = theme.text.inverted;
+    color = theme.surface.primary;
+  } else if (variant === "destructive") {
+    backgroundColor = theme.text.inverted;
+    color = theme.text.error;
+  }
 
   return (
     <Pressable
@@ -103,7 +97,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
       style={{
         alignItems: "center",
         backgroundColor,
-        borderRadius: theme.radius.rounded as any,
+        borderRadius: theme.radius.rounded,
         justifyContent: "center",
         height: 32,
         width: 32,
@@ -132,10 +126,10 @@ const IconButtonComponent: FC<IconButtonProps> = ({
       <View>
         {Boolean(loading) ? (
           <View>
-            <ActivityIndicator color={color as any} size="small" />
+            <ActivityIndicator color={color} size="small" />
           </View>
         ) : (
-          <FontAwesome6 brand="solid" color={color as any} name={iconName} size={16} />
+          <FontAwesome6 brand="solid" color={color} name={iconName} size={16} />
         )}
       </View>
       {withConfirmation && (

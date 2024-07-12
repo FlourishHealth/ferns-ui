@@ -61,13 +61,14 @@ export const Avatar: FC<AvatarProps> = ({
   const showEditIcon = status === "imagePicker";
 
   const avatarRadius = avatarImageDiameter / 2;
-  const computedInitials = (name.match(/(^\S\S?|\s\S)?/g) as any)
-    .map((v: string) => v.trim())
-    .join("")
-    .match(/(^\S|\S$)?/g)
-    .join("")
-    .toLocaleUpperCase();
-
+  const computedInitials =
+    (name.match(/(^\S\S?|\s\S)?/g) ?? []) // Use nullish coalescing to handle the case where match returns null
+      .map((v) => v.trim())
+      .join("")
+      .match(/(^\S|\S$)?/g) ??
+    [] // Use nullish coalescing to handle the case where match returns null
+      .join("")
+      .toLocaleUpperCase();
   const statusIcons: {
     [id: string]: {
       icon: (props: CustomSvgProps) => React.ReactElement;

@@ -40,8 +40,6 @@ export const AddressFieldDemo = ({googleMapsApiKey, includeCounty}: any) => {
     }
   }, [includeCounty]);
 
-  console.log(googleMapsApiKey);
-
   return (
     <Box alignContent="center" direction="row" justifyContent="around" width="100%">
       <Box alignItems="center" justifyContent="center">

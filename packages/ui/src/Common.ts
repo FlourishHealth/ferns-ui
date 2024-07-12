@@ -1,3 +1,4 @@
+import {CountryCode} from "libphonenumber-js";
 import React, {ReactElement, ReactNode} from "react";
 import {ListRenderItemInfo, StyleProp, TextStyle, ViewStyle} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
@@ -271,21 +272,21 @@ export interface StatusTheme {
 }
 
 export interface RadiusTheme {
-  minimal: string;
-  default: string;
-  full: string;
-  rounded: string;
+  minimal: number;
+  default: number;
+  full: number;
+  rounded: number;
 }
 
 export interface SpacingTheme {
-  none: string;
-  xs: string;
-  sm: string;
-  md: string;
-  lg: string;
-  xl: string;
-  "2xl": string;
-  "3xl": string;
+  none: number;
+  xs: number;
+  sm: number;
+  md: number;
+  lg: number;
+  xl: number;
+  "2xl": number;
+  "3xl": number;
 }
 
 export type TextColor = keyof TextTheme;
@@ -314,6 +315,7 @@ export interface FontTheme {
 }
 export type Font = keyof FontTheme;
 
+// The computed theme object that is passed to the ThemeProvider.
 export interface FernsTheme {
   text: TextTheme;
   surface: SurfaceTheme;
@@ -321,6 +323,18 @@ export interface FernsTheme {
   status: StatusTheme;
   radius: RadiusTheme;
   spacing: SpacingTheme;
+  font: FontTheme;
+  primitives: ThemePrimitives;
+}
+
+// A config for generating the theme object from primitives.
+export interface FernsThemeConfig {
+  text: TextThemeConfig;
+  surface: SurfaceThemeConfig;
+  border: BorderThemeConfig;
+  status: StatusThemeConfig;
+  radius: RadiusThemeConfig;
+  spacing: SpacingThemeConfig;
   font: FontTheme;
   primitives: ThemePrimitives;
 }
@@ -409,10 +423,6 @@ export const iconSizeToNumber = (size?: IconSize) => {
 export type TextSize = "sm" | "md" | "lg" | "xl";
 
 export type IconPrefix = "far" | "fas";
-
-export interface BlurBoxProps extends BoxProps {
-  blurType?: "regular" | "dark" | "prominent";
-}
 
 export interface LayerProps {
   children: ReactChildren;
@@ -527,9 +537,9 @@ export interface BoxPropsBase {
 }
 
 // If onClick is provided, add accessibility props.
-export type BoxProps = BoxPropsBase &
-  (BoxPropsBase extends {onClick: () => void} ? AccessibilityProps : {});
-
+export type BoxProps =
+  | (BoxPropsBase & {onClick?: undefined})
+  | (BoxPropsBase & {onClick: () => void} & AccessibilityProps);
 export type BoxColor = SurfaceColor | "transparent";
 
 export interface ErrorBoundaryProps {
@@ -566,7 +576,10 @@ export interface SegmentedControlProps {
 }
 
 // Shared props for fields with labels, subtext, and error messages.
-export interface FieldWithLabelsProps {
+// TODO: combine all the field props based on type
+export interface FieldProps {
+  show?: boolean;
+  labelSize?: TextSize;
   testID?: string;
   errorMessage?: string;
   errorMessageColor?: TextColor;
@@ -616,7 +629,7 @@ export interface ErrorTextProps {
 }
 
 export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
-  type?: "email" | "password" | "phoneNumber" | "search" | "text" | "url" | "username";
+  type?: "email" | "password" | "phoneNumber" | "search" | "text" | "url";
 
   autoComplete?: "current-password" | "on" | "off" | "username";
   returnKeyType?: "done" | "go" | "next" | "search" | "send";
@@ -652,22 +665,23 @@ export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, Err
   timezone?: string;
 }
 
-export interface MaskProps {
-  children?: ReactChildren;
-  shape?: "circle" | "rounded" | "square";
-  height?: number | string;
-  width?: number | string;
-  maxHeight?: number | string;
-  maxWidth?: number | string;
-  rounding?: Rounding;
-  willChangeTransform?: boolean;
-  wash?: boolean;
+export interface EmailFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface PhoneNumberFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  /**
+   * Defaults to "US"
+   */
+  defaultCountryCode?: CountryCode;
 }
 
-export interface IconRowProps {
-  icon: string;
-  label: string;
-  value: string;
+export interface URLFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface SearchFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface AddressFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  includeCounty?: boolean;
+  googleMapsApiKey: string;
+  googlePlacesMobileStyles?: Styles;
 }
 
 export interface LinkProps {
@@ -1289,34 +1303,87 @@ export interface AvatarProps {
 }
 
 export interface BadgeProps {
+  /**
+   * The name of the icon to display in the badge.
+   */
   iconName?: IconName;
-  // The text to display inside the badge.
-  value?: number | string;
-  // Position relative to the text. Top should only be used with headings.
-  status?: "info" | "error" | "warning" | "success" | "neutral"; // default "info
-  secondary?: boolean;
-  hasIcon?: boolean;
-  variant?: "iconOnly" | "numberOnly" | "text"; // text is default
+
   // TODO: improve type discrimination
   // used for numberOnly variant to display "${maxValue}+" when value is greater than max
+
+  /**
+   * The maximum value to display. Used for "numberOnly" variant to display "${maxValue}+" when
+   * value is greater than max.
+   */
   maxValue?: number;
+
+  /**
+   * If true, the badge will have a secondary style.
+   * @default false
+   */
+  secondary?: boolean;
+
+  /**
+   * The status of the badge. Determines its color and appearance.
+   * @default "info"
+   */
+  status?: "info" | "error" | "warning" | "success" | "neutral";
+
+  /**
+   * The text or number to display inside the badge.
+   */
+  value?: number | string;
+
+  /**
+   * The variant of the badge. Determines if it displays an icon or number only.
+   */
+  variant?: "iconOnly" | "numberOnly";
 }
 
-export interface BannerProps {
+type BannerButtonProps = {
+  /**
+   * Text to display on optional banner button, will display button if provided
+   */
+  buttonText: string;
+  /**
+   * Icon to display on optional banner button
+   */
+  buttonIconName?: IconName;
+};
+
+export interface BannerPropsBase {
+  /**
+   * Used to identify if banner has been dismissed by the user.
+   */
   id: string;
-  customButtonProps?: Partial<ButtonProps>;
-  color?: BoxColor;
-  dismissible?: boolean;
-  iconName?: IconName;
-  negativeXMargin?: number;
-  onClick?: () => void;
-  shape?: Rounding;
-  subtext?: string;
+  /**
+   * The text to display in the main body of the banner.
+   */
   text: string;
-  textColor?: TextColor;
-  type?: "dismiss" | "action" | "permanent" /* deprecated */ | "customButton";
-  width?: number | string;
+  /**
+   * The status of the banner changes the color of the banner.
+   * @default "info"
+   */
+  status?: "info" | "alert" | "warning";
+  /**
+   * Allows the banner to be dismissed and removed by clicking X button on the right.
+   * @default false
+   */
+  dismissible?: boolean; // default false
+  /**
+   * Renders triangle with exclamation mark icon to the left of banner content.
+   * @default false
+   */
+  hasIcon?: boolean;
+  /**
+   * Function called when optional button on banner is clicked.
+   */
+  buttonOnClick?: () => void | Promise<void>;
 }
+
+export type BannerProps =
+  | (BannerPropsBase & {buttonOnClick?: undefined})
+  | (BannerPropsBase & {buttonOnClick: () => void | Promise<void>} & BannerButtonProps);
 
 export interface BodyProps {
   scroll?: boolean;
@@ -1434,12 +1501,35 @@ export interface DecimalRangeActionSheetState {
   decimal: string;
 }
 
+export interface DismissButtonProps {
+  /**
+   * The accessibility hint describes the results of performing an action on a control or view.
+   * It should be a very brief description of the result of interacting with the button.
+   */
+  accessibilityHint: string;
+
+  /**
+   * The accessibility label attribute identifies the user interface element.
+   * It should be a very brief description of the element, such as "Dismiss".
+   */
+  accessibilityLabel: string;
+  /**
+   * A function to call when the button is clicked,
+   * function should result in hiding the element rendering the dismiss button.
+   */
+  onClick: () => void;
+  /**
+   * Color of the icon on the dismiss button
+   * @default "primary"
+   */
+  color?: IconColor;
+}
 export interface ErrorPageProps {
   error: Error;
   resetError: () => void;
 }
 
-export interface FieldProps extends FieldWithLabelsProps {
+export interface FieldProps {
   name?: string;
   label?: string;
   height?: number;
@@ -1803,10 +1893,21 @@ export interface TableHeaderCellProps {
   /**
    * The content of the table header cell.
    */
-  children: ReactElement;
+  children?: ReactElement;
   index: number;
   sortable?: boolean;
   onSortChange?: (direction: "asc" | "desc" | undefined) => void;
+  /**
+   * The alignment of the text/components in the cell. Most cells should be left aligned,
+   * unless the column is for a badge, icon, or boolean, then center align.
+   * It should be right if the column is right aligned text or numbers.
+   */
+  align?: "left" | "center" | "right";
+  /**
+   * If title is provided, the text will be wrapped in a TableTitle, saving you from having to
+   * wrap the text yourself. Alignments will match between the cell and the title.
+   */
+  title?: string;
 }
 
 export interface TableRowProps {
@@ -1913,18 +2014,6 @@ export interface TooltipProps {
 
 export interface LinkProps extends TextProps {
   href: string;
-}
-
-export interface WithLabelProps {
-  children?: ReactChildren;
-  show?: boolean;
-  label?: string;
-  labelInline?: boolean;
-  labelColor?: TextColor;
-  labelJustifyContent?: JustifyContent;
-  labelAlignItems?: AlignItems;
-  labelPlacement?: "before" | "after";
-  labelSize?: TextSize;
 }
 
 export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
@@ -2070,6 +2159,13 @@ export interface TableTitleProps {
    * The text content of the table title.
    */
   title: string;
+
+  /**
+   * Most titles should be left aligned, but some may be centered, such as badges or booleans.
+   * It should match the alignment of the column.
+   * @default "left"
+   */
+  align?: "left" | "center" | "right";
 }
 
 export interface TableBooleanProps {
@@ -2082,7 +2178,7 @@ export interface TableBooleanProps {
   /**
    * The function to call when the value is saved.
    */
-  onSave: () => void | Promise<void>;
+  onSave?: () => void | Promise<void>;
 
   /**
    * The boolean value to be displayed or edited.
@@ -2143,6 +2239,7 @@ export type FieldOptions = {
    */
   value: string;
 }[];
+
 export interface SelectFieldProps {
   /**
    * If true, the select field will be disabled.
@@ -2185,4 +2282,78 @@ export interface SelectFieldProps {
    * The function to call when the selected value changes.
    */
   onChange: (value: string | undefined) => void;
+}
+
+export interface TableBadgeProps {
+  /**
+   * The icon name of the badge.
+   */
+  badgeIconName?: BadgeProps["iconName"];
+
+  /**
+   * The status of the badge.
+   * @default "info"
+   */
+  badgeStatus?: BadgeProps["status"];
+
+  /**
+   * If true, the component is in editing mode.
+   * @default false
+   */
+  isEditing?: boolean;
+
+  /**
+   * The options available for editing the badge.
+   */
+  editingOptions?: FieldOptions;
+
+  /**
+   * The function to call when the badge status is saved.
+   */
+  onSave?: (newStatus: string | undefined) => void | Promise<void>;
+
+  /**
+   * The value of the badge.
+   */
+  value: string;
+}
+
+export interface TableTextProps {
+  /**
+   * Whether the text field is in editing mode.
+   */
+  isEditing?: boolean;
+  /**
+   * The text to display in the text field.
+   */
+  value: string;
+  /**
+   * Callback to save the text field value.
+   */
+  onSave?: () => void | Promise<void>;
+  /**
+   * The alignment of the text field. Most text fields should be left aligned.
+   * @default "left"
+   */
+  align?: "left" | "center" | "right";
+}
+
+export interface TableNumberProps {
+  /**
+   * Whether the text field is in editing mode.
+   */
+  isEditing?: boolean;
+  /**
+   * The number to display in the text field.
+   */
+  value: string;
+  /**
+   * Callback to save the text field value.
+   */
+  onSave?: () => void | Promise<void>;
+  /**
+   * Numbers generally should be right aligned for ease of scanability.
+   * @default "right"
+   */
+  align?: "left" | "right";
 }

@@ -26,7 +26,19 @@ export const TableBadgeConfiguration: DemoConfiguration = {
   },
   props: {},
   demo: TableBadgeDemo,
-  demoOptions: {},
+  demoOptions: {
+    controls: {
+      status: {
+        type: "select",
+        options: [
+          {label: "Default", value: "info"},
+          {label: "Error", value: "error"},
+          {label: "Warning", value: "warning"},
+        ],
+        defaultValue: "info",
+      },
+    },
+  },
   stories: {
     States: {
       render: TableBadgeStates,

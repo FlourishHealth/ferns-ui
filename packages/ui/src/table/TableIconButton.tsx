@@ -2,10 +2,11 @@
 // accessibility hint handled in IconButton.tsx
 
 import React, {FC} from "react";
+import {View} from "react-native";
 
-import {IconButtonProps, IconName} from "..";
-import {TableIconButtonProps} from "../Common";
+import {IconButtonProps, IconName, TableIconButtonProps} from "../Common";
 import {IconButton} from "../IconButton";
+
 export const TableIconButton: FC<TableIconButtonProps> = ({tableIconButtonName, onClick}) => {
   const iconButtonMap: Record<
     string,
@@ -49,12 +50,13 @@ export const TableIconButton: FC<TableIconButtonProps> = ({tableIconButtonName, 
   };
 
   return (
-    <IconButton
-      accessibilityHint={iconButtonMap[tableIconButtonName].accessibilityHint}
-      accessibilityLabel={iconButtonMap[tableIconButtonName].accessibilityLabel}
-      iconName={iconButtonMap[tableIconButtonName].iconName}
-      variant={iconButtonMap[tableIconButtonName].variant}
-      onClick={onClick}
-    />
+    <View style={{justifyContent: "center", alignItems: "center", width: "100%"}}>
+      <IconButton
+        accessibilityLabel={iconButtonMap[tableIconButtonName].accessibilityLabel}
+        iconName={iconButtonMap[tableIconButtonName].iconName}
+        variant={iconButtonMap[tableIconButtonName].variant}
+        onClick={onClick}
+      />
+    </View>
   );
 };

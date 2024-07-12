@@ -701,7 +701,7 @@ export class ActionSheet extends Component<Props, State, any> {
         deviceHeight: height,
         deviceWidth: width,
         portrait: height > width,
-        paddingTop: measuredPadding as any,
+        paddingTop: measuredPadding ?? 0,
       });
     }, 1);
   };
@@ -802,6 +802,7 @@ export class ActionSheet extends Component<Props, State, any> {
                   onTouchStart={this._onTouchStart}
                 >
                   <Pressable
+                    accessibilityRole="button"
                     style={{
                       height: this.state.deviceHeight * 1.15,
                       width: "100%",
