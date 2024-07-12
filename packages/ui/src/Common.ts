@@ -424,10 +424,6 @@ export type TextSize = "sm" | "md" | "lg" | "xl";
 
 export type IconPrefix = "far" | "fas";
 
-export interface BlurBoxProps extends BoxProps {
-  blurType?: "regular" | "dark" | "prominent";
-}
-
 export interface LayerProps {
   children: ReactChildren;
 }
@@ -541,9 +537,9 @@ export interface BoxPropsBase {
 }
 
 // If onClick is provided, add accessibility props.
-export type BoxProps = BoxPropsBase &
-  (BoxPropsBase extends {onClick: () => void} ? AccessibilityProps : {});
-
+export type BoxProps =
+  | (BoxPropsBase & {onClick?: undefined})
+  | (BoxPropsBase & {onClick: () => void} & AccessibilityProps);
 export type BoxColor = SurfaceColor | "transparent";
 
 export interface ErrorBoundaryProps {
@@ -577,21 +573,6 @@ export interface SegmentedControlProps {
   size?: "md" | "lg"; // default "md"
   onChange: (activeIndex: number) => void;
   selectedIndex?: number;
-}
-
-// Shared props for fields with labels, subtext, and error messages.
-// TODO: combine all the field props based on type
-export interface FieldProps {
-  show?: boolean;
-  labelSize?: TextSize;
-  testID?: string;
-  errorMessage?: string;
-  errorMessageColor?: TextColor;
-  label?: string;
-  labelColor?: TextColor;
-  helperText?: string;
-  helperTextColor?: TextColor;
-  children?: ReactChildren;
 }
 
 export interface TimezonePickerProps {
@@ -645,7 +626,7 @@ export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTe
   inputRef?: any;
 }
 
-export interface TextAreaProps extends Exclude<TextFieldProps, "multiline"> {}
+export interface TextAreaProps extends Omit<TextFieldProps, "multiline" | "type"> {}
 
 export interface NumberFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
   type: "number" | "decimal";
@@ -681,6 +662,22 @@ export interface PhoneNumberFieldProps extends BaseFieldProps, HelperTextProps, 
 export interface URLFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
 
 export interface SearchFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface PercentFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface CurrencyFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface AddressFieldProps
+  extends Omit<BaseFieldProps, "value" | "onChange" | "onBlur">,
+    HelperTextProps,
+    ErrorTextProps {
+  includeCounty?: boolean;
+  googleMapsApiKey?: string;
+  googlePlacesMobileStyles?: Styles;
+  value: AddressInterface;
+  onChange: (value: AddressInterface) => void;
+  onBlur?: (value: AddressInterface) => void;
+}
 
 export interface LinkProps {
   href: string;
@@ -1301,17 +1298,41 @@ export interface AvatarProps {
 }
 
 export interface BadgeProps {
+  /**
+   * The name of the icon to display in the badge.
+   */
   iconName?: IconName;
-  // The text to display inside the badge.
-  value?: number | string;
-  // Position relative to the text. Top should only be used with headings.
-  status?: "info" | "error" | "warning" | "success" | "neutral"; // default "info
-  secondary?: boolean;
-  hasIcon?: boolean;
-  variant?: "iconOnly" | "numberOnly" | "text"; // text is default
+
   // TODO: improve type discrimination
   // used for numberOnly variant to display "${maxValue}+" when value is greater than max
+
+  /**
+   * The maximum value to display. Used for "numberOnly" variant to display "${maxValue}+" when
+   * value is greater than max.
+   */
   maxValue?: number;
+
+  /**
+   * If true, the badge will have a secondary style.
+   * @default false
+   */
+  secondary?: boolean;
+
+  /**
+   * The status of the badge. Determines its color and appearance.
+   * @default "info"
+   */
+  status?: "info" | "error" | "warning" | "success" | "neutral";
+
+  /**
+   * The text or number to display inside the badge.
+   */
+  value?: number | string;
+
+  /**
+   * The variant of the badge. Determines if it displays an icon or number only.
+   */
+  variant?: "iconOnly" | "numberOnly";
 }
 
 type BannerButtonProps = {
@@ -1538,44 +1559,26 @@ export interface ErrorPageProps {
   resetError: () => void;
 }
 
-export interface FieldProps {
-  name?: string;
-  label?: string;
-  height?: number;
-  type?:
-    | "address"
-    | "boolean"
-    | "currency"
-    | "customSelect"
-    | "date"
-    | "datetime"
-    | "email"
-    | "multiselect"
-    | "number"
-    | "password"
-    | "percent"
-    | "phoneNumber"
-    | "select"
-    | "signature"
-    | "text"
-    | "textarea"
-    | "time"
-    | "url";
-  rows?: number;
-  value?: any;
-  onChange?: any;
-  onBlur?: any;
-  onStart?: any;
-  onEnd?: any;
-  options?: FieldOptions;
-  placeholder?: string;
-  disabled?: boolean;
-  useCheckbox?: boolean;
-  includeCounty?: boolean;
-  googleMapsApiKey?: string;
-  googlePlacesMobileStyles?: Styles;
-  transformValue?: TransformValueOptions;
-}
+export type FieldProps =
+  | TextFieldProps
+  | NumberFieldProps
+  | NumberRangeFieldProps
+  | DateTimeFieldProps
+  | (MultiselectFieldProps & {type: "multiselect"})
+  | (TextAreaProps & {type: "textarea"})
+  | (SelectFieldProps & {type: "select"})
+  | (CustomSelectProps & {type: "customSelect"})
+  | (EmailFieldProps & {type: "email"})
+  | (PhoneNumberFieldProps & {type: "phoneNumber"})
+  | (BooleanFieldProps & {type: "boolean"})
+  | (RadioFieldProps & {type: "radio"})
+  | (SignatureFieldProps & {type: "signature"})
+  | (SearchFieldProps & {type: "search"})
+  | (AddressFieldProps & {type: "address"});
+// | (CurrencyFieldProps & {type: "currency"});
+// | (PercentFieldProps & {type: "percent"});
+
+// | URLFieldProps
 
 export interface FormLineProps {
   name: string;
@@ -1902,10 +1905,21 @@ export interface TableHeaderCellProps {
   /**
    * The content of the table header cell.
    */
-  children: ReactElement;
+  children?: ReactElement;
   index: number;
   sortable?: boolean;
   onSortChange?: (direction: "asc" | "desc" | undefined) => void;
+  /**
+   * The alignment of the text/components in the cell. Most cells should be left aligned,
+   * unless the column is for a badge, icon, or boolean, then center align.
+   * It should be right if the column is right aligned text or numbers.
+   */
+  align?: "left" | "center" | "right";
+  /**
+   * If title is provided, the text will be wrapped in a TableTitle, saving you from having to
+   * wrap the text yourself. Alignments will match between the cell and the title.
+   */
+  title?: string;
 }
 
 export interface TableRowProps {
@@ -2157,6 +2171,13 @@ export interface TableTitleProps {
    * The text content of the table title.
    */
   title: string;
+
+  /**
+   * Most titles should be left aligned, but some may be centered, such as badges or booleans.
+   * It should match the alignment of the column.
+   * @default "left"
+   */
+  align?: "left" | "center" | "right";
 }
 
 export interface TableBooleanProps {
@@ -2169,7 +2190,7 @@ export interface TableBooleanProps {
   /**
    * The function to call when the value is saved.
    */
-  onSave: () => void | Promise<void>;
+  onSave?: () => void | Promise<void>;
 
   /**
    * The boolean value to be displayed or edited.
@@ -2230,6 +2251,7 @@ export type FieldOptions = {
    */
   value: string;
 }[];
+
 export interface SelectFieldProps {
   /**
    * If true, the select field will be disabled.
@@ -2272,4 +2294,78 @@ export interface SelectFieldProps {
    * The function to call when the selected value changes.
    */
   onChange: (value: string | undefined) => void;
+}
+
+export interface TableBadgeProps {
+  /**
+   * The icon name of the badge.
+   */
+  badgeIconName?: BadgeProps["iconName"];
+
+  /**
+   * The status of the badge.
+   * @default "info"
+   */
+  badgeStatus?: BadgeProps["status"];
+
+  /**
+   * If true, the component is in editing mode.
+   * @default false
+   */
+  isEditing?: boolean;
+
+  /**
+   * The options available for editing the badge.
+   */
+  editingOptions?: FieldOptions;
+
+  /**
+   * The function to call when the badge status is saved.
+   */
+  onSave?: (newStatus: string | undefined) => void | Promise<void>;
+
+  /**
+   * The value of the badge.
+   */
+  value: string;
+}
+
+export interface TableTextProps {
+  /**
+   * Whether the text field is in editing mode.
+   */
+  isEditing?: boolean;
+  /**
+   * The text to display in the text field.
+   */
+  value: string;
+  /**
+   * Callback to save the text field value.
+   */
+  onSave?: () => void | Promise<void>;
+  /**
+   * The alignment of the text field. Most text fields should be left aligned.
+   * @default "left"
+   */
+  align?: "left" | "center" | "right";
+}
+
+export interface TableNumberProps {
+  /**
+   * Whether the text field is in editing mode.
+   */
+  isEditing?: boolean;
+  /**
+   * The number to display in the text field.
+   */
+  value: string;
+  /**
+   * Callback to save the text field value.
+   */
+  onSave?: () => void | Promise<void>;
+  /**
+   * Numbers generally should be right aligned for ease of scanability.
+   * @default "right"
+   */
+  align?: "left" | "right";
 }

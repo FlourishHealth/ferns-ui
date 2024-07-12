@@ -3,9 +3,10 @@ import {FernsProvider} from "ferns-ui";
 import React from "react";
 
 const RootLayout = () => {
+  // TODO: Store dev/demo in AsyncStorage to persist.
   return (
     <FernsProvider>
-      <Slot initialRouteName="demo" />
+      <Slot initialRouteName={process.env.NODE_ENV === "development" ? "dev" : "demo"} />
     </FernsProvider>
   );
 };

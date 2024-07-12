@@ -151,6 +151,7 @@ const defaultTheme: FernsThemeConfig = {
     "2xl": "spacing8",
     "3xl": "spacing12",
   },
+
   // These will continue to throw errors until we have a proper font system in place.
   font: {
     primary: "Nunito",

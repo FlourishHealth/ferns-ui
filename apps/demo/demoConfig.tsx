@@ -1,5 +1,6 @@
 import {
   AccordionConfiguration,
+  AddressFieldConfiguration,
   AvatarConfiguration,
   BadgeConfiguration,
   BannerConfiguration,
@@ -33,7 +34,7 @@ import {
   TableDateConfiguration,
   TableIconButtonConfiguration,
   TableNumberConfiguration,
-  TableTextFieldConfiguration,
+  TableTextConfiguration,
   TableTitleConfiguration,
   TapToEditConfiguration,
   TextAreaConfiguration,
@@ -164,6 +165,7 @@ export interface DemoConfiguration extends DemoConfigurationBase {
 const Config: DemoConfigurationBase[] = [
   AccordionConfiguration,
   AvatarConfiguration,
+  AddressFieldConfiguration,
   BadgeConfiguration,
   BannerConfiguration,
   BooleanFieldConfiguration,
@@ -200,7 +202,7 @@ const Config: DemoConfigurationBase[] = [
   TableDateConfiguration,
   TableIconButtonConfiguration,
   TableNumberConfiguration,
-  TableTextFieldConfiguration,
+  TableTextConfiguration,
   TableTitleConfiguration,
   TapToEditConfiguration,
   TextConfiguration,

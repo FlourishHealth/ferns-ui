@@ -1,7 +1,9 @@
-import React from "react";
+import React, {FC} from "react";
 
+import {AddressField} from "./AddressField";
 import {BooleanField} from "./BooleanField";
 import {
+  AddressFieldProps,
   BooleanFieldProps,
   CustomSelectFieldProps,
   DateTimeFieldProps,
@@ -28,7 +30,7 @@ import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 
 // TODO: put onblur back in any fields that need it
-export const Field = ({type, ...rest}: FieldProps) => {
+export const Field: FC<FieldProps> = ({type, ...rest}) => {
   if (type === "select") {
     if (!rest?.options) {
       console.error("Field with type=select require options");
@@ -48,8 +50,7 @@ export const Field = ({type, ...rest}: FieldProps) => {
       console.error("Field with type=multiselect require options");
       return undefined;
     }
-    // TODO: update field types to require props based on type prop and remove as unknown below
-    return <MultiselectField {...(rest as unknown as MultiselectFieldProps)} />;
+    return <MultiselectField {...(rest as MultiselectFieldProps)} />;
   } else if (type === "textarea") {
     return <TextArea {...(rest as TextAreaProps)} />;
   } else if (type === "boolean") {
@@ -57,94 +58,7 @@ export const Field = ({type, ...rest}: FieldProps) => {
   } else if (type && ["date", "time", "datetime"].includes(type)) {
     return <DateTimeField {...(rest as DateTimeFieldProps)} />;
   } else if (type === "address") {
-    return null;
-    // const addressValue = value ? value : {};
-    // const {
-    //   address1 = "",
-    //   address2 = "",
-    //   city = "",
-    //   // eslint-disable-next-line unused-imports/no-unused-vars
-    //   state = "",
-    //   zipcode = "",
-    //   countyName = "",
-    //   countyCode = "",
-    // }: AddressInterface = addressValue;
-    // return (
-    //   <>
-    //     <UnifiedAddressAutoCompleteField
-    //       disabled={disabled}
-    //       googleMapsApiKey={googleMapsApiKey}
-    //       googlePlacesMobileStyles={googlePlacesMobileStyles}
-    //       handleAddressChange={(result) => handleAddressChange("address1", result)}
-    //       handleAutoCompleteChange={(result) => handleAutoCompleteChange(result)}
-    //       includeCounty={includeCounty}
-    //       inputValue={address1}
-    //       testID={`${testID}-address1`}
-    //     />
-    //     <TextField
-    //       disabled={disabled}
-    //       id="address2"
-    //       testID={`${testID}-address2`}
-    //       title="Apt, suite, etc"
-    //       type="text"
-    //       value={address2}
-    //       onChange={(result) => handleAddressChange("address2", result)}
-    //     />
-    //     <TextField
-    //       disabled={disabled}
-    //       id="city"
-    //       testID={`${testID}-city`}
-    //       title="City"
-    //       type="text"
-    //       value={city}
-    //       onChange={(result) => handleAddressChange("city", result)}
-    //     />
-    //     {/* <SelectList
-    //         disabled={disabled}
-    //         id="state"
-    //         label="State"
-    //         options={USSTATESLIST}
-    //         placeholder="Select state"
-    //         style={{borderRadius: 16}}
-    //         testID={`${testID}-state`}
-    //         value={state}
-    //         onChange={(result) => {
-    //           handleAddressChange("state", result!);
-    //         }}
-    //       /> */}
-    //     <TextField
-    //       disabled={disabled}
-    //       id="zipcode"
-    //       testID={`${testID}-zip`}
-    //       title="Zipcode"
-    //       type="text"
-    //       value={zipcode}
-    //       onChange={(result) => handleAddressChange("zipcode", result)}
-    //     />
-    //     {includeCounty && (
-    //       <>
-    //         <TextField
-    //           disabled={disabled}
-    //           id="countyName"
-    //           testID={`${testID}-county`}
-    //           title="County Name"
-    //           type="text"
-    //           value={countyName}
-    //           onChange={(result) => handleAddressChange("countyName", result)}
-    //         />
-    //         <NumberField
-    //           disabled={disabled}
-    //           id="countyCode"
-    //           testID={`${testID}-county-code`}
-    //           title="County Code"
-    //           type="number"
-    //           value={countyCode}
-    //           onChange={(result) => handleAddressChange("countyCode", result)}
-    //         />
-    //       </>
-    //     )}
-    //   </>
-    // );
+    return <AddressField {...(rest as AddressFieldProps)} />;
   } else if (type === "customSelect") {
     if (!rest?.options) {
       console.error("Field with type=customSelect require options");
@@ -169,17 +83,18 @@ export const Field = ({type, ...rest}: FieldProps) => {
     return <PhoneNumberField {...(rest as PhoneNumberFieldProps)} />;
   } else {
     let tfType: TextFieldType = "text";
+    let autoComplete: "on" | "current-password" | "username" = "on";
     if (type && ["password", "url"].includes(type)) {
       tfType = type as TextFieldType;
-    } else if (type === "percent" || type === "currency") {
+      // } else if (type === "percent" || type === "currency") {
       // TODO: Implement percent and currency fields
-      tfType = "text";
-    }
-    let autoComplete: "on" | "current-password" | "username" = "on";
-    if (tfType === "password") {
-      autoComplete = "current-password";
-    } else if (tfType === "email") {
-      autoComplete = "username";
+      // tfType = "text";
+      // }
+      if (tfType === "password") {
+        autoComplete = "current-password";
+      } else if (tfType === "email") {
+        autoComplete = "username";
+      }
     }
 
     return (

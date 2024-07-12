@@ -37,10 +37,11 @@ export const Table = ({
   let width: DimensionValue;
   if (columns.every((column) => typeof column === "number")) {
     width = columns.reduce((acc, curr) => {
-      return (acc as number) + (curr as number);
+      return (acc as number) + (curr as number) + 8; // 8 for margin between columns;
     }, 0) as number;
     if (hasDrawerContents) {
-      width = (width as number) + 30;
+      // Size of IconButton + padding is 56
+      width = (width as number) + 56;
     }
   } else {
     width = "100%";
@@ -67,9 +68,18 @@ export const Table = ({
       stickyHeader={stickyHeader}
     >
       <>
-        <Box flex="grow" maxWidth="100%" width={width}>
+        <Box
+          flex="grow"
+          maxWidth="100%"
+          style={{
+            position: "relative",
+          }}
+          width={width}
+        >
           <ScrollView horizontal style={{width, maxWidth: "100%"}}>
+            {/* TODO: Replace table scrollview with flat list */}
             <ScrollView
+              // nestedScrollEnabled
               stickyHeaderIndices={stickyHeader ? [0] : undefined}
               style={{width, maxWidth: "100%", flex: 1, maxHeight}}
             >
@@ -78,7 +88,7 @@ export const Table = ({
                 (child, index) =>
                   Boolean(child) &&
                   React.cloneElement(child as ReactElement, {
-                    color: index % 2 === 1 && alternateRowBackground ? "lightGray" : "white",
+                    color: index % 2 === 1 && alternateRowBackground ? "neutralLight" : "base",
                   })
               )}
             </ScrollView>
