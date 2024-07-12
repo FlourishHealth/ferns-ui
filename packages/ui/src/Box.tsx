@@ -10,11 +10,12 @@ import {
   View,
 } from "react-native";
 
-import {FernsTheme, getRounding, getSpacing, ThemeContext} from ".";
+import {getRounding, getSpacing, ThemeContext} from ".";
 import {
   AlignContent,
   AlignItems,
   AlignSelf,
+  BorderTheme,
   BoxProps,
   JustifyContent,
   SurfaceTheme,
@@ -179,35 +180,35 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
         return {elevation: 4};
       }
     },
-    border: (value: keyof FernsTheme) => {
+    border: (value: keyof BorderTheme) => {
       if (!value) {
         return {};
       }
-      return {borderColor: theme[value], borderWidth: BORDER_WIDTH};
+      return {borderColor: theme.border[value], borderWidth: BORDER_WIDTH};
     },
-    borderBottom: (value: keyof FernsTheme) => {
+    borderBottom: (value: keyof BorderTheme) => {
       if (!value) {
         return {};
       }
-      return {borderBottomColor: theme[value], borderBottomWidth: BORDER_WIDTH};
+      return {borderBottomColor: theme.border[value], borderBottomWidth: BORDER_WIDTH};
     },
-    borderTop: (value: keyof FernsTheme) => {
+    borderTop: (value: keyof BorderTheme) => {
       if (!value) {
         return {};
       }
-      return {borderTopColor: theme[value], borderTopWidth: BORDER_WIDTH};
+      return {borderTopColor: theme.border[value], borderTopWidth: BORDER_WIDTH};
     },
-    borderRight: (value: keyof FernsTheme) => {
+    borderRight: (value: keyof BorderTheme) => {
       if (!value) {
         return {};
       }
-      return {borderRightColor: theme[value], borderRightWidth: BORDER_WIDTH};
+      return {borderRightColor: theme.border[value], borderRightWidth: BORDER_WIDTH};
     },
-    borderLeft: (value: keyof FernsTheme) => {
+    borderLeft: (value: keyof BorderTheme) => {
       if (!value) {
         return {};
       }
-      return {borderLeftColor: theme[value], borderLeftWidth: BORDER_WIDTH};
+      return {borderLeftColor: theme.border[value], borderLeftWidth: BORDER_WIDTH};
     },
   };
 

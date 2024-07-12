@@ -1632,7 +1632,7 @@ export interface IconButtonProps {
   /**
    * Show a small indicator icon in the lower right corner of the button.
    */
-  indicator?: "error" | "warning" | "success" | "primary";
+  indicator?: "error" | "warning" | "success" | "primary" | "neutral";
 
   /**
    * The text or number to display in the indicator. If not provided,
