@@ -15,7 +15,7 @@ export const CheckBox: FC<CheckBoxProps> = ({selected, size = "md", bgColor = "d
 
   const backgroundColor = {
     default: theme.text.link,
-    gold: theme.text.gold,
+    accent: theme.text.accent,
     black: theme.text.primary,
   };
   return (

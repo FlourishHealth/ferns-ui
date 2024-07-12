@@ -232,7 +232,6 @@ export interface TextTheme {
   error: string;
   warning: string;
   success: string;
-  gold: string;
 }
 
 export interface SurfaceTheme {
@@ -777,7 +776,7 @@ export interface CheckBoxProps {
    * The background color of the checkbox.
    * @default "default"
    */
-  bgColor?: "default" | "gold" | "black";
+  bgColor?: "default" | "accent" | "black";
 
   /**
    * If true, the checkbox is selected.

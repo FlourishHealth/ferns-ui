@@ -10,7 +10,7 @@ export const SelectField: FC<SelectFieldProps> = ({
   errorText,
   helperText,
   options,
-  requireValue,
+  requireValue = false,
   placeholder = "Please select an option.",
   title,
   value,

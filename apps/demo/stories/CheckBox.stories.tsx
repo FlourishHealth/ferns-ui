@@ -53,10 +53,10 @@ export const CheckboxColors = () => {
       </Box>
       <Box padding={2}>
         <Box marginBottom={1}>
-          <Heading>Gold</Heading>
+          <Heading>Accent</Heading>
         </Box>
         <Box alignItems="center">
-          <CheckBox bgColor="gold" selected />
+          <CheckBox bgColor="accent" selected />
         </Box>
       </Box>
       <Box padding={2}>
