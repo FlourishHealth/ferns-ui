@@ -1,5 +1,5 @@
-import React, {ReactElement, useEffect, useMemo, useState} from "react";
-import {View} from "react-native";
+import React, {ReactElement, useEffect, useMemo, useRef, useState} from "react";
+import {TextInput, View} from "react-native";
 
 import {CustomSelectFieldProps} from "./Common";
 import {FieldHelperText} from "./FieldElements";
@@ -18,6 +18,7 @@ export const CustomSelectField = ({
 }: CustomSelectFieldProps): ReactElement | null => {
   const [currentValue, setCurrentValue] = useState(value);
   const [showCustomInput, setShowCustomInput] = useState(false);
+  const textInputRef = useRef<TextInput | null>(null);
 
   // Boolean that checks if currentValue is a value from the
   // options prop or if it is a true custom value
@@ -48,6 +49,10 @@ export const CustomSelectField = ({
       setShowCustomInput(true);
       setCurrentValue(isValueCustom ? "custom" : newValue);
       onChange("");
+      // Ensures the state updates and re-renders the component before focusing
+      setTimeout(() => {
+        textInputRef?.current?.focus();
+      }, 100);
     }
 
     // If any non-custom value is selected
@@ -64,21 +69,32 @@ export const CustomSelectField = ({
 
   return (
     <View
+      accessibilityHint="Select an option or input a custom value"
+      accessibilityLabel="Select dropdown with popup text input field"
+      accessibilityRole="combobox"
       style={{
         width: "100%",
       }}
     >
-      <SelectField
-        disabled={disabled}
-        errorText={errorText}
-        options={[...options, {label: "Custom", value: "custom"}]}
-        placeholder={placeholder}
-        title={title}
-        value={isValueCustom ? "custom" : currentValue}
-        onChange={handleCustomSelectListChange}
-      />
+      <View
+        accessibilityHint="Opens a dropdown menu. Select an option, or select custom to trigger popup to input a custom value"
+        accessibilityLabel="Select dropdown"
+        accessibilityRole="button"
+      >
+        <SelectField
+          disabled={disabled}
+          errorText={errorText}
+          options={[...options, {label: "Custom", value: "custom"}]}
+          placeholder={placeholder}
+          title={title}
+          value={isValueCustom ? "custom" : currentValue}
+          onChange={handleCustomSelectListChange}
+        />
+      </View>
       {Boolean(showCustomInput) && (
         <View
+          accessibilityHint="Enter a custom value or go back to select a provided option."
+          accessibilityLabel="Custom value input field"
           style={{
             paddingVertical: 16,
           }}
@@ -86,6 +102,7 @@ export const CustomSelectField = ({
           <TextField
             disabled={disabled}
             id="customOptions"
+            inputRef={(ref: any) => (textInputRef.current = ref)}
             placeholderText="None selected"
             type="text"
             value={value}
