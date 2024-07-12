@@ -1,7 +1,7 @@
 import React, {FC} from "react";
 import {View} from "react-native";
 
-import {AddressFieldProps, AddressInterface, FieldProps} from "./Common";
+import {AddressFieldProps, AddressInterface} from "./Common";
 import {USSTATESLIST} from "./Constants";
 import {SelectField} from "./SelectField";
 import {TextField} from "./TextField";
@@ -16,7 +16,7 @@ export const AddressField: FC<AddressFieldProps> = ({
   testID,
   onChange,
   onBlur,
-}: Partial<FieldProps>) => {
+}) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
     onBlur && onBlur({...value, [field]: newValue});
@@ -26,7 +26,6 @@ export const AddressField: FC<AddressFieldProps> = ({
     onChange({...value, ...newValue});
   };
 
-  const addressValue = value ? value : {};
   const {
     address1 = "",
     address2 = "",
@@ -35,7 +34,7 @@ export const AddressField: FC<AddressFieldProps> = ({
     zipcode = "",
     countyName = "",
     countyCode = "",
-  }: AddressInterface = addressValue;
+  }: AddressInterface = value ?? ({} as AddressInterface);
 
   return (
     <>

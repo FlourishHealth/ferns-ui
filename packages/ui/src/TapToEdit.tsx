@@ -3,7 +3,7 @@ import {Linking} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {AddressInterface, BoxProps, TapToEditProps} from "./Common";
+import {AddressInterface, BoxProps, FieldProps, TapToEditProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
 // import {useOpenAPISpec} from "./OpenAPIContext";
@@ -83,7 +83,6 @@ export function formatAddress(address: AddressInterface, asString = false): stri
 export const TapToEdit = ({
   value,
   setValue,
-  placeholder,
   title,
   onSave,
   editable = true,
@@ -122,10 +121,10 @@ export const TapToEdit = ({
           <Field
             helperText={description}
             label={title}
-            placeholder={placeholder}
+            type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
             value={value}
-            onChange={setValue}
-            {...fieldProps}
+            onChange={setValue ?? (() => {})}
+            {...(fieldProps as any)}
           />
         )}
         {editing && !isEditing && (
@@ -170,18 +169,18 @@ export const TapToEdit = ({
       // If no transform, try and display the value reasonably.
       if (fieldProps?.type === "boolean") {
         displayValue = value ? "Yes" : "No";
-      } else if (fieldProps?.type === "percent") {
-        // Prevent floating point errors from showing up by using parseFloat and precision.
-        // Pass through parseFloat again to trim off insignificant zeroes.
-        displayValue = `${parseFloat(parseFloat(String(value * 100)).toPrecision(7))}%`;
-      } else if (fieldProps?.type === "currency") {
-        // TODO: support currencies other than USD in Field and related components.
-        const formatter = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-          minimumFractionDigits: 2, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-        });
-        displayValue = formatter.format(value);
+        // } else if (fieldProps?.type === "percent") {
+        //   // Prevent floating point errors from showing up by using parseFloat and precision.
+        //   // Pass through parseFloat again to trim off insignificant zeroes.
+        //   displayValue = `${parseFloat(parseFloat(String(value * 100)).toPrecision(7))}%`;
+        // } else if (fieldProps?.type === "currency") {
+        //   // TODO: support currencies other than USD in Field and related components.
+        //   const formatter = new Intl.NumberFormat("en-US", {
+        //     style: "currency",
+        //     currency: "USD",
+        //     minimumFractionDigits: 2, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        //   });
+        //   displayValue = formatter.format(value);
       } else if (fieldProps?.type === "multiselect") {
         // ???
         displayValue = value.join(", ");

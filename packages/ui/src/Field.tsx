@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 
 import {AddressField} from "./AddressField";
 import {BooleanField} from "./BooleanField";
@@ -23,7 +23,7 @@ import {Signature} from "./Signature";
 import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 
-export const Field = ({type, ...rest}: FieldProps) => {
+export const Field: FC<FieldProps> = ({type, ...rest}) => {
   // if (type === "select") {
   //   if (!options) {
   //     console.error("Field with type=select require options");
@@ -129,17 +129,18 @@ export const Field = ({type, ...rest}: FieldProps) => {
     return <PhoneNumberField {...(rest as PhoneNumberFieldProps)} />;
   } else {
     let tfType: TextFieldType = "text";
+    let autoComplete: "on" | "current-password" | "username" = "on";
     if (type && ["password", "url"].includes(type)) {
       tfType = type as TextFieldType;
-    } else if (type === "percent" || type === "currency") {
+      // } else if (type === "percent" || type === "currency") {
       // TODO: Implement percent and currency fields
-      tfType = "text";
-    }
-    let autoComplete: "on" | "current-password" | "username" = "on";
-    if (tfType === "password") {
-      autoComplete = "current-password";
-    } else if (tfType === "email") {
-      autoComplete = "username";
+      // tfType = "text";
+      // }
+      if (tfType === "password") {
+        autoComplete = "current-password";
+      } else if (tfType === "email") {
+        autoComplete = "username";
+      }
     }
 
     return (
