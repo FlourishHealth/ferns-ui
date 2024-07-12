@@ -1,12 +1,13 @@
-import React from "react";
+import React, {FC} from "react";
 import {View} from "react-native";
 
-import {AddressInterface, FieldProps} from "./Common";
+import {AddressFieldProps, AddressInterface, FieldProps} from "./Common";
 import {USSTATESLIST} from "./Constants";
 import {SelectField} from "./SelectField";
 import {TextField} from "./TextField";
 import {UnifiedAddressAutoCompleteField} from "./UnifiedAddressAutoComplete";
-export const AddressField = ({
+
+export const AddressField: FC<AddressFieldProps> = ({
   disabled,
   googleMapsApiKey,
   googlePlacesMobileStyles,
