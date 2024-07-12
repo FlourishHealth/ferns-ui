@@ -591,7 +591,6 @@ interface BaseFieldProps {
   id?: string;
   testID?: string;
   title?: string;
-  label?: string;
   placeholderText?: string;
   iconName?: IconName;
   onIconClick?: () => void;
@@ -765,7 +764,7 @@ export interface BackButtonInterface {
 }
 
 export interface BooleanFieldProps {
-  label?: string;
+  title?: string;
   variant?: "simple" | "title"; // default "simple"
   interaction?: boolean; // default true
   disabledHelperText?: string;
@@ -1736,7 +1735,6 @@ export interface ModalProps {
    */
   visible: boolean;
   /**
-   * The function to call when the modal is dismissed.
    */
   onDismiss: () => void;
   /**
@@ -2337,7 +2335,10 @@ export type FieldOptions = {
   value: string;
 }[];
 
-export interface SelectFieldProps {
+export type FieldOption = {label: string; value: string};
+
+// Split up SelectField so if value is passed as a string,
+export interface SelectFieldPropsBase {
   /**
    * If true, the select field will be disabled.
    * @default false
@@ -2358,7 +2359,7 @@ export interface SelectFieldProps {
    * The options available for selection in the select field.
    * Each option should have a label and a value.
    */
-  options: FieldOptions;
+  options: FieldOption[];
 
   /**
    * The placeholder text to display when no option is selected.
@@ -2369,17 +2370,44 @@ export interface SelectFieldProps {
    * The title of the select field.
    */
   title?: string;
+}
+
+interface SelectFieldPropsWithoutRequire extends SelectFieldPropsBase {
+  /**
+   * Whether the select field should have an empty "---" button to return undefined.
+   * @default false
+   */
+  requireValue?: false;
 
   /**
    * The current value of the select field.
    */
-  value: string | undefined;
+  value?: string;
 
   /**
    * The function to call when the selected value changes.
    */
   onChange: (value: string | undefined) => void;
 }
+
+interface SelectFieldPropsWithRequire extends SelectFieldPropsBase {
+  /**
+   * When requireValue is true, the value is required and onChange will return a string.
+   */
+  requireValue: true;
+
+  /**
+   * The current value of the select field.
+   */
+  value: string;
+
+  /**
+   * The function to call when the selected value changes.
+   */
+  onChange: (value: string) => void;
+}
+
+export type SelectFieldProps = SelectFieldPropsWithoutRequire | SelectFieldPropsWithRequire;
 
 export interface TableBadgeProps {
   /**

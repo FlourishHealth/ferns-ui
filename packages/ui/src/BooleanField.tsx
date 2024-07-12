@@ -2,11 +2,12 @@ import React, {ReactElement, useContext, useRef} from "react";
 import {Animated, TouchableWithoutFeedback, View} from "react-native";
 
 import {BooleanFieldProps} from "./Common";
+import {FieldTitle} from "./FieldElements";
 import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 
 export const BooleanField = ({
-  label,
+  title,
   variant,
   value,
   onChange,
@@ -70,11 +71,7 @@ export const BooleanField = ({
           justifyContent: variant === "title" ? "flex-start" : "center",
         }}
       >
-        {label && (
-          <Text bold={variant === "title"} color="primary" size="lg">
-            {label}
-          </Text>
-        )}
+        {Boolean(title) && <FieldTitle text={title!} />}
         <TouchableWithoutFeedback accessibilityRole="button" onPress={handleSwitch}>
           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
             <Animated.View

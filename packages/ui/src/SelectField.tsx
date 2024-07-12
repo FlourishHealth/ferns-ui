@@ -10,6 +10,7 @@ export const SelectField: FC<SelectFieldProps> = ({
   errorText,
   helperText,
   options,
+  requireValue,
   placeholder = "Please select an option.",
   title,
   value,
@@ -23,12 +24,12 @@ export const SelectField: FC<SelectFieldProps> = ({
       {Boolean(errorText) && <FieldError text={errorText!} />}
       <RNPickerSelect
         disabled={disabled}
-        items={value ? [clearOption, ...options] : options}
-        placeholder={!value ? {label: placeholder, value: ""} : {}}
+        items={!requireValue ? [clearOption, ...options] : options}
+        placeholder={!requireValue ? {label: placeholder, value: ""} : {}}
         value={value ?? ""}
         onValueChange={(v) => {
-          if (v === "") {
-            onChange(undefined);
+          if (v === "" && !requireValue) {
+            (onChange as (val: string | undefined) => void)(undefined);
           } else {
             onChange(v);
           }
