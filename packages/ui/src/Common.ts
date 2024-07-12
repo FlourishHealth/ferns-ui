@@ -678,6 +678,12 @@ export interface URLFieldProps extends BaseFieldProps, HelperTextProps, ErrorTex
 
 export interface SearchFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
 
+export interface AddressFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
+  includeCounty?: boolean;
+  googleMapsApiKey: string;
+  googlePlacesMobileStyles?: Styles;
+}
+
 export interface LinkProps {
   href: string;
   inline?: boolean;
