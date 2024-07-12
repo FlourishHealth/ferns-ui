@@ -49,7 +49,7 @@ const ButtonComponent: FC<ButtonProps> = ({
   testID,
   text,
   variant = "primary",
-  withConfirmationModal = false,
+  withConfirmation = false,
   onClick,
 }) => {
   const [loading, setLoading] = useState(propsLoading);
@@ -90,7 +90,7 @@ const ButtonComponent: FC<ButtonProps> = ({
   return (
     <Pressable
       accessibilityHint={
-        withConfirmationModal ? "Opens a confirmation dialog" : "Press to perform action"
+        withConfirmation ? "Opens a confirmation dialog" : "Press to perform action"
       }
       accessibilityLabel={text}
       accessibilityRole="button"
@@ -114,7 +114,7 @@ const ButtonComponent: FC<ButtonProps> = ({
           await Unifier.utils.haptic();
           setLoading(true);
           try {
-            if (withConfirmationModal && !showConfirmation) {
+            if (withConfirmation && !showConfirmation) {
               setShowConfirmation(true);
             } else if (onClick) {
               await onClick();
@@ -150,7 +150,7 @@ const ButtonComponent: FC<ButtonProps> = ({
           </Box>
         )}
       </View>
-      {withConfirmationModal && (
+      {withConfirmation && (
         <ConfirmationModal
           subTitle={modalSubTitle}
           text={modalText}

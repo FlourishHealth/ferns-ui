@@ -133,7 +133,7 @@ export const TapToEdit = ({
               modalText={confirmationText}
               modalTitle={confirmationHeading}
               text="Save"
-              withConfirmationModal={withConfirmation}
+              withConfirmation={withConfirmation}
               onClick={async (): Promise<void> => {
                 if (!onSave) {
                   console.error("No onSave provided for editable TapToEdit");

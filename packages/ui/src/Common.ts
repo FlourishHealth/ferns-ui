@@ -1454,7 +1454,7 @@ export interface ButtonProps {
   /**
    * If true, a confirmation modal will be shown before the onClick action.
    */
-  withConfirmationModal?: boolean;
+  withConfirmation?: boolean;
   /**
    * The function to call when the button is clicked.
    */
