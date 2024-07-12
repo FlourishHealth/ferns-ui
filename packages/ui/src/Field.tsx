@@ -32,24 +32,16 @@ import {TextField} from "./TextField";
 // TODO: put onblur back in any fields that need it
 export const Field: FC<FieldProps> = ({type, ...rest}) => {
   if (type === "select") {
-    if (!rest?.options) {
-      console.error("Field with type=select require options");
-      return undefined;
-    }
     return (
       <SelectField
         {...(rest as SelectFieldProps)}
-        onChange={(result) => {
-          rest.onChange(result);
-          rest.onBlur && rest.onBlur(result);
-        }}
+        // onChange={(result) => {
+        //   rest.onChange?.(result);
+        //   rest.onBlur?.(result);
+        // }}
       />
     );
   } else if (type === "multiselect") {
-    if (!rest?.options) {
-      console.error("Field with type=multiselect require options");
-      return undefined;
-    }
     return <MultiselectField {...(rest as MultiselectFieldProps)} />;
   } else if (type === "textarea") {
     return <TextArea {...(rest as TextAreaProps)} />;
@@ -60,17 +52,13 @@ export const Field: FC<FieldProps> = ({type, ...rest}) => {
   } else if (type === "address") {
     return <AddressField {...(rest as AddressFieldProps)} />;
   } else if (type === "customSelect") {
-    if (!rest?.options) {
-      console.error("Field with type=customSelect require options");
-      return null;
-    }
     return (
       <CustomSelectField
         {...(rest as CustomSelectFieldProps)}
-        onChange={(result) => {
-          rest.onChange(result);
-          rest.onBlur && rest.onBlur(result);
-        }}
+        // onChange={(result) => {
+        //   rest.onChange(result);
+        //   rest.onBlur && rest.onBlur(result);
+        // }}
       />
     );
   } else if (type === "number") {

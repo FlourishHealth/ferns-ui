@@ -1567,7 +1567,7 @@ export type FieldProps =
   | (MultiselectFieldProps & {type: "multiselect"})
   | (TextAreaProps & {type: "textarea"})
   | (SelectFieldProps & {type: "select"})
-  | (CustomSelectProps & {type: "customSelect"})
+  | (CustomSelectFieldProps & {type: "customSelect"})
   | (EmailFieldProps & {type: "email"})
   | (PhoneNumberFieldProps & {type: "phoneNumber"})
   | (BooleanFieldProps & {type: "boolean"})
