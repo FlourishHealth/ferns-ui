@@ -92,6 +92,61 @@ export const LoadingIconButton = (props: Partial<IconButtonProps>) => {
   );
 };
 
+export const IndicatorIconButton = (props: Partial<IconButtonProps>) => {
+  return (
+    <Box direction="row" wrap>
+      <Box padding={4}>
+        <IconButton
+          accessibilityLabel="add item"
+          iconName="plus"
+          indicator="primary"
+          indicatorText="2"
+          onClick={() => {}}
+          {...props}
+        />
+      </Box>
+      <Box padding={4}>
+        <IconButton
+          accessibilityLabel="add item"
+          iconName="plus"
+          indicator="error"
+          onClick={() => {}}
+          {...props}
+        />
+      </Box>
+    </Box>
+  );
+};
+
+export const NavigationIconButton = (props: Partial<IconButtonProps>) => {
+  return (
+    <Box direction="row" wrap>
+      <Box padding={4}>
+        <IconButton
+          accessibilityLabel="add item"
+          iconName="house"
+          indicator="primary"
+          indicatorText="2"
+          variant="navigation"
+          onClick={() => {}}
+          {...props}
+        />
+      </Box>
+      <Box padding={4}>
+        <IconButton
+          accessibilityLabel="add item"
+          iconName="triangle-exclamation"
+          indicator="error"
+          indicatorText="8"
+          variant="navigation"
+          onClick={() => {}}
+          {...props}
+        />
+      </Box>
+    </Box>
+  );
+};
+
 export const AllButtonIconVariants = (props: Partial<IconButtonProps>) => {
   return (
     <Box direction="row" wrap>

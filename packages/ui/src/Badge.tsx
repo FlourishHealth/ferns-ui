@@ -88,18 +88,21 @@ export const Badge = ({
           {
             justifyContent: "center",
             alignItems: "center",
-            paddingVertical: 1,
-            paddingHorizontal: theme.spacing.xs as any,
+            paddingVertical: variant === "iconOnly" ? 1 : theme.spacing.xs,
+            paddingHorizontal:
+              variant === "iconOnly" ? (theme.spacing.xs as any) : theme.spacing.sm,
             flexDirection: "row",
             borderRadius: badgeBorderRadius as any,
             backgroundColor: theme.surface[badgeBgColor],
+            height: variant === "iconOnly" ? 16 : "auto",
+            width: variant === "iconOnly" ? 16 : "auto",
           },
           isIconOnly && {height: 16, width: 16},
           secondary && {borderWidth: 1, borderColor: secondaryBorderColors[status]},
         ]}
       >
         {Boolean(variant !== "numberOnly" && iconName) && (
-          <View style={{marginRight: isIconOnly ? undefined : (theme.spacing.xs as any)}}>
+          <View style={{marginRight: variant === "iconOnly" ? 0 : (theme.spacing.sm as any)}}>
             <Icon color={badgeColor} iconName={iconName!} size="xs" />
           </View>
         )}
@@ -109,7 +112,7 @@ export const Badge = ({
               color: theme.text[badgeColor],
               fontSize: 10,
               fontWeight: "700",
-              fontFamily: theme.font.primary,
+              fontFamily: "text",
             }}
           >
             {badgeValue}

@@ -122,7 +122,7 @@ export const TextField: FC<TextFieldProps> = ({
       width: "100%",
       height: calculatedHeight,
       color: theme.text.primary,
-      fontFamily: theme.font.primary,
+      fontFamily: "text",
       fontSize: 16,
       paddingVertical: 0,
       gap: 10,
@@ -132,7 +132,7 @@ export const TextField: FC<TextFieldProps> = ({
       style.outline = "none";
     }
     return style;
-  }, [calculatedHeight, theme.font.primary, theme.text.primary]);
+  }, [calculatedHeight, "text", theme.text.primary]);
 
   if (["numberRange", "decimalRange", "height"].includes(type)) {
     console.warn(`${type} is not yet supported`);

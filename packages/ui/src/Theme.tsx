@@ -63,8 +63,6 @@ const defaultPrimitives = {
   success100: "#3EA45C",
   success200: "#1A7F36",
 
-  gold000: "#956A00",
-
   spacing0: 0,
   spacing1: 4,
   spacing2: 8,
@@ -153,6 +151,8 @@ const defaultTheme: FernsThemeConfig = {
   },
 
   // These will continue to throw errors until we have a proper font system in place.
+  // TODO: currently to use these, you need to set fontFamily to "text" or "heading",
+  // not theme.font.primary or theme.font.title.
   font: {
     primary: "Nunito",
     title: "Titillium Web",
