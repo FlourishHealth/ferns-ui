@@ -2,27 +2,18 @@ import {Box, TapToEdit} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 export const TapDemo = (): ReactElement => {
+  const [value, setValue] = useState("Santa Claus");
   return (
-    <TapToEdit
-      key="text"
-      name="text"
-      openApiField="name"
-      openApiModel="users"
-      setValue={() => {}}
-      title="Name"
-      type="text"
-      value="Luke Skywalker"
-      onSave={(): void => {}}
-    />
+    <TapToEdit setValue={setValue} title="Name" type="text" value={value} onSave={(): void => {}} />
   );
 };
 
 export const TapStory = (): ReactElement => {
   const [bool, setBool] = useState(true);
   const [text, setText] = useState("text");
-  const [currency, setCurrency] = useState(14523.23);
+  // const [currency, setCurrency] = useState(14523.23);
   // 1.957 causes a floating imprecision if not handled correctly.
-  const [percent, setPercent] = useState(1.957);
+  // const [percent, setPercent] = useState(1.957);
   const [select, setSelect] = useState("Option1");
   const [multiselect, setMultiselect] = useState(["Option2"]);
   const [textArea, setTextArea] = useState(
@@ -45,10 +36,6 @@ export const TapStory = (): ReactElement => {
   return (
     <Box direction="column" display="flex" height="100%" scroll width="100%">
       <TapToEdit
-        key="text"
-        name="text"
-        openApiField="name"
-        openApiModel="users"
         setValue={setText}
         title="Text"
         type="text"
@@ -58,10 +45,6 @@ export const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
-        key="text"
-        name="textarea"
-        openApiField="name"
-        openApiModel="users"
         setValue={setText}
         title="Text"
         type="textarea"
@@ -71,10 +54,6 @@ export const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
-        key="text"
-        name="text"
-        openApiField="name"
-        openApiModel="users"
         setValue={setText}
         showDescriptionAsTooltip
         title="Text Tooltip"
@@ -85,10 +64,6 @@ export const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
-        key="textarea"
-        name="textarea"
-        openApiField="name"
-        openApiModel="users"
         setValue={setTextArea}
         showDescriptionAsTooltip
         title="Text Area Tooltip"
@@ -99,10 +74,6 @@ export const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
-        key="bool"
-        name="bool"
-        openApiField="staffRoles.SuperUser"
-        openApiModel="users"
         setValue={setBool}
         title="Boolean"
         type="boolean"
@@ -111,9 +82,7 @@ export const TapStory = (): ReactElement => {
           setBool(value);
         }}
       />
-      <TapToEdit
-        key="currency"
-        name="currency"
+      {/* <TapToEdit
         openApiField="namePronunciation"
         openApiModel="users"
         setValue={setCurrency}
@@ -123,12 +92,10 @@ export const TapStory = (): ReactElement => {
         onSave={(value): void => {
           setCurrency(value);
         }}
-      />
-      <TapToEdit
-        key="percent"
-        name="percent"
+      /> */}
+      {/* <TapToEdit
         openApiField="name"
-        openApiModel="users"
+        // openApiModel="users"
         setValue={setPercent}
         title="Percent"
         type="percent"
@@ -136,12 +103,8 @@ export const TapStory = (): ReactElement => {
         onSave={(value): void => {
           setPercent(value);
         }}
-      />
+      /> */}
       <TapToEdit
-        key="select"
-        name="select"
-        openApiField="name"
-        openApiModel="users"
         options={[
           {label: "Option1", value: "Option1"},
           {label: "Option2", value: "Option2"},
@@ -150,24 +113,21 @@ export const TapStory = (): ReactElement => {
         title="Select"
         type="select"
         value={select}
-        onSave={(value): void => {
+        onSave={(value: any): void => {
           setSelect(value);
         }}
       />
       <TapToEdit
-        key="multiselect"
-        name="multiselect"
-        openApiField="name"
-        openApiModel="users"
-        options={[
-          {label: "Option1", value: "Option1"},
-          {label: "Option2", value: "Option2"},
-          {label: "Option2", value: "Option3"},
-          {
-            label: "Really long option for testing some wrap around and such",
-            value: "Really long option for testing some wrap around and such",
-          },
-        ]}
+        // options={[
+        //   {label: "Option1", value: "Option1"},
+        //   {label: "Option2", value: "Option2"},
+        //   {label: "Option2", value: "Option3"},
+        //   {
+        //     label: "Really long option for testing some wrap around and such",
+        //     value: "Really long option for testing some wrap around and such",
+        //   },
+        // ]}
+        options={["option1"]}
         setValue={setMultiselect}
         title="Multi Select"
         type="multiselect"
@@ -177,9 +137,6 @@ export const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
-        name="address"
-        openApiField="staffRoles.SuperUser"
-        openApiModel="users"
         setValue={setAddress}
         title="Address"
         type="address"
@@ -189,9 +146,6 @@ export const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
-        name="url"
-        openApiField="name"
-        openApiModel="users"
         setValue={setURL}
         title="URL"
         type="url"
@@ -202,10 +156,6 @@ export const TapStory = (): ReactElement => {
       />
 
       <TapToEdit
-        key="textWithConfirmation"
-        name="textWithConfirmation"
-        openApiField="name"
-        openApiModel="users"
         setValue={setText}
         title="Text With Confirmation"
         type="text"

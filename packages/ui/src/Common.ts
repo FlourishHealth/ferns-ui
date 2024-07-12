@@ -2050,7 +2050,69 @@ export interface LinkProps extends TextProps {
   href: string;
 }
 
-export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
+export type TapToEditProps =
+  | (BaseTapToEditProps &
+      Omit<TextFieldProps, "onChange" | "value"> & {
+        type: "password" | "text" | "url";
+      })
+  | (BaseTapToEditProps &
+      Omit<NumberFieldProps, "onChange" | "value"> & {
+        type: "number" | "decimal";
+      })
+  | (BaseTapToEditProps &
+      Omit<NumberRangeFieldProps, "onChange" | "value"> & {
+        type: "numberRange" | "decimalRange";
+      })
+  | (BaseTapToEditProps &
+      Omit<DateTimeFieldProps, "onChange" | "value"> & {
+        type: "date" | "datetime" | "time";
+      })
+  | (BaseTapToEditProps &
+      Omit<MultiselectFieldProps, "onChange" | "value"> & {
+        type: "multiselect";
+      })
+  | (BaseTapToEditProps &
+      Omit<TextAreaProps, "onChange" | "value"> & {
+        type: "textarea";
+      })
+  | (BaseTapToEditProps &
+      Omit<SelectFieldProps, "onChange" | "value"> & {
+        type: "select";
+      })
+  | (BaseTapToEditProps &
+      Omit<CustomSelectFieldProps, "onChange" | "value"> & {
+        type: "customSelect";
+      })
+  | (BaseTapToEditProps &
+      Omit<EmailFieldProps, "onChange" | "value"> & {
+        type: "email";
+      })
+  | (BaseTapToEditProps &
+      Omit<PhoneNumberFieldProps, "onChange" | "value"> & {
+        type: "phoneNumber";
+      })
+  | (BaseTapToEditProps &
+      Omit<BooleanFieldProps, "onChange" | "value"> & {
+        type: "boolean";
+      })
+  | (BaseTapToEditProps &
+      Omit<RadioFieldProps, "onChange" | "value"> & {
+        type: "radio";
+      })
+  | (BaseTapToEditProps &
+      Omit<SignatureFieldProps, "onChange" | "value"> & {
+        type: "signature";
+      })
+  | (BaseTapToEditProps &
+      Omit<SearchFieldProps, "onChange" | "value"> & {
+        type: "search";
+      })
+  | (BaseTapToEditProps &
+      Omit<AddressFieldProps, "onChange" | "value"> & {
+        type: "address";
+      });
+
+export interface BaseTapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   title: string;
   value: any;
   // Not required if not editable.
@@ -2069,8 +2131,9 @@ export interface TapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   confirmationText?: string;
   confirmationHeading?: string;
   description?: string;
-  openApiModel?: string;
-  openApiField?: string;
+  // openApi to supported in future
+  // openApiModel?: string;
+  // openApiField?: string;
   showDescriptionAsTooltip?: boolean;
   // Default true. If false, description is shown below the value always.
   onlyShowDescriptionWhileEditing?: boolean;
