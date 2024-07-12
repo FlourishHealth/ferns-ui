@@ -51,6 +51,7 @@ export const Text = ({
     "text-bold-italic": Nunito_700Bold_Italic,
     "text-medium": Nunito_500Medium,
     "text-medium-italic": Nunito_500Medium_Italic,
+    text: Nunito_400Regular,
     "text-regular": Nunito_400Regular,
     "text-regular-italic": Nunito_400Regular_Italic,
   });

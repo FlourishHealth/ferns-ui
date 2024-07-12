@@ -1632,6 +1632,17 @@ export interface IconButtonProps {
   confirmationText?: string;
 
   /**
+   * Show a small indicator icon in the lower right corner of the button.
+   */
+  indicator?: "error" | "warning" | "success" | "primary";
+
+  /**
+   * The text or number to display in the indicator. If not provided,
+   * the indicator will be a solid circle.
+   */
+  indicatorText?: number | string;
+
+  /**
    * The name of the icon to display in the button.
    */
   iconName: IconName;
@@ -1642,7 +1653,6 @@ export interface IconButtonProps {
   loading?: boolean;
 
   /**
-  /**
    * The test ID for the button, used for testing purposes.
    */
   testID?: string;
@@ -1651,11 +1661,13 @@ export interface IconButtonProps {
    * The ideal position of the tooltip.
    */
   tooltipIdealPosition?: TooltipPosition;
+
   /**
    * Include an arrow in the tooltip. Pointing to the button.
    * @default false
    */
   tooltipIncludeArrow?: boolean;
+
   /**
    * The text content of the tooltip.
    */
@@ -1665,7 +1677,7 @@ export interface IconButtonProps {
    * The variant of the button, which determines its style.
    * @default "primary"
    */
-  variant?: "primary" | "secondary" | "muted" | "destructive";
+  variant?: "primary" | "secondary" | "muted" | "destructive" | "navigation";
 
   /**
    * If true, a confirmation modal will be shown before the onClick action.

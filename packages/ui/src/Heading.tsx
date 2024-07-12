@@ -36,6 +36,7 @@ export const Heading = ({
 
   // TODO: make fonts part of theme.
   const [fontsLoaded] = useFonts({
+    heading: TitilliumWeb_600SemiBold,
     "heading-bold": TitilliumWeb_700Bold,
     "heading-semibold": TitilliumWeb_600SemiBold,
   });

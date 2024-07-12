@@ -56,7 +56,7 @@ const TimeInput = ({
     height: INPUT_HEIGHT,
     width: "100%",
     color: theme.text.primary,
-    fontFamily: theme.font.primary,
+    fontFamily: "text",
   };
 
   return (
@@ -371,7 +371,7 @@ const DateCalendar = ({
           theme={{
             todayTextColor: theme.text.accent,
             dayTextColor: theme.text.primary,
-            textDayFontFamily: theme.font.primary,
+            textDayFontFamily: "text",
             textDayFontWeight: "400",
             textDayFontSize: 16,
           }}

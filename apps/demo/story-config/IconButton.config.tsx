@@ -3,7 +3,9 @@ import {
   AllButtonIconVariants,
   ConfirmationIconButton,
   IconButtonDemo,
+  IndicatorIconButton,
   LoadingIconButton,
+  NavigationIconButton,
   ToolTipIconButton,
 } from "@stories";
 import {IconButton} from "ferns-ui";
@@ -84,5 +86,7 @@ export const IconButtonConfiguration: DemoConfiguration = {
     Confirmation: {render: () => ConfirmationIconButton({})},
     WithToolTip: {render: () => ToolTipIconButton({})},
     Loading: {render: () => LoadingIconButton({})},
+    Indicator: {render: () => IndicatorIconButton({})},
+    Navigation: {render: () => NavigationIconButton({})},
   },
 };

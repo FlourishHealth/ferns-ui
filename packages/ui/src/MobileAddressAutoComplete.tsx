@@ -49,7 +49,7 @@ export const MobileAddressAutocomplete = ({
     backgroundColor: theme.surface.base,
     borderRadius: theme.radius.default,
     color: theme.text.primary,
-    fontFamily: theme.font.primary,
+    fontFamily: "text",
     fontSize: (styles?.textInput as TextStyle)?.fontSize ?? 14,
     height: 40,
     marginBottom: 0,

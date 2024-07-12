@@ -15,7 +15,7 @@ export const TableTitle: FC<TableTitleProps> = ({title, align = "left"}) => {
       ellipsizeMode="tail" // ensures that the text is clipped at the end of the line for all platforms
       numberOfLines={3}
       style={{
-        fontFamily: theme.font.primary,
+        fontFamily: "text",
         textTransform: "uppercase",
         fontSize: 10,
         lineHeight: 16,

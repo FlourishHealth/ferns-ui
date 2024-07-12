@@ -16,7 +16,7 @@ export const TableText: FC<TableTextProps> = ({isEditing, value, align}) => {
     <Text
       style={{
         color: theme.text.primary,
-        fontFamily: theme.font.primary,
+        fontFamily: "text",
         fontSize: 14,
         textAlign: align,
       }}

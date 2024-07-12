@@ -16,7 +16,7 @@ export const TableNumber: FC<TableNumberProps> = ({isEditing, value, align = "ri
     <Text
       style={{
         color: theme.text.primary,
-        fontFamily: theme.font.primary,
+        fontFamily: "text",
         fontSize: 14,
         textAlign: align,
       }}
