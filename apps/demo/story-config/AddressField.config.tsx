@@ -28,18 +28,13 @@ export const AddressFieldConfiguration: DemoConfiguration = {
   demoOptions: {
     size: "md",
     controls: {
-      address: {
-        type: "address",
-        includeCounty: true,
-        defaultValue: {
-          address1: "1234 Main St",
-          address2: "Apt 123",
-          city: "Anytown",
-          state: "California",
-          zipcode: "12345",
-          countyName: "Any County",
-          countyCode: "67890",
-        },
+      googleMapsApiKey: {
+        type: "text",
+        defaultValue: "",
+      },
+      includeCounty: {
+        type: "boolean",
+        defaultValue: false,
       },
     },
   },
