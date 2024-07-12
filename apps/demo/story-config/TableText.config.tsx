@@ -1,11 +1,10 @@
 import {DemoConfiguration} from "@config";
-import {DefaultDemo} from "@stories";
-import {TableTextField} from "ferns-ui";
-import React from "react";
+import {TableTextDemo, TableTextVariants} from "@stories";
+import {TableText} from "ferns-ui";
 
-export const TableTextFieldConfiguration: DemoConfiguration = {
-  name: "Table text field",
-  component: TableTextField, // Replace with actual component reference
+export const TableTextConfiguration: DemoConfiguration = {
+  name: "Table Text",
+  component: TableText,
   related: ["Table"],
   description: "This component adds a single line of text to the table.",
   a11yNotes: [],
@@ -20,7 +19,7 @@ export const TableTextFieldConfiguration: DemoConfiguration = {
     web: "ready",
   },
   additionalDocumentation: [],
-  interfaceName: "TableTextFieldProps",
+  interfaceName: "TableTextProps",
   usage: {
     do: [
       "Use the single line variant for short strings. For example, a name.",
@@ -31,7 +30,11 @@ export const TableTextFieldConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: () => <DefaultDemo />,
+  demo: TableTextDemo,
   demoOptions: {},
-  stories: {},
+  stories: {
+    Variants: {
+      render: TableTextVariants,
+    },
+  },
 };

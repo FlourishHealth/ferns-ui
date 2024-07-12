@@ -1,5 +1,5 @@
 import {getCalendars} from "expo-localization";
-import React, {ReactElement, useMemo, useState} from "react";
+import React, {FC, useMemo, useState} from "react";
 import {
   DimensionValue,
   KeyboardTypeOptions,
@@ -54,7 +54,7 @@ const textContentMap: {
   username: "username",
 };
 
-export const TextField = ({
+export const TextField: FC<TextFieldProps> = ({
   title,
   disabled,
   helperText,
@@ -76,7 +76,7 @@ export const TextField = ({
   onEnter,
   onSubmitEditing,
   testID,
-}: TextFieldProps): ReactElement => {
+}) => {
   const {theme} = useTheme();
 
   const calendar = getCalendars()[0];
@@ -122,7 +122,7 @@ export const TextField = ({
       width: "100%",
       height: calculatedHeight,
       color: theme.text.primary,
-      fontFamily: theme.font.primary,
+      fontFamily: "text",
       fontSize: 16,
       paddingVertical: 0,
       gap: 10,
@@ -132,7 +132,7 @@ export const TextField = ({
       style.outline = "none";
     }
     return style;
-  }, [calculatedHeight, theme.font.primary, theme.text.primary]);
+  }, [calculatedHeight, "text", theme.text.primary]);
 
   if (["numberRange", "decimalRange", "height"].includes(type)) {
     console.warn(`${type} is not yet supported`);
@@ -153,8 +153,7 @@ export const TextField = ({
     >
       {title && <FieldTitle text={title} />}
       {Boolean(errorText) && errorText && <FieldError text={errorText} />}
-      <Pressable
-        accessibilityRole="button"
+      <View
         style={{
           flexDirection: "row",
           alignItems: "center",
@@ -175,6 +174,7 @@ export const TextField = ({
           }}
           accessibilityHint="Enter text here"
           accessibilityLabel="Text input field"
+          accessibilityState={{disabled}}
           autoCapitalize={type === "text" ? "sentences" : "none"}
           autoCorrect={shouldAutocorrect}
           blurOnSubmit={blurOnSubmit}
@@ -224,7 +224,7 @@ export const TextField = ({
             <Icon iconName={iconName!} size="md" />
           </Pressable>
         )}
-      </Pressable>
+      </View>
       {helperText && <FieldHelperText text={helperText} />}
       {/* {type === "numberRange" && value && (
         <NumberPickerActionSheet

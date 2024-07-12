@@ -3,7 +3,7 @@ import {Linking} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {TapToEditProps} from "./Common";
+import {AddressInterface, BoxProps, FieldProps, TapToEditProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
 // import {useOpenAPISpec} from "./OpenAPIContext";
@@ -42,7 +42,7 @@ const TapToEditTitle = ({
   }
 };
 
-export function formatAddress(address: any, asString = false): string {
+export function formatAddress(address: AddressInterface, asString = false): string {
   let city = "";
   if (address?.city) {
     city = address?.state || address.zipcode ? `${address.city}, ` : `${address.city}`;
@@ -62,7 +62,7 @@ export function formatAddress(address: any, asString = false): string {
   const addressLineOne = address?.address1 ?? "";
   const addressLineTwo = address?.address2 ?? "";
   const addressLineThree = `${city}${state}${zip}`;
-  const addressLineFour = `${countyName}${address?.countyCode ? ` [${countyCode}]` : ""}`;
+  const addressLineFour = `${countyName}${address?.countyCode ? ` (${countyCode})` : ""}`;
 
   if (!asString) {
     // Only add new lines if lines before and after are not empty to avoid awkward whitespace
@@ -83,7 +83,6 @@ export function formatAddress(address: any, asString = false): string {
 export const TapToEdit = ({
   value,
   setValue,
-  placeholder,
   title,
   onSave,
   editable = true,
@@ -122,10 +121,10 @@ export const TapToEdit = ({
           <Field
             helperText={description}
             label={title}
-            placeholder={placeholder}
+            type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
             value={value}
-            onChange={setValue}
-            {...fieldProps}
+            onChange={setValue ?? (() => {})}
+            {...(fieldProps as any)}
           />
         )}
         {editing && !isEditing && (
@@ -170,18 +169,18 @@ export const TapToEdit = ({
       // If no transform, try and display the value reasonably.
       if (fieldProps?.type === "boolean") {
         displayValue = value ? "Yes" : "No";
-      } else if (fieldProps?.type === "percent") {
-        // Prevent floating point errors from showing up by using parseFloat and precision.
-        // Pass through parseFloat again to trim off insignificant zeroes.
-        displayValue = `${parseFloat(parseFloat(String(value * 100)).toPrecision(7))}%`;
-      } else if (fieldProps?.type === "currency") {
-        // TODO: support currencies other than USD in Field and related components.
-        const formatter = new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: "USD",
-          minimumFractionDigits: 2, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-        });
-        displayValue = formatter.format(value);
+        // } else if (fieldProps?.type === "percent") {
+        //   // Prevent floating point errors from showing up by using parseFloat and precision.
+        //   // Pass through parseFloat again to trim off insignificant zeroes.
+        //   displayValue = `${parseFloat(parseFloat(String(value * 100)).toPrecision(7))}%`;
+        // } else if (fieldProps?.type === "currency") {
+        //   // TODO: support currencies other than USD in Field and related components.
+        //   const formatter = new Intl.NumberFormat("en-US", {
+        //     style: "currency",
+        //     currency: "USD",
+        //     minimumFractionDigits: 2, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+        //   });
+        //   displayValue = formatter.format(value);
       } else if (fieldProps?.type === "multiselect") {
         // ???
         displayValue = value.join(", ");
@@ -225,7 +224,7 @@ export const TapToEdit = ({
         paddingX={3}
         paddingY={2}
         width="100%"
-        {...rowBoxProps}
+        {...(rowBoxProps as Exclude<BoxProps, "onClick">)}
       >
         <Box direction="row" width="100%">
           <TapToEditTitle
@@ -235,7 +234,12 @@ export const TapToEdit = ({
             title={title}
           />
           <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>
-            <Box justifyContent="start" onClick={isClickable ? openLink : undefined}>
+            <Box
+              accessibilityHint=""
+              accessibilityLabel="Link"
+              justifyContent="start"
+              onClick={isClickable ? openLink : undefined}
+            >
               {Boolean(fieldProps?.type !== "textarea") && (
                 <Text align="right" underline={isClickable}>
                   {displayValue}
@@ -243,7 +247,13 @@ export const TapToEdit = ({
               )}
             </Box>
             {editable && (
-              <Box marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
+              <Box
+                accessibilityHint=""
+                accessibilityLabel="Edit"
+                marginLeft={2}
+                width={16}
+                onClick={(): void => setEditing(true)}
+              >
                 <Icon iconName="pencil" size="md" />
               </Box>
             )}
@@ -257,7 +267,14 @@ export const TapToEdit = ({
               </Text>
             </Box>
             {editable && (
-              <Box alignSelf="end" marginLeft={2} width={16} onClick={(): void => setEditing(true)}>
+              <Box
+                accessibilityHint=""
+                accessibilityLabel="Edit"
+                alignSelf="end"
+                marginLeft={2}
+                width={16}
+                onClick={(): void => setEditing(true)}
+              >
                 <Icon color="primary" iconName="pencil" size="md" />
               </Box>
             )}

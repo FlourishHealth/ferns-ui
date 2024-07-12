@@ -105,11 +105,7 @@ export function RNPickerSelect({
   onValueChange,
   value,
   items,
-  placeholder = {
-    label: "Please select an option.",
-    value: "",
-    color: "#9EA0A4",
-  },
+  placeholder,
   disabled = false,
   itemKey,
   children,

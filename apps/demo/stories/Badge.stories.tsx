@@ -5,8 +5,8 @@ import {StorybookContainer} from "./StorybookContainer";
 
 export const BadgeDemo = (props: Partial<BadgeProps>) => {
   return (
-    <Box direction="row" paddingY={2}>
-      <Badge status="info" value="Default" variant="text" {...props} />
+    <Box alignItems="center" justifyContent="center">
+      <Badge iconName="check" status="info" value="Default" variant="text" {...props} />
     </Box>
   );
 };
@@ -17,7 +17,7 @@ function badgeLine(text: string, badgeProps: any) {
       <Box marginRight={2}>
         <Text>{text}</Text>
       </Box>
-      <Badge {...badgeProps} />
+      <Badge iconName="check" {...badgeProps} />
     </Box>
   );
 }

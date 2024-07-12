@@ -12,6 +12,7 @@ import {
   TableHeader,
   TableHeaderCell,
   TableRow,
+  TableText,
   Text,
   TextColor,
 } from "ferns-ui";
@@ -47,34 +48,30 @@ const ComponentProps = ({props}: {props: DemoConfigurationProp[]}) => {
       </Box>
       <Table columns={[160, 600, 160]}>
         <TableHeader>
-          <TableHeaderCell index={0}>
-            <Text>Name</Text>
-          </TableHeaderCell>
-          <TableHeaderCell index={1}>
-            <Text>Type</Text>
-          </TableHeaderCell>
-          <TableHeaderCell index={2}>
-            <Text>Default</Text>
-          </TableHeaderCell>
+          <TableHeaderCell index={0} title="Name" />
+          <TableHeaderCell index={1} title="Type" />
+          <TableHeaderCell index={2} title="Default" />
         </TableHeader>
         {/* eslint-disable-next-line react/prop-types */}
         {sortedProps.map((p) => (
           <TableRow key={p.name}>
             <Box direction="row">
-              <Text>{p.name}</Text>
+              <TableText value={p.name} />
               {Boolean(p.flags?.isOptional !== true) && (
-                <Badge status="warning" variant="iconOnly" />
-              )}
-            </Box>
-            <Box direction="column" width={160} wrap>
-              <Text italic>{p.type.name}</Text>
-              {Boolean(p.comment?.summary?.[0]?.text) && (
-                <Box marginTop={2}>
-                  <Text>{p.comment?.summary?.[0]?.text}</Text>
+                <Box marginLeft={1}>
+                  <Badge status="warning" value="Required" />
                 </Box>
               )}
             </Box>
-            <Text>-</Text>
+            <Box direction="column" width={160} wrap>
+              <TableText value={p.type.name} />
+              {Boolean(p.comment?.summary?.[0]?.text) && (
+                <Box marginTop={2}>
+                  <TableText value={p.comment?.summary?.[0]?.text} />
+                </Box>
+              )}
+            </Box>
+            <TableText value="-" />
           </TableRow>
         ))}
       </Table>
@@ -200,15 +197,17 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
           rounding="lg"
         >
           {Object.keys(propValues).map((prop) => (
-            <Field
-              key={prop}
-              label={config.demoOptions?.controls?.[prop]?.label ?? startCase(prop)}
-              {...config.demoOptions?.controls?.[prop]}
-              value={propValues[prop]}
-              onChange={(value: any) => {
-                setPropValues({...cloneDeep(propValues), [prop]: value});
-              }}
-            />
+            <Box key={prop} paddingY={2}>
+              <Field
+                // TODO: change label -> title once field props are updated
+                label={config.demoOptions?.controls?.[prop]?.label ?? startCase(prop)}
+                {...config.demoOptions?.controls?.[prop]}
+                value={propValues[prop]}
+                onChange={(value: any) => {
+                  setPropValues({...cloneDeep(propValues), [prop]: value});
+                }}
+              />
+            </Box>
           ))}
         </Box>
       )}

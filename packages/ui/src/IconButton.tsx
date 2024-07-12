@@ -104,7 +104,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
       style={{
         alignItems: "center",
         backgroundColor,
-        borderRadius: theme.radius.rounded as any,
+        borderRadius: theme.radius.rounded,
         justifyContent: "center",
         height: 32,
         width: 32,
@@ -156,7 +156,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
               style={{
                 color: theme.text.inverted,
                 textAlign: "center",
-                fontFamily: theme.font.primary,
+                fontFamily: "text",
                 fontSize: 10,
                 fontWeight: 700,
               }}

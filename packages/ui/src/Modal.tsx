@@ -67,7 +67,7 @@ const ModalContent: FC<{
         zIndex: 1,
         backgroundColor: theme.surface.base,
         margin: "auto",
-        borderRadius: theme.radius.default as any,
+        borderRadius: theme.radius.default,
         width: sizePx,
         ...(isMobile
           ? {}

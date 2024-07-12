@@ -160,9 +160,9 @@ class UnifierClass {
       try {
         const jsonValue = JSON.stringify(item);
         await AsyncStorage.setItem(key, jsonValue);
-      } catch (error) {
+      } catch (error: any) {
         console.error(`[storage] Error storing ${key}`, item, error);
-        throw new Error(error as any);
+        throw new Error(error);
       }
     },
   };

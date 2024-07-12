@@ -4,7 +4,7 @@ function getDate(date: string, {timezone}: {timezone?: string} = {}): DateTime {
   if (!date) {
     throw new Error("Passed undefined");
   }
-  if (typeof (date as any) !== "string") {
+  if (typeof date !== "string") {
     throw new Error(`Invalid date type: ${typeof date}`);
   }
   const clonedDate = timezone ? DateTime.fromISO(date).setZone(timezone) : DateTime.fromISO(date);

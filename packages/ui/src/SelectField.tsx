@@ -27,7 +27,7 @@ export const SelectField: FC<SelectFieldProps> = ({
         placeholder={!value ? {label: placeholder, value: ""} : {}}
         value={value ?? ""}
         onValueChange={(v) => {
-          if (value === "") {
+          if (v === "") {
             onChange(undefined);
           } else {
             onChange(v);
