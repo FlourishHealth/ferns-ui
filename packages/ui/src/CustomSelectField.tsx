@@ -103,7 +103,7 @@ export const CustomSelectField = ({
             disabled={disabled}
             id="customOptions"
             inputRef={(ref: any) => (textInputRef.current = ref)}
-            placeholderText="None selected"
+            placeholder="None selected"
             type="text"
             value={value}
             onChange={onChange}
