@@ -1,6 +1,5 @@
 import {DemoConfiguration} from "@config";
 import {Pagination} from "ferns-ui";
-import React from "react";
 
 import {PaginationDemo, PaginationMoreStory, PaginationStory} from "../stories";
 
@@ -33,8 +32,12 @@ export const PaginationConfiguration: DemoConfiguration = {
     doNot: ["Use pagination if only one page is needed."],
   },
   props: {},
-  demo: () => <PaginationDemo />,
-  demoOptions: {},
+  demo: PaginationDemo,
+  demoOptions: {
+    controls: {
+      totalPages: {type: "number", defaultValue: 5, onChange: () => {}},
+    },
+  },
   stories: {
     PaginationSizes: {render: PaginationStory},
     PaginationMore: {render: PaginationMoreStory},

@@ -1,4 +1,4 @@
-import React, {ReactElement} from "react";
+import React, {ReactElement, useMemo} from "react";
 import {Pressable, View} from "react-native";
 
 import {IconName, PaginationProps} from "./Common";
@@ -20,17 +20,11 @@ const PaginationButton = ({
   let icon: IconName;
   let disabled = false;
 
-  if (type === "first") {
-    icon = "angles-left";
-    disabled = page <= 1;
-  } else if (type === "prev") {
+  if (type === "prev") {
     icon = "angle-left";
     disabled = page <= 1;
   } else if (type === "next") {
     icon = "angle-right";
-    disabled = page >= totalPages;
-  } else if (type === "last") {
-    icon = "angles-right";
     disabled = page >= totalPages;
   } else if (type === "more") {
     icon = "ellipsis";
@@ -95,32 +89,48 @@ export const Pagination = ({totalPages, page, setPage}: PaginationProps): ReactE
 
   // Determine the number of pages to show. Show the first page,
   // the page before and after the current page, and the last page.
-  const pages: (number | "more")[] = [];
-  if (page > 2) {
-    pages.push(1);
-  }
+  const pages: (number | "more")[] = useMemo(() => {
+    const pagesResult: (number | "more")[] = [];
 
-  if (page > 3) {
-    pages.push("more");
-  }
+    if (totalPages < 6) {
+      for (let i = 1; i <= totalPages; i++) {
+        pagesResult.push(i);
+      }
+    } else {
+      pagesResult.push(1);
 
-  if (page > 1) {
-    pages.push(page - 1);
-  }
+      if (page > 3) {
+        pagesResult.push("more");
+      } else {
+        pagesResult.push(2);
+        pagesResult.push(3);
+      }
 
-  pages.push(page);
+      // This is to help sort the last few numbers of the total pages behind the current page.
+      if (page > totalPages - 2 && !pagesResult.includes(totalPages - 2)) {
+        pagesResult.push(totalPages - 2);
+      }
 
-  if (page < totalPages) {
-    pages.push(page + 1);
-  }
+      if (page > totalPages - 1 && !pagesResult.includes(totalPages - 1)) {
+        pagesResult.push(totalPages - 1);
+      }
 
-  if (page < totalPages - 2) {
-    pages.push("more");
-  }
+      if (!pagesResult.includes(page)) {
+        pagesResult.push(page);
+      }
 
-  if (page < totalPages - 1) {
-    pages.push(totalPages);
-  }
+      if (page < totalPages - 2) {
+        pagesResult.push("more");
+      } else if (page !== totalPages && !pagesResult.includes(totalPages - 1)) {
+        pagesResult.push(totalPages - 1);
+      }
+
+      if (!pagesResult.includes(totalPages)) {
+        pagesResult.push(totalPages);
+      }
+    }
+    return pagesResult;
+  }, [page, totalPages]);
 
   // TODO: Add hover for pagination numbers.
 
@@ -136,12 +146,6 @@ export const Pagination = ({totalPages, page, setPage}: PaginationProps): ReactE
         alignItems: "center",
       }}
     >
-      <PaginationButton
-        page={page}
-        totalPages={totalPages}
-        type="first"
-        onClick={() => setPage(1)}
-      />
       <PaginationButton
         page={page}
         totalPages={totalPages}
@@ -168,12 +172,6 @@ export const Pagination = ({totalPages, page, setPage}: PaginationProps): ReactE
         onClick={() => {
           setPage(page + 1);
         }}
-      />
-      <PaginationButton
-        page={page}
-        totalPages={totalPages}
-        type="last"
-        onClick={() => setPage(10)}
       />
     </View>
   );
