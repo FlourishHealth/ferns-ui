@@ -672,7 +672,7 @@ export interface AddressFieldProps
     HelperTextProps,
     ErrorTextProps {
   includeCounty?: boolean;
-  googleMapsApiKey: string;
+  googleMapsApiKey?: string;
   googlePlacesMobileStyles?: Styles;
   value: AddressInterface;
   onChange: (value: AddressInterface) => void;
@@ -1539,8 +1539,8 @@ export type FieldProps =
   | (RadioFieldProps & {type: "radio"})
   | (SignatureFieldProps & {type: "signature"})
   | (SearchFieldProps & {type: "search"})
-  | (AddressFieldProps & {type: "address"})
-  // | (CurrencyFieldProps & {type: "currency"});
+  | (AddressFieldProps & {type: "address"});
+// | (CurrencyFieldProps & {type: "currency"});
 // | (PercentFieldProps & {type: "percent"});
 
 // | URLFieldProps
