@@ -26,10 +26,7 @@ export class NumberPickerActionSheet extends React.Component<
           <Box alignItems="end" display="flex" width="100%">
             <Box width="33%">
               <Button
-                color="blue"
-                size="lg"
                 text="Close"
-                type="ghost"
                 onClick={() => {
                   this.props.actionSheetRef?.current?.setModalVisible(false);
                 }}
@@ -45,7 +42,7 @@ export class NumberPickerActionSheet extends React.Component<
               height: PICKER_HEIGHT,
               backgroundColor: "#FFFFFF",
             }}
-            onValueChange={(itemValue) => this.props.onChange({value: String(itemValue)})}
+            onValueChange={(itemValue) => this.props.onChange(String(itemValue))}
           >
             {range(this.props.min, this.props.max).map((n) => (
               <Picker.Item key={String(n)} label={String(n)} value={String(n)} />

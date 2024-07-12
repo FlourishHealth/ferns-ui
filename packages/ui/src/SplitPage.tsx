@@ -28,7 +28,6 @@ export const SplitPage = ({
   listViewWidth,
   bottomNavBarHeight,
   showItemList,
-  selectLimit,
 }: SplitPageProps) => {
   const {theme} = useContext(ThemeContext);
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
@@ -72,6 +71,8 @@ export const SplitPage = ({
   const renderItem = (itemInfo: ListRenderItemInfo<any>) => {
     return (
       <Box
+        accessibilityHint=""
+        accessibilityLabel="Select"
         onClick={async () => {
           await onItemSelect(itemInfo);
         }}
@@ -126,11 +127,9 @@ export const SplitPage = ({
           <Box marginBottom={4} paddingX={4} width="100%">
             <SegmentedControl
               items={tabs}
-              multiselect
-              selectLimit={selectLimit || tabs.length}
-              selectedItemIndexes={activeTabs}
+              selectedIndex={activeTabs[0]}
               onChange={(index) => {
-                setActiveTabs([...(index.activeIndex as number[])]);
+                setActiveTabs([...([index] as number[])]);
               }}
             />
           </Box>
@@ -227,9 +226,9 @@ export const SplitPage = ({
         {isMobileDevice && (
           <Box width="100%">
             <IconButton
+              accessibilityHint="close split page"
               accessibilityLabel="close"
-              icon="times"
-              iconColor="darkGray"
+              iconName="xmark"
               onClick={() => onItemDeselect()}
             />
           </Box>
@@ -289,7 +288,7 @@ export const SplitPage = ({
   return (
     <Box
       avoidKeyboard
-      color={color || "lightGray"}
+      color={color || "neutralLight"}
       direction="row"
       display="flex"
       height="100%"
@@ -297,7 +296,7 @@ export const SplitPage = ({
       padding={2}
       width="100%"
     >
-      {loading === true && <Spinner color={theme.darkGray as any} size="md" />}
+      {loading === true && <Spinner color={theme.text.primary as any} size="md" />}
       {Boolean(isMobileDevice) ? renderMobileSplitPage() : renderSplitPage()}
     </Box>
   );

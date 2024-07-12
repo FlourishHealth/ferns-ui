@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, {useContext, useImperativeHandle} from "react";
 import {
+  AccessibilityProps,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -9,8 +10,15 @@ import {
   View,
 } from "react-native";
 
-import {ThemeContext, UnifiedTheme} from ".";
-import {AlignContent, AlignItems, AlignSelf, BoxProps, JustifyContent, SPACING} from "./Common";
+import {FernsTheme, getRounding, getSpacing, ThemeContext} from ".";
+import {
+  AlignContent,
+  AlignItems,
+  AlignSelf,
+  BoxProps,
+  JustifyContent,
+  SurfaceTheme,
+} from "./Common";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {Unifier} from "./Unifier";
 
@@ -50,21 +58,21 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
 
   useImperativeHandle(ref, () => ({
     scrollToEnd: () => {
-      if (scrollRef && scrollRef.current) {
+      if (scrollRef?.current) {
         // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout
         // to avoid this, but it works well enough.
         setTimeout(() => {
-          scrollRef && scrollRef.current && (scrollRef.current as any).scrollToEnd();
+          scrollRef?.current?.scrollToEnd();
         }, 50);
       }
     },
 
     scrollTo: (y: number) => {
-      if (scrollRef && scrollRef.current) {
+      if (scrollRef?.current) {
         // HACK HACK HACK...but it works. Probably need to do some onContentSizeChange or onLayout
         // to avoid this, but it works well enough.
         setTimeout(() => {
-          scrollRef && scrollRef.current && (scrollRef.current as any).scrollTo({y});
+          scrollRef?.current?.scrollTo({y});
         }, 50);
       }
     },
@@ -79,7 +87,7 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     alignItems: (value: AlignItems) => ({alignItems: ALIGN_ITEMS[value]}),
     alignContent: (value: AlignContent) => ({alignContent: ALIGN_CONTENT[value]}),
     alignSelf: (value: AlignSelf) => ({alignSelf: ALIGN_SELF[value]}),
-    color: (value: keyof UnifiedTheme) => ({backgroundColor: theme[value]}),
+    color: (value: keyof SurfaceTheme) => ({backgroundColor: theme.surface[value]}),
     direction: (value: any) => ({flexDirection: value, display: "flex"}),
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     smDirection: (value: any) =>
@@ -110,14 +118,14 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
         return {height: value};
       }
     },
-    margin: (value) => ({margin: value * SPACING}),
-    marginRight: (value) => ({marginRight: value * SPACING}),
-    marginLeft: (value) => ({marginLeft: value * SPACING}),
-    marginTop: (value) => ({marginTop: value * SPACING}),
-    marginBottom: (value) => ({marginBottom: value * SPACING}),
-    paddingX: (value) => ({paddingLeft: value * SPACING, paddingRight: value * SPACING}),
-    paddingY: (value) => ({paddingTop: value * SPACING, paddingBottom: value * SPACING}),
-    padding: (value) => ({padding: value * SPACING}),
+    margin: (value) => ({margin: getSpacing(value)}),
+    marginRight: (value) => ({marginRight: getSpacing(value)}),
+    marginLeft: (value) => ({marginLeft: getSpacing(value)}),
+    marginTop: (value) => ({marginTop: getSpacing(value)}),
+    marginBottom: (value) => ({marginBottom: getSpacing(value)}),
+    paddingX: (value) => ({paddingLeft: getSpacing(value), paddingRight: getSpacing(value)}),
+    paddingY: (value) => ({paddingTop: getSpacing(value), paddingBottom: getSpacing(value)}),
+    padding: (value) => ({padding: getSpacing(value)}),
     zIndex: (value) => ({zIndex: value ? value : undefined}),
     position: (value) => ({position: value}),
     top: (top) => ({top: top ? 0 : undefined}),
@@ -133,12 +141,8 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
         return {borderRadius: allProps.height || allProps.width};
       }
 
-      if (rounding === "pill") {
-        return {borderRadius: 999};
-      }
-
-      if (typeof rounding === "number") {
-        return {borderRadius: rounding * 4};
+      if (rounding) {
+        return {borderRadius: getRounding(rounding)};
       }
 
       return {borderRadius: undefined};
@@ -175,31 +179,31 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
         return {elevation: 4};
       }
     },
-    border: (value: keyof UnifiedTheme) => {
+    border: (value: keyof FernsTheme) => {
       if (!value) {
         return {};
       }
       return {borderColor: theme[value], borderWidth: BORDER_WIDTH};
     },
-    borderBottom: (value: keyof UnifiedTheme) => {
+    borderBottom: (value: keyof FernsTheme) => {
       if (!value) {
         return {};
       }
       return {borderBottomColor: theme[value], borderBottomWidth: BORDER_WIDTH};
     },
-    borderTop: (value: keyof UnifiedTheme) => {
+    borderTop: (value: keyof FernsTheme) => {
       if (!value) {
         return {};
       }
       return {borderTopColor: theme[value], borderTopWidth: BORDER_WIDTH};
     },
-    borderRight: (value: keyof UnifiedTheme) => {
+    borderRight: (value: keyof FernsTheme) => {
       if (!value) {
         return {};
       }
       return {borderRightColor: theme[value], borderRightWidth: BORDER_WIDTH};
     },
-    borderLeft: (value: keyof UnifiedTheme) => {
+    borderLeft: (value: keyof FernsTheme) => {
       if (!value) {
         return {};
       }
@@ -211,8 +215,8 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
 
   const propsToStyle = (): any => {
     let style: any = {};
-    for (const prop of Object.keys(props)) {
-      const value = (props as any)[prop];
+    for (const prop of Object.keys(props) as Array<keyof typeof props>) {
+      const value = props[prop];
       if (BOX_STYLE_MAP[prop]) {
         Object.assign(style, BOX_STYLE_MAP[prop](value, props));
       } else if (prop !== "children" && prop !== "onClick") {
@@ -243,9 +247,14 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
 
   let box;
 
+  // Adding the accessibilityRole of button throws a warning in React Native since we nest buttons
+  // within Box and RN does not support nested buttons
   if (props.onClick) {
     box = (
       <Pressable
+        accessibilityHint={(props as AccessibilityProps).accessibilityHint}
+        accessibilityLabel={(props as AccessibilityProps).accessibilityLabel}
+        accessibilityRole="button"
         style={propsToStyle()}
         testID={props.testID ? `${props.testID}-clickable` : undefined}
         onLayout={props.onLayout}

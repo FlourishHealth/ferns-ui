@@ -25,11 +25,10 @@
     "noImplicitReturns": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "suppressImplicitAnyIndexErrors": true,
+    //"suppressImplicitAnyIndexErrors": true,
     "downlevelIteration": true,
-    "ignoreDeprecations": "5.0"
   },
   "include": [
     "src"
-  ]
+  ],
 }

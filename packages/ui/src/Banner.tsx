@@ -1,12 +1,89 @@
-import React, {useEffect, useState} from "react";
+import debounce from "lodash/debounce";
+import React, {useContext, useEffect, useState} from "react";
+import {ActivityIndicator, Pressable, Text as NativeText, View} from "react-native";
 
 import {Box} from "./Box";
-import {Button} from "./Button";
-import {BannerProps, ButtonColor} from "./Common";
+import {BannerProps, IconName, SurfaceTheme} from "./Common";
+import {DismissButton} from "./DismissButton";
 import {Icon} from "./Icon";
-import {IconButton} from "./IconButton";
-import {Text} from "./Text";
+import {ThemeContext} from "./Theme";
 import {Unifier} from "./Unifier";
+
+type BannerButtonProps = {
+  buttonIconName?: string;
+  buttonOnClick: () => void | Promise<void>;
+  buttonText: string;
+  loading?: boolean;
+};
+
+const BannerButton = ({
+  loading: propsLoading,
+  buttonText,
+  buttonIconName,
+  buttonOnClick,
+}: BannerButtonProps): React.ReactElement | null => {
+  const [loading, setLoading] = useState(propsLoading);
+  const {theme} = useContext(ThemeContext);
+
+  if (!theme) {
+    return null;
+  }
+
+  return (
+    <Pressable
+      accessibilityHint={`Press to perform action ${buttonText}`}
+      accessibilityLabel={buttonText}
+      accessibilityRole="button"
+      style={{
+        alignItems: "center",
+        alignSelf: "stretch",
+        backgroundColor: theme.surface.base,
+        borderRadius: theme.radius.rounded as any,
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+      }}
+      onPress={debounce(
+        async () => {
+          await Unifier.utils.haptic();
+          setLoading(true);
+          try {
+            await buttonOnClick();
+          } catch (error) {
+            setLoading(false);
+            throw error;
+          }
+          setLoading(false);
+        },
+        500,
+        {leading: true}
+      )}
+    >
+      <View style={{flexDirection: "row"}}>
+        <View style={{flexDirection: "row-reverse"}}>
+          {Boolean(buttonIconName) && (
+            <View
+              style={{
+                alignSelf: "center",
+                marginRight: 0,
+                marginLeft: 8,
+              }}
+            >
+              <Icon iconName={buttonIconName as IconName} type="solid" />
+            </View>
+          )}
+          <NativeText style={{fontSize: 12}}>{buttonText}</NativeText>
+        </View>
+        {Boolean(loading) && (
+          <Box marginLeft={2}>
+            <ActivityIndicator size="small" />
+          </Box>
+        )}
+      </View>
+    </Pressable>
+  );
+};
 
 function getKey(id: string): string {
   return `@FernsUI:${id}`;
@@ -17,137 +94,107 @@ export const hideBanner = (id: string): Promise<void> => {
   return Unifier.storage.setItem(getKey(id), "true");
 };
 
-const BannerType = {
-  ACTION: "action",
-  DISMISS: "dismiss",
-  PERMANENT: "permanent", // deprecated in favor of default behavior
-  CUSTOM_BUTTON: "customButton",
-};
+export const Banner = (props: BannerProps): React.ReactElement | null => {
+  const {id, text, status = "info", dismissible = false, hasIcon = false, buttonOnClick} = props;
 
-export const Banner = ({
-  id,
-  customButtonProps,
-  text,
-  subtext,
-  color = "secondaryDark",
-  iconName,
-  textColor = "white",
-  negativeXMargin = 0,
-  width,
-  shape,
-  type,
-  onClick,
-}: BannerProps): React.ReactElement | null => {
-  // If the banner is not type dismiss, show it immediately.
-  const {ACTION, DISMISS, CUSTOM_BUTTON} = BannerType;
-  const [show, setShow] = useState(type !== DISMISS);
+  const {buttonText, buttonIconName} = props as BannerButtonProps;
+
+  const {theme} = useContext(ThemeContext);
+
+  let bgColor: keyof SurfaceTheme = "secondaryDark";
+
+  if (status === "alert") {
+    bgColor = "error";
+  } else if (status === "warning") {
+    bgColor = "warning";
+  }
+
+  const [show, setShow] = useState(true);
+
   // Load seen from async storage.
   useEffect(() => {
-    if (type === DISMISS) {
+    if (dismissible) {
       void Unifier.storage.getItem(getKey(id)).then((isSeen) => {
         console.debug(`[banner] ${getKey(id)} seen? ${isSeen}`);
         setShow(!isSeen);
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, type]);
+  }, [id]);
 
   const dismiss = async (): Promise<void> => {
-    if (type !== DISMISS) {
+    if (!dismissible) {
       return;
     }
     await hideBanner(id);
     setShow(false);
   };
 
-  const renderButton = (): React.ReactElement | null => {
-    if (type === CUSTOM_BUTTON) {
-      return (
-        <Button
-          {...customButtonProps}
-          color={customButtonProps?.color ?? "primary"}
-          size={customButtonProps?.size ?? "sm"}
-          text={customButtonProps?.text ?? ""}
-          onClick={onClick}
-        />
-      );
-    } else if (type === ACTION) {
-      return (
-        <Box alignItems="center" display="block" justifyContent="center" width={40}>
-          <IconButton
-            accessibilityLabel=""
-            icon="arrow-right"
-            iconColor={textColor as ButtonColor}
-            prefix="fas"
-            onClick={(): void => onClick?.()}
-          />
-        </Box>
-      );
-    } else if (type === DISMISS) {
-      return (
-        <Box alignItems="center" display="block" justifyContent="center" width={40}>
-          <IconButton
-            accessibilityLabel=""
-            icon="times-circle"
-            iconColor={textColor as ButtonColor}
-            prefix="fas"
-            onClick={dismiss}
-          />
-        </Box>
-      );
-    } else {
-      return null;
-    }
-  };
-
   if (!show) {
     return null;
   }
 
-  if ((type === ACTION && !onClick) || (type === CUSTOM_BUTTON && !onClick)) {
-    console.warn("Banners with type action require an onClick property.");
-  }
-
-  const negativeMargin = negativeXMargin * -4;
-
   return (
-    <Box
-      color={color}
-      dangerouslySetInlineStyle={{
-        __style: {
-          marginLeft: negativeMargin,
-          marginRight: negativeMargin,
-        },
+    <View
+      style={{
+        alignItems: "center",
+        backgroundColor: theme.surface[bgColor],
+        height: "auto",
+        width: "100%",
+        margin: "auto",
+        flexDirection: "row",
+        borderRadius: theme.radius.default,
+        minHeight: theme.spacing.xl,
+        padding: theme.spacing.xs,
       }}
-      direction="row"
-      justifyContent="between"
-      paddingX={3}
-      paddingY={2}
-      rounding={shape}
-      shadow
-      width={width || Unifier.utils.dimensions().width || "100%"}
-      onClick={type === DISMISS ? dismiss : undefined}
     >
-      {iconName && (
-        <Box justifyContent="center" width={32}>
-          <Icon color={textColor} name={iconName} size="lg" />
-        </Box>
-      )}
-      <Box alignItems="center" direction="column" flex="shrink" justifyContent="center">
-        <Box paddingY={1}>
-          <Text align="center" color={textColor} weight="bold">
-            {text}
-          </Text>
-        </Box>
-        {subtext && (
-          <Box paddingY={1}>
-            <Text align="center" color={textColor}>
-              {subtext}
-            </Text>
-          </Box>
+      <View
+        style={{
+          flexDirection: "row",
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {Boolean(hasIcon) && (
+          <View style={{paddingRight: 12, paddingLeft: 10}}>
+            <Icon color="inverted" iconName="triangle-exclamation" />
+          </View>
         )}
-      </Box>
-      {renderButton()}
-    </Box>
+        <NativeText
+          style={{
+            color: theme.text.inverted,
+            fontWeight: "bold",
+            textAlign: "center",
+            flexShrink: 1,
+            flexWrap: "wrap",
+          }}
+        >
+          {text}
+        </NativeText>
+        {Boolean(buttonText && buttonIconName && buttonOnClick) && (
+          <View style={{paddingLeft: 16, paddingRight: 10}}>
+            <BannerButton
+              buttonIconName={buttonIconName}
+              buttonOnClick={buttonOnClick ?? (() => {})}
+              buttonText={buttonText}
+            />
+          </View>
+        )}
+        {Boolean(buttonText && !buttonIconName && buttonOnClick) && (
+          <View style={{paddingLeft: 16, paddingRight: 10}}>
+            <BannerButton buttonOnClick={buttonOnClick ?? (() => {})} buttonText={buttonText} />
+          </View>
+        )}
+      </View>
+      {Boolean(dismissible) && (
+        <DismissButton
+          accessibilityHint="Press to dismiss banner"
+          accessibilityLabel="Dismiss"
+          color="inverted"
+          onClick={dismiss}
+        />
+      )}
+    </View>
   );
 };

@@ -20,11 +20,9 @@ export class Page extends React.Component<PageProps, {}> {
         {this.props.backButton && (
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
+              accessibilityHint="Navigate back"
               accessibilityLabel=""
-              icon="chevron-left"
-              iconColor="darkGray"
-              prefix="fas"
-              size="md"
+              iconName="chevron-left"
               onClick={() => this.props.navigation.goBack()}
             />
           </Box>
@@ -32,11 +30,9 @@ export class Page extends React.Component<PageProps, {}> {
         {this.props.closeButton && (
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <IconButton
+              accessibilityHint="Close page"
               accessibilityLabel=""
-              icon="times"
-              iconColor="darkGray"
-              prefix="fas"
-              size="md"
+              iconName="xmark"
               onClick={() => this.props.navigation.goBack()}
             />
           </Box>
@@ -49,9 +45,8 @@ export class Page extends React.Component<PageProps, {}> {
         {this.props.rightButton && (
           <Box alignItems="center" display="block" justifyContent="center" paddingY={3}>
             <Button
-              color="gray"
               text={this.props.rightButton}
-              type="ghost"
+              variant="muted"
               onClick={() => this.props.rightButtonOnClick && this.props.rightButtonOnClick()}
             />
           </Box>
@@ -66,7 +61,7 @@ export class Page extends React.Component<PageProps, {}> {
         <Box
           alignSelf="center"
           avoidKeyboard
-          color={this.props.color || "lightGray"}
+          color={this.props.color || "base"}
           direction={this.props.direction || "column"}
           display={this.props.display || "flex"}
           flex="grow"
@@ -77,7 +72,7 @@ export class Page extends React.Component<PageProps, {}> {
           width="100%"
         >
           {this.renderHeader()}
-          {this.props.loading === true && <Spinner color="darkGray" size="md" />}
+          {this.props.loading === true && <Spinner />}
           {/* <KeyboardAccessoryNavigation
           avoidKeyboard
           doneButton={true}
@@ -90,7 +85,7 @@ export class Page extends React.Component<PageProps, {}> {
         {Boolean(this.props.footer) && (
           <Box
             alignSelf="center"
-            color={this.props.color || "lightGray"}
+            color={this.props.color || "neutralLight"}
             direction={this.props.direction || "column"}
             display={this.props.display || "flex"}
             flex="shrink"

@@ -33,10 +33,7 @@ export class HeightActionSheet extends React.Component<
           <Box alignItems="end" display="flex" width="100%">
             <Box width="33%">
               <Button
-                color="blue"
-                size="lg"
                 text="Close"
-                type="ghost"
                 onClick={() => {
                   this.props.actionSheetRef?.current?.setModalVisible(false);
                 }}
@@ -56,9 +53,7 @@ export class HeightActionSheet extends React.Component<
                 }}
                 onValueChange={(feet) => {
                   this.setState({feet: String(feet)});
-                  this.props.onChange({
-                    value: String(Number(feet) * 12 + Number(this.state.inches)),
-                  });
+                  this.props.onChange(String(Number(feet) * 12 + Number(this.state.inches)));
                 }}
               >
                 {range(4, 8).map((n) => {
@@ -79,9 +74,7 @@ export class HeightActionSheet extends React.Component<
                 }}
                 onValueChange={(inches) => {
                   this.setState({inches: String(inches)});
-                  this.props.onChange({
-                    value: String(Number(this.state.feet) * 12 + Number(inches)),
-                  });
+                  this.props.onChange(String(Number(this.state.feet) * 12 + Number(inches)));
                 }}
               >
                 {range(0, 12).map((n) => {

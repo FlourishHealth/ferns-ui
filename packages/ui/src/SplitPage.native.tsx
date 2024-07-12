@@ -63,6 +63,8 @@ export const SplitPage = ({
   const renderItem = (itemInfo: ListRenderItemInfo<any>) => {
     return (
       <Box
+        accessibilityHint=""
+        accessibilityLabel="Edit"
         onClick={async () => {
           await Unifier.utils.haptic();
           await onItemSelect(itemInfo);
@@ -109,9 +111,9 @@ export const SplitPage = ({
       <Box flex="grow" padding={2}>
         <Box width="100%">
           <IconButton
+            accessibilityHint="close split page"
             accessibilityLabel="close"
-            icon="times"
-            iconColor="darkGray"
+            iconName="xmark"
             onClick={() => onItemDeselect()}
           />
         </Box>
@@ -150,13 +152,13 @@ export const SplitPage = ({
   return (
     <Box
       avoidKeyboard
-      color={color || "lightGray"}
+      color={color || "neutralLight"}
       flex="grow"
       height="100%"
       keyboardOffset={keyboardOffset}
       width="100%"
     >
-      {loading === true && <Spinner color={theme.darkGray as any} size="md" />}
+      {loading === true && <Spinner color="light" size="md" />}
       {selectedId === undefined ? renderList() : renderMainContent}
     </Box>
   );

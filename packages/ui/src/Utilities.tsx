@@ -294,14 +294,22 @@ export const isValidGoogleApiKey = (apiKey: string): boolean => {
 
 export function formattedCountyCode(state: string, countyName: string): string {
   // Remove whitespace and convert to lowercase for comparison
-  const stateKey = state.replace(/\s+/g, "").toLowerCase();
+  const stateKey = state
+    .replace(/\s+/g, "")
+    .toLowerCase() as keyof typeof COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES;
+
+  const stateData = COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES[stateKey];
+
   // Remove whitespace, periods, apostrophes, and dashes for comparison
   const countyKey = countyName
     .trim()
     .toLowerCase()
-    .replace(/[\s.'-]/g, "");
+    .replace(/[\s.'-]/g, "") as keyof typeof stateData;
 
-  const countyData = COUNTY_AND_COUNTY_EQUIVALENT_ENTITIES[stateKey]?.[countyKey];
+  const countyData: {
+    stateFP: string;
+    countyFP: string;
+  } = stateData?.[countyKey];
   if (!countyData) {
     return "";
   }

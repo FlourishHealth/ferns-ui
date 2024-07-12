@@ -38,7 +38,7 @@ export const OpenAPIProvider = ({children, specUrl}: OpenAPIProviderProps): Reac
     }
 
     for (const dotField of dotFields.slice(1)) {
-      field = field?.properties?.[dotField];
+      field = (field?.properties as any)?.[dotField];
     }
     return field;
   };

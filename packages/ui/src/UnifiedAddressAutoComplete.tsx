@@ -52,13 +52,13 @@ export const UnifiedAddressAutoCompleteField = ({
     return (
       <TextField
         disabled={disabled}
-        label="Street Address"
-        placeholder="Enter an address"
+        placeholderText="Enter an address"
         testID={testID}
+        title="Street Address"
         type="text"
         value={inputValue}
-        onChange={({value}): void => {
-          handleAddressChange({value});
+        onChange={(value): void => {
+          handleAddressChange(value);
         }}
       />
     );
