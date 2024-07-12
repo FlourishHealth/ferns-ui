@@ -575,21 +575,6 @@ export interface SegmentedControlProps {
   selectedIndex?: number;
 }
 
-// Shared props for fields with labels, subtext, and error messages.
-// TODO: combine all the field props based on type
-export interface FieldProps {
-  show?: boolean;
-  labelSize?: TextSize;
-  testID?: string;
-  errorMessage?: string;
-  errorMessageColor?: TextColor;
-  label?: string;
-  labelColor?: TextColor;
-  helperText?: string;
-  helperTextColor?: TextColor;
-  children?: ReactChildren;
-}
-
 export interface TimezonePickerProps {
   timezone?: string;
   onChange: (tz: string | undefined) => void | Promise<void>;
@@ -641,7 +626,7 @@ export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTe
   inputRef?: any;
 }
 
-export interface TextAreaProps extends Exclude<TextFieldProps, "multiline"> {}
+export interface TextAreaProps extends Omit<TextFieldProps, "multiline" | "type"> {}
 
 export interface NumberFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
   type: "number" | "decimal";
@@ -677,6 +662,22 @@ export interface PhoneNumberFieldProps extends BaseFieldProps, HelperTextProps, 
 export interface URLFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
 
 export interface SearchFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface PercentFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface CurrencyFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {}
+
+export interface AddressFieldProps
+  extends Omit<BaseFieldProps, "value" | "onChange" | "onBlur">,
+    HelperTextProps,
+    ErrorTextProps {
+  includeCounty?: boolean;
+  googleMapsApiKey?: string;
+  googlePlacesMobileStyles?: Styles;
+  value: AddressInterface;
+  onChange: (value: AddressInterface) => void;
+  onBlur?: (value: AddressInterface) => void;
+}
 
 export interface LinkProps {
   href: string;
@@ -1523,44 +1524,26 @@ export interface ErrorPageProps {
   resetError: () => void;
 }
 
-export interface FieldProps {
-  name?: string;
-  label?: string;
-  height?: number;
-  type?:
-    | "address"
-    | "boolean"
-    | "currency"
-    | "customSelect"
-    | "date"
-    | "datetime"
-    | "email"
-    | "multiselect"
-    | "number"
-    | "password"
-    | "percent"
-    | "phoneNumber"
-    | "select"
-    | "signature"
-    | "text"
-    | "textarea"
-    | "time"
-    | "url";
-  rows?: number;
-  value?: any;
-  onChange?: any;
-  onBlur?: any;
-  onStart?: any;
-  onEnd?: any;
-  options?: FieldOptions;
-  placeholder?: string;
-  disabled?: boolean;
-  useCheckbox?: boolean;
-  includeCounty?: boolean;
-  googleMapsApiKey?: string;
-  googlePlacesMobileStyles?: Styles;
-  transformValue?: TransformValueOptions;
-}
+export type FieldProps =
+  | TextFieldProps
+  | NumberFieldProps
+  | NumberRangeFieldProps
+  | DateTimeFieldProps
+  | (MultiselectFieldProps & {type: "multiselect"})
+  | (TextAreaProps & {type: "textarea"})
+  | (SelectFieldProps & {type: "select"})
+  | (CustomSelectProps & {type: "customSelect"})
+  | (EmailFieldProps & {type: "email"})
+  | (PhoneNumberFieldProps & {type: "phoneNumber"})
+  | (BooleanFieldProps & {type: "boolean"})
+  | (RadioFieldProps & {type: "radio"})
+  | (SignatureFieldProps & {type: "signature"})
+  | (SearchFieldProps & {type: "search"})
+  | (AddressFieldProps & {type: "address"});
+// | (CurrencyFieldProps & {type: "currency"});
+// | (PercentFieldProps & {type: "percent"});
+
+// | URLFieldProps
 
 export interface FormLineProps {
   name: string;
