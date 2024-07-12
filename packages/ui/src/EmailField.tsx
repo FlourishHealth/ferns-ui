@@ -6,7 +6,7 @@ import {TextField} from "./TextField";
 export const EmailField: FC<EmailFieldProps> = ({
   errorText,
   iconName,
-  placeholderText,
+  placeholder,
   value,
   onChange,
   onBlur,
@@ -59,7 +59,7 @@ export const EmailField: FC<EmailFieldProps> = ({
     <TextField
       errorText={error}
       iconName={iconName}
-      placeholderText={placeholderText}
+      placeholder={placeholder}
       type="email"
       value={localValue}
       onBlur={(e) => handleBlur(e)}

@@ -61,7 +61,7 @@ export const TextField: FC<TextFieldProps> = ({
   errorText,
   value,
   onChange,
-  placeholderText,
+  placeholder,
   blurOnSubmit = true,
   iconName,
   onIconClick,
@@ -183,7 +183,7 @@ export const TextField: FC<TextFieldProps> = ({
           keyboardType={keyboardType as KeyboardTypeOptions}
           multiline={multiline}
           numberOfLines={rows || 4}
-          placeholder={placeholderText}
+          placeholder={placeholder}
           placeholderTextColor={theme.text.secondaryLight}
           secureTextEntry={type === "password"}
           style={defaultTextInputStyles}

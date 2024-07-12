@@ -5,7 +5,7 @@ export const TextFieldDemo = (): ReactElement => {
   const [value, setValue] = useState("");
   return (
     <TextField
-      placeholderText="This is placeholder text."
+      placeholder="This is placeholder text."
       value={value}
       onChange={(v) => setValue(v)}
     />
@@ -16,7 +16,7 @@ export const TextFieldWithLabelDemo = (): ReactElement => {
   const [value, setValue] = useState("");
   return (
     <TextField
-      placeholderText="This is placeholder text."
+      placeholder="This is placeholder text."
       title="Form field title"
       value={value}
       onChange={(v) => setValue(v)}
@@ -29,7 +29,7 @@ export const TextFieldWithHelperTextDemo = (): ReactElement => {
   return (
     <TextField
       helperText="Helpful information for filling out the form field."
-      placeholderText="This is placeholder text."
+      placeholder="This is placeholder text."
       title="Form field title"
       value={value}
       onChange={(v) => setValue(v)}
@@ -43,7 +43,7 @@ export const TextFieldWithErrorMsgDemo = (): ReactElement => {
     <TextField
       errorText="Provide actionable information"
       helperText="Helpful information for filling out the form field."
-      placeholderText="This is placeholder text."
+      placeholder="This is placeholder text."
       title="Enter some text"
       value={value}
       onChange={(v) => setValue(v)}
@@ -57,7 +57,7 @@ export const TextFieldDisabledDemo = (): ReactElement => {
     <TextField
       disabled
       helperText="Tell the user why this is disabled."
-      placeholderText="This is placeholder text."
+      placeholder="This is placeholder text."
       title="Form field title"
       value={value}
       onChange={(v) => {

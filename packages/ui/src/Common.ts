@@ -591,7 +591,7 @@ interface BaseFieldProps {
   id?: string;
   testID?: string;
   title?: string;
-  placeholderText?: string;
+  placeholder?: string;
   iconName?: IconName;
   onIconClick?: () => void;
   onBlur?: OnChangeCallback;

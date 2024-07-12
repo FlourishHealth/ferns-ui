@@ -1,4 +1,4 @@
-import {Box, Text, EmailField} from "ferns-ui";
+import {Box, EmailField, Text} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 export const EmailFieldDemo = (): ReactElement => {
@@ -7,7 +7,7 @@ export const EmailFieldDemo = (): ReactElement => {
     <>
       <EmailField
         label="Email"
-        placeholderText="Enter an email address"
+        placeholder="Enter an email address"
         value={value}
         onChange={(v: string) => setValue(v)}
       />

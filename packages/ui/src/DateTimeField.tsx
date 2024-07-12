@@ -139,13 +139,13 @@ export const DateTimeField = ({
     [formatValue, onChange]
   );
 
-  let placeholderText: string = "";
+  let placeholder: string = "";
   if (type === "time") {
-    placeholderText = "hh:mm a";
+    placeholder = "hh:mm a";
   } else if (type === "datetime") {
-    placeholderText = "MM/dd/yyyy hh:mm a";
+    placeholder = "MM/dd/yyyy hh:mm a";
   } else if (type === "date") {
-    placeholderText = "MM/dd/yyyy";
+    placeholder = "MM/dd/yyyy";
   }
 
   return (
@@ -153,7 +153,7 @@ export const DateTimeField = ({
       <TextField
         errorText={error}
         iconName={type === "time" ? "clock" : "calendar"}
-        placeholderText={placeholderText}
+        placeholder={placeholder}
         type="text"
         value={formattedDate}
         onChange={onTextFieldChange}

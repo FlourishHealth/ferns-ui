@@ -52,7 +52,7 @@ export const UnifiedAddressAutoCompleteField = ({
     return (
       <TextField
         disabled={disabled}
-        placeholderText="Enter an address"
+        placeholder="Enter an address"
         testID={testID}
         title="Street Address"
         type="text"

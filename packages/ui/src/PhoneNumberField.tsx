@@ -7,7 +7,7 @@ import {TextField} from "./TextField";
 export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
   errorText,
   iconName,
-  placeholderText,
+  placeholder,
   value,
   onChange,
   onBlur,
@@ -92,7 +92,7 @@ export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
     <TextField
       errorText={error}
       iconName={iconName}
-      placeholderText={placeholderText}
+      placeholder={placeholder}
       type="phoneNumber"
       value={localValue}
       onBlur={(inputValue) => handleBlur(inputValue)}
