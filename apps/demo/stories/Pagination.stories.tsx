@@ -4,10 +4,10 @@ import React, {ReactElement, useState} from "react";
 export const PaginationDemo = ({totalPages = 5}: Partial<PaginationProps>): ReactElement => {
   // Something funky is going on with FieldProps through the config so this is a temp fix for demo
   // purposes
-  const convertedTotalPages = totalPages;
+  let convertedTotalPages = totalPages;
 
   if (typeof totalPages === "string") {
-    parseInt(totalPages);
+    convertedTotalPages = parseInt(totalPages);
   }
   const [page, setPage] = useState(5);
   return <Pagination page={page} setPage={setPage} totalPages={convertedTotalPages} />;
