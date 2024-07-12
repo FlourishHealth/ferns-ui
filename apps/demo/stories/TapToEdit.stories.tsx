@@ -2,14 +2,9 @@ import {Box, TapToEdit} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 export const TapDemo = (): ReactElement => {
+  const [value, setValue] = useState("Santa Claus");
   return (
-    <TapToEdit
-      setValue={() => {}}
-      title="Name"
-      type="text"
-      value="Luke Skywalker"
-      onSave={(): void => {}}
-    />
+    <TapToEdit setValue={setValue} title="Name" type="text" value={value} onSave={(): void => {}} />
   );
 };
 
