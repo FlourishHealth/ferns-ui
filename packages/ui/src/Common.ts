@@ -1886,6 +1886,10 @@ export interface TableProps {
    */
   setPage?: (page: number) => void;
   /**
+   * Set the total number of pages of the Table
+   */
+  totalPages?: number;
+  /**
    * If true, the table will render a next page button. Defaults to true.
    */
   more?: boolean;
@@ -1893,6 +1897,12 @@ export interface TableProps {
    * Extra controls to render below the table next to pagination
    */
   extraControls?: React.ReactElement;
+}
+
+export interface PaginationProps {
+  page: number;
+  setPage: (page: number) => void;
+  totalPages: number;
 }
 
 export interface TableHeaderProps {

@@ -35,6 +35,7 @@ export * from "./TableBoolean.stories";
 export * from "./TableDate.stories";
 export * from "./TableIconButton.stories";
 // export * from "./TableNumber.stories";
+export * from "./Pagination.stories";
 export * from "./TableText.stories";
 export * from "./TableTitle.stories";
 export * from "./TapToEdit.stories";
