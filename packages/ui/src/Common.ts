@@ -640,7 +640,7 @@ export interface NumberRangeFieldProps extends BaseFieldProps, HelperTextProps, 
 
 export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
   type: "date" | "datetime" | "time";
-  value: string; // ISO string always
+  value?: string; // ISO string always
   onChange: (date: string) => void;
   dateFormat?: string;
   pickerType?: "default" | "compact" | "inline" | "spinner";
@@ -762,7 +762,7 @@ export interface BackButtonInterface {
   onBack: () => void;
 }
 
-export interface BooleanFieldProps {
+export interface BooleanFieldProps extends HelperTextProps, ErrorTextProps {
   title?: string;
   variant?: "simple" | "title"; // default "simple"
   interaction?: boolean; // default true

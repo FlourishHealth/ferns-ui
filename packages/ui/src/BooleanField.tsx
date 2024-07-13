@@ -2,7 +2,7 @@ import React, {ReactElement, useContext, useRef} from "react";
 import {Animated, TouchableWithoutFeedback, View} from "react-native";
 
 import {BooleanFieldProps} from "./Common";
-import {FieldTitle} from "./FieldElements";
+import {FieldHelperText, FieldTitle} from "./FieldElements";
 import {Text} from "./Text";
 import {ThemeContext} from "./Theme";
 
@@ -13,6 +13,7 @@ export const BooleanField = ({
   onChange,
   interaction = true,
   disabledHelperText,
+  helperText,
 }: BooleanFieldProps): ReactElement => {
   const {theme} = useContext(ThemeContext);
   const backgroundColor = useRef(new Animated.Value(value ? 75 : -75)).current;
@@ -114,7 +115,8 @@ export const BooleanField = ({
           </View>
         </TouchableWithoutFeedback>
       </View>
-      {!interaction && disabledHelperText && <Text size="md">{disabledHelperText}</Text>}
+      {!interaction && disabledHelperText && <FieldHelperText text={disabledHelperText} />}
+      {Boolean(helperText) && <FieldHelperText text={helperText!} />}
     </View>
   );
 };
