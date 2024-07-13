@@ -38,6 +38,7 @@ const ConfirmationModal: FC<{
 };
 
 const ButtonComponent: FC<ButtonProps> = ({
+  confirmationText = "Are you sure you want to continue?",
   disabled = false,
   fullWidth = false,
   iconName,
@@ -45,7 +46,6 @@ const ButtonComponent: FC<ButtonProps> = ({
   loading: propsLoading,
   modalTitle = "Confirm",
   modalSubTitle,
-  modalText = "Are you sure you want to continue?",
   testID,
   text,
   variant = "primary",
@@ -153,7 +153,7 @@ const ButtonComponent: FC<ButtonProps> = ({
       {withConfirmation && (
         <ConfirmationModal
           subTitle={modalSubTitle}
-          text={modalText}
+          text={confirmationText}
           title={modalTitle}
           visible={showConfirmation}
           onCancel={() => setShowConfirmation(false)}

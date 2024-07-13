@@ -99,7 +99,7 @@ export const ConfirmationButton = () => {
       </Box>
       <Box paddingX={3} paddingY={1}>
         <Button
-          modalText="And some custom text body!"
+          confirmationText="And some custom text body!"
           modalTitle="A Custom Title"
           text="With Custom Modal Props"
            withConfirmation

@@ -130,7 +130,7 @@ export const TapToEdit = ({
         {editing && !isEditing && (
           <Box direction="row">
             <Button
-              modalText={confirmationText}
+              confirmationText={confirmationText}
               modalTitle={confirmationHeading}
               text="Save"
               withConfirmation={withConfirmation}

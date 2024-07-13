@@ -1389,6 +1389,11 @@ export interface BodyProps {
 
 export interface ButtonProps {
   /**
+   * The text content of the confirmation modal.
+   * @default "Are you sure you want to continue?"
+   */
+  confirmationText?: string;
+  /**
    * If true, the button will be disabled.
    * @default false
    */
@@ -1420,11 +1425,6 @@ export interface ButtonProps {
    * The subtitle of the confirmation modal.
    */
   modalSubTitle?: string;
-  /**
-   * The text content of the confirmation modal.
-   * @default "Are you sure you want to continue?"
-   */
-  modalText?: string;
   /**
    * The test ID for the button, used for testing purposes.
    */
