@@ -679,7 +679,6 @@ export interface AddressFieldProps
 
 export interface LinkProps {
   href: string;
-  inline?: boolean;
   text: string;
   onClick?: () => void;
   // TODO: support target on link
