@@ -2,14 +2,14 @@
 import {ImageResult, manipulateAsync, SaveFormat} from "expo-image-manipulator";
 import {launchImageLibraryAsync, MediaTypeOptions} from "expo-image-picker";
 import {LinearGradient} from "expo-linear-gradient";
-import React, {FC, useContext, useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {Image, Pressable, Text, View} from "react-native";
 
 import {AvatarProps, CustomSvgProps} from "./Common";
 import {Icon} from "./Icon";
 import {MobileIcon, OfflineIcon, OnlineIcon, OutOfOfficeIcon} from "./icons";
 import {isMobileDevice} from "./MediaQuery";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 import {Tooltip} from "./Tooltip";
 
 const sizes = {
@@ -53,7 +53,7 @@ export const Avatar: FC<AvatarProps> = ({
   status,
   doNotDisturb = false,
 }) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const [isImageLoaded, setIsImageLoaded] = useState(true);
   const [imgSrc, setImgSrc] = useState(src ?? undefined);
   const avatarImageFormat = SaveFormat.PNG;

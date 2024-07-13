@@ -1,9 +1,9 @@
-import React, {useContext} from "react";
+import React from "react";
 import {Text, View} from "react-native";
 
 import {BadgeProps, SurfaceTheme, TextTheme} from "./Common";
 import {Icon} from "./Icon";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const Badge = ({
   value,
@@ -13,7 +13,7 @@ export const Badge = ({
   variant,
   maxValue = 100,
 }: BadgeProps): React.ReactElement => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const isIconOnly = variant === "iconOnly";
 
   let badgeColor: keyof TextTheme = "inverted";

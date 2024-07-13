@@ -1,13 +1,13 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
-import React, {FC, useContext, useState} from "react";
+import React, {FC, useState} from "react";
 import {ActivityIndicator, Pressable, Text as NativeText, View} from "react-native";
 
 import {IconButtonProps} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
 import {Text} from "./Text";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 import {isNative} from "./Utilities";
@@ -62,7 +62,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
 }) => {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   let accessLabel = accessibilityLabel;
   if (tooltipText && accessibilityLabel === "") {
     accessLabel = tooltipText;

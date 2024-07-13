@@ -1,8 +1,8 @@
-import React, {useContext, useRef} from "react";
+import React, {useRef} from "react";
 import {Text, View} from "react-native";
 import SignatureScreen, {SignatureViewRef} from "react-native-signature-canvas";
 
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 interface Props {
   onChange: (signature: string) => void;
@@ -14,7 +14,7 @@ const style = `.m-signature-pad--footer {display: none; margin: 0px;}`;
 
 export const Signature: React.FC<Props> = ({onChange, onStart, onEnd}: Props) => {
   const ref = useRef<SignatureViewRef>(null);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   const handleClear = () => {
     ref.current?.clearSignature();

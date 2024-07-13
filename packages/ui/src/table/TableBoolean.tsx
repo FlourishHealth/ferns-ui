@@ -1,10 +1,10 @@
-import React, {FC, useCallback, useContext, useState} from "react";
+import React, {FC, useCallback, useState} from "react";
 import {TouchableOpacity, View, ViewStyle} from "react-native";
 
 import {CheckBox} from "../CheckBox";
 import {TableBooleanProps} from "../Common";
 import {Icon} from "../Icon";
-import {ThemeContext} from "../Theme";
+import {useTheme} from "../Theme";
 
 export interface TableBooleanHandles {
   handleSave: () => void | Promise<void>;
@@ -12,7 +12,7 @@ export interface TableBooleanHandles {
 
 export const TableBoolean: FC<TableBooleanProps> = ({value, isEditing = false}) => {
   const [checked, setChecked] = useState(value);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const valueString = checked ? "checked" : "unchecked";
   const oppositeValueString = checked ? "unchecked" : "checked";
 

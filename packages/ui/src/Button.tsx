@@ -1,14 +1,14 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
-import React, {FC, useContext, useState} from "react";
+import React, {FC, useState} from "react";
 import {ActivityIndicator, Pressable, Text, View} from "react-native";
 
 import {Box} from "./Box";
 import {ButtonProps} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
+import {useTheme} from "./Theme";
 // import { Text } from "./Text";
-import {ThemeContext} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 import {isNative} from "./Utilities";
@@ -54,7 +54,7 @@ const ButtonComponent: FC<ButtonProps> = ({
 }) => {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   if (!theme) {
     return null;

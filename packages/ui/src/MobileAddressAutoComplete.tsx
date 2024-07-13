@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {TextStyle, TouchableOpacity, View} from "react-native";
 import {
   GooglePlacesAutocomplete,
@@ -8,7 +8,7 @@ import {
 import {AddressAutocompleteProps} from "./Common";
 import {GOOGLE_PLACES_API_RESTRICTIONS} from "./Constants";
 import {TextField} from "./TextField";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 import {processAddressComponents} from "./Utilities";
 
 export const MobileAddressAutocomplete = ({
@@ -22,7 +22,7 @@ export const MobileAddressAutocomplete = ({
   handleAutoCompleteChange,
   testID,
 }: AddressAutocompleteProps) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const ref = useRef<GooglePlacesAutocompleteRef | null>(null);
   const [isFocused, setIsFocused] = useState(false);
 

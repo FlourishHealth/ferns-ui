@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FC, useCallback, useContext, useEffect, useRef, useState} from "react";
+import {FC, useCallback, useEffect, useRef, useState} from "react";
 import {
   Dimensions,
   LayoutChangeEvent,
@@ -13,7 +13,7 @@ import {Portal} from "react-native-portalize";
 
 import {TooltipPosition, TooltipProps} from "./Common";
 import {Text} from "./Text";
-import {ThemeContext} from "./Theme";
+import { useTheme } from "./Theme";
 
 const TOOLTIP_OFFSET = 6;
 // How many pixels to leave between the tooltip and the edge of the screen
@@ -165,7 +165,7 @@ const Arrow: FC<{position: TooltipPosition; color: string}> = ({position, color}
 };
 
 export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includeArrow}) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const hoverDelay = 800;
   const hoverEndDelay = 0;
   const [visible, setVisible] = useState(false);

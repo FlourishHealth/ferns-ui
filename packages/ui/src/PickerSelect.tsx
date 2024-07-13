@@ -25,7 +25,7 @@
 
 import {Picker} from "@react-native-picker/picker";
 import isEqual from "lodash/isEqual";
-import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {
   Keyboard,
   Modal,
@@ -39,7 +39,7 @@ import {
 } from "react-native";
 
 import {Icon} from "./Icon";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const defaultStyles = StyleSheet.create({
   viewContainer: {
@@ -129,7 +129,7 @@ export function RNPickerSelect({
   const [animationType, setAnimationType] = useState(undefined);
   const [orientation, setOrientation] = useState<"portrait" | "landscape">("portrait");
   const [doneDepressed, setDoneDepressed] = useState<boolean>(false);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   const options = useMemo(() => {
     if (isEqual(placeholder, {})) {

@@ -1,12 +1,12 @@
 import debounce from "lodash/debounce";
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ActivityIndicator, Pressable, Text as NativeText, View} from "react-native";
 
 import {Box} from "./Box";
 import {BannerProps, IconName, SurfaceTheme} from "./Common";
 import {DismissButton} from "./DismissButton";
 import {Icon} from "./Icon";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 import {Unifier} from "./Unifier";
 
 type BannerButtonProps = {
@@ -23,7 +23,7 @@ const BannerButton = ({
   buttonOnClick,
 }: BannerButtonProps): React.ReactElement | null => {
   const [loading, setLoading] = useState(propsLoading);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   if (!theme) {
     return null;
@@ -99,7 +99,7 @@ export const Banner = (props: BannerProps): React.ReactElement | null => {
 
   const {buttonText, buttonIconName} = props as BannerButtonProps;
 
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   let bgColor: keyof SurfaceTheme = "secondaryDark";
 

@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, {useContext, useImperativeHandle} from "react";
+import React, {useImperativeHandle} from "react";
 import {
   AccessibilityProps,
   KeyboardAvoidingView,
@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 
-import {getRounding, getSpacing, ThemeContext} from ".";
+import {getRounding, getSpacing, useTheme} from ".";
 import {
   AlignContent,
   AlignItems,
@@ -55,7 +55,7 @@ const BORDER_WIDTH = 1;
 
 // eslint-disable-next-line react/display-name
 export const Box = React.forwardRef((props: BoxProps, ref) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   useImperativeHandle(ref, () => ({
     scrollToEnd: () => {

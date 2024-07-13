@@ -1,8 +1,8 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import React, {useContext} from "react";
+import React from "react";
 
 import {IconProps, iconSizeToNumber} from "./Common";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 // TODO: Update <Icon /> to be closer to Expo's Vector Icon, letting multiple icon packs be used,
 // etc.
@@ -14,7 +14,7 @@ export const Icon = ({
   type = "solid",
   testID,
 }: IconProps): React.ReactElement => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const iconColor = theme.text[color];
   const iconSize = iconSizeToNumber(size);
   return (

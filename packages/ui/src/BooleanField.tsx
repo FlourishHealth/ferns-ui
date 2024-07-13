@@ -1,10 +1,10 @@
-import React, {ReactElement, useContext, useRef} from "react";
+import React, {ReactElement, useRef} from "react";
 import {Animated, TouchableWithoutFeedback, View} from "react-native";
 
 import {BooleanFieldProps} from "./Common";
 import {FieldHelperText, FieldTitle} from "./FieldElements";
 import {Text} from "./Text";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const BooleanField = ({
   title,
@@ -15,7 +15,7 @@ export const BooleanField = ({
   disabledHelperText,
   helperText,
 }: BooleanFieldProps): ReactElement => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const backgroundColor = useRef(new Animated.Value(value ? 75 : -75)).current;
   const circleColor = useRef(new Animated.Value(value ? 75 : -75)).current;
   const circleBorderColor = useRef(new Animated.Value(value ? 75 : -75)).current;

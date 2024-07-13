@@ -1,12 +1,12 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import React, {FC, useContext} from "react";
+import React, {FC} from "react";
 import {View} from "react-native";
 
 import {CheckBoxProps} from "./Common";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const CheckBox: FC<CheckBoxProps> = ({selected, size = "md", bgColor = "default"}) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const px = {
     sm: {container: 10, icon: 8},
     md: {container: 16, icon: 13},

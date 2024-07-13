@@ -7,12 +7,12 @@ import {
   Nunito_700Bold_Italic,
   useFonts,
 } from "@expo-google-fonts/nunito";
-import React, {useContext} from "react";
+import React from "react";
 import {Platform, Text as NativeText, TextStyle} from "react-native";
 
 import {TextProps} from "./Common";
 import {Hyperlink} from "./Hyperlink";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 const fontSizeAndWeightWeb = {
   sm: {size: 12, weight: "regular"},
@@ -43,7 +43,7 @@ export const Text = ({
   skipLinking,
   testID,
 }: TextProps): React.ReactElement => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   // TODO: make fonts part of theme.
   const [fontsLoaded] = useFonts({
