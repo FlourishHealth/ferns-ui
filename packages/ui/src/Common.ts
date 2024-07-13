@@ -2360,7 +2360,7 @@ export interface SelectFieldPropsBase {
   title?: string;
 }
 
-interface SelectFieldPropsWithoutRequire extends SelectFieldPropsBase {
+export interface SelectFieldPropsWithoutRequire extends SelectFieldPropsBase {
   /**
    * Whether the select field should have an empty "---" button to return undefined.
    * @default false
@@ -2378,7 +2378,7 @@ interface SelectFieldPropsWithoutRequire extends SelectFieldPropsBase {
   onChange: (value: string | undefined) => void;
 }
 
-interface SelectFieldPropsWithRequire extends SelectFieldPropsBase {
+export interface SelectFieldPropsWithRequire extends SelectFieldPropsBase {
   /**
    * When requireValue is true, the value is required and onChange will return a string.
    */
