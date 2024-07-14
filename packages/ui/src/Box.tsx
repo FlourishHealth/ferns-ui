@@ -85,18 +85,46 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
       all: {[prop: string]: any}
     ) => {[style: string]: string | number} | {};
   } = {
-    alignItems: (value: AlignItems) => ({alignItems: ALIGN_ITEMS[value]}),
     alignContent: (value: AlignContent) => ({alignContent: ALIGN_CONTENT[value]}),
+    alignItems: (value: AlignItems) => ({alignItems: ALIGN_ITEMS[value]}),
     alignSelf: (value: AlignSelf) => ({alignSelf: ALIGN_SELF[value]}),
+    border: (value: keyof BorderTheme) => {
+      if (!value) {
+        return {};
+      }
+      return {borderColor: theme.border[value], borderWidth: BORDER_WIDTH};
+    },
+    borderBottom: (value: keyof BorderTheme) => {
+      if (!value) {
+        return {};
+      }
+      return {borderBottomColor: theme.border[value], borderBottomWidth: BORDER_WIDTH};
+    },
+    borderLeft: (value: keyof BorderTheme) => {
+      if (!value) {
+        return {};
+      }
+      return {borderLeftColor: theme.border[value], borderLeftWidth: BORDER_WIDTH};
+    },
+    borderRight: (value: keyof BorderTheme) => {
+      if (!value) {
+        return {};
+      }
+      return {borderRightColor: theme.border[value], borderRightWidth: BORDER_WIDTH};
+    },
+    borderTop: (value: keyof BorderTheme) => {
+      if (!value) {
+        return {};
+      }
+      return {borderTopColor: theme.border[value], borderTopWidth: BORDER_WIDTH};
+    },
+    bottom: (bottom) => ({bottom: bottom ? 0 : undefined}),
     color: (value: keyof SurfaceTheme) => ({backgroundColor: theme.surface[value]}),
     direction: (value: any) => ({flexDirection: value, display: "flex"}),
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     smDirection: (value: any) =>
       mediaQueryLargerThan("sm") ? {flexDirection: value, display: "flex"} : {},
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     mdDirection: (value: any) =>
       mediaQueryLargerThan("md") ? {flexDirection: value, display: "flex"} : {},
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     lgDirection: (value: any) =>
       mediaQueryLargerThan("lg") ? {flexDirection: value, display: "flex"} : {},
     display: (value: any) => {
@@ -111,7 +139,7 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
         return {flex: 0, display: "flex"};
       }
     },
-    justifyContent: (value: JustifyContent) => ({justifyContent: ALIGN_CONTENT[value]}),
+    gap: (value) => ({gap: getSpacing(value)}),
     height: (value) => {
       if (props.border && !isNaN(Number(value))) {
         return {height: Number(value) + 2 * 2};
@@ -119,20 +147,24 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
         return {height: value};
       }
     },
+    justifyContent: (value: JustifyContent) => ({justifyContent: ALIGN_CONTENT[value]}),
+    left: (left) => ({left: left ? 0 : undefined}),
     margin: (value) => ({margin: getSpacing(value)}),
-    marginRight: (value) => ({marginRight: getSpacing(value)}),
-    marginLeft: (value) => ({marginLeft: getSpacing(value)}),
-    marginTop: (value) => ({marginTop: getSpacing(value)}),
     marginBottom: (value) => ({marginBottom: getSpacing(value)}),
+    marginLeft: (value) => ({marginLeft: getSpacing(value)}),
+    marginRight: (value) => ({marginRight: getSpacing(value)}),
+    marginTop: (value) => ({marginTop: getSpacing(value)}),
+    overflow: (value) => {
+      if (value === "scrollY" || value === "scroll") {
+        return {overflow: "scroll"};
+      }
+      return {overflow: value};
+    },
+    padding: (value) => ({padding: getSpacing(value)}),
     paddingX: (value) => ({paddingLeft: getSpacing(value), paddingRight: getSpacing(value)}),
     paddingY: (value) => ({paddingTop: getSpacing(value), paddingBottom: getSpacing(value)}),
-    padding: (value) => ({padding: getSpacing(value)}),
-    zIndex: (value) => ({zIndex: value ? value : undefined}),
     position: (value) => ({position: value}),
-    top: (top) => ({top: top ? 0 : undefined}),
-    bottom: (bottom) => ({bottom: bottom ? 0 : undefined}),
     right: (right) => ({right: right ? 0 : undefined}),
-    left: (left) => ({left: left ? 0 : undefined}),
     rounding: (rounding, allProps) => {
       if (rounding === "circle") {
         if (!allProps.height && !allProps.width) {
@@ -148,20 +180,6 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
 
       return {borderRadius: undefined};
     },
-    overflow: (value) => {
-      if (value === "scrollY" || value === "scroll") {
-        return {overflow: "scroll"};
-      }
-      return {overflow: value};
-    },
-    width: (value) => {
-      if (props.border && !isNaN(Number(value))) {
-        return {width: Number(value) + 2 * 2};
-      } else {
-        return {width: value};
-      }
-    },
-    wrap: (value) => ({flexWrap: value ? "wrap" : "nowrap", alignItems: "flex-start"}),
     shadow: (value) => {
       if (!value) {
         return {};
@@ -180,36 +198,16 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
         return {elevation: 4};
       }
     },
-    border: (value: keyof BorderTheme) => {
-      if (!value) {
-        return {};
+    top: (top) => ({top: top ? 0 : undefined}),
+    width: (value) => {
+      if (props.border && !isNaN(Number(value))) {
+        return {width: Number(value) + 2 * 2};
+      } else {
+        return {width: value};
       }
-      return {borderColor: theme.border[value], borderWidth: BORDER_WIDTH};
     },
-    borderBottom: (value: keyof BorderTheme) => {
-      if (!value) {
-        return {};
-      }
-      return {borderBottomColor: theme.border[value], borderBottomWidth: BORDER_WIDTH};
-    },
-    borderTop: (value: keyof BorderTheme) => {
-      if (!value) {
-        return {};
-      }
-      return {borderTopColor: theme.border[value], borderTopWidth: BORDER_WIDTH};
-    },
-    borderRight: (value: keyof BorderTheme) => {
-      if (!value) {
-        return {};
-      }
-      return {borderRightColor: theme.border[value], borderRightWidth: BORDER_WIDTH};
-    },
-    borderLeft: (value: keyof BorderTheme) => {
-      if (!value) {
-        return {};
-      }
-      return {borderLeftColor: theme.border[value], borderLeftWidth: BORDER_WIDTH};
-    },
+    wrap: (value) => ({flexWrap: value ? "wrap" : "nowrap", alignItems: "flex-start"}),
+    zIndex: (value) => ({zIndex: value ? value : undefined}),
   };
 
   const scrollRef = props.scrollRef ?? React.createRef();

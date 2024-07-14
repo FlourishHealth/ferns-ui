@@ -458,6 +458,7 @@ export interface BoxPropsBase {
   lgDisplay?: "none" | "flex" | "block" | "inlineBlock" | "visuallyHidden";
   fit?: boolean;
   flex?: "grow" | "shrink" | "none";
+  gap?: SignedUpTo12;
   height?: number | string;
   justifyContent?: "start" | "end" | "center" | "between" | "around";
   left?: boolean;
