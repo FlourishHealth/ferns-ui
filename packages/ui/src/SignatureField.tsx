@@ -12,7 +12,7 @@ import {useTheme} from "./Theme";
 // ScrollView onStart and to true onEnd or it will try to scroll the whole view around this
 // component.
 export const SignatureField = ({
-  state = "default",
+  disabled = false,
   title = "Signature",
   value,
   onChange,
@@ -22,7 +22,7 @@ export const SignatureField = ({
   errorText,
 }: SignatureFieldProps): ReactElement => {
   const {theme} = useTheme();
-  if (state === "disabled") {
+  if (disabled) {
     if (value) {
       return (
         <View>
@@ -52,7 +52,7 @@ export const SignatureField = ({
   return (
     <View>
       <Heading size="sm">{title}</Heading>
-      {state === "error" && (
+      {Boolean(errorText) && (
         <View style={{flexDirection: "row"}}>
           <Icon color="error" iconName="triangle-exclamation" />
           <View style={{marginLeft: 4}}>

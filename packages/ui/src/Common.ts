@@ -1574,7 +1574,6 @@ export type FieldProps =
   | (AddressFieldProps & {type: "address"});
 // | (CurrencyFieldProps & {type: "currency"});
 // | (PercentFieldProps & {type: "percent"});
-
 // | URLFieldProps
 
 export interface HeightActionSheetProps {
@@ -1784,7 +1783,7 @@ export interface RadioFieldProps {
 }
 
 export interface SignatureFieldProps {
-  state?: "default" | "error" | "disabled"; // default "default"
+  disabled?: boolean; // default "default"
   value?: string;
   onChange: (value: any) => void;
   title?: string; // default "Signature"
