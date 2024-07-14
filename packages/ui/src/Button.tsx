@@ -8,7 +8,6 @@ import {ButtonProps} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
 import {useTheme} from "./Theme";
-// import { Text } from "./Text";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 import {isNative} from "./Utilities";
@@ -60,32 +59,26 @@ const ButtonComponent: FC<ButtonProps> = ({
     return null;
   }
 
-  const getButtonStyles = () => {
-    let backgroundColor = theme.surface.primary;
-    let borderColor: string | undefined;
-    let borderWidth: number | undefined;
-    let color = theme.text.inverted;
+  let backgroundColor = theme.surface.primary;
+  let borderColor: string | undefined;
+  let borderWidth: number | undefined;
+  let color = theme.text.inverted;
 
-    if (variant === "secondary") {
-      backgroundColor = theme.surface.secondaryDark;
-    } else if (variant === "muted") {
-      backgroundColor = theme.surface.secondaryLight;
-      color = theme.surface.neutralDark;
-    } else if (variant === "outline") {
-      backgroundColor = theme.surface.base;
-      borderColor = theme.text.secondaryDark;
-      borderWidth = 2;
-      color = theme.text.secondaryDark;
-    } else if (variant === "destructive") {
-      backgroundColor = theme.surface.error;
-    } else if (disabled) {
-      backgroundColor = theme.surface.disabled;
-    }
-
-    return {backgroundColor, borderColor, borderWidth, color};
-  };
-
-  const {backgroundColor, borderColor, borderWidth, color} = getButtonStyles();
+  if (variant === "secondary") {
+    backgroundColor = theme.surface.secondaryDark;
+  } else if (variant === "muted") {
+    backgroundColor = theme.surface.secondaryLight;
+    color = theme.surface.neutralDark;
+  } else if (variant === "outline") {
+    backgroundColor = theme.surface.base;
+    borderColor = theme.text.secondaryDark;
+    borderWidth = 2;
+    color = theme.text.secondaryDark;
+  } else if (variant === "destructive") {
+    backgroundColor = theme.surface.error;
+  } else if (disabled) {
+    backgroundColor = theme.surface.disabled;
+  }
 
   return (
     <Pressable
