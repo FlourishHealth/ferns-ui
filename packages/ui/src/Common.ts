@@ -2210,7 +2210,7 @@ export interface ModelAdminCustomComponentProps extends Omit<FieldProps, "name">
   editing: boolean; // Allow for inline editing of the field.
 }
 
-export interface MultiselectFieldProps {
+export interface MultiselectFieldProps extends HelperTextProps, ErrorTextProps {
   /**
    * The available options for the multiselect field.
    */

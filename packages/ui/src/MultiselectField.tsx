@@ -3,6 +3,7 @@ import {TouchableOpacity, View} from "react-native";
 
 import {CheckBox} from "./CheckBox";
 import {MultiselectFieldProps} from "./Common";
+import {FieldError, FieldHelperText} from "./FieldElements";
 import {Heading} from "./Heading";
 import {isMobileDevice} from "./MediaQuery";
 import {Text} from "./Text";
@@ -57,6 +58,8 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
   value = [],
   variant = "leftText",
   onChange,
+  errorText,
+  helperText,
 }) => {
   const isMobile = isMobileDevice();
   const isDefault = variant === "leftText";
@@ -83,6 +86,7 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
       <Heading color="primary" size="sm">
         {title}
       </Heading>
+      {Boolean(errorText) && <FieldError text={errorText!} />}
       {options.map((option) => (
         <Option
           key={option.key ?? option.value}
@@ -93,6 +97,7 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
           onSelect={() => toggleItem(option.value)}
         />
       ))}
+      {Boolean(helperText) && <FieldHelperText text={helperText!} />}
     </View>
   );
 };
