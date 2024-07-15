@@ -1297,6 +1297,22 @@ export interface AvatarProps {
 
 export interface BadgeProps {
   /**
+   * When status is "custom", determines the badge's background color.
+   */
+  customBackgroundColor?: string;
+  /**
+   * When status is "custom", determines the badge's border color.
+   */
+  customBorderColor?: string;
+  /**
+   * When status is "custom", determines the badge's icon color
+   */
+  customIconColor?: IconColor;
+  /**
+   * When status is "custom", determines the badge's text color.
+   */
+  customTextColor?: string;
+  /**
    * The name of the icon to display in the badge.
    */
   iconName?: IconName;
@@ -1320,7 +1336,7 @@ export interface BadgeProps {
    * The status of the badge. Determines its color and appearance.
    * @default "info"
    */
-  status?: "info" | "error" | "warning" | "success" | "neutral";
+  status?: "info" | "error" | "warning" | "success" | "neutral" | "custom";
 
   /**
    * The text or number to display inside the badge.
