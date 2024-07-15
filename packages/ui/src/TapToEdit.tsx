@@ -112,10 +112,12 @@ export const TapToEdit = ({
 
   if (editable && (editing || isEditing)) {
     return (
-      <Box direction="column">
+      <Box direction="column" width="100%">
+        <Box flex="grow" justifyContent="center">
+          <Text bold>{title}</Text>
+        </Box>
         <Field
           helperText={helperText}
-          label={title}
           type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
           value={value}
           onChange={setValue ?? (() => {})}
@@ -124,27 +126,27 @@ export const TapToEdit = ({
         {editing && !isEditing && (
           <Box direction="row">
             <Button
-              confirmationText={confirmationText}
-              modalTitle={confirmationTitle}
-              text="Save"
-              withConfirmation={withConfirmation}
-              onClick={async (): Promise<void> => {
-                if (!onSave) {
-                  console.error("No onSave provided for editable TapToEdit");
-                } else {
-                  setInitialValue(value);
-                  await onSave(value);
+              text="Cancel"
+              variant="muted"
+              onClick={(): void => {
+                if (setValue) {
+                  setValue(initialValue);
                 }
                 setEditing(false);
               }}
             />
             <Box marginLeft={2}>
               <Button
-                text="Cancel"
-                variant="muted"
-                onClick={(): void => {
-                  if (setValue) {
-                    setValue(initialValue);
+                confirmationText={confirmationText}
+                modalTitle={confirmationTitle}
+                text="Save"
+                withConfirmation={withConfirmation}
+                onClick={async (): Promise<void> => {
+                  if (!onSave) {
+                    console.error("No onSave provided for editable TapToEdit");
+                  } else {
+                    setInitialValue(value);
+                    await onSave(value);
                   }
                   setEditing(false);
                 }}
