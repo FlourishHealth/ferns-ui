@@ -1,5 +1,5 @@
 import React, {ReactElement, useEffect, useState} from "react";
-import {Linking} from "react-native";
+import {Linking, View} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
@@ -22,14 +22,14 @@ const TapToEditTitle = ({
   helperText?: string;
 }): ReactElement => {
   const Title = (
-    <Box flex="grow" justifyContent="center">
+    <View style={{flex: 1, justifyContent: "center"}}>
       <Text bold>{title}:</Text>
       {Boolean(helperText && !showHelperTextAsTooltip && !onlyShowHelperTextWhileEditing) && (
         <Text color="secondaryLight" size="sm">
           {helperText}
         </Text>
       )}
-    </Box>
+    </View>
   );
   if (showHelperTextAsTooltip) {
     return (
@@ -112,10 +112,10 @@ export const TapToEdit = ({
 
   if (editable && (editing || isEditing)) {
     return (
-      <Box direction="column" width="100%">
-        <Box flex="grow" justifyContent="center">
+      <View style={{flexDirection: "column", width: "100%"}}>
+        <View style={{flex: 1, justifyContent: "center"}}>
           <Text bold>{title}</Text>
-        </Box>
+        </View>
         <Field
           helperText={helperText}
           type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
@@ -124,7 +124,7 @@ export const TapToEdit = ({
           {...(fieldProps as any)}
         />
         {editing && !isEditing && (
-          <Box direction="row">
+          <View style={{flexDirection: "row"}}>
             <Button
               text="Cancel"
               variant="muted"
@@ -135,7 +135,7 @@ export const TapToEdit = ({
                 setEditing(false);
               }}
             />
-            <Box marginLeft={2}>
+            <View style={{marginLeft: 8}}>
               <Button
                 confirmationText={confirmationText}
                 modalTitle={confirmationTitle}
@@ -151,10 +151,10 @@ export const TapToEdit = ({
                   setEditing(false);
                 }}
               />
-            </Box>
-          </Box>
+            </View>
+          </View>
         )}
-      </Box>
+      </View>
     );
   } else {
     let displayValue = value;
@@ -214,22 +214,24 @@ export const TapToEdit = ({
     // For textarea to display correctly, we place the title on its own line, then the text
     // on the next line. This is because the textarea will take up the full width of the row.
     return (
-      <Box
-        alignItems={fieldProps?.type === "textarea" ? "start" : "center"}
-        direction={fieldProps?.type === "textarea" ? "column" : "row"}
-        justifyContent="between"
-        paddingX={3}
-        paddingY={2}
-        width="100%"
+      <View
+        style={{
+          alignItems: fieldProps?.type === "textarea" ? "flex-start" : "center",
+          flexDirection: fieldProps?.type === "textarea" ? "column" : "row",
+          justifyContent: "space-between",
+          paddingHorizontal: 12,
+          paddingVertical: 8,
+          width: "100%",
+        }}
       >
-        <Box direction="row" width="100%">
+        <View style={{flexDirection: "row", width: "100%"}}>
           <TapToEditTitle
             helperText={helperText}
             onlyShowHelperTextWhileEditing={onlyShowHelperTextWhileEditing}
             showHelperTextAsTooltip={showHelperTextAsTooltip}
             title={title}
           />
-          <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>
+          <View style={{flexDirection: "row", flex: 1, justifyContent: "flex-end", marginLeft: 8}}>
             <Box
               accessibilityHint=""
               accessibilityLabel="Link"
@@ -253,15 +255,15 @@ export const TapToEdit = ({
                 <Icon iconName="pencil" size="md" />
               </Box>
             )}
-          </Box>
-        </Box>
+          </View>
+        </View>
         {fieldProps?.type === "textarea" && (
           <>
-            <Box marginTop={2} paddingY={2} width="100%">
+            <View style={{marginTop: 8, paddingVertical: 8, width: "100%"}}>
               <Text align="left" underline={isClickable}>
                 {displayValue}
               </Text>
-            </Box>
+            </View>
             {editable && (
               <Box
                 accessibilityHint=""
@@ -276,7 +278,7 @@ export const TapToEdit = ({
             )}
           </>
         )}
-      </Box>
+      </View>
     );
   }
 };
