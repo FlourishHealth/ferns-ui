@@ -1309,6 +1309,10 @@ export interface BadgeProps {
    */
   customIconColor?: IconColor;
   /**
+   * When status is "custom", determines the badge's icon
+   */
+  customIconName?: IconName;
+  /**
    * When status is "custom", determines the badge's text color.
    */
   customTextColor?: string;

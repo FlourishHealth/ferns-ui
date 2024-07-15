@@ -112,6 +112,7 @@ export const BadgeStories = () => {
           value: "Custom",
           status: "custom",
           customBackgroundColor: "#FFA6C9",
+          customTextColor: "#FFFFFF",
         })}
         {badgeLine("Custom Icon Only", {
           variant: "iconOnly",
@@ -153,6 +154,7 @@ export const BadgeStories = () => {
           customBorderColor: "#6600CC",
           customTextColor: "#6600CC",
           customIconColor: "success",
+          customIconName: "user-astronaut",
         })}
       </Box>
     </StorybookContainer>
