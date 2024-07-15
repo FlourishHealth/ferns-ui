@@ -3,7 +3,7 @@ import {Linking} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {AddressInterface, BoxProps, FieldProps, TapToEditProps} from "./Common";
+import {AddressInterface, FieldProps, TapToEditProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
 // import {useOpenAPISpec} from "./OpenAPIContext";
@@ -12,28 +12,28 @@ import {Tooltip} from "./Tooltip";
 
 const TapToEditTitle = ({
   title,
-  description,
-  showDescriptionAsTooltip,
-  onlyShowDescriptionWhileEditing,
+  helperText,
+  showHelperTextAsTooltip,
+  onlyShowHelperTextWhileEditing,
 }: {
-  onlyShowDescriptionWhileEditing?: boolean;
-  showDescriptionAsTooltip?: boolean;
+  onlyShowHelperTextWhileEditing?: boolean;
+  showHelperTextAsTooltip?: boolean;
   title: string;
-  description?: string;
+  helperText?: string;
 }): ReactElement => {
   const Title = (
     <Box flex="grow" justifyContent="center">
       <Text bold>{title}:</Text>
-      {Boolean(description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing) && (
+      {Boolean(helperText && !showHelperTextAsTooltip && !onlyShowHelperTextWhileEditing) && (
         <Text color="secondaryLight" size="sm">
-          {description}
+          {helperText}
         </Text>
       )}
     </Box>
   );
-  if (showDescriptionAsTooltip) {
+  if (showHelperTextAsTooltip) {
     return (
-      <Tooltip idealPosition="top" text={description}>
+      <Tooltip idealPosition="top" text={helperText}>
         {Title}
       </Tooltip>
     );
@@ -87,20 +87,18 @@ export const TapToEdit = ({
   onSave,
   editable = true,
   isEditing = false,
-  rowBoxProps,
   transform,
-  fieldComponent,
   withConfirmation = false,
   confirmationText = "Are you sure you want to save your changes?",
-  confirmationHeading = "Confirm",
-  description: propsDescription,
-  showDescriptionAsTooltip = false,
-  onlyShowDescriptionWhileEditing = true,
+  confirmationTitle = "Confirm",
+  helperText: propsHelperText,
+  showHelperTextAsTooltip = false,
+  onlyShowHelperTextWhileEditing = true,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
   const [initialValue, setInitialValue] = useState();
-  const description: string | undefined = propsDescription;
+  const helperText: string | undefined = propsHelperText;
   // setInitialValue is called after initial render to handle the case where the value is updated
   useEffect(() => {
     setInitialValue(value);
@@ -115,23 +113,19 @@ export const TapToEdit = ({
   if (editable && (editing || isEditing)) {
     return (
       <Box direction="column">
-        {fieldComponent ? (
-          fieldComponent(setValue as any)
-        ) : (
-          <Field
-            helperText={description}
-            label={title}
-            type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
-            value={value}
-            onChange={setValue ?? (() => {})}
-            {...(fieldProps as any)}
-          />
-        )}
+        <Field
+          helperText={helperText}
+          label={title}
+          type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
+          value={value}
+          onChange={setValue ?? (() => {})}
+          {...(fieldProps as any)}
+        />
         {editing && !isEditing && (
           <Box direction="row">
             <Button
               confirmationText={confirmationText}
-              modalTitle={confirmationHeading}
+              modalTitle={confirmationTitle}
               text="Save"
               withConfirmation={withConfirmation}
               onClick={async (): Promise<void> => {
@@ -169,6 +163,7 @@ export const TapToEdit = ({
       // If no transform, try and display the value reasonably.
       if (fieldProps?.type === "boolean") {
         displayValue = value ? "Yes" : "No";
+        // TODO: put transform back in after field types are updated
         // } else if (fieldProps?.type === "percent") {
         //   // Prevent floating point errors from showing up by using parseFloat and precision.
         //   // Pass through parseFloat again to trim off insignificant zeroes.
@@ -224,13 +219,12 @@ export const TapToEdit = ({
         paddingX={3}
         paddingY={2}
         width="100%"
-        {...(rowBoxProps as Exclude<BoxProps, "onClick">)}
       >
         <Box direction="row" width="100%">
           <TapToEditTitle
-            description={description}
-            onlyShowDescriptionWhileEditing={onlyShowDescriptionWhileEditing}
-            showDescriptionAsTooltip={showDescriptionAsTooltip}
+            helperText={helperText}
+            onlyShowHelperTextWhileEditing={onlyShowHelperTextWhileEditing}
+            showHelperTextAsTooltip={showHelperTextAsTooltip}
             title={title}
           />
           <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>

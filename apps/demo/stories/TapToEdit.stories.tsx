@@ -2,9 +2,17 @@ import {Box, TapToEdit} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 export const TapDemo = (): ReactElement => {
-  const [value, setValue] = useState("Santa Claus");
+  const [value, setValue] = useState("Santa Claus !");
   return (
-    <TapToEdit setValue={setValue} title="Name" type="text" value={value} onSave={(): void => {}} />
+    <TapToEdit
+      helperText="This is a some helper text to help you understand what you are editing."
+      setValue={setValue}
+      title="Name"
+      type="text"
+      value={value}
+      withConfirmation
+      onSave={(): void => {}}
+    />
   );
 };
 
@@ -55,7 +63,7 @@ export const TapStory = (): ReactElement => {
       />
       <TapToEdit
         setValue={setText}
-        showDescriptionAsTooltip
+        showHelperTextAsTooltip
         title="Text Tooltip"
         type="text"
         value={text}
@@ -65,7 +73,7 @@ export const TapStory = (): ReactElement => {
       />
       <TapToEdit
         setValue={setTextArea}
-        showDescriptionAsTooltip
+        showHelperTextAsTooltip
         title="Text Area Tooltip"
         type="textarea"
         value={textArea}
@@ -83,8 +91,6 @@ export const TapStory = (): ReactElement => {
         }}
       />
       {/* <TapToEdit
-        openApiField="namePronunciation"
-        openApiModel="users"
         setValue={setCurrency}
         title="Currency"
         type="currency"
@@ -94,8 +100,6 @@ export const TapStory = (): ReactElement => {
         }}
       /> */}
       {/* <TapToEdit
-        openApiField="name"
-        // openApiModel="users"
         setValue={setPercent}
         title="Percent"
         type="percent"
@@ -118,16 +122,15 @@ export const TapStory = (): ReactElement => {
         }}
       />
       <TapToEdit
-        // options={[
-        //   {label: "Option1", value: "Option1"},
-        //   {label: "Option2", value: "Option2"},
-        //   {label: "Option2", value: "Option3"},
-        //   {
-        //     label: "Really long option for testing some wrap around and such",
-        //     value: "Really long option for testing some wrap around and such",
-        //   },
-        // ]}
-        options={["option1"]}
+        options={[
+          {label: "Option1", value: "Option1"},
+          {label: "Option2", value: "Option2"},
+          {label: "Option2", value: "Option3"},
+          {
+            label: "Really long option for testing some wrap around and such",
+            value: "Really long option for testing some wrap around and such",
+          },
+        ]}
         setValue={setMultiselect}
         title="Multi Select"
         type="multiselect"
