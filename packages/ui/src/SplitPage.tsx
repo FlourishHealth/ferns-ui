@@ -1,4 +1,4 @@
-import React, {Children, useCallback, useContext, useEffect, useState} from "react";
+import React, {Children, useCallback, useEffect, useState} from "react";
 import {Dimensions, ListRenderItemInfo, ScrollView, View} from "react-native";
 import {SwiperFlatList} from "react-native-swiper-flatlist";
 
@@ -9,7 +9,7 @@ import {IconButton} from "./IconButton";
 import {mediaQueryLargerThan} from "./MediaQuery";
 import {SegmentedControl} from "./SegmentedControl";
 import {Spinner} from "./Spinner";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 // A component for rendering a list on one side and a details view on the right for large screens,
 // and a scrollable list where clicking an item takes you the details view.
@@ -29,7 +29,7 @@ export const SplitPage = ({
   bottomNavBarHeight,
   showItemList,
 }: SplitPageProps) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
   const [activeTabs, setActiveTabs] = useState<number[]>([0, 1]);
   const {width} = Dimensions.get("window");

@@ -61,10 +61,11 @@ export class Page extends React.Component<PageProps, {}> {
         <Box
           alignSelf="center"
           avoidKeyboard
-          color={this.props.color || "base"}
+          color={this.props.color || "neutralLight"}
           direction={this.props.direction || "column"}
           display={this.props.display || "flex"}
           flex="grow"
+          height="100%"
           keyboardOffset={this.props.keyboardOffset}
           maxWidth={this.props.maxWidth || 800}
           padding={this.props.padding !== undefined ? this.props.padding : 2}

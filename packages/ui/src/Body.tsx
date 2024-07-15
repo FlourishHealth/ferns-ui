@@ -1,9 +1,9 @@
-import React, {useContext} from "react";
+import React from "react";
 import {ActivityIndicator, KeyboardAvoidingView} from "react-native";
 
 import {Box} from "./Box";
 import {BodyProps} from "./Common";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const Body = ({
   scroll,
@@ -13,7 +13,7 @@ export const Body = ({
   avoidKeyboard,
   children,
 }: BodyProps): React.ReactElement => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   const renderBody = () => {
     return (

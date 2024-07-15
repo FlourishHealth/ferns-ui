@@ -25,7 +25,7 @@ export const TextFieldStory = () => {
 };
 
 export const BooleanFieldStory = () => {
-  const [value, setValue] = useState(true);
+  const [value, setValue] = useState<boolean>(true);
   return (
     <StorybookContainer>
       <Field

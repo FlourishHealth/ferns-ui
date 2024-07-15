@@ -3,16 +3,20 @@ import {TouchableOpacity, View} from "react-native";
 
 import {CheckBox} from "./CheckBox";
 import {MultiselectFieldProps} from "./Common";
+import {FieldError, FieldHelperText} from "./fieldElements";
 import {Heading} from "./Heading";
 import {isMobileDevice} from "./MediaQuery";
 import {Text} from "./Text";
 
-const Option: FC<{
+interface OptionProps {
   isDefault: boolean;
-  option: string;
+  value: string;
+  label?: string;
   selected: boolean;
   onSelect: () => void;
-}> = ({option, isDefault, selected, onSelect}) => {
+}
+
+const Option: FC<OptionProps> = ({value, label, isDefault, selected, onSelect}) => {
   return (
     <View
       style={{
@@ -22,12 +26,12 @@ const Option: FC<{
       }}
     >
       <View style={{flex: 1, flexWrap: "wrap"}}>
-        <Text>{option}</Text>
+        <Text>{label ?? value}</Text>
       </View>
       <TouchableOpacity
-        key={option}
-        accessibilityHint={`Select ${option} from list of options`}
-        accessibilityLabel={option}
+        key={value}
+        accessibilityHint={`Select ${label ?? value} from list of options`}
+        accessibilityLabel={label ?? value}
         accessibilityRole="checkbox"
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         style={{
@@ -54,6 +58,8 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
   value = [],
   variant = "leftText",
   onChange,
+  errorText,
+  helperText,
 }) => {
   const isMobile = isMobileDevice();
   const isDefault = variant === "leftText";
@@ -80,15 +86,18 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
       <Heading color="primary" size="sm">
         {title}
       </Heading>
+      {Boolean(errorText) && <FieldError text={errorText!} />}
       {options.map((option) => (
         <Option
-          key={option}
+          key={option.key ?? option.value}
           isDefault={isDefault}
-          option={option}
-          selected={selectedItems.includes(option)}
-          onSelect={() => toggleItem(option)}
+          label={option.label}
+          selected={selectedItems.includes(option.value)}
+          value={option.value}
+          onSelect={() => toggleItem(option.value)}
         />
       ))}
+      {Boolean(helperText) && <FieldHelperText text={helperText!} />}
     </View>
   );
 };

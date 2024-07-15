@@ -232,7 +232,6 @@ export interface TextTheme {
   error: string;
   warning: string;
   success: string;
-  gold: string;
 }
 
 export interface SurfaceTheme {
@@ -459,6 +458,7 @@ export interface BoxPropsBase {
   lgDisplay?: "none" | "flex" | "block" | "inlineBlock" | "visuallyHidden";
   fit?: boolean;
   flex?: "grow" | "shrink" | "none";
+  gap?: SignedUpTo12;
   height?: number | string;
   justifyContent?: "start" | "end" | "center" | "between" | "around";
   left?: boolean;
@@ -591,8 +591,7 @@ interface BaseFieldProps {
   id?: string;
   testID?: string;
   title?: string;
-  label?: string;
-  placeholderText?: string;
+  placeholder?: string;
   iconName?: IconName;
   onIconClick?: () => void;
   onBlur?: OnChangeCallback;
@@ -642,7 +641,7 @@ export interface NumberRangeFieldProps extends BaseFieldProps, HelperTextProps, 
 
 export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, ErrorTextProps {
   type: "date" | "datetime" | "time";
-  value: string; // ISO string always
+  value?: string; // ISO string always
   onChange: (date: string) => void;
   dateFormat?: string;
   pickerType?: "default" | "compact" | "inline" | "spinner";
@@ -681,7 +680,6 @@ export interface AddressFieldProps
 
 export interface LinkProps {
   href: string;
-  inline?: boolean;
   text: string;
   onClick?: () => void;
   // TODO: support target on link
@@ -764,10 +762,10 @@ export interface BackButtonInterface {
   onBack: () => void;
 }
 
-export interface BooleanFieldProps {
-  label?: string;
+export interface BooleanFieldProps extends HelperTextProps, ErrorTextProps {
+  title?: string;
   variant?: "simple" | "title"; // default "simple"
-  interaction?: boolean; // default true
+  disabled?: boolean;
   disabledHelperText?: string;
   value: boolean;
   onChange: (value: boolean) => void;
@@ -778,7 +776,7 @@ export interface CheckBoxProps {
    * The background color of the checkbox.
    * @default "default"
    */
-  bgColor?: "default" | "gold" | "black";
+  bgColor?: "default" | "accent" | "black";
 
   /**
    * If true, the checkbox is selected.
@@ -1391,6 +1389,11 @@ export interface BodyProps {
 
 export interface ButtonProps {
   /**
+   * The text content of the confirmation modal.
+   * @default "Are you sure you want to continue?"
+   */
+  confirmationText?: string;
+  /**
    * If true, the button will be disabled.
    * @default false
    */
@@ -1423,11 +1426,6 @@ export interface ButtonProps {
    */
   modalSubTitle?: string;
   /**
-   * The text content of the confirmation modal.
-   * @default "Are you sure you want to continue?"
-   */
-  modalText?: string;
-  /**
    * The test ID for the button, used for testing purposes.
    */
   testID?: string;
@@ -1456,7 +1454,7 @@ export interface ButtonProps {
   /**
    * If true, a confirmation modal will be shown before the onClick action.
    */
-  withConfirmationModal?: boolean;
+  withConfirmation?: boolean;
   /**
    * The function to call when the button is clicked.
    */
@@ -1478,7 +1476,7 @@ export interface CustomSelectFieldProps {
    * The options available for selection in the select field.
    * Each option should have a label and a value.
    */
-  options: FieldOptions;
+  options: FieldOption[];
 
   /**
    * The placeholder text to display when no option is selected.
@@ -1577,16 +1575,7 @@ export type FieldProps =
   | (AddressFieldProps & {type: "address"});
 // | (CurrencyFieldProps & {type: "currency"});
 // | (PercentFieldProps & {type: "percent"});
-
 // | URLFieldProps
-
-export interface FormLineProps {
-  name: string;
-  value: any;
-  onSave: (value: any) => void;
-  kind: "boolean" | "string" | "textarea" | "select" | "multiboolean";
-  options?: string[];
-}
 
 export interface HeightActionSheetProps {
   value?: string;
@@ -1634,7 +1623,7 @@ export interface IconButtonProps {
   /**
    * Show a small indicator icon in the lower right corner of the button.
    */
-  indicator?: "error" | "warning" | "success" | "primary";
+  indicator?: "error" | "warning" | "success" | "primary" | "neutral";
 
   /**
    * The text or number to display in the indicator. If not provided,
@@ -1736,7 +1725,6 @@ export interface ModalProps {
    */
   visible: boolean;
   /**
-   * The function to call when the modal is dismissed.
    */
   onDismiss: () => void;
   /**
@@ -1792,11 +1780,11 @@ export interface RadioFieldProps {
   variant?: "leftText" | "rightText"; // default "rightText"
   value: string;
   onChange: (value: string) => void;
-  options: string[];
+  options: FieldOption[];
 }
 
 export interface SignatureFieldProps {
-  state?: "default" | "error" | "disabled"; // default "default"
+  disabled?: boolean; // default "default"
   value?: string;
   onChange: (value: any) => void;
   title?: string; // default "Signature"
@@ -2223,11 +2211,11 @@ export interface ModelAdminCustomComponentProps extends Omit<FieldProps, "name">
   editing: boolean; // Allow for inline editing of the field.
 }
 
-export interface MultiselectFieldProps {
+export interface MultiselectFieldProps extends HelperTextProps, ErrorTextProps {
   /**
    * The available options for the multiselect field.
    */
-  options: string[];
+  options: FieldOption[];
 
   /**
    * The title of the multiselect field.
@@ -2320,7 +2308,7 @@ export interface TableIconButtonProps {
   onClick: () => void | Promise<void>;
 }
 
-export type FieldOptions = {
+export type FieldOption = {
   /**
    * The label to display for the option.
    */
@@ -2335,9 +2323,10 @@ export type FieldOptions = {
    * The value of the option.
    */
   value: string;
-}[];
+};
 
-export interface SelectFieldProps {
+// Split up SelectField so if value is passed as a string,
+export interface SelectFieldPropsBase {
   /**
    * If true, the select field will be disabled.
    * @default false
@@ -2358,7 +2347,7 @@ export interface SelectFieldProps {
    * The options available for selection in the select field.
    * Each option should have a label and a value.
    */
-  options: FieldOptions;
+  options: FieldOption[];
 
   /**
    * The placeholder text to display when no option is selected.
@@ -2369,17 +2358,44 @@ export interface SelectFieldProps {
    * The title of the select field.
    */
   title?: string;
+}
+
+export interface SelectFieldPropsWithoutRequire extends SelectFieldPropsBase {
+  /**
+   * Whether the select field should have an empty "---" button to return undefined.
+   * @default false
+   */
+  requireValue?: false;
 
   /**
    * The current value of the select field.
    */
-  value: string | undefined;
+  value?: string;
 
   /**
    * The function to call when the selected value changes.
    */
   onChange: (value: string | undefined) => void;
 }
+
+export interface SelectFieldPropsWithRequire extends SelectFieldPropsBase {
+  /**
+   * When requireValue is true, the value is required and onChange will return a string.
+   */
+  requireValue: true;
+
+  /**
+   * The current value of the select field.
+   */
+  value: string;
+
+  /**
+   * The function to call when the selected value changes.
+   */
+  onChange: (value: string) => void;
+}
+
+export type SelectFieldProps = SelectFieldPropsWithoutRequire | SelectFieldPropsWithRequire;
 
 export interface TableBadgeProps {
   /**
@@ -2402,7 +2418,7 @@ export interface TableBadgeProps {
   /**
    * The options available for editing the badge.
    */
-  editingOptions?: FieldOptions;
+  editingOptions?: FieldOption[];
 
   /**
    * The function to call when the badge status is saved.

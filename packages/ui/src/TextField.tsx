@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import {TextFieldProps, TextStyleWithOutline} from "./Common";
-import {FieldError, FieldHelperText, FieldTitle} from "./FieldElements";
+import {FieldError, FieldHelperText, FieldTitle} from "./fieldElements";
 import {Icon} from "./Icon";
 import {useTheme} from "./Theme";
 
@@ -61,7 +61,7 @@ export const TextField: FC<TextFieldProps> = ({
   errorText,
   value,
   onChange,
-  placeholderText,
+  placeholder,
   blurOnSubmit = true,
   iconName,
   onIconClick,
@@ -132,7 +132,7 @@ export const TextField: FC<TextFieldProps> = ({
       style.outline = "none";
     }
     return style;
-  }, [calculatedHeight, "text", theme.text.primary]);
+  }, [calculatedHeight, theme.text.primary]);
 
   if (["numberRange", "decimalRange", "height"].includes(type)) {
     console.warn(`${type} is not yet supported`);
@@ -183,7 +183,7 @@ export const TextField: FC<TextFieldProps> = ({
           keyboardType={keyboardType as KeyboardTypeOptions}
           multiline={multiline}
           numberOfLines={rows || 4}
-          placeholder={placeholderText}
+          placeholder={placeholder}
           placeholderTextColor={theme.text.secondaryLight}
           secureTextEntry={type === "password"}
           style={defaultTextInputStyles}

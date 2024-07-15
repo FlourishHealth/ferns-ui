@@ -1,12 +1,12 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import React, {FC, useContext} from "react";
+import React, {FC} from "react";
 import {View} from "react-native";
 
 import {CheckBoxProps} from "./Common";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const CheckBox: FC<CheckBoxProps> = ({selected, size = "md", bgColor = "default"}) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const px = {
     sm: {container: 10, icon: 8},
     md: {container: 16, icon: 13},
@@ -15,7 +15,7 @@ export const CheckBox: FC<CheckBoxProps> = ({selected, size = "md", bgColor = "d
 
   const backgroundColor = {
     default: theme.text.link,
-    gold: theme.text.gold,
+    accent: theme.text.accent,
     black: theme.text.primary,
   };
   return (
@@ -32,7 +32,7 @@ export const CheckBox: FC<CheckBoxProps> = ({selected, size = "md", bgColor = "d
       }}
     >
       {selected ? (
-        <FontAwesome6 brand="solid" color={theme.surface.base} name="check" size={px[size].icon} />
+        <FontAwesome6 color={theme.surface.base} name="check" size={px[size].icon} solid />
       ) : null}
     </View>
   );

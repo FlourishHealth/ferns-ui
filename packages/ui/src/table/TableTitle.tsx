@@ -1,11 +1,11 @@
-import React, {FC, useContext} from "react";
+import React, {FC} from "react";
 import {Text} from "react-native";
 
 import {TableTitleProps} from "../Common";
-import {ThemeContext} from "../Theme";
+import {useTheme} from "../Theme";
 
 export const TableTitle: FC<TableTitleProps> = ({title, align = "left"}) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   return (
     // No hint needed for a title.
     // eslint-disable-next-line react-native-a11y/has-accessibility-hint

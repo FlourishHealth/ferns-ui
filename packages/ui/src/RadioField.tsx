@@ -19,21 +19,21 @@ export const RadioField = ({
       <Heading size="sm">{title}</Heading>
       {options.map((option) => (
         <TouchableOpacity
-          key={option}
+          key={option.key ?? option.value}
           accessibilityHint={`Select ${option} from list of options`}
-          accessibilityLabel={option}
+          accessibilityLabel={option.label ?? option.value}
           accessibilityRole="button"
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
           }}
-          onPress={() => onChange(option)}
+          onPress={() => onChange(option.value)}
         >
-          {variant === "leftText" && <Text>{option}</Text>}
-          <Radio key={option} selected={option === value} />
+          {variant === "leftText" && <Text>{option.label ?? option.value}</Text>}
+          <Radio key={option.key ?? option.value} selected={option.value === value} />
           {variant === "rightText" && (
             <View style={{marginRight: 0}}>
-              <Text>{option}</Text>
+              <Text>{option.label ?? option.value}</Text>
             </View>
           )}
         </TouchableOpacity>

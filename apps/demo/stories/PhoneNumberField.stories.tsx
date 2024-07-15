@@ -6,7 +6,7 @@ export const PhoneNumberFieldDemo = (): ReactElement => {
   return (
     <>
       <PhoneNumberField
-        placeholderText="Enter a phone number"
+        placeholder="Enter a phone number"
         title="Phone Number"
         value={value}
         onChange={(v: string) => setValue(v)}

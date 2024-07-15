@@ -1,12 +1,12 @@
-import React, {FC, useContext} from "react";
+import React, {FC} from "react";
 import {Text} from "react-native";
 
 import {TableTextProps} from "../Common";
-import {ThemeContext} from "../Theme";
+import {useTheme} from "../Theme";
 
 // TODO: Implement isEditing to TableText
 export const TableText: FC<TableTextProps> = ({isEditing, value, align}) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   if (isEditing) {
     console.warn("isEditing is not implemented yet.");

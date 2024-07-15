@@ -23,7 +23,6 @@ export const FieldTitle: FC<FieldTitleProps> = ({text}) => {
         fontSize: isMobileOrNative ? 14 : 16,
         fontWeight: 600,
         lineHeight: 22.4,
-        marginLeft: 1,
       }}
     >
       {text}

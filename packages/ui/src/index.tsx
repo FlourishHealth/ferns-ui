@@ -1,5 +1,6 @@
 export * from "./Accordion";
 export * from "./ActionSheet";
+export * from "./AddressField";
 export * from "./Avatar";
 export * from "./Badge";
 export * from "./Banner";

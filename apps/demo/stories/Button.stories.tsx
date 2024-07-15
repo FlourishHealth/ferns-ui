@@ -93,16 +93,16 @@ export const ConfirmationButton = () => {
       <Box paddingX={3} paddingY={3}>
         <Button
           text="Default Confirmation Modal"
-          withConfirmationModal
+           withConfirmation
           onClick={() => console.info("clicked")}
         />
       </Box>
       <Box paddingX={3} paddingY={1}>
         <Button
-          modalText="And some custom text body!"
+          confirmationText="And some custom text body!"
           modalTitle="A Custom Title"
           text="With Custom Modal Props"
-          withConfirmationModal
+           withConfirmation
           onClick={() => console.info("clicked")}
         />
       </Box>

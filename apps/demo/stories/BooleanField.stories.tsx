@@ -9,7 +9,7 @@ export const BooleanFieldDemo = (): React.ReactElement => {
     <StorybookContainer>
       <BooleanField
         disabledHelperText="Here's some help text"
-        label="Boolean field"
+        title="Boolean field"
         value={value}
         variant="simple"
         onChange={setValue}
@@ -23,9 +23,9 @@ export const BooleanFieldDisabledDemo = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <BooleanField
+        disabled
         disabledHelperText="Here's some help text"
-        interaction={false}
-        label="Boolean field"
+        title="Boolean field"
         value={value}
         onChange={setValue}
       />
@@ -39,7 +39,7 @@ export const BooleanFieldWithTitleDemo = (): React.ReactElement => {
     <StorybookContainer>
       <BooleanField
         disabledHelperText="Here's some help text"
-        label="Boolean field"
+        title="Boolean field"
         value={value}
         variant="title"
         onChange={setValue}
@@ -53,9 +53,9 @@ export const BooleanFieldDisabledWithTitleDemo = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <BooleanField
+        disabled
         disabledHelperText="Here's some help text"
-        interaction={false}
-        label="Boolean field"
+        title="Boolean field"
         value={value}
         variant="title"
         onChange={setValue}

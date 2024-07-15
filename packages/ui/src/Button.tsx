@@ -1,14 +1,13 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
-import React, {FC, useContext, useState} from "react";
+import React, {FC, useState} from "react";
 import {ActivityIndicator, Pressable, Text, View} from "react-native";
 
 import {Box} from "./Box";
 import {ButtonProps} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
 import {Modal} from "./Modal";
-// import { Text } from "./Text";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 import {isNative} from "./Utilities";
@@ -38,6 +37,7 @@ const ConfirmationModal: FC<{
 };
 
 const ButtonComponent: FC<ButtonProps> = ({
+  confirmationText = "Are you sure you want to continue?",
   disabled = false,
   fullWidth = false,
   iconName,
@@ -45,52 +45,45 @@ const ButtonComponent: FC<ButtonProps> = ({
   loading: propsLoading,
   modalTitle = "Confirm",
   modalSubTitle,
-  modalText = "Are you sure you want to continue?",
   testID,
   text,
   variant = "primary",
-  withConfirmationModal = false,
+  withConfirmation = false,
   onClick,
 }) => {
   const [loading, setLoading] = useState(propsLoading);
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   if (!theme) {
     return null;
   }
 
-  const getButtonStyles = () => {
-    let backgroundColor = theme.surface.primary;
-    let borderColor: string | undefined;
-    let borderWidth: number | undefined;
-    let color = theme.text.inverted;
+  let backgroundColor = theme.surface.primary;
+  let borderColor: string | undefined;
+  let borderWidth: number | undefined;
+  let color = theme.text.inverted;
 
-    if (variant === "secondary") {
-      backgroundColor = theme.surface.secondaryDark;
-    } else if (variant === "muted") {
-      backgroundColor = theme.surface.secondaryLight;
-      color = theme.surface.neutralDark;
-    } else if (variant === "outline") {
-      backgroundColor = theme.surface.base;
-      borderColor = theme.text.secondaryDark;
-      borderWidth = 2;
-      color = theme.text.secondaryDark;
-    } else if (variant === "destructive") {
-      backgroundColor = theme.surface.error;
-    } else if (disabled) {
-      backgroundColor = theme.surface.disabled;
-    }
-
-    return {backgroundColor, borderColor, borderWidth, color};
-  };
-
-  const {backgroundColor, borderColor, borderWidth, color} = getButtonStyles();
+  if (variant === "secondary") {
+    backgroundColor = theme.surface.secondaryDark;
+  } else if (variant === "muted") {
+    backgroundColor = theme.surface.secondaryLight;
+    color = theme.surface.neutralDark;
+  } else if (variant === "outline") {
+    backgroundColor = theme.surface.base;
+    borderColor = theme.text.secondaryDark;
+    borderWidth = 2;
+    color = theme.text.secondaryDark;
+  } else if (variant === "destructive") {
+    backgroundColor = theme.surface.error;
+  } else if (disabled) {
+    backgroundColor = theme.surface.disabled;
+  }
 
   return (
     <Pressable
       accessibilityHint={
-        withConfirmationModal ? "Opens a confirmation dialog" : "Press to perform action"
+        withConfirmation ? "Opens a confirmation dialog" : "Press to perform action"
       }
       accessibilityLabel={text}
       accessibilityRole="button"
@@ -114,7 +107,7 @@ const ButtonComponent: FC<ButtonProps> = ({
           await Unifier.utils.haptic();
           setLoading(true);
           try {
-            if (withConfirmationModal && !showConfirmation) {
+            if (withConfirmation && !showConfirmation) {
               setShowConfirmation(true);
             } else if (onClick) {
               await onClick();
@@ -139,7 +132,7 @@ const ButtonComponent: FC<ButtonProps> = ({
                 marginLeft: iconPosition === "right" ? 8 : 0,
               }}
             >
-              <FontAwesome6 brand="solid" color={color} name={iconName} size={16} />
+              <FontAwesome6 color={color} name={iconName} size={16} solid />
             </View>
           )}
           <Text style={{color, fontWeight: "700", fontSize: 16}}>{text}</Text>
@@ -150,10 +143,10 @@ const ButtonComponent: FC<ButtonProps> = ({
           </Box>
         )}
       </View>
-      {withConfirmationModal && (
+      {withConfirmation && (
         <ConfirmationModal
           subTitle={modalSubTitle}
-          text={modalText}
+          text={confirmationText}
           title={modalTitle}
           visible={showConfirmation}
           onCancel={() => setShowConfirmation(false)}

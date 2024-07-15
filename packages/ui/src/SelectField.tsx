@@ -2,7 +2,7 @@ import React, {FC} from "react";
 import {View} from "react-native";
 
 import {SelectFieldProps} from "./Common";
-import {FieldError, FieldHelperText, FieldTitle} from "./FieldElements";
+import {FieldError, FieldHelperText, FieldTitle} from "./fieldElements";
 import {RNPickerSelect} from "./PickerSelect";
 
 export const SelectField: FC<SelectFieldProps> = ({
@@ -10,12 +10,13 @@ export const SelectField: FC<SelectFieldProps> = ({
   errorText,
   helperText,
   options,
+  requireValue = false,
   placeholder = "Please select an option.",
   title,
   value,
   onChange,
 }) => {
-  const clearOption = {label: value ? "---" : placeholder, value: ""};
+  const clearOption = {label: placeholder ?? "---", value: ""};
 
   return (
     <View>
@@ -23,12 +24,12 @@ export const SelectField: FC<SelectFieldProps> = ({
       {Boolean(errorText) && <FieldError text={errorText!} />}
       <RNPickerSelect
         disabled={disabled}
-        items={value ? [clearOption, ...options] : options}
-        placeholder={!value ? {label: placeholder, value: ""} : {}}
+        items={options}
+        placeholder={!requireValue ? clearOption : {}}
         value={value ?? ""}
         onValueChange={(v) => {
-          if (v === "") {
-            onChange(undefined);
+          if (v === "" && !requireValue) {
+            (onChange as (val: string | undefined) => void)(undefined);
           } else {
             onChange(v);
           }

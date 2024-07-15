@@ -1,11 +1,11 @@
-import React, {useContext} from "react";
+import React from "react";
 import {View} from "react-native";
 
 import {RadioProps} from "./Common";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const Radio = ({selected}: RadioProps): React.ReactElement => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   return (
     <View
       style={{

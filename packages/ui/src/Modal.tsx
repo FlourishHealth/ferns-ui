@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useRef} from "react";
+import React, {FC, useEffect, useRef} from "react";
 import {Dimensions, DimensionValue, Modal as RNModal, Pressable, View} from "react-native";
 import ActionSheet, {ActionSheetRef} from "react-native-actions-sheet";
 import {
@@ -13,7 +13,7 @@ import {Heading} from "./Heading";
 import {Icon} from "./Icon";
 import {isMobileDevice} from "./MediaQuery";
 import {Text} from "./Text";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 import {isNative} from "./Utilities";
 
 const getModalSize = (size: "sm" | "md" | "lg"): DimensionValue => {
@@ -181,7 +181,7 @@ export const Modal: FC<ModalProps> = ({
   secondaryButtonOnClick,
 }: ModalProps) => {
   const actionSheetRef = useRef<ActionSheetRef>(null);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   const onHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
     if (nativeEvent.state === State.END && nativeEvent.translationY > 100) {

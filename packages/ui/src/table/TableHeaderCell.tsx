@@ -80,10 +80,10 @@ export const TableHeaderCell = ({
             }}
           >
             <FontAwesome6
-              brand="solid"
               color={theme.text.inverted}
               name={sort === "asc" ? "arrow-down" : "arrow-up"}
               size={10}
+              solid
             />
           </View>
         </Box>

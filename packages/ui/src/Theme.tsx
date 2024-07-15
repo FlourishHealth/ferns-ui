@@ -77,8 +77,8 @@ const defaultPrimitives = {
   spacing11: 72,
   spacing12: 80,
 
-  radiusSm: 1,
-  radiusMd: 3,
+  radiusSm: 2,
+  radiusMd: 4,
   radiusLg: 16,
   radiusXl: 32,
   radius2xl: 128,

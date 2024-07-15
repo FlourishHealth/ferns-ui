@@ -25,7 +25,7 @@
 
 import {Picker} from "@react-native-picker/picker";
 import isEqual from "lodash/isEqual";
-import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {
   Keyboard,
   Modal,
@@ -39,7 +39,7 @@ import {
 } from "react-native";
 
 import {Icon} from "./Icon";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const defaultStyles = StyleSheet.create({
   viewContainer: {
@@ -129,7 +129,7 @@ export function RNPickerSelect({
   const [animationType, setAnimationType] = useState(undefined);
   const [orientation, setOrientation] = useState<"portrait" | "landscape">("portrait");
   const [doneDepressed, setDoneDepressed] = useState<boolean>(false);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   const options = useMemo(() => {
     if (isEqual(placeholder, {})) {
@@ -338,7 +338,7 @@ export function RNPickerSelect({
     }
 
     return (
-      <View pointerEvents="none" testID="icon_container">
+      <View style={{pointerEvents: "none"}} testID="icon_container">
         <Icon color={disabled ? "secondaryLight" : "primary"} iconName="angle-down" size="sm" />
       </View>
     );
@@ -346,13 +346,17 @@ export function RNPickerSelect({
 
   const renderTextInputOrChildren = () => {
     if (children) {
-      return <View pointerEvents="box-only">{children}</View>;
+      return <View style={{pointerEvents: "box-only"}}>{children}</View>;
     }
 
     return (
       <View
-        pointerEvents="box-only"
-        style={{flexDirection: "row", justifyContent: "space-between", width: "100%"}}
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          pointerEvents: "box-only",
+          width: "100%",
+        }}
       >
         <TextInput
           editable={false}

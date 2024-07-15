@@ -6,7 +6,11 @@ export const MultiselectFieldDemo = (props: Partial<MultiselectFieldProps>) => {
     <Box alignItems="center" justifyContent="center">
       <Box padding={3} width="100%">
         <MultiselectField
-          options={["Option 1", "Option 2", "Option 3"]}
+          options={[
+            {label: "Option 1", value: "Option 1"},
+            {label: "Option 2", value: "Option 2"},
+            {label: "Option 3", value: "Option 3"},
+          ]}
           title="Multiselect Field"
           value={["Option 1"]}
           onChange={() => console.info("selected")}
@@ -23,7 +27,11 @@ export const MultiselectVariants = () => {
     <Box width={isMobile ? undefined : "30%"}>
       <Box padding={3}>
         <MultiselectField
-          options={["Option 1", "Option 2", "Option 3"]}
+          options={[
+            {label: "Option 1", value: "Option 1"},
+            {label: "Option 2", value: "Option 2"},
+            {label: "Option 3", value: "Option 3"},
+          ]}
           title='Default - Variant "leftText"'
           value={["Option 1"]}
           onChange={() => console.info("selected")}
@@ -31,7 +39,11 @@ export const MultiselectVariants = () => {
       </Box>
       <Box padding={3}>
         <MultiselectField
-          options={["Option 1", "Option 2", "Option 3"]}
+          options={[
+            {label: "Option 1", value: "Option 1"},
+            {label: "Option 2", value: "Option 2"},
+            {label: "Option 3", value: "Option 3"},
+          ]}
           title='Variant "rightText"'
           value={["Option 1"]}
           variant="rightText"

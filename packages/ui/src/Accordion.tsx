@@ -1,11 +1,11 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import React, {FC, useContext, useState} from "react";
+import React, {FC, useState} from "react";
 import {Pressable, View} from "react-native";
 
 import {AccordionProps} from "./Common";
 import {Heading} from "./Heading";
 import {Modal} from "./Modal";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const Accordion: FC<AccordionProps> = ({
   children,
@@ -17,7 +17,7 @@ export const Accordion: FC<AccordionProps> = ({
   infoModalText,
   infoModalTitle,
 }) => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [infoModalVisibleState, setInfoModalVisibleState] = useState(false);
 

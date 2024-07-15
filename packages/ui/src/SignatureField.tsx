@@ -1,4 +1,4 @@
-import React, {ReactElement, useContext} from "react";
+import React, {ReactElement} from "react";
 import {Image, View} from "react-native";
 
 import {SignatureFieldProps} from "./Common";
@@ -6,13 +6,13 @@ import {Heading} from "./Heading";
 import {Icon} from "./Icon";
 import {Signature} from "./Signature";
 import {Text} from "./Text";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 // NOTE: When using this inside a ScrollView, you must set the scrollEnabled prop to false on the
 // ScrollView onStart and to true onEnd or it will try to scroll the whole view around this
 // component.
 export const SignatureField = ({
-  state = "default",
+  disabled = false,
   title = "Signature",
   value,
   onChange,
@@ -21,8 +21,8 @@ export const SignatureField = ({
   disabledText,
   errorText,
 }: SignatureFieldProps): ReactElement => {
-  const {theme} = useContext(ThemeContext);
-  if (state === "disabled") {
+  const {theme} = useTheme();
+  if (disabled) {
     if (value) {
       return (
         <View>
@@ -52,7 +52,7 @@ export const SignatureField = ({
   return (
     <View>
       <Heading size="sm">{title}</Heading>
-      {state === "error" && (
+      {Boolean(errorText) && (
         <View style={{flexDirection: "row"}}>
           <Icon color="error" iconName="triangle-exclamation" />
           <View style={{marginLeft: 4}}>

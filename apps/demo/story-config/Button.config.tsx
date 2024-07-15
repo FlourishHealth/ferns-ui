@@ -84,7 +84,7 @@ export const ButtonConfiguration: DemoConfiguration = {
         type: "boolean",
         defaultValue: false,
       },
-      withConfirmationModal: {
+       withConfirmation: {
         type: "boolean",
         defaultValue: false,
       },

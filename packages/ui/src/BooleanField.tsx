@@ -1,19 +1,21 @@
-import React, {ReactElement, useContext, useRef} from "react";
+import React, {ReactElement, useRef} from "react";
 import {Animated, TouchableWithoutFeedback, View} from "react-native";
 
 import {BooleanFieldProps} from "./Common";
+import {FieldHelperText, FieldTitle} from "./fieldElements";
 import {Text} from "./Text";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export const BooleanField = ({
-  label,
+  title,
   variant,
   value,
   onChange,
-  interaction = true,
+  disabled,
   disabledHelperText,
+  helperText,
 }: BooleanFieldProps): ReactElement => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
   const backgroundColor = useRef(new Animated.Value(value ? 75 : -75)).current;
   const circleColor = useRef(new Animated.Value(value ? 75 : -75)).current;
   const circleBorderColor = useRef(new Animated.Value(value ? 75 : -75)).current;
@@ -44,7 +46,7 @@ export const BooleanField = ({
   };
 
   const handleSwitch = () => {
-    if (!interaction) {
+    if (disabled) {
       return;
     }
     animateSwitch(!value);
@@ -70,11 +72,7 @@ export const BooleanField = ({
           justifyContent: variant === "title" ? "flex-start" : "center",
         }}
       >
-        {label && (
-          <Text bold={variant === "title"} color="primary" size="lg">
-            {label}
-          </Text>
-        )}
+        {Boolean(title) && <FieldTitle text={title!} />}
         <TouchableWithoutFeedback accessibilityRole="button" onPress={handleSwitch}>
           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
             <Animated.View
@@ -82,8 +80,8 @@ export const BooleanField = ({
                 width: 60,
                 height: 30,
                 borderRadius: 30,
-                backgroundColor: interaction ? interpolatedColorAnimation : theme.surface.disabled,
-                borderColor: interaction ? theme.surface.secondaryDark : theme.surface.disabled,
+                backgroundColor: disabled ? theme.surface.disabled : interpolatedColorAnimation,
+                borderColor: disabled ? theme.surface.disabled : theme.surface.secondaryDark,
                 borderWidth: 1,
                 marginHorizontal: variant === "title" ? undefined : 8,
                 marginRight: variant === "title" ? 8 : undefined,
@@ -102,7 +100,7 @@ export const BooleanField = ({
                 <Animated.View
                   style={{
                     borderWidth: 1,
-                    borderColor: interaction ? theme.surface.secondaryDark : theme.surface.disabled,
+                    borderColor: disabled ? theme.surface.disabled : theme.surface.secondaryDark,
                     backgroundColor: theme.surface.base,
                     width: 30,
                     height: 30,
@@ -117,7 +115,8 @@ export const BooleanField = ({
           </View>
         </TouchableWithoutFeedback>
       </View>
-      {!interaction && disabledHelperText && <Text size="md">{disabledHelperText}</Text>}
+      {disabled && disabledHelperText && <FieldHelperText text={disabledHelperText} />}
+      {Boolean(helperText) && <FieldHelperText text={helperText!} />}
     </View>
   );
 };

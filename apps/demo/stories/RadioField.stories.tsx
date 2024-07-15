@@ -7,7 +7,11 @@ export const RadioFieldDemo = (props: Partial<RadioFieldProps>): React.ReactElem
   return (
     <View style={{width: 200}}>
       <RadioField
-        options={["Option 1", "Option 2"]}
+        options={[
+          {label: "Option 1", value: "Option 1"},
+          {label: "Option 2", value: "Option 2"},
+          {label: "Option 3", value: "Option 3"},
+        ]}
         title="Sample Radio Fields"
         value={selectedOption}
         onChange={setSelectedOption}
@@ -23,7 +27,11 @@ export const RadioFieldsLeftText = (): React.ReactElement => {
   return (
     <View style={{width: 200, paddingVertical: 10}}>
       <RadioField
-        options={["Option 1", "Option 2"]}
+        options={[
+          {label: "Option 1", value: "Option 1"},
+          {label: "Option 2", value: "Option 2"},
+          {label: "Option 3", value: "Option 3"},
+        ]}
         title="Sample Radio Fields - Left"
         value={selectedOption}
         variant="leftText"
@@ -39,7 +47,11 @@ export const RadioFieldsRightText = (): React.ReactElement => {
   return (
     <View style={{width: 200, paddingVertical: 10}}>
       <RadioField
-        options={["Option 1", "Option 2"]}
+        options={[
+          {label: "Option 1", value: "Option 1"},
+          {label: "Option 2", value: "Option 2"},
+          {label: "Option 3", value: "Option 3"},
+        ]}
         title="Sample Radio Fields - Right"
         value={selectedOption}
         variant="rightText"

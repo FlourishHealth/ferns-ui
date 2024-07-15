@@ -197,17 +197,15 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
           rounding="lg"
         >
           {Object.keys(propValues).map((prop) => (
-            <Box key={prop} paddingY={2}>
-              <Field
-                // TODO: change label -> title once field props are updated
-                label={config.demoOptions?.controls?.[prop]?.label ?? startCase(prop)}
-                {...config.demoOptions?.controls?.[prop]}
-                value={propValues[prop]}
-                onChange={(value: any) => {
-                  setPropValues({...cloneDeep(propValues), [prop]: value});
-                }}
-              />
-            </Box>
+            <Field
+              key={prop}
+              title={config.demoOptions?.controls?.[prop]?.title ?? startCase(prop)}
+              {...config.demoOptions?.controls?.[prop]}
+              value={propValues[prop]}
+              onChange={(value: any) => {
+                setPropValues({...cloneDeep(propValues), [prop]: value});
+              }}
+            />
           ))}
         </Box>
       )}
@@ -217,10 +215,10 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
 
 const ComponentStatusSection = ({
   status,
-  label,
+  title,
 }: {
   status: DemoConfigStatus;
-  label: string;
+  title: string;
 }): React.ReactElement => {
   let iconName: IconName = "circle";
   let color: TextColor = "secondaryLight";
@@ -243,7 +241,7 @@ const ComponentStatusSection = ({
   return (
     <Box alignItems="center" direction="row" marginBottom={2} marginRight={4}>
       <Box marginRight={1}>
-        <Text>{label}:</Text>
+        <Text>{title}:</Text>
       </Box>
       <Icon color={color} iconName={iconName} size="md" />
     </Box>
@@ -257,11 +255,11 @@ const ComponentStatus = ({config}: {config: DemoConfiguration}): React.ReactElem
         <Heading size="sm">Status</Heading>
       </Box>
       <Box direction="column" mdDirection="row">
-        <ComponentStatusSection label="Documentation" status={config.status.documentation} />
-        <ComponentStatusSection label="Figma" status={config.status.figma} />
-        <ComponentStatusSection label="Web" status={config.status.web} />
-        <ComponentStatusSection label="iOS" status={config.status.ios} />
-        <ComponentStatusSection label="Android" status={config.status.android} />
+        <ComponentStatusSection status={config.status.documentation} title="Documentation" />
+        <ComponentStatusSection status={config.status.figma} title="Figma" />
+        <ComponentStatusSection status={config.status.web} title="Web" />
+        <ComponentStatusSection status={config.status.ios} title="iOS" />
+        <ComponentStatusSection status={config.status.android} title="Android" />
       </Box>
     </Box>
   );

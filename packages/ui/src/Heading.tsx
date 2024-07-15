@@ -3,11 +3,11 @@ import {
   TitilliumWeb_700Bold,
   useFonts,
 } from "@expo-google-fonts/titillium-web";
-import React, {useContext} from "react";
+import React from "react";
 import {Platform, StyleProp, Text as NativeText, TextStyle} from "react-native";
 
 import {HeadingProps} from "./Common";
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 const fontSizeAndWeightWeb = {
   sm: {size: 16, weight: "semibold"},
@@ -32,7 +32,7 @@ export const Heading = ({
   size,
   testID,
 }: HeadingProps): React.ReactElement => {
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   // TODO: make fonts part of theme.
   const [fontsLoaded] = useFonts({

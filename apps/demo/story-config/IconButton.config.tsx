@@ -52,16 +52,20 @@ export const IconButtonConfiguration: DemoConfiguration = {
       variant: {
         type: "select",
         defaultValue: "primary",
+        requireValue: false,
         options: [
           {label: "Primary", value: "primary"},
           {label: "Secondary", value: "secondary"},
           {label: "Muted", value: "muted"},
           {label: "Destructive", value: "destructive"},
         ],
+        onChange: (): void => {},
       },
       iconName: {
         type: "select",
         defaultValue: "plus",
+        requireValue: false,
+        onChange: (): void => {},
         options: [
           {label: "Plus", value: "plus"},
           {label: "Check", value: "check"},

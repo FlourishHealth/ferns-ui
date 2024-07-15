@@ -130,10 +130,10 @@ export const TapToEdit = ({
         {editing && !isEditing && (
           <Box direction="row">
             <Button
-              modalText={confirmationText}
+              confirmationText={confirmationText}
               modalTitle={confirmationHeading}
               text="Save"
-              withConfirmationModal={withConfirmation}
+              withConfirmation={withConfirmation}
               onClick={async (): Promise<void> => {
                 if (!onSave) {
                   console.error("No onSave provided for editable TapToEdit");

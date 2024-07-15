@@ -1,8 +1,8 @@
-import React, {ReactElement, useContext, useRef} from "react";
+import React, {ReactElement, useRef} from "react";
 import {Text, View} from "react-native";
 import SignatureCanvas from "react-signature-canvas";
 
-import {ThemeContext} from "./Theme";
+import {useTheme} from "./Theme";
 
 export interface SignatureProps {
   onChange: (signature: string) => void;
@@ -13,7 +13,7 @@ export interface SignatureProps {
 
 export const Signature = ({onChange}: SignatureProps): ReactElement | null => {
   const ref = useRef<SignatureCanvas>(null);
-  const {theme} = useContext(ThemeContext);
+  const {theme} = useTheme();
 
   const onClear = () => {
     ref.current?.clear();
