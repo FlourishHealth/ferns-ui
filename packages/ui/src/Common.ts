@@ -765,7 +765,7 @@ export interface BackButtonInterface {
 export interface BooleanFieldProps extends HelperTextProps, ErrorTextProps {
   title?: string;
   variant?: "simple" | "title"; // default "simple"
-  interaction?: boolean; // default true
+  disabled?: boolean;
   disabledHelperText?: string;
   value: boolean;
   onChange: (value: boolean) => void;

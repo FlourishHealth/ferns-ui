@@ -11,7 +11,7 @@ export const BooleanField = ({
   variant,
   value,
   onChange,
-  interaction = true,
+  disabled,
   disabledHelperText,
   helperText,
 }: BooleanFieldProps): ReactElement => {
@@ -46,7 +46,7 @@ export const BooleanField = ({
   };
 
   const handleSwitch = () => {
-    if (!interaction) {
+    if (disabled) {
       return;
     }
     animateSwitch(!value);
@@ -80,8 +80,8 @@ export const BooleanField = ({
                 width: 60,
                 height: 30,
                 borderRadius: 30,
-                backgroundColor: interaction ? interpolatedColorAnimation : theme.surface.disabled,
-                borderColor: interaction ? theme.surface.secondaryDark : theme.surface.disabled,
+                backgroundColor: disabled ? theme.surface.disabled : interpolatedColorAnimation,
+                borderColor: disabled ? theme.surface.disabled : theme.surface.secondaryDark,
                 borderWidth: 1,
                 marginHorizontal: variant === "title" ? undefined : 8,
                 marginRight: variant === "title" ? 8 : undefined,
@@ -100,7 +100,7 @@ export const BooleanField = ({
                 <Animated.View
                   style={{
                     borderWidth: 1,
-                    borderColor: interaction ? theme.surface.secondaryDark : theme.surface.disabled,
+                    borderColor: disabled ? theme.surface.disabled : theme.surface.secondaryDark,
                     backgroundColor: theme.surface.base,
                     width: 30,
                     height: 30,
@@ -115,7 +115,7 @@ export const BooleanField = ({
           </View>
         </TouchableWithoutFeedback>
       </View>
-      {!interaction && disabledHelperText && <FieldHelperText text={disabledHelperText} />}
+      {disabled && disabledHelperText && <FieldHelperText text={disabledHelperText} />}
       {Boolean(helperText) && <FieldHelperText text={helperText!} />}
     </View>
   );
