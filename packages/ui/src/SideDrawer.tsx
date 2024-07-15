@@ -3,11 +3,11 @@ import {Platform, SafeAreaView, StyleProp, ViewStyle} from "react-native";
 import {Drawer} from "react-native-drawer-layout";
 
 import {SideDrawerProps} from "./Common";
+import {useTheme} from "./Theme";
 
 const DEFAULT_STYLES: StyleProp<ViewStyle> = {
   width: Platform.OS === "web" ? "40%" : "95%",
   height: "100%",
-  backgroundColor: "neutralLight",
   borderWidth: 1,
   borderColor: "gray",
 };
@@ -30,6 +30,7 @@ export const SideDrawer = ({
   children,
   drawerStyles = {},
 }: SideDrawerProps): ReactElement => {
+  const {theme} = useTheme();
   const renderDrawerContent = useCallback((): ReactElement => {
     return <SafeAreaView>{renderContent()}</SafeAreaView>;
   }, [renderContent]);
@@ -37,7 +38,12 @@ export const SideDrawer = ({
   return (
     <Drawer
       drawerPosition={position}
-      drawerStyle={[DEFAULT_STYLES, drawerStyles, addWebScroll(isOpen)]}
+      drawerStyle={[
+        DEFAULT_STYLES,
+        {backgroundColor: theme.surface.neutralLight},
+        drawerStyles,
+        addWebScroll(isOpen),
+      ]}
       drawerType={drawerType}
       open={isOpen}
       renderDrawerContent={renderDrawerContent}
