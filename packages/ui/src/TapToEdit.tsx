@@ -124,7 +124,7 @@ export const TapToEdit = ({
           {...(fieldProps as any)}
         />
         {editing && !isEditing && (
-          <View style={{flexDirection: "row"}}>
+          <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
             <Button
               text="Cancel"
               variant="muted"
