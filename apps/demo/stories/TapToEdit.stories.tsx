@@ -56,8 +56,8 @@ export const TapStory = (): ReactElement => {
       </Box>
       <Box>
         <TapToEdit
-          setValue={setText}
-          title="Text"
+          setValue={setTextArea}
+          title="Text Area"
           type="textarea"
           value={textArea}
           onSave={(value): void => {
