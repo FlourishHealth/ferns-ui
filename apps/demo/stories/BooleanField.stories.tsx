@@ -25,7 +25,7 @@ export const BooleanFieldDisabledDemo = (): React.ReactElement => {
       <BooleanField
         disabled
         disabledHelperText="Here's some help text"
-        label="Boolean field"
+        title="Boolean field"
         value={value}
         onChange={setValue}
       />

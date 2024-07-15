@@ -11,7 +11,7 @@ import {
 } from "react-native";
 
 import {TextFieldProps, TextStyleWithOutline} from "./Common";
-import {FieldError, FieldHelperText, FieldTitle} from "./fieldElements";
+import {FieldError, FieldHelperText, FieldTitle} from "./fieldElems";
 import {Icon} from "./Icon";
 import {useTheme} from "./Theme";
 

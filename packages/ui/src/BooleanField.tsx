@@ -2,7 +2,7 @@ import React, {ReactElement, useRef} from "react";
 import {Animated, TouchableWithoutFeedback, View} from "react-native";
 
 import {BooleanFieldProps} from "./Common";
-import {FieldHelperText, FieldTitle} from "./fieldElements";
+import {FieldHelperText, FieldTitle} from "./fieldElems";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
 
