@@ -20,7 +20,7 @@ const TapToEditTitle = ({
 }): ReactElement => {
   return (
     <View style={{flex: 1, justifyContent: "center"}}>
-      <Text bold>{title}:</Text>
+      <Text bold>{title}</Text>
       {Boolean(helperText && !onlyShowHelperTextWhileEditing) && (
         <Text color="secondaryLight" size="sm">
           {helperText}
@@ -103,44 +103,46 @@ export const TapToEdit = ({
         <View style={{flex: 1, justifyContent: "center"}}>
           <Text bold>{title}</Text>
         </View>
-        <Field
-          helperText={helperText}
-          type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
-          value={value}
-          onChange={setValue ?? (() => {})}
-          {...(fieldProps as any)}
-        />
-        {editing && !isEditing && (
-          <View style={{flexDirection: "row", justifyContent: "flex-end"}}>
-            <Button
-              text="Cancel"
-              variant="muted"
-              onClick={(): void => {
-                if (setValue) {
-                  setValue(initialValue);
-                }
-                setEditing(false);
-              }}
-            />
-            <View style={{marginLeft: 8}}>
+        <View style={{gap: 16}}>
+          <Field
+            helperText={helperText}
+            type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
+            value={value}
+            onChange={setValue ?? (() => {})}
+            {...(fieldProps as any)}
+          />
+          {editing && !isEditing && (
+            <View style={{flexDirection: "row", justifyContent: "flex-end", gap: 16}}>
               <Button
-                confirmationText={confirmationText}
-                modalTitle={confirmationTitle}
-                text="Save"
-                withConfirmation={withConfirmation}
-                onClick={async (): Promise<void> => {
-                  if (!onSave) {
-                    console.error("No onSave provided for editable TapToEdit");
-                  } else {
-                    setInitialValue(value);
-                    await onSave(value);
+                text="Cancel"
+                variant="muted"
+                onClick={(): void => {
+                  if (setValue) {
+                    setValue(initialValue);
                   }
                   setEditing(false);
                 }}
               />
+              <View style={{marginLeft: 8}}>
+                <Button
+                  confirmationText={confirmationText}
+                  modalTitle={confirmationTitle}
+                  text="Save"
+                  withConfirmation={withConfirmation}
+                  onClick={async (): Promise<void> => {
+                    if (!onSave) {
+                      console.error("No onSave provided for editable TapToEdit");
+                    } else {
+                      setInitialValue(value);
+                      await onSave(value);
+                    }
+                    setEditing(false);
+                  }}
+                />
+              </View>
             </View>
-          </View>
-        )}
+          )}
+        </View>
       </View>
     );
   } else {
@@ -206,18 +208,22 @@ export const TapToEdit = ({
           alignItems: fieldProps?.type === "textarea" ? "flex-start" : "center",
           flexDirection: fieldProps?.type === "textarea" ? "column" : "row",
           justifyContent: "space-between",
-          paddingHorizontal: 12,
-          paddingVertical: 8,
           width: "100%",
         }}
       >
-        <View style={{flexDirection: "row", width: "100%"}}>
+        <View style={{flexDirection: "row", width: "100%", gap: 16}}>
           <TapToEditTitle
             helperText={helperText}
             onlyShowHelperTextWhileEditing={onlyShowHelperTextWhileEditing}
             title={title}
           />
-          <View style={{flexDirection: "row", flex: 1, justifyContent: "flex-end", marginLeft: 8}}>
+          <View
+            style={{
+              flexDirection: "row",
+              flex: 1,
+              justifyContent: "flex-end",
+            }}
+          >
             <Box
               accessibilityHint=""
               accessibilityLabel="Link"
