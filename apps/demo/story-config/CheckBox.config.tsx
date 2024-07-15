@@ -55,7 +55,7 @@ export const CheckBoxConfiguration: DemoConfiguration = {
         type: "select",
         options: [
           {label: "Default", value: "default"},
-          {label: "Gold", value: "gold"},
+          {label: "Accent", value: "accent"},
           {label: "Black", value: "black"},
         ],
         defaultValue: "default",
