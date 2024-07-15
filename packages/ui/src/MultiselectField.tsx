@@ -11,12 +11,12 @@ import {Text} from "./Text";
 interface OptionProps {
   isDefault: boolean;
   value: string;
-  title?: string;
+  label?: string;
   selected: boolean;
   onSelect: () => void;
 }
 
-const Option: FC<OptionProps> = ({value, title, isDefault, selected, onSelect}) => {
+const Option: FC<OptionProps> = ({value, label, isDefault, selected, onSelect}) => {
   return (
     <View
       style={{
@@ -26,12 +26,12 @@ const Option: FC<OptionProps> = ({value, title, isDefault, selected, onSelect}) 
       }}
     >
       <View style={{flex: 1, flexWrap: "wrap"}}>
-        <Text>{title ?? value}</Text>
+        <Text>{label ?? value}</Text>
       </View>
       <TouchableOpacity
         key={value}
-        accessibilityHint={`Select ${title ?? value} from list of options`}
-        accessibilityLabel={title ?? value}
+        accessibilityHint={`Select ${label ?? value} from list of options`}
+        accessibilityLabel={label ?? value}
         accessibilityRole="checkbox"
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         style={{
@@ -91,8 +91,8 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
         <Option
           key={option.key ?? option.value}
           isDefault={isDefault}
+          label={option.label}
           selected={selectedItems.includes(option.value)}
-          title={option.label}
           value={option.value}
           onSelect={() => toggleItem(option.value)}
         />

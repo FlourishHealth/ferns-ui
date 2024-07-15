@@ -132,7 +132,7 @@ const ButtonComponent: FC<ButtonProps> = ({
                 marginLeft: iconPosition === "right" ? 8 : 0,
               }}
             >
-              <FontAwesome6 brand="solid" color={color} name={iconName} size={16} />
+              <FontAwesome6 color={color} name={iconName} size={16} solid />
             </View>
           )}
           <Text style={{color, fontWeight: "700", fontSize: 16}}>{text}</Text>
