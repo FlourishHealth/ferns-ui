@@ -2,7 +2,7 @@ import React, {ReactElement, useEffect, useMemo, useRef, useState} from "react";
 import {TextInput, View} from "react-native";
 
 import {CustomSelectFieldProps} from "./Common";
-import {FieldHelperText} from "./FieldElements";
+import {FieldHelperText} from "./fieldElements";
 import {SelectField} from "./SelectField";
 import {TextField} from "./TextField";
 
