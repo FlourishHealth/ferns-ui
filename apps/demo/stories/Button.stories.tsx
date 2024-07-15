@@ -93,7 +93,7 @@ export const ConfirmationButton = () => {
       <Box paddingX={3} paddingY={3}>
         <Button
           text="Default Confirmation Modal"
-           withConfirmation
+          withConfirmation
           onClick={() => console.info("clicked")}
         />
       </Box>
@@ -102,7 +102,7 @@ export const ConfirmationButton = () => {
           confirmationText="And some custom text body!"
           modalTitle="A Custom Title"
           text="With Custom Modal Props"
-           withConfirmation
+          withConfirmation
           onClick={() => console.info("clicked")}
         />
       </Box>
@@ -112,14 +112,25 @@ export const ConfirmationButton = () => {
 
 export const FullWidthButtons = (props: Partial<ButtonProps>) => {
   return (
-    <Box paddingY={1}>
-      <Button
-        text="Default/Primary Full Width"
-        onClick={() => console.info("clicked")}
-        {...props}
-        fullWidth
-      />
-    </Box>
+    <>
+      <Box paddingY={1}>
+        <Button
+          text="Default/Primary Full Width"
+          onClick={() => console.info("clicked")}
+          {...props}
+          fullWidth
+        />
+      </Box>
+      <Box paddingY={1}>
+        <Button
+          text="Full Width with tooltip"
+          tooltipText="This is a tooltip"
+          onClick={() => console.info("clicked")}
+          {...props}
+          fullWidth
+        />
+      </Box>
+    </>
   );
 };
 
