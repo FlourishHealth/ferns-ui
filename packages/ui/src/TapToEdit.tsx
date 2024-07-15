@@ -8,38 +8,26 @@ import {Field} from "./Field";
 import {Icon} from "./Icon";
 // import {useOpenAPISpec} from "./OpenAPIContext";
 import {Text} from "./Text";
-import {Tooltip} from "./Tooltip";
 
 const TapToEditTitle = ({
   title,
   helperText,
-  showHelperTextAsTooltip,
   onlyShowHelperTextWhileEditing,
 }: {
   onlyShowHelperTextWhileEditing?: boolean;
-  showHelperTextAsTooltip?: boolean;
   title: string;
   helperText?: string;
 }): ReactElement => {
-  const Title = (
+  return (
     <View style={{flex: 1, justifyContent: "center"}}>
       <Text bold>{title}:</Text>
-      {Boolean(helperText && !showHelperTextAsTooltip && !onlyShowHelperTextWhileEditing) && (
+      {Boolean(helperText && !onlyShowHelperTextWhileEditing) && (
         <Text color="secondaryLight" size="sm">
           {helperText}
         </Text>
       )}
     </View>
   );
-  if (showHelperTextAsTooltip) {
-    return (
-      <Tooltip idealPosition="top" text={helperText}>
-        {Title}
-      </Tooltip>
-    );
-  } else {
-    return Title;
-  }
 };
 
 export function formatAddress(address: AddressInterface, asString = false): string {
@@ -92,7 +80,6 @@ export const TapToEdit = ({
   confirmationText = "Are you sure you want to save your changes?",
   confirmationTitle = "Confirm",
   helperText: propsHelperText,
-  showHelperTextAsTooltip = false,
   onlyShowHelperTextWhileEditing = true,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
@@ -228,7 +215,6 @@ export const TapToEdit = ({
           <TapToEditTitle
             helperText={helperText}
             onlyShowHelperTextWhileEditing={onlyShowHelperTextWhileEditing}
-            showHelperTextAsTooltip={showHelperTextAsTooltip}
             title={title}
           />
           <View style={{flexDirection: "row", flex: 1, justifyContent: "flex-end", marginLeft: 8}}>

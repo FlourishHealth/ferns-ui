@@ -2150,12 +2150,6 @@ export interface BaseTapToEditProps extends Omit<FieldProps, "onChange" | "value
   helperText?: string;
 
   /**
-   * Surface helperText as a tooltip rather than below the value.
-   * @default false
-   */
-  showHelperTextAsTooltip?: boolean;
-
-  /**
    * Only display the helperText in the UI while editing. if false, the helperText is always shown below the value.
    * @default true
    */
