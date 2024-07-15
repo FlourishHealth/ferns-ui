@@ -133,7 +133,12 @@ const IconButtonComponent: FC<IconButtonProps> = ({
       {Boolean(loading) ? (
         <ActivityIndicator color={color} size="small" />
       ) : (
-        <FontAwesome6 color={color} name={iconName} size={16} solid />
+        <FontAwesome6
+          color={color}
+          name={iconName}
+          size={variant === "navigation" ? 20 : 16}
+          solid
+        />
       )}
       {Boolean(indicator) && (
         <View

@@ -65,6 +65,7 @@ export class Page extends React.Component<PageProps, {}> {
           direction={this.props.direction || "column"}
           display={this.props.display || "flex"}
           flex="grow"
+          height="100%"
           keyboardOffset={this.props.keyboardOffset}
           maxWidth={this.props.maxWidth || 800}
           padding={this.props.padding !== undefined ? this.props.padding : 2}
