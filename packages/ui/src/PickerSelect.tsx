@@ -338,7 +338,7 @@ export function RNPickerSelect({
     }
 
     return (
-      <View pointerEvents="none" testID="icon_container">
+      <View style={{pointerEvents: "none"}} testID="icon_container">
         <Icon color={disabled ? "secondaryLight" : "primary"} iconName="angle-down" size="sm" />
       </View>
     );
@@ -346,13 +346,17 @@ export function RNPickerSelect({
 
   const renderTextInputOrChildren = () => {
     if (children) {
-      return <View pointerEvents="box-only">{children}</View>;
+      return <View style={{pointerEvents: "box-only"}}>{children}</View>;
     }
 
     return (
       <View
-        pointerEvents="box-only"
-        style={{flexDirection: "row", justifyContent: "space-between", width: "100%"}}
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          pointerEvents: "box-only",
+          width: "100%",
+        }}
       >
         <TextInput
           editable={false}

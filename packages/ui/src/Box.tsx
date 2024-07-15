@@ -186,13 +186,15 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
       }
       if (Platform.OS === "ios" || Platform.OS === "web") {
         return {
-          shadowColor: "#999",
-          shadowOffset: {
-            width: 2,
-            height: 2,
+          boxShadow: {
+            shadowColor: "#999",
+            shadowOffset: {
+              width: 2,
+              height: 2,
+            },
+            shadowRadius: 2,
+            shadowOpacity: 1.0,
           },
-          shadowRadius: 2,
-          shadowOpacity: 1.0,
         };
       } else {
         return {elevation: 4};
