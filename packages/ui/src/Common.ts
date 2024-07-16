@@ -31,7 +31,7 @@ export interface AccordionProps {
   /**
    * The subtitle of the information modal.
    */
-  infoModalSubTitle?: ModalProps["subTitle"];
+  infoModalSubtitle?: ModalProps["subtitle"];
 
   /**
    * The text content of the information modal.
@@ -48,6 +48,11 @@ export interface AccordionProps {
    * @default true
    */
   isCollapsed?: boolean;
+
+  /*
+   * The subtitle showed below the title of the accordion.
+   */
+  subtitle?: string;
 
   /**
    * The title of the accordion.
@@ -1731,7 +1736,7 @@ export interface ModalProps {
   /**
    * The subtitle of the modal.
    */
-  subTitle?: string;
+  subtitle?: string;
   /**
    * The text content of the modal.
    */

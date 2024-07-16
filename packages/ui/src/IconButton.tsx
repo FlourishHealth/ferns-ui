@@ -15,7 +15,7 @@ import {isNative} from "./Utilities";
 type ConfirmationModalProps = {
   visible: boolean;
   title: string;
-  subTitle?: string;
+  subtitle?: string;
   text: string;
   onConfirm: () => void;
   onCancel: () => void;
@@ -24,7 +24,7 @@ type ConfirmationModalProps = {
 const ConfirmationModal: FC<ConfirmationModalProps> = ({
   visible,
   title,
-  subTitle,
+  subtitle,
   text,
   onConfirm,
   onCancel,
@@ -35,7 +35,7 @@ const ConfirmationModal: FC<ConfirmationModalProps> = ({
       primaryButtonText="Confirm"
       secondaryButtonOnClick={onCancel}
       secondaryButtonText="Cancel"
-      subTitle={subTitle}
+      subtitle={subtitle}
       title={title}
       visible={visible}
       onDismiss={onCancel}
@@ -173,7 +173,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
       )}
       {withConfirmation && (
         <ConfirmationModal
-          subTitle={undefined}
+          subtitle={undefined}
           text={confirmationText}
           title={confirmationHeading}
           visible={showConfirmation}

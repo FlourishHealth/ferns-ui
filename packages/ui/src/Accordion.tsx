@@ -1,25 +1,32 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import React, {FC, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {Pressable, View} from "react-native";
 
 import {AccordionProps} from "./Common";
 import {Heading} from "./Heading";
 import {Modal} from "./Modal";
+import {Text} from "./Text";
 import {useTheme} from "./Theme";
 
 export const Accordion: FC<AccordionProps> = ({
   children,
   isCollapsed = false,
   title,
+  subtitle,
   includeInfoModal = false,
   infoModalChildren,
-  infoModalSubTitle,
+  infoModalSubtitle,
   infoModalText,
   infoModalTitle,
 }) => {
   const {theme} = useTheme();
-  const [collapsed, setCollapsed] = useState(isCollapsed);
+  const [collapsed, setCollapsed] = useState(false);
   const [infoModalVisibleState, setInfoModalVisibleState] = useState(false);
+
+  // The external collapse state should override the internal collapse state.
+  useEffect(() => {
+    setCollapsed(isCollapsed);
+  }, [isCollapsed]);
 
   return (
     <>
@@ -27,7 +34,7 @@ export const Accordion: FC<AccordionProps> = ({
         primaryButtonOnClick={() => setInfoModalVisibleState(false)}
         primaryButtonText="Close"
         size="md"
-        subTitle={infoModalSubTitle}
+        subtitle={infoModalSubtitle}
         text={infoModalText}
         title={infoModalTitle}
         visible={infoModalVisibleState}
@@ -46,22 +53,23 @@ export const Accordion: FC<AccordionProps> = ({
         }}
       >
         <View style={{flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-          <View style={{flexDirection: "row", alignItems: "center"}}>
-            <Heading>{title}</Heading>
-            {includeInfoModal && infoModalTitle && (
-              <Pressable
-                accessibilityRole="button"
-                hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-                style={{marginLeft: 8}}
-                onPress={() => setInfoModalVisibleState(true)}
-              >
-                <Heading color="secondaryLight" size="sm">
-                  ⓘ
-                </Heading>
-                {/* TODO: Figure out why FontAwesome6 'light' is not working */}
-                {/* <FontAwesome6 color={theme.text.secondaryLight} light name="circle-info" size={16}  light="circle-info"/> */}
-              </Pressable>
-            )}
+          <View style={{flexDirection: "column", gap: 4}}>
+            <View style={{flexDirection: "row", alignItems: "center"}}>
+              <Heading>{title}</Heading>
+              {includeInfoModal && infoModalTitle && (
+                <Pressable
+                  accessibilityRole="button"
+                  hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+                  style={{marginLeft: 8}}
+                  onPress={() => setInfoModalVisibleState(true)}
+                >
+                  <Heading color="secondaryLight" size="sm">
+                    ⓘ
+                  </Heading>
+                </Pressable>
+              )}
+            </View>
+            {subtitle && <Text>{subtitle}</Text>}
           </View>
           <View>
             <Pressable
