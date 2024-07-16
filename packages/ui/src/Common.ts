@@ -2128,28 +2128,61 @@ export type TapToEditProps =
 export interface BaseTapToEditProps extends Omit<FieldProps, "onChange" | "value"> {
   title: string;
   value: any;
-  // Not required if not editable.
+
+  /**
+   * Not required if not editable.
+   */
   setValue?: (value: any) => void;
-  // Not required if not editable.
+
+  /**
+   * Not required if not editable.
+   */
   onSave?: (value: any) => void | Promise<void>;
-  // Defaults to true
+
+  /**
+   * If false, the field will not be editable and will be disabled
+   * @default true
+   */
   editable?: boolean;
-  // enable edit mode from outside the component
+
+  /**
+   * Enable edit mode from outside the component.
+   */
   isEditing?: boolean;
-  // For changing how the non-editing row renders
-  rowBoxProps?: Partial<BoxProps>;
   transform?: (value: any) => string;
-  fieldComponent?: (setValue: () => void) => ReactElement;
+  /**
+   * Show a confirmation modal before saving the value.
+   * @default false
+   */
   withConfirmation?: boolean;
+
+  /**
+   * The text content of the confirmation modal.
+   * @default "Are you sure you want save your changes?"
+   */
   confirmationText?: string;
-  confirmationHeading?: string;
-  description?: string;
+
+  /**
+   * The title of the confirmation modal.
+   * @default "Confirm"
+   */
+  confirmationTitle?: string;
+
+  /**
+   * Field helperText, a description of the field surfaced in the UI
+   * @default "Confirm"
+   */
+  helperText?: string;
+
+  /**
+   * Only display the helperText in the UI while editing. if false, the helperText is always shown below the value.
+   * @default true
+   */
+  onlyShowHelperTextWhileEditing?: boolean;
+
   // openApi to supported in future
   // openApiModel?: string;
   // openApiField?: string;
-  showDescriptionAsTooltip?: boolean;
-  // Default true. If false, description is shown below the value always.
-  onlyShowDescriptionWhileEditing?: boolean;
 }
 
 export interface APIError {

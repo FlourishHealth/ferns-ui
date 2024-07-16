@@ -13,7 +13,7 @@ import {Portal} from "react-native-portalize";
 
 import {TooltipPosition, TooltipProps} from "./Common";
 import {Text} from "./Text";
-import { useTheme } from "./Theme";
+import {useTheme} from "./Theme";
 
 const TOOLTIP_OFFSET = 6;
 // How many pixels to leave between the tooltip and the edge of the screen
@@ -310,73 +310,67 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
 
   return (
     <View>
-      <View
-        style={{
-          alignSelf: "flex-start",
-        }}
-      >
-        {visible && (
-          <Portal>
+      {visible && (
+        <Portal>
+          <View
+            style={{
+              position: "absolute",
+              zIndex: 999,
+              ...getTooltipPosition({...(measurement as Measurement), idealPosition}),
+            }}
+            onLayout={handleOnLayout}
+          >
+            {includeArrow && isWeb && (
+              <View style={arrowContainerStyles as ViewStyle}>
+                <Arrow color={theme.surface.secondaryExtraDark} position={finalPosition} />
+              </View>
+            )}
             <View
               style={{
-                position: "absolute",
-                zIndex: 999,
-                ...getTooltipPosition({...(measurement as Measurement), idealPosition}),
+                backgroundColor: theme.surface.secondaryExtraDark,
+                borderRadius: theme.radius.default,
+                paddingVertical: 2,
+                paddingHorizontal: 8,
+                maxWidth: 320,
+                display: "flex",
+                flexShrink: 1,
+                opacity: measurement.measured ? 1 : 0,
               }}
-              onLayout={handleOnLayout}
             >
-              {includeArrow && isWeb && (
-                <View style={arrowContainerStyles as ViewStyle}>
-                  <Arrow color={theme.surface.secondaryExtraDark} position={finalPosition} />
-                </View>
-              )}
-              <View
+              <Pressable
+                accessibilityHint="Tooltip information"
+                accessibilityLabel={text}
+                accessibilityRole="button"
                 style={{
                   backgroundColor: theme.surface.secondaryExtraDark,
                   borderRadius: theme.radius.default,
-                  paddingVertical: 2,
-                  paddingHorizontal: 8,
-                  maxWidth: 320,
-                  display: "flex",
-                  flexShrink: 1,
-                  opacity: measurement.measured ? 1 : 0,
                 }}
+                testID="tooltip-container"
+                onPress={() => setVisible(false)}
               >
-                <Pressable
-                  accessibilityHint="Tooltip information"
-                  accessibilityLabel={text}
-                  accessibilityRole="button"
-                  style={{
-                    backgroundColor: theme.surface.secondaryExtraDark,
-                    borderRadius: theme.radius.default,
-                  }}
-                  testID="tooltip-container"
-                  onPress={() => setVisible(false)}
-                >
-                  <Text color="inverted" size="sm">
-                    {text}
-                  </Text>
-                </Pressable>
-              </View>
+                <Text color="inverted" size="sm">
+                  {text}
+                </Text>
+              </Pressable>
             </View>
-          </Portal>
-        )}
-        <View
-          ref={childrenWrapperRef}
-          hitSlop={{top: 10, bottom: 10, left: 15, right: 15}}
-          onPointerEnter={() => {
-            handleHoverIn();
-            children.props.onHoverIn?.();
-          }}
-          onPointerLeave={() => {
-            handleHoverOut();
-            children.props.onHoverOut?.();
-          }}
-          onTouchStart={handleTouchStart}
-          {...(!isWeb && mobilePressProps)}
-        >
-          {children}
-        </View>
+          </View>
+        </Portal>
+      )}
+      <View
+        ref={childrenWrapperRef}
+        hitSlop={{top: 10, bottom: 10, left: 15, right: 15}}
+        onPointerEnter={() => {
+          handleHoverIn();
+          children.props.onHoverIn?.();
+        }}
+        onPointerLeave={() => {
+          handleHoverOut();
+          children.props.onHoverOut?.();
+        }}
+        onTouchStart={handleTouchStart}
+        {...(!isWeb && mobilePressProps)}
+      >
+        {children}
       </View>
     </View>
   );
