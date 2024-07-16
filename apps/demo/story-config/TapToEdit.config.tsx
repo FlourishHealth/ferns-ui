@@ -4,7 +4,7 @@ import {TapToEdit} from "ferns-ui";
 
 export const TapToEditConfiguration: DemoConfiguration = {
   name: "Tap to edit",
-  component: TapToEdit, // Replace with actual component reference
+  component: TapToEdit,
   related: ["Tap to edit pattern", "Address tap-to-edit pattern"],
   description:
     "This element allows the user to see information and interact with an icon to edit it. See the pattern here.",

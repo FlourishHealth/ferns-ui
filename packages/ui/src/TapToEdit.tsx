@@ -1,45 +1,33 @@
 import React, {ReactElement, useEffect, useState} from "react";
-import {Linking} from "react-native";
+import {Linking, View} from "react-native";
 
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {AddressInterface, BoxProps, FieldProps, TapToEditProps} from "./Common";
+import {AddressInterface, FieldProps, TapToEditProps} from "./Common";
 import {Field} from "./Field";
 import {Icon} from "./Icon";
 // import {useOpenAPISpec} from "./OpenAPIContext";
 import {Text} from "./Text";
-import {Tooltip} from "./Tooltip";
 
 const TapToEditTitle = ({
   title,
-  description,
-  showDescriptionAsTooltip,
-  onlyShowDescriptionWhileEditing,
+  helperText,
+  onlyShowHelperTextWhileEditing,
 }: {
-  onlyShowDescriptionWhileEditing?: boolean;
-  showDescriptionAsTooltip?: boolean;
+  onlyShowHelperTextWhileEditing?: boolean;
   title: string;
-  description?: string;
+  helperText?: string;
 }): ReactElement => {
-  const Title = (
-    <Box flex="grow" justifyContent="center">
-      <Text bold>{title}:</Text>
-      {Boolean(description && !showDescriptionAsTooltip && !onlyShowDescriptionWhileEditing) && (
+  return (
+    <View style={{flex: 1, justifyContent: "center"}}>
+      <Text bold>{title}</Text>
+      {Boolean(helperText && !onlyShowHelperTextWhileEditing) && (
         <Text color="secondaryLight" size="sm">
-          {description}
+          {helperText}
         </Text>
       )}
-    </Box>
+    </View>
   );
-  if (showDescriptionAsTooltip) {
-    return (
-      <Tooltip idealPosition="top" text={description}>
-        {Title}
-      </Tooltip>
-    );
-  } else {
-    return Title;
-  }
 };
 
 export function formatAddress(address: AddressInterface, asString = false): string {
@@ -87,20 +75,17 @@ export const TapToEdit = ({
   onSave,
   editable = true,
   isEditing = false,
-  rowBoxProps,
   transform,
-  fieldComponent,
   withConfirmation = false,
   confirmationText = "Are you sure you want to save your changes?",
-  confirmationHeading = "Confirm",
-  description: propsDescription,
-  showDescriptionAsTooltip = false,
-  onlyShowDescriptionWhileEditing = true,
+  confirmationTitle = "Confirm",
+  helperText: propsHelperText,
+  onlyShowHelperTextWhileEditing = true,
   ...fieldProps
 }: TapToEditProps): ReactElement => {
   const [editing, setEditing] = useState(false);
   const [initialValue, setInitialValue] = useState();
-  const description: string | undefined = propsDescription;
+  const helperText: string | undefined = propsHelperText;
   // setInitialValue is called after initial render to handle the case where the value is updated
   useEffect(() => {
     setInitialValue(value);
@@ -114,37 +99,20 @@ export const TapToEdit = ({
 
   if (editable && (editing || isEditing)) {
     return (
-      <Box direction="column">
-        {fieldComponent ? (
-          fieldComponent(setValue as any)
-        ) : (
+      <View style={{flexDirection: "column", width: "100%"}}>
+        <View style={{flex: 1, justifyContent: "center"}}>
+          <Text bold>{title}</Text>
+        </View>
+        <View style={{gap: 16}}>
           <Field
-            helperText={description}
-            label={title}
+            helperText={helperText}
             type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
             value={value}
             onChange={setValue ?? (() => {})}
             {...(fieldProps as any)}
           />
-        )}
-        {editing && !isEditing && (
-          <Box direction="row">
-            <Button
-              confirmationText={confirmationText}
-              modalTitle={confirmationHeading}
-              text="Save"
-              withConfirmation={withConfirmation}
-              onClick={async (): Promise<void> => {
-                if (!onSave) {
-                  console.error("No onSave provided for editable TapToEdit");
-                } else {
-                  setInitialValue(value);
-                  await onSave(value);
-                }
-                setEditing(false);
-              }}
-            />
-            <Box marginLeft={2}>
+          {editing && !isEditing && (
+            <View style={{flexDirection: "row", justifyContent: "flex-end", gap: 16}}>
               <Button
                 text="Cancel"
                 variant="muted"
@@ -155,10 +123,27 @@ export const TapToEdit = ({
                   setEditing(false);
                 }}
               />
-            </Box>
-          </Box>
-        )}
-      </Box>
+              <View style={{marginLeft: 8}}>
+                <Button
+                  confirmationText={confirmationText}
+                  modalTitle={confirmationTitle}
+                  text="Save"
+                  withConfirmation={withConfirmation}
+                  onClick={async (): Promise<void> => {
+                    if (!onSave) {
+                      console.error("No onSave provided for editable TapToEdit");
+                    } else {
+                      setInitialValue(value);
+                      await onSave(value);
+                    }
+                    setEditing(false);
+                  }}
+                />
+              </View>
+            </View>
+          )}
+        </View>
+      </View>
     );
   } else {
     let displayValue = value;
@@ -169,6 +154,7 @@ export const TapToEdit = ({
       // If no transform, try and display the value reasonably.
       if (fieldProps?.type === "boolean") {
         displayValue = value ? "Yes" : "No";
+        // TODO: put transform back in after field types are updated
         // } else if (fieldProps?.type === "percent") {
         //   // Prevent floating point errors from showing up by using parseFloat and precision.
         //   // Pass through parseFloat again to trim off insignificant zeroes.
@@ -217,23 +203,27 @@ export const TapToEdit = ({
     // For textarea to display correctly, we place the title on its own line, then the text
     // on the next line. This is because the textarea will take up the full width of the row.
     return (
-      <Box
-        alignItems={fieldProps?.type === "textarea" ? "start" : "center"}
-        direction={fieldProps?.type === "textarea" ? "column" : "row"}
-        justifyContent="between"
-        paddingX={3}
-        paddingY={2}
-        width="100%"
-        {...(rowBoxProps as Exclude<BoxProps, "onClick">)}
+      <View
+        style={{
+          alignItems: fieldProps?.type === "textarea" ? "flex-start" : "center",
+          flexDirection: fieldProps?.type === "textarea" ? "column" : "row",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
       >
-        <Box direction="row" width="100%">
+        <View style={{flexDirection: "row", width: "100%", gap: 16}}>
           <TapToEditTitle
-            description={description}
-            onlyShowDescriptionWhileEditing={onlyShowDescriptionWhileEditing}
-            showDescriptionAsTooltip={showDescriptionAsTooltip}
+            helperText={helperText}
+            onlyShowHelperTextWhileEditing={onlyShowHelperTextWhileEditing}
             title={title}
           />
-          <Box direction="row" flex="grow" justifyContent="end" marginLeft={2}>
+          <View
+            style={{
+              flexDirection: "row",
+              flex: 1,
+              justifyContent: "flex-end",
+            }}
+          >
             <Box
               accessibilityHint=""
               accessibilityLabel="Link"
@@ -257,15 +247,15 @@ export const TapToEdit = ({
                 <Icon iconName="pencil" size="md" />
               </Box>
             )}
-          </Box>
-        </Box>
+          </View>
+        </View>
         {fieldProps?.type === "textarea" && (
           <>
-            <Box marginTop={2} paddingY={2} width="100%">
+            <View style={{marginTop: 8, paddingVertical: 8, width: "100%"}}>
               <Text align="left" underline={isClickable}>
                 {displayValue}
               </Text>
-            </Box>
+            </View>
             {editable && (
               <Box
                 accessibilityHint=""
@@ -280,7 +270,7 @@ export const TapToEdit = ({
             )}
           </>
         )}
-      </Box>
+      </View>
     );
   }
 };
