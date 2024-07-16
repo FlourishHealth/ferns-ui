@@ -2402,6 +2402,12 @@ export interface SelectFieldPropsBase {
   helperText?: string;
 
   /**
+   * The function to call when the selected value changes.
+   * If requireValue is false and value is undefined, onChange will return empty string.
+   */
+  onChange: (value: string) => void;
+
+  /**
    * The options available for selection in the select field.
    * Each option should have a label and a value.
    */
@@ -2429,11 +2435,6 @@ export interface SelectFieldPropsWithoutRequire extends SelectFieldPropsBase {
    * The current value of the select field.
    */
   value?: string;
-
-  /**
-   * The function to call when the selected value changes.
-   */
-  onChange: (value: string | undefined) => void;
 }
 
 export interface SelectFieldPropsWithRequire extends SelectFieldPropsBase {

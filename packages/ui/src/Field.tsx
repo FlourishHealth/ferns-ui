@@ -48,7 +48,12 @@ export const Field: FC<FieldProps> = ({type, ...rest}) => {
   } else if (type === "boolean") {
     return <BooleanField {...(rest as BooleanFieldProps)} />;
   } else if (type && ["date", "time", "datetime"].includes(type)) {
-    return <DateTimeField {...(rest as DateTimeFieldProps)} />;
+    return (
+      <DateTimeField
+        {...(rest as DateTimeFieldProps)}
+        type={type as "date" | "time" | "datetime"}
+      />
+    );
   } else if (type === "address") {
     return <AddressField {...(rest as AddressFieldProps)} />;
   } else if (type === "customSelect") {
