@@ -31,7 +31,7 @@ export interface AccordionProps {
   /**
    * The subtitle of the information modal.
    */
-  infoModalSubTitle?: ModalProps["subTitle"];
+  infoModalSubtitle?: ModalProps["subtitle"];
 
   /**
    * The text content of the information modal.
@@ -48,6 +48,11 @@ export interface AccordionProps {
    * @default true
    */
   isCollapsed?: boolean;
+
+  /*
+   * The subtitle showed below the title of the accordion.
+   */
+  subtitle?: string;
 
   /**
    * The title of the accordion.
@@ -1297,6 +1302,26 @@ export interface AvatarProps {
 
 export interface BadgeProps {
   /**
+   * When status is "custom", determines the badge's background color.
+   */
+  customBackgroundColor?: string;
+  /**
+   * When status is "custom", determines the badge's border color.
+   */
+  customBorderColor?: string;
+  /**
+   * When status is "custom", determines the badge's icon color
+   */
+  customIconColor?: IconColor;
+  /**
+   * When status is "custom", determines the badge's icon
+   */
+  customIconName?: IconName;
+  /**
+   * When status is "custom", determines the badge's text color.
+   */
+  customTextColor?: string;
+  /**
    * The name of the icon to display in the badge.
    */
   iconName?: IconName;
@@ -1320,7 +1345,7 @@ export interface BadgeProps {
    * The status of the badge. Determines its color and appearance.
    * @default "info"
    */
-  status?: "info" | "error" | "warning" | "success" | "neutral";
+  status?: "info" | "error" | "warning" | "success" | "neutral" | "custom";
 
   /**
    * The text or number to display inside the badge.
@@ -1711,7 +1736,7 @@ export interface ModalProps {
   /**
    * The subtitle of the modal.
    */
-  subTitle?: string;
+  subtitle?: string;
   /**
    * The text content of the modal.
    */

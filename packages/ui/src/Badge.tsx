@@ -12,6 +12,11 @@ export const Badge = ({
   secondary = false,
   variant,
   maxValue = 100,
+  customBackgroundColor,
+  customTextColor,
+  customBorderColor,
+  customIconColor,
+  customIconName,
 }: BadgeProps): React.ReactElement => {
   const {theme} = useTheme();
   const isIconOnly = variant === "iconOnly";
@@ -25,6 +30,7 @@ export const Badge = ({
     info: "#8FC1D2",
     success: "#7FD898",
     neutral: "#AAAAAA",
+    custom: "#AAAAAA",
   };
 
   if (secondary) {
@@ -54,6 +60,11 @@ export const Badge = ({
   } else if (status === "neutral") {
     badgeBgColor = secondary ? "neutralLight" : "neutralDark";
   }
+
+  const backgroundColor = status === "custom" ? customBackgroundColor : theme.surface[badgeBgColor];
+  const borderColor = status === "custom" ? customBorderColor : secondaryBorderColors[status];
+  const textColor = status === "custom" ? customTextColor : theme.text[badgeColor];
+  const iconColor = status === "custom" ? customIconColor : badgeColor;
 
   let badgeBorderRadius = theme.radius.default;
   if (isIconOnly) {
@@ -89,27 +100,26 @@ export const Badge = ({
             justifyContent: "center",
             alignItems: "center",
             paddingVertical: variant === "iconOnly" ? 1 : theme.spacing.xs,
-            paddingHorizontal:
-              variant === "iconOnly" ? (theme.spacing.xs as any) : theme.spacing.sm,
+            paddingHorizontal: variant === "iconOnly" ? theme.spacing.xs : theme.spacing.sm,
             flexDirection: "row",
-            borderRadius: badgeBorderRadius as any,
-            backgroundColor: theme.surface[badgeBgColor],
+            borderRadius: badgeBorderRadius,
+            backgroundColor,
             height: variant === "iconOnly" ? 16 : "auto",
             width: variant === "iconOnly" ? 16 : "auto",
           },
           isIconOnly && {height: 16, width: 16},
-          secondary && {borderWidth: 1, borderColor: secondaryBorderColors[status]},
+          secondary && {borderWidth: 1, borderColor},
         ]}
       >
         {Boolean(variant !== "numberOnly" && iconName) && (
-          <View style={{marginRight: variant === "iconOnly" ? 0 : (theme.spacing.sm as any)}}>
-            <Icon color={badgeColor} iconName={iconName!} size="xs" />
+          <View style={{marginRight: variant === "iconOnly" ? 0 : theme.spacing.sm}}>
+            <Icon color={iconColor} iconName={customIconName ?? iconName!} size="xs" />
           </View>
         )}
         {Boolean(variant !== "iconOnly") && (
           <Text
             style={{
-              color: theme.text[badgeColor],
+              color: textColor,
               fontSize: 10,
               fontWeight: "700",
               fontFamily: "text",

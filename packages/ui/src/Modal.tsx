@@ -32,7 +32,7 @@ const getModalSize = (size: "sm" | "md" | "lg"): DimensionValue => {
 const ModalContent: FC<{
   children?: ModalProps["children"];
   title?: ModalProps["title"];
-  subTitle?: ModalProps["subTitle"];
+  subtitle?: ModalProps["subtitle"];
   text?: ModalProps["text"];
   primaryButtonText?: ModalProps["primaryButtonText"];
   primaryButtonDisabled?: ModalProps["primaryButtonDisabled"];
@@ -46,7 +46,7 @@ const ModalContent: FC<{
 }> = ({
   children,
   title,
-  subTitle,
+  subtitle,
   text,
   primaryButtonText,
   primaryButtonDisabled,
@@ -113,14 +113,14 @@ const ModalContent: FC<{
           <Heading size="lg">{title}</Heading>
         </View>
       )}
-      {subTitle && (
+      {subtitle && (
         <View
           accessibilityHint="Modal Sub Heading Text"
-          accessibilityLabel={subTitle}
+          accessibilityLabel={subtitle}
           accessibilityRole="text"
-          style={{alignSelf: "flex-start", marginTop: subTitle ? 8 : 0}}
+          style={{alignSelf: "flex-start", marginTop: subtitle ? 8 : 0}}
         >
-          <Text size="lg">{subTitle}</Text>
+          <Text size="lg">{subtitle}</Text>
         </View>
       )}
       {text && (
@@ -172,7 +172,7 @@ export const Modal: FC<ModalProps> = ({
   primaryButtonText,
   secondaryButtonText,
   size = "sm",
-  subTitle,
+  subtitle,
   text,
   title,
   visible,
@@ -201,7 +201,7 @@ export const Modal: FC<ModalProps> = ({
 
   const modalContentProps = {
     title,
-    subTitle,
+    subtitle,
     text,
     primaryButtonText,
     primaryButtonDisabled,

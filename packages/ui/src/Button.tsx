@@ -15,18 +15,18 @@ import {isNative} from "./Utilities";
 const ConfirmationModal: FC<{
   visible: boolean;
   title: string;
-  subTitle?: string;
+  subtitle?: string;
   text: string;
   onConfirm: () => void;
   onCancel: () => void;
-}> = ({visible, title, subTitle, text, onConfirm, onCancel}) => {
+}> = ({visible, title, subtitle, text, onConfirm, onCancel}) => {
   return (
     <Modal
       primaryButtonOnClick={onConfirm}
       primaryButtonText="Confirm"
       secondaryButtonOnClick={onCancel}
       secondaryButtonText="Cancel"
-      subTitle={subTitle}
+      subtitle={subtitle}
       title={title}
       visible={visible}
       onDismiss={onCancel}
@@ -145,7 +145,7 @@ const ButtonComponent: FC<ButtonProps> = ({
       </View>
       {withConfirmation && (
         <ConfirmationModal
-          subTitle={modalSubTitle}
+          subtitle={modalSubTitle}
           text={confirmationText}
           title={modalTitle}
           visible={showConfirmation}

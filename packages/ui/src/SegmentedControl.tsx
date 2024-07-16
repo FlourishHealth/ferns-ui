@@ -2,7 +2,7 @@ import React from "react";
 import {Pressable, View} from "react-native";
 
 import {SegmentedControlProps} from "./Common";
-import {Text} from "./Text";
+import {Heading} from "./Heading";
 import {useTheme} from "./Theme";
 
 export const SegmentedControl = ({
@@ -23,6 +23,7 @@ export const SegmentedControl = ({
         alignItems: "center",
         gap: 4,
         height,
+        maxHeight: height,
         borderRadius: theme.primitives.radius3xl,
         borderColor: theme.primitives.neutral300,
         borderWidth: 3,
@@ -52,7 +53,7 @@ export const SegmentedControl = ({
           }}
           onPress={() => onChange(index)}
         >
-          <Text>{item}</Text>
+          <Heading size="sm">{item}</Heading>
         </Pressable>
       ))}
     </View>

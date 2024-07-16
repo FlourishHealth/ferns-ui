@@ -11,7 +11,7 @@ export const ModalDemo = (props: Partial<ModalProps>) => {
         primaryButtonOnClick={() => setShowModal(false)}
         primaryButtonText="Accept"
         secondaryButtonOnClick={() => setShowModal(false)}
-        subTitle="Sub heading"
+        subtitle="Sub heading"
         text="This is the text of the modal."
         title="Demo modal"
         visible={showModal}
@@ -52,7 +52,7 @@ export const Modals = () => {
         secondaryButtonOnClick={() => {}}
         secondaryButtonText={modalToShow === "secondary" ? "Secondary" : undefined}
         size={size as "sm" | "md" | "lg"}
-        subTitle="Sub heading"
+        subtitle="Sub heading"
         text="This is the text of the modal."
         title={`${modalToShow} modal`}
         visible={

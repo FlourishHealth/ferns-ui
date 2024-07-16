@@ -105,7 +105,9 @@ export const TapToEdit = ({
         </View>
         <View style={{gap: 16}}>
           <Field
+            grow={fieldProps?.type === "textarea" ? fieldProps.grow ?? true : undefined}
             helperText={helperText}
+            row={fieldProps?.type === "textarea" ? 5 : undefined}
             type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
             value={value}
             onChange={setValue ?? (() => {})}
@@ -236,7 +238,7 @@ export const TapToEdit = ({
                 </Text>
               )}
             </Box>
-            {editable && (
+            {editable && fieldProps?.type !== "textarea" && (
               <Box
                 accessibilityHint=""
                 accessibilityLabel="Edit"
