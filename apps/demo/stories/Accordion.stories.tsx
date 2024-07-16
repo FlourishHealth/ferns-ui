@@ -34,7 +34,7 @@ export const AccordionDevDemo = () => {
         <Accordion
           includeInfoModal
           infoModalChildren={<InfoChild />}
-          infoModalSubTitle="Info Modal Sub title"
+          infoModalSubtitle="Info Modal Subtitle"
           infoModalTitle="Info Modal Title"
           title="Accordion Title"
         >
