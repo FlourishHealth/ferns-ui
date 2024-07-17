@@ -1,4 +1,4 @@
-import {Box, DateTimeField} from "ferns-ui";
+import {Box, DateTimeField, Text} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 export const DateTimeFieldDemo = (): ReactElement => {
@@ -31,6 +31,7 @@ export const DateTimeFieldStory = (): ReactElement => {
           setValue(v);
         }}
       />
+      <Text>Value: {value}</Text>
     </Box>
   );
 };
@@ -48,6 +49,7 @@ export const DateFieldStory = (): ReactElement => {
           setValue(v);
         }}
       />
+      <Text>Value: {value}</Text>
     </Box>
   );
 };
@@ -65,6 +67,7 @@ export const TimeFieldStory = (): ReactElement => {
           setValue(v);
         }}
       />
+      <Text>Value: {value}</Text>
     </Box>
   );
 };

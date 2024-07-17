@@ -28,8 +28,8 @@ export const SelectField: FC<SelectFieldProps> = ({
         placeholder={!requireValue ? clearOption : {}}
         value={value ?? ""}
         onValueChange={(v) => {
-          if (v === "" && !requireValue) {
-            (onChange as (val: string | undefined) => void)(undefined);
+          if (v === undefined || v === "") {
+            onChange("");
           } else {
             onChange(v);
           }

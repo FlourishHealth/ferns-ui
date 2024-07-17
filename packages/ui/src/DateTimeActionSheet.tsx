@@ -340,7 +340,7 @@ const DateCalendar = ({
 
   // Check if the date is T00:00:00.000Z (it should be), otherwise treat it as a date in the
   // current timezone.
-  const dt = DateTime.fromISO(date).setZone("UTC");
+  const dt = DateTime.fromISO(date);
   let dateString: string;
   if (dt.hour === 0 && dt.minute === 0 && dt.second === 0) {
     dateString = dt.toISO()!;

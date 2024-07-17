@@ -26,7 +26,7 @@ export const DateTimeField = ({
           return printDateAndTime(val, {timezone, showTimezone: true});
         case "date":
         default:
-          return printDate(val, {timezone, showTimezone: true});
+          return printDate(val, {ignoreTime: true});
       }
     },
     [timezone, type]
@@ -108,9 +108,9 @@ export const DateTimeField = ({
         const month = cleanedInput.slice(0, 2);
         const day = cleanedInput.slice(2, 4);
         const year = cleanedInput.slice(4, 8);
-        parsedDate = DateTime.fromFormat(`${month}${day}${year}`, "MMddyyyy", {
-          zone: timezone,
-        });
+        parsedDate = DateTime.fromFormat(`${month}${day}${year}`, "MMddyyyy", {zone: timezone})
+          .startOf("day")
+          .toUTC(0, {keepLocalTime: true});
       }
 
       if (parsedDate?.isValid) {

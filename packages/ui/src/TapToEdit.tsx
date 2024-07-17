@@ -238,7 +238,7 @@ export const TapToEdit = ({
                 </Text>
               )}
             </Box>
-            {editable && fieldProps?.type !== "textarea" && (
+            {editable && (
               <Box
                 accessibilityHint=""
                 accessibilityLabel="Edit"
@@ -252,25 +252,11 @@ export const TapToEdit = ({
           </View>
         </View>
         {fieldProps?.type === "textarea" && (
-          <>
-            <View style={{marginTop: 8, paddingVertical: 8, width: "100%"}}>
-              <Text align="left" underline={isClickable}>
-                {displayValue}
-              </Text>
-            </View>
-            {editable && (
-              <Box
-                accessibilityHint=""
-                accessibilityLabel="Edit"
-                alignSelf="end"
-                marginLeft={2}
-                width={16}
-                onClick={(): void => setEditing(true)}
-              >
-                <Icon color="primary" iconName="pencil" size="md" />
-              </Box>
-            )}
-          </>
+          <View style={{marginTop: 8, paddingVertical: 8, width: "100%"}}>
+            <Text align="left" underline={isClickable}>
+              {displayValue}
+            </Text>
+          </View>
         )}
       </View>
     );
