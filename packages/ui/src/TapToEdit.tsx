@@ -233,7 +233,7 @@ export const TapToEdit = ({
               onClick={isClickable ? openLink : undefined}
             >
               {Boolean(fieldProps?.type !== "textarea") && (
-                <Text align="right" underline={isClickable}>
+                <Text align="right" skipLinking underline={isClickable}>
                   {displayValue}
                 </Text>
               )}
