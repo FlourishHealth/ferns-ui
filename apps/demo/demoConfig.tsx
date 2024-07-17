@@ -90,7 +90,7 @@ interface DemoConfigurationBase {
     // "md" is the default.
     size?: "md" | "lg";
     controls?: {
-      [prop: string]: FieldProps & {defaultValue?: any};
+      [prop: string]: Omit<FieldProps & {defaultValue?: any; options?: any}, "value" | "onChange">;
     };
   };
   // Stories represent different states of the component and different examples of using it.
