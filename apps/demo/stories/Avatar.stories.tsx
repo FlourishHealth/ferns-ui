@@ -15,6 +15,7 @@ export const AvatarDemo = (props: Partial<AvatarProps>) => {
   return (
     <Box>
       <Avatar
+        hasBorder
         name="Tony Stark"
         src={src}
         status="online"
@@ -31,15 +32,15 @@ export const AvatarInitials = () => {
   return (
     <Box direction="column" display="flex">
       <Text>Tony Stark</Text>
-      <Avatar name="Tony Stark" status="online" />
+      <Avatar hasBorder name="Tony Stark" status="online" />
       <Text>Tony Stark Jr</Text>
-      <Avatar name="Tony Stark Jr" status="online" />
+      <Avatar hasBorder name="Tony Stark Jr" status="online" />
       <Text>Tony Ironman Stark</Text>
-      <Avatar name="Tony Ironman Stark" status="online" />
+      <Avatar hasBorder name="Tony Ironman Stark" status="online" />
       <Text>Tony</Text>
-      <Avatar name="Tony" status="online" />
+      <Avatar hasBorder name="Tony" status="online" />
       <Text> Tony Stark Colored</Text>
-      <Avatar name="Tony Stark" status="online" />
+      <Avatar hasBorder name="Tony Stark" status="online" />
     </Box>
   );
 };
@@ -121,6 +122,7 @@ export const AvatarStatusDemo = () => {
       <Box paddingY={1}>
         <Text>{text}</Text>
         <Avatar
+          hasBorder
           name="Tony Stark"
           size={size}
           src="https://i.ibb.co/ZfCZrY8/keerthi.jpg"
@@ -152,6 +154,7 @@ export const AvatarImage = (): ReactElement => {
       <Text>Height: {xlImage.height}</Text>
 
       <Avatar
+        hasBorder
         name="Tony Stark"
         size="xl"
         src={xlImage.uri}
