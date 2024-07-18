@@ -119,7 +119,7 @@ export const TapToEdit = ({
             grow={fieldProps?.type === "textarea" ? fieldProps.grow ?? true : undefined}
             helperText={helperText}
             inputRef={
-              ["text", "textarea", "url"].includes(fieldProps?.type)
+              ["text", "textarea", "url", "email", "number"].includes(fieldProps?.type)
                 ? (ref: any) => (inputRef.current = ref)
                 : undefined
             }
