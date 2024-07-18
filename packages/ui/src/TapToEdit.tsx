@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useState} from "react";
+import React, {ReactElement, useEffect, useRef, useState} from "react";
 import {Linking, View} from "react-native";
 
 import {Box} from "./Box";
@@ -93,6 +93,17 @@ export const TapToEdit = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // TODO: Auto focus on input when editing for field types other than text for accessibility
+  const inputRef = useRef<any>(null);
+
+  // bring the bring the input into focus when editing from within the component,
+  // but not when editing from outside
+  useEffect(() => {
+    if (editable && editing && !isEditing) {
+      inputRef.current?.focus();
+    }
+  }, [editable, editing, isEditing]);
+
   if (editable && !setValue) {
     throw new Error("setValue is required if editable is true");
   }
@@ -107,6 +118,11 @@ export const TapToEdit = ({
           <Field
             grow={fieldProps?.type === "textarea" ? fieldProps.grow ?? true : undefined}
             helperText={helperText}
+            inputRef={
+              ["text", "textarea", "url", "email", "number"].includes(fieldProps?.type)
+                ? (ref: any) => (inputRef.current = ref)
+                : undefined
+            }
             row={fieldProps?.type === "textarea" ? 5 : undefined}
             type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
             value={value}
