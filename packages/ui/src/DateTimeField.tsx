@@ -1,6 +1,6 @@
 import {getCalendars} from "expo-localization";
 import {DateTime} from "luxon";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import {DateTimeFieldProps} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
@@ -147,6 +147,14 @@ export const DateTimeField = ({
   } else if (type === "date") {
     placeholder = "MM/dd/yyyy";
   }
+
+  // if the value of the overall field changes via prop from the parent,
+  // update the formattedDate to keep the value of the TextField and DateTimeActionSheet in sync
+  useEffect(() => {
+    if (value && formatValue(value) !== formattedDate) {
+      setFormattedDate(formatValue(value));
+    }
+  }, [formatValue, formattedDate, value]);
 
   return (
     <>
