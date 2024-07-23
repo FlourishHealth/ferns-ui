@@ -45,8 +45,7 @@ export const Text = ({
 }: TextProps): React.ReactElement => {
   const {theme} = useTheme();
 
-  // TODO: make fonts part of theme.
-  const [fontsLoaded] = useFonts({
+  useFonts({
     "text-bold": Nunito_700Bold,
     "text-bold-italic": Nunito_700Bold_Italic,
     "text-medium": Nunito_500Medium,
@@ -55,12 +54,6 @@ export const Text = ({
     "text-regular": Nunito_400Regular,
     "text-regular-italic": Nunito_400Regular_Italic,
   });
-
-  // TODO: How should we handle unloaded fonts.
-  if (!fontsLoaded) {
-    // eslint-disable-next-line react-native/no-raw-text
-    return <NativeText />;
-  }
 
   const style: TextStyle = {};
 
