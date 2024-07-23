@@ -1,12 +1,13 @@
 import {getCalendars} from "expo-localization";
 import {DateTime} from "luxon";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import {DateTimeFieldProps} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
 import {printDate, printDateAndTime, printTime} from "./DateUtilities";
 import {TextField} from "./TextField";
 
+// TODO: allow use of keyboard to type in date/time
 export const DateTimeField = ({
   type,
   value,
@@ -143,10 +144,18 @@ export const DateTimeField = ({
   if (type === "time") {
     placeholder = "hh:mm a";
   } else if (type === "datetime") {
-    placeholder = "MM/dd/yyyy hh:mm a";
+    placeholder = "mm/dd/yyyy hh:mm a";
   } else if (type === "date") {
-    placeholder = "MM/dd/yyyy";
+    placeholder = "mm/dd/yyyy";
   }
+
+  // if the value of the overall field changes via prop from the parent,
+  // update the formattedDate to keep the value of the TextField and DateTimeActionSheet in sync
+  useEffect(() => {
+    if (value && formatValue(value) !== formattedDate) {
+      setFormattedDate(formatValue(value));
+    }
+  }, [formatValue, formattedDate, value]);
 
   return (
     <>
