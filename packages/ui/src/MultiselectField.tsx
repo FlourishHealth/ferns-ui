@@ -60,6 +60,7 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
   onChange,
   errorText,
   helperText,
+  disabled,
 }) => {
   const isMobile = isMobileDevice();
   const isDefault = variant === "leftText";
@@ -81,22 +82,30 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
       accessibilityHint="Contains a prompt and list of options to select"
       accessibilityLabel={title}
       accessibilityRole="combobox"
-      style={{display: "flex", width: "100%", gap: isMobile ? 16 : 8}}
+      style={{
+        display: "flex",
+        width: "100%",
+        gap: isMobile ? 16 : 8,
+      }}
     >
       <Heading color="primary" size="sm">
         {title}
       </Heading>
       {Boolean(errorText) && <FieldError text={errorText!} />}
-      {options.map((option) => (
-        <Option
-          key={option.key ?? option.value}
-          isDefault={isDefault}
-          label={option.label}
-          selected={selectedItems.includes(option.value)}
-          value={option.value}
-          onSelect={() => toggleItem(option.value)}
-        />
-      ))}
+      {Boolean(disabled) ? (
+        <Text>{value.join(", ")}</Text>
+      ) : (
+        options.map((option) => (
+          <Option
+            key={option.key ?? option.value}
+            isDefault={isDefault}
+            label={option.label}
+            selected={selectedItems.includes(option.value)}
+            value={option.value}
+            onSelect={() => toggleItem(option.value)}
+          />
+        ))
+      )}
       {Boolean(helperText) && <FieldHelperText text={helperText!} />}
     </View>
   );
