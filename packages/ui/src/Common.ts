@@ -2295,6 +2295,12 @@ export interface MultiselectFieldProps extends HelperTextProps, ErrorTextProps {
    * The function to call when the selected values change.
    */
   onChange: (selected: string[]) => void;
+
+  /**
+   * The disabled state of multiselect. Removes checkboxes and only shows the values.
+   */
+
+  disabled?: boolean;
 }
 
 export interface TableTitleProps {
