@@ -35,17 +35,11 @@ export const Heading = ({
   const {theme} = useTheme();
 
   // TODO: make fonts part of theme.
-  const [fontsLoaded] = useFonts({
+  useFonts({
     heading: TitilliumWeb_600SemiBold,
     "heading-bold": TitilliumWeb_700Bold,
     "heading-semibold": TitilliumWeb_600SemiBold,
   });
-
-  // TODO: How should we handle unloaded fonts.
-  if (!fontsLoaded) {
-    // eslint-disable-next-line react-native/no-raw-text
-    return <NativeText>Loading fonts...</NativeText>;
-  }
 
   const style: StyleProp<TextStyle> = {};
 
