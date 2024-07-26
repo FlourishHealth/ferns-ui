@@ -64,7 +64,9 @@ const ButtonComponent: FC<ButtonProps> = ({
   let borderWidth: number | undefined;
   let color = theme.text.inverted;
 
-  if (variant === "secondary") {
+  if (disabled) {
+    backgroundColor = theme.surface.disabled;
+  } else if (variant === "secondary") {
     backgroundColor = theme.surface.secondaryDark;
   } else if (variant === "muted") {
     backgroundColor = theme.surface.secondaryLight;
@@ -76,8 +78,6 @@ const ButtonComponent: FC<ButtonProps> = ({
     color = theme.text.secondaryDark;
   } else if (variant === "destructive") {
     backgroundColor = theme.surface.error;
-  } else if (disabled) {
-    backgroundColor = theme.surface.disabled;
   }
 
   return (
