@@ -1,4 +1,4 @@
-import {Box, Button, ButtonProps} from "ferns-ui";
+import {Box, Button, ButtonProps, Heading} from "ferns-ui";
 import React from "react";
 
 export const ButtonDemo = (props: Partial<ButtonProps>) => {
@@ -11,41 +11,92 @@ export const ButtonDemo = (props: Partial<ButtonProps>) => {
 
 export const ButtonVariants = (props: Partial<ButtonProps>) => {
   return (
-    <Box direction="row" wrap>
-      <Box padding={1}>
-        <Button text="Default/Primary" onClick={() => console.info("clicked")} {...props} />
+    <>
+      <Box direction="row" wrap>
+        <Box padding={1}>
+          <Button text="Default/Primary" onClick={() => console.info("clicked")} {...props} />
+        </Box>
+        <Box padding={1}>
+          <Button
+            text="Secondary"
+            variant="secondary"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+        <Box padding={1}>
+          <Button
+            text="Outline"
+            variant="outline"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+        <Box padding={1}>
+          <Button
+            text="Destructive"
+            variant="destructive"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+        <Box padding={1}>
+          <Button text="Muted" variant="muted" onClick={() => console.info("clicked")} {...props} />
+        </Box>
+        <Box padding={1}>
+          <Button disabled text="Disabled" onClick={() => console.info("clicked")} {...props} />
+        </Box>
       </Box>
-      <Box padding={1}>
-        <Button
-          text="Secondary"
-          variant="secondary"
-          onClick={() => console.info("clicked")}
-          {...props}
-        />
+      <Box direction="column" paddingX={1} paddingY={4}>
+        <Heading>Disabled Variants</Heading>
       </Box>
-      <Box padding={1}>
-        <Button
-          text="Outline"
-          variant="outline"
-          onClick={() => console.info("clicked")}
-          {...props}
-        />
+      <Box direction="row" wrap>
+        <Box padding={1}>
+          <Button
+            disabled
+            text="Default/Primary"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+        <Box padding={1}>
+          <Button
+            disabled
+            text="Secondary"
+            variant="secondary"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+        <Box padding={1}>
+          <Button
+            disabled
+            text="Outline"
+            variant="outline"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+        <Box padding={1}>
+          <Button
+            disabled
+            text="Destructive"
+            variant="destructive"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
+        <Box padding={1}>
+          <Button
+            disabled
+            text="Muted"
+            variant="muted"
+            onClick={() => console.info("clicked")}
+            {...props}
+          />
+        </Box>
       </Box>
-      <Box padding={1}>
-        <Button
-          text="Destructive"
-          variant="destructive"
-          onClick={() => console.info("clicked")}
-          {...props}
-        />
-      </Box>
-      <Box padding={1}>
-        <Button text="Muted" variant="muted" onClick={() => console.info("clicked")} {...props} />
-      </Box>
-      <Box padding={1}>
-        <Button disabled text="Disabled" onClick={() => console.info("clicked")} {...props} />
-      </Box>
-    </Box>
+    </>
   );
 };
 
