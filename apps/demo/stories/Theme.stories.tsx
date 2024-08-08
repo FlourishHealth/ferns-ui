@@ -206,9 +206,8 @@ export const ThemeFontStories = () => {
       <Button text="Some Button Text" variant="primary" onClick={() => {}} />
       <Field
         helperText="Here's some help text"
-        label="Text Field"
-        name="text"
         placeholder="Placeholder text"
+        title="Text Field"
         type="text"
         value=""
         onChange={(): void => {}}

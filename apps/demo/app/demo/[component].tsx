@@ -200,7 +200,7 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
             <Field
               key={prop}
               title={config.demoOptions?.controls?.[prop]?.title ?? startCase(prop)}
-              {...config.demoOptions?.controls?.[prop]}
+              {...(config.demoOptions?.controls?.[prop] as any)}
               value={propValues[prop]}
               onChange={(value: any) => {
                 setPropValues({...cloneDeep(propValues), [prop]: value});

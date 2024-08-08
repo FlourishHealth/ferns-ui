@@ -1,7 +1,7 @@
-import {Box, FieldOptions, Heading, SelectField} from "ferns-ui";
+import {Box, FieldOption, Heading, SelectField} from "ferns-ui";
 import React from "react";
 
-const options: FieldOptions = [
+const options: FieldOption[] = [
   {label: "First", value: "first"},
   {label: "Second", value: "second"},
   {label: "Third, A Really Long Option", value: "third"},
