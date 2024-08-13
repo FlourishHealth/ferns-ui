@@ -193,10 +193,10 @@ export const TextField: FC<TextFieldProps> = ({
           value={value}
           onBlur={() => {
             if (disabled) return;
-
             if (onBlur) {
               onBlur(value ?? "");
             }
+            setFocused(false);
           }}
           onChangeText={onChange}
           onContentSizeChange={(event) => {
