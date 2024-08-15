@@ -1,4 +1,4 @@
-import React, {ReactElement, useRef} from "react";
+import React, {ReactElement, useEffect, useRef} from "react";
 import {Animated, TouchableWithoutFeedback, View} from "react-native";
 
 import {BooleanFieldProps} from "./Common";
@@ -52,6 +52,12 @@ export const BooleanField = ({
     animateSwitch(!value);
     onChange(!value);
   };
+
+  // Update animation when value changes without pressing
+  useEffect(() => {
+    animateSwitch(value);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
 
   const interpolatedColorAnimation = backgroundColor.interpolate({
     inputRange: [-75, 75],
