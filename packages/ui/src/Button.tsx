@@ -1,6 +1,6 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
-import React, {FC, useState} from "react";
+import React, {FC, useMemo, useState} from "react";
 import {ActivityIndicator, Pressable, Text, View} from "react-native";
 
 import {Box} from "./Box";
@@ -55,29 +55,41 @@ const ButtonComponent: FC<ButtonProps> = ({
   const [showConfirmation, setShowConfirmation] = useState(false);
   const {theme} = useTheme();
 
+  const {backgroundColor, borderColor, borderWidth, color} = useMemo(() => {
+    if (!theme) {
+      return {};
+    }
+    let bgColor = theme.surface.primary;
+    let bColor: string | undefined;
+    let bWidth: number | undefined;
+    let textColor = theme.text.inverted;
+
+    if (disabled) {
+      bgColor = theme.surface.disabled;
+    } else if (variant === "secondary") {
+      bgColor = theme.surface.secondaryDark;
+    } else if (variant === "muted") {
+      bgColor = theme.surface.secondaryLight;
+      textColor = theme.surface.neutralDark;
+    } else if (variant === "outline") {
+      bgColor = theme.surface.base;
+      bColor = theme.text.secondaryDark;
+      bWidth = 2;
+      textColor = theme.text.secondaryDark;
+    } else if (variant === "destructive") {
+      bgColor = theme.surface.error;
+    }
+
+    return {
+      backgroundColor: bgColor,
+      borderColor: bColor,
+      borderWidth: bWidth,
+      color: textColor,
+    };
+  }, [disabled, variant, theme]);
+
   if (!theme) {
     return null;
-  }
-
-  let backgroundColor = theme.surface.primary;
-  let borderColor: string | undefined;
-  let borderWidth: number | undefined;
-  let color = theme.text.inverted;
-
-  if (disabled) {
-    backgroundColor = theme.surface.disabled;
-  } else if (variant === "secondary") {
-    backgroundColor = theme.surface.secondaryDark;
-  } else if (variant === "muted") {
-    backgroundColor = theme.surface.secondaryLight;
-    color = theme.surface.neutralDark;
-  } else if (variant === "outline") {
-    backgroundColor = theme.surface.base;
-    borderColor = theme.text.secondaryDark;
-    borderWidth = 2;
-    color = theme.text.secondaryDark;
-  } else if (variant === "destructive") {
-    backgroundColor = theme.surface.error;
   }
 
   return (
