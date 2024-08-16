@@ -73,6 +73,7 @@ export const TextField: FC<TextFieldProps> = ({
   grow,
   returnKeyType,
   onBlur,
+  onFocus,
   onEnter,
   onSubmitEditing,
   testID,
@@ -208,6 +209,9 @@ export const TextField: FC<TextFieldProps> = ({
           onFocus={() => {
             if (!disabled) {
               setFocused(true);
+            }
+            if (onFocus) {
+              onFocus();
             }
           }}
           onSubmitEditing={() => {
