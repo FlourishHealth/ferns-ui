@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useState} from "react";
+import React, {FC, useCallback, useEffect, useState} from "react";
 
 import {NumberFieldProps} from "./Common";
 import {TextField} from "./TextField";
@@ -12,6 +12,11 @@ export const NumberField: FC<NumberFieldProps> = ({
   ...rest
 }: NumberFieldProps) => {
   const [value, setValue] = useState(valueProp ?? "");
+
+  // Sync local state with incoming prop values
+  useEffect(() => {
+    setValue(valueProp ?? "");
+  }, [valueProp]);
 
   const getError = useCallback(
     (newV?: string) => {
