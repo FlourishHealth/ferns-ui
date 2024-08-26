@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useState} from "react";
+import React, {FC, useCallback, useEffect, useState} from "react";
 
 import {EmailFieldProps} from "./Common";
 import {TextField} from "./TextField";
@@ -25,6 +25,12 @@ export const EmailField: FC<EmailFieldProps> = ({
     }
     return undefined;
   }, []);
+
+  // Sync local state with incoming prop values
+  useEffect(() => {
+    setLocalValue(value || "");
+    setError(errorText);
+  }, [value, errorText]);
 
   const handleBlur = useCallback(
     (email: string) => {
@@ -62,8 +68,18 @@ export const EmailField: FC<EmailFieldProps> = ({
       placeholder={placeholder}
       type="email"
       value={localValue}
-      onBlur={(e) => handleBlur(e)}
-      onChange={(e) => handleChange(e)}
+      onBlur={(e) => {
+        handleBlur(e);
+        if (onBlur) {
+          onBlur(value || "");
+        }
+      }}
+      onChange={(e) => {
+        handleChange(e);
+        if (onChange) {
+          onChange;
+        }
+      }}
       {...rest}
     />
   );
