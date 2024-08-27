@@ -128,6 +128,9 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     lgDirection: (value: any) =>
       mediaQueryLargerThan("lg") ? {flexDirection: value, display: "flex"} : {},
     display: (value: any) => {
+      if (value === "none") {
+        return {display: "none"};
+      }
       return value === "flex" ? {flex: undefined} : {flex: 0, flexDirection: "row"};
     },
     flex: (value: string) => {

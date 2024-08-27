@@ -50,6 +50,20 @@ export const MultiselectVariants = () => {
           onChange={() => console.info("selected")}
         />
       </Box>
+      <Box padding={3}>
+        <MultiselectField
+          disabled
+          options={[
+            {label: "Option 1", value: "Option 1"},
+            {label: "Option 2", value: "Option 2"},
+            {label: "Option 3", value: "Option 3"},
+          ]}
+          title="Disabled State"
+          value={["Option 1", "Option 2"]}
+          variant="rightText"
+          onChange={() => console.info("selected")}
+        />
+      </Box>
     </Box>
   );
 };

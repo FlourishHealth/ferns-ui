@@ -36,10 +36,7 @@ export const SegmentedControl = ({
           accessibilityRole="button"
           style={{
             display: "flex",
-            paddingTop: theme.spacing.sm,
-            paddingBottom: theme.spacing.sm,
-            paddingLeft: theme.spacing.md,
-            paddingRight: theme.spacing.md,
+            paddingHorizontal: size === "md" ? theme.spacing.sm : theme.spacing.md,
             justifyContent: "center",
             alignItems: "center",
             height: "100%",

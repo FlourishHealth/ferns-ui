@@ -322,3 +322,16 @@ export function printSince(
     return `${years} ${years === 1 ? "year" : "years"}${ago}`;
   }
 }
+
+export function convertNullToUndefined(value: string | null): string | undefined {
+  return value ?? undefined;
+}
+
+// Get the ISO date string from a date string. If the date string is undefined,
+// return undefined instead of null so MongoDB can handle it.
+export function getIsoDate(date: string | undefined): string | undefined {
+  if (!date) {
+    return undefined;
+  }
+  return convertNullToUndefined(DateTime.fromISO(date).toUTC().toISO());
+}

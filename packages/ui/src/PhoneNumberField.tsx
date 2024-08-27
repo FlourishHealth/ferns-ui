@@ -1,5 +1,5 @@
 import {AsYouType, parsePhoneNumberFromString} from "libphonenumber-js";
-import React, {FC, useCallback, useState} from "react";
+import React, {FC, useCallback, useEffect, useState} from "react";
 
 import {PhoneNumberFieldProps} from "./Common";
 import {TextField} from "./TextField";
@@ -16,6 +16,12 @@ export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
 }) => {
   const [localValue, setLocalValue] = useState<string>(value || "");
   const [error, setError] = useState<string | undefined>(errorText);
+
+  // Sync local state with incoming prop values
+  useEffect(() => {
+    setLocalValue(value || "");
+    setError(errorText);
+  }, [value, errorText]);
 
   const validatePhoneNumber = useCallback(
     (phoneNumber: string): string | undefined => {

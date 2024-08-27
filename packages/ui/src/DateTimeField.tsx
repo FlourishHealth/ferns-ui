@@ -1,21 +1,32 @@
 import {getCalendars} from "expo-localization";
 import {DateTime} from "luxon";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import {DateTimeFieldProps} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
 import {printDate, printDateAndTime, printTime} from "./DateUtilities";
 import {TextField} from "./TextField";
 
+// TODO: allow use of keyboard to type in date/time
 export const DateTimeField = ({
   type,
   value,
   onChange,
   timezone: tz,
+  errorText,
   ...rest
 }: DateTimeFieldProps): React.ReactElement => {
   const calendar = getCalendars()[0];
   const timezone = (tz || calendar?.timeZone) ?? "UTC"; // Fallback to UTC if timezone is undefined
+
+  let placeholder: string = "";
+  if (type === "time") {
+    placeholder = "hh:mm a";
+  } else if (type === "datetime") {
+    placeholder = "mm/dd/yyyy hh:mm a";
+  } else if (type === "date") {
+    placeholder = "mm/dd/yyyy";
+  }
 
   const formatValue = useCallback(
     (val: string) => {
@@ -81,7 +92,7 @@ export const DateTimeField = ({
   const dateActionSheetRef: React.RefObject<any> = React.createRef();
   const [formattedDate, setFormattedDate] = useState<string>(value ? formatValue(value) : "");
   const [showDate, setShowDate] = useState(false);
-  const [error, setError] = useState<string>("");
+  const [localError, setLocalError] = useState<string>("");
 
   const onTextFieldChange = useCallback(
     (inputDate: string) => {
@@ -113,20 +124,26 @@ export const DateTimeField = ({
           .toUTC(0, {keepLocalTime: true});
       }
 
+      if (!parsedDate) {
+        setLocalError("Invalid date/time. Please format as " + `${placeholder}`);
+        setFormattedDate(formattedInput);
+        onChange("");
+        return;
+      }
       if (parsedDate?.isValid) {
         setFormattedDate(formatValue(parsedDate.toISO()));
-        setError("");
+        setLocalError("");
         onChange(parsedDate.toISO());
       } else if (cleanedInput.length > (type === "datetime" ? 12 : type === "time" ? 4 : 8)) {
-        setError("Invalid date/time");
+        setLocalError("Invalid date/time");
         setFormattedDate(formattedInput);
         onChange("");
       } else {
         setFormattedDate(formattedInput);
-        setError("");
+        setLocalError("Invalid date/time. Please format as " + `${placeholder}`);
       }
     },
-    [formatInputDate, type, timezone, formatValue, onChange]
+    [formatInputDate, type, timezone, formatValue, onChange, placeholder]
   );
 
   const onActionSheetChange = useCallback(
@@ -134,24 +151,29 @@ export const DateTimeField = ({
       onChange(inputDate);
       setFormattedDate(formatValue(inputDate));
       setShowDate(false);
-      setError("");
+      setLocalError("");
     },
     [formatValue, onChange]
   );
 
-  let placeholder: string = "";
-  if (type === "time") {
-    placeholder = "hh:mm a";
-  } else if (type === "datetime") {
-    placeholder = "MM/dd/yyyy hh:mm a";
-  } else if (type === "date") {
-    placeholder = "MM/dd/yyyy";
-  }
+  // if the value of the overall field changes via prop from the parent,
+  // update the formattedDate to keep the value of the TextField and DateTimeActionSheet in sync
+  useEffect(() => {
+    if (value) {
+      const formatted = formatValue(value);
+      if (formattedDate !== formatted) {
+        setFormattedDate(formatted);
+      }
+      if (errorText) {
+        setLocalError(errorText);
+      }
+    }
+  }, [value, formatValue, formattedDate, errorText]);
 
   return (
     <>
       <TextField
-        errorText={error}
+        errorText={localError}
         iconName={type === "time" ? "clock" : "calendar"}
         placeholder={placeholder}
         type="text"

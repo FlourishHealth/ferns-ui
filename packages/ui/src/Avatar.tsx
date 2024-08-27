@@ -46,7 +46,7 @@ const sizeIconPadding = {
 
 export const Avatar: FC<AvatarProps> = ({
   name,
-  hasBorder = true,
+  hasBorder = false,
   size = "md",
   src,
   onChange,

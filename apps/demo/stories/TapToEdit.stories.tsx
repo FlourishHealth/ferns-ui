@@ -41,6 +41,10 @@ export const TapStory = (): ReactElement => {
     zipcode: "12345",
   });
   const [url, setURL] = useState("https://en.wikipedia.org/wiki/React_Native#Implementation");
+  const [number, setNumber] = useState(12345);
+  const [email, setEmail] = useState("email@example.com");
+  const [customSelect, setCustomSelect] = useState("Option1");
+
   return (
     <Box direction="column" display="flex" height="100%" scroll width="100%">
       <Box>
@@ -148,6 +152,43 @@ export const TapStory = (): ReactElement => {
           value={url}
           onSave={(value): void => {
             setURL(value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TapToEdit
+          setValue={setNumber}
+          title="Number"
+          type="number"
+          value={number}
+          onSave={(value): void => {
+            setNumber(value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TapToEdit
+          setValue={setEmail}
+          title="Email"
+          type="email"
+          value={email}
+          onSave={(value): void => {
+            setEmail(value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TapToEdit
+          options={[
+            {label: "Option1", value: "Option1"},
+            {label: "Option2", value: "Option2"},
+          ]}
+          setValue={setCustomSelect}
+          title="Custom Select"
+          type="customSelect"
+          value={customSelect}
+          onSave={(value): void => {
+            setCustomSelect(value);
           }}
         />
       </Box>

@@ -73,6 +73,7 @@ export const TextField: FC<TextFieldProps> = ({
   grow,
   returnKeyType,
   onBlur,
+  onFocus,
   onEnter,
   onSubmitEditing,
   testID,
@@ -193,10 +194,10 @@ export const TextField: FC<TextFieldProps> = ({
           value={value}
           onBlur={() => {
             if (disabled) return;
-
             if (onBlur) {
               onBlur(value ?? "");
             }
+            setFocused(false);
           }}
           onChangeText={onChange}
           onContentSizeChange={(event) => {
@@ -208,6 +209,9 @@ export const TextField: FC<TextFieldProps> = ({
           onFocus={() => {
             if (!disabled) {
               setFocused(true);
+            }
+            if (onFocus) {
+              onFocus();
             }
           }}
           onSubmitEditing={() => {
