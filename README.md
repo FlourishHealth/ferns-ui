@@ -106,3 +106,11 @@ Update the paths to match your project directories. This will build and pack up 
 send to NPM, then install it from the created tarball in your app. `yarn link` is also an option but React
 Native requires extra configuration to support symlinks.
 
+## Upgrading dependencies
+
+To upgrade to the latest Expo and upgrade the related dependencies:
+
+    yarn upgrades
+
+This will upgrade Expo, upgrade Expo packages, sync the changes from apps/demo to packages/ui,
+and update yarn.lock.
