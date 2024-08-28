@@ -15,7 +15,8 @@
     "preview": "yarn build && yarn --cwd apps/demo build-web",
     "clean": "rm -rf node_modules && rm -rf packages/ui/node_modules && rm -rf packages/demo/node_modules && yarn",
     "test": "yarn --cwd packages/ui test",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "upgrades": "cd apps/demo && npx expo install --fix && cd ../../ && node syncUiFromUiDemo.js"
   },
   "workspaces": {
     "packages": [
