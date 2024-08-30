@@ -6,8 +6,8 @@ export const EmailFieldDemo = (): ReactElement => {
   return (
     <>
       <EmailField
-        label="Email"
         placeholder="Enter an email address"
+        title="Email"
         value={value}
         onChange={(v: string) => setValue(v)}
       />

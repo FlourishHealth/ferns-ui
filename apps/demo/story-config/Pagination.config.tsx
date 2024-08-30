@@ -35,7 +35,7 @@ export const PaginationConfiguration: DemoConfiguration = {
   demo: PaginationDemo,
   demoOptions: {
     controls: {
-      totalPages: {type: "number", defaultValue: 5, onChange: () => {}},
+      totalPages: {type: "number", defaultValue: 5},
     },
   },
   stories: {

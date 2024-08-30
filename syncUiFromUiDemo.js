@@ -1,13 +1,13 @@
-// The idea is that you first upgrade ui-demo and then use this to sync the versions to ui
-// The reason behind that is ui-demo is an actual Expo project, and you can then use
+// The idea is that you first upgrade demo and then use this to sync the versions to ui
+// The reason behind that is demo is an actual Expo project, and you can then use
 // npx expo install --fix
 // to make sure all versions we are using are Expo-supported before just upgrading all of ui
 
 
 const fs = require('fs');
 
-const sourcePackagePath = '../flourish/app/package.json';
-const targetPackagePath = 'packages/ui-demo/package.json';
+const sourcePackagePath  = 'apps/demo/package.json';
+const targetPackagePath = 'packages/ui/package.json';
 
 const sourcePackageJson = JSON.parse(fs.readFileSync(sourcePackagePath, 'utf8'));
 const targetPackageJson = JSON.parse(fs.readFileSync(targetPackagePath, 'utf8'));

@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import {Box, Field, Heading, TapToEdit, Text} from "ferns-ui";
+import {AddressInterface, Box, Field, Heading, TapToEdit, Text} from "ferns-ui";
 import {printDateAndTime} from "ferns-ui/dist/DateUtilities";
 import {TimezonePicker} from "ferns-ui/dist/TimezonePicker";
 import {DateTime} from "luxon";
@@ -14,8 +14,7 @@ export const TextFieldStory = () => {
     <StorybookContainer>
       <Field
         helperText="Here's some help text"
-        label="Text Field"
-        name="text"
+        title="Text Field"
         type="text"
         value={value}
         onChange={setValue}
@@ -30,8 +29,7 @@ export const BooleanFieldStory = () => {
     <StorybookContainer>
       <Field
         helperText="Here's some help text"
-        label="Boolean Field"
-        name="boolean"
+        title="Boolean Field"
         type="boolean"
         value={value}
         onChange={setValue}
@@ -45,10 +43,9 @@ export const FieldWithErrorStory = () => {
   return (
     <StorybookContainer>
       <Field
-        errorMessage={value.length > 1 ? "Error message" : undefined}
+        errorText={value.length > 1 ? "Error message" : undefined}
         helperText="Only enter 1 character, enter 2 to see the error label"
-        label="Field with error"
-        name="boolean"
+        title="Field with error"
         type="text"
         value={value}
         onChange={setValue}
@@ -63,8 +60,7 @@ export const EmailTextFieldStory = () => {
     <StorybookContainer>
       <Field
         helperText="Here's some help text"
-        label="Email Field"
-        name="text"
+        title="Email Field"
         type="email"
         value={value}
         onChange={setValue}
@@ -79,19 +75,17 @@ export const TextAreaFieldStory = () => {
     <StorybookContainer>
       <Field
         helperText="Here's some help text"
-        label="TextArea Field"
-        name="text"
         placeholder="this is my placeholder"
+        title="TextArea Field"
         type="textarea"
         value={value}
         onChange={setValue}
       />
       <Field
         helperText="Here's some help text"
-        label="Large TextArea "
-        name="text"
         placeholder="this is my placeholder"
         rows={10}
+        title="Large TextArea "
         type="textarea"
         value={value}
         onChange={setValue}
@@ -106,8 +100,7 @@ export const NumberFieldStory = () => {
     <StorybookContainer>
       <Field
         helperText="Here's some help text"
-        label="Number Field"
-        name="text"
+        title="Number Field"
         type="number"
         value={value}
         onChange={setValue}
@@ -116,46 +109,42 @@ export const NumberFieldStory = () => {
   );
 };
 
-export const CurrencyFieldStory = () => {
-  const [value, setValue] = useState(1234.56);
-  return (
-    <StorybookContainer>
-      <Field
-        helperText="Here's some help text"
-        label="Currency Field"
-        name="text"
-        type="currency"
-        value={value}
-        onChange={setValue}
-      />
-    </StorybookContainer>
-  );
-};
+// export const CurrencyFieldStory = () => {
+//   const [value, setValue] = useState(1234.56);
+//   return (
+//     <StorybookContainer>
+//       <Field
+//         helperText="Here's some help text"
+//         title="Currency Field"
+//         type="currency"
+//         value={value}
+//         onChange={setValue}
+//       />
+//     </StorybookContainer>
+//   );
+// };
 
-export const PercentFieldStory = () => {
-  const [value, setValue] = useState(0.12);
-  return (
-    <StorybookContainer>
-      <Field
-        helperText="Here's some help text"
-        label="Percent Field"
-        name="text"
-        type="percent"
-        value={value}
-        onChange={setValue}
-      />
-    </StorybookContainer>
-  );
-};
+// export const PercentFieldStory = () => {
+//   const [value, setValue] = useState(0.12);
+//   return (
+//     <StorybookContainer>
+//       <Field
+//         helperText="Here's some help text"
+//         title="Percent Field"
+//         type="percent"
+//         value={value}
+//         onChange={setValue}
+//       />
+//     </StorybookContainer>
+//   );
+// };
 
 export const SelectFieldStory = () => {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string | undefined>();
   return (
     <StorybookContainer>
       <Field
         helperText="Here's some help text"
-        label="Select Field"
-        name="text"
         options={[
           {label: "Option 1", value: "Option 1"},
           {label: "Option 2", value: "Option 2"},
@@ -165,6 +154,7 @@ export const SelectFieldStory = () => {
           {label: "Option 6", value: "Option 6"},
         ]}
         placeholder="Select option"
+        title="Select Field"
         type="select"
         value={value}
         onChange={setValue}
@@ -180,8 +170,7 @@ export const PasswordFieldStory = () => {
     <StorybookContainer>
       <Field
         helperText="Here's some help text"
-        label="Password Field"
-        name="text"
+        title="Password Field"
         type="password"
         value={value}
         onChange={setValue}
@@ -196,8 +185,7 @@ export const URLFieldStory = () => {
     <StorybookContainer>
       <Field
         helperText="Here's some help text"
-        label="URL Field"
-        name="text"
+        title="URL Field"
         type="url"
         value={value}
         onChange={setValue}
@@ -212,8 +200,7 @@ export const PhoneNumberFieldStory = () => {
     <StorybookContainer>
       <Field
         helperText="Here's some help text"
-        label="Phone Number Field"
-        name="text"
+        title="Phone Number Field"
         type="phoneNumber"
         value={value}
         onChange={setValue}
@@ -235,11 +222,7 @@ export const DateAndTimeFieldStory = () => {
       <TimezonePicker showLabel timezone={timezone} onChange={(tz) => setTimezone(tz)} />
       <Field
         helperText="Here's some help text"
-        label="Date Time Field"
-        name="text"
-        transformValue={{
-          options: {timezone},
-        }}
+        title="Date Time Field"
         type="datetime"
         value={value}
         onChange={(v: string) => {
@@ -248,15 +231,15 @@ export const DateAndTimeFieldStory = () => {
       />
       <Field
         disabled
-        label="Time in local timezone"
+        title="Time in local timezone"
         type="text"
         value={printDateAndTime(value, {showTimezone: true})}
+        onChange={() => {}}
       />
 
       <Field
         helperText="Here's some help text"
-        label="Date Field"
-        name="text"
+        title="Date Field"
         type="date"
         value={dateValue}
         onChange={setDateValue}
@@ -264,8 +247,7 @@ export const DateAndTimeFieldStory = () => {
 
       <Field
         helperText="Here's some help text"
-        label="Time Field"
-        name="text"
+        title="Time Field"
         type="time"
         value={timeValue}
         onChange={setTimeValue}
@@ -281,13 +263,12 @@ export const MultiselectFieldStory = () => {
       <Box width={300}>
         <Field
           helperText="Here's some help text"
-          label="Multiselect Field"
-          name="text"
           options={[
             {label: "Option1", value: "Option1"},
             {label: "Option2", value: "Option2"},
             {label: "Option3", value: "Option3"},
           ]}
+          title="Multiselect Field"
           type="multiselect"
           value={checkboxValue}
           onChange={setCheckboxValue}
@@ -298,28 +279,28 @@ export const MultiselectFieldStory = () => {
 };
 
 export const AddressFieldStory = () => {
-  const [value, setValue] = useState({
+  const [value, setValue] = useState<AddressInterface>({
     address1: "123 Main St",
     address2: "Apt 1",
     city: "San Francisco",
     state: "CA",
-    zip: "94105",
+    zipcode: "94105",
   });
 
-  const [secondValue, setSecondValue] = useState({
+  const [secondValue, setSecondValue] = useState<AddressInterface>({
     address1: "456 Main St",
     address2: "",
     city: "San Francisco",
     state: "CA",
-    zip: "94105",
+    zipcode: "94105",
   });
 
-  const [thirdVal, setThirdVal] = useState({
+  const [thirdVal, setThirdVal] = useState<AddressInterface>({
     address1: "789 Main St",
     address2: "",
     city: "San Francisco",
     state: "CA",
-    zip: "94105",
+    zipcode: "94105",
     countyName: "San Francisco",
     countyCode: "00000",
   });
@@ -331,15 +312,13 @@ export const AddressFieldStory = () => {
       <Box width={300}>
         <Field
           helperText="Address Fields Helper Text"
-          label="Address Field"
-          name="address"
+          title="Address Field"
           type="address"
           value={value}
           onChange={setValue}
         />
         <TapToEdit
           isEditing={false}
-          name="address"
           setValue={setValue}
           title="Address"
           type="address"
@@ -350,8 +329,7 @@ export const AddressFieldStory = () => {
         <Heading>Auto Complete </Heading>
         <Field
           helperText="Test Your API Key Here"
-          label="Google Maps API Key"
-          name="googleMapsApiKey"
+          title="Google Maps API Key"
           type="text"
           value={googleMapsApiKey}
           onChange={setGoogleMapsApiKey}
@@ -359,8 +337,7 @@ export const AddressFieldStory = () => {
         <Heading size="sm">Without County</Heading>
         <Field
           googleMapsApiKey={googleMapsApiKey}
-          label="Address Field"
-          name="address"
+          title="Address Field"
           type="address"
           value={secondValue}
           onChange={setSecondValue}
@@ -368,7 +345,6 @@ export const AddressFieldStory = () => {
         <TapToEdit
           googleMapsApiKey={googleMapsApiKey}
           isEditing={false}
-          name="address"
           setValue={setSecondValue}
           title="Address"
           type="address"
@@ -380,8 +356,7 @@ export const AddressFieldStory = () => {
         <Field
           googleMapsApiKey={googleMapsApiKey}
           includeCounty
-          label="Address Field"
-          name="address"
+          title="Address Field"
           type="address"
           value={thirdVal}
           onChange={setThirdVal}
@@ -390,7 +365,6 @@ export const AddressFieldStory = () => {
           googleMapsApiKey={googleMapsApiKey}
           includeCounty
           isEditing={false}
-          name="address"
           setValue={setThirdVal}
           title="Address"
           type="address"
@@ -403,21 +377,20 @@ export const AddressFieldStory = () => {
 };
 
 export const CustomSelectFieldStory = () => {
-  const [value1, setValue1] = useState("they/them/theirs");
-  const [value2, setValue2] = useState("they/them/theirs");
+  const [value1, setValue1] = useState<string | undefined>("they/them/theirs");
+  const [value2, setValue2] = useState<string | undefined>("they/them/theirs");
   return (
     <StorybookContainer>
       <Box width={300}>
         <Field
           helperText="Helper text goes here"
-          label="Custom Select Field With Placeholder"
-          name="customSelect"
           options={[
             {label: "she/her/hers", value: "she/her/hers"},
             {label: "he/him/his", value: "he/him/his"},
             {label: "they/them/theirs", value: "they/them/theirs"},
           ]}
           placeholder="None selected"
+          title="Custom Select Field With Placeholder"
           type="customSelect"
           value={value1}
           onChange={setValue1}
@@ -426,13 +399,12 @@ export const CustomSelectFieldStory = () => {
       <Box width={300}>
         <Field
           helperText="Helper text goes here"
-          label="Custom Select Field Without Placeholder"
-          name="customSelect"
           options={[
             {label: "she/her/hers", value: "she/her/hers"},
             {label: "he/him/his", value: "he/him/his"},
             {label: "they/them/theirs", value: "they/them/theirs"},
           ]}
+          title="Custom Select Field Without Placeholder"
           type="customSelect"
           value={value2}
           onChange={setValue2}
@@ -451,8 +423,7 @@ export const SignatureFieldStory = ({setScrollEnabled}: SignatureFieldProps) => 
   return (
     <StorybookContainer>
       <Field
-        label="Signature Field"
-        name="signature"
+        title="Signature Field"
         type="signature"
         onChange={setValue}
         onEnd={() => setScrollEnabled(true)}

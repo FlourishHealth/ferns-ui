@@ -16,7 +16,7 @@ export const WithLabelTextArea = (): React.ReactElement => {
       <TextArea
         helperText="And some subtext"
         id="none"
-        label="Enter a bunch of text"
+        title="Enter a bunch of text"
         onChange={() => {}}
       />
     </StorybookContainer>
@@ -33,10 +33,10 @@ export const TextAreaErrored = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <TextArea
-        errorMessage="There's been an error"
+        errorText="There's been an error"
         helperText="And some subtext"
         id="none"
-        label="Enter a bunch of text"
+        title="Enter a bunch of text"
         onChange={() => {}}
       />
     </StorybookContainer>
