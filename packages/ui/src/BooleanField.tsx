@@ -6,6 +6,11 @@ import {FieldHelperText, FieldTitle} from "./fieldElements";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
 
+const TOUCHABLE_SIZE = 20;
+const OFFSET = 10;
+const WIDTH = 36;
+const WIDTH_WITH_OFFSET = OFFSET + WIDTH;
+
 export const BooleanField = ({
   title,
   variant,
@@ -16,29 +21,29 @@ export const BooleanField = ({
   helperText,
 }: BooleanFieldProps): ReactElement => {
   const {theme} = useTheme();
-  const backgroundColor = useRef(new Animated.Value(value ? 75 : -75)).current;
-  const circleColor = useRef(new Animated.Value(value ? 75 : -75)).current;
-  const circleBorderColor = useRef(new Animated.Value(value ? 75 : -75)).current;
-  const transformSwitch = useRef(new Animated.Value(value ? 15 : -15)).current;
+  const backgroundColor = useRef(new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)).current;
+  const circleColor = useRef(new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)).current;
+  const circleBorderColor = useRef(new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)).current;
+  const transformSwitch = useRef(new Animated.Value(value ? OFFSET : -1 * OFFSET)).current;
 
   const animateSwitch = (newValue: boolean) => {
     Animated.parallel([
       Animated.spring(transformSwitch, {
-        toValue: newValue ? 15 : -15,
+        toValue: newValue ? OFFSET : -1 * OFFSET,
         useNativeDriver: false,
       }),
       Animated.timing(backgroundColor, {
-        toValue: newValue ? 75 : -75,
+        toValue: newValue ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET,
         duration: 200,
         useNativeDriver: false,
       }),
       Animated.timing(circleColor, {
-        toValue: newValue ? 75 : -75,
+        toValue: newValue ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET,
         duration: 200,
         useNativeDriver: false,
       }),
       Animated.timing(circleBorderColor, {
-        toValue: value ? 75 : -75,
+        toValue: value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET,
         duration: 200,
         useNativeDriver: false,
       }),
@@ -60,7 +65,7 @@ export const BooleanField = ({
   }, [value]);
 
   const interpolatedColorAnimation = backgroundColor.interpolate({
-    inputRange: [-75, 75],
+    inputRange: [-1 * WIDTH_WITH_OFFSET, WIDTH_WITH_OFFSET],
     outputRange: [theme.surface.base, theme.surface.secondaryDark],
   });
 
@@ -83,20 +88,20 @@ export const BooleanField = ({
           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
             <Animated.View
               style={{
-                width: 60,
-                height: 30,
-                borderRadius: 30,
+                width: WIDTH,
+                height: TOUCHABLE_SIZE,
+                borderRadius: TOUCHABLE_SIZE,
                 backgroundColor: disabled ? theme.surface.disabled : interpolatedColorAnimation,
                 borderColor: disabled ? theme.surface.disabled : theme.surface.secondaryDark,
                 borderWidth: 1,
-                marginHorizontal: variant === "title" ? undefined : 8,
-                marginRight: variant === "title" ? 8 : undefined,
+                marginHorizontal: variant === "title" ? undefined : OFFSET,
+                marginRight: variant === "title" ? OFFSET : undefined,
               }}
             >
               <Animated.View
                 style={{
                   flex: 1,
-                  width: 60,
+                  width: WIDTH,
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
@@ -108,9 +113,9 @@ export const BooleanField = ({
                     borderWidth: 1,
                     borderColor: disabled ? theme.surface.disabled : theme.surface.secondaryDark,
                     backgroundColor: theme.surface.base,
-                    width: 30,
-                    height: 30,
-                    borderRadius: 15,
+                    width: TOUCHABLE_SIZE,
+                    height: TOUCHABLE_SIZE,
+                    borderRadius: 10,
                     alignItems: "center",
                     justifyContent: "center",
                   }}
