@@ -69,6 +69,8 @@ const ModalContent: FC<{
         margin: "auto",
         borderRadius: theme.radius.default,
         width: sizePx,
+        overflow: "hidden",
+        maxHeight: "75%",
         ...(isMobile
           ? {}
           : {
@@ -134,7 +136,7 @@ const ModalContent: FC<{
         </View>
       )}
       {children && (
-        <View accessibilityRole="text" style={{marginTop: text ? 0 : 12}}>
+        <View accessibilityRole="text" style={{flex: 1, marginTop: text ? 0 : 12}}>
           {children}
         </View>
       )}
