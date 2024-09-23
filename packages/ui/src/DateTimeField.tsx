@@ -1,6 +1,6 @@
 import {getCalendars} from "expo-localization";
 import {DateTime} from "luxon";
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 
 import {DateTimeFieldProps} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
@@ -14,6 +14,7 @@ export const DateTimeField = ({
   onChange,
   timezone: tz,
   errorText,
+  disabled,
   ...rest
 }: DateTimeFieldProps): React.ReactElement => {
   const calendar = getCalendars()[0];
@@ -170,11 +171,22 @@ export const DateTimeField = ({
     }
   }, [value, formatValue, formattedDate, errorText]);
 
+  const iconName = useMemo(() => {
+  if (disabled) {
+    return undefined;
+  } else if (type === "time") {
+    return "clock";
+  } else {
+    return "calendar";
+  }
+}, [disabled, type]);
+
   return (
     <>
       <TextField
         errorText={localError}
-        iconName={type === "time" ? "clock" : "calendar"}
+        disabled={disabled}
+        iconName={iconName}
         placeholder={placeholder}
         type="text"
         value={formattedDate}
@@ -184,6 +196,7 @@ export const DateTimeField = ({
         }}
         {...rest}
       />
+      {!disabled && (
       <DateTimeActionSheet
         actionSheetRef={dateActionSheetRef}
         timezone={timezone}
@@ -193,6 +206,7 @@ export const DateTimeField = ({
         onChange={onActionSheetChange}
         onDismiss={() => setShowDate(false)}
       />
+      )}
     </>
   );
 };
