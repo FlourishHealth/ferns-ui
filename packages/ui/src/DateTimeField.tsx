@@ -1,8 +1,8 @@
 import {getCalendars} from "expo-localization";
 import {DateTime} from "luxon";
-import React, {useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
-import {DateTimeFieldProps} from "./Common";
+import {DateTimeFieldProps, IconName} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
 import {printDate, printDateAndTime, printTime} from "./DateUtilities";
 import {TextField} from "./TextField";
@@ -171,21 +171,22 @@ export const DateTimeField = ({
     }
   }, [value, formatValue, formattedDate, errorText]);
 
-  const iconName = useMemo(() => {
+  let iconName: IconName | undefined;
   if (disabled) {
-    return undefined;
+    iconName = undefined;
   } else if (type === "time") {
-    return "clock";
+    iconName = "clock";
   } else {
-    return "calendar";
+    iconName = "calendar";
   }
-}, [disabled, type]);
+
+  console.log("DateTimeField render", iconName);
 
   return (
     <>
       <TextField
-        errorText={localError}
         disabled={disabled}
+        errorText={localError}
         iconName={iconName}
         placeholder={placeholder}
         type="text"
@@ -197,15 +198,15 @@ export const DateTimeField = ({
         {...rest}
       />
       {!disabled && (
-      <DateTimeActionSheet
-        actionSheetRef={dateActionSheetRef}
-        timezone={timezone}
-        type={type}
-        value={value}
-        visible={showDate}
-        onChange={onActionSheetChange}
-        onDismiss={() => setShowDate(false)}
-      />
+        <DateTimeActionSheet
+          actionSheetRef={dateActionSheetRef}
+          timezone={timezone}
+          type={type}
+          value={value}
+          visible={showDate}
+          onChange={onActionSheetChange}
+          onDismiss={() => setShowDate(false)}
+        />
       )}
     </>
   );

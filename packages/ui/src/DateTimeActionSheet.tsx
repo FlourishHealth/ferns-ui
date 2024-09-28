@@ -407,6 +407,7 @@ export const DateTimeActionSheet = ({
   onDismiss,
   timezone: tz,
 }: DateTimeActionSheetProps) => {
+  console.log("DateTimeActionSheet render");
   const calendar = getCalendars()[0];
   const originalTimezone = (tz || calendar?.timeZone) ?? undefined;
   const [timezone, setTimezone] = useState<string | undefined>(originalTimezone);
