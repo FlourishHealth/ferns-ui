@@ -96,7 +96,7 @@
     "@typescript-eslint/parser": "^8.2.0",
     "babel-jest": "^29.7.0",
     "babel-preset-react-app": "^10.0.1",
-    "eslint": "^8.57.0",
+    "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-ban": "^1.6.0",
     "eslint-plugin-comment-length": "^1.7.3",
