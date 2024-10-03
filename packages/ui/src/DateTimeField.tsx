@@ -1,8 +1,8 @@
 import {getCalendars} from "expo-localization";
 import {DateTime} from "luxon";
-import React, {useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
-import {DateTimeFieldProps} from "./Common";
+import {DateTimeFieldProps, IconName} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
 import {printDate, printDateAndTime, printTime} from "./DateUtilities";
 import {TextField} from "./TextField";
@@ -27,6 +27,15 @@ export const DateTimeField = ({
     placeholder = "mm/dd/yyyy hh:mm a";
   } else if (type === "date") {
     placeholder = "mm/dd/yyyy";
+  }
+
+  let iconName: IconName | undefined;
+  if (disabled) {
+    iconName = undefined;
+  } else if (type === "time") {
+    iconName = "clock";
+  } else {
+    iconName = "calendar";
   }
 
   const formatValue = useCallback(
@@ -171,21 +180,11 @@ export const DateTimeField = ({
     }
   }, [value, formatValue, formattedDate, errorText]);
 
-  const iconName = useMemo(() => {
-  if (disabled) {
-    return undefined;
-  } else if (type === "time") {
-    return "clock";
-  } else {
-    return "calendar";
-  }
-}, [disabled, type]);
-
   return (
     <>
       <TextField
-        errorText={localError}
         disabled={disabled}
+        errorText={localError}
         iconName={iconName}
         placeholder={placeholder}
         type="text"
@@ -197,15 +196,15 @@ export const DateTimeField = ({
         {...rest}
       />
       {!disabled && (
-      <DateTimeActionSheet
-        actionSheetRef={dateActionSheetRef}
-        timezone={timezone}
-        type={type}
-        value={value}
-        visible={showDate}
-        onChange={onActionSheetChange}
-        onDismiss={() => setShowDate(false)}
-      />
+        <DateTimeActionSheet
+          actionSheetRef={dateActionSheetRef}
+          timezone={timezone}
+          type={type}
+          value={value}
+          visible={showDate}
+          onChange={onActionSheetChange}
+          onDismiss={() => setShowDate(false)}
+        />
       )}
     </>
   );
