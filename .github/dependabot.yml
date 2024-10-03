@@ -15,6 +15,9 @@ updates:
     directory: "/packages/ui"
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "eslint"
+        versions: ["9.x"]
     # Group non-native dependencies into one PR for app.
     # Note: security PRs for non-native deps will still be their own for visibility. 
     # Native will be grouped together, because security or not will require app store release.
@@ -23,9 +26,6 @@ updates:
         applies-to: version-updates
         patterns:
           - "*"
-        ignore:
-          - dependency-name: "eslint"
-            versions: ["9.x"]
         exclude-patterns:
           - "@expo/*"
           - "@react-native-community/*"
@@ -75,6 +75,9 @@ updates:
     directory: "/apps/demo"
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "eslint"
+        versions: ["9.x"]
     # Group non-native dependencies into one PR for app.
     # Note: security PRs for non-native deps will still be their own for visibility. 
     # Native will be grouped together, because security or not will require app store release.
@@ -83,9 +86,6 @@ updates:
         applies-to: version-updates
         patterns:
           - "*"
-        ignore:
-          - dependency-name: "eslint"
-            versions: ["9.x"]
         exclude-patterns:
           - "@expo/*"
           - "@react-native-community/*"
