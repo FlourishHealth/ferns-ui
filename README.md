@@ -84,8 +84,11 @@ You must wrap your app in a FernsProvider to use the theme, Toasts, and other fe
     # Install dependencies
     yarn install
 
+    # Initial build (including type generation)
+    yarn build
+
     # Build the UI continuously
-    yarn build -w
+    yarn watch
 
     # In a separate window, run one of the following to run the demo app:
     yarn web
