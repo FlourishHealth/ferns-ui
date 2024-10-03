@@ -31,7 +31,7 @@ export const DateTimeField = ({
   const formatValue = useCallback(
     (val: string) => {
       if (!val) {
-        return placeholder;
+        return "";
       }
       switch (type) {
         case "time":
