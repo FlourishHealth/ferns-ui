@@ -15,7 +15,113 @@ updates:
     directory: "/packages/ui"
     schedule:
       interval: "weekly"
+    # Group non-native dependencies into one PR for app.
+    # Note: security PRs for non-native deps will still be their own for visibility. 
+    # Native will be grouped together, because security or not will require app store release.
+    groups:
+      ferns-ui-non-native:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@expo/*"
+          - "@react-native-community/*"
+          - "@react-navigation"
+          - "@react-navigation/*"
+          - "@sentry/react-native"
+          - "@types/react"
+          - "@types/react-dom"
+          - "@types/react-router"
+          - "expo"
+          - "expo-*"
+          - "react"
+          - "react-dom"
+          - "react-native"
+          - "react-native-*"
+          - "react-router"
+          - "@shopify/react-native-skia"
+          - "@shopify/flash-list"
+          - "@react-native-picker/picker"
+          - "@react-native-async-storage/async-storage"
+
+      ferns-ui-native:
+        # No applies-to line so it applies to version and security updates.
+
+        # patterns here should match exclude-patterns above.
+        patterns:
+          - "@expo/*"
+          - "@react-native-community/*"
+          - "@react-navigation"
+          - "@react-navigation/*"
+          - "@sentry/react-native"
+          - "@types/react"
+          - "@types/react-dom"
+          - "@types/react-router"
+          - "expo"
+          - "expo-*"
+          - "react"
+          - "react-dom"
+          - "react-native"
+          - "react-native-*"
+          - "react-router"
+          - "@shopify/react-native-skia"
+          - "@shopify/flash-list"
+          - "@react-native-picker/picker"
+          - "@react-native-async-storage/async-storage"
   - package-ecosystem: "npm"
     directory: "/apps/demo"
     schedule:
       interval: "weekly"
+    # Group non-native dependencies into one PR for app.
+    # Note: security PRs for non-native deps will still be their own for visibility. 
+    # Native will be grouped together, because security or not will require app store release.
+    groups:
+      demo-non-native:
+        applies-to: version-updates
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@expo/*"
+          - "@react-native-community/*"
+          - "@react-navigation"
+          - "@react-navigation/*"
+          - "@sentry/react-native"
+          - "@types/react"
+          - "@types/react-dom"
+          - "@types/react-router"
+          - "expo"
+          - "expo-*"
+          - "react"
+          - "react-dom"
+          - "react-native"
+          - "react-native-*"
+          - "react-router"
+          - "@shopify/react-native-skia"
+          - "@shopify/flash-list"
+          - "@react-native-picker/picker"
+          - "@react-native-async-storage/async-storage"
+
+      demo-native:
+        # No applies-to line so it applies to version and security updates.
+
+        # patterns here should match exclude-patterns above.
+        patterns:
+          - "@expo/*"
+          - "@react-native-community/*"
+          - "@react-navigation"
+          - "@react-navigation/*"
+          - "@sentry/react-native"
+          - "@types/react"
+          - "@types/react-dom"
+          - "@types/react-router"
+          - "expo"
+          - "expo-*"
+          - "react"
+          - "react-dom"
+          - "react-native"
+          - "react-native-*"
+          - "react-router"
+          - "@shopify/react-native-skia"
+          - "@shopify/flash-list"
+          - "@react-native-picker/picker"
+          - "@react-native-async-storage/async-storage"
