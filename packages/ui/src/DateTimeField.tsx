@@ -2,7 +2,7 @@ import {getCalendars} from "expo-localization";
 import {DateTime} from "luxon";
 import React, {useCallback, useEffect, useState} from "react";
 
-import {DateTimeFieldProps} from "./Common";
+import {DateTimeFieldProps, IconName} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
 import {printDate, printDateAndTime, printTime} from "./DateUtilities";
 import {TextField} from "./TextField";
@@ -14,6 +14,7 @@ export const DateTimeField = ({
   onChange,
   timezone: tz,
   errorText,
+  disabled,
   ...rest
 }: DateTimeFieldProps): React.ReactElement => {
   const calendar = getCalendars()[0];
@@ -26,6 +27,15 @@ export const DateTimeField = ({
     placeholder = "mm/dd/yyyy hh:mm a";
   } else if (type === "date") {
     placeholder = "mm/dd/yyyy";
+  }
+
+  let iconName: IconName | undefined;
+  if (disabled) {
+    iconName = undefined;
+  } else if (type === "time") {
+    iconName = "clock";
+  } else {
+    iconName = "calendar";
   }
 
   const formatValue = useCallback(
@@ -176,8 +186,9 @@ export const DateTimeField = ({
   return (
     <>
       <TextField
+        disabled={disabled}
         errorText={localError}
-        iconName={type === "time" ? "clock" : "calendar"}
+        iconName={iconName}
         placeholder={placeholder}
         type="text"
         value={formattedDate}
@@ -187,15 +198,17 @@ export const DateTimeField = ({
         }}
         {...rest}
       />
-      <DateTimeActionSheet
-        actionSheetRef={dateActionSheetRef}
-        timezone={timezone}
-        type={type}
-        value={value}
-        visible={showDate}
-        onChange={onActionSheetChange}
-        onDismiss={() => setShowDate(false)}
-      />
+      {!disabled && (
+        <DateTimeActionSheet
+          actionSheetRef={dateActionSheetRef}
+          timezone={timezone}
+          type={type}
+          value={value}
+          visible={showDate}
+          onChange={onActionSheetChange}
+          onDismiss={() => setShowDate(false)}
+        />
+      )}
     </>
   );
 };

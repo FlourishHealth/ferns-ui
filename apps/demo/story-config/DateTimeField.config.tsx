@@ -1,11 +1,11 @@
 import {DemoConfiguration} from "@config";
 import {DateTimeField} from "ferns-ui";
 
-import {DateFieldStory, DateTimeFieldDemo, DateTimeFieldStory, TimeFieldStory} from "../stories";
+import {DateTimeFieldDemo, DateTimeFieldStory, DateTimeFieldTypes} from "../stories";
 
 // TODO: Update with the notes from TimeField and DateField.
 export const DateTimeFieldConfiguration: DemoConfiguration = {
-  name: "Date & time field",
+  name: "Date & Time field",
   component: DateTimeField,
   related: ["Date / time modal"],
   description:
@@ -35,10 +35,25 @@ export const DateTimeFieldConfiguration: DemoConfiguration = {
   },
   props: {},
   demo: DateTimeFieldDemo,
-  demoOptions: {},
+  demoOptions: {
+    controls: {
+      type: {
+        type: "select",
+        defaultValue: "datetime",
+        options: [
+          {label: "time", value: "time"},
+          {label: "datetime", value: "datetime"},
+          {label: "date", value: "date"},
+        ],
+      },
+      disabled: {
+        type: "boolean",
+        defaultValue: false,
+      },
+    },
+  },
   stories: {
-    DateTime: {render: DateTimeFieldStory},
-    Time: {render: TimeFieldStory},
-    Date: {render: DateFieldStory},
+    DateTimeField: {render: DateTimeFieldStory},
+    "Date Time Types": {render: DateTimeFieldTypes},
   },
 };
