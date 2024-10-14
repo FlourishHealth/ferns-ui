@@ -115,7 +115,7 @@
     "jest-github-actions-reporter": "^1.0.3",
     "mdurl": "^2.0.0",
     "prettier": "^3.2.5",
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-keyed-flatten-children": "^3.0.0",
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",
@@ -123,7 +123,7 @@
     "typescript": "~5.3.3"
   },
   "peerDependencies": {
-    "react": "18.2.0",
+    "react": "18.3.1",
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0"
   },
@@ -150,7 +150,7 @@
     "react-date-picker": "^11.0.0",
     "react-datetime-picker": "^6.0.1",
     "react-dev-utils": "^12.0.1",
-    "react-dom": "18.2.0",
+    "react-dom": "18.3.1",
     "react-native": "0.74.5",
     "react-native-actions-sheet": "^0.9.3",
     "react-native-calendars": "^1.1305.0",
@@ -158,7 +158,7 @@
     "react-native-gesture-handler": "~2.16.1",
     "react-native-google-places-autocomplete": "^2.5.6",
     "react-native-modalize": "^2.1.1",
-    "react-native-permissions": "^4.1.5",
+    "react-native-permissions": "^5.0.0",
     "react-native-picker-select": "^9.1.3",
     "react-native-portalize": "^1.0.7",
     "react-native-reanimated": "~3.10.1",
