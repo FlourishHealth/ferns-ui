@@ -152,8 +152,8 @@ export const TextField: FC<TextFieldProps> = ({
         width: "100%",
       }}
     >
-      {title && <FieldTitle text={title} />}
-      {Boolean(errorText) && errorText && <FieldError text={errorText} />}
+      {Boolean(title) && <FieldTitle text={title!} />}
+      {Boolean(errorText) && <FieldError text={errorText!} />}
       <View
         style={{
           flexDirection: "row",
@@ -229,7 +229,7 @@ export const TextField: FC<TextFieldProps> = ({
           </Pressable>
         )}
       </View>
-      {helperText && <FieldHelperText text={helperText} />}
+      {Boolean(helperText) && <FieldHelperText text={helperText!} />}
       {/* {type === "numberRange" && value && (
         <NumberPickerActionSheet
           actionSheetRef={numberRangeActionSheetRef}
