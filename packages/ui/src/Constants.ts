@@ -3265,7 +3265,7 @@ export const USSTATESLIST = [
   {label: "CO", value: "Colorado"},
   {label: "CT", value: "Connecticut"},
   {label: "DE", value: "Delaware"},
-  {label: "DC", value: "District Of Columbia"},
+  {label: "DC", value: "District of Columbia"},
   {label: "FL", value: "Florida"},
   {label: "GA", value: "Georgia"},
   {label: "HI", value: "Hawaii"},
