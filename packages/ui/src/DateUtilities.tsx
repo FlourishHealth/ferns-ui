@@ -134,8 +134,6 @@ export const printDate = (
   }: {
     timezone?: string;
     showTimezone?: boolean;
-    // Ignore the time in the date, treat as a date in timezone.
-    // Will log a warning if the time is not set to midnight UTC.
     ignoreTime?: boolean;
     defaultValue?: string;
   } = {}
@@ -147,21 +145,21 @@ export const printDate = (
     console.warn("showTimezone is not supported for printDate");
   }
 
-  let clonedDate;
-  try {
-    clonedDate = getDate(date!, {timezone});
-  } catch (error: any) {
-    throw new Error(`printDate: ${error.message}`);
+  if (ignoreTime) {
+    // Parse the date in the specified timezone (or local if not provided)
+    // then force to UTC midnight to ignore time component
+    const justDate = timezone
+      ? DateTime.fromISO(date).setZone(timezone)
+      : DateTime.fromISO(date).setZone("UTC");
+    // Using startOf('day') to normalize the time component
+    return justDate.startOf("day").toFormat("M/d/yyyy");
   }
 
-  if (ignoreTime) {
-    if (!date) {
-      throw new Error("printDate: Passed undefined");
-    }
-    // Use only the date component, ignore the time.
-    const justDate = DateTime.fromISO(date);
-    // We force it into UTC so we can get the correct date.
-    return justDate.setZone("UTC").toFormat("M/d/yyyy");
+  let clonedDate;
+  try {
+    clonedDate = getDate(date, {timezone});
+  } catch (error: any) {
+    throw new Error(`printDate: ${error.message}`);
   }
 
   return clonedDate.toLocaleString(DateTime.DATE_SHORT);

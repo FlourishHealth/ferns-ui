@@ -50,7 +50,7 @@ export const DateTimeField = ({
           return printDateAndTime(val, {timezone, showTimezone: true});
         case "date":
         default:
-          return printDate(val, {ignoreTime: true});
+          return printDate(val, {timezone, ignoreTime: true});
       }
     },
     [timezone, type]
