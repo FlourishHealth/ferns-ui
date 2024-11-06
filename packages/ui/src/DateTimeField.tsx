@@ -50,7 +50,7 @@ export const DateTimeField = ({
           return printDateAndTime(val, {timezone, showTimezone: true});
         case "date":
         default:
-          return printDate(val, {ignoreTime: true});
+          return printDate(val, {timezone, ignoreTime: true});
       }
     },
     [timezone, type]
@@ -173,7 +173,9 @@ export const DateTimeField = ({
   // update the formattedDate to keep the value of the TextField and DateTimeActionSheet in sync
   useEffect(() => {
     if (value) {
+      console.log("value", value);
       const formatted = formatValue(value);
+      console.log("formatted", formatted);
       if (formattedDate !== formatted) {
         setFormattedDate(formatted);
       }
