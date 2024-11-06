@@ -154,17 +154,17 @@ export const printDate = (
     throw new Error(`printDate: ${error.message}`);
   }
 
-  if (!ignoreTime) {
-    return clonedDate.toLocaleString(DateTime.DATE_SHORT);
-  } else {
-    let justDate = DateTime.fromISO(date);
-
-    if(!timezone) {
-      justDate = justDate.setZone("UTC");
-    } 
-
-    return justDate.toFormat("M/d/yyyy");
+  if (ignoreTime) {
+    if (!date) {
+      throw new Error("printDate: Passed undefined");
+    }
+    // Use only the date component, ignore the time.
+    const justDate = DateTime.fromISO(date);
+    // We force it into UTC so we can get the correct date.
+    return justDate.setZone("UTC").toFormat("M/d/yyyy");
   }
+
+  return clonedDate.toLocaleString(DateTime.DATE_SHORT);
 };
 
 // For printing dates from date times, ignoring the time. These should end in T00:00:00.000Z.
