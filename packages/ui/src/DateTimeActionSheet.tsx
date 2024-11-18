@@ -340,7 +340,9 @@ const DateCalendar = ({
 
   // Check if the date is T00:00:00.000Z (it should be), otherwise treat it as a date in the
   // current timezone.
+  console.log({date});
   const dt = DateTime.fromISO(date);
+  console.log({dt});
   let dateString: string;
   if (dt.hour === 0 && dt.minute === 0 && dt.second === 0) {
     dateString = dt.toISO()!;
@@ -407,6 +409,7 @@ export const DateTimeActionSheet = ({
   onDismiss,
   timezone: tz,
 }: DateTimeActionSheetProps) => {
+  console.log({actionSheetValue: value, tz});
   const calendar = getCalendars()[0];
   const originalTimezone = (tz || calendar?.timeZone) ?? undefined;
   const [timezone, setTimezone] = useState<string | undefined>(originalTimezone);
@@ -524,6 +527,8 @@ export const DateTimeActionSheet = ({
     }),
     [type, timezone, setTimezone, hour, setHour, minute, setMinute, amPm, setAmPm]
   );
+
+  console.log({dateProps});
 
   return (
     <Modal

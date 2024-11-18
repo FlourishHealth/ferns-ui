@@ -215,8 +215,7 @@ export const DateAndTimeFieldStory = () => {
   const [timeValue, setTimeValue] = useState(
     DateTime.now().set({hour: 12, minute: 0, second: 0}).toISO()
   );
-  const [value, setValue] = useState<string>(DateTime.now().endOf("day").toISO());
-  const [timezone, setTimezone] = useState<string | undefined>("America/New_York");
+  const [timezone, setTimezone] = useState<string | undefined>(DateTime.now().zone.name);
   return (
     <StorybookContainer>
       <TimezonePicker showLabel timezone={timezone} onChange={(tz) => setTimezone(tz)} />
@@ -225,16 +224,14 @@ export const DateAndTimeFieldStory = () => {
         timezone={timezone}
         title="Date Time Field"
         type="datetime"
-        value={value}
-        onChange={(v: string) => {
-          setValue(v);
-        }}
+        value={dateValue}
+        onChange={setDateValue}
       />
-      <Field
+      {/* <Field
         disabled
         title="Time in local timezone"
         type="text"
-        value={printDateAndTime(value, {timezone, showTimezone: true})}
+        value={printDateAndTime(dateValue, {timezone, showTimezone: true})}
         onChange={() => {}}
       />
 
@@ -243,8 +240,8 @@ export const DateAndTimeFieldStory = () => {
         helperText="Here's some help text"
         title="Date Field"
         type="date"
-        value={value}
-        onChange={setValue}
+        value={dateValue}
+        onChange={setDateValue}
       />
 
       <Field
@@ -253,7 +250,7 @@ export const DateAndTimeFieldStory = () => {
         type="time"
         value={timeValue}
         onChange={setTimeValue}
-      />
+      /> */}
     </StorybookContainer>
   );
 };
