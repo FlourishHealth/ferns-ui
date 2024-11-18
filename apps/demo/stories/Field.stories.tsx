@@ -218,6 +218,7 @@ export const DateAndTimeFieldStory = () => {
   const [timezone, setTimezone] = useState<string | undefined>(DateTime.now().zone.name);
   return (
     <StorybookContainer>
+      <Heading>NOTE: The timezone picker below is to mimic the user's current timezone to test how dates/times are displayed</Heading>
       <TimezonePicker showLabel timezone={timezone} onChange={(tz) => setTimezone(tz)} />
       <Field
         helperText="Here's some help text"
@@ -227,7 +228,7 @@ export const DateAndTimeFieldStory = () => {
         value={dateValue}
         onChange={setDateValue}
       />
-      {/* <Field
+      <Field
         disabled
         title="Time in local timezone"
         type="text"
@@ -250,7 +251,7 @@ export const DateAndTimeFieldStory = () => {
         type="time"
         value={timeValue}
         onChange={setTimeValue}
-      /> */}
+      />
     </StorybookContainer>
   );
 };

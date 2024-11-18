@@ -325,9 +325,11 @@ const DateCalendar = ({
   onDismiss,
   date,
   setDate,
+  timezone,
 }: {
   type: DateTimeActionSheetProps["type"];
   date: string;
+  timezone: string | undefined;
   setDate: (date: string) => void;
   onChange: DateTimeActionSheetProps["onChange"];
   onDismiss: DateTimeActionSheetProps["onDismiss"];
@@ -340,9 +342,7 @@ const DateCalendar = ({
 
   // Check if the date is T00:00:00.000Z (it should be), otherwise treat it as a date in the
   // current timezone.
-  console.log({date});
   const dt = DateTime.fromISO(date);
-  console.log({dt});
   let dateString: string;
   if (dt.hour === 0 && dt.minute === 0 && dt.second === 0) {
     dateString = dt.toISO()!;
@@ -351,7 +351,10 @@ const DateCalendar = ({
   }
 
   if (date) {
-    markedDates[DateTime.fromISO(dateString).toFormat("yyyy-MM-dd")] = {
+    const displayDate = timezone
+      ? DateTime.fromISO(dateString).setZone(timezone).toFormat("yyyy-MM-dd")
+      : DateTime.fromISO(dateString).toFormat("yyyy-MM-dd");
+    markedDates[displayDate] = {
       selected: true,
       selectedColor: theme.text.primary,
       customStyles: {
@@ -409,7 +412,6 @@ export const DateTimeActionSheet = ({
   onDismiss,
   timezone: tz,
 }: DateTimeActionSheetProps) => {
-  console.log({actionSheetValue: value, tz});
   const calendar = getCalendars()[0];
   const originalTimezone = (tz || calendar?.timeZone) ?? undefined;
   const [timezone, setTimezone] = useState<string | undefined>(originalTimezone);
@@ -506,11 +508,12 @@ export const DateTimeActionSheet = ({
     () => ({
       date,
       type,
+      timezone,
       setDate,
       onChange,
       onDismiss,
     }),
-    [date, type, setDate, onChange, onDismiss]
+    [date, type, setDate, onChange, onDismiss, timezone]
   );
 
   const timeProps = useMemo(
@@ -527,8 +530,6 @@ export const DateTimeActionSheet = ({
     }),
     [type, timezone, setTimezone, hour, setHour, minute, setMinute, amPm, setAmPm]
   );
-
-  console.log({dateProps});
 
   return (
     <Modal
