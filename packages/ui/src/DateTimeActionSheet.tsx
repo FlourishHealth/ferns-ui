@@ -325,9 +325,11 @@ const DateCalendar = ({
   onDismiss,
   date,
   setDate,
+  timezone,
 }: {
   type: DateTimeActionSheetProps["type"];
   date: string;
+  timezone: string | undefined;
   setDate: (date: string) => void;
   onChange: DateTimeActionSheetProps["onChange"];
   onDismiss: DateTimeActionSheetProps["onDismiss"];
@@ -349,7 +351,10 @@ const DateCalendar = ({
   }
 
   if (date) {
-    markedDates[DateTime.fromISO(dateString).toFormat("yyyy-MM-dd")] = {
+    const displayDate = timezone
+      ? DateTime.fromISO(dateString).setZone(timezone).toFormat("yyyy-MM-dd")
+      : DateTime.fromISO(dateString).toFormat("yyyy-MM-dd");
+    markedDates[displayDate] = {
       selected: true,
       selectedColor: theme.text.primary,
       customStyles: {
@@ -503,11 +508,12 @@ export const DateTimeActionSheet = ({
     () => ({
       date,
       type,
+      timezone,
       setDate,
       onChange,
       onDismiss,
     }),
-    [date, type, setDate, onChange, onDismiss]
+    [date, type, setDate, onChange, onDismiss, timezone]
   );
 
   const timeProps = useMemo(
