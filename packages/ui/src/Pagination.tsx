@@ -36,7 +36,7 @@ const PaginationButton = ({
   return (
     <Pressable
       accessibilityHint={`Click to go to ${type} page`}
-      accessibilityLabel="Pagination Button"
+      aria-label="Pagination Button"
       disabled={disabled}
       style={{
         width: 32,

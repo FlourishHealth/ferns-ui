@@ -73,8 +73,8 @@ export const MobileAddressAutocomplete = ({
 
   return (
     <TouchableOpacity
-      accessibilityRole="button"
       activeOpacity={1}
+      aria-role="button"
       style={{flex: 1}}
       onPress={() => setIsFocused(false)}
     >

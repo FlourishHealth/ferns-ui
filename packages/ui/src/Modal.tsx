@@ -72,13 +72,7 @@ const ModalContent: FC<{
         ...(isMobile
           ? {}
           : {
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 0,
-                height: 4,
-              },
-              shadowOpacity: 0.5,
-              shadowRadius: 24,
+              boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.5)",
               elevation: 24,
             }),
       }}
@@ -86,8 +80,8 @@ const ModalContent: FC<{
       <View style={{alignSelf: "flex-end", position: "relative"}}>
         <Pressable
           accessibilityHint="Closes the modal"
-          accessibilityLabel="Close modal"
-          accessibilityRole="button"
+          aria-label="Close modal"
+          aria-role="button"
           style={{
             flex: 1,
             justifyContent: "center",
@@ -106,8 +100,8 @@ const ModalContent: FC<{
       {title && (
         <View
           accessibilityHint="Modal title"
-          accessibilityLabel={title}
-          accessibilityRole="header"
+          aria-label={title}
+          aria-role="header"
           style={{alignSelf: "flex-start"}}
         >
           <Heading size="lg">{title}</Heading>
@@ -116,8 +110,8 @@ const ModalContent: FC<{
       {subtitle && (
         <View
           accessibilityHint="Modal Sub Heading Text"
-          accessibilityLabel={subtitle}
-          accessibilityRole="text"
+          aria-label={subtitle}
+          aria-role="text"
           style={{alignSelf: "flex-start", marginTop: subtitle ? 8 : 0}}
         >
           <Text size="lg">{subtitle}</Text>
@@ -126,15 +120,15 @@ const ModalContent: FC<{
       {text && (
         <View
           accessibilityHint="Modal body text"
-          accessibilityLabel={text}
-          accessibilityRole="text"
+          aria-label={text}
+          aria-role="text"
           style={{marginVertical: text ? 12 : 0, alignSelf: "flex-start"}}
         >
           <Text>{text}</Text>
         </View>
       )}
       {children && (
-        <View accessibilityRole="text" style={{marginTop: text ? 0 : 12}}>
+        <View aria-role="text" style={{marginTop: text ? 0 : 12}}>
           {children}
         </View>
       )}
@@ -221,8 +215,8 @@ export const Modal: FC<ModalProps> = ({
           <View>
             <View
               accessibilityHint="Pull down to close the modal"
-              accessibilityLabel="Pull down bar"
-              accessibilityRole="adjustable"
+              aria-label="Pull down bar"
+              aria-role="adjustable"
               style={{
                 justifyContent: "center",
                 alignItems: "center",

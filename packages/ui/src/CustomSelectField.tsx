@@ -70,16 +70,16 @@ export const CustomSelectField = ({
   return (
     <View
       accessibilityHint="Select an option or input a custom value"
-      accessibilityLabel="Select dropdown with popup text input field"
-      accessibilityRole="combobox"
+      aria-label="Select dropdown with popup text input field"
+      aria-role="combobox"
       style={{
         width: "100%",
       }}
     >
       <View
         accessibilityHint="Opens a dropdown menu. Select an option, or select custom to trigger popup to input a custom value"
-        accessibilityLabel="Select dropdown"
-        accessibilityRole="button"
+        aria-label="Select dropdown"
+        aria-role="button"
       >
         <SelectField
           disabled={disabled}
@@ -94,7 +94,7 @@ export const CustomSelectField = ({
       {Boolean(showCustomInput) && (
         <View
           accessibilityHint="Enter a custom value or go back to select a provided option."
-          accessibilityLabel="Custom value input field"
+          aria-label="Custom value input field"
           style={{
             paddingVertical: 16,
           }}

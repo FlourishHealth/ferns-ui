@@ -98,8 +98,8 @@ const IconButtonComponent: FC<IconButtonProps> = ({
           ? `Opens a confirmation dialog to confirm ${accessLabel}`
           : `Press to perform ${accessLabel} action`
       }
-      accessibilityLabel={accessLabel}
-      accessibilityRole="button"
+      aria-label={accessLabel}
+      aria-role="button"
       disabled={loading}
       style={{
         alignItems: "center",
@@ -136,6 +136,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
         <FontAwesome6
           color={color}
           name={iconName}
+          selectable={undefined}
           size={variant === "navigation" ? 20 : 16}
           solid
         />

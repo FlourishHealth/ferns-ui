@@ -97,8 +97,8 @@ const ButtonComponent: FC<ButtonProps> = ({
       accessibilityHint={
         withConfirmation ? "Opens a confirmation dialog" : "Press to perform action"
       }
-      accessibilityLabel={text}
-      accessibilityRole="button"
+      aria-label={text}
+      aria-role="button"
       disabled={disabled || loading}
       style={{
         alignItems: "center",

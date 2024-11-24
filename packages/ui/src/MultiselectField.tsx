@@ -31,8 +31,8 @@ const Option: FC<OptionProps> = ({value, label, isDefault, selected, onSelect}) 
       <TouchableOpacity
         key={value}
         accessibilityHint={`Select ${label ?? value} from list of options`}
-        accessibilityLabel={label ?? value}
-        accessibilityRole="checkbox"
+        aria-label={label ?? value}
+        aria-role="checkbox"
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         style={{
           justifyContent: "center",
@@ -80,8 +80,8 @@ export const MultiselectField: FC<MultiselectFieldProps> = ({
   return (
     <View
       accessibilityHint="Contains a prompt and list of options to select"
-      accessibilityLabel={title}
-      accessibilityRole="combobox"
+      aria-label={title}
+      aria-role="combobox"
       style={{
         display: "flex",
         width: "100%",

@@ -24,8 +24,8 @@ export const TableBoolean: FC<TableBooleanProps> = ({value, isEditing = false}) 
     return (
       <TouchableOpacity
         accessibilityHint={`Tap to change the checkbox from ${oppositeValueString} to ${valueString}`}
-        accessibilityLabel={`Checkbox is currently ${valueString}`}
-        accessibilityRole="checkbox"
+        aria-label={`Checkbox is currently ${valueString}`}
+        aria-role="checkbox"
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         style={
           {
@@ -49,8 +49,8 @@ export const TableBoolean: FC<TableBooleanProps> = ({value, isEditing = false}) 
       >
         <View
           accessibilityHint={value ? "Checked icon" : "Unchecked icon"}
-          accessibilityLabel={`The checkbox is ${valueString}`}
-          accessibilityRole="image"
+          aria-label={`The checkbox is ${valueString}`}
+          aria-role="image"
           style={{
             height: 32,
             width: 32,

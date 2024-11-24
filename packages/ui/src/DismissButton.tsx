@@ -13,8 +13,8 @@ export const DismissButton = ({
   return (
     <Pressable
       accessibilityHint={accessibilityHint}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
+      aria-label={accessibilityLabel}
+      aria-role="button"
       style={{
         alignItems: "center",
         justifyContent: "center",
