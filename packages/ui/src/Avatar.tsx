@@ -132,7 +132,7 @@ export const Avatar: FC<AvatarProps> = ({
 
     return (
       <Pressable
-        accessibilityRole="button"
+        aria-role="button"
         style={{
           alignItems: "center",
           backgroundColor: "rgba(255,255,255,0.75)",
@@ -191,12 +191,12 @@ export const Avatar: FC<AvatarProps> = ({
   let avatar = (
     <View
       accessibilityHint={showEditIcon ? "Opens file explorer" : "Avatar image"}
-      accessibilityLabel={`${name}'s avatar`}
-      accessibilityRole="image"
+      aria-label={`${name}'s avatar`}
+      aria-role="image"
       style={{height: avatarImageDiameter, position: "relative", width: avatarImageDiameter}}
     >
       <Pressable
-        accessibilityRole="button"
+        aria-role="button"
         style={{
           overflow: "hidden",
           position: "relative",

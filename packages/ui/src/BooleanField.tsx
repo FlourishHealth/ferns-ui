@@ -21,9 +21,15 @@ export const BooleanField = ({
   helperText,
 }: BooleanFieldProps): ReactElement => {
   const {theme} = useTheme();
-  const backgroundColor = useRef(new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)).current;
-  const circleColor = useRef(new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)).current;
-  const circleBorderColor = useRef(new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)).current;
+  const backgroundColor = useRef(
+    new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)
+  ).current;
+  const circleColor = useRef(
+    new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)
+  ).current;
+  const circleBorderColor = useRef(
+    new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)
+  ).current;
   const transformSwitch = useRef(new Animated.Value(value ? OFFSET : -1 * OFFSET)).current;
 
   const animateSwitch = (newValue: boolean) => {
@@ -84,7 +90,7 @@ export const BooleanField = ({
         }}
       >
         {Boolean(title) && <FieldTitle text={title!} />}
-        <TouchableWithoutFeedback accessibilityRole="button" onPress={handleSwitch}>
+        <TouchableWithoutFeedback aria-role="button" onPress={handleSwitch}>
           <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center"}}>
             <Animated.View
               style={{

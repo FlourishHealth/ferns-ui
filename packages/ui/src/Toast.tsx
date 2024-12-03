@@ -214,7 +214,7 @@ export const Toast = ({
         </View>
         {Boolean(persistent && onDismiss) && (
           <Pressable
-            accessibilityRole="button"
+            aria-role="button"
             style={{
               display: "flex",
               alignItems: "center",

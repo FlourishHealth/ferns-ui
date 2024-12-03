@@ -253,8 +253,8 @@ export function RNPickerSelect({
         >
           {Boolean(onUpArrow) && (
             <TouchableOpacity
-              accessibilityRole="button"
               activeOpacity={onUpArrow ? 0.5 : 1}
+              aria-role="button"
               onPress={onUpArrow ? onUpArrowEvent : undefined}
             >
               <View
@@ -272,8 +272,8 @@ export function RNPickerSelect({
           )}
           {Boolean(onDownArrow) && (
             <TouchableOpacity
-              accessibilityRole="button"
               activeOpacity={onDownArrow ? 0.5 : 1}
+              aria-role="button"
               onPress={onDownArrow ? onDownArrowEvent : undefined}
             >
               <View
@@ -359,7 +359,7 @@ export function RNPickerSelect({
         }}
       >
         <TextInput
-          editable={false}
+          readOnly
           style={{color: disabled ? theme.text.secondaryLight : theme.text.primary}}
           testID="text_input"
           value={selectedItem?.inputLabel ? selectedItem?.inputLabel : selectedItem?.label}
@@ -411,7 +411,7 @@ export function RNPickerSelect({
           {...modalProps}
         >
           <Pressable
-            accessibilityRole="button"
+            aria-role="button"
             style={{
               flex: 1,
             }}

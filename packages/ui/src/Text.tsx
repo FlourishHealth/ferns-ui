@@ -105,7 +105,7 @@ export const Text = ({
     lines = 1;
   }
   const inner = (
-    <NativeText numberOfLines={lines} style={style} testID={testID}>
+    <NativeText numberOfLines={lines} selectable={undefined} style={style} testID={testID}>
       {children}
     </NativeText>
   );

@@ -33,7 +33,7 @@ export const SegmentedControl = ({
       {items.map((item, index) => (
         <Pressable
           key={index}
-          accessibilityRole="button"
+          aria-role="button"
           style={{
             display: "flex",
             paddingHorizontal: size === "md" ? theme.spacing.sm : theme.spacing.md,

@@ -75,10 +75,6 @@ class UnifierClass {
     return this._dev;
   }
 
-  constructor() {
-    console.debug("[unifier] Setting up Unifier");
-  }
-
   navigation = {
     dismissOverlay: () => {
       console.warn("Dismiss overlay not supported.");
