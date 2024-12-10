@@ -683,14 +683,6 @@ export interface AddressFieldProps
   onBlur?: (value: AddressInterface) => void;
 }
 
-export interface LinkProps {
-  href?: string;
-  text: string;
-  onClick?: () => void;
-  // TODO: support target on link
-  // target?: null | "blank";
-}
-
 export type Rounding =
   | "minimal" // alias "sm"
   | "default" // alias "md"
@@ -2059,9 +2051,15 @@ export interface TooltipProps {
   text?: string;
 }
 
-export interface LinkProps extends TextProps {
-  href?: string;
-}
+export type LinkProps = TextProps &
+  (
+    | {
+        href: string;
+      }
+    | {
+        onClick: () => void | Promise<void>;
+      }
+  );
 
 export type TapToEditProps =
   | (BaseTapToEditProps &
