@@ -684,7 +684,7 @@ export interface AddressFieldProps
 }
 
 export interface LinkProps {
-  href: string;
+  href?: string;
   text: string;
   onClick?: () => void;
   // TODO: support target on link
@@ -2060,7 +2060,7 @@ export interface TooltipProps {
 }
 
 export interface LinkProps extends TextProps {
-  href: string;
+  href?: string;
 }
 
 export type TapToEditProps =
