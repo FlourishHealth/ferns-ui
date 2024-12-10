@@ -2051,12 +2051,15 @@ export interface TooltipProps {
   text?: string;
 }
 
-export type LinkProps = TextProps &
-  (
+export type LinkProps = TextProps & {
+  text: string;
+} & (
     | {
         href: string;
+        onClick?: never;
       }
     | {
+        href?: never;
         onClick: () => void | Promise<void>;
       }
   );
