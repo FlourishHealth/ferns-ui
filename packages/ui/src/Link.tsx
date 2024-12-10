@@ -12,7 +12,7 @@ export const Link = ({text, href, onClick}: LinkProps): React.ReactElement => {
     <Pressable
       aria-role="button"
       hitSlop={20}
-      onPress={() => (onClick ? onClick() : Linking.openURL(href))}
+      onPress={() => (onClick ? onClick() : href && Linking.openURL(href))}
     >
       <Text color="link" underline>
         {text}
