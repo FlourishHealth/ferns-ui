@@ -134,7 +134,7 @@ export const DateTimeField = ({
         const year = cleanedInput.slice(4, 8);
         parsedDate = DateTime.fromFormat(`${month}${day}${year}`, "MMddyyyy", {zone: timezone})
           .startOf("day")
-          .toUTC(0, {keepLocalTime: true});
+          .toUTC();
       }
 
       if (!parsedDate) {
