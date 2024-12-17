@@ -1638,6 +1638,12 @@ export interface IconButtonProps {
   confirmationText?: string;
 
   /**
+   * If true, the button will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
    * Show a small indicator icon in the lower right corner of the button.
    */
   indicator?: "error" | "warning" | "success" | "primary" | "neutral";

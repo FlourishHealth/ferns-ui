@@ -57,6 +57,7 @@ export const IconButtonConfiguration: DemoConfiguration = {
           {label: "Secondary", value: "secondary"},
           {label: "Muted", value: "muted"},
           {label: "Destructive", value: "destructive"},
+          {label: "Disabled", value: "disabled"},
         ],
       },
       iconName: {

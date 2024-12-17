@@ -50,6 +50,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
   accessibilityLabel,
   confirmationHeading = "Confirm",
   confirmationText = "Are you sure you want to continue?",
+  disabled = false,
   iconName,
   indicator,
   indicatorText,
@@ -75,7 +76,10 @@ const IconButtonComponent: FC<IconButtonProps> = ({
   let backgroundColor = theme.surface.primary;
   let color = theme.text.inverted;
 
-  if (variant === "secondary") {
+  if (disabled) {
+    backgroundColor = theme.surface.disabled;
+    color = theme.text.secondaryLight;
+  } else if (variant === "secondary") {
     backgroundColor = theme.surface.neutralLight;
     color = theme.surface.secondaryDark;
   } else if (variant === "muted") {
@@ -100,7 +104,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
       }
       aria-label={accessLabel}
       aria-role="button"
-      disabled={loading}
+      disabled={loading || disabled}
       style={{
         alignItems: "center",
         backgroundColor,
