@@ -263,6 +263,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   const handleFieldChange = useCallback(
     (index: number, text: string, config: FieldConfig) => {
       const numericValue = text.replace(/[^0-9]/g, "");
+      console.log("numericValue", numericValue);
+
       if (numericValue.length <= config.maxLength) {
         if (type === "date" || type === "datetime") {
           if (index === 0) setMonth(numericValue);
@@ -313,8 +315,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       }
         
       if (type === "time" || type === "datetime") {
-        // Fix: Correctly handle 12-hour format
-        const hourNum = parsedDate.hour > 12 ? parsedDate.hour - 12 : parsedDate.hour;
+        let hourNum = parsedDate.hour % 12;
+        hourNum = hourNum === 0 ? 12 : hourNum;
         console.log("hourNum", hourNum);
         setHour(hourNum.toString().padStart(2, "0"));
         setMinute(parsedDate.minute.toString().padStart(2, "0"));
@@ -359,7 +361,9 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     }
     
     if (type === "time" || type === "datetime") {
-      const hourNum = parsedDate.hour > 12 ? parsedDate.hour - 12 : parsedDate.hour;
+      let hourNum = parsedDate.hour % 12;
+      hourNum = hourNum === 0 ? 12 : hourNum;
+      console.log("hourNum", hourNum);
       setHour(hourNum.toString().padStart(2, "0"));
       setMinute(parsedDate.minute.toString().padStart(2, "0"));
     }
