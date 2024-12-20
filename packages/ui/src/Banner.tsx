@@ -32,8 +32,8 @@ const BannerButton = ({
   return (
     <Pressable
       accessibilityHint={`Press to perform action ${buttonText}`}
-      accessibilityLabel={buttonText}
-      accessibilityRole="button"
+      aria-label={buttonText}
+      aria-role="button"
       style={{
         alignItems: "center",
         alignSelf: "stretch",

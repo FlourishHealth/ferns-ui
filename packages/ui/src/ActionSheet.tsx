@@ -73,12 +73,7 @@ export const getElevation = (elevation?: number) => {
   }
   return {
     elevation,
-    boxShadow: {
-      shadowColor: "black",
-      shadowOffset: {width: 0.3 * elevation, height: 0.5 * elevation},
-      shadowOpacity: 0.2,
-      shadowRadius: 0.7 * elevation,
-    },
+    boxShadow: `${0.3 * elevation}px ${0.5 * elevation}px ${0.7 * elevation}px rgba(0, 0, 0, 0.2)`,
   };
 };
 
@@ -804,7 +799,7 @@ export class ActionSheet extends Component<Props, State, any> {
                   onTouchStart={this._onTouchStart}
                 >
                   <Pressable
-                    accessibilityRole="button"
+                    aria-role="button"
                     style={{
                       height: this.state.deviceHeight * 1.15,
                       width: "100%",

@@ -78,7 +78,7 @@ const TimeInput = ({
     >
       <TextInput
         accessibilityHint="Enter a number"
-        accessibilityLabel="Text input field"
+        aria-label="Text input field"
         enterKeyHint="done"
         selectTextOnFocus
         keyboardType="number-pad"
@@ -121,12 +121,12 @@ const CalendarButton = ({
   return (
     <Pressable
       accessibilityHint={accessibilityHint}
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="button"
+      aria-label={accessibilityLabel}
+      aria-role="button"
       hitSlop={10}
       onPress={onClick}
     >
-      <FontAwesome6 color={theme.surface.secondaryDark} name={iconName} size={16} />
+      <FontAwesome6 color={theme.surface.secondaryDark} name={iconName} size={16}  selectable={undefined} />
     </Pressable>
   );
 };

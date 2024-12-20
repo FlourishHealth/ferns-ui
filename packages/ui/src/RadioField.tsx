@@ -21,8 +21,8 @@ export const RadioField = ({
         <TouchableOpacity
           key={option.key ?? option.value}
           accessibilityHint={`Select ${option} from list of options`}
-          accessibilityLabel={option.label ?? option.value}
-          accessibilityRole="button"
+          aria-label={option.label ?? option.value}
+          aria-role="button"
           style={{
             flexDirection: "row",
             justifyContent: "space-between",

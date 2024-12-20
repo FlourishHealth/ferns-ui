@@ -339,8 +339,8 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
             >
               <Pressable
                 accessibilityHint="Tooltip information"
-                accessibilityLabel={text}
-                accessibilityRole="button"
+                aria-label={text}
+                aria-role="button"
                 style={{
                   backgroundColor: theme.surface.secondaryExtraDark,
                   borderRadius: theme.radius.default,

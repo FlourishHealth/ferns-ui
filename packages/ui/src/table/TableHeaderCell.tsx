@@ -82,6 +82,7 @@ export const TableHeaderCell = ({
             <FontAwesome6
               color={theme.text.inverted}
               name={sort === "asc" ? "arrow-down" : "arrow-up"}
+              selectable={undefined}
               size={10}
               solid
             />

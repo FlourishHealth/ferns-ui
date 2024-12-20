@@ -25,6 +25,7 @@ export const Icon = ({
       light={type === "light" || type === "sharpLight"}
       name={iconName}
       regular={type === "regular"}
+      selectable={undefined}
       sharp={type === "sharp"}
       size={iconSize}
       solid={type === "solid" || type === "sharpSolid"}

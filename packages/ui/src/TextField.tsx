@@ -89,23 +89,12 @@ export const TextField: FC<TextFieldProps> = ({
   const [focused, setFocused] = useState(false);
   const [height, setHeight] = useState(rows * 40);
 
-  const borderColor = useMemo(() => {
-    if (disabled) {
-      return theme.border.activeNeutral;
-    } else if (errorText) {
-      return theme.border.error;
-    } else {
-      return focused ? theme.border.focus : theme.border.dark;
-    }
-  }, [
-    disabled,
-    errorText,
-    focused,
-    theme.border.activeNeutral,
-    theme.border.dark,
-    theme.border.error,
-    theme.border.focus,
-  ]);
+  let borderColor = focused ? theme.border.focus : theme.border.dark;
+  if (disabled) {
+    borderColor = theme.border.activeNeutral;
+  } else if (errorText) {
+    borderColor = theme.border.error;
+  }
 
   const calculatedHeight: DimensionValue = useMemo(() => {
     if (grow) {
@@ -174,18 +163,18 @@ export const TextField: FC<TextFieldProps> = ({
             }
           }}
           accessibilityHint="Enter text here"
-          accessibilityLabel="Text input field"
           accessibilityState={{disabled}}
+          aria-label="Text input field"
           autoCapitalize={type === "text" ? "sentences" : "none"}
           autoCorrect={shouldAutocorrect}
           blurOnSubmit={blurOnSubmit}
-          editable={!disabled}
           enterKeyHint={returnKeyType}
           keyboardType={keyboardType as KeyboardTypeOptions}
           multiline={multiline}
           numberOfLines={rows || 4}
           placeholder={placeholder}
           placeholderTextColor={theme.text.secondaryLight}
+          readOnly={disabled}
           secureTextEntry={type === "password"}
           style={defaultTextInputStyles}
           testID={testID}
@@ -224,7 +213,7 @@ export const TextField: FC<TextFieldProps> = ({
           }}
         />
         {Boolean(iconName) && (
-          <Pressable accessibilityRole="button" onPress={onIconClick}>
+          <Pressable aria-role="button" onPress={onIconClick}>
             <Icon iconName={iconName!} size="md" />
           </Pressable>
         )}

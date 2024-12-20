@@ -10,8 +10,8 @@ export const TableTitle: FC<TableTitleProps> = ({title, align = "left"}) => {
     // No hint needed for a title.
     // eslint-disable-next-line react-native-a11y/has-accessibility-hint
     <Text
-      accessibilityLabel={`Table title: ${title}`}
-      accessibilityRole="header"
+      aria-label={`Table title: ${title}`}
+      aria-role="header"
       ellipsizeMode="tail" // ensures that the text is clipped at the end of the line for all platforms
       numberOfLines={3}
       style={{

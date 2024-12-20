@@ -189,15 +189,7 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
       }
       if (Platform.OS === "ios" || Platform.OS === "web") {
         return {
-          boxShadow: {
-            shadowColor: "#999",
-            shadowOffset: {
-              width: 2,
-              height: 2,
-            },
-            shadowRadius: 2,
-            shadowOpacity: 1.0,
-          },
+          boxShadow: "2px 2px 2px rgba(153, 153, 153, 1.0)",
         };
       } else {
         return {elevation: 4};
@@ -257,8 +249,8 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     box = (
       <Pressable
         accessibilityHint={(props as AccessibilityProps).accessibilityHint}
-        accessibilityLabel={(props as AccessibilityProps).accessibilityLabel}
-        accessibilityRole="button"
+        aria-label={(props as AccessibilityProps).accessibilityLabel}
+        aria-role="button"
         style={propsToStyle()}
         testID={props.testID ? `${props.testID}-clickable` : undefined}
         onLayout={props.onLayout}
