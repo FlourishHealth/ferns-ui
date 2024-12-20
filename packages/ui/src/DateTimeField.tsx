@@ -12,11 +12,11 @@ import {SelectField} from "./SelectField";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
 import {TimezonePicker} from "./TimezonePicker";
-interface SeperatorProps {
+interface SeparatorProps {
   type: "date" | "time";
 }
 
-const Seperator: React.FC<SeperatorProps> = ({type}) => {
+const Separator: React.FC<SeparatorProps> = ({type}) => {
   return (
     <View>
       <Text>{type === "time" ? ":" : "/"}</Text>
@@ -62,13 +62,18 @@ const DateTimeSegment: React.FC<DateTimeSegmentProps> = ({
         accessibilityHint={`Enter the ${config.placeholder}`}
         aria-label="Text input field"
         inputMode="numeric"
-        maxLength={config.maxLength}
         placeholder={config.placeholder}
         readOnly={disabled}
+        selectTextOnFocus
         style={{width: config.width - 2, textAlign: "center"}}
         value={getFieldValue(index)}
         onBlur={() => onBlur()}
-        onChangeText={(text) => handleFieldChange(index, text, config)}
+        onChangeText={(text) => {
+          if(text.length > config.maxLength) {
+            text = text.replace(/^0+/, '');   
+          }
+          handleFieldChange(index, text, config);
+        }}
       />
     </View>
   );
@@ -83,9 +88,9 @@ const DateField: React.FC<DateTimeProps> = (segmentProps) => {
   return (
     <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
       <DateTimeSegment {...segmentProps} config={segmentProps.fieldConfigs[0]} index={0} />
-      <Seperator type="date" />
+      <Separator type="date" />
       <DateTimeSegment {...segmentProps} config={segmentProps.fieldConfigs[1]} index={1} />
-      <Seperator type="date" />
+      <Separator type="date" />
       <DateTimeSegment {...segmentProps} config={segmentProps.fieldConfigs[2]} index={2} />
     </View>
   );
@@ -105,7 +110,7 @@ const TimeField: React.FC<DateTimeProps> = ({
         index={type === "time" ? 0 : 3}
         onBlur={onBlur}
       />
-      <Seperator type="time" />
+      <Separator type="time" />
       <DateTimeSegment
         {...segmentProps}
         config={segmentProps.fieldConfigs[1]}
@@ -258,7 +263,6 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   const handleFieldChange = useCallback(
     (index: number, text: string, config: FieldConfig) => {
       const numericValue = text.replace(/[^0-9]/g, "");
-
       if (numericValue.length <= config.maxLength) {
         if (type === "date" || type === "datetime") {
           if (index === 0) setMonth(numericValue);
@@ -275,6 +279,12 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           if (index === 3) setHour(numericValue);
           if (index === 4) setMinute(numericValue);
         }
+
+        // We use getISOFromFields to ensure the value is valid and current
+        const result = getISOFromFields();
+        if(result) {
+          onChange(result);
+        }
       }
 
       // Auto-advance to next field if current field is full
@@ -288,6 +298,27 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   const onActionSheetChange = useCallback(
     (inputDate: string) => {
+      const parsedDate = DateTime.fromISO(inputDate);
+      if (!parsedDate.isValid) {
+        console.warn("Invalid date passed to DateTimeField", inputDate);
+        return;
+      }
+      setTimezone(parsedDate.zoneName ?? "UTC");
+      setAmPm(parsedDate.hour >= 12 ? "pm" : "am");
+  
+      if (type === "date" || type === "datetime") {
+        setMonth(parsedDate.month.toString().padStart(2, "0"));
+        setDay(parsedDate.day.toString().padStart(2, "0"));
+        setYear(parsedDate.year.toString());
+      }
+        
+      if (type === "time" || type === "datetime") {
+        // Fix: Correctly handle 12-hour format
+        const hourNum = parsedDate.hour > 12 ? parsedDate.hour - 12 : parsedDate.hour;
+        console.log("hourNum", hourNum);
+        setHour(hourNum.toString().padStart(2, "0"));
+        setMinute(parsedDate.minute.toString().padStart(2, "0"));
+      }     
       onChange(inputDate);
       setShowDate(false);
     },
@@ -311,30 +342,22 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     if (!value) {
       return;
     }
-    const parsedDate = DateTime.fromISO(value);
+    const currentISO = getISOFromFields();
+    const parsedDate = DateTime.fromISO(currentISO ??value);
     if (!parsedDate.isValid) {
       console.warn("Invalid date passed to DateTimeField", value);
       return;
     }
-
-    // Compare the parsed dates instead of string comparison
-    const currentISO = getISOFromFields();
-    if (currentISO) {
-      const currentDate = DateTime.fromISO(currentISO);
-      if (currentDate.toMillis() === parsedDate.toMillis()) {
-        return;
-      }
-    }
-
-    setAmPm(parsedDate.hour >= 12 ? "pm" : "am");
+  
     setTimezone(parsedDate.zoneName ?? "UTC");
-
+    setAmPm(parsedDate.hour >= 12 ? "pm" : "am");
+  
     if (type === "date" || type === "datetime") {
-      setMonth(parsedDate.month.toString().padStart(2, "0"));
-      setDay(parsedDate.day.toString().padStart(2, "0"));
+    setMonth(parsedDate.month.toString().padStart(2, "0"));
+    setDay(parsedDate.day.toString().padStart(2, "0"));
       setYear(parsedDate.year.toString());
     }
-
+    
     if (type === "time" || type === "datetime") {
       const hourNum = parsedDate.hour > 12 ? parsedDate.hour - 12 : parsedDate.hour;
       setHour(hourNum.toString().padStart(2, "0"));

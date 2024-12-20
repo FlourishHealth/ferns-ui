@@ -80,6 +80,7 @@ const TimeInput = ({
         accessibilityHint="Enter a number"
         accessibilityLabel="Text input field"
         enterKeyHint="done"
+        selectTextOnFocus
         keyboardType="number-pad"
         style={
           {

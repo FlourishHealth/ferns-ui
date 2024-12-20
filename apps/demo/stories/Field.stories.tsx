@@ -226,7 +226,10 @@ export const DateAndTimeFieldStory = () => {
         title="Date Time Field"
         type="datetime"
         value={dateValue}
-        onChange={setDateValue}
+        onChange={(value) => {
+          setDateValue(value);
+          setTimezone(DateTime.fromISO(value).zone.name);
+        }}
       />
       <Field
         disabled
@@ -242,7 +245,10 @@ export const DateAndTimeFieldStory = () => {
         title="Date Field"
         type="date"
         value={dateValue}
-        onChange={setDateValue}
+        onChange={(value) => {
+          setDateValue(value);
+          setTimezone(DateTime.fromISO(value).zone.name);
+        }}
       />
 
       <Field
