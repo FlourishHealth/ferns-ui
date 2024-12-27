@@ -11,18 +11,7 @@ import {
   FontAwesome6SolidNames,
 } from "./CommonIconTypes";
 
-export interface AccordionProps {
-  /**
-   * The content to be displayed inside the accordion.
-   */
-  children: React.ReactNode;
-
-  /**
-   * If true, an information modal will be included.
-   * @default false
-   */
-  includeInfoModal?: boolean;
-
+export interface InfoModalIconProps {
   /**
    * The content of the information modal.
    */
@@ -42,6 +31,19 @@ export interface AccordionProps {
    * The title of the information modal.
    */
   infoModalTitle?: ModalProps["title"];
+}
+
+export interface AccordionProps extends InfoModalIconProps {
+  /**
+   * The content to be displayed inside the accordion.
+   */
+  children: React.ReactNode;
+
+  /**
+   * If true, an information modal will be included.
+   * @default false
+   */
+  includeInfoModal?: boolean;
 
   /**
    * If true, the accordion will be collapsed.
@@ -1908,6 +1910,18 @@ export interface TableProps {
    * Extra controls to render below the table next to pagination
    */
   extraControls?: React.ReactElement;
+  /**
+   * Pinned rows to the left of the table
+   */
+  pinnedRows?: React.ReactElement[];
+  /**
+   * Number of columns to pin to the left
+   */
+  leftPinnedColumns?: number;
+  /**
+   * Number of columns to pin to the right
+   */
+  rightPinnedColumns?: number;
 }
 
 export interface PaginationProps {
@@ -1934,7 +1948,7 @@ export interface TableHeaderProps {
   color?: BoxColor;
 }
 
-export interface TableHeaderCellProps {
+export interface TableHeaderCellProps extends InfoModalIconProps {
   /**
    * The content of the table header cell.
    */
@@ -1953,6 +1967,11 @@ export interface TableHeaderCellProps {
    * wrap the text yourself. Alignments will match between the cell and the title.
    */
   title?: string;
+  /**
+   * If provided, a tooltip icon will be shown and a tooltip will be shown when hovering over the
+   * icon.
+   */
+  infoText?: string;
 }
 
 export interface TableRowProps {
