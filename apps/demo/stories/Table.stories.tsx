@@ -45,7 +45,7 @@ export const SortableExpandableTableStory = (): React.ReactElement => {
 
   return (
     <Box color="base" direction="column" maxHeight={250} maxWidth={400} scroll>
-      <Table columns={[160, 200, 120, 200, 140, 140]} stickyFirstColumn stickyHeader>
+      <Table columns={[160, 200, 120, 200, 140, 140]}>
         <TableHeader>
           <TableHeaderCell
             index={0}
@@ -133,7 +133,7 @@ export const StandardTable = (): React.ReactElement => {
   ];
   return (
     <Box color="base" direction="column" maxHeight={250} maxWidth={400} scroll>
-      <Table columns={[120, 120, 120, 120]} pinnedColumns={[0]} pinnedRows={[0]}>
+      <Table columns={[120, 120, 120, 120]}>
         <TableHeader>
           <TableHeaderCell index={0} title="Column 1" />
           <TableHeaderCell index={1} title="Column 2" />
