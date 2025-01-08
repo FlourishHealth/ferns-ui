@@ -465,7 +465,7 @@ const DataTableContent: React.FC<DataTableContentProps> = ({
 
   return (
     <>
-      <ScrollView contentContainerStyle={{flex: 1}} style={{flex: 1}}>
+      <ScrollView style={{flex: 1}}>
         <View
           style={{
             flexDirection: "row",
@@ -480,7 +480,7 @@ const DataTableContent: React.FC<DataTableContentProps> = ({
                 left: 0,
                 top: 0,
                 width: 48,
-                zIndex: 11,
+                zIndex: 1,
                 backgroundColor: theme.surface.base,
               }}
             >
@@ -643,52 +643,54 @@ export const DataTable: React.FC<DataTableProps> = ({
   }, [data, defaultTextSize]);
 
   return (
-    <View
-      style={{
-        flex: 1,
-        borderWidth: 1,
-        borderColor: theme.border.default,
-        position: "relative",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <DataTableHeader
-        columnWidths={columnWidths}
-        columns={columns}
-        hasMoreContent={Boolean(moreContentComponent)}
-        headerScrollRef={headerScrollRef}
-        pinnedColumns={pinnedColumns}
-        rowHeight={rowHeight}
-        sortColumn={sortColumn}
-        onScroll={handleScroll}
-        onSort={handleSort}
-      />
+    <View style={{height: "100%", display: "flex", flexDirection: "column"}}>
+      <View
+        style={{
+          flex: 1,
+          minHeight: 0,
+          borderWidth: 1,
+          borderColor: theme.border.default,
+          height: "100%",
+        }}
+      >
+        <DataTableHeader
+          columnWidths={columnWidths}
+          columns={columns}
+          hasMoreContent={Boolean(moreContentComponent)}
+          headerScrollRef={headerScrollRef}
+          pinnedColumns={pinnedColumns}
+          rowHeight={rowHeight}
+          sortColumn={sortColumn}
+          onScroll={handleScroll}
+          onSort={handleSort}
+        />
 
-      <DataTableContent
-        alternateRowBackground={alternateRowBackground}
-        bodyScrollRef={bodyScrollRef}
-        columnWidths={columnWidths}
-        columns={columns}
-        customColumnComponentMap={customColumnComponentMap}
-        data={processedData}
-        moreContentComponent={moreContentComponent}
-        moreContentExtraData={moreContentExtraData}
-        pinnedColumns={pinnedColumns}
-        rowHeight={rowHeight}
-        onScroll={handleScroll}
-      />
+        <View style={{flex: 1, minHeight: 0}}>
+          <DataTableContent
+            alternateRowBackground={alternateRowBackground}
+            bodyScrollRef={bodyScrollRef}
+            columnWidths={columnWidths}
+            columns={columns}
+            customColumnComponentMap={customColumnComponentMap}
+            data={processedData}
+            moreContentComponent={moreContentComponent}
+            moreContentExtraData={moreContentExtraData}
+            pinnedColumns={pinnedColumns}
+            rowHeight={rowHeight}
+            onScroll={handleScroll}
+          />
+        </View>
+      </View>
 
-      {setPage && (
+      {Boolean(setPage && totalPages > 1) && (
         <View
           style={{
+            height: 60,
             padding: 16,
-            borderTopWidth: 1,
-            borderTopColor: theme.border.default,
-            alignItems: "flex-end",
+            alignItems: "center",
           }}
         >
-          <Pagination page={page} setPage={setPage} totalPages={totalPages} />
+          <Pagination page={page} setPage={setPage!} totalPages={totalPages} />
         </View>
       )}
     </View>

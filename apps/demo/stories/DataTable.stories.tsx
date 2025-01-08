@@ -186,7 +186,7 @@ export const StandardDataTable = (): React.ReactElement => {
   ];
 
   return (
-    <Box color="base" direction="column" maxHeight={400} maxWidth={600} scroll>
+    <Box color="base" direction="column" height="100%" maxHeight={400} maxWidth={600} scroll>
       <DataTable
         alternateRowBackground
         columns={columns}
