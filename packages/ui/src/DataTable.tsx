@@ -5,74 +5,22 @@ import {NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, View} fr
 import Markdown from "react-native-markdown-display";
 
 import {Box} from "./Box";
-import {ColumnSortInterface, SurfaceColor} from "./Common";
+import {
+  ColumnSortInterface,
+  DataTableCellData,
+  DataTableCellProps,
+  DataTableColumn,
+  DataTableCustomComponentMap,
+  DataTableProps,
+  SurfaceColor,
+} from "./Common";
 import {Icon} from "./Icon";
-import {IconButton} from "./IconButton";
 import {InfoModalIcon} from "./InfoModalIcon";
 import {Modal} from "./Modal";
 import {Pagination} from "./Pagination";
 import {TableTitle} from "./table/TableTitle";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
-
-export type CellData = {
-  value: any;
-  highlight?: SurfaceColor;
-  textSize?: "sm" | "md" | "lg";
-};
-
-export type CustomComponentMap = Record<
-  string,
-  React.ComponentType<{column: DataTableColumn; cellData: CellData}>
->;
-export interface DataTableColumn {
-  title: string;
-  columnType: "text" | "number" | "date" | "boolean" | string;
-  width: number;
-  highlight?: SurfaceColor;
-  sortable?: boolean;
-  infoModalText?: string;
-}
-
-interface DataTableProps {
-  data: {value: any; highlight?: SurfaceColor; textSize?: "sm" | "md" | "lg"}[][];
-  columns: DataTableColumn[];
-  alternateRowBackground?: boolean;
-  totalPages?: number;
-  page?: number;
-  setPage?: (page: number) => void;
-  pinnedColumns?: number;
-  sortColumn?: ColumnSortInterface;
-  setSortColumn?: (sortColumn?: ColumnSortInterface) => void;
-  rowHeight?: number;
-  defaultTextSize?: "sm" | "md" | "lg";
-  /**
-   * When tapping the eye icon, a modal is shown with more info about the row.
-   */
-  moreContentComponent?: React.ComponentType<{
-    column: DataTableColumn;
-    rowData: any[];
-    rowIndex: number;
-  }>;
-  // Extra data to pass to the more modal.
-  moreContentExtraData?: any[];
-  // Allows handling of custom column types.
-  customColumnComponentMap?: CustomComponentMap;
-}
-
-interface DataTableCellProps {
-  value: any;
-  columnDef: DataTableColumn;
-  colIndex: number;
-  isPinned: boolean;
-  pinnedColumns: number;
-  columnWidths: number[];
-  backgroundColor: string;
-  highlight?: SurfaceColor;
-  customColumnComponentMap?: CustomComponentMap;
-  height: number;
-  textSize?: "sm" | "md" | "lg";
-}
 
 const TextCell: React.FC<{
   cellData: {value: string; textSize?: "sm" | "md" | "lg"};
@@ -102,7 +50,7 @@ const DataTableCell: React.FC<DataTableCellProps> = ({
   value,
   columnDef,
   colIndex,
-  isPinned,
+  isPinnedHorizontal,
   pinnedColumns,
   columnWidths,
   customColumnComponentMap,
@@ -111,7 +59,7 @@ const DataTableCell: React.FC<DataTableCellProps> = ({
   textSize = "md",
 }) => {
   const {theme} = useTheme();
-  const isLastPinnedColumn = isPinned && colIndex === pinnedColumns - 1;
+  const isLastPinnedColumn = isPinnedHorizontal && colIndex === pinnedColumns - 1;
 
   // Default to TextCell
   let Component: React.ComponentType<{
@@ -138,7 +86,7 @@ const DataTableCell: React.FC<DataTableCellProps> = ({
         borderBottomWidth: 1,
         borderBottomColor: theme.border.default,
         // For pinned columns: use absolute positioning to stay fixed while scrolling horizontally
-        ...(isPinned && {
+        ...(isPinnedHorizontal && {
           position: "absolute",
           // Position each pinned column by summing widths of all previous columns
           left: columnWidths.slice(0, colIndex).reduce((sum, width) => sum + width, 0),
@@ -158,13 +106,13 @@ const DataTableCell: React.FC<DataTableCellProps> = ({
 };
 
 interface DataTableRowProps {
-  rowData: CellData[];
+  rowData: DataTableCellData[];
   rowIndex: number;
   columns: DataTableColumn[];
   pinnedColumns: number;
   columnWidths: number[];
   alternateRowBackground: boolean;
-  customColumnComponentMap?: CustomComponentMap;
+  customColumnComponentMap?: DataTableCustomComponentMap;
   rowHeight: number;
 }
 
@@ -202,7 +150,7 @@ const DataTableRow: React.FC<DataTableRowProps> = ({
           columnWidths={columnWidths}
           customColumnComponentMap={customColumnComponentMap}
           height={rowHeight}
-          isPinned={colIndex < pinnedColumns}
+          isPinnedHorizontal={colIndex < pinnedColumns}
           pinnedColumns={pinnedColumns}
           textSize={cell.textSize}
           value={cell}
@@ -243,13 +191,25 @@ const MoreButtonCell: React.FC<MoreButtonCellProps> = ({
         borderBottomColor: theme.border.default,
       }}
     >
-      <IconButton
+      <Pressable
         accessibilityHint="View details"
         accessibilityLabel="Open modal"
-        iconName="info"
-        variant="secondary"
-        onClick={() => onClick(rowIndex)}
-      />
+        accessibilityRole="button"
+        style={{
+          borderRadius: theme.radius.rounded,
+          backgroundColor:
+            alternateRowBackground && rowIndex % 2 === 1
+              ? theme.surface.base
+              : theme.surface.neutralLight,
+          width: 32,
+          height: 32,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onPress={() => onClick(rowIndex)}
+      >
+        <Icon color="secondaryDark" iconName="info" size="md" />
+      </Pressable>
     </View>
   );
 };
@@ -257,7 +217,8 @@ const MoreButtonCell: React.FC<MoreButtonCellProps> = ({
 interface DataTableHeaderCellProps {
   column: DataTableColumn;
   index: number;
-  isPinned: boolean;
+  isPinnedHorizontal: boolean;
+  isPinnedRow?: boolean;
   columnWidths: number[];
   sortColumn?: ColumnSortInterface;
   onSort: (index: number) => void;
@@ -267,7 +228,7 @@ interface DataTableHeaderCellProps {
 const DataTableHeaderCell: React.FC<DataTableHeaderCellProps> = ({
   column,
   index,
-  isPinned,
+  isPinnedHorizontal,
   columnWidths,
   sortColumn,
   onSort,
@@ -288,7 +249,7 @@ const DataTableHeaderCell: React.FC<DataTableHeaderCellProps> = ({
         backgroundColor: theme.surface.base,
         borderBottomWidth: 1,
         borderBottomColor: theme.border.default,
-        ...(isPinned && {
+        ...(isPinnedHorizontal && {
           position: "absolute",
           left: columnWidths.slice(0, index).reduce((sum, width) => sum + width, 0),
           zIndex: 10 - index,
@@ -388,7 +349,7 @@ const DataTableHeader: React.FC<DataTableHeaderProps> = ({
               column={column}
               columnWidths={columnWidths}
               index={index}
-              isPinned
+              isPinnedHorizontal
               rowHeight={rowHeight}
               sortColumn={sortColumn}
               onSort={onSort}
@@ -415,7 +376,7 @@ const DataTableHeader: React.FC<DataTableHeaderProps> = ({
             column={column}
             columnWidths={columnWidths}
             index={index + pinnedColumns}
-            isPinned={false}
+            isPinnedHorizontal={false}
             rowHeight={rowHeight}
             sortColumn={sortColumn}
             onSort={onSort}
@@ -442,7 +403,7 @@ interface DataTableContentProps {
   // Extra props to pass to the more modal, one per row.
   moreContentExtraData?: any[];
   moreContentSize?: "sm" | "md" | "lg";
-  customColumnComponentMap?: CustomComponentMap;
+  customColumnComponentMap?: DataTableCustomComponentMap;
   rowHeight: number;
 }
 

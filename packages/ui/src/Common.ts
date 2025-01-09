@@ -1910,24 +1910,75 @@ export interface TableProps {
    * Extra controls to render below the table next to pagination
    */
   extraControls?: React.ReactElement;
-  /**
-   * Pinned rows to the left of the table
-   */
-  pinnedRows?: React.ReactElement[];
-  /**
-   * Number of columns to pin to the left
-   */
-  leftPinnedColumns?: number;
-  /**
-   * Number of columns to pin to the right
-   */
-  rightPinnedColumns?: number;
 }
 
 export interface PaginationProps {
   page: number;
   setPage: (page: number) => void;
   totalPages: number;
+}
+
+/**
+ * Data Table
+ */
+export type DataTableCellData = {
+  value: any;
+  highlight?: SurfaceColor;
+  textSize?: "sm" | "md" | "lg";
+};
+
+export type DataTableCustomComponentMap = Record<
+  string,
+  React.ComponentType<{column: DataTableColumn; cellData: DataTableCellData}>
+>;
+export interface DataTableColumn {
+  title: string;
+  columnType: "text" | "number" | "date" | "boolean" | string;
+  width: number;
+  highlight?: SurfaceColor;
+  sortable?: boolean;
+  infoModalText?: string;
+}
+
+export interface DataTableProps {
+  data: {value: any; highlight?: SurfaceColor; textSize?: "sm" | "md" | "lg"}[][];
+  columns: DataTableColumn[];
+  alternateRowBackground?: boolean;
+  totalPages?: number;
+  page?: number;
+  setPage?: (page: number) => void;
+  pinnedColumns?: number;
+  sortColumn?: ColumnSortInterface;
+  setSortColumn?: (sortColumn?: ColumnSortInterface) => void;
+  rowHeight?: number;
+  defaultTextSize?: "sm" | "md" | "lg";
+  /**
+   * When tapping the eye icon, a modal is shown with more info about the row.
+   */
+  moreContentComponent?: React.ComponentType<{
+    column: DataTableColumn;
+    rowData: any[];
+    rowIndex: number;
+  }>;
+  // Extra data to pass to the more modal.
+  moreContentExtraData?: any[];
+  // Allows handling of custom column types.
+  customColumnComponentMap?: DataTableCustomComponentMap;
+}
+
+export interface DataTableCellProps {
+  value: any;
+  columnDef: DataTableColumn;
+  colIndex: number;
+  isPinnedHorizontal: boolean;
+  isPinnedRow?: boolean;
+  pinnedColumns: number;
+  columnWidths: number[];
+  backgroundColor: string;
+  highlight?: SurfaceColor;
+  customColumnComponentMap?: DataTableCustomComponentMap;
+  height: number;
+  textSize?: "sm" | "md" | "lg";
 }
 
 export interface TableHeaderProps {
