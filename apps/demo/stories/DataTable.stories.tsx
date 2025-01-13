@@ -185,6 +185,18 @@ export const StandardDataTable = (): React.ReactElement => {
     {title: "Custom", width: 200, columnType: "custom", sortable: false},
   ];
 
+  if (sortColumn) {
+    rows.sort((a, b) => {
+      return sortColumn.direction === "asc"
+        ? a[sortColumn.column].value > b[sortColumn.column].value
+          ? 1
+          : -1
+        : a[sortColumn.column].value < b[sortColumn.column].value
+          ? 1
+          : -1;
+    });
+  }
+
   return (
     <Box color="base" direction="column" height="100%" maxHeight={400} maxWidth={600} scroll>
       <DataTable
