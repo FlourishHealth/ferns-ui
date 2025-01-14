@@ -231,7 +231,8 @@ export const DateAndTimeFieldStory = () => {
         value={dateValue}
         onChange={(value) => {
           setDateValue(value);
-          setTimezone(DateTime.fromISO(value).zone.name);
+          console.log("story value", value);
+          console.log("story timezone", DateTime.fromISO(value).zone.name);
         }}
       />
       <Field
@@ -242,7 +243,7 @@ export const DateAndTimeFieldStory = () => {
         onChange={() => {}}
       />
 
-      <Field
+      {/* <Field
         helperText="Here's some help text"
         timezone={timezone}
         title="Date Field"
@@ -260,7 +261,7 @@ export const DateAndTimeFieldStory = () => {
         type="time"
         value={timeValue}
         onChange={setTimeValue}
-      />
+      /> */}
     </StorybookContainer>
   );
 };

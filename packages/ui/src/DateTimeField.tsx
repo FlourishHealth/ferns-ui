@@ -43,6 +43,7 @@ const DateTimeSegment: React.FC<DateTimeSegmentProps> = ({
   index,
   config,
 }): React.ReactElement => {
+  console.log("DateTimeSegment", index, config);
   return (
     <View
       style={{
@@ -69,8 +70,8 @@ const DateTimeSegment: React.FC<DateTimeSegmentProps> = ({
         value={getFieldValue(index)}
         onBlur={() => onBlur()}
         onChangeText={(text) => {
-          if(text.length > config.maxLength) {
-            text = text.replace(/^0+/, '');   
+          if (text.length > config.maxLength) {
+            text = text.replace(/^0+/, "");
           }
           handleFieldChange(index, text, config);
         }}
@@ -192,6 +193,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   const getISOFromFields = useCallback(
     (override?: {amPm?: "am" | "pm"; timezone?: string}): string | undefined => {
+      console.log("getISOFromFields", override);
       const ampPmVal = override?.amPm ?? amPm;
       const timezoneVal = override?.timezone ?? timezone;
       let date;
@@ -262,8 +264,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   const handleFieldChange = useCallback(
     (index: number, text: string, config: FieldConfig) => {
+      console.log("handleFieldChange", index, text, config);
       const numericValue = text.replace(/[^0-9]/g, "");
-      console.log("numericValue", numericValue);
 
       if (numericValue.length <= config.maxLength) {
         if (type === "date" || type === "datetime") {
@@ -284,7 +286,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
         // We use getISOFromFields to ensure the value is valid and current
         const result = getISOFromFields();
-        if(result) {
+        if (result) {
           onChange(result);
         }
       }
@@ -295,11 +297,13 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         inputRefs.current[index + 1]?.focus();
       }
     },
-    [type, getFieldConfigs]
+    [type, getFieldConfigs, getISOFromFields, onChange]
   );
 
   const onActionSheetChange = useCallback(
     (inputDate: string) => {
+      console.log("Actionsheet Change", inputDate);
+
       const parsedDate = DateTime.fromISO(inputDate);
       if (!parsedDate.isValid) {
         console.warn("Invalid date passed to DateTimeField", inputDate);
@@ -307,29 +311,29 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       }
       setTimezone(parsedDate.zoneName ?? "UTC");
       setAmPm(parsedDate.hour >= 12 ? "pm" : "am");
-  
+
       if (type === "date" || type === "datetime") {
         setMonth(parsedDate.month.toString().padStart(2, "0"));
         setDay(parsedDate.day.toString().padStart(2, "0"));
         setYear(parsedDate.year.toString());
       }
-        
+
       if (type === "time" || type === "datetime") {
         let hourNum = parsedDate.hour % 12;
         hourNum = hourNum === 0 ? 12 : hourNum;
-        console.log("hourNum", hourNum);
         setHour(hourNum.toString().padStart(2, "0"));
         setMinute(parsedDate.minute.toString().padStart(2, "0"));
-      }     
+      }
       onChange(inputDate);
       setShowDate(false);
     },
-    [onChange]
+    [onChange, type]
   );
 
   // When fields change, send the value to onChange
   const onBlur = useCallback(
     (override?: {amPm?: "am" | "pm"; timezone?: string}) => {
+      console.log("onBlur getISOFromFields", override);
       const iso = getISOFromFields(override);
       // Only call onChange if we have a valid ISO string and it's different from the current value
       if (iso && iso !== value) {
@@ -344,31 +348,37 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     if (!value) {
       return;
     }
-    const currentISO = getISOFromFields();
-    const parsedDate = DateTime.fromISO(currentISO ??value);
+    console.log("external useEffect getISOFromFields", value);
+    const currentISO = getISOFromFields({timezone});
+    const parsedDate = DateTime.fromISO(currentISO ?? value);
+    console.log("parsedDate", parsedDate);
+    console.log("parsedDate.hour", parsedDate.hour);
+    console.log("parsedDate.minute", parsedDate.minute);
+    console.log("value", value);
     if (!parsedDate.isValid) {
       console.warn("Invalid date passed to DateTimeField", value);
       return;
     }
-  
-    setTimezone(parsedDate.zoneName ?? "UTC");
     setAmPm(parsedDate.hour >= 12 ? "pm" : "am");
-  
+
     if (type === "date" || type === "datetime") {
-    setMonth(parsedDate.month.toString().padStart(2, "0"));
-    setDay(parsedDate.day.toString().padStart(2, "0"));
+      setMonth(parsedDate.month.toString().padStart(2, "0"));
+      setDay(parsedDate.day.toString().padStart(2, "0"));
       setYear(parsedDate.year.toString());
     }
-    
+
     if (type === "time" || type === "datetime") {
       let hourNum = parsedDate.hour % 12;
       hourNum = hourNum === 0 ? 12 : hourNum;
-      console.log("hourNum", hourNum);
+      console.log("external hourNum", hourNum);
       setHour(hourNum.toString().padStart(2, "0"));
       setMinute(parsedDate.minute.toString().padStart(2, "0"));
     }
-  }, [value, type, getISOFromFields]);
+  }, [value, type, getISOFromFields, timezone]);
 
+  // JOSH: This is where the infinite loop is happening
+  // We update the value of the date according to the zone and then this get triggered
+  // and we update the value of the date according to the zone again
   const getFieldValue = useCallback(
     (index: number): string => {
       if (type === "date" || type === "datetime") {
@@ -446,6 +456,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
                   requireValue
                   value={amPm}
                   onChange={(result) => {
+                    console.log("SelectField onChange", result);
                     setAmPm(result as "am" | "pm");
                     // We need to call onBlur manually because the SelectField doesn't support it
                     onBlur({amPm: result as "am" | "pm"});
@@ -458,6 +469,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
                   shortTimezone
                   timezone={timezone}
                   onChange={(t) => {
+                    console.log("TimezonePicker onChange", t);
                     setTimezone(t);
                     // We need to call onBlur manually because the TimezonePicker doesn't support
                     // it
