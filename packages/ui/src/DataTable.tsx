@@ -22,6 +22,9 @@ import {TableTitle} from "./table/TableTitle";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
 
+// TODO: Add permanent horizontal scroll bar so users with only a mouse can scroll left/right
+// easily.
+
 const TextCell: React.FC<{
   cellData: {value: string; textSize?: "sm" | "md" | "lg"};
   column: DataTableColumn;
