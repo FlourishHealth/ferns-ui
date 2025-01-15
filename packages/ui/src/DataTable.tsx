@@ -492,7 +492,7 @@ const DataTableContent: React.FC<DataTableContentProps> = ({
             ref={bodyScrollRef}
             horizontal
             scrollEventThrottle={16}
-            showsHorizontalScrollIndicator={false}
+            showsHorizontalScrollIndicator
             style={{
               flex: 1,
               marginLeft:
