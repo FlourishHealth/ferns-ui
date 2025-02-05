@@ -58,6 +58,7 @@ const ModalContent: FC<{
   theme,
   isMobile,
 }) => {
+  console.log("Freddie's modal");
   return (
     <View
       style={{
@@ -128,7 +129,7 @@ const ModalContent: FC<{
         </View>
       )}
       {children && (
-        <View aria-role="text" style={{marginTop: text ? 0 : 12}}>
+        <View aria-role="text" style={{marginTop: text ? 0 : 12, width: "100%"}}>
           {children}
         </View>
       )}
