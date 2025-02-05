@@ -115,7 +115,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
       }}
       testID={testID}
       onPress={debounce(
-        // TODO: Allow for a click outside of the modal to close it.
+        // TODO: Allow for a click outside of the confirmation modal to close it.
         async () => {
           await Unifier.utils.haptic();
           setLoading(true);

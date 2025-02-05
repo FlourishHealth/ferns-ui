@@ -116,6 +116,7 @@ const ButtonComponent: FC<ButtonProps> = ({
       testID={testID}
       onPress={debounce(
         async () => {
+          // TODO: Allow for a click outside of the confirmation modal to close it.
           await Unifier.utils.haptic();
           setLoading(true);
 
@@ -124,11 +125,6 @@ const ButtonComponent: FC<ButtonProps> = ({
             // open it
             if (withConfirmation && !showConfirmation) {
               setShowConfirmation(true);
-            } else if (withConfirmation && showConfirmation) {
-              // If a confirmation is required, and the confirmation modal is currently open,
-              // close it. DO NOT perform the action. The action is driven by the confirmation
-              // modal.
-              setShowConfirmation(false);
             } else if (!withConfirmation && onClick) {
               // If a confirmation is not required, perform the action.
               await onClick();
