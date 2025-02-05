@@ -58,7 +58,6 @@ const ModalContent: FC<{
   theme,
   isMobile,
 }) => {
-  console.log("Freddie's modal");
   return (
     <View
       style={{
