@@ -115,13 +115,17 @@ const IconButtonComponent: FC<IconButtonProps> = ({
       }}
       testID={testID}
       onPress={debounce(
+        // TODO: Allow for a click outside of the confirmation modal to close it.
         async () => {
           await Unifier.utils.haptic();
           setLoading(true);
           try {
+            // If a confirmation is required, and the confirmation modal is not currently open,
+            // open it
             if (withConfirmation && !showConfirmation) {
               setShowConfirmation(true);
-            } else if (onClick) {
+            } else if (!withConfirmation && onClick) {
+              // If a confirmation is not required, perform the action.
               await onClick();
             }
           } catch (error) {
