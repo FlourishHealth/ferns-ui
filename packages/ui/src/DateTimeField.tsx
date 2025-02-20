@@ -485,6 +485,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
             <>
               <Box direction="column" marginLeft={2} marginRight={2} width={60}>
                 <SelectField
+                  disabled={disabled}
                   options={[
                     {label: "am", value: "am"},
                     {label: "pm", value: "pm"},
@@ -500,6 +501,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
               </Box>
               <Box direction="column" marginRight={2} width={70}>
                 <TimezonePicker
+                  disabled={disabled}
                   hideTitle
                   shortTimezone
                   timezone={timezone}
