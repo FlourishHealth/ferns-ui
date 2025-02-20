@@ -60,9 +60,6 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
           alignItems: "center",
           height,
           maxHeight: height,
-          borderRadius: theme.primitives.radius3xl,
-          borderColor: theme.primitives.neutral300,
-          borderWidth: 3,
           backgroundColor: theme.primitives.neutral300,
           overflow: "hidden",
         }}
@@ -74,6 +71,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
             gap: 4,
             flexGrow: 1,
             paddingHorizontal: 4,
+            height: height - 4,
           }}
         >
           {visibleItems.map((item, index) => {
@@ -84,7 +82,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
                 aria-role="button"
                 style={{
                   display: "flex",
-                  paddingHorizontal: size === "md" ? theme.spacing.sm : theme.spacing.md,
+                  paddingHorizontal: 2,
                   justifyContent: "center",
                   alignItems: "center",
                   height: "100%",
