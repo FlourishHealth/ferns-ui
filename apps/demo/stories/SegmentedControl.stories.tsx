@@ -76,7 +76,7 @@ export const ScrollingWithBadges = () => {
       <SegmentedControl
         badges={[{count: 10}, {count: 5}, {count: 2}, {count: 15}, {count: 3, status: "error"}]}
         items={["Inbox", "Sent", "Drafts", "Archive", "Spam"]}
-        maxTabs={3}
+        maxItems={3}
         selectedIndex={itemIndex}
         onChange={(activeIndex) => setItemIndex(activeIndex as number)}
       />

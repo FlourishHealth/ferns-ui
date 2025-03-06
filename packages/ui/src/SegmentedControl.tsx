@@ -62,6 +62,7 @@ export const SegmentedControl: React.FC<SegmentedControlProps> = ({
           maxHeight: height,
           backgroundColor: theme.primitives.neutral300,
           overflow: "hidden",
+          borderRadius: theme.primitives.radius3xl,
         }}
       >
         <View
