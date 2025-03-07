@@ -1,5 +1,12 @@
 import {DemoConfiguration} from "@config";
-import {DefaultControl, LargeControl, OverflowControl, SegmentedControlDemo} from "@stories";
+import {
+  DefaultControl,
+  LargeControl,
+  OverflowControl,
+  ScrollingWithBadges,
+  SegmentedControlDemo,
+  WithBadges,
+} from "@stories";
 import {SegmentedControl} from "ferns-ui";
 
 export const SegmentedControlConfiguration: DemoConfiguration = {
@@ -37,5 +44,7 @@ export const SegmentedControlConfiguration: DemoConfiguration = {
     Default: {render: DefaultControl},
     Large: {render: LargeControl},
     Overflow: {render: OverflowControl},
+    WithBadges: {render: WithBadges},
+    ScrollingWithBadges: {render: ScrollingWithBadges},
   },
 };
