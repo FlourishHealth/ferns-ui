@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import {AddressInterface, Box, Field, Heading, TapToEdit, Text} from "ferns-ui";
 import {printDateAndTime} from "ferns-ui/dist/DateUtilities";
-import {TimezonePicker} from "ferns-ui/dist/TimezonePicker";
 import {DateTime} from "luxon";
 import React, {useState} from "react";
 import {Image} from "react-native";
@@ -212,17 +211,9 @@ export const PhoneNumberFieldStory = () => {
 
 export const DateAndTimeFieldStory = () => {
   const [dateValue, setDateValue] = useState<string>(DateTime.now().toISO());
-  const [timeValue, setTimeValue] = useState(
-    DateTime.now().set({hour: 12, minute: 0, second: 0}).toISO()
-  );
   const [timezone, setTimezone] = useState<string | undefined>(DateTime.now().zone.name);
   return (
     <StorybookContainer>
-      <Heading>
-        NOTE: The timezone picker below is to mimic the user&apos;s current timezone to test how
-        dates/times are displayed
-      </Heading>
-      <TimezonePicker showLabel timezone={timezone} onChange={(tz) => setTimezone(tz)} />
       <Field
         helperText="Here's some help text"
         timezone={timezone}
@@ -231,9 +222,8 @@ export const DateAndTimeFieldStory = () => {
         value={dateValue}
         onChange={(value) => {
           setDateValue(value);
-          console.log("story value", value);
-          console.log("story timezone", DateTime.fromISO(value).zone.name);
         }}
+        onTimezoneChange={setTimezone}
       />
       <Field
         disabled
@@ -242,26 +232,6 @@ export const DateAndTimeFieldStory = () => {
         value={printDateAndTime(dateValue, {timezone, showTimezone: true})}
         onChange={() => {}}
       />
-
-      {/* <Field
-        helperText="Here's some help text"
-        timezone={timezone}
-        title="Date Field"
-        type="date"
-        value={dateValue}
-        onChange={(value) => {
-          setDateValue(value);
-          setTimezone(DateTime.fromISO(value).zone.name);
-        }}
-      />
-
-      <Field
-        helperText="Here's some help text"
-        title="Time Field"
-        type="time"
-        value={timeValue}
-        onChange={setTimeValue}
-      /> */}
     </StorybookContainer>
   );
 };
