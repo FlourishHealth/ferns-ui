@@ -128,7 +128,7 @@ const ModalContent: FC<{
         </View>
       )}
       {children && (
-        <View aria-role="text" style={{marginTop: text ? 0 : 12}}>
+        <View aria-role="text" style={{marginTop: text ? 0 : 12, width: "100%"}}>
           {children}
         </View>
       )}
