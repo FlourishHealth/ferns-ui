@@ -575,11 +575,18 @@ export type TooltipPosition = "top" | "bottom" | "left" | "right";
 
 export type IndicatorDirection = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
 
+export type SegmentedControlBadgeConfig = {
+  count: number;
+  status?: "info" | "error" | "warning" | "success" | "neutral";
+};
+
 export interface SegmentedControlProps {
   items: string[];
   size?: "md" | "lg"; // default "md"
   onChange: (activeIndex: number) => void;
   selectedIndex?: number;
+  maxItems?: number;
+  badges?: SegmentedControlBadgeConfig[];
 }
 
 export interface TimezonePickerProps {
