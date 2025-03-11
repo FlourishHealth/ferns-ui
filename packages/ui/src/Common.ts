@@ -657,6 +657,7 @@ export interface DateTimeFieldProps extends BaseFieldProps, HelperTextProps, Err
   type: "date" | "datetime" | "time";
   value?: string; // ISO string always
   onChange: (date: string) => void;
+  onTimezoneChange?: (timezone: string) => void;
   dateFormat?: string;
   pickerType?: "default" | "compact" | "inline" | "spinner";
   showTimezone?: boolean; // defaults to true
