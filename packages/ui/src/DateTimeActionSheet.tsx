@@ -125,7 +125,12 @@ const CalendarButton = ({
       hitSlop={10}
       onPress={onClick}
     >
-      <FontAwesome6 color={theme.surface.secondaryDark} name={iconName} size={16}  selectable={undefined} />
+      <FontAwesome6
+        color={theme.surface.secondaryDark}
+        name={iconName}
+        selectable={undefined}
+        size={16}
+      />
     </Pressable>
   );
 };
@@ -380,7 +385,7 @@ const DateCalendar = ({
             textDayFontWeight: "400",
             textDayFontSize: 16,
           }}
-          onDayPress={(day) => {
+          onDayPress={(day: any) => {
             setDate(day.dateString);
             // If type is just date, we can shortcut and close right away.
             // time and datetime need to wait for the primary button.
