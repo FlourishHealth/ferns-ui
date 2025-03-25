@@ -94,11 +94,9 @@ export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
       // Ensure invalid values don't propagate up
       if (!validationError) {
         onChange(formattedValue);
-      } else if (value === undefined) {
-        onChange("");
       }
     },
-    [onChange, error, validatePhoneNumber, formatPhoneNumber, value]
+    [onChange, error, validatePhoneNumber, formatPhoneNumber]
   );
 
   return (
