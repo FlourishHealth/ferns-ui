@@ -44,6 +44,8 @@ export const TapStory = (): ReactElement => {
   const [number, setNumber] = useState(12345);
   const [email, setEmail] = useState("email@example.com");
   const [customSelect, setCustomSelect] = useState("Option1");
+  const [phoneNumber, setPhoneNumber] = useState(undefined);
+  const [secondPhoneNumber, setSecondPhoneNumber] = useState("+18885551212"); 
 
   return (
     <Box direction="column" display="flex" height="100%" scroll width="100%">
@@ -189,6 +191,28 @@ export const TapStory = (): ReactElement => {
           value={customSelect}
           onSave={(value): void => {
             setCustomSelect(value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TapToEdit
+          setValue={setPhoneNumber}
+          title="Phone Number"
+          type="phoneNumber"
+          value={phoneNumber}
+          onSave={(value): void => {
+            setPhoneNumber(value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TapToEdit
+          setValue={setSecondPhoneNumber}
+          title="Second Phone Number"
+          type="phoneNumber"
+          value={secondPhoneNumber}
+          onSave={(value): void => {
+            setSecondPhoneNumber(value);
           }}
         />
       </Box>
