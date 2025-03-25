@@ -21,11 +21,16 @@ export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
   useEffect(() => {
     setLocalValue(value || "");
     setError(errorText);
-  }, [value, errorText]);
+    // If the value is undefined on mount, initialize to an empty string to ensure first input
+    // is recorded
+    if (value === undefined) {
+      onChange("");
+    }
+  }, [value, errorText, onChange]);
 
   const validatePhoneNumber = useCallback(
     (phoneNumber: string): string | undefined => {
-      if (phoneNumber.trim() === "") {
+      if (!phoneNumber || phoneNumber.trim() === "") {
         return undefined;
       }
       const parsedNumber = parsePhoneNumberFromString(phoneNumber, defaultCountryCode);
@@ -85,13 +90,15 @@ export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
       if (error && !validationError) {
         setError(undefined);
       }
+
+      // Ensure invalid values don't propagate up
       if (!validationError) {
         onChange(formattedValue);
-      } else {
-        onChange(""); // Ensure invalid values don't propagate up
+      } else if (value === undefined) {
+        onChange("");
       }
     },
-    [onChange, error, validatePhoneNumber, formatPhoneNumber]
+    [onChange, error, validatePhoneNumber, formatPhoneNumber, value]
   );
 
   return (
