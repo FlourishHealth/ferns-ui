@@ -5,6 +5,7 @@ import {TextInput, View} from "react-native";
 import {Box} from "./Box";
 import {DateTimeFieldProps, IconName} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
+import {FieldError, FieldTitle} from "./fieldElements";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {SelectField} from "./SelectField";
@@ -126,6 +127,7 @@ type FieldConfig = {
 
 export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   type,
+  title,
   value,
   onChange,
   timezone: providedTimezone,
@@ -179,8 +181,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     }
     if (type === "time" || type === "datetime") {
       configs.push(
-        {maxLength: 2, placeholder: "HH", width: 30},
-        {maxLength: 2, placeholder: "MM", width: 30}
+        {maxLength: 2, placeholder: "hh", width: 30},
+        {maxLength: 2, placeholder: "mm", width: 30}
       );
     }
     return configs;
@@ -391,7 +393,13 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       return;
     }
 
-    const parsedDate = DateTime.fromISO(value).setZone(timezone);
+    // Handle dates which should have 00:00:00.000Z as the time component, ignore timezones.
+    let parsedDate = DateTime.fromISO(value);
+    if (type === "date") {
+      parsedDate = parsedDate.setZone("UTC");
+    } else {
+      parsedDate = parsedDate.setZone(timezone);
+    }
     if (!parsedDate.isValid) {
       console.warn("Invalid date passed to DateTimeField", value);
       return;
@@ -451,6 +459,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   return (
     <>
+      {Boolean(title) && <FieldTitle text={title!} />}
+      {Boolean(errorText) && <FieldError text={errorText!} />}
       <View
         style={{
           flexDirection: isMobileDevice() ? "column" : "row",
