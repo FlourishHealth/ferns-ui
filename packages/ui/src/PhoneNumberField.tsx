@@ -21,12 +21,7 @@ export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
   useEffect(() => {
     setLocalValue(value || "");
     setError(errorText);
-    // If the value is undefined on mount, initialize to an empty string to ensure first input
-    // is recorded
-    if (value === undefined) {
-      onChange("");
-    }
-  }, [value, errorText, onChange]);
+  }, [value, errorText]);
 
   const validatePhoneNumber = useCallback(
     (phoneNumber: string): string | undefined => {
