@@ -25,7 +25,7 @@ export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
 
   const validatePhoneNumber = useCallback(
     (phoneNumber: string): string | undefined => {
-      if (phoneNumber.trim() === "") {
+      if (!phoneNumber || phoneNumber.trim() === "") {
         return undefined;
       }
       const parsedNumber = parsePhoneNumberFromString(phoneNumber, defaultCountryCode);
@@ -85,10 +85,10 @@ export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
       if (error && !validationError) {
         setError(undefined);
       }
+
+      // Ensure invalid values don't propagate up
       if (!validationError) {
         onChange(formattedValue);
-      } else {
-        onChange(""); // Ensure invalid values don't propagate up
       }
     },
     [onChange, error, validatePhoneNumber, formatPhoneNumber]
