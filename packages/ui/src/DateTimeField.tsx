@@ -195,12 +195,22 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   }, [getFieldConfigs]);
 
   const getISOFromFields = useCallback(
-    (override?: {amPm?: "am" | "pm"; timezone?: string; minute?: string}): string | undefined => {
+    (override?: {
+      amPm?: "am" | "pm";
+      timezone?: string;
+      minute?: string;
+      month?: string;
+      day?: string;
+      year?: string;
+    }): string | undefined => {
       const ampPmVal = override?.amPm ?? amPm;
       const minuteVal = override?.minute ?? minute;
+      const monthVal = override?.month ?? month;
+      const dayVal = override?.day ?? day;
+      const yearVal = override?.year ?? year;
       let date;
       if (type === "datetime") {
-        if (!month || !day || !year || !hour || !minuteVal) {
+        if (!monthVal || !dayVal || !yearVal || !hour || !minuteVal) {
           return undefined;
         }
         let hourNum = parseInt(hour);
@@ -211,9 +221,9 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         }
         date = DateTime.fromObject(
           {
-            year: parseInt(year),
-            month: parseInt(month),
-            day: parseInt(day),
+            year: parseInt(yearVal),
+            month: parseInt(monthVal),
+            day: parseInt(dayVal),
             hour: hourNum,
             minute: parseInt(minuteVal),
           },
@@ -222,14 +232,14 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           }
         );
       } else if (type === "date") {
-        if (!month || !day || !year) {
+        if (!monthVal || !dayVal || !yearVal) {
           return undefined;
         }
         date = DateTime.fromObject(
           {
-            year: parseInt(year),
-            month: parseInt(month),
-            day: parseInt(day),
+            year: parseInt(yearVal),
+            month: parseInt(monthVal),
+            day: parseInt(dayVal),
           },
           {
             zone: override?.timezone ?? timezone,
@@ -303,10 +313,44 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           ? numericValue.replace(/^0+/, "").slice(0, config.maxLength)
           : numericValue;
 
+      let newMonth = month;
+      let newDay = day;
+      let newYear = year;
+
       if (type === "date" || type === "datetime") {
-        if (index === 0) setMonth(finalValue);
-        if (index === 1) setDay(finalValue);
-        if (index === 2) setYear(finalValue);
+        if (index === 0) {
+          newMonth = finalValue;
+          setMonth(finalValue);
+        }
+        if (index === 1) {
+          newDay = finalValue;
+          setDay(finalValue);
+        }
+        if (index === 2) {
+          newYear = finalValue;
+          setYear(finalValue);
+        }
+
+        // Only update the value if we have all date fields filled
+        if (type === "date") {
+          const hasAllFields = newMonth && newDay && newYear;
+          // For year field, only process if exactly 4 digits
+          const hasValidYear = index !== 2 || finalValue.length === 4;
+          if (hasAllFields && hasValidYear) {
+            // Pass the new values to getISOFromFields to ensure we use the latest values
+            const result = getISOFromFields({
+              month: newMonth,
+              day: newDay,
+              year: newYear,
+            });
+            if (result) {
+              const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
+              if (result !== currentValueUTC) {
+                onChange(result);
+              }
+            }
+          }
+        }
       }
 
       if (type === "time") {
@@ -317,12 +361,14 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         if (index === 3) setHour(finalValue);
       }
 
-      // We use getISOFromFields to ensure the value is valid and current
-      const result = getISOFromFields();
-      if (result) {
-        const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
-        if (result !== currentValueUTC) {
-          onChange(result);
+      // For non-date fields, update value immediately
+      if (type !== "date") {
+        const result = getISOFromFields();
+        if (result) {
+          const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
+          if (result !== currentValueUTC) {
+            onChange(result);
+          }
         }
       }
 
@@ -332,7 +378,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         inputRefs.current[index + 1]?.focus();
       }
     },
-    [type, getFieldConfigs, getISOFromFields, onChange, value]
+    [type, getFieldConfigs, getISOFromFields, onChange, value, month, day, year]
   );
 
   const onActionSheetChange = useCallback(
