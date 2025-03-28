@@ -388,4 +388,116 @@ describe("DateTimeField", () => {
       expect(getByPlaceholderText("YYYY").props.value).toBe("2023");
     });
   });
+
+  describe("error states", () => {
+    it("shows error for invalid month", () => {
+      const {getByPlaceholderText, getByText} = render(
+        <DateTimeField timezone="America/New_York" type="date" onChange={jest.fn()} />
+      );
+
+      const monthInput = getByPlaceholderText("MM");
+      fireEvent.changeText(monthInput, "13");
+
+      expect(getByText("Month must be between 1 and 12")).toBeTruthy();
+    });
+
+    it("shows error for invalid day", () => {
+      const {getByPlaceholderText, getByText} = render(
+        <DateTimeField timezone="America/New_York" type="date" onChange={jest.fn()} />
+      );
+
+      const monthInput = getByPlaceholderText("MM");
+      const dayInput = getByPlaceholderText("DD");
+
+      // Set month to February (28 days)
+      fireEvent.changeText(monthInput, "02");
+      fireEvent.changeText(dayInput, "29");
+
+      expect(getByText("Day must be between 1 and 28")).toBeTruthy();
+    });
+
+    it("shows error for invalid year", () => {
+      const {getByPlaceholderText, getByText} = render(
+        <DateTimeField timezone="America/New_York" type="date" onChange={jest.fn()} />
+      );
+
+      const yearInput = getByPlaceholderText("YYYY");
+      fireEvent.changeText(yearInput, "1899");
+
+      expect(getByText("Year must be between 1900 and 2100")).toBeTruthy();
+    });
+
+    it("shows error for invalid hour", () => {
+      const {getByPlaceholderText, getByText} = render(
+        <DateTimeField timezone="America/New_York" type="time" onChange={jest.fn()} />
+      );
+
+      const hourInput = getByPlaceholderText("hh");
+      fireEvent.changeText(hourInput, "13");
+
+      expect(getByText("Hour must be between 1 and 12")).toBeTruthy();
+    });
+
+    it("shows error for invalid minute", () => {
+      const {getByPlaceholderText, getByText} = render(
+        <DateTimeField timezone="America/New_York" type="time" onChange={jest.fn()} />
+      );
+
+      const minuteInput = getByPlaceholderText("mm");
+      fireEvent.changeText(minuteInput, "60");
+
+      expect(getByText("Minute must be between 0 and 59")).toBeTruthy();
+    });
+
+    it("clears error when valid value is entered", () => {
+      const {getByPlaceholderText, queryByText} = render(
+        <DateTimeField timezone="America/New_York" type="time" onChange={jest.fn()} />
+      );
+
+      const minuteInput = getByPlaceholderText("mm");
+
+      // Enter invalid value
+      fireEvent.changeText(minuteInput, "60");
+      expect(queryByText("Minute must be between 0 and 59")).toBeTruthy();
+
+      // Enter valid value
+      fireEvent.changeText(minuteInput, "30");
+      expect(queryByText("Minute must be between 0 and 59")).toBeFalsy();
+    });
+
+    it("shows multiple errors when multiple fields are invalid", () => {
+      const {getByPlaceholderText, getByText} = render(
+        <DateTimeField timezone="America/New_York" type="datetime" onChange={jest.fn()} />
+      );
+
+      const monthInput = getByPlaceholderText("MM");
+      const dayInput = getByPlaceholderText("DD");
+      const yearInput = getByPlaceholderText("YYYY");
+      const hourInput = getByPlaceholderText("hh");
+      const minuteInput = getByPlaceholderText("mm");
+
+      fireEvent.changeText(monthInput, "13");
+      fireEvent.changeText(dayInput, "32");
+      fireEvent.changeText(yearInput, "1899");
+      fireEvent.changeText(hourInput, "13");
+      fireEvent.changeText(minuteInput, "60");
+
+      const errorText = getByText(
+        "Month must be between 1 and 12, Day must be between 1 and 31, Year must be between 1900 and 2100, Hour must be between 1 and 12, Minute must be between 0 and 59"
+      );
+      expect(errorText).toBeTruthy();
+    });
+
+    it("allows typing 00 in minutes field", () => {
+      const {getByPlaceholderText, queryByText} = render(
+        <DateTimeField timezone="America/New_York" type="time" onChange={jest.fn()} />
+      );
+
+      const minuteInput = getByPlaceholderText("mm");
+      fireEvent.changeText(minuteInput, "00");
+
+      expect(queryByText("Minute must be between 0 and 59")).toBeFalsy();
+      expect(minuteInput.props.value).toBe("00");
+    });
+  });
 });
