@@ -60,7 +60,7 @@ export const TableBoolean: FC<TableBooleanProps> = ({value, isEditing = false}) 
             justifyContent: "center",
           }}
         >
-          <Icon color={value ? "success" : "secondaryLight"} iconName={value ? "check" : "x"} />
+          <Icon color={value ? "success" : "error"} iconName={value ? "check" : "x"} />
         </View>
       </View>
     );
