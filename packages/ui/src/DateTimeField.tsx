@@ -396,7 +396,6 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   // When fields change, send the value to onChange
   const onBlur = useCallback(
     (override?: {amPm?: "am" | "pm"}) => {
-      console.info("onBlur", pendingValueRef.current, override);
       const iso = getISOFromFields({...override, ...pendingValueRef.current});
       // Compare in UTC to avoid timezone issues
       const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
