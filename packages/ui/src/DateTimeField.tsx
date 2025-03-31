@@ -147,6 +147,20 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   const [localTimezone, setLocalTimezone] = useState(
     providedTimezone ?? DateTime.local().zoneName ?? "UTC"
   );
+  // We need to store the pending value in a ref because the state changes don't trigger
+  // immediately, so onBlur may use stale values.
+  const pendingValueRef = useRef<
+    | {
+        amPm?: "am" | "pm";
+        timezone?: string;
+        minute?: string;
+        month?: string;
+        day?: string;
+        year?: string;
+        hour?: string;
+      }
+    | undefined
+  >(undefined);
 
   // Use provided timezone if available, otherwise use local
   const timezone = providedTimezone ?? localTimezone;
@@ -288,6 +302,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         // Only update if it's a valid minute value
         if (!isNaN(minuteNum) && minuteNum >= 0 && minuteNum <= 59) {
           setMinute(finalValue);
+          pendingValueRef.current = {minute: finalValue};
 
           // Pass the new minute value directly to getISOFromFields
           const result = getISOFromFields({minute: finalValue});
@@ -313,62 +328,32 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           ? numericValue.replace(/^0+/, "").slice(0, config.maxLength)
           : numericValue;
 
-      let newMonth = month;
-      let newDay = day;
-      let newYear = year;
-
       if (type === "date" || type === "datetime") {
         if (index === 0) {
-          newMonth = finalValue;
           setMonth(finalValue);
+          pendingValueRef.current = {month: finalValue};
         }
         if (index === 1) {
-          newDay = finalValue;
           setDay(finalValue);
+          pendingValueRef.current = {day: finalValue};
         }
         if (index === 2) {
-          newYear = finalValue;
           setYear(finalValue);
-        }
-
-        // Only update the value if we have all date fields filled
-        if (type === "date") {
-          const hasAllFields = newMonth && newDay && newYear;
-          // For year field, only process if exactly 4 digits
-          const hasValidYear = index !== 2 || finalValue.length === 4;
-          if (hasAllFields && hasValidYear) {
-            // Pass the new values to getISOFromFields to ensure we use the latest values
-            const result = getISOFromFields({
-              month: newMonth,
-              day: newDay,
-              year: newYear,
-            });
-            if (result) {
-              const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
-              if (result !== currentValueUTC) {
-                onChange(result);
-              }
-            }
-          }
+          pendingValueRef.current = {year: finalValue};
         }
       }
 
       if (type === "time") {
-        if (index === 0) setHour(finalValue);
+        if (index === 0) {
+          setHour(finalValue);
+          pendingValueRef.current = {hour: finalValue};
+        }
       }
 
       if (type === "datetime") {
-        if (index === 3) setHour(finalValue);
-      }
-
-      // For non-date fields, update value immediately
-      if (type !== "date") {
-        const result = getISOFromFields();
-        if (result) {
-          const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
-          if (result !== currentValueUTC) {
-            onChange(result);
-          }
+        if (index === 3) {
+          setHour(finalValue);
+          pendingValueRef.current = {hour: finalValue};
         }
       }
 
@@ -378,7 +363,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         inputRefs.current[index + 1]?.focus();
       }
     },
-    [type, getFieldConfigs, getISOFromFields, onChange, value, month, day, year]
+    [type, getFieldConfigs, getISOFromFields, onChange, value]
   );
 
   const onActionSheetChange = useCallback(
@@ -411,12 +396,16 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   // When fields change, send the value to onChange
   const onBlur = useCallback(
     (override?: {amPm?: "am" | "pm"}) => {
-      const iso = getISOFromFields(override);
+      console.info("onBlur", pendingValueRef.current, override);
+      const iso = getISOFromFields({...override, ...pendingValueRef.current});
       // Compare in UTC to avoid timezone issues
       const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
       if (iso && iso !== currentValueUTC) {
         onChange(iso);
       }
+
+      // Clear the pending value after processing
+      pendingValueRef.current = undefined;
     },
     [getISOFromFields, onChange, value]
   );
@@ -550,8 +539,15 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
                   value={amPm}
                   onChange={(result) => {
                     setAmPm(result as "am" | "pm");
-                    // We need to call onBlur manually because the SelectField doesn't support it
-                    onBlur({amPm: result as "am" | "pm"});
+                    // No onblur, so we need to manually update the value
+                    const iso = getISOFromFields({amPm: result as "am" | "pm"});
+                    // Compare in UTC to avoid timezone issues
+                    const currentValueUTC = value
+                      ? DateTime.fromISO(value).toUTC().toISO()
+                      : undefined;
+                    if (iso && iso !== currentValueUTC) {
+                      onChange(iso);
+                    }
                   }}
                 />
               </Box>
