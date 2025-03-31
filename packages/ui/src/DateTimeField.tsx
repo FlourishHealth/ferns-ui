@@ -5,6 +5,7 @@ import {TextInput, View} from "react-native";
 import {Box} from "./Box";
 import {DateTimeFieldProps, IconName} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
+import {FieldError, FieldTitle} from "./fieldElements";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {SelectField} from "./SelectField";
@@ -126,6 +127,7 @@ type FieldConfig = {
 
 export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   type,
+  title,
   value,
   onChange,
   timezone: providedTimezone,
@@ -142,6 +144,13 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   const [year, setYear] = useState("");
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<{
+    month?: string;
+    day?: string;
+    year?: string;
+    hour?: string;
+    minute?: string;
+  }>({});
   const [localTimezone, setLocalTimezone] = useState(
     providedTimezone ?? DateTime.local().zoneName ?? "UTC"
   );
@@ -179,8 +188,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     }
     if (type === "time" || type === "datetime") {
       configs.push(
-        {maxLength: 2, placeholder: "HH", width: 30},
-        {maxLength: 2, placeholder: "MM", width: 30}
+        {maxLength: 2, placeholder: "hh", width: 30},
+        {maxLength: 2, placeholder: "mm", width: 30}
       );
     }
     return configs;
@@ -193,12 +202,22 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   }, [getFieldConfigs]);
 
   const getISOFromFields = useCallback(
-    (override?: {amPm?: "am" | "pm"; timezone?: string; minute?: string}): string | undefined => {
+    (override?: {
+      amPm?: "am" | "pm";
+      timezone?: string;
+      minute?: string;
+      month?: string;
+      day?: string;
+      year?: string;
+    }): string | undefined => {
       const ampPmVal = override?.amPm ?? amPm;
       const minuteVal = override?.minute ?? minute;
+      const monthVal = override?.month ?? month;
+      const dayVal = override?.day ?? day;
+      const yearVal = override?.year ?? year;
       let date;
       if (type === "datetime") {
-        if (!month || !day || !year || !hour || !minuteVal) {
+        if (!monthVal || !dayVal || !yearVal || !hour || !minuteVal) {
           return undefined;
         }
         let hourNum = parseInt(hour);
@@ -209,9 +228,9 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         }
         date = DateTime.fromObject(
           {
-            year: parseInt(year),
-            month: parseInt(month),
-            day: parseInt(day),
+            year: parseInt(yearVal),
+            month: parseInt(monthVal),
+            day: parseInt(dayVal),
             hour: hourNum,
             minute: parseInt(minuteVal),
           },
@@ -220,14 +239,14 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           }
         );
       } else if (type === "date") {
-        if (!month || !day || !year) {
+        if (!monthVal || !dayVal || !yearVal) {
           return undefined;
         }
         date = DateTime.fromObject(
           {
-            year: parseInt(year),
-            month: parseInt(month),
-            day: parseInt(day),
+            year: parseInt(yearVal),
+            month: parseInt(monthVal),
+            day: parseInt(dayVal),
           },
           {
             zone: override?.timezone ?? timezone,
@@ -263,19 +282,73 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     [amPm, month, day, year, hour, minute, timezone, type]
   );
 
+  const validateMonth = useCallback((value: string): string | undefined => {
+    if (!value) return undefined;
+    const num = parseInt(value);
+    if (isNaN(num) || num < 1 || num > 12) {
+      return "Month must be between 1 and 12";
+    }
+    return undefined;
+  }, []);
+
+  const validateDay = useCallback((value: string, monthValue: string): string | undefined => {
+    if (!value) return undefined;
+    const num = parseInt(value);
+    if (isNaN(num) || num < 1) {
+      return "Day must be between 1 and 31";
+    }
+
+    const monthNum = parseInt(monthValue);
+    if (!isNaN(monthNum)) {
+      const daysInMonth = DateTime.fromObject({year: 2024, month: monthNum}).daysInMonth;
+      if (num > daysInMonth) {
+        return `Day must be between 1 and ${daysInMonth}`;
+      }
+    }
+    return undefined;
+  }, []);
+
+  const validateYear = useCallback((value: string): string | undefined => {
+    if (!value) return undefined;
+    const num = parseInt(value);
+    if (isNaN(num) || num < 1900 || num > 2100) {
+      return "Year must be between 1900 and 2100";
+    }
+    return undefined;
+  }, []);
+
+  const validateHour = useCallback((value: string): string | undefined => {
+    if (!value) return undefined;
+    const num = parseInt(value);
+    if (isNaN(num) || num < 1 || num > 12) {
+      return "Hour must be between 1 and 12";
+    }
+    return undefined;
+  }, []);
+
+  const validateMinute = useCallback((value: string): string | undefined => {
+    if (!value) return undefined;
+    const num = parseInt(value);
+    if (isNaN(num) || num < 0 || num > 59) {
+      return "Minute must be between 0 and 59";
+    }
+    return undefined;
+  }, []);
+
   const handleFieldChange = useCallback(
     (index: number, text: string, config: FieldConfig) => {
       const numericValue = text.replace(/[^0-9]/g, "");
 
       // For minutes, just ensure it's at most 2 digits and valid (0-59)
       if ((type === "time" && index === 1) || (type === "datetime" && index === 4)) {
-        // For minutes, take the last two digits and remove leading zeros unless it would be empty
-        const finalValue = numericValue.slice(-2).replace(/^0+(?=\d)/, "");
+        // For minutes, take the last two digits and preserve leading zeros
+        const finalValue = numericValue.slice(-2);
         const minuteNum = parseInt(finalValue);
 
         // Only update if it's a valid minute value
         if (!isNaN(minuteNum) && minuteNum >= 0 && minuteNum <= 59) {
           setMinute(finalValue);
+          setFieldErrors((prev) => ({...prev, minute: undefined}));
 
           // Pass the new minute value directly to getISOFromFields
           const result = getISOFromFields({minute: finalValue});
@@ -285,6 +358,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
               onChange(result);
             }
           }
+        } else {
+          setFieldErrors((prev) => ({...prev, minute: "Minute must be between 0 and 59"}));
         }
 
         // Auto-advance to next field if current field is full
@@ -301,26 +376,78 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           ? numericValue.replace(/^0+/, "").slice(0, config.maxLength)
           : numericValue;
 
+      let newMonth = month;
+      let newDay = day;
+      let newYear = year;
+
       if (type === "date" || type === "datetime") {
-        if (index === 0) setMonth(finalValue);
-        if (index === 1) setDay(finalValue);
-        if (index === 2) setYear(finalValue);
+        if (index === 0) {
+          newMonth = finalValue;
+          setMonth(finalValue);
+          const monthError = validateMonth(finalValue);
+          setFieldErrors((prev) => ({...prev, month: monthError}));
+        }
+        if (index === 1) {
+          newDay = finalValue;
+          setDay(finalValue);
+          const dayError = validateDay(finalValue, newMonth);
+          setFieldErrors((prev) => ({...prev, day: dayError}));
+        }
+        if (index === 2) {
+          newYear = finalValue;
+          setYear(finalValue);
+          const yearError = validateYear(finalValue);
+          setFieldErrors((prev) => ({...prev, year: yearError}));
+        }
+
+        // Only update the value if we have all date fields filled and no errors
+        if (type === "date") {
+          const hasAllFields = newMonth && newDay && newYear;
+          const hasValidYear = index !== 2 || finalValue.length === 4;
+          const hasNoErrors = !fieldErrors.month && !fieldErrors.day && !fieldErrors.year;
+          if (hasAllFields && hasValidYear && hasNoErrors) {
+            const result = getISOFromFields({
+              month: newMonth,
+              day: newDay,
+              year: newYear,
+            });
+            if (result) {
+              const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
+              if (result !== currentValueUTC) {
+                onChange(result);
+              }
+            }
+          }
+        }
       }
 
       if (type === "time") {
-        if (index === 0) setHour(finalValue);
+        if (index === 0) {
+          setHour(finalValue);
+          const hourError = validateHour(finalValue);
+          setFieldErrors((prev) => ({...prev, hour: hourError}));
+        }
       }
 
       if (type === "datetime") {
-        if (index === 3) setHour(finalValue);
+        if (index === 3) {
+          setHour(finalValue);
+          const hourError = validateHour(finalValue);
+          setFieldErrors((prev) => ({...prev, hour: hourError}));
+        }
       }
 
-      // We use getISOFromFields to ensure the value is valid and current
-      const result = getISOFromFields();
-      if (result) {
-        const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
-        if (result !== currentValueUTC) {
-          onChange(result);
+      // For non-date fields, update value immediately if no errors
+      if (type !== "date") {
+        const hasNoErrors = !fieldErrors.hour && !fieldErrors.minute;
+        if (hasNoErrors) {
+          const result = getISOFromFields();
+          if (result) {
+            const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
+            if (result !== currentValueUTC) {
+              onChange(result);
+            }
+          }
         }
       }
 
@@ -330,7 +457,21 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         inputRefs.current[index + 1]?.focus();
       }
     },
-    [type, getFieldConfigs, getISOFromFields, onChange, value]
+    [
+      type,
+      getFieldConfigs,
+      getISOFromFields,
+      onChange,
+      value,
+      month,
+      day,
+      year,
+      fieldErrors,
+      validateMonth,
+      validateDay,
+      validateYear,
+      validateHour,
+    ]
   );
 
   const onActionSheetChange = useCallback(
@@ -391,7 +532,13 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       return;
     }
 
-    const parsedDate = DateTime.fromISO(value).setZone(timezone);
+    // Handle dates which should have 00:00:00.000Z as the time component, ignore timezones.
+    let parsedDate = DateTime.fromISO(value);
+    if (type === "date") {
+      parsedDate = parsedDate.setZone("UTC");
+    } else {
+      parsedDate = parsedDate.setZone(timezone);
+    }
     if (!parsedDate.isValid) {
       console.warn("Invalid date passed to DateTimeField", value);
       return;
@@ -451,10 +598,19 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   return (
     <>
+      {Boolean(title) && <FieldTitle text={title!} />}
+      {Boolean(errorText) && <FieldError text={errorText!} />}
       <View
         style={{
           flexDirection: isMobileDevice() ? "column" : "row",
-          borderColor,
+          borderColor:
+            fieldErrors.month ||
+            fieldErrors.day ||
+            fieldErrors.year ||
+            fieldErrors.hour ||
+            fieldErrors.minute
+              ? theme.border.error
+              : borderColor,
           backgroundColor: theme.surface.base,
           borderWidth: 1,
           paddingHorizontal: 12,
@@ -494,7 +650,6 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
                   value={amPm}
                   onChange={(result) => {
                     setAmPm(result as "am" | "pm");
-                    // We need to call onBlur manually because the SelectField doesn't support it
                     onBlur({amPm: result as "am" | "pm"});
                   }}
                 />
@@ -512,7 +667,6 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
                       setLocalTimezone(t);
                     }
                     const iso = getISOFromFields({timezone: t});
-                    // Compare in UTC to avoid timezone issues
                     const currentValueUTC = value
                       ? DateTime.fromISO(value).toUTC().toISO()
                       : undefined;
@@ -536,6 +690,13 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           )}
         </View>
       </View>
+      {(fieldErrors.month ||
+        fieldErrors.day ||
+        fieldErrors.year ||
+        fieldErrors.hour ||
+        fieldErrors.minute) && (
+        <FieldError text={Object.values(fieldErrors).filter(Boolean).join(", ")} />
+      )}
 
       {!disabled && (
         <DateTimeActionSheet
