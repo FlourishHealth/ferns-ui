@@ -80,8 +80,8 @@ const TimeInput = ({
         accessibilityHint="Enter a number"
         aria-label="Text input field"
         enterKeyHint="done"
-        selectTextOnFocus
         keyboardType="number-pad"
+        selectTextOnFocus
         style={
           {
             ...textInputStyle,
@@ -126,7 +126,12 @@ const CalendarButton = ({
       hitSlop={10}
       onPress={onClick}
     >
-      <FontAwesome6 color={theme.surface.secondaryDark} name={iconName} size={16}  selectable={undefined} />
+      <FontAwesome6
+        color={theme.surface.secondaryDark}
+        name={iconName}
+        selectable={undefined}
+        size={16}
+      />
     </Pressable>
   );
 };

@@ -5,6 +5,7 @@ import {TextInput, View} from "react-native";
 import {Box} from "./Box";
 import {DateTimeFieldProps, IconName} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
+import {FieldError, FieldTitle} from "./fieldElements";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {SelectField} from "./SelectField";
@@ -126,6 +127,7 @@ type FieldConfig = {
 
 export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   type,
+  title,
   value,
   onChange,
   timezone: providedTimezone,
@@ -145,6 +147,20 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   const [localTimezone, setLocalTimezone] = useState(
     providedTimezone ?? DateTime.local().zoneName ?? "UTC"
   );
+  // We need to store the pending value in a ref because the state changes don't trigger
+  // immediately, so onBlur may use stale values.
+  const pendingValueRef = useRef<
+    | {
+        amPm?: "am" | "pm";
+        timezone?: string;
+        minute?: string;
+        month?: string;
+        day?: string;
+        year?: string;
+        hour?: string;
+      }
+    | undefined
+  >(undefined);
 
   // Use provided timezone if available, otherwise use local
   const timezone = providedTimezone ?? localTimezone;
@@ -179,8 +195,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     }
     if (type === "time" || type === "datetime") {
       configs.push(
-        {maxLength: 2, placeholder: "HH", width: 30},
-        {maxLength: 2, placeholder: "MM", width: 30}
+        {maxLength: 2, placeholder: "hh", width: 30},
+        {maxLength: 2, placeholder: "mm", width: 30}
       );
     }
     return configs;
@@ -193,12 +209,22 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   }, [getFieldConfigs]);
 
   const getISOFromFields = useCallback(
-    (override?: {amPm?: "am" | "pm"; timezone?: string; minute?: string}): string | undefined => {
+    (override?: {
+      amPm?: "am" | "pm";
+      timezone?: string;
+      minute?: string;
+      month?: string;
+      day?: string;
+      year?: string;
+    }): string | undefined => {
       const ampPmVal = override?.amPm ?? amPm;
       const minuteVal = override?.minute ?? minute;
+      const monthVal = override?.month ?? month;
+      const dayVal = override?.day ?? day;
+      const yearVal = override?.year ?? year;
       let date;
       if (type === "datetime") {
-        if (!month || !day || !year || !hour || !minuteVal) {
+        if (!monthVal || !dayVal || !yearVal || !hour || !minuteVal) {
           return undefined;
         }
         let hourNum = parseInt(hour);
@@ -209,9 +235,9 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         }
         date = DateTime.fromObject(
           {
-            year: parseInt(year),
-            month: parseInt(month),
-            day: parseInt(day),
+            year: parseInt(yearVal),
+            month: parseInt(monthVal),
+            day: parseInt(dayVal),
             hour: hourNum,
             minute: parseInt(minuteVal),
           },
@@ -220,14 +246,14 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           }
         );
       } else if (type === "date") {
-        if (!month || !day || !year) {
+        if (!monthVal || !dayVal || !yearVal) {
           return undefined;
         }
         date = DateTime.fromObject(
           {
-            year: parseInt(year),
-            month: parseInt(month),
-            day: parseInt(day),
+            year: parseInt(yearVal),
+            month: parseInt(monthVal),
+            day: parseInt(dayVal),
           },
           {
             zone: override?.timezone ?? timezone,
@@ -276,6 +302,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         // Only update if it's a valid minute value
         if (!isNaN(minuteNum) && minuteNum >= 0 && minuteNum <= 59) {
           setMinute(finalValue);
+          pendingValueRef.current = {minute: finalValue};
 
           // Pass the new minute value directly to getISOFromFields
           const result = getISOFromFields({minute: finalValue});
@@ -302,25 +329,31 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           : numericValue;
 
       if (type === "date" || type === "datetime") {
-        if (index === 0) setMonth(finalValue);
-        if (index === 1) setDay(finalValue);
-        if (index === 2) setYear(finalValue);
+        if (index === 0) {
+          setMonth(finalValue);
+          pendingValueRef.current = {month: finalValue};
+        }
+        if (index === 1) {
+          setDay(finalValue);
+          pendingValueRef.current = {day: finalValue};
+        }
+        if (index === 2) {
+          setYear(finalValue);
+          pendingValueRef.current = {year: finalValue};
+        }
       }
 
       if (type === "time") {
-        if (index === 0) setHour(finalValue);
+        if (index === 0) {
+          setHour(finalValue);
+          pendingValueRef.current = {hour: finalValue};
+        }
       }
 
       if (type === "datetime") {
-        if (index === 3) setHour(finalValue);
-      }
-
-      // We use getISOFromFields to ensure the value is valid and current
-      const result = getISOFromFields();
-      if (result) {
-        const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
-        if (result !== currentValueUTC) {
-          onChange(result);
+        if (index === 3) {
+          setHour(finalValue);
+          pendingValueRef.current = {hour: finalValue};
         }
       }
 
@@ -363,12 +396,15 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   // When fields change, send the value to onChange
   const onBlur = useCallback(
     (override?: {amPm?: "am" | "pm"}) => {
-      const iso = getISOFromFields(override);
+      const iso = getISOFromFields({...override, ...pendingValueRef.current});
       // Compare in UTC to avoid timezone issues
       const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
       if (iso && iso !== currentValueUTC) {
         onChange(iso);
       }
+
+      // Clear the pending value after processing
+      pendingValueRef.current = undefined;
     },
     [getISOFromFields, onChange, value]
   );
@@ -391,7 +427,13 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       return;
     }
 
-    const parsedDate = DateTime.fromISO(value).setZone(timezone);
+    // Handle dates which should have 00:00:00.000Z as the time component, ignore timezones.
+    let parsedDate = DateTime.fromISO(value);
+    if (type === "date") {
+      parsedDate = parsedDate.setZone("UTC");
+    } else {
+      parsedDate = parsedDate.setZone(timezone);
+    }
     if (!parsedDate.isValid) {
       console.warn("Invalid date passed to DateTimeField", value);
       return;
@@ -451,6 +493,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   return (
     <>
+      {Boolean(title) && <FieldTitle text={title!} />}
+      {Boolean(errorText) && <FieldError text={errorText!} />}
       <View
         style={{
           flexDirection: isMobileDevice() ? "column" : "row",
@@ -494,8 +538,15 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
                   value={amPm}
                   onChange={(result) => {
                     setAmPm(result as "am" | "pm");
-                    // We need to call onBlur manually because the SelectField doesn't support it
-                    onBlur({amPm: result as "am" | "pm"});
+                    // No onblur, so we need to manually update the value
+                    const iso = getISOFromFields({amPm: result as "am" | "pm"});
+                    // Compare in UTC to avoid timezone issues
+                    const currentValueUTC = value
+                      ? DateTime.fromISO(value).toUTC().toISO()
+                      : undefined;
+                    if (iso && iso !== currentValueUTC) {
+                      onChange(iso);
+                    }
                   }}
                 />
               </Box>

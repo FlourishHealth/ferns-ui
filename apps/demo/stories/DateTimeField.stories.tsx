@@ -8,6 +8,7 @@ import {
   Text,
 } from "ferns-ui";
 import React, {ReactElement, useState} from "react";
+import {DateTime} from "luxon";
 
 export const DateTimeFieldDemo = (props: Partial<DateTimeFieldProps>): ReactElement => {
   const [value, setValue] = useState("");
@@ -80,7 +81,7 @@ export const DateTimeFieldStory = (): ReactElement => {
 
 export const DateTimeFieldTypes = (): ReactElement => {
   const [datetimeValue, setDatetimeValue] = useState("");
-  const [dateValue, setDateValue] = useState("");
+  const [dateValue, setDateValue] = useState(DateTime.now().toUTC().startOf("day").toISO());
   const [timeValue, setTimeValue] = useState("");
   const [disabled, setDisabled] = useState(false);
 
