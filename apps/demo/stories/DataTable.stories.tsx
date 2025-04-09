@@ -200,6 +200,7 @@ export const StandardDataTable = (): React.ReactElement => {
   return (
     <Box color="base" direction="column" height="100%" maxHeight={400} maxWidth={600} scroll>
       <DataTable
+      headerHeight={40}
         alternateRowBackground
         columns={columns}
         customColumnComponentMap={{custom: CustomColumnComponent}}
