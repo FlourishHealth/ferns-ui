@@ -226,7 +226,7 @@ interface DataTableHeaderCellProps {
   sortColumn?: ColumnSortInterface;
   onSort: (index: number) => void;
   rowHeight: number;
-  headerHeight: number;
+  headerHeight?: number;
 }
 
 const DataTableHeaderCell: React.FC<DataTableHeaderCellProps> = ({
