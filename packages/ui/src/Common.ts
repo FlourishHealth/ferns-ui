@@ -1959,6 +1959,7 @@ export interface DataTableProps {
   sortColumn?: ColumnSortInterface;
   setSortColumn?: (sortColumn?: ColumnSortInterface) => void;
   rowHeight?: number;
+  headerHeight?: number;
   defaultTextSize?: "sm" | "md" | "lg";
   /**
    * When tapping the eye icon, a modal is shown with more info about the row.

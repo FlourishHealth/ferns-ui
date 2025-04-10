@@ -226,6 +226,7 @@ interface DataTableHeaderCellProps {
   sortColumn?: ColumnSortInterface;
   onSort: (index: number) => void;
   rowHeight: number;
+  headerHeight?: number;
 }
 
 const DataTableHeaderCell: React.FC<DataTableHeaderCellProps> = ({
@@ -236,6 +237,7 @@ const DataTableHeaderCell: React.FC<DataTableHeaderCellProps> = ({
   sortColumn,
   onSort,
   rowHeight,
+  headerHeight,
 }) => {
   const {theme} = useTheme();
   const sort = sortColumn?.column === index ? sortColumn.direction : undefined;
@@ -247,7 +249,7 @@ const DataTableHeaderCell: React.FC<DataTableHeaderCellProps> = ({
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
-        height: rowHeight ?? 54,
+        height: headerHeight ?? rowHeight,
         width: column.width,
         backgroundColor: theme.surface.base,
         borderBottomWidth: 1,
@@ -304,6 +306,7 @@ interface DataTableHeaderProps {
   onSort: (index: number) => void;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>, isHeader: boolean) => void;
   rowHeight: number;
+  headerHeight?: number;
 }
 
 const DataTableHeader: React.FC<DataTableHeaderProps> = ({
@@ -316,6 +319,7 @@ const DataTableHeader: React.FC<DataTableHeaderProps> = ({
   onSort,
   onScroll,
   rowHeight,
+  headerHeight,
 }) => {
   const {theme} = useTheme();
 
@@ -326,7 +330,7 @@ const DataTableHeader: React.FC<DataTableHeaderProps> = ({
         <View
           style={{
             width: 48,
-            height: rowHeight ?? 54,
+            height: headerHeight ?? rowHeight,
             backgroundColor: theme.surface.base,
             borderBottomWidth: 1,
             borderBottomColor: theme.border.default,
@@ -351,6 +355,7 @@ const DataTableHeader: React.FC<DataTableHeaderProps> = ({
               key={`pinned-header-${index}`}
               column={column}
               columnWidths={columnWidths}
+              headerHeight={headerHeight}
               index={index}
               isPinnedHorizontal
               rowHeight={rowHeight}
@@ -378,6 +383,7 @@ const DataTableHeader: React.FC<DataTableHeaderProps> = ({
             key={`scrollable-header-${index + pinnedColumns}`}
             column={column}
             columnWidths={columnWidths}
+            headerHeight={headerHeight}
             index={index + pinnedColumns}
             isPinnedHorizontal={false}
             rowHeight={rowHeight}
@@ -552,6 +558,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   moreContentExtraData,
   customColumnComponentMap,
   rowHeight = 54,
+  headerHeight,
   defaultTextSize = "md",
 }) => {
   const {theme} = useTheme();
@@ -621,6 +628,7 @@ export const DataTable: React.FC<DataTableProps> = ({
           columnWidths={columnWidths}
           columns={columns}
           hasMoreContent={Boolean(moreContentComponent)}
+          headerHeight={headerHeight}
           headerScrollRef={headerScrollRef}
           pinnedColumns={pinnedColumns}
           rowHeight={rowHeight}
