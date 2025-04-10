@@ -33,6 +33,7 @@ interface DateTimeSegmentProps {
   onBlur: (override?: {amPm?: "am" | "pm"; timezone?: string}) => void;
   onRef: (ref: TextInput | null, index: number) => void;
   index: number;
+  error?: string;
 }
 
 const DateTimeSegment: React.FC<DateTimeSegmentProps> = ({
@@ -43,19 +44,21 @@ const DateTimeSegment: React.FC<DateTimeSegmentProps> = ({
   onRef,
   index,
   config,
+  error,
 }): React.ReactElement => {
+  const {theme} = useTheme();
   return (
     <View
       style={{
         flexDirection: "row",
         alignItems: "center",
         width: config.width,
-        borderColor: "transparent",
+        borderColor: error ? theme.border.error : "transparent",
         backgroundColor: "transparent",
         overflow: "hidden",
         padding: 0,
         flexShrink: 1,
-        height: 40,
+        height: 50,
       }}
     >
       <TextInput
@@ -66,7 +69,11 @@ const DateTimeSegment: React.FC<DateTimeSegmentProps> = ({
         placeholder={config.placeholder}
         readOnly={disabled}
         selectTextOnFocus
-        style={{width: config.width - 2, textAlign: "center"}}
+        style={{
+          width: config.width - 2,
+          textAlign: "center",
+          color: error ? theme.text.error : theme.text.primary,
+        }}
         value={getFieldValue(index)}
         onBlur={() => onBlur()}
         onChangeText={(text) => {
@@ -80,31 +87,43 @@ const DateTimeSegment: React.FC<DateTimeSegmentProps> = ({
 interface DateTimeProps extends Omit<DateTimeSegmentProps, "index" | "config"> {
   fieldConfigs: FieldConfig[];
   type: "date" | "datetime" | "time";
+  fieldErrors?: Record<number, string | undefined>;
 }
 
-const DateField: React.FC<DateTimeProps> = (segmentProps) => {
-  return (
-    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
-      <DateTimeSegment {...segmentProps} config={segmentProps.fieldConfigs[0]} index={0} />
-      <Separator type="date" />
-      <DateTimeSegment {...segmentProps} config={segmentProps.fieldConfigs[1]} index={1} />
-      <Separator type="date" />
-      <DateTimeSegment {...segmentProps} config={segmentProps.fieldConfigs[2]} index={2} />
-    </View>
-  );
-};
-
-const TimeField: React.FC<DateTimeProps> = ({
-  type,
-  onBlur,
-
-  ...segmentProps
-}) => {
+const DateField: React.FC<DateTimeProps> = ({fieldErrors, ...segmentProps}) => {
   return (
     <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
       <DateTimeSegment
         {...segmentProps}
         config={segmentProps.fieldConfigs[0]}
+        error={fieldErrors?.[0]}
+        index={0}
+      />
+      <Separator type="date" />
+      <DateTimeSegment
+        {...segmentProps}
+        config={segmentProps.fieldConfigs[1]}
+        error={fieldErrors?.[1]}
+        index={1}
+      />
+      <Separator type="date" />
+      <DateTimeSegment
+        {...segmentProps}
+        config={segmentProps.fieldConfigs[2]}
+        error={fieldErrors?.[2]}
+        index={2}
+      />
+    </View>
+  );
+};
+
+const TimeField: React.FC<DateTimeProps> = ({type, onBlur, fieldErrors, ...segmentProps}) => {
+  return (
+    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+      <DateTimeSegment
+        {...segmentProps}
+        config={segmentProps.fieldConfigs[0]}
+        error={fieldErrors?.[type === "time" ? 0 : 3]}
         index={type === "time" ? 0 : 3}
         onBlur={onBlur}
       />
@@ -112,6 +131,7 @@ const TimeField: React.FC<DateTimeProps> = ({
       <DateTimeSegment
         {...segmentProps}
         config={segmentProps.fieldConfigs[1]}
+        error={fieldErrors?.[type === "time" ? 1 : 4]}
         index={type === "time" ? 1 : 4}
         onBlur={onBlur}
       />
@@ -144,6 +164,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   const [year, setYear] = useState("");
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
+  const [fieldErrors, setFieldErrors] = useState<Record<number, string | undefined>>({});
   const [localTimezone, setLocalTimezone] = useState(
     providedTimezone ?? DateTime.local().zoneName ?? "UTC"
   );
@@ -180,7 +201,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   let borderColor = theme.border.dark;
   if (disabled) {
     borderColor = theme.border.activeNeutral;
-  } else if (errorText) {
+  } else if (errorText || Object.values(fieldErrors).some((error) => error !== undefined)) {
     borderColor = theme.border.error;
   }
 
@@ -207,6 +228,53 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     const configs = getFieldConfigs();
     inputRefs.current = configs.map(() => null);
   }, [getFieldConfigs]);
+
+  const validateField = useCallback(
+    (fieldIndex: number, fieldValue: string): string | undefined => {
+      if (!fieldValue) return undefined;
+
+      if (type === "date" || type === "datetime") {
+        if (fieldIndex === 0) {
+          // Month
+          const monthNum = parseInt(fieldValue);
+          if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+            return "Month must be between 1 and 12";
+          }
+        } else if (fieldIndex === 1) {
+          // Day
+          const dayNum = parseInt(fieldValue);
+          if (isNaN(dayNum) || dayNum < 1 || dayNum > 31) {
+            return "Day must be between 1 and 31";
+          }
+        } else if (fieldIndex === 2) {
+          // Year
+          const yearNum = parseInt(fieldValue);
+          if (isNaN(yearNum) || yearNum < 1900 || yearNum > 2100) {
+            return "Year must be between 1900 and 2100";
+          }
+        }
+      }
+
+      if (type === "time" || type === "datetime") {
+        if (fieldIndex === (type === "time" ? 0 : 3)) {
+          // Hour
+          const hourNum = parseInt(fieldValue);
+          if (isNaN(hourNum) || hourNum < 1 || hourNum > 12) {
+            return "Hour must be between 1 and 12";
+          }
+        } else if (fieldIndex === (type === "time" ? 1 : 4)) {
+          // Minute
+          const minuteNum = parseInt(fieldValue);
+          if (isNaN(minuteNum) || minuteNum < 0 || minuteNum > 59) {
+            return "Minute must be between 0 and 59";
+          }
+        }
+      }
+
+      return undefined;
+    },
+    [type]
+  );
 
   const getISOFromFields = useCallback(
     (override?: {
@@ -303,6 +371,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         if (!isNaN(minuteNum) && minuteNum >= 0 && minuteNum <= 59) {
           setMinute(finalValue);
           pendingValueRef.current = {minute: finalValue};
+          setFieldErrors((prev) => ({...prev, [index]: undefined}));
 
           // Pass the new minute value directly to getISOFromFields
           const result = getISOFromFields({minute: finalValue});
@@ -312,6 +381,8 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
               onChange(result);
             }
           }
+        } else {
+          setFieldErrors((prev) => ({...prev, [index]: "Minute must be between 0 and 59"}));
         }
 
         // Auto-advance to next field if current field is full
@@ -327,6 +398,9 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         numericValue.length > config.maxLength
           ? numericValue.replace(/^0+/, "").slice(0, config.maxLength)
           : numericValue;
+
+      const error = validateField(index, finalValue);
+      setFieldErrors((prev) => ({...prev, [index]: error}));
 
       if (type === "date" || type === "datetime") {
         if (index === 0) {
@@ -363,7 +437,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         inputRefs.current[index + 1]?.focus();
       }
     },
-    [type, getFieldConfigs, getISOFromFields, onChange, value]
+    [type, getFieldConfigs, getISOFromFields, onChange, value, validateField]
   );
 
   const onActionSheetChange = useCallback(
@@ -489,6 +563,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
     onBlur,
     fieldConfigs,
     onRef: (el: TextInput | null, i: number) => (inputRefs.current[i] = el),
+    fieldErrors,
   };
 
   return (
@@ -506,6 +581,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           borderRadius: 4,
           alignItems: "center",
           justifyContent: "space-between",
+          maxHeight: 50,
         }}
       >
         {(type === "date" || type === "datetime") && (
