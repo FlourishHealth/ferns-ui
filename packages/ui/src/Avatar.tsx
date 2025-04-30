@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import {ImageResult, manipulateAsync, SaveFormat} from "expo-image-manipulator";
-import {launchImageLibraryAsync, MediaTypeOptions} from "expo-image-picker";
+import {ImageManipulator, ImageResult, SaveFormat} from "expo-image-manipulator";
+import {launchImageLibraryAsync} from "expo-image-picker";
 import {LinearGradient} from "expo-linear-gradient";
-import React, {FC, useEffect, useState} from "react";
+import React, {FC, useState} from "react";
 import {Image, Pressable, Text, View} from "react-native";
 
 import {AvatarProps, CustomSvgProps} from "./Common";
@@ -55,7 +55,6 @@ export const Avatar: FC<AvatarProps> = ({
 }) => {
   const {theme} = useTheme();
   const [isImageLoaded, setIsImageLoaded] = useState(true);
-  const [imgSrc, setImgSrc] = useState(src ?? undefined);
   const avatarImageFormat = SaveFormat.PNG;
   const avatarImageDiameter = sizes[size];
   const showEditIcon = status === "imagePicker";
@@ -85,43 +84,55 @@ export const Avatar: FC<AvatarProps> = ({
     },
   };
 
-  // If the src changes, update the image.
-  useEffect(() => {
-    setImgSrc(imgSrc);
-  }, [imgSrc]);
+  // useEffect(() => {
+  //   // convert src to base64
+  //   if (src) {
+  //     const imageContext = await ImageManipulator.manipulate(src);
+  //     const renderedImage = await imageContext.renderAsync();
+  //     const base64 = await renderedImage.toBase64Async();
+  //     setImgSrc(base64);
+  //   }
+  // }, [src]);
+
+  // const convertSrcToBase64 = async (src: string) => {
+  //   const imageContext = await ImageManipulator.manipulate(src);
+  //   const renderedImage = await imageContext.renderAsync();
+  //   const base64 = await renderedImage.saveAsync({format: avatarImageFormat, base64: true});
+  //   return base64;
+  // };
 
   if (showEditIcon && !onChange) {
     console.warn("Avatars with the status of 'imagePicker' should also have an onChange property.");
   }
 
-  const handleImageError = () => {
+  const handleImageError = (event: any) => {
     setIsImageLoaded(false);
-    console.warn("Image load error");
+    console.warn("Image load error: ", event);
   };
 
   const pickImage = async () => {
     // TODO: Add permission request to use camera to take a picture
     const result = await launchImageLibraryAsync({
-      mediaTypes: MediaTypeOptions.Images,
+      mediaTypes: "images",
       allowsEditing: true,
       base64: true,
     });
 
     if (!result.canceled && result.assets) {
-      const resizedImage = await resizeImage(result.assets[0].uri);
-      setImgSrc(resizedImage.uri);
+      const resizedImage = await resizeAndFormatImage(result.assets[0].uri);
       if (onChange) {
         onChange({avatarImageFormat, ...resizedImage});
       }
     }
   };
 
-  const resizeImage = async (imageUri: string): Promise<ImageResult> => {
-    return manipulateAsync(
-      imageUri,
-      [{resize: {width: avatarImageDiameter, height: avatarImageDiameter}}],
-      {format: avatarImageFormat}
-    );
+  const resizeAndFormatImage = async (imageUri: string): Promise<ImageResult> => {
+    const imageContext = await ImageManipulator.manipulate(imageUri);
+    const resizedImage = await imageContext.resize({
+      height: avatarImageDiameter,
+    });
+    const renderedImage = await resizedImage.renderAsync();
+    return await renderedImage.saveAsync({format: avatarImageFormat, base64: true});
   };
 
   const renderEditIcon = () => {
