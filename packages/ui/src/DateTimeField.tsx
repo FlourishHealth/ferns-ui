@@ -577,11 +577,10 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           backgroundColor: theme.surface.base,
           borderWidth: 1,
           paddingHorizontal: 12,
-          paddingVertical: 8,
+          paddingVertical: 4,
           borderRadius: 4,
           alignItems: "center",
           justifyContent: "space-between",
-          maxHeight: 50,
         }}
       >
         {(type === "date" || type === "datetime") && (
