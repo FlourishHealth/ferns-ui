@@ -84,23 +84,6 @@ export const Avatar: FC<AvatarProps> = ({
     },
   };
 
-  // useEffect(() => {
-  //   // convert src to base64
-  //   if (src) {
-  //     const imageContext = await ImageManipulator.manipulate(src);
-  //     const renderedImage = await imageContext.renderAsync();
-  //     const base64 = await renderedImage.toBase64Async();
-  //     setImgSrc(base64);
-  //   }
-  // }, [src]);
-
-  // const convertSrcToBase64 = async (src: string) => {
-  //   const imageContext = await ImageManipulator.manipulate(src);
-  //   const renderedImage = await imageContext.renderAsync();
-  //   const base64 = await renderedImage.saveAsync({format: avatarImageFormat, base64: true});
-  //   return base64;
-  // };
-
   if (showEditIcon && !onChange) {
     console.warn("Avatars with the status of 'imagePicker' should also have an onChange property.");
   }
@@ -120,6 +103,8 @@ export const Avatar: FC<AvatarProps> = ({
 
     if (!result.canceled && result.assets) {
       const resizedImage = await resizeAndFormatImage(result.assets[0].uri);
+      // convert base64 to data uri
+      resizedImage.uri = `data:image/${avatarImageFormat.toLowerCase()};base64,${resizedImage.base64}`;
       if (onChange) {
         onChange({avatarImageFormat, ...resizedImage});
       }
