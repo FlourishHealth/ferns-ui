@@ -69,6 +69,7 @@ const ModalContent: FC<{
         margin: "auto",
         borderRadius: theme.radius.default,
         width: sizePx,
+        maxHeight: "100%",
         ...(isMobile
           ? {}
           : {
@@ -128,7 +129,7 @@ const ModalContent: FC<{
         </View>
       )}
       {children && (
-        <View aria-role="text" style={{marginTop: text ? 0 : 12, width: "100%"}}>
+        <View aria-role="text" style={{marginTop: text ? 0 : 12, width: "100%", height: "100%"}}>
           {children}
         </View>
       )}
