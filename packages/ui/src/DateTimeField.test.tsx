@@ -170,13 +170,14 @@ describe("DateTimeField", () => {
   // Simplified datetime test that checks fewer things
   describe("datetime type", () => {
     it("should render correctly with date and time", () => {
-      const {getAllByPlaceholderText} = renderWithTheme(
+      const {getByPlaceholderText} = renderWithTheme(
         <DateTimeField type="datetime" value="2023-05-15T15:30:00.000Z" onChange={mockOnChange} />
       );
 
-      // Validate MM is found for both month and minute
-      const mmElements = getAllByPlaceholderText("MM");
-      expect(mmElements.length).toBe(2);
+      // Validate placeholders for month, hour, and minute
+      expect(getByPlaceholderText("MM")).toBeTruthy(); // month
+      expect(getByPlaceholderText("hh")).toBeTruthy(); // hour
+      expect(getByPlaceholderText("mm")).toBeTruthy(); // minute
     });
   });
 
