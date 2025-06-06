@@ -92,7 +92,14 @@ interface DateTimeProps extends Omit<DateTimeSegmentProps, "index" | "config"> {
 
 const DateField: React.FC<DateTimeProps> = ({fieldErrors, ...segmentProps}) => {
   return (
-    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+    <View
+      style={{
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: 130,
+      }}
+    >
       <DateTimeSegment
         {...segmentProps}
         config={segmentProps.fieldConfigs[0]}
@@ -118,21 +125,23 @@ const DateField: React.FC<DateTimeProps> = ({fieldErrors, ...segmentProps}) => {
 };
 
 const TimeField: React.FC<DateTimeProps> = ({type, onBlur, fieldErrors, ...segmentProps}) => {
+  const hourIndex = type === "time" ? 0 : 3;
+  const minuteIndex = type === "time" ? 1 : 4;
   return (
-    <View style={{flexDirection: "row", alignItems: "center", justifyContent: "space-between"}}>
+    <View style={{flexDirection: "row", alignItems: "center", width: 65}}>
       <DateTimeSegment
         {...segmentProps}
-        config={segmentProps.fieldConfigs[0]}
-        error={fieldErrors?.[type === "time" ? 0 : 3]}
-        index={type === "time" ? 0 : 3}
+        config={segmentProps.fieldConfigs[hourIndex]}
+        error={fieldErrors?.[hourIndex]}
+        index={hourIndex}
         onBlur={onBlur}
       />
       <Separator type="time" />
       <DateTimeSegment
         {...segmentProps}
-        config={segmentProps.fieldConfigs[1]}
-        error={fieldErrors?.[type === "time" ? 1 : 4]}
-        index={type === "time" ? 1 : 4}
+        config={segmentProps.fieldConfigs[minuteIndex]}
+        error={fieldErrors?.[minuteIndex]}
+        index={minuteIndex}
         onBlur={onBlur}
       />
     </View>
@@ -168,6 +177,22 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   const [localTimezone, setLocalTimezone] = useState(
     providedTimezone ?? DateTime.local().zoneName ?? "UTC"
   );
+
+  const breakpoint = 395; // Breakpoint for switching to action sheet
+  let minimumWidth = 230; // Minimum width for the field container
+  if (type === "date") {
+    minimumWidth = 200;
+  }
+
+  let maximumWidth = breakpoint; // Maximum width for the field container
+  if (["date", "time"].includes(type)) {
+    maximumWidth = minimumWidth + 10;
+  }
+
+  const [parentWidth, setParentWidth] = useState<number | null>(null);
+  const parentIsLessThanBreakpointOrIsMobile =
+    (parentWidth !== null && parentWidth < breakpoint) || isMobileDevice();
+
   // We need to store the pending value in a ref because the state changes don't trigger
   // immediately, so onBlur may use stale values.
   const pendingValueRef = useRef<
@@ -284,18 +309,20 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       month?: string;
       day?: string;
       year?: string;
+      hour?: string;
     }): string | undefined => {
       const ampPmVal = override?.amPm ?? amPm;
       const minuteVal = override?.minute ?? minute;
       const monthVal = override?.month ?? month;
       const dayVal = override?.day ?? day;
       const yearVal = override?.year ?? year;
+      const hourVal = override?.hour ?? hour;
       let date;
       if (type === "datetime") {
         if (!monthVal || !dayVal || !yearVal || !hour || !minuteVal) {
           return undefined;
         }
-        let hourNum = parseInt(hour);
+        let hourNum = parseInt(hourVal);
         if (ampPmVal === "pm" && hourNum !== 12) {
           hourNum += 12;
         } else if (ampPmVal === "am" && hourNum === 12) {
@@ -363,13 +390,20 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
       // For minutes, just ensure it's at most 2 digits and valid (0-59)
       if ((type === "time" && index === 1) || (type === "datetime" && index === 4)) {
-        // For minutes, take the last two digits and remove leading zeros unless it would be empty
-        const finalValue = numericValue.slice(-2).replace(/^0+(?=\d)/, "");
+        // For minutes, keep only the last two digits entered.
+        // If the user deletes everything, set the value to "00"
+        // so it's always a valid time and easier to edit.
+        // This lets users freely edit or clear the minute field without breaking the time format.
+        const finalValue = numericValue === "" ? "00" : numericValue.slice(-2);
         const minuteNum = parseInt(finalValue);
 
-        // Only update if it's a valid minute value
+        // Update the minute state so the UI reflects the latest input,
+        // even if it's temporarily invalid
+        // This allows the user to freely edit or clear the field.
+        setMinute(finalValue);
+
+        // Only update ref and result if it's a valid minute value
         if (!isNaN(minuteNum) && minuteNum >= 0 && minuteNum <= 59) {
-          setMinute(finalValue);
           pendingValueRef.current = {minute: finalValue};
           setFieldErrors((prev) => ({...prev, [index]: undefined}));
 
@@ -396,7 +430,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       // For other fields, handle leading zeros
       const finalValue =
         numericValue.length > config.maxLength
-          ? numericValue.replace(/^0+/, "").slice(0, config.maxLength)
+          ? numericValue.slice(-config.maxLength)
           : numericValue;
 
       const error = validateField(index, finalValue);
@@ -572,29 +606,33 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       {Boolean(errorText) && <FieldError text={errorText!} />}
       <View
         style={{
-          flexDirection: isMobileDevice() ? "column" : "row",
+          flexDirection: parentIsLessThanBreakpointOrIsMobile ? "column" : "row",
           borderColor,
           backgroundColor: theme.surface.base,
           borderWidth: 1,
-          paddingHorizontal: 12,
-          paddingVertical: 4,
+          paddingHorizontal: 6,
+          paddingVertical: 2,
           borderRadius: 4,
           alignItems: "center",
-          justifyContent: "space-between",
+          minWidth: minimumWidth,
+          maxWidth: maximumWidth,
         }}
+        onLayout={(e) => setParentWidth(e.nativeEvent.layout.width)}
       >
         {(type === "date" || type === "datetime") && (
           <View style={{flexDirection: "row", alignItems: "center"}}>
             <DateField {...segmentProps} type={type} />
-            {!disabled && type === "date" && (
-              <IconButton
-                accessibilityHint="Opens the calendar to select a date and time"
-                accessibilityLabel="Show calendar"
-                iconName={iconName!}
-                variant="muted"
-                onClick={() => setShowDate(true)}
-              />
-            )}
+            {!disabled &&
+              (type === "date" ||
+                (type === "datetime" && parentIsLessThanBreakpointOrIsMobile)) && (
+                <IconButton
+                  accessibilityHint="Opens the calendar to select a date and time"
+                  accessibilityLabel="Show calendar"
+                  iconName={iconName!}
+                  variant="muted"
+                  onClick={() => setShowDate(true)}
+                />
+              )}
           </View>
         )}
 
@@ -625,7 +663,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
                   }}
                 />
               </Box>
-              <Box direction="column" marginRight={2} width={70}>
+              <Box direction="column" width={70}>
                 <TimezonePicker
                   disabled={disabled}
                   hideTitle
@@ -651,14 +689,16 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
             </>
           )}
 
-          {!disabled && type === "datetime" && (
-            <IconButton
-              accessibilityHint="Opens the calendar to select a date and time"
-              accessibilityLabel="Show calendar"
-              iconName={iconName!}
-              variant="muted"
-              onClick={() => setShowDate(true)}
-            />
+          {!disabled && type === "datetime" && !parentIsLessThanBreakpointOrIsMobile && (
+            <Box marginLeft={2}>
+              <IconButton
+                accessibilityHint="Opens the calendar to select a date and time"
+                accessibilityLabel="Show calendar"
+                iconName={iconName!}
+                variant="muted"
+                onClick={() => setShowDate(true)}
+              />
+            </Box>
           )}
         </View>
       </View>
