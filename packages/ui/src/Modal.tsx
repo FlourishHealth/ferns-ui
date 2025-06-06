@@ -66,13 +66,13 @@ const ModalContent: FC<{
         alignSelf: "center",
         zIndex: 1,
         backgroundColor: theme.surface.base,
-        margin: "auto",
         borderRadius: theme.radius.default,
         width: sizePx,
         maxHeight: "100%",
         ...(isMobile
           ? {}
           : {
+              margin: "auto",
               boxShadow: "0px 4px 24px rgba(0, 0, 0, 0.5)",
               elevation: 24,
             }),
@@ -129,7 +129,7 @@ const ModalContent: FC<{
         </View>
       )}
       {children && (
-        <View aria-role="text" style={{marginTop: text ? 0 : 12, width: "100%", flex: 1}}>
+        <View style={{marginTop: text ? 0 : 12, width: "100%", flex: isMobile ? undefined : 1}}>
           {children}
         </View>
       )}
