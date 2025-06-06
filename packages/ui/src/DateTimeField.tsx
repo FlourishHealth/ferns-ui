@@ -309,18 +309,20 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       month?: string;
       day?: string;
       year?: string;
+      hour?: string;
     }): string | undefined => {
       const ampPmVal = override?.amPm ?? amPm;
       const minuteVal = override?.minute ?? minute;
       const monthVal = override?.month ?? month;
       const dayVal = override?.day ?? day;
       const yearVal = override?.year ?? year;
+      const hourVal = override?.hour ?? hour;
       let date;
       if (type === "datetime") {
         if (!monthVal || !dayVal || !yearVal || !hour || !minuteVal) {
           return undefined;
         }
-        let hourNum = parseInt(hour);
+        let hourNum = parseInt(hourVal);
         if (ampPmVal === "pm" && hourNum !== 12) {
           hourNum += 12;
         } else if (ampPmVal === "am" && hourNum === 12) {
@@ -388,13 +390,20 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
       // For minutes, just ensure it's at most 2 digits and valid (0-59)
       if ((type === "time" && index === 1) || (type === "datetime" && index === 4)) {
-        // For minutes, take the last two digits and remove leading zeros unless it would be empty
-        const finalValue = numericValue.slice(-2).replace(/^0+(?=\d)/, "");
+        // For minutes, keep only the last two digits entered.
+        // If the user deletes everything, set the value to "00"
+        // so it's always a valid time and easier to edit.
+        // This lets users freely edit or clear the minute field without breaking the time format.
+        const finalValue = numericValue === "" ? "00" : numericValue.slice(-2);
         const minuteNum = parseInt(finalValue);
 
-        // Only update if it's a valid minute value
+        // Update the minute state so the UI reflects the latest input,
+        // even if it's temporarily invalid
+        // This allows the user to freely edit or clear the field.
+        setMinute(finalValue);
+
+        // Only update ref and result if it's a valid minute value
         if (!isNaN(minuteNum) && minuteNum >= 0 && minuteNum <= 59) {
-          setMinute(finalValue);
           pendingValueRef.current = {minute: finalValue};
           setFieldErrors((prev) => ({...prev, [index]: undefined}));
 
@@ -421,7 +430,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
       // For other fields, handle leading zeros
       const finalValue =
         numericValue.length > config.maxLength
-          ? numericValue.replace(/^0+/, "").slice(0, config.maxLength)
+          ? numericValue.slice(-config.maxLength)
           : numericValue;
 
       const error = validateField(index, finalValue);
