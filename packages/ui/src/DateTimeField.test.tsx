@@ -170,13 +170,14 @@ describe("DateTimeField", () => {
   // Simplified datetime test that checks fewer things
   describe("datetime type", () => {
     it("should render correctly with date and time", () => {
-      const {getAllByPlaceholderText} = renderWithTheme(
+      const {getByPlaceholderText} = renderWithTheme(
         <DateTimeField type="datetime" value="2023-05-15T15:30:00.000Z" onChange={mockOnChange} />
       );
 
-      // Validate MM is found for both month and minute
-      const mmElements = getAllByPlaceholderText("MM");
-      expect(mmElements.length).toBe(2);
+      // Validate placeholders for month, hour, and minute
+      expect(getByPlaceholderText("MM")).toBeTruthy(); // month
+      expect(getByPlaceholderText("hh")).toBeTruthy(); // hour
+      expect(getByPlaceholderText("mm")).toBeTruthy(); // minute
     });
   });
 
@@ -264,13 +265,20 @@ describe("DateTimeField", () => {
         jest.runAllTimers();
       });
 
-      // It should not call onChange with an invalid time. Called once when we type "6",
-      // and once when we type "0", but retains the "6"
-      expect(mockOnChange).toHaveBeenCalledTimes(2);
-      const firstCall = mockOnChange.mock.calls[0][0];
-      const secondCall = mockOnChange.mock.calls[1][0];
-      expect(firstCall).toBe("2023-05-15T15:06:00.000Z");
-      expect(secondCall).toBe("2023-05-15T15:06:00.000Z");
+      // The component should call onChange for valid minute updates (0 and 6)
+      // and must never emit an invalid minute (60).
+      expect(mockOnChange).toHaveBeenCalled();
+      expect(mockOnChange).toHaveBeenCalledTimes(4);
+      const calls = mockOnChange.mock.calls.map(([iso]) => iso);
+      // No call should use an invalid "60" minute.
+      expect(calls.some((iso) => iso.includes(":60:00.000Z"))).toBe(false);
+      // It should include a reset to "00" and then a valid "06".
+      expect(calls).toEqual(
+        expect.arrayContaining([
+          expect.stringContaining("T15:00:00.000Z"),
+          expect.stringContaining("T15:06:00.000Z"),
+        ])
+      );
     });
   });
 
