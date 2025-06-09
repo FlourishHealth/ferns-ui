@@ -836,6 +836,7 @@ export interface SplitPageProps {
   listViewData: any[];
   listViewExtraData?: any;
   listViewWidth?: number;
+  listViewMaxWidth?: number;
   renderChild?: () => ReactChild;
   onSelectionChange?: (value?: any) => void | Promise<void>;
 }
