@@ -88,7 +88,7 @@ export const SplitPage = ({
       <View
         style={{
           width: listViewWidth ?? 300,
-          maxWidth: listViewMaxWidth ?? 300,
+          maxWidth: listViewMaxWidth ?? listViewWidth ?? 300,
           flexGrow: 1,
           flexShrink: 0,
           display: "flex",
