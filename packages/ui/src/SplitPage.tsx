@@ -26,6 +26,7 @@ export const SplitPage = ({
   listViewData,
   listViewExtraData,
   listViewWidth,
+  listViewMaxWidth,
   bottomNavBarHeight,
   showItemList,
 }: SplitPageProps) => {
@@ -87,7 +88,7 @@ export const SplitPage = ({
       <View
         style={{
           width: listViewWidth ?? 300,
-          maxWidth: listViewWidth ?? 300,
+          maxWidth: listViewMaxWidth ?? listViewWidth ?? 300,
           flexGrow: 1,
           flexShrink: 0,
           display: "flex",
