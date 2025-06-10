@@ -84,7 +84,7 @@
     "@expo/config-plugins": "~10.0.0",
     "@testing-library/react-native": "^13.2.0",
     "@types/jest": "^29.5.14",
-    "@types/lodash": "^4.17.14",
+    "@types/lodash": "^4.17.17",
     "@types/luxon": "^3.4.2",
     "@types/mdurl": "^2.0.0",
     "@types/react": "~18.3.12",
@@ -118,7 +118,7 @@
     "react-keyed-flatten-children": "^3.0.2",
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",
-    "tsc-watch": "^6.0.4",
+    "tsc-watch": "^7.1.1",
     "typescript": "~5.8.3"
   },
   "peerDependencies": {

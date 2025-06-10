@@ -46,7 +46,7 @@
     "@expo/metro-runtime": "~5.0.4",
     "@expo/webpack-config": "^19.0.1",
     "@shopify/flash-list": "1.7.6",
-    "@types/lodash": "^4.17.14",
+    "@types/lodash": "^4.17.17",
     "@typescript-eslint/eslint-plugin": "^8.19.0",
     "@typescript-eslint/parser": "^8.19.0",
     "eslint": "^8.57.0",
@@ -64,7 +64,7 @@
     "eslint-plugin-unused-imports": "4.1.4",
     "postcss": "8.4.39",
     "prettier": "^3.3.3",
-    "typedoc": "^0.25.12",
+    "typedoc": "^0.28.5",
     "typescript": "~5.8.3"
   },
   "private": true,
