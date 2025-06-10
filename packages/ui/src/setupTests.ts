@@ -39,4 +39,33 @@ jest.mock("./MediaQuery", () => ({
 // Make sure we can test date/time functionality
 global.Date.now = jest.fn(() => new Date("2023-05-15T10:30:00.000Z").getTime());
 
+// Mock expo-localization
+jest.mock("expo-localization", () => ({
+  getCalendars: jest.fn().mockReturnValue([
+    {
+      id: "gregorian",
+      calendar: "gregorian",
+      locale: "en-US",
+      timeZone: "America/New_York",
+    },
+  ]),
+  getLocales: jest.fn().mockReturnValue([
+    {
+      languageCode: "en",
+      countryCode: "US",
+      textDirection: "ltr",
+      digitGroupingSeparator: ",",
+      decimalSeparator: ".",
+      measurementSystem: "US",
+      uses24hourClock: false,
+      usesMetricSystem: false,
+      temperatureUnit: "F",
+    },
+  ]),
+  timezone: "America/New_York",
+  isRTL: false,
+  locale: "en-US",
+  locales: ["en-US"],
+}));
+
 export {};
