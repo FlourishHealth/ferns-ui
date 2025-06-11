@@ -115,7 +115,7 @@
     "mdurl": "^2.0.0",
     "prettier": "^3.3.3",
     "react": "19.0.0",
-    "react-keyed-flatten-children": "^3.0.2",
+    "react-keyed-flatten-children": "^5.0.0",
     "react-router": "^6.23.0",
     "react-router-dom": "^6.23.0",
     "tsc-watch": "^7.1.1",
