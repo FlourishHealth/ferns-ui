@@ -1,13 +1,9 @@
-import {act, render, userEvent} from "@testing-library/react-native";
+import {act, userEvent} from "@testing-library/react-native";
 import {DateTime} from "luxon";
 import React from "react";
 
 import {DateTimeField} from "./DateTimeField";
-import {ThemeProvider} from "./Theme";
-
-const renderWithTheme = (ui: React.ReactElement) => {
-  return render(<ThemeProvider>{ui}</ThemeProvider>);
-};
+import {renderWithTheme} from "./test-utils";
 
 describe("DateTimeField", () => {
   let mockOnChange: jest.Mock;
