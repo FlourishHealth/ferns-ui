@@ -3,20 +3,19 @@ import {DateTime} from "luxon";
 import React from "react";
 
 import {DateTimeField} from "./DateTimeField";
-import {renderWithTheme} from "./test-utils";
+import {renderWithTheme, setupComponentTest, teardownComponentTest} from "./test-utils";
 
 describe("DateTimeField", () => {
   let mockOnChange: jest.Mock;
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    const mocks = setupComponentTest();
     jest.setSystemTime(new Date("2023-05-15T10:30:00.000Z"));
-    mockOnChange = jest.fn();
+    mockOnChange = mocks.onChange;
   });
 
   afterEach(() => {
-    jest.useRealTimers();
-    jest.clearAllMocks();
+    teardownComponentTest();
   });
 
   describe("date type", () => {

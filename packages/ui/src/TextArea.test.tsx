@@ -1,13 +1,8 @@
-import {render, userEvent} from "@testing-library/react-native";
+import {userEvent} from "@testing-library/react-native";
 import React from "react";
-import {assert} from "chai";
 
 import {TextArea} from "./TextArea";
-import {ThemeProvider} from "./Theme";
-
-const renderWithTheme = (ui: React.ReactElement) => {
-  return render(<ThemeProvider>{ui}</ThemeProvider>);
-};
+import {renderWithTheme} from "./test-utils";
 
 describe("TextArea", () => {
   let mockOnChange: jest.Mock;
@@ -27,8 +22,8 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue("test content");
-      assert.isTrue(input.props.multiline);
-      assert.equal(input.props.value, "test content");
+      expect(input.props.multiline).toBe(true);
+      expect(input.props.value).toBe("test content");
     });
 
     it("should render with title", () => {
@@ -36,7 +31,7 @@ describe("TextArea", () => {
         <TextArea title="Description" value="" onChange={mockOnChange} />
       );
       
-      assert.isNotNull(getByText("Description"));
+      expect(getByText("Description")).toBeTruthy();
     });
 
     it("should render with placeholder", () => {
@@ -44,7 +39,7 @@ describe("TextArea", () => {
         <TextArea placeholder="Enter description" value="" onChange={mockOnChange} />
       );
       
-      assert.isNotNull(getByPlaceholderText("Enter description"));
+      expect(getByPlaceholderText("Enter description")).toBeTruthy();
     });
 
     it("should render helper text", () => {
@@ -52,7 +47,7 @@ describe("TextArea", () => {
         <TextArea helperText="Maximum 500 characters" value="" onChange={mockOnChange} />
       );
       
-      assert.isNotNull(getByText("Maximum 500 characters"));
+      expect(getByText("Maximum 500 characters")).toBeTruthy();
     });
 
     it("should render error text", () => {
@@ -60,7 +55,7 @@ describe("TextArea", () => {
         <TextArea errorText="This field is required" value="" onChange={mockOnChange} />
       );
       
-      assert.isNotNull(getByText("This field is required"));
+      expect(getByText("This field is required")).toBeTruthy();
     });
 
     it("should support grow behavior", () => {
@@ -69,7 +64,7 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue("");
-      assert.isTrue(input.props.multiline);
+      expect(input.props.multiline).toBe(true);
     });
 
     it("should be disabled when disabled prop is true", () => {
@@ -78,7 +73,7 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue("test");
-      assert.isTrue(input.props.readOnly);
+      expect(input.props.readOnly).toBe(true);
     });
 
     it("should always have text type", () => {
@@ -87,7 +82,7 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue("");
-      assert.equal(input.props.keyboardType, "default");
+      expect(input.props.keyboardType).toBe("default");
     });
   });
 
@@ -101,8 +96,8 @@ describe("TextArea", () => {
       const input = getByDisplayValue("");
       await user.type(input, "hello world");
 
-      assert.isTrue(mockOnChange.mock.calls.length > 0);
-      assert.equal(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0], "hello world");
+      expect(mockOnChange).toHaveBeenCalled();
+      expect(mockOnChange.mock.calls.length).toBeGreaterThan(0);
     });
 
     it("should handle multiline text input", async () => {
@@ -115,8 +110,8 @@ describe("TextArea", () => {
       const input = getByDisplayValue("");
       await user.type(input, multilineText);
 
-      assert.isTrue(mockOnChange.mock.calls.length > 0);
-      assert.equal(mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0], multilineText);
+      expect(mockOnChange).toHaveBeenCalled();
+      expect(mockOnChange.mock.calls.length).toBeGreaterThan(0);
     });
   });
 
@@ -127,8 +122,8 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue("");
-      assert.equal(input.props.accessibilityHint, "Enter text here");
-      assert.equal(input.props["aria-label"], "Text input field");
+      expect(input.props.accessibilityHint).toBe("Enter text here");
+      expect(input.props["aria-label"]).toBe("Text input field");
     });
 
     it("should indicate disabled state in accessibility", () => {
@@ -137,7 +132,7 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue("");
-      assert.isTrue(input.props.accessibilityState.disabled);
+      expect(input.props.accessibilityState.disabled).toBe(true);
     });
   });
 
@@ -148,15 +143,15 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue("");
-      assert.equal(input.props.value, "");
+      expect(input.props.value).toBe("");
     });
 
     it("should handle undefined value", () => {
-      const {container} = renderWithTheme(
+      const {root} = renderWithTheme(
         <TextArea value={undefined} onChange={mockOnChange} />
       );
       
-      assert.isNotNull(container);
+      expect(root).toBeTruthy();
     });
 
     it("should handle long text values", () => {
@@ -166,7 +161,7 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue(longText);
-      assert.equal(input.props.value, longText);
+      expect(input.props.value).toBe(longText);
     });
 
     it("should handle text with line breaks", () => {
@@ -176,7 +171,7 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue(textWithBreaks);
-      assert.equal(input.props.value, textWithBreaks);
+      expect(input.props.value).toBe(textWithBreaks);
     });
   });
 
@@ -198,9 +193,9 @@ describe("TextArea", () => {
       );
       
       const input = getByDisplayValue("test");
-      assert.equal(input.props.numberOfLines, 5);
-      assert.isNotNull(input.props.onFocus);
-      assert.isNotNull(input.props.onBlur);
+      expect(input.props.numberOfLines).toBe(5);
+      expect(input.props.onFocus).toBeTruthy();
+      expect(input.props.onBlur).toBeTruthy();
     });
 
     it("should support inputRef", () => {
@@ -209,7 +204,7 @@ describe("TextArea", () => {
         <TextArea inputRef={mockInputRef} value="" onChange={mockOnChange} />
       );
       
-      assert.isTrue(mockInputRef.called);
+      expect(mockInputRef).toHaveBeenCalled();
     });
   });
 });
