@@ -5,6 +5,7 @@ import {
   BooleanFieldDisabledWithTitleDemo,
   BooleanFieldNoLabelDemo,
   BooleanFieldWithTitleDemo,
+  BooleanFieldWithStoredStateDemo,
 } from "@stories";
 import {BooleanField} from "ferns-ui";
 import React from "react";
@@ -62,6 +63,9 @@ export const BooleanFieldConfiguration: DemoConfiguration = {
     },
     "Boolean Field without label": {
       render: () => <BooleanFieldNoLabelDemo />,
+    },
+    "Boolean Field with Stored State": {
+      render: () => <BooleanFieldWithStoredStateDemo />,
     },
   },
 };
