@@ -1,4 +1,4 @@
-import {BooleanField, useStoredState} from "ferns-ui";
+import {BooleanField, Text, useStoredState} from "ferns-ui";
 import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -79,7 +79,7 @@ export const BooleanFieldWithStoredStateDemo = (): React.ReactElement => {
   if (isLoading) {
     return (
       <StorybookContainer>
-        <div>Loading...</div>
+        <Text>Loading...</Text>
       </StorybookContainer>
     );
   }
