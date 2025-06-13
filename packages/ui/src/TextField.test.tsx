@@ -234,7 +234,7 @@ describe("TextField", () => {
   describe("icon functionality", () => {
     it("should render icon when iconName is provided", () => {
       const {getByDisplayValue} = renderWithTheme(
-        <TextField iconName="search" value="" onChange={mockOnChange} />
+        <TextField iconName="check" value="" onChange={mockOnChange} />
       );
       
       const input = getByDisplayValue("");
@@ -244,7 +244,7 @@ describe("TextField", () => {
     it("should call onIconClick when icon is pressed", async () => {
       const mockOnIconClick = jest.fn();
       const {getByDisplayValue} = renderWithTheme(
-        <TextField iconName="search" onIconClick={mockOnIconClick} value="" onChange={mockOnChange} />
+        <TextField iconName="check" onIconClick={mockOnIconClick} value="" onChange={mockOnChange} />
       );
 
       const input = getByDisplayValue("");
@@ -369,6 +369,74 @@ describe("TextField", () => {
       );
       
       expect(mockInputRef).toHaveBeenCalled();
+    });
+  });
+
+  describe("snapshots", () => {
+    it("should match snapshot with default props", () => {
+      const component = renderWithTheme(
+        <TextField value="test value" onChange={mockOnChange} />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("should match snapshot with all props", () => {
+      const component = renderWithTheme(
+        <TextField
+          title="Test Title"
+          placeholder="Enter text"
+          helperText="Helper text"
+          errorText="Error text"
+          iconName="check"
+          onIconClick={jest.fn()}
+          value="test value"
+          onChange={mockOnChange}
+          onFocus={mockOnFocus}
+          onBlur={mockOnBlur}
+          onEnter={mockOnEnter}
+          disabled={false}
+          multiline={false}
+          type="text"
+        />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("should match snapshot when disabled", () => {
+      const component = renderWithTheme(
+        <TextField
+          title="Disabled Field"
+          value="disabled value"
+          onChange={mockOnChange}
+          disabled={true}
+        />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("should match snapshot with multiline", () => {
+      const component = renderWithTheme(
+        <TextField
+          title="Multiline Field"
+          value="line 1\nline 2"
+          onChange={mockOnChange}
+          multiline={true}
+          rows={3}
+        />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("should match snapshot with error state", () => {
+      const component = renderWithTheme(
+        <TextField
+          title="Error Field"
+          value=""
+          onChange={mockOnChange}
+          errorText="This field is required"
+        />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
     });
   });
 });

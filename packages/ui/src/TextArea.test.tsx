@@ -207,4 +207,65 @@ describe("TextArea", () => {
       expect(mockInputRef).toHaveBeenCalled();
     });
   });
+
+  describe("snapshots", () => {
+    it("should match snapshot with default props", () => {
+      const component = renderWithTheme(
+        <TextArea value="test content" onChange={mockOnChange} />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("should match snapshot with all props", () => {
+      const component = renderWithTheme(
+        <TextArea
+          title="Description"
+          placeholder="Enter description"
+          helperText="Maximum 500 characters"
+          value="test content"
+          onChange={mockOnChange}
+          disabled={false}
+          grow={true}
+          rows={5}
+        />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("should match snapshot when disabled", () => {
+      const component = renderWithTheme(
+        <TextArea
+          title="Disabled TextArea"
+          value="disabled content"
+          onChange={mockOnChange}
+          disabled={true}
+        />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("should match snapshot with error state", () => {
+      const component = renderWithTheme(
+        <TextArea
+          title="Error TextArea"
+          value=""
+          onChange={mockOnChange}
+          errorText="This field is required"
+        />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("should match snapshot with multiline content", () => {
+      const component = renderWithTheme(
+        <TextArea
+          title="Multiline Content"
+          value="Line 1\nLine 2\nLine 3"
+          onChange={mockOnChange}
+          rows={4}
+        />
+      );
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+  });
 });
