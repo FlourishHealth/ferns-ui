@@ -1,0 +1,424 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea snapshots should match snapshot when disabled 1`] = `
+<View
+  style={
+    {
+      "flexDirection": "column",
+      "width": "100%",
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#1C1C1C",
+        "fontSize": 14,
+        "fontWeight": 600,
+        "lineHeight": 22.4,
+      }
+    }
+  >
+    Disabled TextArea
+  </Text>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#D9D9D9",
+        "borderColor": "#4E4E4E",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "overflow": "hidden",
+        "paddingHorizontal": 12,
+        "paddingVertical": 8,
+      }
+    }
+  >
+    <TextInput
+      accessibilityHint="Enter text here"
+      accessibilityState={
+        {
+          "disabled": true,
+        }
+      }
+      aria-label="Text input field"
+      autoCapitalize="sentences"
+      autoCorrect={true}
+      blurOnSubmit={true}
+      keyboardType="default"
+      multiline={true}
+      numberOfLines={1}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onContentSizeChange={[Function]}
+      onFocus={[Function]}
+      onSubmitEditing={[Function]}
+      placeholderTextColor="#686868"
+      readOnly={true}
+      secureTextEntry={false}
+      style={
+        {
+          "color": "#1C1C1C",
+          "flex": 1,
+          "fontFamily": "text",
+          "fontSize": 16,
+          "gap": 10,
+          "height": 40,
+          "paddingVertical": 0,
+          "width": "100%",
+        }
+      }
+      textContentType="none"
+      underlineColorAndroid="transparent"
+      value="disabled content"
+    />
+  </View>
+</View>
+`;
+
+exports[`TextArea snapshots should match snapshot with all props 1`] = `
+<View
+  style={
+    {
+      "flexDirection": "column",
+      "width": "100%",
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#1C1C1C",
+        "fontSize": 14,
+        "fontWeight": 600,
+        "lineHeight": 22.4,
+      }
+    }
+  >
+    Description
+  </Text>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#9A9A9A",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "overflow": "hidden",
+        "paddingHorizontal": 12,
+        "paddingVertical": 8,
+      }
+    }
+  >
+    <TextInput
+      accessibilityHint="Enter text here"
+      accessibilityState={
+        {
+          "disabled": false,
+        }
+      }
+      aria-label="Text input field"
+      autoCapitalize="sentences"
+      autoCorrect={true}
+      blurOnSubmit={true}
+      keyboardType="default"
+      multiline={true}
+      numberOfLines={5}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onContentSizeChange={[Function]}
+      onFocus={[Function]}
+      onSubmitEditing={[Function]}
+      placeholder="Enter description"
+      placeholderTextColor="#686868"
+      readOnly={false}
+      secureTextEntry={false}
+      style={
+        {
+          "color": "#1C1C1C",
+          "flex": 1,
+          "fontFamily": "text",
+          "fontSize": 16,
+          "gap": 10,
+          "height": 200,
+          "paddingVertical": 0,
+          "width": "100%",
+        }
+      }
+      textContentType="none"
+      underlineColorAndroid="transparent"
+      value="test content"
+    />
+  </View>
+  <View
+    style={
+      {
+        "marginTop": 2,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#1C1C1C",
+          "fontSize": 12,
+          "lineHeight": 16,
+        }
+      }
+    >
+      Maximum 500 characters
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`TextArea snapshots should match snapshot with default props 1`] = `
+<View
+  style={
+    {
+      "flexDirection": "column",
+      "width": "100%",
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#9A9A9A",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "overflow": "hidden",
+        "paddingHorizontal": 12,
+        "paddingVertical": 8,
+      }
+    }
+  >
+    <TextInput
+      accessibilityHint="Enter text here"
+      accessibilityState={
+        {
+          "disabled": undefined,
+        }
+      }
+      aria-label="Text input field"
+      autoCapitalize="sentences"
+      autoCorrect={true}
+      blurOnSubmit={true}
+      keyboardType="default"
+      multiline={true}
+      numberOfLines={1}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onContentSizeChange={[Function]}
+      onFocus={[Function]}
+      onSubmitEditing={[Function]}
+      placeholderTextColor="#686868"
+      secureTextEntry={false}
+      style={
+        {
+          "color": "#1C1C1C",
+          "flex": 1,
+          "fontFamily": "text",
+          "fontSize": 16,
+          "gap": 10,
+          "height": 40,
+          "paddingVertical": 0,
+          "width": "100%",
+        }
+      }
+      textContentType="none"
+      underlineColorAndroid="transparent"
+      value="test content"
+    />
+  </View>
+</View>
+`;
+
+exports[`TextArea snapshots should match snapshot with error state 1`] = `
+<View
+  style={
+    {
+      "flexDirection": "column",
+      "width": "100%",
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#1C1C1C",
+        "fontSize": 14,
+        "fontWeight": 600,
+        "lineHeight": 22.4,
+      }
+    }
+  >
+    Error TextArea
+  </Text>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "marginVertical": 2,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "marginLeft": 4,
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#BD1111",
+            "fontSize": 12,
+          }
+        }
+      >
+        This field is required
+      </Text>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#D33232",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "overflow": "hidden",
+        "paddingHorizontal": 12,
+        "paddingVertical": 8,
+      }
+    }
+  >
+    <TextInput
+      accessibilityHint="Enter text here"
+      accessibilityState={
+        {
+          "disabled": undefined,
+        }
+      }
+      aria-label="Text input field"
+      autoCapitalize="sentences"
+      autoCorrect={true}
+      blurOnSubmit={true}
+      keyboardType="default"
+      multiline={true}
+      numberOfLines={1}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onContentSizeChange={[Function]}
+      onFocus={[Function]}
+      onSubmitEditing={[Function]}
+      placeholderTextColor="#686868"
+      secureTextEntry={false}
+      style={
+        {
+          "color": "#1C1C1C",
+          "flex": 1,
+          "fontFamily": "text",
+          "fontSize": 16,
+          "gap": 10,
+          "height": 40,
+          "paddingVertical": 0,
+          "width": "100%",
+        }
+      }
+      textContentType="none"
+      underlineColorAndroid="transparent"
+      value=""
+    />
+  </View>
+</View>
+`;
+
+exports[`TextArea snapshots should match snapshot with multiline content 1`] = `
+<View
+  style={
+    {
+      "flexDirection": "column",
+      "width": "100%",
+    }
+  }
+>
+  <Text
+    style={
+      {
+        "color": "#1C1C1C",
+        "fontSize": 14,
+        "fontWeight": 600,
+        "lineHeight": 22.4,
+      }
+    }
+  >
+    Multiline Content
+  </Text>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#FFFFFF",
+        "borderColor": "#9A9A9A",
+        "borderRadius": 4,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "overflow": "hidden",
+        "paddingHorizontal": 12,
+        "paddingVertical": 8,
+      }
+    }
+  >
+    <TextInput
+      accessibilityHint="Enter text here"
+      accessibilityState={
+        {
+          "disabled": undefined,
+        }
+      }
+      aria-label="Text input field"
+      autoCapitalize="sentences"
+      autoCorrect={true}
+      blurOnSubmit={true}
+      keyboardType="default"
+      multiline={true}
+      numberOfLines={4}
+      onBlur={[Function]}
+      onChangeText={[MockFunction]}
+      onContentSizeChange={[Function]}
+      onFocus={[Function]}
+      onSubmitEditing={[Function]}
+      placeholderTextColor="#686868"
+      secureTextEntry={false}
+      style={
+        {
+          "color": "#1C1C1C",
+          "flex": 1,
+          "fontFamily": "text",
+          "fontSize": 16,
+          "gap": 10,
+          "height": 160,
+          "paddingVertical": 0,
+          "width": "100%",
+        }
+      }
+      textContentType="none"
+      underlineColorAndroid="transparent"
+      value="Line 1\\nLine 2\\nLine 3"
+    />
+  </View>
+</View>
+`;

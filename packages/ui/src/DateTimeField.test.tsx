@@ -1,26 +1,21 @@
-import {act, render, userEvent} from "@testing-library/react-native";
+import {act, userEvent} from "@testing-library/react-native";
 import {DateTime} from "luxon";
 import React from "react";
 
 import {DateTimeField} from "./DateTimeField";
-import {ThemeProvider} from "./Theme";
-
-const renderWithTheme = (ui: React.ReactElement) => {
-  return render(<ThemeProvider>{ui}</ThemeProvider>);
-};
+import {renderWithTheme, setupComponentTest, teardownComponentTest} from "./test-utils";
 
 describe("DateTimeField", () => {
   let mockOnChange: jest.Mock;
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    const mocks = setupComponentTest();
     jest.setSystemTime(new Date("2023-05-15T10:30:00.000Z"));
-    mockOnChange = jest.fn();
+    mockOnChange = mocks.onChange;
   });
 
   afterEach(() => {
-    jest.useRealTimers();
-    jest.clearAllMocks();
+    teardownComponentTest();
   });
 
   describe("date type", () => {
