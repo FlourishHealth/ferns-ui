@@ -1,4 +1,4 @@
-import {BooleanField} from "ferns-ui";
+import {BooleanField, Text, useStoredState} from "ferns-ui";
 import React, {useState} from "react";
 
 import {StorybookContainer} from "./StorybookContainer";
@@ -69,6 +69,32 @@ export const BooleanFieldNoLabelDemo = (): React.ReactElement => {
   return (
     <StorybookContainer>
       <BooleanField value={value} variant="simple" onChange={setValue} />
+    </StorybookContainer>
+  );
+};
+
+export const BooleanFieldWithStoredStateDemo = (): React.ReactElement => {
+  const [value, setValue, isLoading] = useStoredState<boolean>("booleanFieldDemo", false);
+  
+  if (isLoading) {
+    return (
+      <StorybookContainer>
+        <Text>Loading...</Text>
+      </StorybookContainer>
+    );
+  }
+
+  return (
+    <StorybookContainer>
+      <BooleanField
+        title="Persistent Boolean Field"
+        helperText="This value persists after page refresh. Try toggling it and refreshing the page!"
+        value={value ?? false}
+        variant="title"
+        onChange={(newValue) => {
+          void setValue(newValue);
+        }}
+      />
     </StorybookContainer>
   );
 };
