@@ -25,6 +25,7 @@ export * from "./PasswordField.config";
 export * from "./PhoneNumberField.config";
 export * from "./RadioField.config";
 export * from "./SegmentedControl.config";
+export * from "./SelectBadge.config";
 export * from "./SelectField.config";
 export * from "./SideDrawer.config";
 export * from "./SignatureField.config";

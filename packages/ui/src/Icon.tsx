@@ -15,7 +15,7 @@ export const Icon = ({
   testID,
 }: IconProps): React.ReactElement => {
   const {theme} = useTheme();
-  const iconColor = theme.text[color];
+  const iconColor = theme.text[color] ?? color;
   const iconSize = iconSizeToNumber(size);
   return (
     <FontAwesome6

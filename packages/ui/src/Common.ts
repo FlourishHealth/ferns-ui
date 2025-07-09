@@ -1361,6 +1361,49 @@ export interface BadgeProps {
   variant?: "iconOnly" | "numberOnly";
 }
 
+export interface SelectBadgeProps {
+  /**
+   * When status is "custom", determines the badge's background color.
+   */
+  customBackgroundColor?: string;
+  /**
+   * When status is "custom", determines the badge's border color.
+   */
+  customBorderColor?: string;
+  /**
+   * When status is "custom", determines the badge's text color.
+   */
+  customTextColor?: string;
+  /**
+   * If true, the badge will be disabled and not interactive.
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * The options available for the dropdown badge.
+   * Each option should have a label and a value.
+   */
+  options: FieldOption[];
+  /**
+   * The current value of the select field.
+   */
+  value?: string;
+  /**
+   * If true, the badge will have a secondary style.
+   * @default false
+   */
+  secondary?: boolean;
+  /**
+   * The status of the badge. Determines its color and appearance.
+   * @default "info"
+   */
+  status?: "info" | "error" | "warning" | "success" | "neutral" | "custom";
+  /**
+   * The function to call when the selected value changes.
+   */
+  onChange: (value: string) => void;
+}
+
 type BannerButtonProps = {
   /**
    * Text to display on optional banner button, will display button if provided
