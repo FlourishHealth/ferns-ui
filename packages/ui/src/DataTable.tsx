@@ -13,6 +13,7 @@ import {
   DataTableCustomComponentMap,
   DataTableProps,
   SurfaceColor,
+  TextColor,
 } from "./Common";
 import {Icon} from "./Icon";
 import {InfoModalIcon} from "./InfoModalIcon";
@@ -26,12 +27,12 @@ import {useTheme} from "./Theme";
 // easily.
 
 const TextCell: React.FC<{
-  cellData: {value: string; textSize?: "sm" | "md" | "lg"};
+  cellData: {value: string; textSize?: "sm" | "md" | "lg"; textColor?: TextColor};
   column: DataTableColumn;
 }> = ({cellData}) => {
   return (
     <Box flex="grow" justifyContent="center" paddingX={2}>
-      <Text size={cellData.textSize || "md"}>{cellData.value}</Text>
+      <Text size={cellData.textSize || "md"} color={cellData.textColor}>{cellData.value}</Text>
     </Box>
   );
 };
@@ -67,7 +68,7 @@ const DataTableCell: React.FC<DataTableCellProps> = ({
   // Default to TextCell
   let Component: React.ComponentType<{
     column: DataTableColumn;
-    cellData: {value: any; highlight?: SurfaceColor};
+    cellData: {value: any; highlight?: SurfaceColor; textColor?: TextColor};
   }> = TextCell;
   if (customColumnComponentMap?.[columnDef.columnType]) {
     Component = customColumnComponentMap[columnDef.columnType];

@@ -1933,6 +1933,7 @@ export interface PaginationProps {
 export type DataTableCellData = {
   value: any;
   highlight?: SurfaceColor;
+  textColor?: TextColor;
   textSize?: "sm" | "md" | "lg";
 };
 
