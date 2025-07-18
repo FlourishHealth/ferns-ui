@@ -22,6 +22,7 @@ export * from "./Modal.stories";
 export * from "./MultiselectField.stories";
 export * from "./NumberField.stories";
 export * from "./PhoneNumberField.stories";
+export * from "./SelectBadge.stories";
 // export * from "./Pagination.stories";
 // export * from "./PasswordField.stories";
 export * from "./RadioField.stories";
