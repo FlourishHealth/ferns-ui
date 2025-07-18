@@ -1,10 +1,9 @@
 import {act, renderHook} from "@testing-library/react-native";
-import React from "react";
 
-import {Unifier} from "../Unifier";
-import {useStoredState} from "../useStoredState";
+import {Unifier} from "./Unifier";
+import {useStoredState} from "./useStoredState";
 
-jest.mock("../Unifier", () => ({
+jest.mock("./Unifier", () => ({
   Unifier: {
     storage: {
       getItem: jest.fn(),
@@ -51,14 +50,14 @@ describe("useStoredState", () => {
     });
 
     expect(result.current[0]).toBe("new value");
-    
+
     expect(Unifier.storage.setItem).toHaveBeenCalledWith("testKey", "new value");
   });
 
   it("should handle errors when reading from storage", async () => {
     const originalConsoleError = console.error;
     console.error = jest.fn();
-    
+
     (Unifier.storage.getItem as jest.Mock).mockRejectedValue(new Error("Storage error"));
 
     const {result} = renderHook(() => useStoredState("testKey", "initial value"));
@@ -70,14 +69,14 @@ describe("useStoredState", () => {
     expect(result.current[0]).toBe("initial value");
     expect(result.current[2]).toBe(false);
     expect(console.error).toHaveBeenCalled();
-    
+
     console.error = originalConsoleError;
   });
 
   it("should handle errors when writing to storage", async () => {
     const originalConsoleError = console.error;
     console.error = jest.fn();
-    
+
     (Unifier.storage.getItem as jest.Mock).mockResolvedValue("stored value");
     (Unifier.storage.setItem as jest.Mock).mockRejectedValue(new Error("Storage error"));
 
@@ -93,7 +92,7 @@ describe("useStoredState", () => {
 
     expect(result.current[0]).toBe("stored value");
     expect(console.error).toHaveBeenCalled();
-    
+
     console.error = originalConsoleError;
   });
 

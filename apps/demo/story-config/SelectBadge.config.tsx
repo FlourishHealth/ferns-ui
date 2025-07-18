@@ -52,6 +52,10 @@ export const SelectBadgeConfiguration: DemoConfiguration = {
         type: "boolean",
         defaultValue: false,
       },
+      disabled: {
+        type: "boolean",
+        defaultValue: false,
+      },
     },
   },
   stories: {

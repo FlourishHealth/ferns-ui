@@ -1,5 +1,5 @@
 import {Picker} from "@react-native-picker/picker";
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import {Modal, Platform, Text, TouchableOpacity, View} from "react-native";
 
 import {FieldOption, SelectBadgeProps, SurfaceTheme, TextTheme} from "./Common";
@@ -70,6 +70,10 @@ export const SelectBadge = ({
     },
     [options]
   );
+
+  const displayVal = useMemo(() => {
+    return findSelectedItem(value)?.label ?? "---";
+  }, [value, findSelectedItem]);
 
   const handleOnChange = useCallback(
     (val: string) => {
@@ -193,7 +197,6 @@ export const SelectBadge = ({
           // Android headless picker: transparent overlay to capture touches without visible UI.
           Platform.OS !== "web" && {backgroundColor: "transparent"},
         ]}
-        testID="android_picker_headless"
         onValueChange={handleOnChange}
       >
         {renderPickerItems()}
@@ -208,7 +211,6 @@ export const SelectBadge = ({
         accessibilityLabel="Open select badge options"
         aria-role="button"
         disabled={disabled}
-        testID="select_badge_button"
         onPress={() => setShowPicker(!showPicker)}
       >
         <View
@@ -243,7 +245,7 @@ export const SelectBadge = ({
                 fontFamily: "text",
               }}
             >
-              {findSelectedItem(value)?.label ?? "---"}
+              {displayVal}
             </Text>
           </View>
           <View
