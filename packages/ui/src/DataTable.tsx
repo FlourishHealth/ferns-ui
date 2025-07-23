@@ -13,6 +13,7 @@ import {
   DataTableCustomComponentMap,
   DataTableProps,
   SurfaceColor,
+  TextColor,
 } from "./Common";
 import {Icon} from "./Icon";
 import {InfoModalIcon} from "./InfoModalIcon";
@@ -26,12 +27,14 @@ import {useTheme} from "./Theme";
 // easily.
 
 const TextCell: React.FC<{
-  cellData: {value: string; textSize?: "sm" | "md" | "lg"};
+  cellData: {value: string; textSize?: "sm" | "md" | "lg"; textColor?: TextColor};
   column: DataTableColumn;
 }> = ({cellData}) => {
   return (
     <Box flex="grow" justifyContent="center" paddingX={2}>
-      <Text size={cellData.textSize || "md"}>{cellData.value}</Text>
+      <Text size={cellData.textSize || "md"} color={cellData.textColor}>
+        {cellData.value}
+      </Text>
     </Box>
   );
 };
@@ -60,6 +63,7 @@ const DataTableCell: React.FC<DataTableCellProps> = ({
   backgroundColor,
   height,
   textSize = "md",
+  textColor,
 }) => {
   const {theme} = useTheme();
   const isLastPinnedColumn = isPinnedHorizontal && colIndex === pinnedColumns - 1;
@@ -67,7 +71,7 @@ const DataTableCell: React.FC<DataTableCellProps> = ({
   // Default to TextCell
   let Component: React.ComponentType<{
     column: DataTableColumn;
-    cellData: {value: any; highlight?: SurfaceColor};
+    cellData: {value: any; highlight?: SurfaceColor; textColor?: TextColor};
   }> = TextCell;
   if (customColumnComponentMap?.[columnDef.columnType]) {
     Component = customColumnComponentMap[columnDef.columnType];
@@ -103,7 +107,7 @@ const DataTableCell: React.FC<DataTableCellProps> = ({
         }),
       }}
     >
-      <Component cellData={{...value, textSize}} column={columnDef} />
+      <Component cellData={{...value, textSize, textColor}} column={columnDef} />
     </View>
   );
 };
@@ -156,6 +160,7 @@ const DataTableRow: React.FC<DataTableRowProps> = ({
           isPinnedHorizontal={colIndex < pinnedColumns}
           pinnedColumns={pinnedColumns}
           textSize={cell.textSize}
+          textColor={cell.textColor}
           value={cell}
         />
       ))}

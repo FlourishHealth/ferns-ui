@@ -1976,6 +1976,7 @@ export interface PaginationProps {
 export type DataTableCellData = {
   value: any;
   highlight?: SurfaceColor;
+  textColor?: TextColor;
   textSize?: "sm" | "md" | "lg";
 };
 
@@ -2029,6 +2030,7 @@ export interface DataTableCellProps {
   columnWidths: number[];
   backgroundColor: string;
   highlight?: SurfaceColor;
+  textColor?: TextColor;
   customColumnComponentMap?: DataTableCustomComponentMap;
   height: number;
   textSize?: "sm" | "md" | "lg";
