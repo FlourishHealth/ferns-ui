@@ -178,9 +178,27 @@ export const Modal: FC<ModalProps> = ({
   const actionSheetRef = useRef<ActionSheetRef>(null);
   const {theme} = useTheme();
 
+  const handleDismiss = () => {
+    if (visible && onDismiss) {
+      onDismiss();
+    }
+  };
+
+  const handlePrimaryButtonClick = (value?: Parameters<NonNullable<ModalProps["primaryButtonOnClick"]>>[0]) => {
+    if (visible && primaryButtonOnClick) {
+      return primaryButtonOnClick(value);
+    }
+  };
+
+  const handleSecondaryButtonClick = (value?: Parameters<NonNullable<ModalProps["secondaryButtonOnClick"]>>[0]) => {
+    if (visible && secondaryButtonOnClick) {
+      return secondaryButtonOnClick(value);
+    }
+  };
+
   const onHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
     if (nativeEvent.state === State.END && nativeEvent.translationY > 100) {
-      onDismiss();
+      handleDismiss();
     }
   };
 
@@ -201,9 +219,9 @@ export const Modal: FC<ModalProps> = ({
     primaryButtonText,
     primaryButtonDisabled,
     secondaryButtonText,
-    primaryButtonOnClick,
-    secondaryButtonOnClick,
-    onDismiss,
+    primaryButtonOnClick: handlePrimaryButtonClick,
+    secondaryButtonOnClick: handleSecondaryButtonClick,
+    onDismiss: handleDismiss,
     sizePx,
     theme,
     isMobile,
@@ -211,7 +229,7 @@ export const Modal: FC<ModalProps> = ({
 
   if (isMobile) {
     return (
-      <ActionSheet ref={actionSheetRef} onClose={onDismiss}>
+      <ActionSheet ref={actionSheetRef} onClose={handleDismiss}>
         <PanGestureHandler onHandlerStateChange={onHandlerStateChange}>
           <View>
             <View
@@ -237,7 +255,7 @@ export const Modal: FC<ModalProps> = ({
     );
   } else {
     return (
-      <RNModal animationType="slide" transparent visible={visible} onRequestClose={onDismiss}>
+      <RNModal animationType="slide" transparent visible={visible} onRequestClose={handleDismiss}>
         <ModalContent {...modalContentProps}>{children}</ModalContent>
       </RNModal>
     );
