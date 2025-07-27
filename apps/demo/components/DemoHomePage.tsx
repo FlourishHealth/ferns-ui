@@ -1,10 +1,10 @@
 import {DemoConfig} from "@config";
 import {useNavigation} from "expo-router";
 import {Box, Heading} from "ferns-ui";
-import React, {useEffect} from "react";
+import React, {FC, useEffect} from "react";
 import {Pressable, ScrollView, Text, View} from "react-native";
 
-export const DemoHomePage: React.FC<{
+export const DemoHomePage: FC<{
   onPress: (componentName: string) => void;
 }> = ({
   onPress,

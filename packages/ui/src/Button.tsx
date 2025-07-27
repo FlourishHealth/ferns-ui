@@ -1,6 +1,6 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
-import React, {useMemo, useState} from "react";
+import React, {FC, useMemo, useState} from "react";
 import {ActivityIndicator, Pressable, Text, View} from "react-native";
 
 import {Box} from "./Box";
@@ -12,7 +12,7 @@ import {Tooltip} from "./Tooltip";
 import {Unifier} from "./Unifier";
 import {isNative} from "./Utilities";
 
-const ConfirmationModal: React.FC<{
+const ConfirmationModal: FC<{
   visible: boolean;
   title: string;
   subtitle?: string;
@@ -36,7 +36,7 @@ const ConfirmationModal: React.FC<{
   );
 };
 
-const ButtonComponent: React.FC<ButtonProps> = ({
+const ButtonComponent: FC<ButtonProps> = ({
   confirmationText = "Are you sure you want to continue?",
   disabled = false,
   fullWidth = false,
@@ -177,7 +177,7 @@ const ButtonComponent: React.FC<ButtonProps> = ({
   );
 };
 
-export const Button: React.FC<ButtonProps> = (props) => {
+export const Button: FC<ButtonProps> = (props) => {
   const {tooltipText, tooltipIdealPosition, tooltipIncludeArrow = false} = props;
   const isMobileOrNative = isMobileDevice() || isNative();
 

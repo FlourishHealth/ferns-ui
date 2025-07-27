@@ -1,13 +1,13 @@
 import {Box, Button, CellData, DataTable, DataTableColumn, Text} from "ferns-ui";
-import React, {useState} from "react";
+import React, {FC, useState} from "react";
 
-const CustomColumnComponent: React.FC<{column: DataTableColumn; cellData: CellData}> = ({
+const CustomColumnComponent: FC<{column: DataTableColumn; cellData: CellData}> = ({
   cellData,
 }) => {
   return <Text>Custom: {cellData?.value.text}</Text>;
 };
 
-const MoreModalContent: React.FC<{column: DataTableColumn; rowData: any[]; rowIndex: number}> = ({
+const MoreModalContent: FC<{column: DataTableColumn; rowData: any[]; rowIndex: number}> = ({
   rowIndex,
 }) => {
   return (

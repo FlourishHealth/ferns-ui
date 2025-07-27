@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {FC, useEffect, useRef} from "react";
 import {Dimensions, DimensionValue, Modal as RNModal, Pressable, View} from "react-native";
 import ActionSheet, {ActionSheetRef} from "react-native-actions-sheet";
 import {
@@ -29,7 +29,7 @@ const getModalSize = (size: "sm" | "md" | "lg"): DimensionValue => {
   return sizePx;
 };
 
-const ModalContent: React.FC<{
+const ModalContent: FC<{
   children?: ModalProps["children"];
   title?: ModalProps["title"];
   subtitle?: ModalProps["subtitle"];
@@ -161,7 +161,7 @@ const ModalContent: React.FC<{
   );
 };
 
-export const Modal: React.FC<ModalProps> = ({
+export const Modal: FC<ModalProps> = ({
   children,
   primaryButtonDisabled = false,
   primaryButtonText,

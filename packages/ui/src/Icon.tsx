@@ -1,5 +1,5 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import React from "react";
+import React, {FC} from "react";
 
 import {IconProps, iconSizeToNumber} from "./Common";
 import {useTheme} from "./Theme";
@@ -7,7 +7,7 @@ import {useTheme} from "./Theme";
 // TODO: Update <Icon /> to be closer to Expo's Vector Icon, letting multiple icon packs be used,
 // etc.
 // TODO: Add documentation for adding FA6-Pro icons.
-export const Icon: React.FC<IconProps> = ({
+export const Icon: FC<IconProps> = ({
   color = "primary",
   size = "md",
   iconName,

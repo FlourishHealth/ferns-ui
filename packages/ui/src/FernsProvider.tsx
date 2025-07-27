@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import {Host} from "react-native-portalize";
 import {ToastProvider} from "react-native-toast-notifications";
 
@@ -6,7 +6,7 @@ import {OpenAPIProvider} from "./OpenAPIContext";
 import {ThemeProvider} from "./Theme";
 import {Toast} from "./Toast";
 
-export const FernsProvider: React.FC<{
+export const FernsProvider: FC<{
   children: React.ReactNode;
   openAPISpecUrl?: string;
 }> = ({

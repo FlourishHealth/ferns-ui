@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {FC, useMemo} from "react";
 import {Pressable, View} from "react-native";
 
 import {IconName, PaginationProps} from "./Common";
@@ -6,7 +6,7 @@ import {Icon} from "./Icon";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
 
-const PaginationButton: React.FC<{
+const PaginationButton: FC<{
   type: "first" | "prev" | "next" | "last" | "more";
   onClick: () => void;
   totalPages?: number;
@@ -52,7 +52,7 @@ const PaginationButton: React.FC<{
   );
 };
 
-const PaginationNumber: React.FC<{
+const PaginationNumber: FC<{
   number: number | "more";
   current: boolean;
   onClick: () => void;
@@ -84,7 +84,7 @@ const PaginationNumber: React.FC<{
   );
 };
 
-export const Pagination: React.FC<PaginationProps> = ({totalPages, page, setPage}) => {
+export const Pagination: FC<PaginationProps> = ({totalPages, page, setPage}) => {
   const {theme} = useTheme();
 
   // Determine the number of pages to show. Show the first page,

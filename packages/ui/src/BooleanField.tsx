@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {FC, useEffect, useRef} from "react";
 import {Animated, TouchableWithoutFeedback, View} from "react-native";
 
 import {BooleanFieldProps} from "./Common";
@@ -11,7 +11,7 @@ const OFFSET = 10;
 const WIDTH = 36;
 const WIDTH_WITH_OFFSET = OFFSET + WIDTH;
 
-export const BooleanField: React.FC<BooleanFieldProps> = ({
+export const BooleanField: FC<BooleanFieldProps> = ({
   title,
   variant,
   value,

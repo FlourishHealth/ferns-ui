@@ -1,13 +1,13 @@
 /* eslint-disable react-native-a11y/has-accessibility-hint */
 // accessibility hint handled in IconButton.tsx
 
-import React from "react";
+import React, {FC} from "react";
 import {View} from "react-native";
 
 import {IconButtonProps, IconName, TableIconButtonProps} from "../Common";
 import {IconButton} from "../IconButton";
 
-export const TableIconButton: React.FC<TableIconButtonProps> = ({tableIconButtonName, onClick}) => {
+export const TableIconButton: FC<TableIconButtonProps> = ({tableIconButtonName, onClick}) => {
   const iconButtonMap: Record<
     string,
     {

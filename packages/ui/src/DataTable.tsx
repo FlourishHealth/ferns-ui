@@ -1,5 +1,5 @@
 import {FontAwesome6} from "@expo/vector-icons";
-import React, {useCallback, useMemo, useRef, useState} from "react";
+import React, {FC, useCallback, useMemo, useRef, useState} from "react";
 import {NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, View} from "react-native";
 // @ts-ignore
 import Markdown from "react-native-markdown-display";
@@ -25,7 +25,7 @@ import {useTheme} from "./Theme";
 // TODO: Add permanent horizontal scroll bar so users with only a mouse can scroll left/right
 // easily.
 
-const TextCell: React.FC<{
+const TextCell: FC<{
   cellData: {value: string; textSize?: "sm" | "md" | "lg"};
   column: DataTableColumn;
 }> = ({cellData}) => {
@@ -36,7 +36,7 @@ const TextCell: React.FC<{
   );
 };
 
-const CheckedCell: React.FC<{cellData: {value: boolean}; column: DataTableColumn}> = ({
+const CheckedCell: FC<{cellData: {value: boolean}; column: DataTableColumn}> = ({
   cellData,
 }) => {
   return (
@@ -49,7 +49,7 @@ const CheckedCell: React.FC<{cellData: {value: boolean}; column: DataTableColumn
   );
 };
 
-const DataTableCell: React.FC<DataTableCellProps> = ({
+const DataTableCell: FC<DataTableCellProps> = ({
   value,
   columnDef,
   colIndex,
@@ -119,7 +119,7 @@ interface DataTableRowProps {
   rowHeight: number;
 }
 
-const DataTableRow: React.FC<DataTableRowProps> = ({
+const DataTableRow: FC<DataTableRowProps> = ({
   rowData,
   rowIndex,
   columns,
@@ -171,7 +171,7 @@ interface MoreButtonCellProps {
   rowHeight: number;
 }
 
-const MoreButtonCell: React.FC<MoreButtonCellProps> = ({
+const MoreButtonCell: FC<MoreButtonCellProps> = ({
   rowIndex,
   alternateRowBackground,
   onClick,
@@ -229,7 +229,7 @@ interface DataTableHeaderCellProps {
   headerHeight?: number;
 }
 
-const DataTableHeaderCell: React.FC<DataTableHeaderCellProps> = ({
+const DataTableHeaderCell: FC<DataTableHeaderCellProps> = ({
   column,
   index,
   isPinnedHorizontal,
@@ -309,7 +309,7 @@ interface DataTableHeaderProps {
   headerHeight?: number;
 }
 
-const DataTableHeader: React.FC<DataTableHeaderProps> = ({
+const DataTableHeader: FC<DataTableHeaderProps> = ({
   columns,
   hasMoreContent,
   pinnedColumns,
@@ -416,7 +416,7 @@ interface DataTableContentProps {
   rowHeight: number;
 }
 
-const DataTableContent: React.FC<DataTableContentProps> = ({
+const DataTableContent: FC<DataTableContentProps> = ({
   data,
   columns,
   pinnedColumns,
@@ -544,7 +544,7 @@ const DataTableContent: React.FC<DataTableContentProps> = ({
   );
 };
 
-export const DataTable: React.FC<DataTableProps> = ({
+export const DataTable: FC<DataTableProps> = ({
   data,
   columns,
   alternateRowBackground = true,

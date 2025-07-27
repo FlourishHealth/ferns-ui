@@ -1,7 +1,7 @@
 // This component is intended to be used as a title for form fields,
 // specifically for text fields and text areas. It is not intended to be used as a standalone
 // component.
-import React from "react";
+import React, {FC} from "react";
 import {Text} from "react-native";
 
 import {isMobileDevice} from "../MediaQuery";
@@ -12,7 +12,7 @@ interface FieldTitleProps {
   text: string;
 }
 
-export const FieldTitle: React.FC<FieldTitleProps> = ({text}) => {
+export const FieldTitle: FC<FieldTitleProps> = ({text}) => {
   const {theme} = useTheme();
   const isMobileOrNative = isMobileDevice() || isNative();
 

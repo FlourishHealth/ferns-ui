@@ -1,9 +1,9 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {FC, useCallback, useEffect, useState} from "react";
 
 import {EmailFieldProps} from "./Common";
 import {TextField} from "./TextField";
 
-export const EmailField: React.FC<EmailFieldProps> = ({
+export const EmailField: FC<EmailFieldProps> = ({
   errorText,
   iconName,
   placeholder,

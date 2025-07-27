@@ -18,7 +18,7 @@ import {
 } from "ferns-ui";
 import cloneDeep from "lodash/cloneDeep";
 import startCase from "lodash/startCase";
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 // @ts-ignore
 import MarkdownView from "react-native-markdown-display";
 
@@ -79,7 +79,7 @@ const ComponentProps = ({props}: {props: DemoConfigurationProp[]}) => {
   );
 };
 
-const ComponentStories: React.FC<{config: DemoConfiguration}> = ({config}) => {
+const ComponentStories: FC<{config: DemoConfiguration}> = ({config}) => {
   if (!Object.keys(config.stories).length) {
     return null;
   }
@@ -213,7 +213,7 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
   );
 };
 
-const ComponentStatusSection: React.FC<{
+const ComponentStatusSection: FC<{
   status: DemoConfigStatus;
   title: string;
 }> = ({
@@ -248,7 +248,7 @@ const ComponentStatusSection: React.FC<{
   );
 };
 
-const ComponentStatus: React.FC<{config: DemoConfiguration}> = ({config}) => {
+const ComponentStatus: FC<{config: DemoConfiguration}> = ({config}) => {
   return (
     <Box marginBottom={4} marginTop={4}>
       <Box marginBottom={2}>
@@ -265,7 +265,7 @@ const ComponentStatus: React.FC<{config: DemoConfiguration}> = ({config}) => {
   );
 };
 
-const ComponentPage: React.FC = () => {
+const ComponentPage: FC = () => {
   const {component} = useLocalSearchParams<{component: string}>();
 
   const config = DemoConfig.find((c) => c.name === component);

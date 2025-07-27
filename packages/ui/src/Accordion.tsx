@@ -1,5 +1,5 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import React, {useEffect, useState} from "react";
+import React, {FC, useEffect, useState} from "react";
 import {Pressable, View} from "react-native";
 
 import {AccordionProps} from "./Common";
@@ -8,7 +8,7 @@ import {InfoModalIcon} from "./InfoModalIcon";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
 
-export const Accordion: React.FC<AccordionProps> = ({
+export const Accordion: FC<AccordionProps> = ({
   children,
   isCollapsed = false,
   title,

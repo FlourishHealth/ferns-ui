@@ -1,6 +1,6 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
-import React, {useState} from "react";
+import React, {FC, useState} from "react";
 import {ActivityIndicator, Pressable, Text as NativeText, View} from "react-native";
 
 import {IconButtonProps} from "./Common";
@@ -21,7 +21,7 @@ type ConfirmationModalProps = {
   onCancel: () => void;
 };
 
-const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
+const ConfirmationModal: FC<ConfirmationModalProps> = ({
   visible,
   title,
   subtitle,
@@ -45,7 +45,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   );
 };
 
-const IconButtonComponent: React.FC<IconButtonProps> = ({
+const IconButtonComponent: FC<IconButtonProps> = ({
   accessibilityHint,
   accessibilityLabel,
   confirmationHeading = "Confirm",
@@ -197,7 +197,7 @@ const IconButtonComponent: React.FC<IconButtonProps> = ({
   );
 };
 
-export const IconButton: React.FC<IconButtonProps> = (props) => {
+export const IconButton: FC<IconButtonProps> = (props) => {
   const {tooltipText, tooltipIdealPosition, tooltipIncludeArrow = false} = props;
   const isMobileOrNative = isMobileDevice() || isNative();
 

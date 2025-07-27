@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {FC, useEffect, useRef, useState} from "react";
 import {Linking, View} from "react-native";
 
 import {Box} from "./Box";
@@ -9,7 +9,7 @@ import {Icon} from "./Icon";
 // import {useOpenAPISpec} from "./OpenAPIContext";
 import {Text} from "./Text";
 
-const TapToEditTitle: React.FC<{
+const TapToEditTitle: FC<{
   onlyShowHelperTextWhileEditing?: boolean;
   title: string;
   helperText?: string;
@@ -68,7 +68,7 @@ export function formatAddress(address: AddressInterface, asString = false): stri
   }
 }
 
-export const TapToEdit: React.FC<TapToEditProps> = ({
+export const TapToEdit: FC<TapToEditProps> = ({
   value,
   setValue,
   title,

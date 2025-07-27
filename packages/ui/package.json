@@ -57,18 +57,7 @@
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "react-native-a11y/has-valid-accessibility-descriptors": "off",
-      "no-restricted-imports": [
-        "error",
-        {
-          "paths": [
-            {
-              "name": "react",
-              "importNames": ["FC"],
-              "message": "Use React.FC instead of importing FC directly"
-            }
-          ]
-        }
-      ],
+     "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
       "ban/ban": [
         "error",
         {

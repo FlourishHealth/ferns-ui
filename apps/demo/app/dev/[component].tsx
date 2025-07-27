@@ -1,10 +1,10 @@
 import {ErrorBoundary} from "@components";
 import {DemoConfig} from "@config";
 import {router, useLocalSearchParams, useNavigation} from "expo-router";
-import React, {useEffect} from "react";
+import React, {FC, useEffect} from "react";
 import {View} from "react-native";
 
-const DevComponentPage: React.FC = () => {
+const DevComponentPage: FC = () => {
   const {component, story} = useLocalSearchParams<{component: string; story?: string}>();
 
   const config = DemoConfig.find((c) => c.name === component);

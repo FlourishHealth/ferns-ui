@@ -1,5 +1,5 @@
 import {DateTime} from "luxon";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {FC, useCallback, useEffect, useRef, useState} from "react";
 import {TextInput, View} from "react-native";
 
 import {Box} from "./Box";
@@ -17,7 +17,7 @@ interface SeparatorProps {
   type: "date" | "time";
 }
 
-const Separator: React.FC<SeparatorProps> = ({type}) => {
+const Separator: FC<SeparatorProps> = ({type}) => {
   return (
     <View>
       <Text>{type === "time" ? ":" : "/"}</Text>
@@ -36,7 +36,7 @@ interface DateTimeSegmentProps {
   error?: string;
 }
 
-const DateTimeSegment: React.FC<DateTimeSegmentProps> = ({
+const DateTimeSegment: FC<DateTimeSegmentProps> = ({
   disabled,
   getFieldValue,
   handleFieldChange,
@@ -90,7 +90,7 @@ interface DateTimeProps extends Omit<DateTimeSegmentProps, "index" | "config"> {
   fieldErrors?: Record<number, string | undefined>;
 }
 
-const DateField: React.FC<DateTimeProps> = ({fieldErrors, ...segmentProps}) => {
+const DateField: FC<DateTimeProps> = ({fieldErrors, ...segmentProps}) => {
   return (
     <View
       style={{
@@ -124,7 +124,7 @@ const DateField: React.FC<DateTimeProps> = ({fieldErrors, ...segmentProps}) => {
   );
 };
 
-const TimeField: React.FC<DateTimeProps> = ({type, onBlur, fieldErrors, ...segmentProps}) => {
+const TimeField: FC<DateTimeProps> = ({type, onBlur, fieldErrors, ...segmentProps}) => {
   const hourIndex = type === "time" ? 0 : 3;
   const minuteIndex = type === "time" ? 1 : 4;
   return (
@@ -154,7 +154,7 @@ type FieldConfig = {
   width: number;
 };
 
-export const DateTimeField: React.FC<DateTimeFieldProps> = ({
+export const DateTimeField: FC<DateTimeFieldProps> = ({
   type,
   title,
   value,

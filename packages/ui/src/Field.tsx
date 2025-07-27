@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 
 import {AddressField} from "./AddressField";
 import {BooleanField} from "./BooleanField";
@@ -30,7 +30,7 @@ import {TextArea} from "./TextArea";
 import {TextField} from "./TextField";
 
 // TODO: put onblur back in any fields that need it
-export const Field: React.FC<FieldProps> = ({type, ...rest}) => {
+export const Field: FC<FieldProps> = ({type, ...rest}) => {
   if (type === "select") {
     return (
       <SelectField

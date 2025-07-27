@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {FC, useEffect, useMemo, useRef, useState} from "react";
 import {TextInput, View} from "react-native";
 
 import {CustomSelectFieldProps} from "./Common";
@@ -6,7 +6,7 @@ import {FieldHelperText} from "./fieldElements";
 import {SelectField} from "./SelectField";
 import {TextField} from "./TextField";
 
-export const CustomSelectField: React.FC<CustomSelectFieldProps> = ({
+export const CustomSelectField: FC<CustomSelectFieldProps> = ({
   value,
   onChange,
   placeholder,

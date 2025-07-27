@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {FC, useState} from "react";
 import {Pressable} from "react-native";
 
 import {InfoModalIconProps} from "./Common";
 import {Heading} from "./Heading";
 import {Modal} from "./Modal";
 
-export const InfoModalIcon: React.FC<InfoModalIconProps> = ({
+export const InfoModalIcon: FC<InfoModalIconProps> = ({
   infoModalChildren,
   infoModalSubtitle,
   infoModalText,
