@@ -1,11 +1,11 @@
-import React, {FC} from "react";
+import React from "react";
 import {View} from "react-native";
 
 import {SelectFieldProps} from "./Common";
 import {FieldError, FieldHelperText, FieldTitle} from "./fieldElements";
 import {RNPickerSelect} from "./PickerSelect";
 
-export const SelectField: FC<SelectFieldProps> = ({
+export const SelectField: React.FC<SelectFieldProps> = ({
   disabled = false,
   errorText,
   helperText,

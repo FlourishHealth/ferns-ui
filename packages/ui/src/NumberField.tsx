@@ -1,9 +1,9 @@
-import React, {FC, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import {NumberFieldProps} from "./Common";
 import {TextField} from "./TextField";
 
-export const NumberField: FC<NumberFieldProps> = ({
+export const NumberField: React.FC<NumberFieldProps> = ({
   errorText,
   value: valueProp,
   max,

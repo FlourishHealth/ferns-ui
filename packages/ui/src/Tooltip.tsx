@@ -111,7 +111,7 @@ const getTooltipPosition = ({
   }
 };
 
-const Arrow: FC<{position: TooltipPosition; color: string}> = ({position, color}) => {
+const Arrow: React.FC<{position: TooltipPosition; color: string}> = ({position, color}) => {
   const getArrowStyle = (): ViewStyle => {
     const arrowStyles = {
       top: {
@@ -164,7 +164,7 @@ const Arrow: FC<{position: TooltipPosition; color: string}> = ({position, color}
   return <View style={arrowStyle} />;
 };
 
-export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includeArrow}) => {
+export const Tooltip: React.FC<TooltipProps> = ({text, children, idealPosition, includeArrow}) => {
   const {theme} = useTheme();
   const hoverDelay = 800;
   const hoverEndDelay = 0;

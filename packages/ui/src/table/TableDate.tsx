@@ -1,10 +1,10 @@
 import {DateTime} from "luxon";
-import React, {FC, useState} from "react";
+import React, {useState} from "react";
 import {Text} from "react-native";
 
 import {TableDateProps} from "../Common";
 
-export const TableDate: FC<TableDateProps> = ({value, annotated = false}) => {
+export const TableDate: React.FC<TableDateProps> = ({value, annotated = false}) => {
   const initialDate =
     typeof value === "string" ? DateTime.fromISO(value) : DateTime.fromJSDate(value);
   const [dateVal] = useState(initialDate);

@@ -1,6 +1,6 @@
 // This component is intended to be used as a helper text for form fields, specifically for text
 // fields and text areas. It is not intended to be used as a standalone component.
-import React, {FC} from "react";
+import React from "react";
 import {Text, View} from "react-native";
 
 import {useTheme} from "../Theme";
@@ -9,7 +9,7 @@ interface FieldHelperTextProps {
   text: string;
 }
 
-export const FieldHelperText: FC<FieldHelperTextProps> = ({text}) => {
+export const FieldHelperText: React.FC<FieldHelperTextProps> = ({text}) => {
   const {theme} = useTheme();
 
   return (

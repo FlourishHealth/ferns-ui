@@ -2,7 +2,7 @@
 import {ImageManipulator, ImageResult, SaveFormat} from "expo-image-manipulator";
 import {launchImageLibraryAsync} from "expo-image-picker";
 import {LinearGradient} from "expo-linear-gradient";
-import React, {FC, useState} from "react";
+import React, {useState} from "react";
 import {Image, Pressable, Text, View} from "react-native";
 
 import {AvatarProps, CustomSvgProps} from "./Common";
@@ -44,7 +44,7 @@ const sizeIconPadding = {
   xl: 0,
 };
 
-export const Avatar: FC<AvatarProps> = ({
+export const Avatar: React.FC<AvatarProps> = ({
   name,
   hasBorder = false,
   size = "md",

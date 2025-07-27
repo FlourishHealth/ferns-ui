@@ -1,11 +1,11 @@
-import React, {FC} from "react";
+import React from "react";
 import {Text} from "react-native";
 
 import {TableNumberProps} from "../Common";
 import {useTheme} from "../Theme";
 
 // TODO: Implement isEditing to TableNumber
-export const TableNumber: FC<TableNumberProps> = ({isEditing, value, align = "right"}) => {
+export const TableNumber: React.FC<TableNumberProps> = ({isEditing, value, align = "right"}) => {
   const {theme} = useTheme();
 
   if (isEditing) {

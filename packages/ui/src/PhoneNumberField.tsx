@@ -1,10 +1,10 @@
 import {AsYouType, parsePhoneNumberFromString} from "libphonenumber-js";
-import React, {FC, useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import {PhoneNumberFieldProps} from "./Common";
 import {TextField} from "./TextField";
 
-export const PhoneNumberField: FC<PhoneNumberFieldProps> = ({
+export const PhoneNumberField: React.FC<PhoneNumberFieldProps> = ({
   errorText,
   iconName,
   placeholder,

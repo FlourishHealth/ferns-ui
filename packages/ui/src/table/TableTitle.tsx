@@ -1,10 +1,10 @@
-import React, {FC} from "react";
+import React from "react";
 import {Text} from "react-native";
 
 import {TableTitleProps} from "../Common";
 import {useTheme} from "../Theme";
 
-export const TableTitle: FC<TableTitleProps> = ({title, align = "left"}) => {
+export const TableTitle: React.FC<TableTitleProps> = ({title, align = "left"}) => {
   const {theme} = useTheme();
   return (
     // No hint needed for a title.

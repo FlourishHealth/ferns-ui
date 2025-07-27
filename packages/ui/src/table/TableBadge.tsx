@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React, {useState} from "react";
 import {View} from "react-native";
 
 import {Badge} from "../Badge";
@@ -10,7 +10,7 @@ export interface TableBadgeHandles {
 }
 
 // TODO: Support error state in TableBadge
-export const TableBadge: FC<TableBadgeProps> = ({
+export const TableBadge: React.FC<TableBadgeProps> = ({
   value,
   badgeStatus = "info",
   badgeIconName,

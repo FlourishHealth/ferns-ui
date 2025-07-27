@@ -1,6 +1,6 @@
 // This component is intended to be used as an error message for form fields, specifically for text
 // fields and text areas. It is not intended to be used as a standalone component.
-import React, {FC} from "react";
+import React from "react";
 import {Text, View} from "react-native";
 
 import {Icon} from "../Icon";
@@ -10,7 +10,7 @@ interface FieldErrorProps {
   text: string;
 }
 
-export const FieldError: FC<FieldErrorProps> = ({text}) => {
+export const FieldError: React.FC<FieldErrorProps> = ({text}) => {
   const {theme} = useTheme();
 
   return (

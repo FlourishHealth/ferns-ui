@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {TouchableOpacity, View} from "react-native";
 
 import {CheckBox} from "./CheckBox";
@@ -16,7 +16,7 @@ interface OptionProps {
   onSelect: () => void;
 }
 
-const Option: FC<OptionProps> = ({value, label, isDefault, selected, onSelect}) => {
+const Option: React.FC<OptionProps> = ({value, label, isDefault, selected, onSelect}) => {
   return (
     <View
       style={{
@@ -52,7 +52,7 @@ const Option: FC<OptionProps> = ({value, label, isDefault, selected, onSelect}) 
   );
 };
 
-export const MultiselectField: FC<MultiselectFieldProps> = ({
+export const MultiselectField: React.FC<MultiselectFieldProps> = ({
   options,
   title,
   value = [],
