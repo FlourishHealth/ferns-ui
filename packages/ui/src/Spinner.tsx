@@ -1,10 +1,10 @@
-import React, {ReactElement, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {ActivityIndicator} from "react-native";
 
 import {SpinnerProps} from "./Common";
 import {useTheme} from "./Theme";
 
-export const Spinner = ({size = "md", color = "light"}: SpinnerProps): ReactElement | null => {
+export const Spinner: React.FC<SpinnerProps> = ({size = "md", color = "light"}) => {
   const [show, setShow] = useState(false);
   const {theme} = useTheme();
 

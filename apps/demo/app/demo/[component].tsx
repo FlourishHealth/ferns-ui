@@ -79,7 +79,7 @@ const ComponentProps = ({props}: {props: DemoConfigurationProp[]}) => {
   );
 };
 
-const ComponentStories = ({config}: {config: DemoConfiguration}): React.ReactElement | null => {
+const ComponentStories: React.FC<{config: DemoConfiguration}> = ({config}) => {
   if (!Object.keys(config.stories).length) {
     return null;
   }
@@ -213,13 +213,13 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
   );
 };
 
-const ComponentStatusSection = ({
-  status,
-  title,
-}: {
+const ComponentStatusSection: React.FC<{
   status: DemoConfigStatus;
   title: string;
-}): React.ReactElement => {
+}> = ({
+  status,
+  title,
+}) => {
   let iconName: IconName = "circle";
   let color: TextColor = "secondaryLight";
   switch (status) {
@@ -248,7 +248,7 @@ const ComponentStatusSection = ({
   );
 };
 
-const ComponentStatus = ({config}: {config: DemoConfiguration}): React.ReactElement | null => {
+const ComponentStatus: React.FC<{config: DemoConfiguration}> = ({config}) => {
   return (
     <Box marginBottom={4} marginTop={4}>
       <Box marginBottom={2}>
@@ -265,7 +265,7 @@ const ComponentStatus = ({config}: {config: DemoConfiguration}): React.ReactElem
   );
 };
 
-export default function ComponentPage(): React.ReactElement {
+const ComponentPage: React.FC = () => {
   const {component} = useLocalSearchParams<{component: string}>();
 
   const config = DemoConfig.find((c) => c.name === component);
@@ -309,4 +309,6 @@ export default function ComponentPage(): React.ReactElement {
       {/* <ComponentTestMatrix config={config} /> */}
     </Box>
   );
-}
+};
+
+export default ComponentPage;

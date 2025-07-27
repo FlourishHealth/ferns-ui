@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Linking, View} from "react-native";
 
 import {Box} from "./Box";
@@ -9,15 +9,15 @@ import {Icon} from "./Icon";
 // import {useOpenAPISpec} from "./OpenAPIContext";
 import {Text} from "./Text";
 
-const TapToEditTitle = ({
-  title,
-  helperText,
-  onlyShowHelperTextWhileEditing,
-}: {
+const TapToEditTitle: React.FC<{
   onlyShowHelperTextWhileEditing?: boolean;
   title: string;
   helperText?: string;
-}): ReactElement => {
+}> = ({
+  title,
+  helperText,
+  onlyShowHelperTextWhileEditing,
+}) => {
   return (
     <View style={{flex: 1, justifyContent: "center"}}>
       <Text bold>{title}</Text>
@@ -68,7 +68,7 @@ export function formatAddress(address: AddressInterface, asString = false): stri
   }
 }
 
-export const TapToEdit = ({
+export const TapToEdit: React.FC<TapToEditProps> = ({
   value,
   setValue,
   title,
@@ -82,7 +82,7 @@ export const TapToEdit = ({
   helperText: propsHelperText,
   onlyShowHelperTextWhileEditing = true,
   ...fieldProps
-}: TapToEditProps): ReactElement => {
+}) => {
   const [editing, setEditing] = useState(false);
   const [initialValue, setInitialValue] = useState();
   const helperText: string | undefined = propsHelperText;

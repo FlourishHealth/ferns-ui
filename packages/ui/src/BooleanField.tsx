@@ -1,4 +1,4 @@
-import React, {ReactElement, useEffect, useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import {Animated, TouchableWithoutFeedback, View} from "react-native";
 
 import {BooleanFieldProps} from "./Common";
@@ -11,7 +11,7 @@ const OFFSET = 10;
 const WIDTH = 36;
 const WIDTH_WITH_OFFSET = OFFSET + WIDTH;
 
-export const BooleanField = ({
+export const BooleanField: React.FC<BooleanFieldProps> = ({
   title,
   variant,
   value,
@@ -19,7 +19,7 @@ export const BooleanField = ({
   disabled,
   disabledHelperText,
   helperText,
-}: BooleanFieldProps): ReactElement => {
+}) => {
   const {theme} = useTheme();
   const backgroundColor = useRef(
     new Animated.Value(value ? WIDTH_WITH_OFFSET : -1 * WIDTH_WITH_OFFSET)

@@ -4,11 +4,11 @@ import {Box, Heading} from "ferns-ui";
 import React, {useEffect} from "react";
 import {Pressable, ScrollView, Text, View} from "react-native";
 
-export const DemoHomePage = ({
-  onPress,
-}: {
+export const DemoHomePage: React.FC<{
   onPress: (componentName: string) => void;
-}): React.ReactElement => {
+}> = ({
+  onPress,
+}) => {
   const navigation = useNavigation();
   // Set the title
   useEffect(() => {

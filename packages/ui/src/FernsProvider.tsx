@@ -6,13 +6,13 @@ import {OpenAPIProvider} from "./OpenAPIContext";
 import {ThemeProvider} from "./Theme";
 import {Toast} from "./Toast";
 
-export const FernsProvider = ({
-  children,
-  openAPISpecUrl,
-}: {
+export const FernsProvider: React.FC<{
   children: React.ReactNode;
   openAPISpecUrl?: string;
-}): React.ReactElement => {
+}> = ({
+  children,
+  openAPISpecUrl,
+}) => {
   return (
     <ThemeProvider>
       <ToastProvider

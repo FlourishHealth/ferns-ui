@@ -4,7 +4,7 @@ import {router, useLocalSearchParams, useNavigation} from "expo-router";
 import React, {useEffect} from "react";
 import {View} from "react-native";
 
-export default function DevComponentPage(): React.ReactElement {
+const DevComponentPage: React.FC = () => {
   const {component, story} = useLocalSearchParams<{component: string; story?: string}>();
 
   const config = DemoConfig.find((c) => c.name === component);
@@ -37,4 +37,6 @@ export default function DevComponentPage(): React.ReactElement {
       </View>
     </ErrorBoundary>
   );
-}
+};
+
+export default DevComponentPage;
