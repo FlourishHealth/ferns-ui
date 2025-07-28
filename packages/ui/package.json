@@ -73,6 +73,13 @@
             "*"
           ],
           "message": "Use Luxon"
+        },
+        {
+          "name": [
+            "React",
+            "FC"
+          ],
+          "message": "Use FC imported directly from React instead of React.FC"
         }
       ]
     }
