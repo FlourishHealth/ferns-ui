@@ -2310,6 +2310,12 @@ export interface BaseTapToEditProps extends Omit<FieldProps, "onChange" | "value
    */
   onlyShowHelperTextWhileEditing?: boolean;
 
+  /**
+   * Show a clear button in the button row alongside Cancel/Save for clearing the field value.
+   * @default false
+   */
+  showClearButton?: boolean;
+
   // openApi to supported in future
   // openApiModel?: string;
   // openApiField?: string;
