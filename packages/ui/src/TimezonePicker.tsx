@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 
 import {SelectFieldPropsBase} from "./Common";
 import {getTimezoneOptions} from "./DateUtilities";
@@ -12,7 +12,7 @@ interface TimezonePickerProps extends Omit<SelectFieldPropsBase, "options"> {
   shortTimezone?: boolean;
 }
 
-export const TimezonePicker: React.FC<TimezonePickerProps> = ({
+export const TimezonePicker: FC<TimezonePickerProps> = ({
   timezone,
   onChange,
   location = "USA",

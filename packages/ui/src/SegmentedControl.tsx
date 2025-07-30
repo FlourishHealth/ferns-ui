@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {FC, useCallback, useState} from "react";
 import {Pressable, View} from "react-native";
 
 import {Badge} from "./Badge";
@@ -7,7 +7,7 @@ import {Heading} from "./Heading";
 import {Icon} from "./Icon";
 import {useTheme} from "./Theme";
 
-export const SegmentedControl: React.FC<SegmentedControlProps> = ({
+export const SegmentedControl: FC<SegmentedControlProps> = ({
   items,
   onChange = () => {},
   size = "md",

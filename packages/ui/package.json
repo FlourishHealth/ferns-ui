@@ -57,6 +57,7 @@
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "react-native-a11y/has-valid-accessibility-descriptors": "off",
+     "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
       "ban/ban": [
         "error",
         {
@@ -72,6 +73,13 @@
             "*"
           ],
           "message": "Use Luxon"
+        },
+        {
+          "name": [
+            "React",
+            "FC"
+          ],
+          "message": "Use FC imported directly from React instead of React.FC"
         }
       ]
     }

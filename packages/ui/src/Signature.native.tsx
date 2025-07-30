@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, {FC, useRef} from "react";
 import {Text, View} from "react-native";
 import SignatureScreen, {SignatureViewRef} from "react-native-signature-canvas";
 
@@ -12,7 +12,7 @@ interface Props {
 
 const style = `.m-signature-pad--footer {display: none; margin: 0px;}`;
 
-export const Signature: React.FC<Props> = ({onChange, onStart, onEnd}: Props) => {
+export const Signature: FC<Props> = ({onChange, onStart, onEnd}: Props) => {
   const ref = useRef<SignatureViewRef>(null);
   const {theme} = useTheme();
 

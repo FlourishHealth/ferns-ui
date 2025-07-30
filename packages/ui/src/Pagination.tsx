@@ -1,4 +1,4 @@
-import React, {ReactElement, useMemo} from "react";
+import React, {FC, useMemo} from "react";
 import {Pressable, View} from "react-native";
 
 import {IconName, PaginationProps} from "./Common";
@@ -6,17 +6,17 @@ import {Icon} from "./Icon";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
 
-const PaginationButton = ({
-  type,
-  onClick,
-  totalPages = 1,
-  page = 1,
-}: {
+const PaginationButton: FC<{
   type: "first" | "prev" | "next" | "last" | "more";
   onClick: () => void;
   totalPages?: number;
   page?: number;
-}): React.ReactElement | null => {
+}> = ({
+  type,
+  onClick,
+  totalPages = 1,
+  page = 1,
+}) => {
   let icon: IconName;
   let disabled = false;
 
@@ -52,15 +52,15 @@ const PaginationButton = ({
   );
 };
 
-const PaginationNumber = ({
-  number,
-  current,
-  onClick,
-}: {
+const PaginationNumber: FC<{
   number: number | "more";
   current: boolean;
   onClick: () => void;
-}): ReactElement => {
+}> = ({
+  number,
+  current,
+  onClick,
+}) => {
   // Shortcut to make rendering the number buttons easier.
   if (number === "more") {
     return <PaginationButton type="more" onClick={() => {}} />;
@@ -84,7 +84,7 @@ const PaginationNumber = ({
   );
 };
 
-export const Pagination = ({totalPages, page, setPage}: PaginationProps): ReactElement | null => {
+export const Pagination: FC<PaginationProps> = ({totalPages, page, setPage}) => {
   const {theme} = useTheme();
 
   // Determine the number of pages to show. Show the first page,
