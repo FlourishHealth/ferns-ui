@@ -5,7 +5,7 @@ import {TextInput, View} from "react-native";
 import {Box} from "./Box";
 import {DateTimeFieldProps, IconName} from "./Common";
 import {DateTimeActionSheet} from "./DateTimeActionSheet";
-import {FieldError, FieldTitle} from "./fieldElements";
+import {FieldError, FieldHelperText, FieldTitle} from "./fieldElements";
 import {IconButton} from "./IconButton";
 import {isMobileDevice} from "./MediaQuery";
 import {SelectField} from "./SelectField";
@@ -163,6 +163,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
   onTimezoneChange,
   errorText,
   disabled,
+  helperText,
 }): React.ReactElement => {
   const {theme} = useTheme();
   const dateActionSheetRef: React.RefObject<any> = React.createRef();
@@ -714,6 +715,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
           onDismiss={() => setShowDate(false)}
         />
       )}
+      {Boolean(helperText) && <FieldHelperText text={helperText!} />}
     </>
   );
 };
