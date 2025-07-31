@@ -45,7 +45,11 @@ export const TapStory = (): ReactElement => {
   const [email, setEmail] = useState("email@example.com");
   const [customSelect, setCustomSelect] = useState("Option1");
   const [phoneNumber, setPhoneNumber] = useState(undefined);
-  const [secondPhoneNumber, setSecondPhoneNumber] = useState("+18885551212"); 
+  const [secondPhoneNumber, setSecondPhoneNumber] = useState("+18885551212");
+  const [date, setDate] = useState("2024-01-15");
+  const [datetime, setDatetime] = useState("2024-01-15T14:30:00");
+  const [time, setTime] = useState("14:30:00");
+  const [emptyDate, setEmptyDate] = useState("");
 
   return (
     <Box direction="column" display="flex" height="100%" scroll width="100%">
@@ -213,6 +217,50 @@ export const TapStory = (): ReactElement => {
           value={secondPhoneNumber}
           onSave={(value): void => {
             setSecondPhoneNumber(value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TapToEdit
+          setValue={setDate}
+          title="Date (with initial value)"
+          type="date"
+          value={date}
+          onSave={(value): void => {
+            setDate(value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TapToEdit
+          setValue={setDatetime}
+          title="DateTime (with initial value)"
+          type="datetime"
+          value={datetime}
+          onSave={(value): void => {
+            setDatetime(value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TapToEdit
+          setValue={setTime}
+          title="Time (with initial value)"
+          type="time"
+          value={time}
+          onSave={(value): void => {
+            setTime(value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TapToEdit
+          setValue={setEmptyDate}
+          title="Date (empty - test clear button)"
+          type="date"
+          value={emptyDate}
+          onSave={(value): void => {
+            setEmptyDate(value);
           }}
         />
       </Box>
