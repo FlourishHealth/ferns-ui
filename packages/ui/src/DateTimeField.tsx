@@ -708,7 +708,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
           actionSheetRef={dateActionSheetRef}
           timezone={timezone}
           type={type}
-          value={type === "date" ? value?.split("T")[0] : value}
+          value={type === "date" ? value?.split("T")?.[0] : value}
           visible={showDate}
           onChange={onActionSheetChange}
           onDismiss={() => setShowDate(false)}
