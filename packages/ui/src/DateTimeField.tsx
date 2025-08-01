@@ -352,7 +352,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
             day: parseInt(dayVal),
           },
           {
-            zone: override?.timezone ?? timezone,
+            zone: "UTC",
           }
         );
       } else {
@@ -709,7 +709,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
           actionSheetRef={dateActionSheetRef}
           timezone={timezone}
           type={type}
-          value={value}
+          value={type === "date" ? value?.split("T")?.[0] : value}
           visible={showDate}
           onChange={onActionSheetChange}
           onDismiss={() => setShowDate(false)}
