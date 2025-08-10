@@ -476,6 +476,13 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   const onActionSheetChange = useCallback(
     (inputDate: string) => {
+      // Handle clear case - empty string should clear the field
+      if (!inputDate || inputDate === "") {
+        onChange("");
+        setShowDate(false);
+        return;
+      }
+
       const parsedDate = DateTime.fromISO(inputDate);
       if (!parsedDate.isValid) {
         console.warn("Invalid date passed to DateTimeField", inputDate);
