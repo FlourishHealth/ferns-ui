@@ -501,6 +501,7 @@ export const DateTimeActionSheet = ({
   };
 
   const sendClear = () => {
+    console.log("DateTimeActionSheet.sendClear: calling onChange with empty string");
     onChange("");
     onDismiss();
   };

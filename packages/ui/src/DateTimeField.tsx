@@ -476,8 +476,10 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   const onActionSheetChange = useCallback(
     (inputDate: string) => {
+      console.log("DateTimeField.onActionSheetChange: received inputDate:", inputDate);
       // Handle clear case - empty string should clear the field
       if (!inputDate || inputDate === "") {
+        console.log("DateTimeField.onActionSheetChange: clearing field, calling onChange with empty string");
         onChange("");
         setShowDate(false);
         return;
@@ -526,7 +528,9 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
 
   // Handle external value changes
   useEffect(() => {
+    console.log("DateTimeField.useEffect: value changed to:", value);
     if (!value) {
+      console.log("DateTimeField.useEffect: clearing internal state");
       setMonth("");
       setDay("");
       setYear("");
