@@ -527,6 +527,12 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   // Handle external value changes
   useEffect(() => {
     if (!value) {
+      setMonth("");
+      setDay("");
+      setYear("");
+      setHour("");
+      setMinute("");
+      setAmPm("am");
       return;
     }
 
