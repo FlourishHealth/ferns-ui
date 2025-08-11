@@ -127,7 +127,7 @@ export const TapToEdit = ({
             row={fieldProps?.type === "textarea" ? 5 : undefined}
             type={(fieldProps?.type ?? "text") as NonNullable<FieldProps["type"]>}
             value={value}
-            onChange={(newValue) => {
+            onChange={(newValue: string) => {
               console.log("TapToEdit.Field.onChange: received value:", newValue);
               if (setValue) {
                 setValue(newValue);
