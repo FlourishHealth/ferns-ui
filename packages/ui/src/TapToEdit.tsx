@@ -81,6 +81,7 @@ export const TapToEdit: FC<TapToEditProps> = ({
   confirmationTitle = "Confirm",
   helperText: propsHelperText,
   onlyShowHelperTextWhileEditing = true,
+  showClearButton = false,
   ...fieldProps
 }) => {
   const [editing, setEditing] = useState(false);
@@ -141,6 +142,22 @@ export const TapToEdit: FC<TapToEditProps> = ({
                   setEditing(false);
                 }}
               />
+              {(showClearButton || ["date", "datetime", "time"].includes(fieldProps?.type)) && (
+                <Button
+                  text="Clear"
+                  variant="muted"
+                  onClick={(): void => {
+                    if (setValue) {
+                      setValue("");
+                      setInitialValue("" as any);
+                    }
+                    if (onSave) {
+                      onSave("");
+                    }
+                    setEditing(false);
+                  }}
+                />
+              )}
               <View style={{marginLeft: 8}}>
                 <Button
                   confirmationText={confirmationText}
