@@ -48,7 +48,7 @@ describe("DateTimeField", () => {
 
       // Verify that the time is set to 00:00:00
       const lastCall = mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0];
-      const date = DateTime.fromISO(lastCall);
+      const date = DateTime.fromISO(lastCall, {zone: "UTC"});
       expect(date.hour).toBe(0);
       expect(date.minute).toBe(0);
       expect(date.second).toBe(0);
@@ -73,7 +73,7 @@ describe("DateTimeField", () => {
 
       // Verify that the time is set to 00:00:00
       const lastCall = mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0];
-      const date = DateTime.fromISO(lastCall);
+      const date = DateTime.fromISO(lastCall, {zone: "UTC"});
       expect(date.hour).toBe(0);
       expect(date.minute).toBe(0);
       expect(date.second).toBe(0);
@@ -100,7 +100,7 @@ describe("DateTimeField", () => {
 
       // Verify that the time is set to 00:00:00
       const lastCall = mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0];
-      const date = DateTime.fromISO(lastCall);
+      const date = DateTime.fromISO(lastCall, {zone: "UTC"});
       expect(date.hour).toBe(0);
       expect(date.minute).toBe(0);
       expect(date.second).toBe(0);
@@ -300,7 +300,7 @@ describe("DateTimeField", () => {
 
       // Get the last call and check the time components
       const lastCall = mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0];
-      const date = DateTime.fromISO(lastCall);
+      const date = DateTime.fromISO(lastCall, {zone: "UTC"});
       // Only check that minutes and seconds are 0, as the hours may vary based on implementation
       expect(date.minute).toBe(0);
       expect(date.second).toBe(0);
@@ -357,7 +357,7 @@ describe("DateTimeField", () => {
 
       // Verify that the time is set to 00:00:00
       const lastCall = mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1][0];
-      const date = DateTime.fromISO(lastCall);
+      const date = DateTime.fromISO(lastCall, {zone: "UTC"});
       expect(date.hour).toBe(0);
       expect(date.minute).toBe(0);
       expect(date.second).toBe(0);
