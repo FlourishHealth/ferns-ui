@@ -1,0 +1,106 @@
+# Component Test Coverage Report
+
+**Total Components Found:** 94
+**Components Without Tests:** 90
+**Test Coverage:** 4.3%
+
+## 🚨 Components Missing Tests, need basic tests
+
+
+| Component | Path |
+|-----------|------|
+| Accordion | `packages/ui/src/Accordion.tsx` |
+| ActionSheet | `packages/ui/src/ActionSheet.tsx` |
+| AddressField | `packages/ui/src/AddressField.tsx` |
+| Avatar | `packages/ui/src/Avatar.tsx` |
+| Badge | `packages/ui/src/Badge.tsx` |
+| Banner | `packages/ui/src/Banner.tsx` |
+| Body | `packages/ui/src/Body.tsx` |
+| BooleanField | `packages/ui/src/BooleanField.tsx` |
+| Card | `packages/ui/src/Card.tsx` |
+| CheckBox | `packages/ui/src/CheckBox.tsx` |
+| CustomSelectField | `packages/ui/src/CustomSelectField.tsx` |
+| DecimalRangeActionSheet | `packages/ui/src/DecimalRangeActionSheet.tsx` |
+| DismissButton | `packages/ui/src/DismissButton.tsx` |
+| EmailField | `packages/ui/src/EmailField.tsx` |
+| ErrorBoundary | `packages/ui/src/ErrorBoundary.tsx` |
+| ErrorPage | `packages/ui/src/ErrorPage.tsx` |
+| Field | `packages/ui/src/Field.tsx` |
+| Heading | `packages/ui/src/Heading.tsx` |
+| HeightActionSheet | `packages/ui/src/HeightActionSheet.tsx` |
+| Hyperlink | `packages/ui/src/Hyperlink.tsx` |
+| ImageBackground | `packages/ui/src/ImageBackground.tsx` |
+| InfoModalIcon | `packages/ui/src/InfoModalIcon.tsx` |
+| InfoTooltipButton | `packages/ui/src/InfoTooltipButton.tsx` |
+| Link | `packages/ui/src/Link.tsx` |
+| MobileAddressAutoComplete | `packages/ui/src/MobileAddressAutoComplete.tsx` |
+| ModalSheet | `packages/ui/src/ModalSheet.tsx` |
+| MultiselectField | `packages/ui/src/MultiselectField.tsx` |
+| NumberField | `packages/ui/src/NumberField.tsx` |
+| NumberPickerActionSheet | `packages/ui/src/NumberPickerActionSheet.tsx` |
+| Page | `packages/ui/src/Page.tsx` |
+| Pagination | `packages/ui/src/Pagination.tsx` |
+| PasswordField | `packages/ui/src/PasswordField.tsx` |
+| PhoneNumberField | `packages/ui/src/PhoneNumberField.tsx` |
+| Radio | `packages/ui/src/Radio.tsx` |
+| RadioField | `packages/ui/src/RadioField.tsx` |
+| ScrollView | `packages/ui/src/ScrollView.tsx` |
+| SegmentedControl | `packages/ui/src/SegmentedControl.tsx` |
+| SelectBadge | `packages/ui/src/SelectBadge.tsx` |
+| SideDrawer | `packages/ui/src/SideDrawer.tsx` |
+| Signature.native | `packages/ui/src/Signature.native.tsx` |
+| Signature | `packages/ui/src/Signature.tsx` |
+| SignatureField | `packages/ui/src/SignatureField.tsx` |
+| Spinner | `packages/ui/src/Spinner.tsx` |
+| SplitPage.native | `packages/ui/src/SplitPage.native.tsx` |
+| SplitPage | `packages/ui/src/SplitPage.tsx` |
+| TextFieldNumberActionSheet | `packages/ui/src/TextFieldNumberActionSheet.tsx` |
+| Tooltip | `packages/ui/src/Tooltip.tsx` |
+| UnifiedAddressAutoComplete | `packages/ui/src/UnifiedAddressAutoComplete.tsx` |
+| Utilities | `packages/ui/src/Utilities.tsx` |
+| WebAddressAutocomplete | `packages/ui/src/WebAddressAutocomplete.tsx` |
+| FieldError | `packages/ui/src/fieldElements/FieldError.tsx` |
+| FieldHelperText | `packages/ui/src/fieldElements/FieldHelperText.tsx` |
+| FieldTitle | `packages/ui/src/fieldElements/FieldTitle.tsx` |
+| MobileIcon | `packages/ui/src/icons/MobileIcon.tsx` |
+| OfflineIcon | `packages/ui/src/icons/OfflineIcon.tsx` |
+| OnlineIcon | `packages/ui/src/icons/OnlineIcon.tsx` |
+| OutOfficeIcon | `packages/ui/src/icons/OutOfficeIcon.tsx` |
+| index | `packages/ui/src/index.tsx` |
+| Table | `packages/ui/src/table/Table.tsx` |
+| TableBadge | `packages/ui/src/table/TableBadge.tsx` |
+| TableBoolean | `packages/ui/src/table/TableBoolean.tsx` |
+| TableDate | `packages/ui/src/table/TableDate.tsx` |
+| TableHeader | `packages/ui/src/table/TableHeader.tsx` |
+| TableHeaderCell | `packages/ui/src/table/TableHeaderCell.tsx` |
+| TableIconButton | `packages/ui/src/table/TableIconButton.tsx` |
+| TableNumber | `packages/ui/src/table/TableNumber.tsx` |
+| TableRow | `packages/ui/src/table/TableRow.tsx` |
+| TableText | `packages/ui/src/table/TableText.tsx` |
+| TableTitle | `packages/ui/src/table/TableTitle.tsx` |
+
+## 🚨 Components Missing Tests, need complex tests
+| Component | Path |
+|-----------|------|
+| Button | `packages/ui/src/Button.tsx` |
+| DataTable | `packages/ui/src/DataTable.tsx` |
+| DateTimeActionSheet | `packages/ui/src/DateTimeActionSheet.tsx` |
+| Icon | `packages/ui/src/Icon.tsx` |
+| IconButton | `packages/ui/src/IconButton.tsx` |
+| Image | `packages/ui/src/Image.tsx` |
+| Modal | `packages/ui/src/Modal.tsx` |
+| PickerSelect | `packages/ui/src/PickerSelect.tsx` |
+| SelectField | `packages/ui/src/SelectField.tsx` |
+| TapToEdit | `packages/ui/src/TapToEdit.tsx` |
+| Text | `packages/ui/src/Text.tsx` |
+| TimezonePicker | `packages/ui/src/TimezonePicker.tsx` |
+| Toast | `packages/ui/src/Toast.tsx` |
+
+## ✅ Components With Tests
+
+| Component | Path |
+|-----------|------|
+| Box | `packages/ui/src/Box.tsx` |
+| DateTimeField | `packages/ui/src/DateTimeField.tsx` |
+| TextArea | `packages/ui/src/TextArea.tsx` |
+| TextField | `packages/ui/src/TextField.tsx` |
