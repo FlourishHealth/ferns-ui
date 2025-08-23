@@ -30,6 +30,7 @@ export const InfoModalIcon: FC<InfoModalIconProps> = ({
         aria-role="button"
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         style={{marginLeft: 8}}
+        testID="info-icon"
         onPress={() => setInfoModalVisibleState(true)}
       >
         <Heading color="secondaryLight" size="sm">

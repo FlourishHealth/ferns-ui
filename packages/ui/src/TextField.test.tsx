@@ -1,10 +1,8 @@
 import {act, userEvent} from "@testing-library/react-native";
 import React from "react";
 
-import {TextField} from "./TextField";
 import {renderWithTheme} from "./test-utils";
-
-
+import {TextField} from "./TextField";
 
 describe("TextField", () => {
   let mockOnChange: jest.Mock;
@@ -30,7 +28,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField value="test value" onChange={mockOnChange} />
       );
-      
+
       expect(getByDisplayValue("test value").props.value).toBe("test value");
     });
 
@@ -38,7 +36,7 @@ describe("TextField", () => {
       const {getByText} = renderWithTheme(
         <TextField title="Test Title" value="" onChange={mockOnChange} />
       );
-      
+
       expect(getByText("Test Title")).toBeTruthy();
     });
 
@@ -46,7 +44,7 @@ describe("TextField", () => {
       const {getByPlaceholderText} = renderWithTheme(
         <TextField placeholder="Enter text" value="" onChange={mockOnChange} />
       );
-      
+
       expect(getByPlaceholderText("Enter text")).toBeTruthy();
     });
 
@@ -54,7 +52,7 @@ describe("TextField", () => {
       const {getByText} = renderWithTheme(
         <TextField helperText="This is helper text" value="" onChange={mockOnChange} />
       );
-      
+
       expect(getByText("This is helper text")).toBeTruthy();
     });
 
@@ -62,7 +60,7 @@ describe("TextField", () => {
       const {getByText} = renderWithTheme(
         <TextField errorText="This is an error" value="" onChange={mockOnChange} />
       );
-      
+
       expect(getByText("This is an error")).toBeTruthy();
     });
   });
@@ -70,9 +68,7 @@ describe("TextField", () => {
   describe("user interactions", () => {
     it("should call onChange when text is entered", async () => {
       const user = userEvent.setup();
-      const {getByDisplayValue} = renderWithTheme(
-        <TextField value="" onChange={mockOnChange} />
-      );
+      const {getByDisplayValue} = renderWithTheme(<TextField value="" onChange={mockOnChange} />);
 
       const input = getByDisplayValue("");
       await user.type(input, "hello");
@@ -93,7 +89,7 @@ describe("TextField", () => {
     it("should call onBlur when input loses focus", async () => {
       const user = userEvent.setup();
       const {getByDisplayValue} = renderWithTheme(
-        <TextField value="test" onChange={mockOnChange} onBlur={mockOnBlur} />
+        <TextField value="test" onBlur={mockOnBlur} onChange={mockOnChange} />
       );
 
       const input = getByDisplayValue("test");
@@ -126,7 +122,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField type="email" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.keyboardType).toBe("email-address");
     });
@@ -135,7 +131,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField type="password" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.secureTextEntry).toBe(true);
     });
@@ -144,16 +140,18 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField type="url" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
-      expect(input.props.keyboardType === "url" || input.props.keyboardType === "default").toBe(true);
+      expect(input.props.keyboardType === "url" || input.props.keyboardType === "default").toBe(
+        true
+      );
     });
 
     it("should render phoneNumber type with number keyboard", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField type="phoneNumber" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.keyboardType).toBe("number-pad");
     });
@@ -162,7 +160,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField type="search" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.keyboardType).toBe("default");
     });
@@ -173,7 +171,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField multiline value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.multiline).toBe(true);
     });
@@ -182,16 +180,16 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField multiline rows={5} value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.numberOfLines).toBe(5);
     });
 
     it("should handle grow behavior with multiline", () => {
       const {getByDisplayValue} = renderWithTheme(
-        <TextField multiline grow value="" onChange={mockOnChange} />
+        <TextField grow multiline value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.multiline).toBe(true);
     });
@@ -202,7 +200,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField disabled value="test" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("test");
       expect(input.props.readOnly).toBe(true);
     });
@@ -219,7 +217,7 @@ describe("TextField", () => {
 
     it("should not call onBlur when disabled", async () => {
       const {getByDisplayValue} = renderWithTheme(
-        <TextField disabled value="test" onChange={mockOnChange} onBlur={mockOnBlur} />
+        <TextField disabled value="test" onBlur={mockOnBlur} onChange={mockOnChange} />
       );
 
       const input = getByDisplayValue("test");
@@ -236,7 +234,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField iconName="check" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input).toBeTruthy();
     });
@@ -244,7 +242,12 @@ describe("TextField", () => {
     it("should call onIconClick when icon is pressed", async () => {
       const mockOnIconClick = jest.fn();
       const {getByDisplayValue} = renderWithTheme(
-        <TextField iconName="check" onIconClick={mockOnIconClick} value="" onChange={mockOnChange} />
+        <TextField
+          iconName="check"
+          value=""
+          onChange={mockOnChange}
+          onIconClick={mockOnIconClick}
+        />
       );
 
       const input = getByDisplayValue("");
@@ -254,10 +257,8 @@ describe("TextField", () => {
 
   describe("accessibility", () => {
     it("should have correct accessibility properties", () => {
-      const {getByDisplayValue} = renderWithTheme(
-        <TextField value="" onChange={mockOnChange} />
-      );
-      
+      const {getByDisplayValue} = renderWithTheme(<TextField value="" onChange={mockOnChange} />);
+
       const input = getByDisplayValue("");
       expect(input.props.accessibilityHint).toBe("Enter text here");
       expect(input.props["aria-label"]).toBe("Text input field");
@@ -267,7 +268,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField disabled value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.accessibilityState.disabled).toBe(true);
     });
@@ -278,7 +279,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField autoComplete="username" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input).toBeTruthy();
     });
@@ -287,7 +288,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField type="email" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.textContentType).toBe("emailAddress");
     });
@@ -296,7 +297,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField type="password" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.textContentType).toBe("password");
     });
@@ -304,19 +305,15 @@ describe("TextField", () => {
 
   describe("edge cases", () => {
     it("should handle empty value", () => {
-      const {getByDisplayValue} = renderWithTheme(
-        <TextField value="" onChange={mockOnChange} />
-      );
-      
+      const {getByDisplayValue} = renderWithTheme(<TextField value="" onChange={mockOnChange} />);
+
       const input = getByDisplayValue("");
       expect(input.props.value).toBe("");
     });
 
     it("should handle undefined value", () => {
-      const {root} = renderWithTheme(
-        <TextField value={undefined} onChange={mockOnChange} />
-      );
-      
+      const {root} = renderWithTheme(<TextField value={undefined} onChange={mockOnChange} />);
+
       expect(root).toBeTruthy();
     });
 
@@ -325,7 +322,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField value={longText} onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue(longText);
       expect(input.props.value).toBe(longText);
     });
@@ -335,7 +332,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField value={specialText} onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue(specialText);
       expect(input.props.value).toBe(specialText);
     });
@@ -346,7 +343,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField returnKeyType="done" value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.enterKeyHint).toBe("done");
     });
@@ -355,7 +352,7 @@ describe("TextField", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextField blurOnSubmit={false} value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.blurOnSubmit).toBe(false);
     });
@@ -364,39 +361,35 @@ describe("TextField", () => {
   describe("input ref", () => {
     it("should call inputRef with the input reference", () => {
       const mockInputRef = jest.fn();
-      renderWithTheme(
-        <TextField inputRef={mockInputRef} value="" onChange={mockOnChange} />
-      );
-      
+      renderWithTheme(<TextField inputRef={mockInputRef} value="" onChange={mockOnChange} />);
+
       expect(mockInputRef).toHaveBeenCalled();
     });
   });
 
   describe("snapshots", () => {
     it("should match snapshot with default props", () => {
-      const component = renderWithTheme(
-        <TextField value="test value" onChange={mockOnChange} />
-      );
+      const component = renderWithTheme(<TextField value="test value" onChange={mockOnChange} />);
       expect(component.toJSON()).toMatchSnapshot();
     });
 
     it("should match snapshot with all props", () => {
       const component = renderWithTheme(
         <TextField
-          title="Test Title"
-          placeholder="Enter text"
-          helperText="Helper text"
-          errorText="Error text"
-          iconName="check"
-          onIconClick={jest.fn()}
-          value="test value"
-          onChange={mockOnChange}
-          onFocus={mockOnFocus}
-          onBlur={mockOnBlur}
-          onEnter={mockOnEnter}
           disabled={false}
+          errorText="Error text"
+          helperText="Helper text"
+          iconName="check"
           multiline={false}
+          placeholder="Enter text"
+          title="Test Title"
           type="text"
+          value="test value"
+          onBlur={mockOnBlur}
+          onChange={mockOnChange}
+          onEnter={mockOnEnter}
+          onFocus={mockOnFocus}
+          onIconClick={jest.fn()}
         />
       );
       expect(component.toJSON()).toMatchSnapshot();
@@ -404,12 +397,7 @@ describe("TextField", () => {
 
     it("should match snapshot when disabled", () => {
       const component = renderWithTheme(
-        <TextField
-          title="Disabled Field"
-          value="disabled value"
-          onChange={mockOnChange}
-          disabled={true}
-        />
+        <TextField disabled title="Disabled Field" value="disabled value" onChange={mockOnChange} />
       );
       expect(component.toJSON()).toMatchSnapshot();
     });
@@ -417,11 +405,11 @@ describe("TextField", () => {
     it("should match snapshot with multiline", () => {
       const component = renderWithTheme(
         <TextField
+          multiline
+          rows={3}
           title="Multiline Field"
           value="line 1\nline 2"
           onChange={mockOnChange}
-          multiline={true}
-          rows={3}
         />
       );
       expect(component.toJSON()).toMatchSnapshot();
@@ -430,10 +418,10 @@ describe("TextField", () => {
     it("should match snapshot with error state", () => {
       const component = renderWithTheme(
         <TextField
+          errorText="This field is required"
           title="Error Field"
           value=""
           onChange={mockOnChange}
-          errorText="This field is required"
         />
       );
       expect(component.toJSON()).toMatchSnapshot();

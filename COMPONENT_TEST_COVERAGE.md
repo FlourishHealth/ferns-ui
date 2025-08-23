@@ -1,15 +1,8 @@
 # Component Test Coverage Report
 
-**Total Components Found:** 94
-**Components Without Tests:** 90
-**Test Coverage:** 4.3%
-
 ## 🚨 Components Missing Tests, need basic tests
-
-
 | Component | Path |
 |-----------|------|
-| Accordion | `packages/ui/src/Accordion.tsx` |
 | ActionSheet | `packages/ui/src/ActionSheet.tsx` |
 | AddressField | `packages/ui/src/AddressField.tsx` |
 | Avatar | `packages/ui/src/Avatar.tsx` |
@@ -100,6 +93,7 @@
 
 | Component | Path |
 |-----------|------|
+| Accordion | `packages/ui/src/Accordion.tsx` |
 | Box | `packages/ui/src/Box.tsx` |
 | DateTimeField | `packages/ui/src/DateTimeField.tsx` |
 | TextArea | `packages/ui/src/TextArea.tsx` |

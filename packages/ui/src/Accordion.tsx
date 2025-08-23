@@ -57,6 +57,7 @@ export const Accordion: FC<AccordionProps> = ({
           <Pressable
             aria-role="button"
             hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+            testID="accordion-toggle"
             onPress={() => setCollapsed(!collapsed)}
           >
             <FontAwesome6

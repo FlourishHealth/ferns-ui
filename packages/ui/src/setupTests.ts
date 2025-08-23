@@ -1,4 +1,5 @@
 process.env.TZ = "America/New_York";
+process.env.EXPO_OS = "ios";
 
 // Create mocks for libraries that cause issues with testing
 jest.mock("@react-native-async-storage/async-storage", () => ({
@@ -22,8 +23,17 @@ jest.mock("./IconButton", () => ({
   IconButton: jest.fn().mockImplementation(() => null),
 }));
 
+jest.mock("expo-font", () => ({
+  isLoaded: jest.fn().mockImplementation(() => true),
+  loadNativeFonts: jest.fn().mockImplementation(() => Promise.resolve()),
+  loadAsync: jest.fn().mockImplementation(() => Promise.resolve()),
+}));
+
 jest.mock("./Icon", () => ({
-  Icon: jest.fn().mockImplementation(() => null),
+  Icon: ({name}: {name: string}) => ({
+    props: {testID: name},
+    type: "View",
+  }),
 }));
 
 // Mock DateTimeActionSheet
@@ -34,6 +44,39 @@ jest.mock("./DateTimeActionSheet", () => ({
 // Mock MediaQuery
 jest.mock("./MediaQuery", () => ({
   isMobileDevice: jest.fn().mockReturnValue(false),
+}));
+
+// Mock @expo/vector-icons/FontAwesome6
+// interface IconProps {
+//   name: string;
+//   [key: string]: unknown;
+// }
+
+// jest.mock("@expo/vector-icons/FontAwesome6", () => ({
+//   __esModule: true,
+//   default: jest.fn(({name, ...props}: IconProps) =>
+//     React.createElement(View, {testID: name, ...props})
+//   ),
+// }));
+
+// Mock expo-image-manipulator
+jest.mock("expo-image-manipulator", () => ({
+  ImageManipulator: {
+    manipulateAsync: jest.fn(),
+  },
+  SaveFormat: {
+    PNG: "png",
+    JPEG: "jpeg",
+  },
+}));
+
+// Mock expo-image-picker
+jest.mock("expo-image-picker", () => ({
+  launchImageLibraryAsync: jest.fn(),
+  requestMediaLibraryPermissionsAsync: jest.fn(),
+  MediaTypeOptions: {
+    Images: "images",
+  },
 }));
 
 // Make sure we can test date/time functionality
