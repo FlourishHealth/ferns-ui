@@ -4,7 +4,6 @@
 | Component | Path |
 |-----------|------|
 | ActionSheet | `packages/ui/src/ActionSheet.tsx` |
-| Badge | `packages/ui/src/Badge.tsx` |
 | Banner | `packages/ui/src/Banner.tsx` |
 | Body | `packages/ui/src/Body.tsx` |
 | BooleanField | `packages/ui/src/BooleanField.tsx` |
@@ -94,6 +93,7 @@
 | Accordion | `packages/ui/src/Accordion.tsx` |
 | AddressField | `packages/ui/src/AddressField.tsx` |
 | Avatar | `packages/ui/src/Avatar.tsx` |
+| Badge | `packages/ui/src/Badge.tsx` |
 | Box | `packages/ui/src/Box.tsx` |
 | DateTimeField | `packages/ui/src/DateTimeField.tsx` |
 | TextArea | `packages/ui/src/TextArea.tsx` |

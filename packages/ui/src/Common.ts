@@ -1355,6 +1355,11 @@ export interface BadgeProps {
   status?: "info" | "error" | "warning" | "success" | "neutral" | "custom";
 
   /**
+   * Test ID for unit testing
+   */
+  testID?: string;
+
+  /**
    * The text or number to display inside the badge.
    */
   value?: number | string;
