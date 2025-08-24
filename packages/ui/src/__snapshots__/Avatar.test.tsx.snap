@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Avatar renders correctly with default props 1`] = `
+<View
+  accessibilityHint="Avatar image"
+  aria-label="John Doe's avatar"
+  aria-role="image"
+  style={
+    {
+      "height": 56,
+      "position": "relative",
+      "width": 56,
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    aria-role="button"
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "borderRadius": 1,
+        "cursor": "auto",
+        "overflow": "hidden",
+        "position": "relative",
+      }
+    }
+  >
+    <Image
+      accessibilityIgnoresInvertColors={true}
+      onError={[Function]}
+      source={
+        {
+          "cache": "force-cache",
+          "uri": "https://example.com/avatar.jpg",
+        }
+      }
+      style={
+        {
+          "borderColor": "transparent",
+          "borderRadius": 28,
+          "borderWidth": 0,
+          "height": 56,
+          "overflow": "hidden",
+        }
+      }
+      testID="avatar-image"
+    />
+  </View>
+</View>
+`;
