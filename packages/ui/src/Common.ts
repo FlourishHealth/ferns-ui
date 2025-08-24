@@ -434,10 +434,10 @@ export interface LayerProps {
   children: ReactChildren;
 }
 
-type AccessibilityProps = {
+interface AccessibilityProps {
   accessibilityLabel: string;
   accessibilityHint: string;
-};
+}
 
 export interface BoxPropsBase {
   alignContent?: AlignContent;
@@ -575,10 +575,10 @@ export type TooltipPosition = "top" | "bottom" | "left" | "right";
 
 export type IndicatorDirection = "topLeft" | "topRight" | "bottomLeft" | "bottomRight";
 
-export type SegmentedControlBadgeConfig = {
+export interface SegmentedControlBadgeConfig {
   count: number;
   status?: "info" | "error" | "warning" | "success" | "neutral";
-};
+}
 
 export interface SegmentedControlProps {
   items: string[];
@@ -898,7 +898,7 @@ export interface AddressAutocompleteProps {
   testID?: string;
 }
 
-export type ActionSheetProps = {
+export interface ActionSheetProps {
   children?: React.ReactNode;
   ref?: React.MutableRefObject<{
     /**
@@ -1252,17 +1252,17 @@ export type ActionSheetProps = {
    * Event called when position of ActionSheet changes.
    */
   onPositionChanged?: (hasReachedTop: boolean) => void;
-};
+}
 
 export type AvatarStatus = "offline" | "online" | "outOfOffice" | "activeMobile" | "imagePicker";
 
-export type AvatarImagePickerEvent = {
+export interface AvatarImagePickerEvent {
   avatarImageFormat?: string;
   base64?: string;
   uri?: string;
   height?: number;
   width?: number;
-};
+}
 
 export interface CustomSvgProps extends SvgProps {
   doNotDisturb?: boolean;
@@ -1301,6 +1301,10 @@ export interface AvatarProps {
    * Accessibility label for the avatar image.
    */
   accessibilityLabel?: string;
+  /**
+   * Test ID for unit testing
+   */
+  testID?: string;
 }
 
 export interface BadgeProps {
@@ -1404,7 +1408,7 @@ export interface SelectBadgeProps {
   onChange: (value: string) => void;
 }
 
-type BannerButtonProps = {
+interface BannerButtonProps {
   /**
    * Text to display on optional banner button, will display button if provided
    */
@@ -1413,7 +1417,7 @@ type BannerButtonProps = {
    * Icon to display on optional banner button
    */
   buttonIconName?: IconName;
-};
+}
 
 export interface BannerPropsBase {
   /**
@@ -1893,10 +1897,10 @@ export interface SpinnerProps {
   color?: "light" | "dark" | "accent" | "secondary";
 }
 
-export type ColumnSortInterface = {
+export interface ColumnSortInterface {
   column: number;
   direction: "asc" | "desc";
-};
+}
 
 export interface TableProps {
   /**
@@ -1973,11 +1977,11 @@ export interface PaginationProps {
 /**
  * Data Table
  */
-export type DataTableCellData = {
+export interface DataTableCellData {
   value: any;
   highlight?: SurfaceColor;
   textSize?: "sm" | "md" | "lg";
-};
+}
 
 export type DataTableCustomComponentMap = Record<
   string,
@@ -2103,7 +2107,10 @@ export interface TableRowProps {
 
 export type TableFilters = Record<string, string[]>;
 
-export type TableSearch = {search: string; field: string};
+export interface TableSearch {
+  search: string;
+  field: string;
+}
 
 export interface TableContextType {
   columns: Array<number | string>;
@@ -2348,7 +2355,7 @@ export type OpenApiPropertyType =
   | "number"
   | "any";
 
-export type OpenApiProperty = {
+export interface OpenApiProperty {
   type?: OpenApiPropertyType;
   format?: string;
   properties?: OpenApiProperty;
@@ -2357,13 +2364,13 @@ export type OpenApiProperty = {
   // TODO: is this actually there?
   required?: string[];
   enum?: string[];
-};
+}
 
-export type ModelFields = {
+export interface ModelFields {
   type: "object" | "array";
   required: string[];
   properties: {[name: string]: OpenApiProperty};
-};
+}
 
 export interface OpenAPISpec {
   paths: {
@@ -2508,7 +2515,7 @@ export interface TableIconButtonProps {
   onClick: () => void | Promise<void>;
 }
 
-export type FieldOption = {
+export interface FieldOption {
   /**
    * The label to display for the option.
    */
@@ -2523,7 +2530,7 @@ export type FieldOption = {
    * The value of the option.
    */
   value: string;
-};
+}
 
 // Split up SelectField so if value is passed as a string,
 export interface SelectFieldPropsBase {
