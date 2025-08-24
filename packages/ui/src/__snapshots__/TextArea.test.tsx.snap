@@ -272,6 +272,18 @@ exports[`TextArea snapshots should match snapshot with error state 1`] = `
     }
   >
     <View
+      brand={false}
+      color="#BD1111"
+      duotone={false}
+      light={false}
+      name="triangle-exclamation"
+      regular={false}
+      sharp={false}
+      size={12}
+      solid={true}
+      thin={false}
+    />
+    <View
       style={
         {
           "marginLeft": 4,

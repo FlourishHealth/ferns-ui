@@ -16,4 +16,7 @@ module.exports = {
       babelConfig: true,
     },
   },
+  moduleNameMapper: {
+    "^@expo/vector-icons$": "<rootDir>/__mocks__/vector-icons.js",
+  },
 };
