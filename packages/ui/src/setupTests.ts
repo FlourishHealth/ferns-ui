@@ -29,12 +29,12 @@ jest.mock("expo-font", () => ({
   loadAsync: jest.fn().mockImplementation(() => Promise.resolve()),
 }));
 
-jest.mock("./Icon", () => ({
-  Icon: ({name}: {name: string}) => ({
-    props: {testID: name},
-    type: "View",
-  }),
-}));
+// jest.mock("./Icon", () => ({
+//   Icon: ({name}: {name: string}) => ({
+//     props: {testID: name},
+//     type: "View",
+//   }),
+// }));
 
 // Mock DateTimeActionSheet
 jest.mock("./DateTimeActionSheet", () => ({
