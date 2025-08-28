@@ -221,7 +221,7 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
       }
     }
 
-    if (props.wrap && props.alignItems) {
+    if (props.wrap && props.alignItems && Platform.OS !== "web") {
       console.warn("React Native doesn't support wrap and alignItems together.");
     }
 
