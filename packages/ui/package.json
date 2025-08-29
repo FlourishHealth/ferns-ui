@@ -1,6 +1,6 @@
 {
   "name": "ferns-ui",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "main": "dist/index.js",
   "license": "Apache-2.0",
   "scripts": {
@@ -57,7 +57,10 @@
     "rules": {
       "@typescript-eslint/explicit-function-return-type": "off",
       "react-native-a11y/has-valid-accessibility-descriptors": "off",
-     "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+      "@typescript-eslint/consistent-type-definitions": [
+        "error",
+        "interface"
+      ],
       "ban/ban": [
         "error",
         {
