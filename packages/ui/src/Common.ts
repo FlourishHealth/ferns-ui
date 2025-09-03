@@ -11,6 +11,10 @@ import {
   FontAwesome6SolidNames,
 } from "./CommonIconTypes";
 
+type PercentageString = `${number}%`;
+
+type NumberOrPercentage = number | PercentageString | string;
+
 export interface InfoModalIconProps {
   /**
    * The content of the information modal.
@@ -466,7 +470,7 @@ export interface BoxPropsBase {
   fit?: boolean;
   flex?: "grow" | "shrink" | "none";
   gap?: SignedUpTo12;
-  height?: number | string;
+  height?: NumberOrPercentage;
   justifyContent?: "start" | "end" | "center" | "between" | "around";
   left?: boolean;
   margin?: SignedUpTo12;
@@ -497,10 +501,10 @@ export interface BoxPropsBase {
   smMarginTop?: SignedUpTo12;
   mdMarginTop?: SignedUpTo12;
   lgMarginTop?: SignedUpTo12;
-  maxHeight?: number | string;
-  maxWidth?: number | string;
-  minHeight?: number | string;
-  minWidth?: number | string;
+  maxHeight?: NumberOrPercentage;
+  maxWidth?: NumberOrPercentage;
+  minHeight?: NumberOrPercentage;
+  minWidth?: NumberOrPercentage;
   overflow?: "visible" | "hidden" | "scroll" | "scrollX" | "scrollY" | "auto";
   padding?: UnsignedUpTo12;
   smPadding?: UnsignedUpTo12;
@@ -518,7 +522,7 @@ export interface BoxPropsBase {
   right?: boolean;
   rounding?: Rounding | "circle";
   top?: boolean;
-  width?: number | string;
+  width?: NumberOrPercentage;
   wrap?: boolean;
   zIndex?: number | "auto";
 
