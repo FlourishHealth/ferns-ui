@@ -752,7 +752,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
           actionSheetRef={dateActionSheetRef}
           timezone={timezone}
           type={type}
-          value={type === "date" ? value?.split("T")?.[0] : value}
+          value={value}
           visible={showDate}
           onChange={onActionSheetChange}
           onDismiss={() => setShowDate(false)}
