@@ -148,11 +148,11 @@ const TimeField: FC<DateTimeProps> = ({type, onBlur, fieldErrors, ...segmentProp
   );
 };
 
-type FieldConfig = {
+interface FieldConfig {
   maxLength: number;
   placeholder: string;
   width: number;
-};
+}
 
 export const DateTimeField: FC<DateTimeFieldProps> = ({
   type,
@@ -466,13 +466,33 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
         }
       }
 
+      // If date parts are complete and valid, emit ISO immediately (don't wait for blur)
+      if ((type === "date" || type === "datetime") && !error) {
+        const monthVal = index === 0 ? finalValue : month;
+        const dayVal = index === 1 ? finalValue : day;
+        const yearVal = index === 2 ? finalValue : year;
+        const monthComplete = monthVal?.length === 2;
+        const dayComplete = dayVal?.length === 2;
+        const yearComplete = yearVal?.length === 4;
+        const haveAllDateParts = monthComplete && dayComplete && yearComplete;
+        if (haveAllDateParts) {
+          const result = getISOFromFields({month: monthVal, day: dayVal, year: yearVal});
+          if (result) {
+            const currentValueUTC = value ? DateTime.fromISO(value).toUTC().toISO() : undefined;
+            if (result !== currentValueUTC) {
+              onChange(result);
+            }
+          }
+        }
+      }
+
       // Auto-advance to next field if current field is full
       const configs = getFieldConfigs();
       if (finalValue.length === config.maxLength && index < configs.length - 1) {
         inputRefs.current[index + 1]?.focus();
       }
     },
-    [type, getFieldConfigs, getISOFromFields, onChange, value, validateField]
+    [type, getFieldConfigs, getISOFromFields, onChange, value, validateField, month, day, year]
   );
 
   const onActionSheetChange = useCallback(
@@ -503,7 +523,17 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
         setHour(hourNum.toString().padStart(2, "0"));
         setMinute(parsedDate.minute.toString().padStart(2, "0"));
       }
-      onChange(inputDate);
+
+      // Normalize emitted value to ISO (UTC for date-only)
+      const normalized =
+        type === "date"
+          ? parsedDate.setZone("UTC").startOf("day").toUTC().toISO()
+          : parsedDate.toUTC().toISO();
+      if (!normalized) {
+        console.warn("Invalid date passed to DateTimeField", parsedDate);
+        return;
+      }
+      onChange(normalized);
       setShowDate(false);
     },
     [onChange, type]

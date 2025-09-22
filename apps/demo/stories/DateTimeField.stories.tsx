@@ -47,6 +47,7 @@ export const DateTimeFieldStory = (): ReactElement => {
         type="datetime"
         value={value}
         onChange={(v) => {
+          console.log("onChange", v);
           setValue(v);
         }}
         onTimezoneChange={setTimezone}
