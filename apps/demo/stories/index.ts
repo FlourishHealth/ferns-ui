@@ -26,6 +26,7 @@ export * from "./SelectBadge.stories";
 // export * from "./Pagination.stories";
 // export * from "./PasswordField.stories";
 export * from "./RadioField.stories";
+export * from "./SectionDivider.stories";
 export * from "./SegmentedControl.stories";
 export * from "./SelectField.stories";
 export * from "./SideDrawer.stories";

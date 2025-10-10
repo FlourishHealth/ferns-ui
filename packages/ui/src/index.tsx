@@ -49,6 +49,7 @@ export * from "./PhoneNumberField";
 export * from "./Radio";
 export * from "./RadioField";
 export * from "./ScrollView";
+export * from "./SectionDivider";
 export * from "./SegmentedControl";
 export * from "./SelectBadge";
 export * from "./SelectField";
