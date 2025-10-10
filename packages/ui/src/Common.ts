@@ -2678,3 +2678,70 @@ export interface TableNumberProps {
    */
   align?: "left" | "right";
 }
+
+export interface SliderProps extends HelperTextProps, ErrorTextProps {
+  /**
+   * The title of the slider field.
+   */
+  title?: string;
+
+  /**
+   * The current value of the slider.
+   */
+  value: number;
+
+  /**
+   * The function to call when the slider value changes.
+   */
+  onChange: (value: number) => void;
+
+  /**
+   * The minimum value of the slider.
+   * @default 0
+   */
+  minimumValue?: number;
+
+  /**
+   * The maximum value of the slider.
+   * @default 1
+   */
+  maximumValue?: number;
+
+  /**
+   * The step value of the slider.
+   * @default 0
+   */
+  step?: number;
+
+  /**
+   * If true, the slider will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * The color of the track to the left of the thumb.
+   */
+  minimumTrackTintColor?: string;
+
+  /**
+   * The color of the track to the right of the thumb.
+   */
+  maximumTrackTintColor?: string;
+
+  /**
+   * The color of the thumb.
+   */
+  thumbTintColor?: string;
+
+  /**
+   * If true, the slider will show the current value as text.
+   * @default false
+   */
+  showValue?: boolean;
+
+  /**
+   * The test ID for the slider, used for testing purposes.
+   */
+  testID?: string;
+}

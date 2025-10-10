@@ -144,6 +144,7 @@
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-native-community/blur": "^4.4.0",
     "@react-native-community/datetimepicker": "8.4.1",
+    "@react-native-community/slider": "^5.0.1",
     "@react-native-picker/picker": "2.11.0",
     "expo-clipboard": "~7.1.4",
     "expo-font": "~13.3.1",

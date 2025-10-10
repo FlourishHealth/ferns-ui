@@ -30,6 +30,7 @@ export * from "./SegmentedControl.stories";
 export * from "./SelectField.stories";
 export * from "./SideDrawer.stories";
 export * from "./SignatureField.stories";
+export * from "./Slider.stories";
 export * from "./Spinner.stories";
 export * from "./Table.stories";
 export * from "./TableBadge.stories";
