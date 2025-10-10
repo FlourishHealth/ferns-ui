@@ -8,7 +8,7 @@ support iOS, Android, and Web all in one simple repo. It has
 theming support and is primarily designed for Expo. It provides an abstraction
 layer over React Native components, making it easier to build responsive
 applications that work across all platforms.
-For example, instead of using <div> and <View>, you use <Box>, which 
+For example, instead of using ```<div>``` and ```<View>```, you use ```<Box>``` , which 
 translates to a flexbox-first layout system.
 
 Ideal for designers and developers who value clarity, Ferns UI offers a 
