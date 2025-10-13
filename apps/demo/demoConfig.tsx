@@ -46,6 +46,7 @@ import {
   ThemeConfiguration,
   ToastConfiguration,
   TooltipConfiguration,
+  SectionDividerConfiguration,
 } from "@story-config";
 import {FieldProps} from "ferns-ui";
 import React from "react";
@@ -193,6 +194,7 @@ const Config: DemoConfigurationBase[] = [
   PasswordFieldConfiguration,
   PhoneNumberConfiguration,
   RadioFieldConfiguration,
+  SectionDividerConfiguration,
   SegmentedControlConfiguration,
   SelectBadgeConfiguration,
   SelectFieldConfiguration,
