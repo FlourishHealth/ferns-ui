@@ -31,11 +31,7 @@ export const SectionDividerConfiguration: DemoConfiguration = {
     {
       name: "Material Design Dividers",
       link: "https://material.io/design/components/dividers.html",
-    },
-    {
-      name: "Apple Human Interface Guidelines - Dividers",
-      link: "https://developer.apple.com/design/human-interface-guidelines/ios/visual-design/layout/",
-    },
+    }
   ],
   interfaceName: "SectionDividerProps",
   usage: {
