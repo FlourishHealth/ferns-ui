@@ -9,8 +9,8 @@ export const SliderConfiguration: DemoConfiguration = {
   description:
     "Use the slider component to allow users to select a numeric value from a range by dragging a thumb along a track.",
   a11yNotes: [
-    "The slider should be keyboard accessible.",
-    "The slider should provide clear visual feedback of the current value.",
+    "Touch zone is very important here, and must be at least 48 by 48 px. The “handle” as its currently designed fulfills this.",
+    "Contrast is also important. It should be obvious when the active track is present, and when it’s not.",
   ],
   category: "Component",
   status: {
