@@ -1,13 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {
-  SliderDecimalDemo,
-  SliderDemo,
-  SliderDisabledDemo,
-  SliderWithErrorDemo,
-  SliderWithHelperTextDemo,
-  SliderWithLabelDemo,
-  SliderWithValueDemo,
-} from "@stories";
+import {SliderDemo, SliderWithGraphicsDemo, SliderWithSmileysDemo, SliderWithValueDemo} from "@stories";
 import {Slider} from "ferns-ui";
 
 export const SliderConfiguration: DemoConfiguration = {
@@ -43,29 +35,20 @@ export const SliderConfiguration: DemoConfiguration = {
     ],
   },
   props: {},
-  demo: SliderWithLabelDemo,
+  demo: SliderDemo,
   demoOptions: {},
   stories: {
     "Basic Slider": {
       render: SliderDemo,
     },
-    "Slider with Label": {
-      render: SliderWithLabelDemo,
+    "Slider with Emojis Display": {
+      render: SliderWithSmileysDemo,
     },
     "Slider with Value Display": {
       render: SliderWithValueDemo,
     },
-    "Slider with Helper Text": {
-      render: SliderWithHelperTextDemo,
-    },
-    "Slider with Error": {
-      render: SliderWithErrorDemo,
-    },
-    "Disabled Slider": {
-      render: SliderDisabledDemo,
-    },
-    "Decimal Slider": {
-      render: SliderDecimalDemo,
+    "Slider with Graphics": {
+      render: SliderWithGraphicsDemo,
     },
   },
 };

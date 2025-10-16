@@ -6,27 +6,13 @@ export const SliderDemo = (): ReactElement => {
   return <Slider maximumValue={1} minimumValue={0} step={0.1} value={value} onChange={setValue} />;
 };
 
-export const SliderWithLabelDemo = (): ReactElement => {
-  const [value, setValue] = useState<number>(50);
-  return (
-    <Slider
-      maximumValue={100}
-      minimumValue={0}
-      step={1}
-      title="Volume"
-      value={value}
-      onChange={setValue}
-    />
-  );
-};
-
 export const SliderWithValueDemo = (): ReactElement => {
   const [value, setValue] = useState<number>(50);
   return (
     <Slider
       maximumValue={100}
       minimumValue={0}
-      showValue
+      showSelection
       step={1}
       title="Volume"
       value={value}
@@ -35,68 +21,51 @@ export const SliderWithValueDemo = (): ReactElement => {
   );
 };
 
-export const SliderWithHelperTextDemo = (): ReactElement => {
-  const [value, setValue] = useState<number>(25);
-  return (
-    <Slider
-      helperText="Adjust the slider to set the volume level."
-      maximumValue={100}
-      minimumValue={0}
-      showValue
-      step={1}
-      title="Volume"
-      value={value}
-      onChange={setValue}
-    />
-  );
-};
 
-export const SliderWithErrorDemo = (): ReactElement => {
-  const [value, setValue] = useState<number>(90);
-  return (
-    <Slider
-      errorText="Volume is too high!"
-      maximumValue={100}
-      minimumValue={0}
-      showValue
-      step={1}
-      title="Volume"
-      value={value}
-      onChange={setValue}
-    />
-  );
-};
-
-export const SliderDisabledDemo = (): ReactElement => {
+export const SliderWithSmileysDemo = (): ReactElement => {
   const [value, setValue] = useState<number>(50);
   return (
     <Slider
-      disabled
-      helperText="This slider is disabled."
       maximumValue={100}
       minimumValue={0}
-      showValue
-      step={1}
-      title="Volume"
+      showSelection
+      step={25}
+      title="Smileys"
       value={value}
+      valueMapping={[
+        {index: 0, value: "\u{1F61E}"},
+        {index: 25, value: "\u{1F641}"},
+        {index: 50, value: "\u{1F610}"},
+        {index: 75, value: "\u{1F642}"},
+        {index: 100, value: "\u{1F604}"},
+      ]}
       onChange={setValue}
     />
   );
 };
 
-export const SliderDecimalDemo = (): ReactElement => {
-  const [value, setValue] = useState<number>(0.25);
+export const SliderWithGraphicsDemo = (): ReactElement => {
+  const [value, setValue] = useState<number>(50);
   return (
     <Slider
-      maximumValue={1}
+      maximumValue={100}
       minimumValue={0}
-      showValue
-      step={0.01}
-      title="Opacity"
+      showSelection
+      step={25}
+      title="Volume"
+      useIcons
       value={value}
+      valueMapping={[
+        {index: 0, value: "volume-xmark", size: "md"},
+        {index: 25, value: "volume-low", size: "md"},
+        {index: 50, value: "volume-off", size: "md"},
+        {index: 75, value: "volume-high", size: "md"},
+        {index: 100, value: "volume-high", size: "lg"},
+      ]}
       onChange={setValue}
     />
   );
 };
+
 
 

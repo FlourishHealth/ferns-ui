@@ -2738,7 +2738,50 @@ export interface SliderProps extends HelperTextProps, ErrorTextProps {
    * If true, the slider will show the current value as text.
    * @default false
    */
-  showValue?: boolean;
+  showSelection?: boolean;
+
+  /**
+   * Labels to show below the slider track.
+   */
+  labels?: {
+    /**
+     * The minimum value label.
+     */
+    min?: string;
+    /**
+     * The maximum value label.
+     */
+    max?: string;
+    /**
+     * Additional labels with their positions (0-1 range).
+     */
+    custom?: Array<{index: number; label: string}>;
+  };
+
+  /**
+   * If true, icons will be displayed instead of numeric values when valueMapping is provided.
+   * @default false
+   */
+  useIcons?: boolean;
+
+  /**
+   * Graphics/icons to display instead of numeric values.
+   * Maps slider values to icon names or any string.
+   */
+  valueMapping?: Array<{
+    /**
+     * The slider value this option represents.
+     */
+    index: number;
+    /**
+     * The icon or string to display for this value.
+     */
+    value: string;
+    /**
+     * Optional icon size override.
+     */
+    size?: IconSize;
+  }>;
 
   /**
    * The test ID for the slider, used for testing purposes.
