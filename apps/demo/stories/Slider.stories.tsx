@@ -62,8 +62,8 @@ export const SliderWithIconsDemo = (): ReactElement => {
       value={value}
       valueMapping={[
         {index: 0, value: "volume-xmark", size: "md"},
-        {index: 25, value: "volume-low", size: "md"},
-        {index: 50, value: "volume-off", size: "md"},
+        {index: 25, value: "volume-off", size: "md"},
+        {index: 50, value: "volume-low", size: "md"},
         {index: 75, value: "volume-high", size: "md"},
         {index: 100, value: "volume-high", size: "lg"},
       ]}
