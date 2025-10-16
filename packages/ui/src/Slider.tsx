@@ -113,14 +113,14 @@ export const Slider: FC<SliderProps> = ({
     if (inlineLabels && labels?.min && labels?.max) {
       return (
         <Box alignItems="center" direction="row" gap={2}>
-          <Box flex="shrink" minWidth={60}>
-            <Text color="secondaryDark" size="sm">
+          <Box flex="shrink" minWidth={30}>
+            <Text color="secondaryDark" size="md">
               {labels.min}
             </Text>
           </Box>
           <Box flex="grow">{sliderElement}</Box>
-          <Box alignItems="end" flex="shrink" minWidth={60}>
-            <Text color="secondaryDark" size="sm">
+          <Box alignItems="end" flex="shrink" minWidth={30}>
+            <Text color="secondaryDark" size="md">
               {labels.max}
             </Text>
           </Box>

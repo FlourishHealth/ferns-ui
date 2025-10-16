@@ -28,8 +28,8 @@ export const SliderWithSmileysDemo = (): ReactElement => {
     <Slider
       inlineLabels
       labels={{
-        min: "Sad",
-        max: "Happy",
+        min: "\u{1F61E}",
+        max: "\u{1F604}",
       }}
       maximumValue={100}
       minimumValue={0}
