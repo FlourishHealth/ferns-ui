@@ -45,3 +45,4 @@ export * from "./TextField.config";
 export * from "./Theme.config";
 export * from "./Toast.config";
 export * from "./Tooltip.config";
+export * from "./MarkdownView.config";
