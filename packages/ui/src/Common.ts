@@ -1305,6 +1305,10 @@ export interface AvatarProps {
    * Accessibility label for the avatar image.
    */
   accessibilityLabel?: string;
+  /**
+   * Test ID for unit testing
+   */
+  testID?: string;
 }
 
 export interface BadgeProps {
@@ -1353,6 +1357,11 @@ export interface BadgeProps {
    * @default "info"
    */
   status?: "info" | "error" | "warning" | "success" | "neutral" | "custom";
+
+  /**
+   * Test ID for unit testing
+   */
+  testID?: string;
 
   /**
    * The text or number to display inside the badge.

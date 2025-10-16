@@ -1,0 +1,464 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddressField renders correctly with default props 1`] = `
+[
+  <View
+    style={
+      {
+        "marginBottom": 16,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#1C1C1C",
+            "fontSize": 14,
+            "fontWeight": 600,
+            "lineHeight": 22.4,
+          }
+        }
+      >
+        Street Address
+      </Text>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#9A9A9A",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingHorizontal": 12,
+            "paddingVertical": 8,
+          }
+        }
+      >
+        <TextInput
+          accessibilityHint="Enter text here"
+          accessibilityState={
+            {
+              "disabled": undefined,
+            }
+          }
+          aria-label="Text input field"
+          autoCapitalize="sentences"
+          autoCorrect={true}
+          blurOnSubmit={true}
+          keyboardType="default"
+          numberOfLines={1}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onContentSizeChange={[Function]}
+          onFocus={[Function]}
+          onSubmitEditing={[Function]}
+          placeholder="Enter an address"
+          placeholderTextColor="#686868"
+          secureTextEntry={false}
+          style={
+            {
+              "color": "#1C1C1C",
+              "flex": 1,
+              "fontFamily": "text",
+              "fontSize": 16,
+              "gap": 10,
+              "height": 20,
+              "paddingVertical": 0,
+              "width": "100%",
+            }
+          }
+          testID="test-address-address1"
+          textContentType="none"
+          underlineColorAndroid="transparent"
+          value="123 Main St"
+        />
+      </View>
+    </View>
+  </View>,
+  <View
+    style={
+      {
+        "marginBottom": 16,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#1C1C1C",
+            "fontSize": 14,
+            "fontWeight": 600,
+            "lineHeight": 22.4,
+          }
+        }
+      >
+        Apt, suite, etc
+      </Text>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#9A9A9A",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingHorizontal": 12,
+            "paddingVertical": 8,
+          }
+        }
+      >
+        <TextInput
+          accessibilityHint="Enter text here"
+          accessibilityState={
+            {
+              "disabled": undefined,
+            }
+          }
+          aria-label="Text input field"
+          autoCapitalize="sentences"
+          autoCorrect={true}
+          blurOnSubmit={true}
+          keyboardType="default"
+          numberOfLines={1}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onContentSizeChange={[Function]}
+          onFocus={[Function]}
+          onSubmitEditing={[Function]}
+          placeholderTextColor="#686868"
+          secureTextEntry={false}
+          style={
+            {
+              "color": "#1C1C1C",
+              "flex": 1,
+              "fontFamily": "text",
+              "fontSize": 16,
+              "gap": 10,
+              "height": 20,
+              "paddingVertical": 0,
+              "width": "100%",
+            }
+          }
+          testID="test-address-address2"
+          textContentType="none"
+          underlineColorAndroid="transparent"
+          value="Apt 4B"
+        />
+      </View>
+    </View>
+  </View>,
+  <View
+    style={
+      {
+        "marginBottom": 16,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#1C1C1C",
+            "fontSize": 14,
+            "fontWeight": 600,
+            "lineHeight": 22.4,
+          }
+        }
+      >
+        City
+      </Text>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#9A9A9A",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingHorizontal": 12,
+            "paddingVertical": 8,
+          }
+        }
+      >
+        <TextInput
+          accessibilityHint="Enter text here"
+          accessibilityState={
+            {
+              "disabled": undefined,
+            }
+          }
+          aria-label="Text input field"
+          autoCapitalize="sentences"
+          autoCorrect={true}
+          blurOnSubmit={true}
+          keyboardType="default"
+          numberOfLines={1}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onContentSizeChange={[Function]}
+          onFocus={[Function]}
+          onSubmitEditing={[Function]}
+          placeholderTextColor="#686868"
+          secureTextEntry={false}
+          style={
+            {
+              "color": "#1C1C1C",
+              "flex": 1,
+              "fontFamily": "text",
+              "fontSize": 16,
+              "gap": 10,
+              "height": 20,
+              "paddingVertical": 0,
+              "width": "100%",
+            }
+          }
+          testID="test-address-city"
+          textContentType="none"
+          underlineColorAndroid="transparent"
+          value="Springfield"
+        />
+      </View>
+    </View>
+  </View>,
+  <View
+    style={
+      {
+        "marginBottom": 16,
+      }
+    }
+  >
+    <View>
+      <Text
+        style={
+          {
+            "color": "#1C1C1C",
+            "fontSize": 14,
+            "fontWeight": 600,
+            "lineHeight": 22.4,
+          }
+        }
+      >
+        State
+      </Text>
+      <View
+        style={
+          [
+            {
+              "alignItems": "center",
+              "alignSelf": "stretch",
+              "borderRadius": 4,
+              "borderWidth": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "minHeight": 40,
+              "width": "100%",
+            },
+            {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#9A9A9A",
+            },
+            false,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          activeOpacity={1}
+          collapsable={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "minHeight": 40,
+              "width": "95%",
+            }
+          }
+          testID="ios_touchable_wrapper"
+        >
+          <View
+            style={
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+                "pointerEvents": "box-only",
+                "width": "100%",
+              }
+            }
+          >
+            <TextInput
+              readOnly={true}
+              style={
+                {
+                  "color": "#1C1C1C",
+                }
+              }
+              testID="text_input"
+              value="Please select an option."
+            />
+            <View
+              style={
+                {
+                  "pointerEvents": "none",
+                }
+              }
+              testID="icon_container"
+            >
+              <View
+                brand={false}
+                color="#1C1C1C"
+                duotone={false}
+                light={false}
+                name="angle-down"
+                regular={false}
+                sharp={false}
+                size={12}
+                solid={true}
+                thin={false}
+              />
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>,
+  <View
+    style={
+      {
+        "marginBottom": 16,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "width": "100%",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "#1C1C1C",
+            "fontSize": 14,
+            "fontWeight": 600,
+            "lineHeight": 22.4,
+          }
+        }
+      >
+        Zipcode
+      </Text>
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#9A9A9A",
+            "borderRadius": 4,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingHorizontal": 12,
+            "paddingVertical": 8,
+          }
+        }
+      >
+        <TextInput
+          accessibilityHint="Enter text here"
+          accessibilityState={
+            {
+              "disabled": undefined,
+            }
+          }
+          aria-label="Text input field"
+          autoCapitalize="sentences"
+          autoCorrect={true}
+          blurOnSubmit={true}
+          keyboardType="default"
+          numberOfLines={1}
+          onBlur={[Function]}
+          onChangeText={[Function]}
+          onContentSizeChange={[Function]}
+          onFocus={[Function]}
+          onSubmitEditing={[Function]}
+          placeholderTextColor="#686868"
+          secureTextEntry={false}
+          style={
+            {
+              "color": "#1C1C1C",
+              "flex": 1,
+              "fontFamily": "text",
+              "fontSize": 16,
+              "gap": 10,
+              "height": 20,
+              "paddingVertical": 0,
+              "width": "100%",
+            }
+          }
+          testID="test-address-zip"
+          textContentType="none"
+          underlineColorAndroid="transparent"
+          value="62701"
+        />
+      </View>
+    </View>
+  </View>,
+]
+`;

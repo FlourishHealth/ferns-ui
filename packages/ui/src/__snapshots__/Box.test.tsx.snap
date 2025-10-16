@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Box snapshots should match snapshot with border and rounding 1`] = `
+<View
+  onPointerEnter={[Function]}
+  onPointerLeave={[Function]}
+  style={
+    {
+      "backgroundColor": "#0E9DCD",
+      "borderColor": "#CDCDCD",
+      "borderRadius": 4,
+      "borderWidth": 1,
+      "boxShadow": "2px 2px 2px rgba(153, 153, 153, 1.0)",
+    }
+  }
+/>
+`;
+
+exports[`Box snapshots should match snapshot with clickable props 1`] = `
+<View
+  accessibilityHint="Tap to trigger action"
+  accessibilityLabel="Click me"
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  aria-role="button"
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onPointerEnter={[Function]}
+  onPointerLeave={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    {
+      "accessibilityHint": "Tap to trigger action",
+      "accessibilityLabel": "Click me",
+    }
+  }
+/>
+`;
+
+exports[`Box snapshots should match snapshot with default props 1`] = `
+<View
+  onPointerEnter={[Function]}
+  onPointerLeave={[Function]}
+  style={{}}
+/>
+`;
+
+exports[`Box snapshots should match snapshot with keyboard avoidance 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "display": "flex",
+        "flex": 1,
+      },
+      {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <RCTSafeAreaView
+    style={
+      {
+        "display": "flex",
+        "flex": 1,
+      }
+    }
+  >
+    <View
+      onPointerEnter={[Function]}
+      onPointerLeave={[Function]}
+      style={
+        {
+          "avoidKeyboard": true,
+        }
+      }
+    />
+  </RCTSafeAreaView>
+</View>
+`;
+
+exports[`Box snapshots should match snapshot with layout props 1`] = `
+<View
+  onPointerEnter={[Function]}
+  onPointerLeave={[Function]}
+  style={
+    {
+      "alignItems": "center",
+      "display": "flex",
+      "flexDirection": "column",
+      "flexGrow": 1,
+      "flexShrink": 1,
+      "justifyContent": "center",
+      "margin": 8,
+      "padding": 16,
+    }
+  }
+/>
+`;
+
+exports[`Box snapshots should match snapshot with scroll enabled 1`] = `
+<RCTScrollView
+  contentContainerStyle={
+    {
+      "alignContent": undefined,
+      "alignItems": undefined,
+      "justifyContent": undefined,
+    }
+  }
+  horizontal={false}
+  keyboardShouldPersistTaps="handled"
+  nestedScrollEnabled={true}
+  onScroll={[Function]}
+  scrollEventThrottle={50}
+  style={
+    {
+      "scroll": true,
+    }
+  }
+>
+  <View>
+    <View
+      onPointerEnter={[Function]}
+      onPointerLeave={[Function]}
+      style={
+        {
+          "scroll": true,
+        }
+      }
+    />
+  </View>
+</RCTScrollView>
+`;

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Badge renders correctly with default props 1`] = `
+<View
+  style={
+    {
+      "alignItems": "flex-start",
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#2B6072",
+          "borderRadius": 4,
+          "flexDirection": "row",
+          "height": "auto",
+          "justifyContent": "center",
+          "paddingHorizontal": 8,
+          "paddingVertical": 4,
+          "width": "auto",
+        },
+        false,
+        false,
+      ]
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "#FFFFFF",
+          "fontFamily": "text",
+          "fontSize": 10,
+          "fontWeight": "700",
+        }
+      }
+    >
+      Test
+    </Text>
+  </View>
+</View>
+`;

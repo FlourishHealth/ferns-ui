@@ -17,6 +17,7 @@ export const Badge = ({
   customBorderColor,
   customIconColor,
   customIconName,
+  testID,
 }: BadgeProps): React.ReactElement => {
   const {theme} = useTheme();
   const isIconOnly = variant === "iconOnly";
@@ -110,9 +111,10 @@ export const Badge = ({
           isIconOnly && {height: 16, width: 16},
           secondary && {borderWidth: 1, borderColor},
         ]}
+        testID={testID}
       >
         {Boolean(variant !== "numberOnly" && iconName) && (
-          <View style={{marginRight: variant === "iconOnly" ? 0 : theme.spacing.sm}}>
+          <View style={{marginRight: variant === "iconOnly" ? 0 : theme.spacing.sm}} testID="icon">
             <Icon color={iconColor} iconName={customIconName ?? iconName!} size="xs" />
           </View>
         )}

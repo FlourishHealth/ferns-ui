@@ -77,7 +77,10 @@ You must wrap your app in a FernsProvider to use the theme, Toasts, and other fe
             </SafeAreaProvider>
         );
     };
-
+    
+# Cursor Rules
+If you use Cursor or compatible tools, use the rules in .cursor/rules/ferns-ui-usage.md to
+help generate code that uses Ferns UI.
 
 ## Dev
 

@@ -175,6 +175,7 @@ export const Avatar: FC<AvatarProps> = ({
           right: 0,
           zIndex: 5,
         }}
+        testID="status-indicator"
       >
         {icon({
           doNotDisturb,
@@ -213,6 +214,7 @@ export const Avatar: FC<AvatarProps> = ({
               height: avatarImageDiameter,
               overflow: "hidden",
             }}
+            testID="avatar-image"
             onError={handleImageError}
           />
         ) : (
