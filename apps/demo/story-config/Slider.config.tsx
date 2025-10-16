@@ -24,14 +24,14 @@ export const SliderConfiguration: DemoConfiguration = {
   interfaceName: "SliderProps",
   usage: {
     do: [
-      "Use sliders for selecting values from a continuous range.",
-      "Show the current value when precision is important.",
-      "Use appropriate step values for the range.",
-      "Provide helper text to explain the purpose of the slider.",
+      "Provide contextual labels. The Mood and Numeric variants have these built in, but the basic one would need something descriptive, such as a title.",
+      "Provide visual feedback. For the numeric slider, this is automatically satisfied by the numbers changing on the handle. For the mood slider, this would be satisfied by the feedback slider pattern.",
+      "Use sufficient touch targets for the handle. Resist the urge to make it smaller!"
     ],
     doNot: [
-      "Don't use sliders for precise numeric input; use NumberField instead.",
-      "Don't use sliders when there are many discrete options; use SelectField instead.",
+      "When adding additional visual feedback, don’t rely solely on color. Use additional cues like shapes, labels, or patterns to convey information for colorblind users.",
+      "Don’t overcrowd the interface with sliders.",
+      "Don’t use sliders for binary choices.",
     ],
   },
   props: {},
@@ -41,10 +41,10 @@ export const SliderConfiguration: DemoConfiguration = {
     "Basic Slider": {
       render: SliderDemo,
     },
-    "Slider with Emojis Display": {
+    "Slider with Emojis": {
       render: SliderWithSmileysDemo,
     },
-    "Slider with Value Display": {
+    "Slider with Value": {
       render: SliderWithValueDemo,
     },
     "Slider with Icons": {
