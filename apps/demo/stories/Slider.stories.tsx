@@ -67,5 +67,23 @@ export const SliderWithGraphicsDemo = (): ReactElement => {
   );
 };
 
+export const SliderWithLabelsDemo = (): ReactElement => {
+  const [value, setValue] = useState<number>(50);
+  return (
+    <Slider
+      labels={{
+        min: "Low",
+        custom: [{index: 25, label: "|"}, {index: 50, label: "|"}, {index: 75, label: "|"},],
+        max: "High",
+      }}
+      maximumValue={100}
+      minimumValue={0}
+      step={1}
+      title="Temperature"
+      value={value}
+      onChange={setValue}
+    />
+  );
+};
 
 

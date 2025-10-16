@@ -94,6 +94,17 @@ export const Slider: FC<SliderProps> = ({
           thumbTintColor={thumbColor}
           value={value}
           onValueChange={onChange}
+          {...{
+            trackStyle: {
+              height: 10,
+            },
+            thumbStyle: {
+              width: 48,
+              height: 48,
+              backgroundColor: 'white',
+              borderRadius: 24,
+            },
+          }}
         />
         {labels && (
           <Box direction="row" justifyContent="between" marginTop={2}>
