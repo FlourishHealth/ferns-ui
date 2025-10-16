@@ -103,6 +103,14 @@ export const Slider: FC<SliderProps> = ({
               height: 48,
               backgroundColor: 'white',
               borderRadius: 24,
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 5,
             },
           }}
         />
