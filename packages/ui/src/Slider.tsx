@@ -15,6 +15,7 @@ export const Slider: FC<SliderProps> = ({
   disabled = false,
   errorText,
   helperText,
+  inlineLabels = false,
   labels,
   maximumTrackTintColor,
   maximumValue = 1,
@@ -73,6 +74,86 @@ export const Slider: FC<SliderProps> = ({
     }
   };
 
+  const sliderStyles = {
+    trackStyle: {
+      height: 10,
+    },
+    thumbStyle: {
+      width: 48,
+      height: 48,
+      backgroundColor: 'white',
+      borderRadius: 24,
+      shadowColor: '#000',
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    },
+  };
+
+  const sliderElement = (
+    <SliderComponent
+      disabled={disabled}
+      maximumTrackTintColor={maxTrackColor}
+      maximumValue={maximumValue}
+      minimumTrackTintColor={minTrackColor}
+      minimumValue={minimumValue}
+      step={step}
+      thumbTintColor={thumbColor}
+      value={value}
+      onValueChange={onChange}
+      {...sliderStyles}
+    />
+  );
+
+  const renderSlider = () => {
+    if (inlineLabels && labels?.min && labels?.max) {
+      return (
+        <Box alignItems="center" direction="row" gap={2}>
+          <Box flex="shrink" minWidth={60}>
+            <Text color="secondaryDark" size="sm">
+              {labels.min}
+            </Text>
+          </Box>
+          <Box flex="grow">{sliderElement}</Box>
+          <Box alignItems="end" flex="shrink" minWidth={60}>
+            <Text color="secondaryDark" size="sm">
+              {labels.max}
+            </Text>
+          </Box>
+        </Box>
+      );
+    }
+
+    return (
+      <>
+        {sliderElement}
+        {labels && (
+          <Box direction="row" justifyContent="between" marginTop={2}>
+            {labels.min && (
+              <Text color="secondaryDark" size="sm">
+                {labels.min}
+              </Text>
+            )}
+            {labels.custom?.map((customLabel, index) => (
+              <Text key={index} color="secondaryDark" size="sm">
+                {customLabel.label}
+              </Text>
+            ))}
+            {labels.max && (
+              <Text color="secondaryDark" size="sm">
+                {labels.max}
+              </Text>
+            )}
+          </Box>
+        )}
+      </>
+    );
+  };
+
   return (
     <Box>
       {Boolean(title) && <FieldTitle text={title!} />}
@@ -82,55 +163,7 @@ export const Slider: FC<SliderProps> = ({
             {getCenterContent()}
           </Box>
         )}
-        <SliderComponent
-          disabled={disabled}
-          maximumTrackTintColor={maxTrackColor}
-          maximumValue={maximumValue}
-          minimumTrackTintColor={minTrackColor}
-          minimumValue={minimumValue}
-          step={step}
-          thumbTintColor={thumbColor}
-          value={value}
-          onValueChange={onChange}
-          {...{
-            trackStyle: {
-              height: 10,
-            },
-            thumbStyle: {
-              width: 48,
-              height: 48,
-              backgroundColor: 'white',
-              borderRadius: 24,
-              shadowColor: '#000',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 5,
-            },
-          }}
-        />
-        {labels && (
-          <Box direction="row" justifyContent="between" marginTop={2}>
-            {labels.min && (
-              <Text size="sm" color="secondaryDark">
-                {labels.min}
-              </Text>
-            )}
-            {labels.custom?.map((customLabel, index) => (
-              <Text key={index} size="sm" color="secondaryDark">
-                {customLabel.label}
-              </Text>
-            ))}
-            {labels.max && (
-              <Text size="sm" color="secondaryDark">
-                {labels.max}
-              </Text>
-            )}
-          </Box>
-        )}
+        {renderSlider()}
       </Box>
       {Boolean(helperText && !errorText) && <FieldHelperText text={helperText!} />}
       {Boolean(errorText) && <FieldError text={errorText!} />}

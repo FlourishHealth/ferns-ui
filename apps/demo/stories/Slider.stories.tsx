@@ -26,6 +26,11 @@ export const SliderWithSmileysDemo = (): ReactElement => {
   const [value, setValue] = useState<number>(50);
   return (
     <Slider
+      inlineLabels
+      labels={{
+        min: "Sad",
+        max: "Happy",
+      }}
       maximumValue={100}
       minimumValue={0}
       showSelection
@@ -73,7 +78,26 @@ export const SliderWithLabelsDemo = (): ReactElement => {
     <Slider
       labels={{
         min: "Low",
-        custom: [{index: 25, label: "|"}, {index: 50, label: "|"}, {index: 75, label: "|"},],
+        custom: [{index: 25, label: "|"}, {index: 50, label: "|"}, {index: 75, label: "|"}],
+        max: "High",
+      }}
+      maximumValue={100}
+      minimumValue={0}
+      step={1}
+      title="Temperature"
+      value={value}
+      onChange={setValue}
+    />
+  );
+};
+
+export const SliderWithInlineLabelsDemo = (): ReactElement => {
+  const [value, setValue] = useState<number>(50);
+  return (
+    <Slider
+      inlineLabels
+      labels={{
+        min: "Low",
         max: "High",
       }}
       maximumValue={100}

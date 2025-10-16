@@ -2759,6 +2759,12 @@ export interface SliderProps extends HelperTextProps, ErrorTextProps {
   };
 
   /**
+   * If true, displays min and max labels inline on both ends of the track.
+   * @default false
+   */
+  inlineLabels?: boolean;
+
+  /**
    * If true, icons will be displayed instead of numeric values when valueMapping is provided.
    * @default false
    */
