@@ -1,5 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {SliderDemo, SliderWithGraphicsDemo, SliderWithLabelsDemo, SliderWithSmileysDemo, SliderWithValueDemo} from "@stories";
+import {SliderDemo, SliderWithIconsDemo, SliderWithLabelsDemo, SliderWithSmileysDemo, SliderWithValueDemo} from "@stories";
 import {Slider} from "ferns-ui";
 
 export const SliderConfiguration: DemoConfiguration = {
@@ -47,8 +47,8 @@ export const SliderConfiguration: DemoConfiguration = {
     "Slider with Value Display": {
       render: SliderWithValueDemo,
     },
-    "Slider with Graphics": {
-      render: SliderWithGraphicsDemo,
+    "Slider with Icons": {
+      render: SliderWithIconsDemo,
     },
     "Slider with Labels": {
       render: SliderWithLabelsDemo,

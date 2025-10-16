@@ -430,7 +430,7 @@ export const iconSizeToNumber = (size?: IconSize) => {
   }[size || "md"];
 };
 
-export type TextSize = "sm" | "md" | "lg" | "xl";
+export type TextSize = "sm" | "md" | "lg" | "xl" | "xx";
 
 export type IconPrefix = "far" | "fas";
 
@@ -2782,9 +2782,4 @@ export interface SliderProps extends HelperTextProps, ErrorTextProps {
      */
     size?: IconSize;
   }>;
-
-  /**
-   * The test ID for the slider, used for testing purposes.
-   */
-  testID?: string;
 }

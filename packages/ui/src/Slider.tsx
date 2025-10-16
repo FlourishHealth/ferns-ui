@@ -21,7 +21,6 @@ export const Slider: FC<SliderProps> = ({
   minimumTrackTintColor,
   minimumValue = 0,
   step = 0,
-  testID,
   thumbTintColor,
   title,
   showSelection = false,
@@ -64,13 +63,13 @@ export const Slider: FC<SliderProps> = ({
   const getCenterContent = () => {
     if (!valueMapping || valueMapping.length == 0) {
       const formattedValue = value.toFixed(step > 0 && step < 1 ? String(step).split(".")[1]?.length || 0 : 0);
-      return <Text align="center" color={disabled ? "secondaryLight" : "primary"}>{formattedValue}</Text>;
+      return <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="lg">{formattedValue}</Text>;
     }
     const currentOption = getCurrentMapping();
     if (useIcons) {
       return <Icon color={disabled ? "secondaryLight" : "primary"} iconName={currentOption!.value as IconName} size={currentOption!.size || "md"} />;
     } else {
-      return <Text align="center" color={disabled ? "secondaryLight" : "primary"}>{currentOption?.value}</Text>;
+      return <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="xx">{currentOption?.value}</Text>;
     }
   };
 
@@ -90,7 +89,6 @@ export const Slider: FC<SliderProps> = ({
           minimumTrackTintColor={minTrackColor}
           minimumValue={minimumValue}
           step={step}
-          testID={testID}
           thumbTintColor={thumbColor}
           value={value}
           onValueChange={onChange}

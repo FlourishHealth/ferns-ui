@@ -44,7 +44,7 @@ export const SliderWithSmileysDemo = (): ReactElement => {
   );
 };
 
-export const SliderWithGraphicsDemo = (): ReactElement => {
+export const SliderWithIconsDemo = (): ReactElement => {
   const [value, setValue] = useState<number>(50);
   return (
     <Slider
