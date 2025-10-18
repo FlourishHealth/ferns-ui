@@ -432,6 +432,12 @@ export const iconSizeToNumber = (size?: IconSize) => {
 
 export type TextSize = "sm" | "md" | "lg" | "xl" | "xx";
 
+export type ValueMappingItem = {
+  index: number;
+  value: string;
+  size?: IconSize;
+};
+
 export type IconPrefix = "far" | "fas";
 
 export interface LayerProps {
@@ -2774,18 +2780,5 @@ export interface SliderProps extends HelperTextProps, ErrorTextProps {
    * Graphics/icons to display instead of numeric values.
    * Maps slider values to icon names or any string.
    */
-  valueMapping?: Array<{
-    /**
-     * The slider value this option represents.
-     */
-    index: number;
-    /**
-     * The icon or string to display for this value.
-     */
-    value: string;
-    /**
-     * Optional icon size override.
-     */
-    size?: IconSize;
-  }>;
+  valueMapping?: ValueMappingItem[];
 }

@@ -3,7 +3,7 @@ import React, {FC} from "react";
 import {View} from "react-native";
 
 import {Box} from "./Box";
-import {IconName, SliderProps} from "./Common";
+import {IconName, SliderProps, ValueMappingItem} from "./Common";
 import {FieldError} from "./fieldElements/FieldError";
 import {FieldHelperText} from "./fieldElements/FieldHelperText";
 import {FieldTitle} from "./fieldElements/FieldTitle";
@@ -41,16 +41,16 @@ export const Slider: FC<SliderProps> = ({
   const thumbColor = thumbTintColor || theme.surface.primary;
 
   // Find the closest option for the current value
-  const getCurrentMapping = () => {
-    if (!valueMapping || valueMapping.length === 0) {
+  const getCurrentMapping = (map: ValueMappingItem[], value: number) => {
+    if (!map || map.length === 0) {
       return null;
     }
     
     // Find the option with the closest value
-    let closestOption = valueMapping[0];
+    let closestOption = map[0];
     let closestDistance = Math.abs(value - closestOption.index);
     
-    for (const option of valueMapping) {
+    for (const option of map) {
       const distance = Math.abs(value - option.index);
       if (distance < closestDistance) {
         closestDistance = distance;
@@ -66,7 +66,7 @@ export const Slider: FC<SliderProps> = ({
       const formattedValue = value.toFixed(step > 0 && step < 1 ? String(step).split(".")[1]?.length || 0 : 0);
       return <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="lg">{formattedValue}</Text>;
     }
-    const currentOption = getCurrentMapping();
+    const currentOption = getCurrentMapping(valueMapping, value);
     if (useIcons) {
       return <Icon color={disabled ? "secondaryLight" : "primary"} iconName={currentOption!.value as IconName} size={currentOption!.size || "md"} />;
     } else {
