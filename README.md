@@ -112,6 +112,44 @@ Update the paths to match your project directories. This will build and pack up 
 send to NPM, then install it from the created tarball in your app. `yarn link` is also an option but React
 Native requires extra configuration to support symlinks.
 
+## Releasing
+
+Releases are typically done after each pull request is merged to keep the package up-to-date.
+
+### Publishing a new version
+
+1. Go to the [GitHub releases page](https://github.com/FlourishHealth/ferns-ui/releases)
+2. Click "Draft a new release"
+3. Create a new tag with a version number (usually a minor version bump, e.g., `1.11.0`)
+4. Use the "Generate release notes" button to auto-populate the description
+5. Click "Publish release"
+
+### What happens automatically
+
+After publishing the release, the following happens automatically via `.github/workflows/ui-publish.yml`:
+
+1. The package version in `package.json` is updated to match your release tag
+2. The package is built and published to NPM (takes a couple of minutes)
+3. A pull request is automatically created with the version bump
+4. You'll receive a Slack notification when the release is complete
+
+### Approving the version bump PR
+
+After the release is published, you'll get a PR that updates the version in `package.json`. You can approve and merge this PR yourself.
+
+### Using the new version in flourish
+
+To use your newly released version of ferns-ui in the flourish app:
+
+1. Navigate to the flourish repository
+2. Update the `ferns-ui` version in `app/package.json`:
+   ```json
+   "ferns-ui": "1.11.0"
+   ```
+3. Run `yarn install` in the `app/` directory
+4. Create a PR with this change (requires team member approval)
+
+
 ## Upgrading dependencies
 
 To upgrade to the latest Expo and upgrade the related dependencies:
