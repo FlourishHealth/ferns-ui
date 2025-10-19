@@ -63,7 +63,7 @@ const getCenterContent = (
   }
   
   return (
-    <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="xx">
+    <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="2xl">
       {currentOption?.value}
     </Text>
   );

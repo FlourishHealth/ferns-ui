@@ -19,7 +19,7 @@ const fontSizeAndWeightWeb = {
   md: {size: 16, weight: "regular"},
   lg: {size: 18, weight: "medium"},
   xl: {size: 20, weight: "medium"},
-  xx: {size: 48, weight: "medium"},
+  "2xl": {size: 48, weight: "medium"},
 };
 
 const fontSizeAndWeighMobile = {
@@ -27,7 +27,7 @@ const fontSizeAndWeighMobile = {
   md: {size: 14, weight: "regular"},
   lg: {size: 16, weight: "medium"},
   xl: {size: 18, weight: "medium"},
-  xx: {size: 40, weight: "medium"},
+  "2xl": {size: 40, weight: "medium"},
 };
 
 const fontSizes = Platform.OS === "web" ? fontSizeAndWeightWeb : fontSizeAndWeighMobile;

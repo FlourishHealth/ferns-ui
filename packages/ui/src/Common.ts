@@ -430,7 +430,7 @@ export const iconSizeToNumber = (size?: IconSize) => {
   }[size || "md"];
 };
 
-export type TextSize = "sm" | "md" | "lg" | "xl" | "xx";
+export type TextSize = "sm" | "md" | "lg" | "xl" | "2xl";
 
 export type ValueMappingItem = {
   index: number;
