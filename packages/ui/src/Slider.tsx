@@ -11,6 +11,113 @@ import {Icon} from "./Icon";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
 
+// Find the closest option for the current value
+const getCurrentMapping = (map: ValueMappingItem[], value: number) => {
+  if (!map || map.length === 0) {
+    return null;
+  }
+  
+  // Find the option with the closest value
+  let closestOption = map[0];
+  let closestDistance = Math.abs(value - closestOption.index);
+  
+  for (const option of map) {
+    const distance = Math.abs(value - option.index);
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closestOption = option;
+    }
+  }
+  
+  return closestOption;
+};
+
+const getCenterContent = (
+  valueMapping: ValueMappingItem[] | undefined,
+  value: number,
+  step: number,
+  disabled: boolean,
+  useIcons: boolean
+): React.ReactElement => {
+  if (!valueMapping || valueMapping.length === 0) {
+    const formattedValue = value.toFixed(
+      step > 0 && step < 1 ? String(step).split(".")[1]?.length || 0 : 0
+    );
+    return (
+      <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="lg">
+        {formattedValue}
+      </Text>
+    );
+  }
+  
+  const currentOption = getCurrentMapping(valueMapping, value);
+  
+  if (useIcons) {
+    return (
+      <Icon
+        color={disabled ? "secondaryLight" : "primary"}
+        iconName={currentOption!.value as IconName}
+        size={currentOption!.size || "md"}
+      />
+    );
+  }
+  
+  return (
+    <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="xx">
+      {currentOption?.value}
+    </Text>
+  );
+};
+
+const getSliderContent = (
+  slider: React.ReactElement,
+  inlineLabels: boolean,
+  labels?: SliderProps['labels']
+): React.ReactElement => {
+  if (inlineLabels && labels?.min && labels?.max) {
+    return (
+      <Box alignItems="center" direction="row" gap={2}>
+        <Box flex="shrink" minWidth={30}>
+          <Text color="secondaryDark" size="md">
+            {labels.min}
+          </Text>
+        </Box>
+        <Box flex="grow">{slider}</Box>
+        <Box alignItems="end" flex="shrink" minWidth={30}>
+          <Text color="secondaryDark" size="md">
+            {labels.max}
+          </Text>
+        </Box>
+      </Box>
+    );
+  }
+
+  return (
+    <>
+      {slider}
+      {labels && (
+        <Box direction="row" justifyContent="between" marginTop={2}>
+          {labels.min && (
+            <Text color="secondaryDark" size="sm">
+              {labels.min}
+            </Text>
+          )}
+          {labels.custom?.map((customLabel, index) => (
+            <Text key={index} color="secondaryDark" size="sm">
+              {customLabel.label}
+            </Text>
+          ))}
+          {labels.max && (
+            <Text color="secondaryDark" size="sm">
+              {labels.max}
+            </Text>
+          )}
+        </Box>
+      )}
+    </>
+  );
+};
+
 export const Slider: FC<SliderProps> = ({
   disabled = false,
   errorText,
@@ -39,40 +146,6 @@ export const Slider: FC<SliderProps> = ({
   const minTrackColor = minimumTrackTintColor || theme.surface.primary;
   const maxTrackColor = maximumTrackTintColor || theme.border.default;
   const thumbColor = thumbTintColor || theme.surface.primary;
-
-  // Find the closest option for the current value
-  const getCurrentMapping = (map: ValueMappingItem[], value: number) => {
-    if (!map || map.length === 0) {
-      return null;
-    }
-    
-    // Find the option with the closest value
-    let closestOption = map[0];
-    let closestDistance = Math.abs(value - closestOption.index);
-    
-    for (const option of map) {
-      const distance = Math.abs(value - option.index);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestOption = option;
-      }
-    }
-    
-    return closestOption;
-  };
-
-  const getCenterContent = () => {
-    if (!valueMapping || valueMapping.length == 0) {
-      const formattedValue = value.toFixed(step > 0 && step < 1 ? String(step).split(".")[1]?.length || 0 : 0);
-      return <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="lg">{formattedValue}</Text>;
-    }
-    const currentOption = getCurrentMapping(valueMapping, value);
-    if (useIcons) {
-      return <Icon color={disabled ? "secondaryLight" : "primary"} iconName={currentOption!.value as IconName} size={currentOption!.size || "md"} />;
-    } else {
-      return <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="xx">{currentOption?.value}</Text>;
-    }
-  };
 
   const sliderStyles = {
     trackStyle: {
@@ -109,50 +182,8 @@ export const Slider: FC<SliderProps> = ({
     />
   );
 
-  const renderSlider = () => {
-    if (inlineLabels && labels?.min && labels?.max) {
-      return (
-        <Box alignItems="center" direction="row" gap={2}>
-          <Box flex="shrink" minWidth={30}>
-            <Text color="secondaryDark" size="md">
-              {labels.min}
-            </Text>
-          </Box>
-          <Box flex="grow">{sliderElement}</Box>
-          <Box alignItems="end" flex="shrink" minWidth={30}>
-            <Text color="secondaryDark" size="md">
-              {labels.max}
-            </Text>
-          </Box>
-        </Box>
-      );
-    }
-
-    return (
-      <>
-        {sliderElement}
-        {labels && (
-          <Box direction="row" justifyContent="between" marginTop={2}>
-            {labels.min && (
-              <Text color="secondaryDark" size="sm">
-                {labels.min}
-              </Text>
-            )}
-            {labels.custom?.map((customLabel, index) => (
-              <Text key={index} color="secondaryDark" size="sm">
-                {customLabel.label}
-              </Text>
-            ))}
-            {labels.max && (
-              <Text color="secondaryDark" size="sm">
-                {labels.max}
-              </Text>
-            )}
-          </Box>
-        )}
-      </>
-    );
-  };
+  const centerContent = getCenterContent(valueMapping, value, step, disabled, useIcons);
+  const sliderContent = getSliderContent(sliderElement, inlineLabels, labels);
 
   return (
     <Box>
@@ -160,10 +191,10 @@ export const Slider: FC<SliderProps> = ({
       <Box direction="column" gap={showSelection ? 2 : 0}>
         {showSelection && (
           <Box alignItems="center">
-            {getCenterContent()}
+            {centerContent}
           </Box>
         )}
-        {renderSlider()}
+        {sliderContent}
       </Box>
       {Boolean(helperText && !errorText) && <FieldHelperText text={helperText!} />}
       {Boolean(errorText) && <FieldError text={errorText!} />}
