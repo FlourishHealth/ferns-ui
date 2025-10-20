@@ -433,8 +433,8 @@ export const iconSizeToNumber = (size?: IconSize) => {
 export type TextSize = "sm" | "md" | "lg" | "xl" | "2xl";
 
 export type ValueMappingItem = {
-  index: number;
-  value: string;
+  value: number;
+  label: string;
   size?: IconSize;
 };
 

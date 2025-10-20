@@ -19,10 +19,10 @@ const getCurrentMapping = (map: ValueMappingItem[], value: number) => {
   
   // Find the option with the closest value
   let closestOption = map[0];
-  let closestDistance = Math.abs(value - closestOption.index);
+  let closestDistance = Math.abs(value - closestOption.value);
   
   for (const option of map) {
-    const distance = Math.abs(value - option.index);
+    const distance = Math.abs(value - option.value);
     if (distance < closestDistance) {
       closestDistance = distance;
       closestOption = option;
@@ -56,7 +56,7 @@ const getCenterContent = (
     return (
       <Icon
         color={disabled ? "secondaryLight" : "primary"}
-        iconName={currentOption!.value as IconName}
+        iconName={currentOption!.label as IconName}
         size={currentOption!.size || "md"}
       />
     );
@@ -64,7 +64,7 @@ const getCenterContent = (
   
   return (
     <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="2xl">
-      {currentOption?.value}
+      {currentOption?.label}
     </Text>
   );
 };

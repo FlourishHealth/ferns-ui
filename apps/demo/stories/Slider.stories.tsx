@@ -1,9 +1,9 @@
-import {Slider} from "ferns-ui";
+import {Box, Slider} from "ferns-ui";
 import React, {ReactElement, useState} from "react";
 
 export const SliderDemo = (): ReactElement => {
   const [value, setValue] = useState<number>(0.5);
-  return <Slider maximumValue={1} minimumValue={0} step={0.1} value={value} onChange={setValue} />;
+  return <Box width="100%"><Slider maximumValue={1} minimumValue={0} step={0.1} value={value} onChange={setValue} /></Box>;
 };
 
 export const SliderWithValueDemo = (): ReactElement => {
@@ -38,11 +38,11 @@ export const SliderWithSmileysDemo = (): ReactElement => {
       title="Smileys"
       value={value}
       valueMapping={[
-        {index: 0, value: "\u{1F61E}"},
-        {index: 25, value: "\u{1F641}"},
-        {index: 50, value: "\u{1F610}"},
-        {index: 75, value: "\u{1F642}"},
-        {index: 100, value: "\u{1F604}"},
+        {value: 0, label: "\u{1F61E}"},
+        {value: 25, label: "\u{1F641}"},
+        {value: 50, label: "\u{1F610}"},
+        {value: 75, label: "\u{1F642}"},
+        {value: 100, label: "\u{1F604}"},
       ]}
       onChange={setValue}
     />
@@ -61,11 +61,11 @@ export const SliderWithIconsDemo = (): ReactElement => {
       useIcons
       value={value}
       valueMapping={[
-        {index: 0, value: "volume-xmark", size: "md"},
-        {index: 25, value: "volume-off", size: "md"},
-        {index: 50, value: "volume-low", size: "md"},
-        {index: 75, value: "volume-high", size: "md"},
-        {index: 100, value: "volume-high", size: "lg"},
+        {value: 0, label: "volume-xmark", size: "md"},
+        {value: 25, label: "volume-off", size: "md"},
+        {value: 50, label: "volume-low", size: "md"},
+        {value: 75, label: "volume-high", size: "md"},
+        {value: 100, label: "volume-high", size: "lg"},
       ]}
       onChange={setValue}
     />
