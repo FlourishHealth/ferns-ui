@@ -192,6 +192,8 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
       if (hideTooltipTimer.current) {
         clearTimeout(hideTooltipTimer.current);
       }
+      // Hide tooltip on unmount to prevent it from staying stuck on screen
+      setVisible(false);
     };
   }, []);
 
