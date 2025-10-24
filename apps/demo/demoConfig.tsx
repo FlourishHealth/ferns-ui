@@ -18,6 +18,7 @@ import {
   IconButtonConfiguration,
   IconConfiguration,
   LinkConfiguration,
+  MarkdownViewConfiguration,
   ModalConfiguration,
   MultiselectFieldConfiguration,
   NumberFieldConfiguration,
@@ -218,6 +219,7 @@ const Config: DemoConfigurationBase[] = [
   ThemeConfiguration,
   ToastConfiguration,
   TooltipConfiguration,
+  MarkdownViewConfiguration,
 ];
 
 export const DemoConfig = Config.map((c) => ({
