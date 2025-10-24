@@ -56,6 +56,7 @@ export * from "./SelectField";
 export * from "./SideDrawer";
 export * from "./Signature";
 export * from "./SignatureField";
+export * from "./Slider";
 export * from "./Spinner";
 export * from "./SplitPage";
 export * from "./table/Table";

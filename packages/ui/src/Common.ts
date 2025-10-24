@@ -430,7 +430,13 @@ export const iconSizeToNumber = (size?: IconSize) => {
   }[size || "md"];
 };
 
-export type TextSize = "sm" | "md" | "lg" | "xl";
+export type TextSize = "sm" | "md" | "lg" | "xl" | "2xl";
+
+export type ValueMappingItem = {
+  value: number;
+  label: string;
+  size?: IconSize;
+};
 
 export type IconPrefix = "far" | "fas";
 
@@ -2686,4 +2692,102 @@ export interface TableNumberProps {
    * @default "right"
    */
   align?: "left" | "right";
+}
+
+export interface SliderProps extends HelperTextProps, ErrorTextProps {
+  /**
+   * The title of the slider field.
+   */
+  title?: string;
+
+  /**
+   * The current value of the slider.
+   */
+  value: number;
+
+  /**
+   * The function to call when the slider value changes.
+   */
+  onChange: (value: number) => void;
+
+  /**
+   * The minimum value of the slider.
+   * @default 0
+   */
+  minimumValue?: number;
+
+  /**
+   * The maximum value of the slider.
+   * @default 1
+   */
+  maximumValue?: number;
+
+  /**
+   * The step value of the slider.
+   * @default 0
+   */
+  step?: number;
+
+  /**
+   * If true, the slider will be disabled.
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
+   * The color of the track to the left of the thumb.
+   */
+  minimumTrackTintColor?: string;
+
+  /**
+   * The color of the track to the right of the thumb.
+   */
+  maximumTrackTintColor?: string;
+
+  /**
+   * The color of the thumb.
+   */
+  thumbTintColor?: string;
+
+  /**
+   * If true, the slider will show the current value as text.
+   * @default false
+   */
+  showSelection?: boolean;
+
+  /**
+   * Labels to show below the slider track.
+   */
+  labels?: {
+    /**
+     * The minimum value label.
+     */
+    min?: string;
+    /**
+     * The maximum value label.
+     */
+    max?: string;
+    /**
+     * Additional labels with their positions (0-1 range).
+     */
+    custom?: Array<{index: number; label: string}>;
+  };
+
+  /**
+   * If true, displays min and max labels inline on both ends of the track.
+   * @default false
+   */
+  inlineLabels?: boolean;
+
+  /**
+   * If true, icons will be displayed instead of numeric values when valueMapping is provided.
+   * @default false
+   */
+  useIcons?: boolean;
+
+  /**
+   * Graphics/icons to display instead of numeric values.
+   * Maps slider values to icon names or any string.
+   */
+  valueMapping?: ValueMappingItem[];
 }

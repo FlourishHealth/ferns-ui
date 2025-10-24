@@ -30,6 +30,7 @@ export * from "./SelectBadge.config";
 export * from "./SelectField.config";
 export * from "./SideDrawer.config";
 export * from "./SignatureField.config";
+export * from "./Slider.config";
 export * from "./Spinner.config";
 export * from "./Table.config";
 export * from "./TableBadge.config";
