@@ -336,6 +336,8 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
             day: parseInt(dayVal),
             hour: hourNum,
             minute: parseInt(minuteVal),
+            second: 0,
+            millisecond: 0,
           },
           {
             zone: override?.timezone ?? timezone,
@@ -350,6 +352,10 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
             year: parseInt(yearVal),
             month: parseInt(monthVal),
             day: parseInt(dayVal),
+            hour: 0,
+            minute: 0,
+            second: 0,
+            millisecond: 0,
           },
           {
             zone: "UTC",
@@ -369,6 +375,8 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
           {
             hour: hourNum,
             minute: parseInt(minuteVal),
+            second: 0,
+            millisecond: 0,
           },
           {
             zone: override?.timezone ?? timezone,
@@ -527,8 +535,13 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
       // Normalize emitted value to ISO (UTC for date-only)
       const normalized =
         type === "date"
-          ? parsedDate.setZone("UTC").startOf("day").toUTC().toISO()
-          : parsedDate.toUTC().toISO();
+          ? parsedDate
+              .setZone("UTC")
+              .startOf("day")
+              .set({second: 0, millisecond: 0})
+              .toUTC()
+              .toISO()
+          : parsedDate.set({second: 0, millisecond: 0}).toUTC().toISO();
       if (!normalized) {
         console.warn("Invalid date passed to DateTimeField", parsedDate);
         return;
