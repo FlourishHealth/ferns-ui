@@ -68,21 +68,6 @@
     "typescript": "~5.9.2"
   },
   "private": true,
-  "eslintConfig": {
-    "extends": [
-      "plugin:ferns/recommended"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "project": "./tsconfig.json",
-      "tsconfigRootDir": "./"
-    },
-    "rules": {
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "react/function-component-definition": "off",
-      "import/no-default-export": "off"
-    }
-  },
   "prettier": {
     "arrowParens": "always",
     "bracketSpacing": false,

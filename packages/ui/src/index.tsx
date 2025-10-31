@@ -79,6 +79,7 @@ export * from "./TextField";
 export * from "./Theme";
 export * from "./Toast";
 export * from "./Tooltip";
+export * from "./MarkdownView";
 export * from "./UnifiedAddressAutoComplete";
 export * from "./Unifier";
 export * from "./useStoredState";
