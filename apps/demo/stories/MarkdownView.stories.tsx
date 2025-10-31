@@ -20,10 +20,20 @@ const hr = `Above the rule.\n\n---\n\nBelow the rule.`;
 
 const overview = `# Markdown Overview\n\n${headings}\n\n${emphasis}\n\n${lists}\n\n${blockquote}\n\n${code}\n\n${links}\n\n${hr}`;
 
+const demo = `# Markdown Demo\n**bold** and _italic_ text.`;
+
 export const MarkdownOverview = (): React.ReactElement => (
   <StorybookContainer>
     <Box maxWidth={800} width="100%">
       <MarkdownView>{overview}</MarkdownView>
+    </Box>
+  </StorybookContainer>
+);
+
+export const MarkdownViewDemo = (): React.ReactElement => (
+  <StorybookContainer>
+    <Box maxWidth={800} width="100%">
+      <MarkdownView></MarkdownView>
     </Box>
   </StorybookContainer>
 );

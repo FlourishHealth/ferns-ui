@@ -2,12 +2,7 @@ import React from "react";
 import {DemoConfiguration} from "@config";
 import {
   MarkdownOverview,
-  MarkdownHeadings,
-  MarkdownEmphasis,
-  MarkdownLists,
-  MarkdownBlockquote,
-  MarkdownCode,
-  MarkdownLinksAndRules,
+  MarkdownViewDemo,
 } from "@stories";
 import {MarkdownView} from "ferns-ui";
 
@@ -37,7 +32,7 @@ export const MarkdownViewConfiguration: DemoConfiguration = {
     doNot: ["Do not use for long, untrusted markdown without sanitization upstream."],
   },
   props: {},
-  demo: () => <MarkdownOverview />,
+  demo: () => <MarkdownViewDemo />,
   demoOptions: {},
   stories: {
     "MarkdownView": {description: "All elements in one sample.", render: MarkdownOverview},
