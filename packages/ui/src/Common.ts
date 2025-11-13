@@ -738,7 +738,7 @@ export interface HeadingProps {
   children?: React.ReactNode;
   color?: TextColor;
   overflow?: "normal" | "breakWord"; // default "breakWord"
-  size?: "sm" | "md" | "lg" | "xl"; // default "sm"
+  size?: "sm" | "md" | "lg" | "xl" | "2xl"; // default "sm"
   truncate?: boolean; // default false
   testID?: string;
 }

@@ -14,6 +14,7 @@ const fontSizeAndWeightWeb = {
   md: {size: 18, weight: "bold"},
   lg: {size: 24, weight: "bold"},
   xl: {size: 32, weight: "bold"},
+  "2xl": {size: 48, weight: "bold"},
 };
 
 const fontSizeAndWeighMobile = {
@@ -21,6 +22,7 @@ const fontSizeAndWeighMobile = {
   md: {size: 16, weight: "bold"},
   lg: {size: 20, weight: "bold"},
   xl: {size: 28, weight: "bold"},
+  "2xl": {size: 32, weight: "bold"},
 };
 
 const fontSizes = Platform.OS === "web" ? fontSizeAndWeightWeb : fontSizeAndWeighMobile;
