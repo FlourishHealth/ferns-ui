@@ -303,18 +303,6 @@ export type TextColor = keyof TextTheme;
 export type SurfaceColor = keyof SurfaceTheme;
 export type BorderColor = keyof BorderTheme;
 export type StatusColor = keyof StatusTheme;
-// TODO: Remove ButtonColor. Buttons no longer have colors, only types (called style in Figma)
-export type ButtonColor =
-  | "blue"
-  | "gray"
-  | "red"
-  // | "transparent"
-  | "white"
-  | "primary"
-  | "secondary"
-  | "accent"
-  | "tertiary"
-  | string;
 
 // TODO: we may want/need to expand icon color options from just text colors.
 export type IconColor = TextColor;
@@ -768,11 +756,6 @@ export interface ImageProps {
   srcSet?: string;
   fullWidth?: boolean;
   style?: any;
-}
-
-export interface SearchButtonProps {
-  color: ButtonColor;
-  onClick: () => void;
 }
 
 export interface BackButtonInterface {
