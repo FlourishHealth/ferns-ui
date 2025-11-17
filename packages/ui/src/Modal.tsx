@@ -184,13 +184,17 @@ export const Modal: FC<ModalProps> = ({
     }
   };
 
-  const handlePrimaryButtonClick = (value?: Parameters<NonNullable<ModalProps["primaryButtonOnClick"]>>[0]) => {
+  const handlePrimaryButtonClick = (
+    value?: Parameters<NonNullable<ModalProps["primaryButtonOnClick"]>>[0]
+  ) => {
     if (visible && primaryButtonOnClick) {
       return primaryButtonOnClick(value);
     }
   };
 
-  const handleSecondaryButtonClick = (value?: Parameters<NonNullable<ModalProps["secondaryButtonOnClick"]>>[0]) => {
+  const handleSecondaryButtonClick = (
+    value?: Parameters<NonNullable<ModalProps["secondaryButtonOnClick"]>>[0]
+  ) => {
     if (visible && secondaryButtonOnClick) {
       return secondaryButtonOnClick(value);
     }
@@ -265,7 +269,7 @@ export const Modal: FC<ModalProps> = ({
           }}
           onPress={handleDismiss}
         >
-          <Pressable onPress={(e) => e.stopPropagation()}>
+          <Pressable style={{cursor: "auto"}} onPress={(e) => e.stopPropagation()}>
             <ModalContent {...modalContentProps}>{children}</ModalContent>
           </Pressable>
         </Pressable>
