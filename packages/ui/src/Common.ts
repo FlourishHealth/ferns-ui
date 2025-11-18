@@ -64,6 +64,11 @@ export interface AccordionProps extends InfoModalIconProps {
    * The title of the accordion.
    */
   title: string;
+
+  /**
+   * * Callback fired when the accordion is toggled.
+   * */
+  onToggle?: (isCollapse: boolean) => void;
 }
 
 export interface BaseProfile {
@@ -420,11 +425,11 @@ export const iconSizeToNumber = (size?: IconSize) => {
 
 export type TextSize = "sm" | "md" | "lg" | "xl" | "2xl";
 
-export type ValueMappingItem = {
+export interface ValueMappingItem {
   value: number;
   label: string;
   size?: IconSize;
-};
+}
 
 export type IconPrefix = "far" | "fas";
 
