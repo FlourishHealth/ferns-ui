@@ -184,13 +184,17 @@ export const Modal: FC<ModalProps> = ({
     }
   };
 
-  const handlePrimaryButtonClick = (value?: Parameters<NonNullable<ModalProps["primaryButtonOnClick"]>>[0]) => {
+  const handlePrimaryButtonClick = (
+    value?: Parameters<NonNullable<ModalProps["primaryButtonOnClick"]>>[0]
+  ) => {
     if (visible && primaryButtonOnClick) {
       return primaryButtonOnClick(value);
     }
   };
 
-  const handleSecondaryButtonClick = (value?: Parameters<NonNullable<ModalProps["secondaryButtonOnClick"]>>[0]) => {
+  const handleSecondaryButtonClick = (
+    value?: Parameters<NonNullable<ModalProps["secondaryButtonOnClick"]>>[0]
+  ) => {
     if (visible && secondaryButtonOnClick) {
       return secondaryButtonOnClick(value);
     }
@@ -256,7 +260,19 @@ export const Modal: FC<ModalProps> = ({
   } else {
     return (
       <RNModal animationType="slide" transparent visible={visible} onRequestClose={handleDismiss}>
-        <ModalContent {...modalContentProps}>{children}</ModalContent>
+        <Pressable
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onPress={handleDismiss}
+        >
+          <Pressable style={{cursor: "auto"}} onPress={(e) => e.stopPropagation()}>
+            <ModalContent {...modalContentProps}>{children}</ModalContent>
+          </Pressable>
+        </Pressable>
       </RNModal>
     );
   }
