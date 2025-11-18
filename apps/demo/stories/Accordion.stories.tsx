@@ -47,3 +47,30 @@ export const AccordionDevDemo = () => {
     </View>
   );
 };
+
+export const AccordionOnToggleDemo = () => {
+  const [isCollapsed, setIsCollapsed] = React.useState(true);
+  const [title, setTitle] = React.useState("Sm Title");
+  const isMobile = isMobileDevice();
+
+  return (
+    <View
+      style={{width: isMobile ? "100%" : isCollapsed ? 150 : 450, backgroundColor: "white"}}
+    >
+      <View style={{width: "100%", padding: 15}}>
+        <Accordion
+          isCollapsed={isCollapsed}
+          onToggle={(isCollapse: boolean) => {  setIsCollapsed(isCollapse);
+            setTitle(isCollapse ? "Sm T" : "Longer Title With On Toggle");
+          }}
+          title={title}
+        >
+          <Box>
+            <Heading size="sm">Custom Width setting set by onToggle Callback</Heading>
+            <Text>Allows dynamic width adjustment</Text>
+          </Box>
+        </Accordion>
+      </View>
+    </View>
+  );
+}
