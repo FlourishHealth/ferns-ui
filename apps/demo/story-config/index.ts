@@ -48,3 +48,4 @@ export * from "./Theme.config";
 export * from "./Toast.config";
 export * from "./Tooltip.config";
 export * from "./MarkdownView.config";
+export * from "./EmojiSelector.config";
