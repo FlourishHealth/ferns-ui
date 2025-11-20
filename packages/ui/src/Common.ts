@@ -1770,6 +1770,11 @@ export interface ModalProps {
    */
   children?: React.ReactElement;
   /**
+   * If true, the modal will be closed when the background is clicked.
+   * @default false
+   */
+  persistOnBackgroundClick?: boolean;
+  /**
    * If true, the primary button will be disabled.
    * @default false
    */
