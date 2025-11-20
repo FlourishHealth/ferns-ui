@@ -1,5 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {AccordionDemo, AccordionDevDemo} from "@stories";
+import {AccordionDemo, AccordionDevDemo, AccordionOnToggleDemo} from "@stories";
 import {Accordion} from "ferns-ui";
 
 export const AccordionConfiguration: DemoConfiguration = {
@@ -40,6 +40,9 @@ export const AccordionConfiguration: DemoConfiguration = {
   stories: {
     "Accordion Demo": {
       render: () => AccordionDevDemo(),
+    },
+    "Accordion OnToggle Demo": {
+      render: () => AccordionOnToggleDemo(),
     },
   },
 };
