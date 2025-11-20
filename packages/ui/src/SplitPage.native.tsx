@@ -9,7 +9,6 @@ import {SplitPageProps} from "./Common";
 import {FlatList} from "./FlatList";
 import {IconButton} from "./IconButton";
 import {Spinner} from "./Spinner";
-import {useTheme} from "./Theme";
 import {Unifier} from "./Unifier";
 
 export const SplitPage = ({
@@ -26,7 +25,6 @@ export const SplitPage = ({
   bottomNavBarHeight,
   showItemList,
 }: SplitPageProps) => {
-  const {theme} = useTheme();
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
 
   // flattenChildren is necessary to pull children from a React Fragment. Without this,
@@ -92,7 +90,7 @@ export const SplitPage = ({
           paddingBottom: bottomNavBarHeight,
         }}
       >
-        {renderListViewHeader && renderListViewHeader()}
+        {renderListViewHeader?.()}
         <FlatList
           data={listViewData}
           extraData={listViewExtraData}
@@ -117,7 +115,7 @@ export const SplitPage = ({
             onClick={() => onItemDeselect()}
           />
         </Box>
-        {renderContent && renderContent(selectedId)}
+        {renderContent?.(selectedId)}
       </Box>
     );
   };

@@ -6,7 +6,7 @@ import * as Clipboard from "expo-clipboard";
 import * as Haptics from "expo-haptics";
 import {Dimensions, Keyboard, Linking, Platform, Vibration} from "react-native";
 
-import {FernsTheme, PermissionKind} from "./Common";
+import {PermissionKind} from "./Common";
 import {requestPermissions} from "./Permissions";
 
 declare global {
@@ -61,8 +61,6 @@ export function changeColorLuminance(hex: string, luminanceChange: Luminance) {
 }
 
 class UnifierClass {
-  private _theme?: Partial<FernsTheme>;
-
   private _web = false;
 
   private _dev = false;

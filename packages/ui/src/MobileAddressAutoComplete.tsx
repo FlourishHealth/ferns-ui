@@ -108,7 +108,7 @@ export const MobileAddressAutocomplete = ({
               handleAddressChange(event.nativeEvent.text);
             },
           }}
-          onPress={(data, details = null) => {
+          onPress={(_data, details = null) => {
             const addressComponents = details?.address_components;
             const formattedAddressObject = processAddressComponents(addressComponents, {
               includeCounty,

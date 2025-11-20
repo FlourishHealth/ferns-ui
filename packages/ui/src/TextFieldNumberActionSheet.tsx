@@ -4,18 +4,14 @@ import React from "react";
 import {ActionSheet} from "./ActionSheet";
 import {Box} from "./Box";
 import {Button} from "./Button";
-import {NumberPickerActionSheetProps, TextFieldPickerActionSheetProps} from "./Common";
+import {TextFieldPickerActionSheetProps} from "./Common";
 
-interface NumberPickerActionSheetState {}
+type NumberPickerActionSheetState = {};
 
 export class NumberPickerActionSheet extends React.Component<
   TextFieldPickerActionSheetProps,
   NumberPickerActionSheetState
 > {
-  constructor(props: NumberPickerActionSheetProps) {
-    super(props);
-  }
-
   render() {
     return (
       <ActionSheet ref={this.props.actionSheetRef} bounceOnOpen gestureEnabled>
@@ -36,7 +32,7 @@ export class NumberPickerActionSheet extends React.Component<
             mode={this.props.mode}
             testID="dateTimePicker"
             value={this.props.value ? new Date(this.props.value) : new Date()}
-            onChange={(event: any, date?: Date) => {
+            onChange={(_event: any, date?: Date) => {
               if (!date) {
                 return;
               }

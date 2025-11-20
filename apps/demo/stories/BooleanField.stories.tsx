@@ -75,7 +75,7 @@ export const BooleanFieldNoLabelDemo = (): React.ReactElement => {
 
 export const BooleanFieldWithStoredStateDemo = (): React.ReactElement => {
   const [value, setValue, isLoading] = useStoredState<boolean>("booleanFieldDemo", false);
-  
+
   if (isLoading) {
     return (
       <StorybookContainer>

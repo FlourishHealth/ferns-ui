@@ -58,7 +58,7 @@ const isValidPercentage = (value: string): boolean => {
 };
 
 const isValidWidthHeight = (value: number | string): boolean => {
-  return typeof value === 'number' || !isNaN(Number(value)) || isValidPercentage(value);
+  return typeof value === "number" || !Number.isNaN(Number(value)) || isValidPercentage(value);
 };
 
 // eslint-disable-next-line react/display-name
@@ -153,10 +153,12 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     gap: (value) => ({gap: getSpacing(value)}),
     height: (value) => {
       if (!isValidWidthHeight(value)) {
-        console.warn(`Box: height prop must be a number or percentage string (e.g., "50%"), received: ${value}`);
+        console.warn(
+          `Box: height prop must be a number or percentage string (e.g., "50%"), received: ${value}`
+        );
         return {};
       }
-      if (props.border && !isNaN(Number(value))) {
+      if (props.border && !Number.isNaN(Number(value))) {
         return {height: Number(value) + 2 * 2};
       } else {
         return {height: value};
@@ -210,10 +212,12 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     top: (top) => ({top: top ? 0 : undefined}),
     width: (value) => {
       if (!isValidWidthHeight(value)) {
-        console.warn(`Box: width prop must be a number or percentage string (e.g., "50%"), received: ${value}`);
+        console.warn(
+          `Box: width prop must be a number or percentage string (e.g., "50%"), received: ${value}`
+        );
         return {};
       }
-      if (props.border && !isNaN(Number(value))) {
+      if (props.border && !Number.isNaN(Number(value))) {
         return {width: Number(value) + 2 * 2};
       } else {
         return {width: value};
@@ -221,28 +225,36 @@ export const Box = React.forwardRef((props: BoxProps, ref) => {
     },
     maxHeight: (value) => {
       if (!isValidWidthHeight(value)) {
-        console.warn(`Box: maxHeight prop must be a number or percentage string (e.g., "50%"), received: ${value}`);
+        console.warn(
+          `Box: maxHeight prop must be a number or percentage string (e.g., "50%"), received: ${value}`
+        );
         return {};
       }
       return {maxHeight: value};
     },
     maxWidth: (value) => {
       if (!isValidWidthHeight(value)) {
-        console.warn(`Box: maxWidth prop must be a number or percentage string (e.g., "50%"), received: ${value}`);
+        console.warn(
+          `Box: maxWidth prop must be a number or percentage string (e.g., "50%"), received: ${value}`
+        );
         return {};
       }
       return {maxWidth: value};
     },
     minHeight: (value) => {
       if (!isValidWidthHeight(value)) {
-        console.warn(`Box: minHeight prop must be a number or percentage string (e.g., "50%"), received: ${value}`);
+        console.warn(
+          `Box: minHeight prop must be a number or percentage string (e.g., "50%"), received: ${value}`
+        );
         return {};
       }
       return {minHeight: value};
     },
     minWidth: (value) => {
       if (!isValidWidthHeight(value)) {
-        console.warn(`Box: minWidth prop must be a number or percentage string (e.g., "50%"), received: ${value}`);
+        console.warn(
+          `Box: minWidth prop must be a number or percentage string (e.g., "50%"), received: ${value}`
+        );
         return {};
       }
       return {minWidth: value};

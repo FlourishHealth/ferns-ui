@@ -4,7 +4,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/titillium-web";
 import React from "react";
-import {Platform, StyleProp, Text as NativeText, TextStyle} from "react-native";
+import {Text as NativeText, Platform, StyleProp, TextStyle} from "react-native";
 
 import {HeadingProps} from "./Common";
 import {useTheme} from "./Theme";

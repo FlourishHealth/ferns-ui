@@ -19,7 +19,7 @@ export const AddressField: FC<AddressFieldProps> = ({
 }) => {
   const handleAddressChange = (field: string, newValue: string) => {
     onChange({...value, [field]: newValue});
-    onBlur && onBlur({...value, [field]: newValue});
+    onBlur?.({...value, [field]: newValue});
   };
 
   const handleAutoCompleteChange = (newValue: AddressInterface) => {

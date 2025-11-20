@@ -18,8 +18,7 @@ export function mergeInlineStyles(inlineStyle?: any, newStyle?: any) {
 
 export function isTestUser(profile?: BaseProfile) {
   return (
-    profile &&
-    profile.email &&
+    profile?.email &&
     (profile.email.indexOf("nang.io") > -1 || profile.email.indexOf("example.com") > -1)
   );
 }
@@ -57,7 +56,7 @@ order in which you do so doesn't really matter.
 */
 
 interface InlineStyle {
-  [key: string]: string | number | void;
+  [key: string]: string | number | undefined;
 }
 
 // TODO: This type should be opaque, however the Babel parser doesn't support
@@ -318,7 +317,7 @@ export function formattedCountyCode(state: string, countyName: string): string {
 }
 
 export function isAPIError(error: any): error is APIError {
-  return error && error.data?.title;
+  return error?.data?.title;
 }
 
 export function printAPIError(error: APIError, details = true): string {

@@ -9,10 +9,7 @@ import {Toast} from "./Toast";
 export const FernsProvider: FC<{
   children: React.ReactNode;
   openAPISpecUrl?: string;
-}> = ({
-  children,
-  openAPISpecUrl,
-}) => {
+}> = ({children, openAPISpecUrl}) => {
   return (
     <ThemeProvider>
       <ToastProvider

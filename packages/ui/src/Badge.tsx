@@ -77,7 +77,7 @@ export const Badge = ({
   let badgeValue = value;
 
   if (variant === "numberOnly") {
-    if (!isNaN(Number(value)) && maxValue) {
+    if (!Number.isNaN(Number(value)) && maxValue) {
       const numberValue = Number(value);
       if (numberValue > maxValue) {
         badgeValue = `${maxValue}+`;

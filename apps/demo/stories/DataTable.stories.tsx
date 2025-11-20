@@ -1,9 +1,7 @@
 import {Box, Button, CellData, DataTable, DataTableColumn, Text} from "ferns-ui";
 import React, {FC, useState} from "react";
 
-const CustomColumnComponent: FC<{column: DataTableColumn; cellData: CellData}> = ({
-  cellData,
-}) => {
+const CustomColumnComponent: FC<{column: DataTableColumn; cellData: CellData}> = ({cellData}) => {
   return <Text>Custom: {cellData?.value.text}</Text>;
 };
 

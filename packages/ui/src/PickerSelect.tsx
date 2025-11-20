@@ -201,7 +201,7 @@ export function RNPickerSelect({
       Keyboard.dismiss();
     }
 
-    setAnimationType(modalProps && modalProps?.animationType ? modalProps?.animationType : "slide");
+    setAnimationType(modalProps?.animationType ? modalProps?.animationType : "slide");
 
     triggerOpenCloseCallbacks();
 

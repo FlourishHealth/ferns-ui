@@ -19,7 +19,7 @@ import {
 import cloneDeep from "lodash/cloneDeep";
 import startCase from "lodash/startCase";
 import React, {FC, useEffect, useState} from "react";
-// @ts-ignore
+// @ts-expect-error
 import MarkdownView from "react-native-markdown-display";
 
 const ComponentProps = ({props}: {props: DemoConfigurationProp[]}) => {
@@ -216,10 +216,7 @@ const ComponentDemo = ({config}: {config: DemoConfiguration}) => {
 const ComponentStatusSection: FC<{
   status: DemoConfigStatus;
   title: string;
-}> = ({
-  status,
-  title,
-}) => {
+}> = ({status, title}) => {
   let iconName: IconName = "circle";
   let color: TextColor = "secondaryLight";
   switch (status) {

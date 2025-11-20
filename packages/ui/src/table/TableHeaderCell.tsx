@@ -6,8 +6,8 @@ import {View} from "react-native";
 import {Box} from "../Box";
 import {AlignItems, TableHeaderCellProps} from "../Common";
 import {useTheme} from "../Theme";
-import {useTableContext} from "./tableContext";
 import {TableTitle} from "./TableTitle";
+import {useTableContext} from "./tableContext";
 
 /**
  * Use TableHeaderCell to define a header cell in Table.
@@ -48,7 +48,7 @@ export const TableHeaderCell = ({
     if (setSortColumn) {
       setSortColumn(newSort ? {column: index, direction: newSort} : undefined);
     }
-    onSortChange && onSortChange(newSort);
+    onSortChange?.(newSort);
   }, [index, onSortChange, setSortColumn, sort]);
 
   if (sortable && !onSortChange) {

@@ -2122,7 +2122,7 @@ export interface TableContextType {
 }
 
 export interface TableContextProviderProps extends TableContextType {
-  children: React.ReactElement;
+  children: React.ReactNode;
 }
 
 export interface TextProps {

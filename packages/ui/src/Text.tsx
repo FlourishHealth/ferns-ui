@@ -8,7 +8,7 @@ import {
   useFonts,
 } from "@expo-google-fonts/nunito";
 import React from "react";
-import {Platform, Text as NativeText, TextStyle} from "react-native";
+import {Text as NativeText, Platform, TextStyle} from "react-native";
 
 import {TextProps} from "./Common";
 import {Hyperlink} from "./Hyperlink";

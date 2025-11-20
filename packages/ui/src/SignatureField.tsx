@@ -64,10 +64,10 @@ export const SignatureField = ({
         <Signature
           onChange={onChange}
           onEnd={() => {
-            onEnd && onEnd();
+            onEnd?.();
           }}
           onStart={() => {
-            onStart && onStart();
+            onStart?.();
           }}
         />
       </View>

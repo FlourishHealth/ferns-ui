@@ -1,8 +1,7 @@
 import {act, userEvent} from "@testing-library/react-native";
 import React from "react";
-
-import {renderWithTheme} from "./test-utils";
 import {TextField} from "./TextField";
+import {renderWithTheme} from "./test-utils";
 
 describe("TextField", () => {
   let mockOnChange: jest.Mock;
@@ -103,7 +102,7 @@ describe("TextField", () => {
     });
 
     it("should call onEnter when enter key is pressed", async () => {
-      const user = userEvent.setup();
+      const _user = userEvent.setup();
       const {getByDisplayValue} = renderWithTheme(
         <TextField value="" onChange={mockOnChange} onEnter={mockOnEnter} />
       );
@@ -206,7 +205,7 @@ describe("TextField", () => {
     });
 
     it("should not call onFocus when disabled", async () => {
-      const user = userEvent.setup();
+      const _user = userEvent.setup();
       const {getByDisplayValue} = renderWithTheme(
         <TextField disabled value="" onChange={mockOnChange} onFocus={mockOnFocus} />
       );

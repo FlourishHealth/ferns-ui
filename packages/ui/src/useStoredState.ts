@@ -22,17 +22,19 @@ export const useStoredState = <T>(
 
   // Fetch data when the component mounts
   useEffect(() => {
-    void fetchData().then((value) => {
-      if (isMounted.current) {
-        setState(value);
-        setIsLoading(false);
-      }
-    }).catch((error) => {
-      console.error("Error fetching data:", error);
-      if (isMounted.current) {
-        setIsLoading(false);
-      }
-    });
+    void fetchData()
+      .then((value) => {
+        if (isMounted.current) {
+          setState(value);
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        if (isMounted.current) {
+          setIsLoading(false);
+        }
+      });
 
     return () => {
       isMounted.current = false;

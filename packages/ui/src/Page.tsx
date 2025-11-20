@@ -47,7 +47,7 @@ export class Page extends React.Component<PageProps, {}> {
             <Button
               text={this.props.rightButton}
               variant="muted"
-              onClick={() => this.props.rightButtonOnClick && this.props.rightButtonOnClick()}
+              onClick={() => this.props.rightButtonOnClick?.()}
             />
           </Box>
         )}

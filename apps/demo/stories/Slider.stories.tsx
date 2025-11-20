@@ -3,7 +3,11 @@ import React, {ReactElement, useState} from "react";
 
 export const SliderDemo = (): ReactElement => {
   const [value, setValue] = useState<number>(0.5);
-  return <Box width="100%"><Slider maximumValue={1} minimumValue={0} step={0.1} value={value} onChange={setValue} /></Box>;
+  return (
+    <Box width="100%">
+      <Slider maximumValue={1} minimumValue={0} step={0.1} value={value} onChange={setValue} />
+    </Box>
+  );
 };
 
 export const SliderWithValueDemo = (): ReactElement => {
@@ -20,7 +24,6 @@ export const SliderWithValueDemo = (): ReactElement => {
     />
   );
 };
-
 
 export const SliderWithSmileysDemo = (): ReactElement => {
   const [value, setValue] = useState<number>(50);
@@ -78,7 +81,11 @@ export const SliderWithLabelsDemo = (): ReactElement => {
     <Slider
       labels={{
         min: "Low",
-        custom: [{index: 25, label: "|"}, {index: 50, label: "|"}, {index: 75, label: "|"}],
+        custom: [
+          {index: 25, label: "|"},
+          {index: 50, label: "|"},
+          {index: 75, label: "|"},
+        ],
         max: "High",
       }}
       maximumValue={100}
@@ -109,5 +116,3 @@ export const SliderWithInlineLabelsDemo = (): ReactElement => {
     />
   );
 };
-
-
