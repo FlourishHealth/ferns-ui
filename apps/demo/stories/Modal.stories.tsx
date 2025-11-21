@@ -45,8 +45,12 @@ export const Modals = () => {
         <Box paddingY={1}>
           <Button text="Secondary Button Modal" onClick={() => setModalToShow("secondary")} />
         </Box>
+        <Box paddingY={1}>
+          <Button text="Persist on Background Click" onClick={() => setModalToShow("persist")} />
+        </Box>
       </Box>
       <Modal
+        persistOnBackgroundClick={modalToShow === "persist"}
         primaryButtonOnClick={() => setModalToShow("")}
         primaryButtonText="Accept"
         secondaryButtonOnClick={() => {}}
@@ -59,7 +63,8 @@ export const Modals = () => {
           modalToShow === "default" ||
           modalToShow === "md" ||
           modalToShow === "lg" ||
-          modalToShow === "secondary"
+          modalToShow === "secondary" ||
+          modalToShow === "persist"
         }
         onDismiss={() => setModalToShow("")}
       >

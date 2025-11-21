@@ -163,6 +163,7 @@ const ModalContent: FC<{
 
 export const Modal: FC<ModalProps> = ({
   children,
+  persistOnBackgroundClick = false,
   primaryButtonDisabled = false,
   primaryButtonText,
   secondaryButtonText,
@@ -217,6 +218,7 @@ export const Modal: FC<ModalProps> = ({
   const sizePx = getModalSize(size);
 
   const modalContentProps = {
+    persistOnBackgroundClick,
     title,
     subtitle,
     text,
@@ -267,9 +269,14 @@ export const Modal: FC<ModalProps> = ({
             justifyContent: "center",
             alignItems: "center",
           }}
-          onPress={handleDismiss}
+          onPress={persistOnBackgroundClick ? undefined : handleDismiss}
         >
-          <Pressable style={{cursor: "auto"}} onPress={(e) => e.stopPropagation()}>
+          <Pressable
+            style={{cursor: "auto"}}
+            onPress={(e) => {
+              persistOnBackgroundClick ? null : e.stopPropagation();
+            }}
+          >
             <ModalContent {...modalContentProps}>{children}</ModalContent>
           </Pressable>
         </Pressable>
