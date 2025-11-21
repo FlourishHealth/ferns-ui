@@ -1,6 +1,5 @@
 import SliderComponent from "@react-native-community/slider";
 import React, {FC} from "react";
-import {View} from "react-native";
 
 import {Box} from "./Box";
 import {IconName, SliderProps, ValueMappingItem} from "./Common";
@@ -16,11 +15,11 @@ const getCurrentMapping = (map: ValueMappingItem[], value: number) => {
   if (!map || map.length === 0) {
     return null;
   }
-  
+
   // Find the option with the closest value
   let closestOption = map[0];
   let closestDistance = Math.abs(value - closestOption.value);
-  
+
   for (const option of map) {
     const distance = Math.abs(value - option.value);
     if (distance < closestDistance) {
@@ -28,7 +27,7 @@ const getCurrentMapping = (map: ValueMappingItem[], value: number) => {
       closestOption = option;
     }
   }
-  
+
   return closestOption;
 };
 
@@ -49,9 +48,9 @@ const getCenterContent = (
       </Text>
     );
   }
-  
+
   const currentOption = getCurrentMapping(valueMapping, value);
-  
+
   if (useIcons) {
     return (
       <Icon
@@ -61,7 +60,7 @@ const getCenterContent = (
       />
     );
   }
-  
+
   return (
     <Text align="center" color={disabled ? "secondaryLight" : "primary"} size="2xl">
       {currentOption?.label}
@@ -72,7 +71,7 @@ const getCenterContent = (
 const getSliderContent = (
   slider: React.ReactElement,
   inlineLabels: boolean,
-  labels?: SliderProps['labels']
+  labels?: SliderProps["labels"]
 ): React.ReactElement => {
   if (inlineLabels && labels?.min && labels?.max) {
     return (
@@ -154,9 +153,9 @@ export const Slider: FC<SliderProps> = ({
     thumbStyle: {
       width: 48,
       height: 48,
-      backgroundColor: 'white',
+      backgroundColor: "white",
       borderRadius: 24,
-      shadowColor: '#000',
+      shadowColor: "#000",
       shadowOffset: {
         width: 0,
         height: 2,
@@ -189,11 +188,7 @@ export const Slider: FC<SliderProps> = ({
     <Box>
       {Boolean(title) && <FieldTitle text={title!} />}
       <Box direction="column" gap={showSelection ? 2 : 0}>
-        {showSelection && (
-          <Box alignItems="center">
-            {centerContent}
-          </Box>
-        )}
+        {showSelection && <Box alignItems="center">{centerContent}</Box>}
         {sliderContent}
       </Box>
       {Boolean(helperText && !errorText) && <FieldHelperText text={helperText!} />}
@@ -201,5 +196,3 @@ export const Slider: FC<SliderProps> = ({
     </Box>
   );
 };
-
-

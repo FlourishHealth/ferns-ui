@@ -1,10 +1,7 @@
-import React from "react";
 import {DemoConfiguration} from "@config";
-import {
-  MarkdownOverview,
-  MarkdownViewDemo,
-} from "@stories";
+import {MarkdownOverview, MarkdownViewDemo} from "@stories";
 import {MarkdownView} from "ferns-ui";
+import React from "react";
 
 export const MarkdownViewConfiguration: DemoConfiguration = {
   name: "MarkdownView",
@@ -35,6 +32,6 @@ export const MarkdownViewConfiguration: DemoConfiguration = {
   demo: () => <MarkdownViewDemo />,
   demoOptions: {},
   stories: {
-    "MarkdownView": {description: "All elements in one sample.", render: MarkdownOverview},
+    MarkdownView: {description: "All elements in one sample.", render: MarkdownOverview},
   },
 };

@@ -10,6 +10,7 @@
     "android": "yarn --cwd apps/demo android",
     "lint": "yarn --cwd apps/demo lint && yarn --cwd packages/ui lint",
     "lintfix": "yarn --cwd apps/demo lintfix && yarn --cwd packages/ui lintfix",
+    "lintfixunsafe": "yarn --cwd apps/demo lintfixunsafe && yarn --cwd packages/ui lintfixunsafe",
     "build": "yarn --cwd packages/ui build && yarn --cwd packages/ui types",
     "types": "yarn --cwd packages/ui types",
     "preview": "yarn build && yarn --cwd apps/demo build-web",

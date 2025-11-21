@@ -23,12 +23,7 @@ export const SectionDividerInCard = () => {
   return (
     <StorybookContainer>
       <Box direction="column" padding={3} width="100%">
-        <Box
-          color="base"
-          rounding="md"
-          padding={3}
-          shadow
-        >
+        <Box color="base" rounding="md" padding={3} shadow>
           <Heading>Card Title</Heading>
           <Text>This is some content in a card.</Text>
           <SectionDivider />
@@ -45,12 +40,7 @@ export const SectionDividerInList = () => {
   return (
     <StorybookContainer>
       <Box direction="column" padding={3} width="100%">
-        <Box
-          color="base"
-          rounding="md"
-          padding={0}
-          shadow
-        >
+        <Box color="base" rounding="md" padding={0} shadow>
           <Box padding={3}>
             <Heading>Settings</Heading>
           </Box>

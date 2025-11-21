@@ -111,7 +111,7 @@ class HyperlinkComponent extends React.Component<HyperlinkProps> {
         component.props.children.substring(_lastIndex, component.props.children.length)
       );
       return React.cloneElement(component, componentProps, elements);
-    } catch (error) {
+    } catch (_error) {
       return component;
     }
   };

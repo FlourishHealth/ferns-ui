@@ -24,8 +24,8 @@ export const NumberField: FC<NumberFieldProps> = ({
       if (!v) {
         return;
       }
-      const num = type === "number" ? parseInt(v) : parseFloat(v);
-      if (isNaN(num) || (type === "number" && v.match(/[^0-9]/) !== null)) {
+      const num = type === "number" ? parseInt(v, 10) : parseFloat(v);
+      if (Number.isNaN(num) || (type === "number" && v.match(/[^0-9]/) !== null)) {
         return "Value must be an integer";
       } else if (
         (type === "decimal" && v.match(/[^0-9.]+/) !== null) ||

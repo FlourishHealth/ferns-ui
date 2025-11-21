@@ -1,5 +1,5 @@
 import {DemoConfiguration} from "@config";
-import {IncludesArrow, TooltipDemo, TooltipOverText, ToolTipPositions} from "@stories";
+import {IncludesArrow, ToolTipPositions, TooltipDemo, TooltipOverText} from "@stories";
 import {Tooltip} from "ferns-ui";
 
 export const TooltipConfiguration: DemoConfiguration = {

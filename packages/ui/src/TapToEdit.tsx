@@ -13,11 +13,7 @@ const TapToEditTitle: FC<{
   onlyShowHelperTextWhileEditing?: boolean;
   title: string;
   helperText?: string;
-}> = ({
-  title,
-  helperText,
-  onlyShowHelperTextWhileEditing,
-}) => {
+}> = ({title, helperText, onlyShowHelperTextWhileEditing}) => {
   return (
     <View style={{flex: 1, justifyContent: "center"}}>
       <Text bold>{title}</Text>
@@ -117,7 +113,7 @@ export const TapToEdit: FC<TapToEditProps> = ({
         </View>
         <View style={{gap: 16}}>
           <Field
-            grow={fieldProps?.type === "textarea" ? fieldProps.grow ?? true : undefined}
+            grow={fieldProps?.type === "textarea" ? (fieldProps.grow ?? true) : undefined}
             helperText={helperText}
             inputRef={
               ["text", "textarea", "url", "email", "number"].includes(fieldProps?.type)
@@ -210,7 +206,7 @@ export const TapToEdit: FC<TapToEditProps> = ({
         try {
           const url = new URL(value);
           displayValue = url?.hostname ?? value;
-        } catch (error) {
+        } catch (_error) {
           // Don't print an error message for empty values.
           if (value) {
             console.debug(`Invalid URL: $value`);

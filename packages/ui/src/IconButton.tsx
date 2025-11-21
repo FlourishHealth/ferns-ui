@@ -1,7 +1,7 @@
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import debounce from "lodash/debounce";
 import React, {FC, useState} from "react";
-import {ActivityIndicator, Pressable, Text as NativeText, View} from "react-native";
+import {ActivityIndicator, Text as NativeText, Pressable, View} from "react-native";
 
 import {IconButtonProps} from "./Common";
 import {isMobileDevice} from "./MediaQuery";
@@ -98,7 +98,7 @@ const IconButtonComponent: FC<IconButtonProps> = ({
   return (
     <Pressable
       accessibilityHint={
-        accessibilityHint ?? withConfirmation
+        (accessibilityHint ?? withConfirmation)
           ? `Opens a confirmation dialog to confirm ${accessLabel}`
           : `Press to perform ${accessLabel} action`
       }

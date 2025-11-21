@@ -1,6 +1,6 @@
 import debounce from "lodash/debounce";
 import React, {useEffect, useState} from "react";
-import {ActivityIndicator, Pressable, Text as NativeText, View} from "react-native";
+import {ActivityIndicator, Text as NativeText, Pressable, View} from "react-native";
 
 import {Box} from "./Box";
 import {BannerProps, IconName, SurfaceTheme} from "./Common";

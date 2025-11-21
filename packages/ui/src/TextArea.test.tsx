@@ -20,7 +20,7 @@ describe("TextArea", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextArea value="test content" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("test content");
       expect(input.props.multiline).toBe(true);
       expect(input.props.value).toBe("test content");
@@ -30,7 +30,7 @@ describe("TextArea", () => {
       const {getByText} = renderWithTheme(
         <TextArea title="Description" value="" onChange={mockOnChange} />
       );
-      
+
       expect(getByText("Description")).toBeTruthy();
     });
 
@@ -38,7 +38,7 @@ describe("TextArea", () => {
       const {getByPlaceholderText} = renderWithTheme(
         <TextArea placeholder="Enter description" value="" onChange={mockOnChange} />
       );
-      
+
       expect(getByPlaceholderText("Enter description")).toBeTruthy();
     });
 
@@ -46,7 +46,7 @@ describe("TextArea", () => {
       const {getByText} = renderWithTheme(
         <TextArea helperText="Maximum 500 characters" value="" onChange={mockOnChange} />
       );
-      
+
       expect(getByText("Maximum 500 characters")).toBeTruthy();
     });
 
@@ -54,7 +54,7 @@ describe("TextArea", () => {
       const {getByText} = renderWithTheme(
         <TextArea errorText="This field is required" value="" onChange={mockOnChange} />
       );
-      
+
       expect(getByText("This field is required")).toBeTruthy();
     });
 
@@ -62,7 +62,7 @@ describe("TextArea", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextArea grow value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.multiline).toBe(true);
     });
@@ -71,16 +71,14 @@ describe("TextArea", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextArea disabled value="test" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("test");
       expect(input.props.readOnly).toBe(true);
     });
 
     it("should always have text type", () => {
-      const {getByDisplayValue} = renderWithTheme(
-        <TextArea value="" onChange={mockOnChange} />
-      );
-      
+      const {getByDisplayValue} = renderWithTheme(<TextArea value="" onChange={mockOnChange} />);
+
       const input = getByDisplayValue("");
       expect(input.props.keyboardType).toBe("default");
     });
@@ -89,9 +87,7 @@ describe("TextArea", () => {
   describe("user interactions", () => {
     it("should call onChange when text is entered", async () => {
       const user = userEvent.setup();
-      const {getByDisplayValue} = renderWithTheme(
-        <TextArea value="" onChange={mockOnChange} />
-      );
+      const {getByDisplayValue} = renderWithTheme(<TextArea value="" onChange={mockOnChange} />);
 
       const input = getByDisplayValue("");
       await user.type(input, "hello world");
@@ -103,9 +99,7 @@ describe("TextArea", () => {
     it("should handle multiline text input", async () => {
       const user = userEvent.setup();
       const multilineText = "Line 1\nLine 2\nLine 3";
-      const {getByDisplayValue} = renderWithTheme(
-        <TextArea value="" onChange={mockOnChange} />
-      );
+      const {getByDisplayValue} = renderWithTheme(<TextArea value="" onChange={mockOnChange} />);
 
       const input = getByDisplayValue("");
       await user.type(input, multilineText);
@@ -117,10 +111,8 @@ describe("TextArea", () => {
 
   describe("accessibility", () => {
     it("should have correct accessibility properties", () => {
-      const {getByDisplayValue} = renderWithTheme(
-        <TextArea value="" onChange={mockOnChange} />
-      );
-      
+      const {getByDisplayValue} = renderWithTheme(<TextArea value="" onChange={mockOnChange} />);
+
       const input = getByDisplayValue("");
       expect(input.props.accessibilityHint).toBe("Enter text here");
       expect(input.props["aria-label"]).toBe("Text input field");
@@ -130,7 +122,7 @@ describe("TextArea", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextArea disabled value="" onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue("");
       expect(input.props.accessibilityState.disabled).toBe(true);
     });
@@ -138,19 +130,15 @@ describe("TextArea", () => {
 
   describe("edge cases", () => {
     it("should handle empty value", () => {
-      const {getByDisplayValue} = renderWithTheme(
-        <TextArea value="" onChange={mockOnChange} />
-      );
-      
+      const {getByDisplayValue} = renderWithTheme(<TextArea value="" onChange={mockOnChange} />);
+
       const input = getByDisplayValue("");
       expect(input.props.value).toBe("");
     });
 
     it("should handle undefined value", () => {
-      const {root} = renderWithTheme(
-        <TextArea value={undefined} onChange={mockOnChange} />
-      );
-      
+      const {root} = renderWithTheme(<TextArea value={undefined} onChange={mockOnChange} />);
+
       expect(root).toBeTruthy();
     });
 
@@ -159,7 +147,7 @@ describe("TextArea", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextArea value={longText} onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue(longText);
       expect(input.props.value).toBe(longText);
     });
@@ -169,7 +157,7 @@ describe("TextArea", () => {
       const {getByDisplayValue} = renderWithTheme(
         <TextArea value={textWithBreaks} onChange={mockOnChange} />
       );
-      
+
       const input = getByDisplayValue(textWithBreaks);
       expect(input.props.value).toBe(textWithBreaks);
     });
@@ -179,10 +167,10 @@ describe("TextArea", () => {
     it("should inherit all TextField props except multiline and type", () => {
       const mockOnFocus = jest.fn();
       const mockOnBlur = jest.fn();
-      
+
       const {getByDisplayValue} = renderWithTheme(
-        <TextArea 
-          value="test" 
+        <TextArea
+          value="test"
           onChange={mockOnChange}
           onFocus={mockOnFocus}
           onBlur={mockOnBlur}
@@ -191,7 +179,7 @@ describe("TextArea", () => {
           rows={5}
         />
       );
-      
+
       const input = getByDisplayValue("test");
       expect(input.props.numberOfLines).toBe(5);
       expect(input.props.onFocus).toBeTruthy();
@@ -200,19 +188,15 @@ describe("TextArea", () => {
 
     it("should support inputRef", () => {
       const mockInputRef = jest.fn();
-      renderWithTheme(
-        <TextArea inputRef={mockInputRef} value="" onChange={mockOnChange} />
-      );
-      
+      renderWithTheme(<TextArea inputRef={mockInputRef} value="" onChange={mockOnChange} />);
+
       expect(mockInputRef).toHaveBeenCalled();
     });
   });
 
   describe("snapshots", () => {
     it("should match snapshot with default props", () => {
-      const component = renderWithTheme(
-        <TextArea value="test content" onChange={mockOnChange} />
-      );
+      const component = renderWithTheme(<TextArea value="test content" onChange={mockOnChange} />);
       expect(component.toJSON()).toMatchSnapshot();
     });
 

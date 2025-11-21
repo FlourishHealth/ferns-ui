@@ -1,6 +1,6 @@
-import {useTheme} from "./Theme";
 import React from "react";
 import {View} from "react-native";
+import {useTheme} from "./Theme";
 
 export const SectionDivider: React.FC<{}> = () => {
   const {theme} = useTheme();

@@ -11,12 +11,7 @@ const PaginationButton: FC<{
   onClick: () => void;
   totalPages?: number;
   page?: number;
-}> = ({
-  type,
-  onClick,
-  totalPages = 1,
-  page = 1,
-}) => {
+}> = ({type, onClick, totalPages = 1, page = 1}) => {
   let icon: IconName;
   let disabled = false;
 
@@ -56,11 +51,7 @@ const PaginationNumber: FC<{
   number: number | "more";
   current: boolean;
   onClick: () => void;
-}> = ({
-  number,
-  current,
-  onClick,
-}) => {
+}> = ({number, current, onClick}) => {
   // Shortcut to make rendering the number buttons easier.
   if (number === "more") {
     return <PaginationButton type="more" onClick={() => {}} />;

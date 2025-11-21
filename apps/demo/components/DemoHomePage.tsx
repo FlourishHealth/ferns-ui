@@ -6,9 +6,7 @@ import {Pressable, ScrollView, Text, View} from "react-native";
 
 export const DemoHomePage: FC<{
   onPress: (componentName: string) => void;
-}> = ({
-  onPress,
-}) => {
+}> = ({onPress}) => {
   const navigation = useNavigation();
   // Set the title
   useEffect(() => {

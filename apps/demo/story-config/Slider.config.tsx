@@ -1,5 +1,12 @@
 import {DemoConfiguration} from "@config";
-import {SliderDemo, SliderWithIconsDemo, SliderWithInlineLabelsDemo, SliderWithLabelsDemo, SliderWithSmileysDemo, SliderWithValueDemo} from "@stories";
+import {
+  SliderDemo,
+  SliderWithIconsDemo,
+  SliderWithInlineLabelsDemo,
+  SliderWithLabelsDemo,
+  SliderWithSmileysDemo,
+  SliderWithValueDemo,
+} from "@stories";
 import {Slider} from "ferns-ui";
 
 export const SliderConfiguration: DemoConfiguration = {
@@ -26,7 +33,7 @@ export const SliderConfiguration: DemoConfiguration = {
     do: [
       "Provide contextual labels. The Mood and Numeric variants have these built in, but the basic one would need something descriptive, such as a title.",
       "Provide visual feedback. For the numeric slider, this is automatically satisfied by the numbers changing on the handle. For the mood slider, this would be satisfied by the feedback slider pattern.",
-      "Use sufficient touch targets for the handle. Resist the urge to make it smaller!"
+      "Use sufficient touch targets for the handle. Resist the urge to make it smaller!",
     ],
     doNot: [
       "When adding additional visual feedback, don’t rely solely on color. Use additional cues like shapes, labels, or patterns to convey information for colorblind users.",
@@ -58,4 +65,3 @@ export const SliderConfiguration: DemoConfiguration = {
     },
   },
 };
-
