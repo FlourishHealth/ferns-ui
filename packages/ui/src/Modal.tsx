@@ -2,7 +2,6 @@ import React, {FC, useEffect, useRef} from "react";
 import {
   Dimensions,
   DimensionValue,
-  Platform,
   Pressable,
   Modal as RNModal,
   View,

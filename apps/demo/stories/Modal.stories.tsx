@@ -53,7 +53,7 @@ export const Modals = () => {
         persistOnBackgroundClick={modalToShow === "persist"}
         primaryButtonOnClick={() => setModalToShow("")}
         primaryButtonText="Accept"
-        secondaryButtonOnClick={() => {setModalToShow("")}}
+        secondaryButtonOnClick={() => setModalToShow("")}
         secondaryButtonText={modalToShow === "secondary" ? "Secondary" : undefined}
         size={size as "sm" | "md" | "lg"}
         subtitle="Sub heading"
