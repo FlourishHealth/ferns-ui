@@ -1,14 +1,11 @@
 import React, {FC, useEffect, useRef} from "react";
 import {Dimensions, DimensionValue, Pressable, Modal as RNModal, View} from "react-native";
 import ActionSheet, {ActionSheetRef} from "react-native-actions-sheet";
-import {
-  PanGestureHandler,
-  PanGestureHandlerStateChangeEvent,
-  State,
-} from "react-native-gesture-handler";
+import {Gesture, GestureDetector} from "react-native-gesture-handler";
+import {runOnJS} from "react-native-reanimated";
 
 import {Button} from "./Button";
-import {ModalProps} from "./Common";
+import type {ModalProps} from "./Common";
 import {Heading} from "./Heading";
 import {Icon} from "./Icon";
 import {isMobileDevice} from "./MediaQuery";
@@ -129,7 +126,13 @@ const ModalContent: FC<{
         </View>
       )}
       {children && (
-        <View style={{marginTop: text ? 0 : 12, width: "100%", flex: isMobile ? undefined : 1}}>
+        <View
+          style={{
+            marginTop: text ? 0 : 12,
+            width: "100%",
+            flex: isMobile ? undefined : 1,
+          }}
+        >
           {children}
         </View>
       )}
@@ -201,11 +204,12 @@ export const Modal: FC<ModalProps> = ({
     }
   };
 
-  const onHandlerStateChange = ({nativeEvent}: PanGestureHandlerStateChangeEvent) => {
-    if (nativeEvent.state === State.END && nativeEvent.translationY > 100) {
-      handleDismiss();
+  const dragToClose = Gesture.Pan().onEnd((event) => {
+    if (event.translationY > 20) {
+      // Gesture callbacks run on the UI thread, runOnJS is required to safely invoke handleDismiss on the JS thread
+      runOnJS(handleDismiss)();
     }
-  };
+  });
 
   // Open the action sheet ref when the visible prop changes.
   useEffect(() => {
@@ -235,13 +239,22 @@ export const Modal: FC<ModalProps> = ({
 
   if (isMobile) {
     return (
-      <ActionSheet ref={actionSheetRef} onClose={handleDismiss}>
-        <PanGestureHandler onHandlerStateChange={onHandlerStateChange}>
-          <View>
+      <ActionSheet
+        ref={actionSheetRef}
+        closeOnTouchBackdrop={!persistOnBackgroundClick}
+        // Disable ActionSheet's built-in gestures to avoid conflicts with scrolling
+        gestureEnabled={false}
+        onClose={handleDismiss}
+      >
+        <View>
+          {/* Attach our own swipe-to-dismiss gesture to the top handle */}
+          <GestureDetector gesture={dragToClose}>
             <View
               accessibilityHint="Pull down to close the modal"
               aria-label="Pull down bar"
               aria-role="adjustable"
+              // add hitSlop to make the bar easier to hit since it's small
+              hitSlop={{top: 20, bottom: 20, left: 50, right: 50}}
               style={{
                 justifyContent: "center",
                 alignItems: "center",
@@ -254,9 +267,10 @@ export const Modal: FC<ModalProps> = ({
                 marginTop: 10,
               }}
             />
-            <ModalContent {...modalContentProps}>{children}</ModalContent>
-          </View>
-        </PanGestureHandler>
+          </GestureDetector>
+
+          <ModalContent {...modalContentProps}>{children}</ModalContent>
+        </View>
       </ActionSheet>
     );
   } else {
