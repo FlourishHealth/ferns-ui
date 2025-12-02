@@ -1,11 +1,5 @@
 import React, {FC, useEffect, useRef} from "react";
-import {
-  Dimensions,
-  DimensionValue,
-  Pressable,
-  Modal as RNModal,
-  View,
-} from "react-native";
+import {Dimensions, DimensionValue, Pressable, Modal as RNModal, View} from "react-native";
 import ActionSheet, {ActionSheetRef} from "react-native-actions-sheet";
 import {Gesture, GestureDetector} from "react-native-gesture-handler";
 import {runOnJS} from "react-native-reanimated";
