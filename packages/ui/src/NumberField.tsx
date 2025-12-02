@@ -47,13 +47,19 @@ export const NumberField: FC<NumberFieldProps> = ({
   // Only return the value if it is a valid number
   const localOnChange = useCallback(
     (v: string) => {
-      setValue(v);
+      if (type === "decimal" && v === ".") {
+        // if type is decimal and dot is the first character add 0 before it
+        setValue("0.");
+        rest.onChange("0.");
+        return;
+      }
       const err = getError(v);
       if (!err) {
+        setValue(v);
         rest.onChange(v);
       }
     },
-    [getError, rest]
+    [getError, rest, type]
   );
 
   return <TextField {...rest} errorText={error} value={value} onChange={localOnChange} />;
