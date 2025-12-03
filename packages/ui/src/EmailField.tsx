@@ -13,7 +13,11 @@ export const EmailField: FC<EmailFieldProps> = ({
   ...rest
 }) => {
   const [localValue, setLocalValue] = useState<string>(value || "");
-  const [error, setError] = useState<string | undefined>(errorText);
+
+  // Sync local state with incoming prop values
+  useEffect(() => {
+    setLocalValue(value || "");
+  }, [value]);
 
   const validateEmail = useCallback((email: string): string | undefined => {
     if (email.trim() === "") {
@@ -26,60 +30,36 @@ export const EmailField: FC<EmailFieldProps> = ({
     return undefined;
   }, []);
 
-  // Sync local state with incoming prop values
-  useEffect(() => {
-    setLocalValue(value || "");
-    setError(errorText);
-  }, [value, errorText]);
-
-  const handleBlur = useCallback(
-    (email: string) => {
-      if (onBlur) {
-        onBlur(email);
+  const localOnChange = useCallback(
+    (e: string) => {
+      setLocalValue(e);
+      const err = validateEmail(e);
+      if (!err && onChange) {
+        onChange(e);
       }
-      const validationError = validateEmail(email);
-      if (validationError) {
-        setError(validationError);
-      } else {
-        setError(undefined);
+    },
+    [onChange, validateEmail, setLocalValue]
+  );
+
+  const localOnBlur = useCallback(
+    (e: string) => {
+      setLocalValue(e);
+      const err = validateEmail(e);
+      if (!err && onBlur) {
+        onBlur(e);
       }
     },
     [onBlur, validateEmail]
   );
-
-  const handleChange = useCallback(
-    (email: string) => {
-      setLocalValue(email);
-      const validationError = validateEmail(email);
-      if (error && !validationError) {
-        setError(undefined);
-      }
-      if (!validationError) {
-        onChange(email);
-      }
-    },
-    [onChange, error, validateEmail]
-  );
-
   return (
     <TextField
-      errorText={error}
+      errorText={errorText || validateEmail(localValue)}
       iconName={iconName}
       placeholder={placeholder}
       type="email"
       value={localValue}
-      onBlur={(e) => {
-        handleBlur(e);
-        if (onBlur) {
-          onBlur(value || "");
-        }
-      }}
-      onChange={(e) => {
-        handleChange(e);
-        if (onChange) {
-          onChange;
-        }
-      }}
+      onBlur={localOnBlur}
+      onChange={localOnChange}
       {...rest}
     />
   );
