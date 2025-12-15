@@ -7,7 +7,7 @@ export const EmojiSelectorDemo = (): ReactElement => {
   return (
     <Box maxWidth={500} padding={2} gap={2}>
       <Text>Selected emoji: {selected || "None"}</Text>
-      <Box height={350}>
+      <Box height={350} overflow="hidden" borderRadius={8}>
         <EmojiSelector
           category={EmojiSelector.defaultProps.category}
           columns={EmojiSelector.defaultProps.columns}
