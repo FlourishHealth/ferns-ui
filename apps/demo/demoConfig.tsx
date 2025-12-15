@@ -224,7 +224,8 @@ const Config: DemoConfigurationBase[] = [
   TooltipConfiguration,
 ];
 
+// Ensure consistent alphabetical sorting
 export const DemoConfig = Config.map((c) => ({
   ...c,
   props: PropsJSON.children.find((json: any) => json.name === c.interfaceName),
-}));
+})).sort((a, b) => a.name.localeCompare(b.name));
