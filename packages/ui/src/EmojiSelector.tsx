@@ -134,7 +134,8 @@ const TabBar = ({theme, activeCategory, onPress, width}: TabBarProps) => {
         onPress={() => onPress(category)}
         style={{
           flex: 1,
-          height: tabSize,
+          minHeight: 44,
+          maxHeight: 60,
           borderColor: category === activeCategory ? theme : "#EEEEEE",
           borderBottomWidth: 2,
           alignItems: "center",
@@ -471,6 +472,8 @@ const styles = StyleSheet.create({
   },
   tabBar: {
     flexDirection: "row",
+    minHeight: 44,
+    maxHeight: 60,
   },
   scrollview: {
     flex: 1,
