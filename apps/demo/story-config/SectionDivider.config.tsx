@@ -31,7 +31,7 @@ export const SectionDividerConfiguration: DemoConfiguration = {
     {
       name: "Material Design Dividers",
       link: "https://material.io/design/components/dividers.html",
-    }
+    },
   ],
   interfaceName: "SectionDividerProps",
   usage: {

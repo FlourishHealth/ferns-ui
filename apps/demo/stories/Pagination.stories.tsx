@@ -7,7 +7,7 @@ export const PaginationDemo = ({totalPages = 5}: Partial<PaginationProps>): Reac
   let convertedTotalPages = totalPages;
 
   if (typeof totalPages === "string") {
-    convertedTotalPages = parseInt(totalPages);
+    convertedTotalPages = parseInt(totalPages, 10);
   }
   const [page, setPage] = useState(5);
   return <Pagination page={page} setPage={setPage} totalPages={convertedTotalPages} />;

@@ -24,8 +24,8 @@ export const NumberField: FC<NumberFieldProps> = ({
       if (!v) {
         return;
       }
-      const num = type === "number" ? parseInt(v) : parseFloat(v);
-      if (isNaN(num) || (type === "number" && v.match(/[^0-9]/) !== null)) {
+      const num = type === "number" ? parseInt(v, 10) : parseFloat(v);
+      if (Number.isNaN(num) || (type === "number" && v.match(/[^0-9]/) !== null)) {
         return "Value must be an integer";
       } else if (
         (type === "decimal" && v.match(/[^0-9.]+/) !== null) ||
@@ -47,13 +47,19 @@ export const NumberField: FC<NumberFieldProps> = ({
   // Only return the value if it is a valid number
   const localOnChange = useCallback(
     (v: string) => {
-      setValue(v);
+      if (type === "decimal" && v === ".") {
+        // if type is decimal and dot is the first character add 0 before it
+        setValue("0.");
+        rest.onChange("0.");
+        return;
+      }
       const err = getError(v);
       if (!err) {
+        setValue(v);
         rest.onChange(v);
       }
     },
-    [getError, rest]
+    [getError, rest, type]
   );
 
   return <TextField {...rest} errorText={error} value={value} onChange={localOnChange} />;

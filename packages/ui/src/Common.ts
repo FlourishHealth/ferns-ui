@@ -64,6 +64,11 @@ export interface AccordionProps extends InfoModalIconProps {
    * The title of the accordion.
    */
   title: string;
+
+  /**
+   * * Callback fired when the accordion is toggled.
+   * */
+  onToggle?: (isCollapse: boolean) => void;
 }
 
 export interface BaseProfile {
@@ -420,11 +425,11 @@ export const iconSizeToNumber = (size?: IconSize) => {
 
 export type TextSize = "sm" | "md" | "lg" | "xl" | "2xl";
 
-export type ValueMappingItem = {
+export interface ValueMappingItem {
   value: number;
   label: string;
   size?: IconSize;
-};
+}
 
 export type IconPrefix = "far" | "fas";
 
@@ -1770,6 +1775,11 @@ export interface ModalProps {
    */
   children?: React.ReactElement;
   /**
+   * If true, the modal will be closed when the background is clicked.
+   * @default false
+   */
+  persistOnBackgroundClick?: boolean;
+  /**
    * If true, the primary button will be disabled.
    * @default false
    */
@@ -2122,7 +2132,7 @@ export interface TableContextType {
 }
 
 export interface TableContextProviderProps extends TableContextType {
-  children: React.ReactElement;
+  children: React.ReactNode;
 }
 
 export interface TextProps {

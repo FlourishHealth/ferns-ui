@@ -9,16 +9,12 @@ import {NumberPickerActionSheetProps} from "./Common";
 
 const PICKER_HEIGHT = 104;
 
-interface NumberPickerActionSheetState {}
+type NumberPickerActionSheetState = {};
 
 export class NumberPickerActionSheet extends React.Component<
   NumberPickerActionSheetProps,
   NumberPickerActionSheetState
 > {
-  constructor(props: NumberPickerActionSheetProps) {
-    super(props);
-  }
-
   render() {
     return (
       <ActionSheet ref={this.props.actionSheetRef} bounceOnOpen gestureEnabled>

@@ -24,7 +24,9 @@ export const SegmentedControl: FC<SegmentedControlProps> = ({
   }, []);
 
   const handleNext = useCallback(() => {
-    setStartIndex((prev) => Math.min(items.length - (maxItems ?? items.length), prev + (maxItems ?? 4)));
+    setStartIndex((prev) =>
+      Math.min(items.length - (maxItems ?? items.length), prev + (maxItems ?? 4))
+    );
   }, [items.length, maxItems]);
 
   const visibleItems = maxItems ? items.slice(startIndex, startIndex + maxItems) : items;

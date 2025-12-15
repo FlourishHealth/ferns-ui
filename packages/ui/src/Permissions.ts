@@ -4,8 +4,8 @@
 // import Permissions from "react-native-permissions";
 import {PermissionKind, PermissionStatus} from "./Common";
 
-export async function requestPermissions(kind: PermissionKind): Promise<PermissionStatus> {
-  return new Promise(async (resolve, reject) => {
+export async function requestPermissions(_kind: PermissionKind): Promise<PermissionStatus> {
+  return new Promise((_resolve, _reject) => {
     return "denied";
   });
   // const userPropertyKey = `PermissionsFor${capitalize(kind)}`;

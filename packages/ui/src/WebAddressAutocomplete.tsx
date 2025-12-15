@@ -7,7 +7,7 @@ import {processAddressComponents} from "./Utilities";
 
 const loadGooglePlacesScript = (googleMapsApiKey: string, callbackName: any): Promise<void> => {
   return new Promise<void>((resolve, reject): undefined => {
-    if (window.google && window.google.maps && window.google.maps.places) {
+    if (window.google?.maps?.places) {
       resolve();
       return;
     }

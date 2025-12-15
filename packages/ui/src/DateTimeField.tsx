@@ -262,20 +262,20 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
       if (type === "date" || type === "datetime") {
         if (fieldIndex === 0) {
           // Month
-          const monthNum = parseInt(fieldValue);
-          if (isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
+          const monthNum = parseInt(fieldValue, 10);
+          if (Number.isNaN(monthNum) || monthNum < 1 || monthNum > 12) {
             return "Month must be between 1 and 12";
           }
         } else if (fieldIndex === 1) {
           // Day
-          const dayNum = parseInt(fieldValue);
-          if (isNaN(dayNum) || dayNum < 1 || dayNum > 31) {
+          const dayNum = parseInt(fieldValue, 10);
+          if (Number.isNaN(dayNum) || dayNum < 1 || dayNum > 31) {
             return "Day must be between 1 and 31";
           }
         } else if (fieldIndex === 2) {
           // Year
-          const yearNum = parseInt(fieldValue);
-          if (isNaN(yearNum) || yearNum < 1900 || yearNum > 2100) {
+          const yearNum = parseInt(fieldValue, 10);
+          if (Number.isNaN(yearNum) || yearNum < 1900 || yearNum > 2100) {
             return "Year must be between 1900 and 2100";
           }
         }
@@ -284,14 +284,14 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
       if (type === "time" || type === "datetime") {
         if (fieldIndex === (type === "time" ? 0 : 3)) {
           // Hour
-          const hourNum = parseInt(fieldValue);
-          if (isNaN(hourNum) || hourNum < 1 || hourNum > 12) {
+          const hourNum = parseInt(fieldValue, 10);
+          if (Number.isNaN(hourNum) || hourNum < 1 || hourNum > 12) {
             return "Hour must be between 1 and 12";
           }
         } else if (fieldIndex === (type === "time" ? 1 : 4)) {
           // Minute
-          const minuteNum = parseInt(fieldValue);
-          if (isNaN(minuteNum) || minuteNum < 0 || minuteNum > 59) {
+          const minuteNum = parseInt(fieldValue, 10);
+          if (Number.isNaN(minuteNum) || minuteNum < 0 || minuteNum > 59) {
             return "Minute must be between 0 and 59";
           }
         }
@@ -323,7 +323,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
         if (!monthVal || !dayVal || !yearVal || !hour || !minuteVal) {
           return undefined;
         }
-        let hourNum = parseInt(hourVal);
+        let hourNum = parseInt(hourVal, 10);
         if (ampPmVal === "pm" && hourNum !== 12) {
           hourNum += 12;
         } else if (ampPmVal === "am" && hourNum === 12) {
@@ -331,11 +331,11 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
         }
         date = DateTime.fromObject(
           {
-            year: parseInt(yearVal),
-            month: parseInt(monthVal),
-            day: parseInt(dayVal),
+            year: parseInt(yearVal, 10),
+            month: parseInt(monthVal, 10),
+            day: parseInt(dayVal, 10),
             hour: hourNum,
-            minute: parseInt(minuteVal),
+            minute: parseInt(minuteVal, 10),
             second: 0,
             millisecond: 0,
           },
@@ -349,9 +349,9 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
         }
         date = DateTime.fromObject(
           {
-            year: parseInt(yearVal),
-            month: parseInt(monthVal),
-            day: parseInt(dayVal),
+            year: parseInt(yearVal, 10),
+            month: parseInt(monthVal, 10),
+            day: parseInt(dayVal, 10),
             hour: 0,
             minute: 0,
             second: 0,
@@ -365,7 +365,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
         if (!hour || !minuteVal) {
           return undefined;
         }
-        let hourNum = parseInt(hour);
+        let hourNum = parseInt(hour, 10);
         if (ampPmVal === "pm" && hourNum !== 12) {
           hourNum += 12;
         } else if (ampPmVal === "am" && hourNum === 12) {
@@ -374,7 +374,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
         date = DateTime.fromObject(
           {
             hour: hourNum,
-            minute: parseInt(minuteVal),
+            minute: parseInt(minuteVal, 10),
             second: 0,
             millisecond: 0,
           },
@@ -404,7 +404,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
         // so it's always a valid time and easier to edit.
         // This lets users freely edit or clear the minute field without breaking the time format.
         const finalValue = numericValue === "" ? "00" : numericValue.slice(-2);
-        const minuteNum = parseInt(finalValue);
+        const minuteNum = parseInt(finalValue, 10);
 
         // Update the minute state so the UI reflects the latest input,
         // even if it's temporarily invalid
@@ -412,7 +412,7 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({
         setMinute(finalValue);
 
         // Only update ref and result if it's a valid minute value
-        if (!isNaN(minuteNum) && minuteNum >= 0 && minuteNum <= 59) {
+        if (!Number.isNaN(minuteNum) && minuteNum >= 0 && minuteNum <= 59) {
           pendingValueRef.current = {minute: finalValue};
           setFieldErrors((prev) => ({...prev, [index]: undefined}));
 

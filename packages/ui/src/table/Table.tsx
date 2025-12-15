@@ -68,44 +68,42 @@ export const Table = ({
       sortColumn={sortColumn}
       stickyHeader={stickyHeader}
     >
-      <>
-        <Box
-          flex="grow"
-          maxWidth="100%"
-          style={{
-            position: "relative",
-          }}
-          width={width}
-        >
-          <ScrollView horizontal style={{width, maxWidth: "100%"}}>
-            {/* TODO: Replace table scrollview with flat list */}
-            <ScrollView
-              // nestedScrollEnabled
-              stickyHeaderIndices={stickyHeader ? [0] : undefined}
-              style={{width, maxWidth: "100%", flex: 1, maxHeight}}
-            >
-              {Children.map(
-                children,
-                (child, index) =>
-                  Boolean(child) &&
-                  React.cloneElement(child as ReactElement, {
-                    color: index % 2 === 1 && alternateRowBackground ? "neutralLight" : "base",
-                  })
-              )}
-            </ScrollView>
+      <Box
+        flex="grow"
+        maxWidth="100%"
+        style={{
+          position: "relative",
+        }}
+        width={width}
+      >
+        <ScrollView horizontal style={{width, maxWidth: "100%"}}>
+          {/* TODO: Replace table scrollview with flat list */}
+          <ScrollView
+            // nestedScrollEnabled
+            stickyHeaderIndices={stickyHeader ? [0] : undefined}
+            style={{width, maxWidth: "100%", flex: 1, maxHeight}}
+          >
+            {Children.map(
+              children,
+              (child, index) =>
+                Boolean(child) &&
+                React.cloneElement(child as ReactElement, {
+                  color: index % 2 === 1 && alternateRowBackground ? "neutralLight" : "base",
+                })
+            )}
           </ScrollView>
+        </ScrollView>
+      </Box>
+      {Boolean(shouldPaginate && totalPages !== undefined) && (
+        <Box alignItems="center" borderTop="default" direction="row" height={60} paddingX={8}>
+          <Pagination
+            page={propsPage ?? page}
+            setPage={propsSetPage ?? setPage}
+            totalPages={totalPages!}
+          />
+          {Boolean(extraControls) && extraControls}
         </Box>
-        {Boolean(shouldPaginate && totalPages !== undefined) && (
-          <Box alignItems="center" borderTop="default" direction="row" height={60} paddingX={8}>
-            <Pagination
-              page={propsPage ?? page}
-              setPage={propsSetPage ?? setPage}
-              totalPages={totalPages!}
-            />
-            {Boolean(extraControls) && extraControls}
-          </Box>
-        )}
-      </>
+      )}
     </TableContextProvider>
   );
 };

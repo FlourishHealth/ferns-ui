@@ -95,7 +95,7 @@ export const SplitPage = ({
           flexDirection: "column",
         }}
       >
-        {renderListViewHeader && renderListViewHeader()}
+        {renderListViewHeader?.()}
         <FlatList
           data={listViewData}
           extraData={listViewExtraData}
@@ -109,7 +109,7 @@ export const SplitPage = ({
   const renderListContent = () => {
     return (
       <Box flex="grow" padding={2}>
-        {renderContent && renderContent(selectedId)}
+        {renderContent?.(selectedId)}
       </Box>
     );
   };
@@ -205,7 +205,7 @@ export const SplitPage = ({
           flexDirection: "column",
         }}
       >
-        {renderListViewHeader && renderListViewHeader()}
+        {renderListViewHeader?.()}
         <FlatList
           data={listViewData}
           extraData={listViewExtraData}
@@ -234,7 +234,7 @@ export const SplitPage = ({
             />
           </Box>
         )}
-        {renderContent && renderContent(selectedId)}
+        {renderContent?.(selectedId)}
       </Box>
     );
   };

@@ -4,8 +4,8 @@ import {
   BooleanFieldDisabledDemo,
   BooleanFieldDisabledWithTitleDemo,
   BooleanFieldNoLabelDemo,
-  BooleanFieldWithTitleDemo,
   BooleanFieldWithStoredStateDemo,
+  BooleanFieldWithTitleDemo,
 } from "@stories";
 import {BooleanField} from "ferns-ui";
 import React from "react";

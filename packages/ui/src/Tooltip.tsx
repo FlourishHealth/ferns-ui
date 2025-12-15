@@ -19,20 +19,20 @@ const TOOLTIP_OFFSET = 6;
 // How many pixels to leave between the tooltip and the edge of the screen
 const TOOLTIP_OVERFLOW_PADDING = 20;
 
-type ChildrenMeasurement = {
+interface ChildrenMeasurement {
   width: number;
   height: number;
   pageX: number;
   pageY: number;
-};
+}
 
 // empty object is a fallback for when the tooltip is not measured yet
-type Measurement = {
+interface Measurement {
   children: ChildrenMeasurement | {};
   tooltip: LayoutRectangle | {};
   measured: boolean;
   idealPosition?: TooltipPosition;
-};
+}
 
 const getTooltipPosition = ({
   children,
@@ -182,20 +182,33 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
   const childrenWrapperRef = useRef<View>(null);
   const touched = useRef(false);
   const isWeb = Platform.OS === "web";
+  const resetMeasurement = useCallback(() => {
+    setMeasurement({
+      children: {},
+      tooltip: {},
+      measured: false,
+    });
+  }, []);
+  const hideTooltip = useCallback(() => {
+    if (showTooltipTimer.current) {
+      clearTimeout(showTooltipTimer.current);
+    }
+    if (hideTooltipTimer.current) {
+      clearTimeout(hideTooltipTimer.current);
+    }
+
+    touched.current = false;
+    setVisible(false);
+    resetMeasurement();
+  }, [resetMeasurement, setVisible]);
 
   // If the tooltip is visible, and the user clicks outside of the tooltip, hide it.
   useEffect(() => {
     return () => {
-      if (showTooltipTimer.current) {
-        clearTimeout(showTooltipTimer.current);
-      }
-      if (hideTooltipTimer.current) {
-        clearTimeout(hideTooltipTimer.current);
-      }
       // Hide tooltip on unmount to prevent it from staying stuck on screen
-      setVisible(false);
+      hideTooltip();
     };
-  }, []);
+  }, [hideTooltip]);
 
   const getArrowContainerStyle = (): ViewStyle => {
     if (!includeArrow) {
@@ -258,6 +271,11 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
   );
 
   const handleTouchStart = useCallback(() => {
+    if (visible) {
+      hideTooltip();
+      return;
+    }
+
     if (hideTooltipTimer.current) {
       clearTimeout(hideTooltipTimer.current);
     }
@@ -266,7 +284,7 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
       touched.current = true;
       setVisible(true);
     }, 100);
-  }, []);
+  }, [hideTooltip, visible]);
 
   const handleHoverIn = useCallback(() => {
     if (hideTooltipTimer.current) {
@@ -280,20 +298,23 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
   }, [hoverDelay]);
 
   const handleHoverOut = useCallback(() => {
-    touched.current = false;
     if (showTooltipTimer.current) {
       clearTimeout(showTooltipTimer.current);
     }
+    if (hideTooltipTimer.current) {
+      clearTimeout(hideTooltipTimer.current);
+    }
 
     hideTooltipTimer.current = setTimeout(() => {
-      setVisible(false);
-      setMeasurement({
-        children: {},
-        tooltip: {},
-        measured: false,
-      });
+      hideTooltip();
     }, hoverEndDelay);
-  }, [hoverEndDelay]);
+  }, [hideTooltip, hoverEndDelay]);
+
+  const handleClick = useCallback(() => {
+    if (visible) {
+      hideTooltip();
+    }
+  }, [hideTooltip, visible]);
 
   const mobilePressProps = {
     onPress: useCallback(() => {
@@ -348,7 +369,7 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
                   borderRadius: theme.radius.default,
                 }}
                 testID="tooltip-container"
-                onPress={() => setVisible(false)}
+                onPress={hideTooltip}
               >
                 <Text color="inverted" size="sm">
                   {text}
@@ -369,6 +390,7 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
           handleHoverOut();
           children.props.onHoverOut?.();
         }}
+        onPress={isWeb ? handleClick : undefined}
         onTouchStart={handleTouchStart}
         {...(!isWeb && mobilePressProps)}
       >

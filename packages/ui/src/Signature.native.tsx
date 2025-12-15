@@ -21,14 +21,14 @@ export const Signature: FC<Props> = ({onChange, onStart, onEnd}: Props) => {
   };
 
   const onBegin = () => {
-    onStart && onStart();
+    onStart?.();
   };
 
   // Called after end of stroke. Kind of goofy if you ask me,
   // but you need this in order to trigger the 'onOK' callback that gives us the actual image.
   const handleEnd = () => {
     ref.current?.readSignature();
-    onEnd && onEnd();
+    onEnd?.();
   };
 
   return (

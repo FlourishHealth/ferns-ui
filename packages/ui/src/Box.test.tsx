@@ -38,7 +38,7 @@ describe("Box", () => {
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
         flexDirection: "column",
-        display: "flex"
+        display: "flex",
       });
     });
 
@@ -53,7 +53,7 @@ describe("Box", () => {
       expect(view.props.style).toMatchObject({
         flexGrow: 1,
         flexShrink: 1,
-        display: "flex"
+        display: "flex",
       });
     });
 
@@ -62,7 +62,7 @@ describe("Box", () => {
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
         flexShrink: 1,
-        display: "flex"
+        display: "flex",
       });
     });
 
@@ -71,7 +71,7 @@ describe("Box", () => {
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
         flex: 0,
-        display: "flex"
+        display: "flex",
       });
     });
 
@@ -79,7 +79,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box justifyContent="center" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        justifyContent: "center"
+        justifyContent: "center",
       });
     });
 
@@ -87,7 +87,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box alignItems="center" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        alignItems: "center"
+        alignItems: "center",
       });
     });
 
@@ -95,7 +95,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box alignContent="center" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        alignContent: "center"
+        alignContent: "center",
       });
     });
 
@@ -103,7 +103,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box alignSelf="center" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        alignSelf: "center"
+        alignSelf: "center",
       });
     });
 
@@ -112,7 +112,7 @@ describe("Box", () => {
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
         flexWrap: "wrap",
-        alignItems: "flex-start"
+        alignItems: "flex-start",
       });
     });
 
@@ -120,7 +120,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box gap={4} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        gap: 16
+        gap: 16,
       });
     });
   });
@@ -130,7 +130,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box padding={4} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        padding: 16
+        padding: 16,
       });
     });
 
@@ -139,7 +139,7 @@ describe("Box", () => {
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
         paddingLeft: 8,
-        paddingRight: 8
+        paddingRight: 8,
       });
     });
 
@@ -148,7 +148,7 @@ describe("Box", () => {
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
         paddingTop: 12,
-        paddingBottom: 12
+        paddingBottom: 12,
       });
     });
 
@@ -156,7 +156,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box margin={4} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        margin: 16
+        margin: 16,
       });
     });
 
@@ -164,7 +164,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box marginTop={2} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        marginTop: 8
+        marginTop: 8,
       });
     });
 
@@ -172,7 +172,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box marginBottom={2} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        marginBottom: 8
+        marginBottom: 8,
       });
     });
 
@@ -180,7 +180,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box marginLeft={2} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        marginLeft: 8
+        marginLeft: 8,
       });
     });
 
@@ -188,7 +188,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box marginRight={2} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        marginRight: 8
+        marginRight: 8,
       });
     });
   });
@@ -198,7 +198,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box width={100} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        width: 100
+        width: 100,
       });
     });
 
@@ -206,7 +206,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box height={100} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        height: 100
+        height: 100,
       });
     });
 
@@ -214,7 +214,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box width="50%" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        width: "50%"
+        width: "50%",
       });
     });
 
@@ -222,7 +222,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box height="50%" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        height: "50%"
+        height: "50%",
       });
     });
   });
@@ -232,7 +232,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box position="absolute" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        position: "absolute"
+        position: "absolute",
       });
     });
 
@@ -240,7 +240,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box top />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        top: 0
+        top: 0,
       });
     });
 
@@ -248,7 +248,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box bottom />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        bottom: 0
+        bottom: 0,
       });
     });
 
@@ -256,7 +256,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box left />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        left: 0
+        left: 0,
       });
     });
 
@@ -264,7 +264,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box right />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        right: 0
+        right: 0,
       });
     });
 
@@ -272,7 +272,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box zIndex={10} />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        zIndex: 10
+        zIndex: 10,
       });
     });
   });
@@ -356,7 +356,9 @@ describe("Box", () => {
     it("should warn when using circle without dimensions", () => {
       const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
       renderWithTheme(<Box rounding="circle" />);
-      expect(consoleSpy).toHaveBeenCalledWith("Cannot use Box rounding='circle' without height or width.");
+      expect(consoleSpy).toHaveBeenCalledWith(
+        "Cannot use Box rounding='circle' without height or width."
+      );
       consoleSpy.mockRestore();
     });
   });
@@ -366,7 +368,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box display="none" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        display: "none"
+        display: "none",
       });
     });
 
@@ -374,7 +376,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box display="flex" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        flex: undefined
+        flex: undefined,
       });
     });
 
@@ -383,7 +385,7 @@ describe("Box", () => {
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
         flex: 0,
-        flexDirection: "row"
+        flexDirection: "row",
       });
     });
   });
@@ -393,7 +395,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box overflow="scroll" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        overflow: "scroll"
+        overflow: "scroll",
       });
     });
 
@@ -401,7 +403,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box overflow="scrollY" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        overflow: "scroll"
+        overflow: "scroll",
       });
     });
 
@@ -409,7 +411,7 @@ describe("Box", () => {
       const {root} = renderWithTheme(<Box overflow="hidden" />);
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        overflow: "hidden"
+        overflow: "hidden",
       });
     });
   });
@@ -426,11 +428,15 @@ describe("Box", () => {
     it("should render as Pressable when onClick is provided", () => {
       const mockOnClick = jest.fn();
       const {root} = renderWithTheme(
-        <Box onClick={mockOnClick} accessibilityLabel="Click me" accessibilityHint="Tap to trigger action">
+        <Box
+          onClick={mockOnClick}
+          accessibilityLabel="Click me"
+          accessibilityHint="Tap to trigger action"
+        >
           <Text>Clickable content</Text>
         </Box>
       );
-      
+
       expect(root).toBeTruthy();
       // Just verify the component renders without error when onClick is provided
     });
@@ -438,33 +444,33 @@ describe("Box", () => {
     it("should call onClick when pressed", async () => {
       const mockOnClick = jest.fn();
       const {getByTestId} = renderWithTheme(
-        <Box 
-          onClick={mockOnClick} 
+        <Box
+          onClick={mockOnClick}
           testID="clickable-box"
-          accessibilityLabel="Click me" 
+          accessibilityLabel="Click me"
           accessibilityHint="Tap to trigger action"
         />
       );
-      
+
       const pressable = getByTestId("clickable-box-clickable");
       await act(async () => {
         fireEvent.press(pressable);
       });
-      
+
       expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
 
     it("should apply accessibility props to Pressable", () => {
       const mockOnClick = jest.fn();
       const {getByTestId} = renderWithTheme(
-        <Box 
+        <Box
           onClick={mockOnClick}
           testID="accessible-box"
           accessibilityLabel="Click me"
           accessibilityHint="Tap to trigger action"
         />
       );
-      
+
       const pressable = getByTestId("accessible-box-clickable");
       expect(pressable).toBeTruthy();
       // Basic check that accessibility props are being applied
@@ -513,26 +519,24 @@ describe("Box", () => {
       const {getByTestId} = renderWithTheme(
         <Box onHoverStart={mockOnHoverStart} testID="hover-box" />
       );
-      
+
       const view = getByTestId("hover-box");
       await act(async () => {
         fireEvent(view, "pointerEnter");
       });
-      
+
       expect(mockOnHoverStart).toHaveBeenCalledTimes(1);
     });
 
     it("should call onHoverEnd", async () => {
       const mockOnHoverEnd = jest.fn();
-      const {getByTestId} = renderWithTheme(
-        <Box onHoverEnd={mockOnHoverEnd} testID="hover-box" />
-      );
-      
+      const {getByTestId} = renderWithTheme(<Box onHoverEnd={mockOnHoverEnd} testID="hover-box" />);
+
       const view = getByTestId("hover-box");
       await act(async () => {
         fireEvent(view, "pointerLeave");
       });
-      
+
       expect(mockOnHoverEnd).toHaveBeenCalledTimes(1);
     });
   });
@@ -541,7 +545,7 @@ describe("Box", () => {
     it("should expose scrollToEnd method", () => {
       const ref = React.createRef<any>();
       renderWithTheme(<Box ref={ref} scroll />);
-      
+
       expect(ref.current).toBeTruthy();
       expect(typeof ref.current.scrollToEnd).toBe("function");
     });
@@ -549,7 +553,7 @@ describe("Box", () => {
     it("should expose scrollTo method", () => {
       const ref = React.createRef<any>();
       renderWithTheme(<Box ref={ref} scroll />);
-      
+
       expect(ref.current).toBeTruthy();
       expect(typeof ref.current.scrollTo).toBe("function");
     });
@@ -558,11 +562,11 @@ describe("Box", () => {
   describe("dangerous inline styles", () => {
     it("should apply dangerouslySetInlineStyle", () => {
       const {root} = renderWithTheme(
-        <Box dangerouslySetInlineStyle={{ __style: { backgroundColor: "red" } }} />
+        <Box dangerouslySetInlineStyle={{__style: {backgroundColor: "red"}}} />
       );
       const view = root.findByType("View");
       expect(view.props.style).toMatchObject({
-        backgroundColor: "red"
+        backgroundColor: "red",
       });
     });
   });
@@ -571,7 +575,9 @@ describe("Box", () => {
     it("should warn when using wrap and alignItems together", () => {
       const consoleSpy = jest.spyOn(console, "warn").mockImplementation();
       renderWithTheme(<Box wrap alignItems="center" />);
-      expect(consoleSpy).toHaveBeenCalledWith("React Native doesn't support wrap and alignItems together.");
+      expect(consoleSpy).toHaveBeenCalledWith(
+        "React Native doesn't support wrap and alignItems together."
+      );
       consoleSpy.mockRestore();
     });
   });
@@ -604,7 +610,7 @@ describe("Box", () => {
       expect(view.props.style).toMatchObject({
         padding: 0,
         margin: 0,
-        gap: 0
+        gap: 0,
       });
     });
   });
@@ -617,11 +623,11 @@ describe("Box", () => {
 
     it("should match snapshot with layout props", () => {
       const component = renderWithTheme(
-        <Box 
-          direction="column" 
-          flex="grow" 
-          justifyContent="center" 
-          alignItems="center" 
+        <Box
+          direction="column"
+          flex="grow"
+          justifyContent="center"
+          alignItems="center"
           padding={4}
           margin={2}
         />
@@ -631,7 +637,7 @@ describe("Box", () => {
 
     it("should match snapshot with clickable props", () => {
       const component = renderWithTheme(
-        <Box 
+        <Box
           onClick={jest.fn()}
           accessibilityLabel="Click me"
           accessibilityHint="Tap to trigger action"
@@ -652,12 +658,7 @@ describe("Box", () => {
 
     it("should match snapshot with border and rounding", () => {
       const component = renderWithTheme(
-        <Box 
-          border="default"
-          rounding="md"
-          color="primary"
-          shadow
-        />
+        <Box border="default" rounding="md" color="primary" shadow />
       );
       expect(component.toJSON()).toMatchSnapshot();
     });

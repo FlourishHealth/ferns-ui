@@ -32,7 +32,13 @@ export const CheckBox: FC<CheckBoxProps> = ({selected, size = "md", bgColor = "d
       }}
     >
       {selected ? (
-        <FontAwesome6 color={theme.surface.base} name="check" size={px[size].icon} solid selectable={undefined}/>
+        <FontAwesome6
+          color={theme.surface.base}
+          name="check"
+          size={px[size].icon}
+          solid
+          selectable={undefined}
+        />
       ) : null}
     </View>
   );

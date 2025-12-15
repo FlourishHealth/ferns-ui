@@ -5,8 +5,8 @@ import {
   Animated,
   Dimensions,
   EmitterSubscription,
-  findNodeHandle,
   FlatList,
+  findNodeHandle,
   Keyboard,
   KeyboardEvent,
   LayoutChangeEvent,
@@ -312,11 +312,11 @@ export class ActionSheet extends Component<Props, State, any> {
           () => {
             this.isClosing = false;
             this.isReachedTop = false;
-            this.props.onPositionChanged && this.props.onPositionChanged(false);
+            this.props.onPositionChanged?.(false);
             this.indicatorTranslateY.setValue(-this.state.paddingTop);
             this.layoutHasCalled = false;
             this.deviceLayoutCalled = false;
-            this.props.onClose && this.props.onClose();
+            this.props.onClose?.();
           }
         );
       }
@@ -334,7 +334,7 @@ export class ActionSheet extends Component<Props, State, any> {
       setTimeout(() => {
         UIManager.measureInWindow(
           this.safeAreaViewRef.current._nativeTag,
-          (x, y, width, height) => {
+          (_x, _y, _width, height) => {
             safeAreaPaddingTop = height;
             resolve(height === 0 ? 20 : height);
           }
@@ -377,7 +377,7 @@ export class ActionSheet extends Component<Props, State, any> {
       this.underlayScale.setValue(1);
       this.underlayTranslateY.setValue(100);
       if (!gestureEnabled) {
-        this.props.onPositionChanged && this.props.onPositionChanged(true);
+        this.props.onPositionChanged?.(true);
       }
       this.updateActionSheetPosition(scrollOffset);
     }
@@ -441,7 +441,7 @@ export class ActionSheet extends Component<Props, State, any> {
         this._scrollTo(scrollOffset);
         await waitAsync(300);
         this.isRecoiling = false;
-        this.props.onPositionChanged && this.props.onPositionChanged(true);
+        this.props.onPositionChanged?.(true);
       } else {
         this._returnToPrevScrollPosition(this.actionSheetHeight);
       }
@@ -529,12 +529,12 @@ export class ActionSheet extends Component<Props, State, any> {
     if (this.actionSheetHeight < this.offsetY) {
       if (!this.isReachedTop) {
         this.isReachedTop = true;
-        this.props.onPositionChanged && this.props.onPositionChanged(true);
+        this.props.onPositionChanged?.(true);
       }
     } else {
       if (this.isReachedTop) {
         this.isReachedTop = false;
-        this.props.onPositionChanged && this.props.onPositionChanged(false);
+        this.props.onPositionChanged?.(false);
       }
     }
 
@@ -581,7 +581,7 @@ export class ActionSheet extends Component<Props, State, any> {
     const ReactNativeVersion = require("react-native/Libraries/Core/ReactNativeVersion");
 
     let v = ReactNativeVersion.version.major + ReactNativeVersion.version.minor;
-    v = parseInt(v);
+    v = parseInt(v, 10);
 
     if (v >= 63 || Platform.OS === "ios") {
       const keyboardHeight = event.endCoordinates.height;
@@ -595,20 +595,24 @@ export class ActionSheet extends Component<Props, State, any> {
         return;
       }
 
-      UIManager.measure(currentlyFocusedField, (originX, originY, width, height, pageX, pageY) => {
-        const fieldHeight = height;
-        const gap = windowHeight - keyboardHeight - (pageY + fieldHeight);
-        if (gap >= 0) {
-          return;
-        }
-        const toValue = this.props.keyboardMode === "position" ? -(keyboardHeight + 15) : gap - 10;
+      UIManager.measure(
+        currentlyFocusedField,
+        (_originX, _originY, _width, height, _pageX, pageY) => {
+          const fieldHeight = height;
+          const gap = windowHeight - keyboardHeight - (pageY + fieldHeight);
+          if (gap >= 0) {
+            return;
+          }
+          const toValue =
+            this.props.keyboardMode === "position" ? -(keyboardHeight + 15) : gap - 10;
 
-        Animated.timing(this.transformValue, {
-          toValue,
-          duration: 250,
-          useNativeDriver: true,
-        }).start();
-      });
+          Animated.timing(this.transformValue, {
+            toValue,
+            duration: 250,
+            useNativeDriver: true,
+          }).start();
+        }
+      );
     } else {
       Animated.timing(this.transformValue, {
         toValue: -10,

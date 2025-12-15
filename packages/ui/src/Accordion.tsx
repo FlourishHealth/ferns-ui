@@ -18,6 +18,7 @@ export const Accordion: FC<AccordionProps> = ({
   infoModalSubtitle,
   infoModalText,
   infoModalTitle,
+  onToggle,
 }) => {
   const {theme} = useTheme();
   const [collapsed, setCollapsed] = useState(false);
@@ -58,7 +59,12 @@ export const Accordion: FC<AccordionProps> = ({
             aria-role="button"
             hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
             testID="accordion-toggle"
-            onPress={() => setCollapsed(!collapsed)}
+            onPress={() => {
+              setCollapsed(!collapsed);
+              if (onToggle) {
+                onToggle(!collapsed);
+              }
+            }}
           >
             <FontAwesome6
               color={theme.text.link}

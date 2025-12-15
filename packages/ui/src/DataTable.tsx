@@ -1,7 +1,6 @@
 import {FontAwesome6} from "@expo/vector-icons";
 import React, {FC, useCallback, useMemo, useRef, useState} from "react";
 import {NativeScrollEvent, NativeSyntheticEvent, Pressable, ScrollView, View} from "react-native";
-// @ts-ignore
 import Markdown from "react-native-markdown-display";
 
 import {Box} from "./Box";
@@ -18,9 +17,9 @@ import {Icon} from "./Icon";
 import {InfoModalIcon} from "./InfoModalIcon";
 import {Modal} from "./Modal";
 import {Pagination} from "./Pagination";
-import {TableTitle} from "./table/TableTitle";
 import {Text} from "./Text";
 import {useTheme} from "./Theme";
+import {TableTitle} from "./table/TableTitle";
 
 // TODO: Add permanent horizontal scroll bar so users with only a mouse can scroll left/right
 // easily.
@@ -36,9 +35,7 @@ const TextCell: FC<{
   );
 };
 
-const CheckedCell: FC<{cellData: {value: boolean}; column: DataTableColumn}> = ({
-  cellData,
-}) => {
+const CheckedCell: FC<{cellData: {value: boolean}; column: DataTableColumn}> = ({cellData}) => {
   return (
     <Box flex="grow" justifyContent="center" width="100%">
       <Icon

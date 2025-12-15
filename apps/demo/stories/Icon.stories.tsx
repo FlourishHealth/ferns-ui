@@ -19,12 +19,10 @@ export const SolidIcons = (
       maxWidth={300}
       width="100%"
     >
-      <>
-        <Icon iconName="heart" />
-        <Icon iconName="plus" />
-        <Icon iconName="pencil" />
-        <Icon iconName="heart" />
-      </>
+      <Icon iconName="heart" />
+      <Icon iconName="plus" />
+      <Icon iconName="pencil" />
+      <Icon iconName="heart" />
     </Box>
   </StorybookContainer>
 );

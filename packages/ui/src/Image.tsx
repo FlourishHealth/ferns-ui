@@ -3,6 +3,7 @@ import {Dimensions, Image as NativeImage} from "react-native";
 
 import {Box} from "./Box";
 import {ImageProps} from "./Common";
+
 const {width: DEVICE_WIDTH} = Dimensions.get("window");
 
 export class Image extends React.Component<ImageProps, {}> {
