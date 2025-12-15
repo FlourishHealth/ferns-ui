@@ -474,6 +474,7 @@ const styles = StyleSheet.create({
   },
   scrollview: {
     flex: 1,
+    overflow: "hidden",
   },
   searchbar_container: {
     width: "100%",
@@ -493,9 +494,9 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    flexWrap: "wrap",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "flex-start",
+    overflow: "hidden",
   },
   sectionHeader: {
     margin: 8,
