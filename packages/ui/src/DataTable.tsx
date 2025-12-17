@@ -298,7 +298,7 @@ interface DataTableHeaderProps {
   hasMoreContent: boolean;
   pinnedColumns: number;
   columnWidths: number[];
-  headerScrollRef: React.RefObject<ScrollView>;
+  headerScrollRef: React.RefObject<ScrollView | null>;
   sortColumn?: ColumnSortInterface;
   onSort: (index: number) => void;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>, isHeader: boolean) => void;
@@ -399,7 +399,7 @@ interface DataTableContentProps {
   pinnedColumns: number;
   alternateRowBackground: boolean;
   columnWidths: number[];
-  bodyScrollRef: React.RefObject<ScrollView>;
+  bodyScrollRef: React.RefObject<ScrollView | null>;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>, isHeader: boolean) => void;
   moreContentComponent?: React.ComponentType<{
     column: DataTableColumn;
