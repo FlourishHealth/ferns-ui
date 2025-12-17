@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2017",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "outDir": "dist/",
     "sourceMap": true,
     "jsx": "react",
@@ -27,8 +23,8 @@
     "strictNullChecks": true,
     //"suppressImplicitAnyIndexErrors": true,
     "downlevelIteration": true,
+    "types": ["jest", "node"]
   },
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
+  "exclude": ["src/**/*.test.tsx", "src/**/*.test.ts"]
 }

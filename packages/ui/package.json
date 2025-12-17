@@ -97,6 +97,7 @@
     "@types/lodash": "^4.17.16",
     "@types/luxon": "^3.6.2",
     "@types/mdurl": "^2.0.0",
+    "@types/minimatch": "^6.0.0",
     "@types/react": "~19.1.10",
     "@types/react-datetime-picker": "^5.0.0",
     "@types/react-signature-canvas": "^1.0.5",
