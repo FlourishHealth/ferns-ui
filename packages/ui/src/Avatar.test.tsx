@@ -18,9 +18,7 @@ const mockRenderAsync = jest.fn();
 const mockSaveAsync = jest.fn();
 
 jest.mock("expo-image-manipulator", () => {
-  const actual = jest.requireActual("expo-image-manipulator");
   return {
-    ...actual,
     ImageManipulator: {
       manipulate: jest.fn().mockImplementation(() => ({
         resize: mockResize.mockImplementation(() => ({
