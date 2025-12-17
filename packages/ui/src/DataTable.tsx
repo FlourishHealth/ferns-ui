@@ -36,9 +36,7 @@ const TextCell: FC<{
   );
 };
 
-const CheckedCell: FC<{cellData: {value: boolean}; column: DataTableColumn}> = ({
-  cellData,
-}) => {
+const CheckedCell: FC<{cellData: {value: boolean}; column: DataTableColumn}> = ({cellData}) => {
   return (
     <Box flex="grow" justifyContent="center" width="100%">
       <Icon
@@ -301,7 +299,7 @@ interface DataTableHeaderProps {
   hasMoreContent: boolean;
   pinnedColumns: number;
   columnWidths: number[];
-  headerScrollRef: React.RefObject<ScrollView>;
+  headerScrollRef: React.RefObject<ScrollView | null>;
   sortColumn?: ColumnSortInterface;
   onSort: (index: number) => void;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>, isHeader: boolean) => void;
@@ -402,7 +400,7 @@ interface DataTableContentProps {
   pinnedColumns: number;
   alternateRowBackground: boolean;
   columnWidths: number[];
-  bodyScrollRef: React.RefObject<ScrollView>;
+  bodyScrollRef: React.RefObject<ScrollView | null>;
   onScroll: (event: NativeSyntheticEvent<NativeScrollEvent>, isHeader: boolean) => void;
   moreContentComponent?: React.ComponentType<{
     column: DataTableColumn;

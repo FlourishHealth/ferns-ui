@@ -156,7 +156,7 @@ class HyperlinkComponent extends React.Component<HyperlinkProps> {
       <View {...viewProps} style={this.props.style}>
         {!this.props.onPress && !this.props.onLongPress && !this.props.linkStyle
           ? this.props.children
-          : this.parse(this).props.children}
+          : (this.parse(this).props as {children?: React.ReactNode}).children}
       </View>
     );
   }

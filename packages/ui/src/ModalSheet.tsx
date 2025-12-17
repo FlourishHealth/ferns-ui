@@ -5,7 +5,7 @@ import {Modalize} from "react-native-modalize";
 import {Portal} from "react-native-portalize";
 
 export const useCombinedRefs = (...refs: any) => {
-  const targetRef = useRef();
+  const targetRef = useRef<any>(null);
 
   // Iterate through the refs array, and set the ref.current value to the targetRef
   useEffect(() => {

@@ -19,20 +19,26 @@ const TOOLTIP_OFFSET = 6;
 // How many pixels to leave between the tooltip and the edge of the screen
 const TOOLTIP_OVERFLOW_PADDING = 20;
 
-type ChildrenMeasurement = {
+interface ChildrenMeasurement {
   width: number;
   height: number;
   pageX: number;
   pageY: number;
-};
+}
 
 // empty object is a fallback for when the tooltip is not measured yet
-type Measurement = {
+interface Measurement {
   children: ChildrenMeasurement | {};
   tooltip: LayoutRectangle | {};
   measured: boolean;
   idealPosition?: TooltipPosition;
-};
+}
+
+interface ChildrenProps {
+  onClick?: () => void | Promise<void>;
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
+}
 
 const getTooltipPosition = ({
   children,
@@ -177,8 +183,8 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
     measured: false,
   });
 
-  const showTooltipTimer = useRef<NodeJS.Timeout>();
-  const hideTooltipTimer = useRef<NodeJS.Timeout>();
+  const showTooltipTimer = useRef<NodeJS.Timeout | undefined>(undefined);
+  const hideTooltipTimer = useRef<NodeJS.Timeout | undefined>(undefined);
   const childrenWrapperRef = useRef<View>(null);
   const touched = useRef(false);
   const isWeb = Platform.OS === "web";
@@ -298,7 +304,7 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
   const mobilePressProps = {
     onPress: useCallback(() => {
       if (!touched.current) {
-        children.props.onClick?.();
+        (children.props as ChildrenProps).onClick?.();
       }
     }, [children.props]),
   };
@@ -363,11 +369,11 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
         hitSlop={{top: 10, bottom: 10, left: 15, right: 15}}
         onPointerEnter={() => {
           handleHoverIn();
-          children.props.onHoverIn?.();
+          (children.props as ChildrenProps).onHoverIn?.();
         }}
         onPointerLeave={() => {
           handleHoverOut();
-          children.props.onHoverOut?.();
+          (children.props as ChildrenProps).onHoverOut?.();
         }}
         onTouchStart={handleTouchStart}
         {...(!isWeb && mobilePressProps)}
