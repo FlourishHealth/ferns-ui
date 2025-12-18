@@ -34,6 +34,12 @@ interface Measurement {
   idealPosition?: TooltipPosition;
 }
 
+interface ChildrenProps {
+  onClick?: () => void;
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
+}
+
 const getTooltipPosition = ({
   children,
   tooltip,

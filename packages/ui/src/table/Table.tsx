@@ -87,7 +87,7 @@ export const Table = ({
               children,
               (child, index) =>
                 Boolean(child) &&
-                React.cloneElement(child as ReactElement, {
+                React.cloneElement(child as ReactElement<TableRowProps>, {
                   color: index % 2 === 1 && alternateRowBackground ? "neutralLight" : "base",
                 })
             )}
