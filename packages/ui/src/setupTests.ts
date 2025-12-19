@@ -79,6 +79,30 @@ jest.mock("expo-image-picker", () => ({
   },
 }));
 
+// Mock expo-haptics
+jest.mock("expo-haptics", () => ({
+  ImpactFeedbackStyle: {
+    Light: "light",
+    Medium: "medium",
+    Heavy: "heavy",
+  },
+  NotificationFeedbackType: {
+    Success: "success",
+    Warning: "warning",
+    Error: "error",
+  },
+  impactAsync: jest.fn(),
+  notificationAsync: jest.fn(),
+  selectionAsync: jest.fn(),
+}));
+
+// Mock expo-clipboard
+jest.mock("expo-clipboard", () => ({
+  getStringAsync: jest.fn().mockResolvedValue(""),
+  setStringAsync: jest.fn().mockResolvedValue(undefined),
+  hasStringAsync: jest.fn().mockResolvedValue(false),
+}));
+
 // Make sure we can test date/time functionality
 global.Date.now = jest.fn(() => new Date("2023-05-15T10:30:00.000Z").getTime());
 

@@ -34,6 +34,12 @@ interface Measurement {
   idealPosition?: TooltipPosition;
 }
 
+interface ChildrenProps {
+  onClick?: () => void;
+  onHoverIn?: () => void;
+  onHoverOut?: () => void;
+}
+
 const getTooltipPosition = ({
   children,
   tooltip,
@@ -177,8 +183,8 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
     measured: false,
   });
 
-  const showTooltipTimer = useRef<NodeJS.Timeout>();
-  const hideTooltipTimer = useRef<NodeJS.Timeout>();
+  const showTooltipTimer = useRef<NodeJS.Timeout | undefined>(undefined);
+  const hideTooltipTimer = useRef<NodeJS.Timeout | undefined>(undefined);
   const childrenWrapperRef = useRef<View>(null);
   const touched = useRef(false);
   const isWeb = Platform.OS === "web";
@@ -319,7 +325,7 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
   const mobilePressProps = {
     onPress: useCallback(() => {
       if (!touched.current) {
-        children.props.onClick?.();
+        (children.props as ChildrenProps).onClick?.();
       }
     }, [children.props]),
   };
@@ -384,11 +390,11 @@ export const Tooltip: FC<TooltipProps> = ({text, children, idealPosition, includ
         hitSlop={{top: 10, bottom: 10, left: 15, right: 15}}
         onPointerEnter={() => {
           handleHoverIn();
-          children.props.onHoverIn?.();
+          (children.props as ChildrenProps).onHoverIn?.();
         }}
         onPointerLeave={() => {
           handleHoverOut();
-          children.props.onHoverOut?.();
+          (children.props as ChildrenProps).onHoverOut?.();
         }}
         onPress={isWeb ? handleClick : undefined}
         onTouchStart={handleTouchStart}
