@@ -54,13 +54,12 @@ export const AccordionOnToggleDemo = () => {
   const isMobile = isMobileDevice();
 
   return (
-    <View
-      style={{width: isMobile ? "100%" : isCollapsed ? 150 : 450, backgroundColor: "white"}}
-    >
+    <View style={{width: isMobile ? "100%" : isCollapsed ? 150 : 450, backgroundColor: "white"}}>
       <View style={{width: "100%", padding: 15}}>
         <Accordion
           isCollapsed={isCollapsed}
-          onToggle={(isCollapse: boolean) => {  setIsCollapsed(isCollapse);
+          onToggle={(isCollapse: boolean) => {
+            setIsCollapsed(isCollapse);
             setTitle(isCollapse ? "Sm T" : "Longer Title With On Toggle");
           }}
           title={title}
@@ -73,4 +72,4 @@ export const AccordionOnToggleDemo = () => {
       </View>
     </View>
   );
-}
+};

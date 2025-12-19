@@ -20,6 +20,7 @@ export * from "./DateUtilities";
 export * from "./DecimalRangeActionSheet";
 export * from "./DismissButton";
 export * from "./EmailField";
+export {default as EmojiSelector} from "./EmojiSelector";
 export * from "./ErrorBoundary";
 export * from "./ErrorPage";
 export * from "./FernsProvider";
