@@ -5,9 +5,9 @@ export const EmojiSelectorDemo = (): ReactElement => {
   const [selected, setSelected] = useState("");
 
   return (
-    <Box maxWidth={500} padding={2} gap={2}>
+    <Box maxWidth={500} height="100%" display="flex" direction="column" padding={2} gap={2}>
       <Box
-        padding={3}
+        padding={2}
         rounding="md"
         color="lightGray"
         display="flex"
@@ -19,7 +19,7 @@ export const EmojiSelectorDemo = (): ReactElement => {
         <Text weight="bold">Selected emoji:</Text>
         {selected ? <Text size="2xl">{selected}</Text> : <Text color="gray">None</Text>}
       </Box>
-      <Box height={350} overflow="hidden" rounding="md">
+      <Box flex="grow" minHeight={0} overflow="hidden" rounding="md">
         <EmojiSelector
           category={EmojiSelector.defaultProps.category}
           columns={EmojiSelector.defaultProps.columns}
