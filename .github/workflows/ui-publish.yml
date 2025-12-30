@@ -3,7 +3,7 @@ name: UI NPM publish Continuous Deployment workflow
 on:
   release:
     # This specifies that the build will be triggered when we publish a release
-    types: [ published ]
+    types: [published]
 
 defaults:
   run:
@@ -40,8 +40,17 @@ jobs:
       - run: cd src && yarn version --new-version ${{ github.event.release.tag_name }}
       # build the project
       - run: yarn build
-      # publish to NPM -> there is one caveat, continue reading for the fix
-      - run: yarn publish
+      # publish to NPM
+      # For prerelease GitHub releases (e.g. 2.0.0-beta.0), publish to the "beta" dist-tag
+      - name: Publish to npm (prerelease)
+        if: ${{ github.event.release.prerelease }}
+        run: yarn publish --tag beta
+        env:
+          # Use a token to publish to NPM. See below for how to set it up
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+      - name: Publish to npm (stable)
+        if: ${{ !github.event.release.prerelease }}
+        run: yarn publish
         env:
           # Use a token to publish to NPM. See below for how to set it up
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
