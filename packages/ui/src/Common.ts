@@ -640,6 +640,7 @@ export interface TextFieldProps extends BaseFieldProps, HelperTextProps, ErrorTe
   rows?: number;
 
   inputRef?: any;
+  trimOnBlur?: boolean;
 }
 
 export interface TextAreaProps extends Omit<TextFieldProps, "multiline" | "type"> {}

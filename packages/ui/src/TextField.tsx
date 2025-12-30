@@ -65,6 +65,7 @@ export const TextField: FC<TextFieldProps> = ({
   blurOnSubmit = true,
   iconName,
   onIconClick,
+  trimOnBlur = true,
   type = "text",
   autoComplete,
   inputRef,
@@ -183,8 +184,16 @@ export const TextField: FC<TextFieldProps> = ({
           value={value}
           onBlur={() => {
             if (disabled) return;
+            let finalValue = value ?? "";
+
+            if (trimOnBlur && value) {
+              finalValue = finalValue.trim();
+              if (finalValue !== value) {
+                onChange(finalValue);
+              }
+            }
             if (onBlur) {
-              onBlur(value ?? "");
+              onBlur(finalValue);
             }
             setFocused(false);
           }}
