@@ -13,6 +13,7 @@ import {
   DataTableConfiguration,
   DateTimeFieldConfiguration,
   EmailFieldConfiguration,
+  EmojiSelectorConfiguration,
   FieldConfiguration,
   HeadingConfiguration,
   IconButtonConfiguration,
@@ -182,11 +183,13 @@ const Config: DemoConfigurationBase[] = [
   DataTableConfiguration,
   DateTimeFieldConfiguration,
   EmailFieldConfiguration,
+  EmojiSelectorConfiguration,
   FieldConfiguration,
   HeadingConfiguration,
   IconConfiguration,
   IconButtonConfiguration,
   LinkConfiguration,
+  MarkdownViewConfiguration,
   // FilteredItemConfiguration,
   // MessageConfiguration,
   ModalConfiguration,
@@ -219,10 +222,10 @@ const Config: DemoConfigurationBase[] = [
   ThemeConfiguration,
   ToastConfiguration,
   TooltipConfiguration,
-  MarkdownViewConfiguration,
 ];
 
+// Ensure consistent alphabetical sorting
 export const DemoConfig = Config.map((c) => ({
   ...c,
   props: PropsJSON.children.find((json: any) => json.name === c.interfaceName),
-}));
+})).sort((a, b) => a.name.localeCompare(b.name));

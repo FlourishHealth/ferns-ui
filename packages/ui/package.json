@@ -89,6 +89,7 @@
     "@react-native-community/datetimepicker": "8.4.4",
     "@react-native-community/slider": "^5.0.1",
     "@react-native-picker/picker": "2.11.1",
+    "emoji-datasource": "^16.0.0",
     "expo-clipboard": "~8.0.8",
     "expo-font": "~14.0.10",
     "expo-haptics": "~15.0.8",

@@ -13,6 +13,7 @@ export * from "./DataTable.stories";
 export * from "./DateTimeField.stories";
 export * from "./DefaultDemo";
 export * from "./EmailField.stories";
+export * from "./EmojiSelector.stories";
 export * from "./Field.stories";
 export * from "./Heading.stories";
 export * from "./Icon.stories";

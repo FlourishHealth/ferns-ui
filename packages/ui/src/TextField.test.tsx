@@ -1,4 +1,4 @@
-import {act, userEvent} from "@testing-library/react-native";
+import {act, fireEvent, userEvent} from "@testing-library/react-native";
 import React from "react";
 import {TextField} from "./TextField";
 import {renderWithTheme} from "./test-utils";
@@ -113,6 +113,66 @@ describe("TextField", () => {
       });
 
       expect(mockOnEnter).toHaveBeenCalledTimes(1);
+    });
+
+    it("should trim value on blur if trimOnBlur is true, even if onBlur prop is not provided", () => {
+      const {getByDisplayValue} = renderWithTheme(
+        <TextField value="test    " trimOnBlur onChange={mockOnChange} />
+      );
+
+      const input = getByDisplayValue("test    ");
+
+      fireEvent(input, "blur");
+
+      // on change should be called with trimmed value
+      expect(mockOnChange).toHaveBeenCalled();
+      const lastCall = mockOnChange.mock.calls.at(-1);
+      expect(lastCall?.[0]).toBe("test");
+    });
+
+    it("should trim value on blur if trimOnBlur is true, with onBlur prop provided", async () => {
+      const {getByDisplayValue} = renderWithTheme(
+        <TextField value="test    " trimOnBlur={true} onChange={mockOnChange} onBlur={mockOnBlur} />
+      );
+
+      const input = getByDisplayValue("test    ");
+
+      fireEvent(input, "blur");
+
+      // onChange should be called with trimmed value
+      expect(mockOnChange).toHaveBeenCalled();
+      const lastCall = mockOnChange.mock.calls[mockOnChange.mock.calls.length - 1];
+      expect(lastCall[0]).toBe("test");
+
+      // onBlur should also be called with trimmed value
+      expect(mockOnBlur).toHaveBeenCalledTimes(1);
+      expect(mockOnBlur.mock.calls[0][0]).toBe("test");
+    });
+
+    it("should NOT trim value on blur if trimOnBlur is false", async () => {
+      const {getByDisplayValue} = renderWithTheme(
+        <TextField value="test    " trimOnBlur={false} onChange={mockOnChange} />
+      );
+
+      const input = getByDisplayValue("test    ");
+      fireEvent(input, "blur");
+
+      // onChange should not be called because the value hasn't changed (no trimming)
+      expect(mockOnChange).not.toHaveBeenCalled();
+    });
+
+    it("trims on blur by default when no prop is provided", async () => {
+      const {getByDisplayValue} = renderWithTheme(
+        <TextField value="test    " onChange={mockOnChange} />
+      );
+
+      const input = getByDisplayValue("test    ");
+      fireEvent(input, "blur");
+
+      // onChange should be called with trimmed value
+      expect(mockOnChange).toHaveBeenCalled();
+      const lastCall = mockOnChange.mock.calls.at(-1);
+      expect(lastCall?.[0]).toBe("test");
     });
   });
 
