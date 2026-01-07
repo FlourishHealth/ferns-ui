@@ -1,6 +1,6 @@
 {
   "name": "ferns-ui",
-  "version": "1.16.1",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "license": "Apache-2.0",
   "scripts": {
