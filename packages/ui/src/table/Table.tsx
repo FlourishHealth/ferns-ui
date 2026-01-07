@@ -3,7 +3,7 @@ import {ScrollView} from "react-native";
 import {DimensionValue} from "react-native/Libraries/StyleSheet/StyleSheetTypes";
 
 import {Box} from "../Box";
-import {ColumnSortInterface, TableProps} from "../Common";
+import {ColumnSortInterface, TableProps, TableRowProps} from "../Common";
 import {Pagination} from "../Pagination";
 import {TableContextProvider} from "./tableContext";
 
@@ -30,7 +30,7 @@ export const Table = ({
   // Check if any of the rows below have a drawerContents prop to see if we need to render space
   // for the caret.
   const hasDrawerContents = arrayChildren.some((child) => {
-    return (child as ReactElement).props?.drawerContents;
+    return (child as ReactElement<TableRowProps>).props?.drawerContents;
   });
 
   // Calculate the total width of the table. If the table has only number widths, calculate a
@@ -87,7 +87,7 @@ export const Table = ({
               children,
               (child, index) =>
                 Boolean(child) &&
-                React.cloneElement(child as ReactElement, {
+                React.cloneElement(child as ReactElement<TableRowProps>, {
                   color: index % 2 === 1 && alternateRowBackground ? "neutralLight" : "base",
                 })
             )}
